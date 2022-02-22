@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2022-02-22 Tue 14:28 -->
+<!-- 2022-02-22 Tue 17:48 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Emacs org-special-src-blocks</title>
@@ -267,6 +267,27 @@
                       color:red;
                       text-decoration: none;}
         </style>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        displayAlign: "center",
+        displayIndent: "0em",
+
+        "HTML-CSS": { scale: 100,
+                        linebreaks: { automatic: "false" },
+                        webFont: "TeX"
+                       },
+        SVG: {scale: 100,
+              linebreaks: { automatic: "false" },
+              font: "TeX"},
+        NativeMML: {scale: 100},
+        TeX: { equationNumbers: {autoNumber: "AMS"},
+               MultLineWidth: "85%",
+               TagSide: "right",
+               TagIndent: ".8em"
+             }
+});
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS_HTML"></script>
 </head>
 <body>
 <div id="content" class="content">
@@ -275,9 +296,14 @@
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents" role="doc-toc">
 <ul>
-<li><a href="#orge33996e">1. Minimal working example</a></li>
-<li><a href="#orged71a7a">2. 各种链接</a></li>
-<li><a href="#orgecc015e">3. link here head</a></li>
+<li><a href="#org50ceeb7">1. Minimal working example</a></li>
+<li><a href="#org18a4a79">2. 各种链接</a></li>
+<li><a href="#org178aace">3. Blocks</a>
+<ul>
+<li><a href="#orga618c9f">3.1. 折叠 block</a></li>
+</ul>
+</li>
+<li><a href="#org994383c">4. link here head</a></li>
 </ul>
 </div>
 </div>
@@ -289,8 +315,8 @@
 Examples: 或 <a href="https://alhassy.github.io/org-special-block-extras/">org-special-block-extras</a>
 </p>
 
-<div id="outline-container-orge33996e" class="outline-2">
-<h2 id="orge33996e"><span class="section-number-2">1.</span> Minimal working example</h2>
+<div id="outline-container-org50ceeb7" class="outline-2">
+<h2 id="org50ceeb7"><span class="section-number-2">1.</span> Minimal working example</h2>
 <div class="outline-text-2" id="text-1">
 <div style="column-rule-style: none;column-count: 2;">
 <p>
@@ -334,10 +360,10 @@ Syntactically, <code>(apply f '(x0 ... xN)) = (f x0 ... xN)</code>.
 <p style="color: black;"><span style="border-width:1px;border-style:solid;padding:5px"><strong>[Musa:</strong></span> Ain&rsquo;t that cool?  <span style="border-width:1px;border-style:solid;padding:5px"><strong>]</strong></span></p>
 </p>
 
-<style> #g288 {color: aqua; background-color:aqua;}
-       #g288:hover {color: black; background-color:white;} </style>
+<style> #g327 {color: aqua; background-color:aqua;}
+       #g327:hover {color: black; background-color:white;} </style>
 <p>
-That is, <span style="color:magenta;">we can <span id="g288"> apply </span> a function to a list of arguments!</span>
+That is, <span style="color:magenta;">we can <span id="g327"> apply </span> a function to a list of arguments!</span>
 </p>
 
 
@@ -360,8 +386,8 @@ That is, <span style="color:magenta;">we can <span id="g288"> apply </span> a fu
 </div>
 </div>
 
-<div id="outline-container-orged71a7a" class="outline-2">
-<h2 id="orged71a7a"><span class="section-number-2">2.</span> 各种链接</h2>
+<div id="outline-container-org18a4a79" class="outline-2">
+<h2 id="org18a4a79"><span class="section-number-2">2.</span> 各种链接</h2>
 <div class="outline-text-2" id="text-2">
 <p>
 <kbd style="">xboldcolor</kbd>  <code>*&lt;pink: super neato stuff&gt;*</code> -&gt; <b><span style="color:pink;"> super neato stuff</span></b>
@@ -401,10 +427,181 @@ https://www.google.com/search?q=hello%20world | gnu-emacs&gt;</code> 导出成 <
 </p>
 </div>
 </div>
-
-<div id="outline-container-orgecc015e" class="outline-2">
-<h2 id="orgecc015e"><span class="section-number-2">3.</span> link here head</h2>
+<div id="outline-container-org178aace" class="outline-2">
+<h2 id="org178aace"><span class="section-number-2">3.</span> Blocks</h2>
 <div class="outline-text-2" id="text-3">
+<p>
+<kbd style="">xblocklr</kbd> org-demo block, 左边源码，右边输出结果
+</p>
+
+<div style="column-rule-style: none;column-count: 2;">
+<div style="padding: 1em; background-color: cyan;border-radius: 15px; font-size: 0.9em; box-shadow: 0.05em 0.1em 5px 0.01em #00000057;"><h3>Source</h3>
+<div ><pre class="src src-org">/italics/ and _underline_
+
+$e^{i \times \pi} + 1 = 0$
+</pre></div>
+</div>
+<div style="padding: 1em; background-color: cyan;border-radius: 15px; font-size: 0.9em; box-shadow: 0.05em 0.1em 5px 0.01em #00000057;"><h3>Result</h3>
+<p>
+<i>italics</i> and <span class="underline">underline</span>
+</p>
+
+<p>
+\(e^{i \times \pi} + 1 = 0\)
+</p>
+
+</div>
+</div>
+<p>
+org-demo block, 上边源码，下边输出结果
+</p>
+
+<div style="padding: 1em; background-color: cyan;border-radius: 15px; font-size: 0.9em; box-shadow: 0.05em 0.1em 5px 0.01em #00000057;"><h3>Source</h3>
+<div ><pre class="src src-org">/italics/ and _underline_
+
+$e^{i \times \pi} + 1 = 0$
+</pre></div>
+</div>
+<div style="padding: 1em; background-color: cyan;border-radius: 15px; font-size: 0.9em; box-shadow: 0.05em 0.1em 5px 0.01em #00000057;"><h3>Result</h3>
+<p>
+<i>italics</i> and <span class="underline">underline</span>
+</p>
+
+<p>
+\(e^{i \times \pi} + 1 = 0\)
+</p>
+
+</div>
+<br>
+<div style="padding: 1em; background-color: #CCFFCC;border-radius: 15px; font-size: 0.9em; box-shadow: 0.05em 0.1em 5px 0.01em #00000057;"><h3>重复 stutter</h3>
+<p>
+<code>[[stutter:5][woah, I'm repeated 5 times!]]</code>
+</p>
+
+<p>
+woah, I&rsquo;m repeated 5 times!woah, I&rsquo;m repeated 5 times!woah, I&rsquo;m repeated 5 times!woah, I&rsquo;m repeated 5 times!woah, I&rsquo;m repeated 5 times!
+</p>
+
+</div>
+
+<br>
+<div style="padding: 1em; background-color: #CCFFCC;border-radius: 15px; font-size: 0.9em; box-shadow: 0.05em 0.1em 5px 0.01em #00000057;"><h3>重复的 blocks</h3>
+<pre class="example">
+#+begin_stutter 2
+
+words
+
+more words
+#+end_stutter
+</pre>
+
+
+
+<p>
+words
+</p>
+
+<p>
+more words
+</p>
+
+
+
+<p>
+words
+</p>
+
+<p>
+more words
+</p>
+
+
+
+</div>
+
+<br>
+<div style="padding: 1em; background-color: #CCFFCC;border-radius: 15px; font-size: 0.9em; box-shadow: 0.05em 0.1em 5px 0.01em #00000057;"><h3>垂直平分的 blocks</h3>
+
+<p>
+<span class="underline">模板</span>
+</p>
+<pre class="example">
+#+begin_parallel 2 :bar yes-or-any-other-text
+X
+
+#+columnbreak:
+
+Y
+
+Z
+#+end_parallel
+</pre>
+
+<p>
+<span class="underline">效果</span>
+</p>
+<div style="column-rule-style: solid;column-count: 2;">
+<p>
+X
+</p>
+
+<p>
+<p><br>
+</p>
+
+<p>
+Y
+</p>
+
+<p>
+Z
+</p>
+
+</div>
+
+</div>
+</div>
+
+<div id="outline-container-orga618c9f" class="outline-3">
+<h3 id="orga618c9f"><span class="section-number-3">3.1.</span> 折叠 block</h3>
+<div class="outline-text-3" id="text-3-1">
+<details class="code-details"
+                 style ="padding: 1em;
+                          background-color: #e5f5e5;
+                          /* background-color: pink; */
+                          border-radius: 15px;
+                          color: hsl(157 75%);
+                          font-size: 0.9em;
+                          box-shadow: 0.05em 0.1em 5px 0.01em  #00000057;">
+                  <summary>
+                    <strong>
+                      <font face="Courier" size="3" color="green">
+                         测试代码
+                      </font>
+                    </strong>
+                  </summary>
+<div class="org-src-container">
+<pre class="src src-js"><span style="color: #51afef;">function</span> <span style="color: #c678dd;">test</span>() {
+  console.log(<span style="color: #98be65;">'xxx'</span>)
+}
+
+test()
+</pre>
+</div>
+
+
+</details>
+</div>
+</div>
+</div>
+
+
+
+
+
+<div id="outline-container-org994383c" class="outline-2">
+<h2 id="org994383c"><span class="section-number-2">4.</span> link here head</h2>
+<div class="outline-text-2" id="text-4">
 <p>
 <span id="test-link-here-links"></span>
 </p>
@@ -419,7 +616,7 @@ https://www.google.com/search?q=hello%20world | gnu-emacs&gt;</code> 导出成 <
 </div>
 <div id="postamble" class="status">
 <p class="author">Author: Zhicheng Lee</p>
-<p class="date">Created: 2022-02-22 Tue 14:28</p>
+<p class="date">Created: 2022-02-22 Tue 17:48</p>
 </div>
 </body>
 </html>

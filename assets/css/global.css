@@ -5,3 +5,7 @@
 code {
   white-space: normal !important;
 }
+
+details.code-details {
+  margin-bottom: 1rem;
+}
