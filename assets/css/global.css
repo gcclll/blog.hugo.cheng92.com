@@ -1,3 +1,7 @@
 #table-of-contents {
   width: 316px !important;
 }
+
+code {
+  white-space: normal !important;
+}
