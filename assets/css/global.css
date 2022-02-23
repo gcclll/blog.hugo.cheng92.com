@@ -2,10 +2,18 @@
   width: 316px !important;
 }
 
+#content {
+  /* max-width: 100%; */
+}
+
 code {
   white-space: normal !important;
 }
 
 details.code-details {
   margin-bottom: 1rem;
+}
+
+blockquote {
+  border-left: 5px solid #ea4c89;
 }
