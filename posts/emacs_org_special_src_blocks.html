@@ -1,16 +1,14 @@
-<?xml version="1.0" encoding="utf-8"?>
-<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<!DOCTYPE html>
+<html lang="en">
 <head>
-  <!-- 2022-02-22 Tue 18:41 -->
-  <meta http-equiv="Content-Type" content=
-  "text/html; charset=utf-8" />
+  <!-- 2022-02-23 Wed 13:16 -->
+  <meta charset="utf-8">
   <meta name="viewport" content=
-  "width=device-width, initial-scale=1" />
+  "width=device-width, initial-scale=1">
   <title>Emacs org-special-src-blocks</title>
-  <meta name="author" content="Zhicheng Lee" />
-  <meta name="generator" content="Org Mode" />
+  <meta name="author" content="Zhicheng Lee">
+  <meta name="generator" content="Org Mode">
   <style>
-  <![CDATA[
   #content { max-width: 60em; margin: auto; }
   .title  { text-align: center;
              margin-bottom: .2em; }
@@ -193,24 +191,22 @@
   .org-info-js_search-highlight
     { background-color: #ffff00; color: #000000; font-weight: bold; }
   .org-svg { width: 90%; }
-  ]]>
   </style>
   <link rel="stylesheet" type="text/css" href=
-  "src/readtheorg_theme/css/htmlize.css" />
+  "/assets/css/htmlize.css">
   <link rel="stylesheet" type="text/css" href=
-  "src/readtheorg_theme/css/readtheorg.css" />
+  "/assets/css/readtheorg.css">
+  <link rel="stylesheet" type="text/css" href=
+  "/assets/css/global.css">
+  <script src="/assets/js/jquery.min.js"></script>
+  <script src="/assets/js/bootstrap.min.js"></script>
   <script type="text/javascript" src=
-  "src/lib/js/jquery.min.js"></script>
+  "/assets/js/jquery.stickytableheaders.min.js"></script>
   <script type="text/javascript" src=
-  "src/lib/js/bootstrap.min.js"></script>
+  "/assets/js/readtheorg.js"></script>
   <script type="text/javascript" src=
-  "src/lib/js/jquery.stickytableheaders.min.js"></script>
-  <script type="text/javascript" src=
-  "src/readtheorg_theme/js/readtheorg.js"></script>
-  <link href="/assets/css/global.css" rel="stylesheet" type=
-  "text/css" />
+  "/assets/js/global.js"></script>
   <style>
-  <![CDATA[
         /* From: https://endlessparentheses.com/public/css/endless.css */
         /* See also: https://meta.superuser.com/questions/4788/css-for-the-new-kbd-style */
         kbd
@@ -236,24 +232,20 @@
         
           box-shadow: 2px 2px 2px #222; /* MA: An extra I've added. */
         }
-  ]]>
   </style>
   <link rel="stylesheet" type="text/css" href=
-  "https://alhassy.github.io/org-special-block-extras/tooltipster/dist/css/tooltipster.bundle.min.css" />
+  "https://alhassy.github.io/org-special-block-extras/tooltipster/dist/css/tooltipster.bundle.min.css">
   <link rel="stylesheet" type="text/css" href=
-  "https://alhassy.github.io/org-special-block-extras/tooltipster/dist/css/plugins/tooltipster/sideTip/themes/tooltipster-sideTip-punk.min.css" />
+  "https://alhassy.github.io/org-special-block-extras/tooltipster/dist/css/plugins/tooltipster/sideTip/themes/tooltipster-sideTip-punk.min.css">
 
   <script type="text/javascript">
-  //<![CDATA[
             if (typeof jQuery == 'undefined') {
                 document.write(unescape('%3Cscript src="https://code.jquery.com/jquery-1.10.0.min.js"%3E%3C/script%3E'));
             }
-  //]]>
   </script>
   <script type="text/javascript" src=
   "https://alhassy.github.io/org-special-block-extras/tooltipster/dist/js/tooltipster.bundle.min.js"></script>
   <script>
-  <![CDATA[
                  $(document).ready(function() {
                      $('.tooltip').tooltipster({
                          theme: 'tooltipster-punk',
@@ -271,19 +263,15 @@
                          }
          });
                  });
-  ]]>
   </script>
   <style>
-  <![CDATA[
            abbr {color: red;}
         
            .tooltip { border-bottom: 1px dotted #000;
                       color:red;
                       text-decoration: none;}
-  ]]>
   </style>
   <script type="text/x-mathjax-config">
-  <![CDATA[
     MathJax.Hub.Config({
         displayAlign: "center",
         displayIndent: "0em",
@@ -302,15 +290,12 @@
                TagIndent: ".8em"
              }
   });
-  ]]>
   </script>
   <script src=
   "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS_HTML"></script>
   <style>
-  <![CDATA[
-  #g152 {color: aqua; background-color:aqua;}
-       #g152:hover {color: black; background-color:white;} 
-  ]]>
+  #g194 {color: aqua; background-color:aqua;}
+       #g194:hover {color: black; background-color:white;} 
   </style>
 </head>
 <body>
@@ -320,25 +305,32 @@
       <h2>Table of Contents</h2>
       <div id="text-table-of-contents" role="doc-toc">
         <ul>
-          <li><a href="#orgd6da98b">1. Minimal working
-          example</a></li>
-          <li><a href="#orgea83438">2. 各种链接</a></li>
           <li>
-            <a href="#org867de2c">3. Blocks</a>
+            <a href="#org5179bc5">1. Minimal working example</a>
+          </li>
+          <li>
+            <a href="#orgd44ddc6">2. 各种链接</a>
+          </li>
+          <li>
+            <a href="#org687efb3">3. Blocks</a>
             <ul>
-              <li><a href="#org7ef5ee6">3.1. 折叠 block</a></li>
+              <li>
+                <a href="#orgb95a434">3.1. 折叠 block</a>
+              </li>
             </ul>
           </li>
-          <li><a href="#orgaf5b826">4. link here head</a></li>
+          <li>
+            <a href="#org14d72f1">4. link here head</a>
+          </li>
         </ul>
       </div>
     </div>
     <p><a href="/"><img src=
-    "https://img.shields.io/badge/GCCLL-Homepage-green?logo=gnu-emacs" /></a></p>
+    "https://img.shields.io/badge/GCCLL-Homepage-green?logo=gnu-emacs"></a></p>
     <p>Examples: 或 <a href=
     "https://alhassy.github.io/org-special-block-extras/">org-special-block-extras</a></p>
-    <div id="outline-container-orgd6da98b" class="outline-2">
-      <h2 id="orgd6da98b"><span class="section-number-2">1.</span>
+    <div id="outline-container-org5179bc5" class="outline-2">
+      <h2 id="org5179bc5"><span class="section-number-2">1.</span>
       Minimal working example</h2>
       <div class="outline-text-2" id="text-1">
         <div style="column-rule-style: none;column-count: 2;">
@@ -370,9 +362,9 @@
           ]</strong></span></p>
           <p></p>
           <p>That is, <span style="color:magenta;">we can <span id=
-          "g152">apply</span> a function to a list of
+          "g194">apply</span> a function to a list of
           arguments!</span></p>
-        </details><br />
+        </details><br>
         <div style=
         "padding: 1em; background-color: #CCFFCC;border-radius: 15px; font-size: 0.9em; box-shadow: 0.05em 0.1em 5px 0.01em #00000057;">
           <h3></h3>
@@ -382,17 +374,25 @@
           "M0 2a1 1 0 011-1h14a1 1 0 011 1v9a1 1 0 01-1 1H7l-4 4v-4H1a1 1 0 01-1-1V2zm1 0h14v9H6.5L4 13.5V11H1V2zm6 6h2v2H7V8zm0-5h2v4H7V3z">
           </path></svg> Note that <abbr class="tooltip" style=
           "border: none; text-decoration: none;" title=
-          "C-x C-e ∷ eval-last-sexp&lt;br&gt;Evaluate sexp before point; print value in the echo area.&lt;br&gt;Interactively, with a non ‘-’ prefix argument, print output into&lt;br&gt;current buffer.&lt;br&gt;&lt;br&gt;This commands handles ‘defvar’, ‘defcustom’ and ‘defface’ the&lt;br&gt;same way that ‘eval-defun’ does. See the doc string of that&lt;br&gt;function for details.&lt;br&gt;&lt;br&gt;Normally, this function truncates long output according to the&lt;br&gt;value of the variables ‘eval-expression-print-length’ and&lt;br&gt;‘eval-expression-print-level’. With a prefix argument of zero,&lt;br&gt;however, there is no such truncation.&lt;br&gt;Integer values are printed in several formats (decimal, octal,&lt;br&gt;and hexadecimal). When the prefix argument is -1 or the value&lt;br&gt;doesn’t exceed ‘eval-expression-print-maximum-character’, an&lt;br&gt;integer value is also printed as a character of that codepoint.&lt;br&gt;&lt;br&gt;If ‘eval-expression-debug-on-error’ is non-nil, which is the default,&lt;br&gt;this command arranges for all errors to enter the debugger.&lt;br&gt;&lt;br&gt;(fn EVAL-LAST-SEXP-ARG-INTERNAL)">
+          "C-x C-e ∷ eros-eval-last-sexp&lt;br&gt;Wrapper for ‘eval-last-sexp’ that overlays results.&lt;br&gt;&lt;br&gt;(fn EVAL-LAST-SEXP-ARG-INTERNAL)">
           <kbd style="border-color: red">C-x C-e</kbd></abbr>
           evaluates a Lisp form!</p>
         </div>
         <p><abbr class="tooltip" title=
+        "zsh:1: command not found: wn&lt;br&gt;">Hussain</abbr>
+        <abbr class="tooltip" title=
+        "zsh:1: command not found: wn&lt;br&gt;">family</abbr>
+        <abbr class="tooltip" title=
+        "Thread FORMS elements as the first argument of their successor.&lt;br&gt;Example:&lt;br&gt;  (thread-first&lt;br&gt;   5&lt;br&gt;   (+ 20)&lt;br&gt;   (&lt;em&gt; 25)&lt;br&gt;   -&lt;br&gt;   (+ 40))&lt;br&gt;Is equivalent to:&lt;br&gt;  (+ (- (&lt;/em&gt; (+ 5 20) 25)) 40)&lt;br&gt;Note how the single ‘-’ got converted into a list before&lt;br&gt;threading.&lt;br&gt;&lt;br&gt;(fn &amp;rest FORMS)">
+        thread-first</abbr> <abbr class="tooltip" title=
+        "Show an OctoIcon: home, link, mail, report, tag, clock">o-link/octoicon</abbr>
+        <abbr class="tooltip" title=
         "Call FUNCTION with our remaining args, using our last arg as list of args.&lt;br&gt;Then return the value FUNCTION returns.&lt;br&gt;With a single argument, call the argument’s first element using the&lt;br&gt;other elements as args.&lt;br&gt;Thus, (apply '+ 1 2 '(3 4)) returns 10.&lt;br&gt;&lt;br&gt;(fn FUNCTION &amp;rest ARGUMENTS)">
         apply</abbr></p>
       </div>
     </div>
-    <div id="outline-container-orgea83438" class="outline-2">
-      <h2 id="orgea83438"><span class="section-number-2">2.</span>
+    <div id="outline-container-orgd44ddc6" class="outline-2">
+      <h2 id="orgd44ddc6"><span class="section-number-2">2.</span>
       各种链接</h2>
       <div class="outline-text-2" id="text-2">
         <p><kbd style="">xboldcolor</kbd> <code>*&lt;pink: super
@@ -419,7 +419,7 @@
         https://www.google.com/search?q=hello%20world |
         gnu-emacs&gt;</code> 导出成 <a href=
         "https://www.google.com/search?q=hello%20world"><img src=
-        "https://img.shields.io/badge/Emacs-is%20awesome-blue?logo=gnu-emacs" />
+        "https://img.shields.io/badge/Emacs-is%20awesome-blue?logo=gnu-emacs">
         </a></p>
         <p><abbr class="tooltip" title=
         "Thread FORMS elements as the first argument of their successor.&lt;br&gt;Example:&lt;br&gt;  (thread-first&lt;br&gt;   5&lt;br&gt;   (+ 20)&lt;br&gt;   (&lt;em&gt; 25)&lt;br&gt;   -&lt;br&gt;   (+ 40))&lt;br&gt;Is equivalent to:&lt;br&gt;  (+ (- (&lt;/em&gt; (+ 5 20) 25)) 40)&lt;br&gt;Note how the single ‘-’ got converted into a list before&lt;br&gt;threading.&lt;br&gt;&lt;br&gt;(fn &amp;rest FORMS)">
@@ -432,8 +432,8 @@
         个人文档描述</p>
       </div>
     </div>
-    <div id="outline-container-org867de2c" class="outline-2">
-      <h2 id="org867de2c"><span class="section-number-2">3.</span>
+    <div id="outline-container-org687efb3" class="outline-2">
+      <h2 id="org687efb3"><span class="section-number-2">3.</span>
       Blocks</h2>
       <div class="outline-text-2" id="text-3">
         <p><kbd style="">xblocklr</kbd> org-demo block,
@@ -474,7 +474,7 @@ $e^{i \times \pi} + 1 = 0$
           <p><i>italics</i> and <span class=
           "underline">underline</span></p>
           <p>\(e^{i \times \pi} + 1 = 0\)</p>
-        </div><br />
+        </div><br>
         <div style=
         "padding: 1em; background-color: #CCFFCC;border-radius: 15px; font-size: 0.9em; box-shadow: 0.05em 0.1em 5px 0.01em #00000057;">
           <h3>重复 stutter</h3>
@@ -483,7 +483,7 @@ $e^{i \times \pi} + 1 = 0$
           <p>woah, I’m repeated 5 times!woah, I’m repeated 5
           times!woah, I’m repeated 5 times!woah, I’m repeated 5
           times!woah, I’m repeated 5 times!</p>
-        </div><br />
+        </div><br>
         <div style=
         "padding: 1em; background-color: #CCFFCC;border-radius: 15px; font-size: 0.9em; box-shadow: 0.05em 0.1em 5px 0.01em #00000057;">
           <h3>重复的 blocks</h3>
@@ -499,7 +499,7 @@ more words
           <p>more words</p>
           <p>words</p>
           <p>more words</p>
-        </div><br />
+        </div><br>
         <div style=
         "padding: 1em; background-color: #CCFFCC;border-radius: 15px; font-size: 0.9em; box-shadow: 0.05em 0.1em 5px 0.01em #00000057;">
           <h3>垂直平分的 blocks</h3>
@@ -519,17 +519,17 @@ Z
           <div style="column-rule-style: solid;column-count: 2;">
             <p>X</p>
             <p></p>
-            <p><br /></p>
+            <p><br></p>
             <p>Y</p>
             <p>Z</p>
           </div>
         </div>
       </div>
-      <div id="outline-container-org7ef5ee6" class="outline-3">
-        <h3 id="org7ef5ee6"><span class=
+      <div id="outline-container-orgb95a434" class="outline-3">
+        <h3 id="orgb95a434"><span class=
         "section-number-3">3.1.</span> 折叠 block</h3>
         <div class="outline-text-3" id="text-3-1">
-          <br />
+          <br>
           <details class="code-details" style=
           "padding: 1em; background-color: #e5f5e5; /* background-color: pink; */ border-radius: 15px; color: hsl(157 75%); font-size: 0.9em; box-shadow: 0.05em 0.1em 5px 0.01em #00000057;">
             <summary>
@@ -550,26 +550,26 @@ test()
         </div>
       </div>
     </div>
-    <div id="outline-container-orgaf5b826" class="outline-2">
-      <h2 id="orgaf5b826"><span class="section-number-2">4.</span>
+    <div id="outline-container-org14d72f1" class="outline-2">
+      <h2 id="org14d72f1"><span class="section-number-2">4.</span>
       link here head</h2>
       <div class="outline-text-2" id="text-4">
         <p><span id="test-link-here-links"></span></p>
         <p><img src=
-        "https://img.shields.io/badge/Thanks-for_reading-nil?logo=nil" />
+        "https://img.shields.io/badge/Thanks-for_reading-nil?logo=nil">
         <a href=
         "https://twitter.com/intent/tweet?text=This%20looks%20super%20neat%20(%E2%80%A2%CC%80%E1%B4%97%E2%80%A2%CC%81)%D9%88::&amp;url=https://github.com/gcclll/blog.cheng92.com">
         <img src=
-        "https://img.shields.io/twitter/url?url=https://github.com/gcclll/blog.cheng92.com" />
+        "https://img.shields.io/twitter/url?url=https://github.com/gcclll/blog.cheng92.com">
         </a> <a href="https://www.cheng92.com"><img src=
-        "https://img.shields.io/badge/-buy_me_a_coffee-gray?logo=buy-me-a-coffee" />
+        "https://img.shields.io/badge/-buy_me_a_coffee-gray?logo=buy-me-a-coffee">
         </a></p>
       </div>
     </div>
   </div>
   <div id="postamble" class="status">
     <p class="author">Author: Zhicheng Lee</p>
-    <p class="date">Created: 2022-02-22 Tue 18:41</p>
+    <p class="date">Created: 2022-02-23 Wed 13:16</p>
   </div>
 </body>
 </html>

@@ -1,18 +1,14 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
-    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<!DOCTYPE html>
+<html lang="en">
 <head>
-  <!-- 2022-02-22 Tue 18:56 -->
-  <meta http-equiv="Content-Type" content=
-  "text/html; charset=utf-8" />
+  <!-- 2022-02-23 Wed 13:16 -->
+  <meta charset="utf-8">
   <meta name="viewport" content=
-  "width=device-width, initial-scale=1" />
+  "width=device-width, initial-scale=1">
   <title>Documentations</title>
-  <meta name="author" content="Zhicheng Lee" />
-  <meta name="generator" content="Org Mode" />
+  <meta name="author" content="Zhicheng Lee">
+  <meta name="generator" content="Org Mode">
   <style>
-  <![CDATA[
   #content { max-width: 60em; margin: auto; }
   .title  { text-align: center;
              margin-bottom: .2em; }
@@ -195,24 +191,22 @@
   .org-info-js_search-highlight
     { background-color: #ffff00; color: #000000; font-weight: bold; }
   .org-svg { width: 90%; }
-  ]]>
   </style>
   <link rel="stylesheet" type="text/css" href=
-  "src/readtheorg_theme/css/htmlize.css" />
+  "/assets/css/htmlize.css">
   <link rel="stylesheet" type="text/css" href=
-  "src/readtheorg_theme/css/readtheorg.css" />
+  "/assets/css/readtheorg.css">
+  <link rel="stylesheet" type="text/css" href=
+  "/assets/css/global.css">
+  <script src="/assets/js/jquery.min.js"></script>
+  <script src="/assets/js/bootstrap.min.js"></script>
   <script type="text/javascript" src=
-  "src/lib/js/jquery.min.js"></script>
+  "/assets/js/jquery.stickytableheaders.min.js"></script>
   <script type="text/javascript" src=
-  "src/lib/js/bootstrap.min.js"></script>
+  "/assets/js/readtheorg.js"></script>
   <script type="text/javascript" src=
-  "src/lib/js/jquery.stickytableheaders.min.js"></script>
-  <script type="text/javascript" src=
-  "src/readtheorg_theme/js/readtheorg.js"></script>
-  <link href="/assets/css/global.css" rel="stylesheet" type=
-  "text/css" />
+  "/assets/js/global.js"></script>
   <style>
-  <![CDATA[
         /* From: https://endlessparentheses.com/public/css/endless.css */
         /* See also: https://meta.superuser.com/questions/4788/css-for-the-new-kbd-style */
         kbd
@@ -238,24 +232,20 @@
         
           box-shadow: 2px 2px 2px #222; /* MA: An extra I've added. */
         }
-  ]]>
   </style>
   <link rel="stylesheet" type="text/css" href=
-  "https://alhassy.github.io/org-special-block-extras/tooltipster/dist/css/tooltipster.bundle.min.css" />
+  "https://alhassy.github.io/org-special-block-extras/tooltipster/dist/css/tooltipster.bundle.min.css">
   <link rel="stylesheet" type="text/css" href=
-  "https://alhassy.github.io/org-special-block-extras/tooltipster/dist/css/plugins/tooltipster/sideTip/themes/tooltipster-sideTip-punk.min.css" />
+  "https://alhassy.github.io/org-special-block-extras/tooltipster/dist/css/plugins/tooltipster/sideTip/themes/tooltipster-sideTip-punk.min.css">
 
   <script type="text/javascript">
-  //<![CDATA[
             if (typeof jQuery == 'undefined') {
                 document.write(unescape('%3Cscript src="https://code.jquery.com/jquery-1.10.0.min.js"%3E%3C/script%3E'));
             }
-  //]]>
   </script>
   <script type="text/javascript" src=
   "https://alhassy.github.io/org-special-block-extras/tooltipster/dist/js/tooltipster.bundle.min.js"></script>
   <script>
-  <![CDATA[
                  $(document).ready(function() {
                      $('.tooltip').tooltipster({
                          theme: 'tooltipster-punk',
@@ -273,19 +263,15 @@
                          }
          });
                  });
-  ]]>
   </script>
   <style>
-  <![CDATA[
            abbr {color: red;}
         
            .tooltip { border-bottom: 1px dotted #000;
                       color:red;
                       text-decoration: none;}
-  ]]>
   </style>
   <script type="text/x-mathjax-config">
-  <![CDATA[
     MathJax.Hub.Config({
         displayAlign: "center",
         displayIndent: "0em",
@@ -304,7 +290,6 @@
                TagIndent: ".8em"
              }
   });
-  ]]>
   </script>
   <script src=
   "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS_HTML"></script>
@@ -317,25 +302,33 @@
       <div id="text-table-of-contents" role="doc-toc">
         <ul>
           <li>
-            <a href="#Logics">1. Logics &amp; Programming
+            <a href="#Logics">1. Logics & Programming
             Abstractions</a>
             <ul>
-              <li><a href="#Misc">1.1.
-              Misc&nbsp;&nbsp;&nbsp;<span class="tag"><span class=
-              "ignore">ignore</span></span></a></li>
+              <li>
+                <a href="#Misc">1.1.
+                Misc&nbsp;&nbsp;&nbsp;<span class=
+                "tag"><span class="ignore">ignore</span></span></a>
+              </li>
             </ul>
           </li>
-          <li><a href="#Properties-of-Operators-Relations">2.
-          Properties of Operators</a></li>
-          <li><a href="#Properties-of-Homogeneous-Relations">3.
-          Properties of <i>Homogeneous</i> Relations</a></li>
-          <li><a href="#Properties-of-Heterogeneous-Relations">4.
-          Properties of <i>Heterogeneous</i> Relations</a></li>
+          <li>
+            <a href="#Properties-of-Operators-Relations">2.
+            Properties of Operators</a>
+          </li>
+          <li>
+            <a href="#Properties-of-Homogeneous-Relations">3.
+            Properties of <i>Homogeneous</i> Relations</a>
+          </li>
+          <li>
+            <a href="#Properties-of-Heterogeneous-Relations">4.
+            Properties of <i>Heterogeneous</i> Relations</a>
+          </li>
         </ul>
       </div>
     </div>
     <p><a href="/"><img src=
-    "https://img.shields.io/badge/GCCLL-Homepage-green?logo=gnu-emacs" /></a></p>
+    "https://img.shields.io/badge/GCCLL-Homepage-green?logo=gnu-emacs"></a></p>
     <blockquote>
       <p><i>Knowledge is software for your brain: The more you
       know, the more problems you can solve!</i></p>
@@ -350,6 +343,7 @@
     MacID login: <a href=
     "http://catalogue.mcmaster.ca/catalogue/Record/1950176">http://catalogue.mcmaster.ca/catalogue/Record/1950176</a>
     )</p>
+    <p></p>
     <p><abbr class="tooltip" title="">temp</abbr></p>
     <div style=
     "padding: 1em; background-color: #CCFFFF;border-radius: 15px; font-size: 0.9em; box-shadow: 0.05em 0.1em 5px 0.01em #00000057;">
@@ -377,7 +371,7 @@
       Massacre may be found at <a href=
       "https://youtu.be/2i9Y3Km6h08">https://youtu.be/2i9Y3Km6h08</a>
       —“Arbaeen Maqtal - Sheikh Hamam Nassereddine - 1439”.</p>
-      <hr />
+      <hr>
       <p><b>Charles Dickens:</b> <i>“If Hussain had fought to
       quench his worldly desires…then I</i> <i>do not understand
       why his sister, wife, and children accompanied him. It stands
@@ -468,13 +462,13 @@
         <li>Cantonese (粵語,廣東話) 早晨, 你好</li>
         <li>Korean (한글) 안녕하세요 ╱ 안녕하십니까</li>
       </ol>
-      <hr />
+      <hr>
       <p>This list was generated by pressing <code>C-h h</code> in
       Emacs, <code>view-hello-file</code>.</p>
     </div>
     <div id="outline-container-Logics" class="outline-2">
       <h2 id="Logics"><span class="section-number-2">1.</span>
-      Logics &amp; Programming Abstractions</h2>
+      Logics & Programming Abstractions</h2>
       <div class="outline-text-2" id="text-Logics">
         <p><abbr class="tooltip" title=
         "A &lt;em&gt;(Partial, resp. Total) Graph&lt;/em&gt; &lt;em&gt;G = (V, E, src, tgt)&lt;/em&gt; consists of&lt;br&gt;  + &lt;EM&gt;V&lt;/EM&gt;, a set of “points, nodes, vertices”&lt;br&gt;  + &lt;EM&gt;E&lt;/EM&gt;, a set of “arcs, edges”&lt;br&gt;  + &lt;em&gt;src, tgt : E ↔ V&lt;/em&gt;, a pair of &lt;em&gt;partial (resp. total)&lt;/em&gt; functions.&lt;br&gt;&lt;br&gt;⟦ Tersely put, in any category, a &lt;em&gt;graph&lt;/em&gt; is a parallel pair of morphisms. ⟧&lt;br&gt;&lt;br&gt;&lt;em&gt;Edge parallelism&lt;/em&gt; is the relation &lt;em&gt;Ξ = src ⨾ src ˘ ∩ tgt ⨾ tgt˘&lt;/em&gt;; two arcs are&lt;br&gt;related when they have the same starting point and the same ending point, which&lt;br&gt;both exist. Joyously, the name ‘Ξ’ is a neat reminder of the concept:&lt;br&gt;The name is three parallel lines, for the concept of edge(line) parallelism.&lt;br&gt;&lt;br&gt;+ A graph is &lt;em&gt;total&lt;/em&gt; exactly when &lt;em&gt;Id ⊆ Ξ&lt;/em&gt;; and so Ξ is an equivalence.&lt;br&gt;+ A graph has &lt;em&gt;no parallel arrows&lt;/em&gt; exactly when &lt;em&gt;Ξ ⊆ Id&lt;/em&gt;.&lt;br&gt;+ A graph is &lt;em&gt;simple&lt;/em&gt; exactly when &lt;em&gt;Ξ = Id&lt;/em&gt;.&lt;br&gt;&lt;br&gt;The &lt;em&gt;associated relation&lt;/em&gt; is the relation &lt;em&gt;_⟶_ = src ˘ ⨾ tgt&lt;/em&gt; that relates two nodes&lt;br&gt;when the first is the source of some edge that happens to have the second point&lt;br&gt;as its target. One uses the associated relation to study properties not&lt;br&gt;involving partial or parallel arrows. One writes &lt;em&gt;⟵&lt;/em&gt; for &lt;em&gt;⟶˘&lt;/em&gt;;&lt;br&gt;one writes ⟶⋆ for the &lt;em&gt;reachability&lt;/em&gt; relation.&lt;br&gt;&lt;br&gt;+ Node &lt;em&gt;y&lt;/em&gt; is &lt;em&gt;reachable via a non-empty path&lt;/em&gt; from node &lt;em&gt;x&lt;/em&gt; exactly when &lt;em&gt;x ⟶⁺ y&lt;/em&gt;.&lt;br&gt; - Node &lt;em&gt;x&lt;/em&gt; lies on a cycle exactly when &lt;em&gt;x ⟶⁺ x&lt;/em&gt;.&lt;br&gt; - A graph is &lt;em&gt;DAG, acylic, circuit-free,&lt;/em&gt; exactly when &lt;em&gt;⟶⁺ ⊆ ∼Id&lt;/em&gt;; i.e., &lt;em&gt;⟶⁺ ∩ Id = ⊥&lt;/em&gt;.&lt;br&gt; - An acyclic graph is a (&lt;em&gt;directed) forest&lt;/em&gt; exactly when ⟶ is injective; i.e.,&lt;br&gt;  every node has at most one predecessor; i.e., &lt;em&gt;⟶ ⨾ ⟵ ⊆ Id&lt;/em&gt;.&lt;br&gt;+ A node &lt;em&gt;r&lt;/em&gt; is a &lt;em&gt;root&lt;/em&gt; exactly when every node is reachable from it; i.e., &lt;em&gt;{r} × V ⊆ ⟶⋆;&lt;/em&gt;&lt;br&gt; i.e., &lt;em&gt;𝕃 r ⨾ ⟶⋆ = ⊤&lt;/em&gt; where &lt;em&gt;𝕃 r&lt;/em&gt; is defined by &lt;em&gt;𝕃 r = (ℝ r)˘&lt;/em&gt; and &lt;em&gt;x 〔ℝ r〕 y  ≡  x = r&lt;/em&gt;.&lt;br&gt; - &lt;em&gt;x〔𝕃 r ⨾ R〕 y  ≡  r〔R〕 y&lt;/em&gt; and &lt;em&gt;x 〔R ⨾ ℝ r〕 y  ≡  x 〔R〕 r&lt;/em&gt;&lt;br&gt; - A &lt;em&gt;tree&lt;/em&gt; is a forest with a root.&lt;br&gt;+ A graph is &lt;em&gt;loop free&lt;/em&gt; exactly when &lt;em&gt;⟶ ⊆ ∼Id&lt;/em&gt;.&lt;br&gt;+ A graph is &lt;em&gt;strongly connected&lt;/em&gt; exactly when &lt;em&gt;⟶⋆ = ⊤&lt;/em&gt;; i.e., &lt;em&gt;∼Id ⊆ ⟶⁺&lt;/em&gt;;&lt;br&gt; i.e., every point is reachable from any &lt;em&gt;other&lt;/em&gt; point; i.e., &lt;em&gt;∼Id ⊆ ⟶ ∩ ⟵˘&lt;/em&gt;;&lt;br&gt; i.e., any two distinct points lie on an undirected circuit.&lt;br&gt; - The equivalence classes of &lt;em&gt;⟶⋆ ∩ ⟵⋆&lt;/em&gt; are the &lt;em&gt;strongly connected components&lt;/em&gt;.&lt;br&gt;+ &lt;em&gt;Terminal∣sinks&lt;/em&gt; are nodes from which it is &lt;em&gt;not&lt;/em&gt; possible to proceed &lt;em&gt;any&lt;/em&gt; further;&lt;br&gt; i.e., terminals have no successors; the domain of &lt;em&gt;∼(⟶ ⨾ ⊤)&lt;/em&gt; is all terminals.&lt;br&gt;+ &lt;em&gt;Initial∣sources&lt;/em&gt; are nodes from which it is &lt;em&gt;not&lt;/em&gt; possible to proceed backward;&lt;br&gt; i.e., initials have no predecessors; the domain of &lt;em&gt;∼(⟵ ⨾ ⊤)&lt;/em&gt; is all initials.">
@@ -569,7 +563,7 @@
           <p>An <i>expression</i> is either a ‘variable’ or a
           ‘function application’; i.e., the name of a function
           along with a number of existing expressions.</p>
-          <pre class="example" id="org1b2409c">
+          <pre class="example" id="org9013e4b">
  Expr ::= Constant    -- E.g., 1 or “apple”
       |  Variable    -- E.g., x or apple (no quotes!)
       |  Application -- E.g., f(x₁, x₂, …, xₙ)
@@ -581,7 +575,7 @@
           <p>Notice that a constant is really just an application
           with <i>n</i> being <i>0</i> arguments and so the first
           line in the definition above could be omitted.</p>
-          <hr />
+          <hr>
           <p>In a sense, an expression is like a sentence with the
           variables acting as pronouns and the function
           applications acting as verb clauses and the argument to
@@ -605,7 +599,7 @@
           as not just any normal variable, but instead as a
           <b>meta-variable</b>: A variable capable of referring to
           other (simpler) variables.</p>
-          <hr />
+          <hr>
           <p>Expressions, as defined above, are also known as
           <i>abstract syntax trees</i> (AST) or <i>prefix
           notation</i>. Then <i>textual substitution</i> is known
@@ -757,7 +751,7 @@
             <li><i>f(t₁, …, tₙ)[x ≔ F] = f(t₁′, …, tₙ′)
             &nbsp;where&nbsp; tᵢ′ = tᵢ[x ≔ F]</i></li>
           </ul>
-          <hr />
+          <hr>
           <p>Sequential ≠ Simultaneous: <i>(x + 2 · y)[x ≔ y][y ≔
           x] ≠ (x + 2 · y)[x, y ≔ y, x]</i></p>
           <p><a href=
@@ -765,7 +759,7 @@
           Python</a>, for example, has simultaneous
           <i>assignment</i>; e.g., <code>x, y = y, x</code> is used
           to swap the value of two variables.</p>
-          <hr />
+          <hr>
           <p>A <i>function</i> \(f\) is a rule for computing a
           value from another value.</p>
           <p>If we define \(f\, x = E\) using an expression, then
@@ -808,7 +802,7 @@
           and their sum below the line, so too is that notation
           reused for inference rules: Premises are above the
           fraction’s bar and the conclusion is below.</p>
-          <pre class="example" id="org2ff1f99">
+          <pre class="example" id="org713f4bc">
                                    12
 P₁, P₂, …, Pn                    +  7
 ---------------R     versues     ----
@@ -852,7 +846,7 @@ P₁, P₂, …, Pn                    +  7
           <p>Syntax is like static analysis; semantics is like
           actually running the program (on some, or all possible
           inputs).</p>
-          <hr />
+          <hr>
           <p>One reads/writes a <i>natural deduction proof
           (tree)</i> from the very <b>bottom</b>: Each line is an
           application of a rule of reasoning, whose assumptions are
@@ -878,7 +872,7 @@ P₁, P₂, …, Pn                    +  7
               line was reached from the previous line.</p>
             </li>
           </ul>
-          <hr />
+          <hr>
           <p>Finally, an inference rule says that it is possible to
           start with the givens \(Pᵢ\) and obtain as result \(C\).
           The idea to use <b>inference rules as computation</b> is
@@ -919,7 +913,7 @@ P₁, P₂, …, Pn                    +  7
           theorems.</p>
           <p>Different axioms could lead to the same set of
           theorems, and many texts use different axioms.</p>
-          <hr />
+          <hr>
           <p>A “theorem” is a syntactic concept: Can we play the
           game of moving symbols to get this? Not “is the meaning
           of this true”! ‘Semantic concepts’ rely on ‘states’,
@@ -929,7 +923,7 @@ P₁, P₂, …, Pn                    +  7
           <p>Syntax is like static analysis; semantics is like
           actually running the program (on some, or all possible
           inputs).</p>
-          <hr />
+          <hr>
           <p>A <b>meta-theorem</b> is a general statement about our
           logic that we prove to be true. That is, if 𝑬 is
           collection of rules that allows us to find truths, then a
@@ -983,7 +977,7 @@ P₁, P₂, …, Pn                    +  7
           by calculation with symbols. A <i>propositional
           calculus</i> is a method of calculating with Boolean (or
           propositional) expressions.</p>
-          <hr />
+          <hr>
           <p>Calculus: Formalised reasoning through
           calculation.</p>
           <p>‘Hand wavy’ English arguments tend to favour case
@@ -1014,7 +1008,7 @@ P₁, P₂, …, Pn                    +  7
           Abstractions for operations are also known as “design
           patterns”. ( With judicious use of Yoneda, things always
           denote/mean certain actions. )</p>
-          <hr />
+          <hr>
           <p>An expression can contain variables, and evaluating
           such an expression requires knowing what values to use
           for these variables; i.e., a <b>state</b>: A list of
@@ -1028,7 +1022,7 @@ P₁, P₂, …, Pn                    +  7
           <b>satisfiable</b> if there is a state in which it is
           satisfied; and \(P\) is <b>valid</b> (or is a
           <b>tautology</b>) if it is satisfied in every state.</p>
-          <hr />
+          <hr>
           <p>Often operations are defined by how they are evaluated
           (<b>operationally</b>), we can take the alternative route
           of defining operations by how they can be manipulated
@@ -1052,7 +1046,7 @@ P₁, P₂, …, Pn                    +  7
           translated into the other according to the laws.</p>
           <p>Usually, in <i>a</i> logic, theorems correspond to
           expressions that are true in all states.</p>
-          <hr />
+          <hr>
           <p>That is, instead of defining expressions by how they
           are evaluated, we may define expressions in terms of how
           they can be manipulated —c.f., a calculus.</p>
@@ -1094,27 +1088,27 @@ P₁, P₂, …, Pn                    +  7
           <i>communicate</i> what’s going on to future readers.
           )</p>
           <p>The structure of equational proofs allows implicit use
-          of infernece rules Leibniz, Transitvitity &amp; Symmetry
-          &amp; Reflexivity of equality, and Substitution. In
-          contrast, the structure of proof trees is no help in this
-          regard, and so all uses of inference rules must be
-          mentioned explicitly.</p>
+          of infernece rules Leibniz, Transitvitity & Symmetry &
+          Reflexivity of equality, and Substitution. In contrast,
+          the structure of proof trees is no help in this regard,
+          and so all uses of inference rules must be mentioned
+          explicitly.</p>
           <p>For comparison with other proof notations see <a href=
           "http://www.cse.yorku.ca/~logicE/misc/logicE_intro.pdf">Equational
           Propositional Logic</a>.</p>
-          <hr />
+          <hr>
           <p>We advocate <i>calculational proofs</i> in which
           reasoning is goal directed and justified by simple
           axiomatic laws that can be checked syntactically rather
           than semantically. ---<i>Program Construction</i> by
           Roland Backhouse</p>
-          <hr />
+          <hr>
           <p>Calculational proofs introduce notation and recall
           theorems as needed, thereby making each step of the
           argument easy to verify and follow. Thus, such arguments
           are more accessible to readers unfamiliar with the
           problem domain.</p>
-          <hr />
+          <hr>
           <p>The use of a formal approach let us keep track of when
           our statements are equivalent (“=”) rather than being
           weakened (“⇒”). That is, the use of English to express
@@ -1178,7 +1172,7 @@ P₁, P₂, …, Pn                    +  7
             and it expresses “when begun in a state satisfying
             <i>R</i>, program 𝑺 will terminate in a state
             satisfying <i>G</i>.”</p>
-            <hr />
+            <hr>
             <ul class="org-ul">
               <li>Proving ≈ Programming</li>
               <li>Logic ≈ Trees (algebraic data types,
@@ -1251,7 +1245,7 @@ P₁, P₂, …, Pn                    +  7
           “making a choice” of how sequences of ⊕ should be read,
           by using parentheses —unless to make things clear or
           explicit for manipulation.</p>
-          <hr />
+          <hr>
           <p>More generally, for any two operations <span class=
           "underline">⊕</span> and <span class=
           "underline">⊞</span>, the “(left to right) mutual
@@ -1330,7 +1324,7 @@ P₁, P₂, …, Pn                    +  7
         "padding: 1em; background-color: #CCFFFF;border-radius: 15px; font-size: 0.9em; box-shadow: 0.05em 0.1em 5px 0.01em #00000057;">
           <h3>Reflexive</h3>
           <p><i>Elements are related to themselves</i></p>
-          <hr />
+          <hr>
           <p>A relation \(R : V → V\) can be visualised as a
           drawing: A dot for each element \(x\) of \(V\), and a
           directed line \(x ⟶ y\) between two points exactly when
@@ -1339,7 +1333,7 @@ P₁, P₂, …, Pn                    +  7
           dots as <i>nodes</i>.</p>
           <p>As a simple graph, reflexivity means <i>there is loop
           “ ⟳ ” at each node.</i></p>
-          <hr />
+          <hr>
           <p><i>R</i> is reflexive exactly when <i>everything is
           related to itself</i>. ≡ <i>∀ x • x 〔R〕 x</i> ≡ \(Id ⊆
           R\)</p>
@@ -1363,7 +1357,7 @@ P₁, P₂, …, Pn                    +  7
           c</i>.</p>
           <p>Loosely put, whenever <i>a</i> and <i>c</i> have a
           common relative then they are themselves related.</p>
-          <hr />
+          <hr>
           <p>A relation \(R : V → V\) can be visualised as a
           drawing: A dot for each element \(x\) of \(V\), and a
           directed line \(x ⟶ y\) between two points exactly when
@@ -1372,7 +1366,7 @@ P₁, P₂, …, Pn                    +  7
           dots as <i>nodes</i>.</p>
           <p>As a simple graph, transitivity means <i>paths can
           always be shortened (but nonempty).</i></p>
-          <hr />
+          <hr>
           <p>By the shunting rule, transitivity can be read as a
           <b>‘monotonicity’</b> property for the operation that
           turns a value <i>x</i> into the proposition <i>a ⊑ x</i>;
@@ -1383,7 +1377,7 @@ P₁, P₂, …, Pn                    +  7
           value <i>x</i> to the proposition <i>x ⊑ c</i>; this maps
           ordered relationships <i>a ⊑ b</i> to ordered
           propositions <i>b ⊑ c ⇒ a ⊑ c</i>.</p>
-          <hr />
+          <hr>
           <p>Relation <i>R</i> is transitive ≡ <i>Things related to
           things that are related, are themselves related.</i> ≡
           Whenever <i>x</i> is related to <i>y</i> and <i>y</i> is
@@ -1394,7 +1388,7 @@ P₁, P₂, …, Pn                    +  7
           composition, the universal relation, the empty relation,
           the identity relation, relation converse (transpose), and
           complement.</p>
-          <hr />
+          <hr>
           <p>A transitive relation is irreflexive precisely when it
           is asymmetric.</p>
         </div>
@@ -1415,7 +1409,7 @@ P₁, P₂, …, Pn                    +  7
           composition, the universal relation, the empty relation,
           the identity relation, relation converse (transpose), and
           complement.</p>
-          <hr />
+          <hr>
           <p>A relation \(R : V → V\) can be visualised as a
           drawing: A dot for each element \(x\) of \(V\), and a
           directed line \(x ⟶ y\) between two points exactly when
@@ -1438,7 +1432,7 @@ P₁, P₂, …, Pn                    +  7
               R\).</p>
             </li>
           </ul>
-          <hr />
+          <hr>
           <p>Interestingly, every homogeneous relation <i>R</i> may
           be <i>partitioned</i> into an asymmetric part \(A = R ∩
           ∼R˘\) and a symmetric part \(S = R ∩ R˘\) —i.e., \(R = A
@@ -1461,7 +1455,7 @@ P₁, P₂, …, Pn                    +  7
             <li>E.g, one often shows two sets are equal by using
             the antisymmetry of ‘⊆’.</li>
           </ul>
-          <hr />
+          <hr>
           <p>A relation \(R : V → V\) can be visualised as a
           drawing: A dot for each element \(x\) of \(V\), and a
           directed line \(x ⟶ y\) between two points exactly when
@@ -1470,7 +1464,7 @@ P₁, P₂, …, Pn                    +  7
           dots as <i>nodes</i>.</p>
           <p>As a simple graph, antisymmetry means <i>Mutually
           related nodes are necessarily self-loops</i>.</p>
-          <hr />
+          <hr>
           <p>\(R\) is antisymmetric ≡ <i>∀ x, y • x 〔R〕 y ∧ y 〔 R〕
           x ⇒ x = y</i> ≡ <i>∀ x, y • x ≠ y ⇒ ¬ (x 〔R〕 y ∧ y 〔 R〕
           x)</i> ≡ <i>∀ x, y • x ≠ y ⇒ x 〔R̸〕 y ∨ y 〔 R̸〕 x</i> ≡
@@ -1491,7 +1485,7 @@ P₁, P₂, …, Pn                    +  7
         "padding: 1em; background-color: #CCFFFF;border-radius: 15px; font-size: 0.9em; box-shadow: 0.05em 0.1em 5px 0.01em #00000057;">
           <h3>Asymmetric</h3>
           <p><i>The relationship is mutually exclusive.</i></p>
-          <hr />
+          <hr>
           <p>A relation \(R : V → V\) can be visualised as a
           drawing: A dot for each element \(x\) of \(V\), and a
           directed line \(x ⟶ y\) between two points exactly when
@@ -1501,7 +1495,7 @@ P₁, P₂, …, Pn                    +  7
           <p>As a simple graph, asymmetric means: <i>There’s at
           most 1 edge (regardless of direction) relating any 2
           nodes</i>.</p>
-          <hr />
+          <hr>
           <p>\(R\) is asymmetric ≡ <i>∀ x, y • x 〔R〕 y ⇒ ¬ y 〔R〕
           x</i> ≡ \(R ∩ R ˘ ⊆ ⊥\) ≡ \(R ˘ ⊆ ∼ R\)</p>
           <p>Where <i>⨾, ⊤, ⊥, Id, ˘, ∼</i> are relation
@@ -1510,7 +1504,7 @@ P₁, P₂, …, Pn                    +  7
           complement.</p>
           <p>Asymmetrics are irreflexive —just pick <i>x = y</i> in
           the above ∀-formulation ;-)</p>
-          <hr />
+          <hr>
           <p>Interestingly, every homogeneous relation <i>R</i> may
           be <i>partitioned</i> into an asymmetric part \(A = R ∩
           ∼R˘\) and a symmetric part \(S = R ∩ R˘\) —i.e., \(R = A
@@ -1591,7 +1585,7 @@ P₁, P₂, …, Pn                    +  7
           composition, the universal relation, the empty relation,
           the identity relation, relation converse (transpose), and
           complement.</p>
-          <hr />
+          <hr>
           <p>For example, “2 + 3” and “5” are clearly <b>not the
           same*”: The first is a string of 3 symbols, whereas the
           latter is a string of a single symbol. However, they are
@@ -1605,11 +1599,11 @@ P₁, P₂, …, Pn                    +  7
           equivalence relation. That is, if \(f : A → B\) is a
           function, then ∼ is an equivalence relation defined by
           \(a₁ ∼ a₂ \quad≡\quad f(a₁) \;=\; f(a₂)\).</p>
-          <hr />
+          <hr>
           <p>Characterising Equivalences with “Indirect
           Equivalence”: Ξ is an equivalence ≡ \(∀ x, y • x 〔Ξ〕 y
           \quad≡\quad (∀ z • x 〔Ξ〕 z \;≡\; y 〔Ξ〕 z)\)</p>
-          <hr />
+          <hr>
           <p>Equivalence relations coincide with partitions.</p>
         </div>
         <p><abbr class="tooltip" title=
@@ -1633,7 +1627,7 @@ P₁, P₂, …, Pn                    +  7
           composition, the universal relation, the empty relation,
           the identity relation, relation converse (transpose), and
           complement.</p>
-          <hr />
+          <hr>
           <p>A linear <i>order</i> corresponds to a full upper
           triangular matrix, <i>after</i> suitably arranging rows
           and columns. A linear (pre)-<i>order</i> has no
@@ -1717,7 +1711,7 @@ P₁, P₂, …, Pn                    +  7
           elements.</i></p>
           <p><i>That is, every source value x is associated <b>at
           most one</b> target value y.</i></p>
-          <hr />
+          <hr>
           <p>A relation \(R : V → V\) can be visualised as a
           drawing: A dot for each element \(x\) of \(V\), and a
           directed line \(x ⟶ y\) between two points exactly when
@@ -1727,7 +1721,7 @@ P₁, P₂, …, Pn                    +  7
           <p>As a simple graph, univalence means: <i>Any arcs from
           the same source actually coincide.</i> That is, <i>Every
           node has at most one outgoing edge.</i></p>
-          <hr />
+          <hr>
           <p>\(R\) is univalent ≡ <i>∀ x, y, y′ • x 〔 R 〕 y ∧ x 〔R〕
           y′ ⇒ y = y′</i> ≡ \(R ˘ ⨾ R ⊆ Id\) ≡ \(R ⨾ ∼ Id \;⊆\; ∼
           R\) ≡ \(∀ S • R ⨾ ∼ S \;⊆\; ∼ (R ⨾ S)\) ≡ <i>∀ S • R ⨾ ∼
@@ -1739,7 +1733,7 @@ P₁, P₂, …, Pn                    +  7
           composition, the universal relation, the empty relation,
           the identity relation, relation converse (transpose), and
           complement.</p>
-          <hr />
+          <hr>
           <p>The formula \(R ⨾ ∼ Id \;⊆ ∼ R\) reads “If <i>x</i> is
           <i>R</i>-related to a value different from <i>y</i>, then
           it is not <i>R</i>-related to <i>y</i>.” It continues to
@@ -1769,7 +1763,7 @@ P₁, P₂, …, Pn                    +  7
           <h3>Total</h3>
           <p><b>Total:</b> <i>Every source value x is associated
           <b>at least one</b> target value y.</i></p>
-          <hr />
+          <hr>
           <p>A relation \(R : V → V\) can be visualised as a
           drawing: A dot for each element \(x\) of \(V\), and a
           directed line \(x ⟶ y\) between two points exactly when
@@ -1786,7 +1780,7 @@ P₁, P₂, …, Pn                    +  7
           composition, the universal relation, the empty relation,
           the identity relation, relation converse (transpose), and
           complement.</p>
-          <hr />
+          <hr>
           <p>The formula \(∼ R \;⊆\; R ⨾ ∼ Id\) reads “If <i>x</i>
           is not <i>R</i>-related to y, then <i>x</i> is <i>R</i>
           related to some element different from <i>y</i>.” It
@@ -1807,7 +1801,7 @@ P₁, P₂, …, Pn                    +  7
           <p><b>Map (totally defined function):</b> <i>Every source
           value x is associated <b>exactly one</b> target value
           y.</i></p>
-          <hr />
+          <hr>
           <p>A relation \(R : V → V\) can be visualised as a
           drawing: A dot for each element \(x\) of \(V\), and a
           directed line \(x ⟶ y\) between two points exactly when
@@ -1816,14 +1810,14 @@ P₁, P₂, …, Pn                    +  7
           dots as <i>nodes</i>.</p>
           <p>As a simple relation, being a mapping means: <i>Every
           node has exactly one outgoing edge.</i></p>
-          <hr />
+          <hr>
           <p>\(F\) is a map ≡ \(F\) is total and univalent ≡ \(F ⨾
           ∼ Id \;=\; ∼ F\) ≡ \(∀ S • F ⨾ ∼ S \;=\; ∼ (F ⨾ S)\)</p>
           <p>Where <i>⨾, ⊤, ⊥, Id, ˘, ∼</i> are relation
           composition, the universal relation, the empty relation,
           the identity relation, relation converse (transpose), and
           complement.</p>
-          <hr />
+          <hr>
           <p>The final rule says <i>the preimage of the complement
           is the complement of the preimage</i>; or, using
           conventional direct image notation, \(f⁻¹(∼ A) \;=\; ∼
@@ -1850,7 +1844,7 @@ P₁, P₂, …, Pn                    +  7
           <h3>Surjective</h3>
           <p><b>Surjective:</b> <i>Every source value y is
           associated <b>at least</b> one source value x.</i></p>
-          <hr />
+          <hr>
           <p>A relation \(R : V → V\) can be visualised as a
           drawing: A dot for each element \(x\) of \(V\), and a
           directed line \(x ⟶ y\) between two points exactly when
@@ -1859,7 +1853,7 @@ P₁, P₂, …, Pn                    +  7
           dots as <i>nodes</i>.</p>
           <p>As a simple graph, surjectivity means: <i>Every node
           has at least one incoming edge.</i></p>
-          <hr />
+          <hr>
           <p>\(R\) is surjective ≡ \(R˘\) is total ≡ \(⊤ ⨾ R = ⊤\)
           ≡ \(Id ⊆ R ˘ ⨾ R\) ≡ \(∼ R \;⊆\; ∼ Id ⨾ R\) ≡ <i>∀ S • R
           ⨾ S = ⊥ ≡ S = ⊥</i></p>
@@ -1876,7 +1870,7 @@ P₁, P₂, …, Pn                    +  7
           <h3>Injective</h3>
           <p><b>Injective:</b> <i>Every source value y is
           associated <b>at most</b> one source value x.</i></p>
-          <hr />
+          <hr>
           <p>A relation \(R : V → V\) can be visualised as a
           drawing: A dot for each element \(x\) of \(V\), and a
           directed line \(x ⟶ y\) between two points exactly when
@@ -1885,7 +1879,7 @@ P₁, P₂, …, Pn                    +  7
           dots as <i>nodes</i>.</p>
           <p>As a simple graph, injective means: <i>Every node has
           at most one incoming edge.</i></p>
-          <hr />
+          <hr>
           <p>\(R\) is injective ≡ \(R˘\) is univalent ≡ \(R ⨾ R ˘ ⊆
           Id\) ≡ \(∼ Id ⨾ R \;⊆\; ∼ R\)</p>
           <p>Where <i>⨾, ⊤, ⊥, Id, ˘, ∼</i> are relation
@@ -1903,7 +1897,7 @@ P₁, P₂, …, Pn                    +  7
           associated <b>exactly one</b> source value x.</i></p>
           <p>\(R\) is bijective ≡ \(R\) is injective and
           surjective</p>
-          <hr />
+          <hr>
           <p>A relation \(R : V → V\) can be visualised as a
           drawing: A dot for each element \(x\) of \(V\), and a
           directed line \(x ⟶ y\) between two points exactly when
@@ -1923,7 +1917,7 @@ P₁, P₂, …, Pn                    +  7
           <b>permutation.</b></p>
           <p>An isomorphism is a non-lossy protocol associating
           inputs to outputs.</p>
-          <hr />
+          <hr>
           <p>A relation \(R : V → V\) can be visualised as a
           drawing: A dot for each element \(x\) of \(V\), and a
           directed line \(x ⟶ y\) between two points exactly when
@@ -1933,7 +1927,7 @@ P₁, P₂, …, Pn                    +  7
           <p>As a simple graph, an iso is a <i>bunch of
           circles</i>: Any number of cycles, such that every node
           lies on exactly one.</p>
-          <hr />
+          <hr>
           <p>If relation \(R\) is finite, then \(R ⨾ R ˘ = Id
           \quad≡\quad (∃ m • Rᵐ = Id ∧ Rᵐ⁻¹ = R ˘)\)</p>
           <p>Where <i>⨾, ⊤, ⊥, Id, ˘, ∼</i> are relation
@@ -2000,7 +1994,7 @@ P₁, P₂, …, Pn                    +  7
           composition, the universal relation, the empty relation,
           the identity relation, relation converse (transpose), and
           complement.</p>
-          <hr />
+          <hr>
           <p>The equivalence target-saturation of a univalent
           relation is difunctional; i.e., if <i>R</i> is univalent
           and Ξ is an equivalence, then \(R ⨾ Ξ\) is
@@ -2011,7 +2005,7 @@ P₁, P₂, …, Pn                    +  7
   </div>
   <div id="postamble" class="status">
     <p class="author">Author: Zhicheng Lee</p>
-    <p class="date">Created: 2022-02-22 Tue 18:56</p>
+    <p class="date">Created: 2022-02-23 Wed 13:16</p>
   </div>
 </body>
 </html>
