@@ -33,7 +33,7 @@ $(function () {
 
   const app = createApp({
     template: `
-<img src="/assets/img/command.svg"/>K
+
 <el-autocomplete
   v-model="search"
   :fetch-suggestions="querySearch"
@@ -41,7 +41,9 @@ $(function () {
   class="inline-input search-input"
   placeholder="Please Input Search Content"
   @select="handleSelect"
-/>
+>
+<template #prefix><img src="/assets/img/command.svg" style="width:18px"/>K</template>
+</el-autocomplet>
 <el-dialog v-model="dialogVisible" @open="handleOpen" @close="handleClose">
 <el-input v-model="search" placeholder="请输入搜索内容"/>
 <ul style="max-height:500px;overflow-y:scroll;text-align:left">
