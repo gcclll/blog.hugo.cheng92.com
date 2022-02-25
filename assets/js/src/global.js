@@ -40,6 +40,7 @@ $(function () {
 
       Vue.onMounted(() => {
         results.value = loadAllItems();
+        console.log(results, "results");
       });
 
       return {
