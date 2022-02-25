@@ -71,12 +71,14 @@ $(function () {
 
       Vue.watch(
         () => state.search,
-        (newVal) =>
+        (newVal) => {
           querySearch(
             newVal,
             (results) => (state.filterResults = [...results]),
             state.results
-          )
+          );
+          console.log(newVal, state.filterResults, "1111");
+        }
       );
 
       $(document.body).on("keydown", keydownHandler);
