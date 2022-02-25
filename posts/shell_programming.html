@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <!-- 2022-02-25 Fri 11:22 -->
+  <!-- 2022-02-25 Fri 11:43 -->
   <meta charset="utf-8">
   <meta name="viewport" content=
   "width=device-width, initial-scale=1">
@@ -264,7 +264,7 @@
       <div id="text-table-of-contents" role="doc-toc">
         <ul>
           <li>
-            <a href="#org2f60d27">1. 正则表达式</a>
+            <a href="#org11ccc7f">1. 正则表达式</a>
             <ul>
               <li>
                 <a href="#reg-match-delete">1.1. <code>${}</code>
@@ -273,13 +273,13 @@
             </ul>
           </li>
           <li>
-            <a href="#org8761c71">2. 常用命令</a>
+            <a href="#orgec3bb40">2. 常用命令</a>
             <ul>
               <li>
                 <a href="#cmd-sed">2.1. sed</a>
                 <ul>
                   <li>
-                    <a href="#org3e2f6df">2.1.1. 执行 sed</a>
+                    <a href="#org98385b7">2.1.1. 执行 sed</a>
                   </li>
                 </ul>
               </li>
@@ -290,8 +290,8 @@
     </div>
     <p><a href="/"><img src=
     "https://img.shields.io/badge/GCCLL-Homepage-green?logo=gnu-emacs"></a></p>
-    <div id="outline-container-org2f60d27" class="outline-2">
-      <h2 id="org2f60d27"><span class="section-number-2">1.</span>
+    <div id="outline-container-org11ccc7f" class="outline-2">
+      <h2 id="org11ccc7f"><span class="section-number-2">1.</span>
       正则表达式</h2>
       <div class="outline-text-2" id="text-1"></div>
       <div id="outline-container-reg-match-delete" class=
@@ -341,8 +341,8 @@
         </div>
       </div>
     </div>
-    <div id="outline-container-org8761c71" class="outline-2">
-      <h2 id="org8761c71"><span class="section-number-2">2.</span>
+    <div id="outline-container-orgec3bb40" class="outline-2">
+      <h2 id="orgec3bb40"><span class="section-number-2">2.</span>
       常用命令</h2>
       <div class="outline-text-2" id="text-2"></div>
       <div id="outline-container-cmd-sed" class="outline-3">
@@ -355,8 +355,8 @@
           <p><code>sed</code>
           是一个流编辑器，用来在一个输入流上执行基本的文本操作，输入流可以是一个文件或 管道。</p>
         </div>
-        <div id="outline-container-org3e2f6df" class="outline-4">
-          <h4 id="org3e2f6df"><span class=
+        <div id="outline-container-org98385b7" class="outline-4">
+          <h4 id="org98385b7"><span class=
           "section-number-4">2.1.1.</span> 执行 sed</h4>
           <div class="outline-text-4" id="text-2-1-1">
             <p><code>$ sed SCRIPT INPUTFILE...</code></p>
@@ -376,6 +376,28 @@ sed <span style=
 <span style="color: #ECBE7B;">cat</span> /tmp/output.txt
 </pre>
             </div>
+            <p>如果没有指定 <i>INPUTFILE</i> 或者 <i>INPUTFILE</i> 是
+            <code>-</code>, sed 会将标准输入的内容做为处理目标， 下面的命令都是等价的:</p>
+            <div class="org-src-container">
+              <pre class="src src-sh">sed <span style=
+              "color: #98be65;">'s/hello/world/'</span> input.txt &gt; output.txt
+sed <span style=
+"color: #98be65;">'s/hello/world/'</span> &lt; input.txt &gt; output.txt
+<span style=
+"color: #ECBE7B;">cat</span> input.txt | sed <span style=
+"color: #98be65;">'s/hello/world/'</span> - &gt; output.txt
+</pre>
+            </div>
+            <p>sed 默认会将输出写入到标准输出，可以用 <code>i-</code>
+            去编辑来源文件从而代替打印到标准输出 (意思就是直接编辑原文件了)</p>
+            <div class="org-src-container">
+              <pre class="src src-sh"><span style=
+              "color: #ECBE7B;">cat</span> /tmp/input.txt
+sed -i<span style="color: #98be65;">''</span> -e <span style=
+"color: #98be65;">'s/world/hello/'</span> /tmp/input.txt
+<span style="color: #ECBE7B;">cat</span> /tmp/input.txt
+</pre>
+            </div>
           </div>
         </div>
       </div>
@@ -383,7 +405,7 @@ sed <span style=
   </div>
   <div id="postamble" class="status">
     <p class="author">Author: Zhicheng Lee</p>
-    <p class="date">Created: 2022-02-25 Fri 11:22</p>
+    <p class="date">Created: 2022-02-25 Fri 11:43</p>
   </div>
 </body>
 </html>
