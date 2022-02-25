@@ -56,16 +56,8 @@ $(function () {
       Vue.onMounted(() => {
         if ($.isArray(window.$stats)) {
           window.$stats.forEach((stat) => {
-            const pathname = location.pathname.split('/')
-            const filename = pathname[pathname.length - 1]
-            const re = new RegExp(`^\\[${filename}\\]`)
-            const bak = { ...stat }
-            // 去掉当前页面名称
-            if (re.test(stat.value)) {
-              bak.value = bak.value.replace(re, '')
-            }
-            if (!state.results.find((r) => r && r.value === bak.value)) {
-              state.results.push(bak)
+            if (!state.results.find((r) => r && r.value === stat.value)) {
+              state.results.push(stat)
             }
           })
         }

@@ -62,7 +62,7 @@ for index in range( len( list ) ):
     if item['text'] == '' and item['href'] != '':
         item['text'] = item['href']
     if len(item['text']) > 0:
-        item['text'] = '[' + item['file'] + ']' + item['text']
+        # item['text'] = '[' + item['file'] + ']' + item['text']
         item['value'] = item['text']
         if item['href'].startswith('#'):
             item['href'] = item['file'] + item['href']
