@@ -6,6 +6,7 @@ echo "> generate sites index..."
 npm run stats
 
 # build scss -> css
+echo
 echo "> building scss to css..."
 src=$path/assets/sass
 target=$path/assets/css
@@ -21,6 +22,7 @@ for file in $(ls $src); do
 done
 
 # babel es6+ -> es5
+echo
 echo "> building es6+ to es5 js..."
 jsrc=$path/assets/js/src
 dist=$path/assets/js/dist
