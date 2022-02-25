@@ -20,7 +20,7 @@ done
 jsrc=$path/assets/js/src
 dist=$path/assets/js/dist
 for file in $(ls $jsrc); do
-    ./node_modules/.bin/babel $jsrc/$file $dist
+    ./node_modules/.bin/babel $jsrc/$file -d $dist
 done
 
 cd $path
