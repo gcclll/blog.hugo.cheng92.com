@@ -21,7 +21,8 @@
   "devDependencies": {
     "@babel/cli": "^7.17.6",
     "@babel/core": "^7.17.5",
-    "@babel/preset-env": "^7.16.11"
+    "@babel/preset-env": "^7.16.11",
+    "prettier": "^2.5.1"
   },
   "dependencies": {
     "atomic-algolia": "^0.3.19"
