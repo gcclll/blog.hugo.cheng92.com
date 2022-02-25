@@ -10,8 +10,8 @@ $(function () {
 
   $("#postamble .author").append(
     $(
-      '<span class="follows"><a href="https:www.github.com/gcclll?tab=followers">' +
-        '<img src="https:img.shields.io/github/followers/gcclll?style=social"></a></span>'
+      '<span class="follows"><a href="https://www.github.com/gcclll?tab=followers">' +
+        '<img src="https://img.shields.io/github/followers/gcclll?style=social"></a></span>'
     )
   );
 });
