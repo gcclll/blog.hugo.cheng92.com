@@ -2,13 +2,13 @@
 #table-of-contents {
   width: 316px !important; }
 
-#postamble .author .follows .author .follows {
+#postamble .author .follows {
   margin-left: 4px; }
-  #postamble .author .follows .author .follows img {
+  #postamble .author .follows img {
     margin-top: -4px; }
 
 .MathJax_Display {
-  overflow: scroll; }
+  overflow: scroll !important; }
 
 code {
   white-space: normal !important; }

@@ -2,7 +2,7 @@
   width: 316px !important;
 }
 
-#postamble .author .follows {
+#postamble {
   .author {
     .follows {
       margin-left: 4px;
@@ -15,7 +15,7 @@
 }
 
 .MathJax_Display {
-  overflow: scroll;
+  overflow: scroll !important;
 }
 
 code {
