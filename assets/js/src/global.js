@@ -39,8 +39,8 @@ $(function () {
 <el-dialog v-model="dialogVisible" @open="clean" @close="clean">
 <el-input v-model="search" placeholder="请输入搜索内容(仅限本文，TODO搜索全博客)"/>
 <ul style="max-height:500px;overflow-y:scroll;text-align:left">
-  <li @click="clean" v-for="(result, i) in filterResults" :key="result.value">
-    <a :href="result.link">{{result.value}}</a>
+  <li v-for="(result, i) in filterResults" :key="result.value" @click="locate(result.link)">
+    {{result.value}}
   </li>
 </ul>
 </el-dialog>
@@ -97,6 +97,11 @@ $(function () {
       return {
         ...Vue.toRefs(state),
         clean,
+        locate(link) {
+          location.href = link
+          clean()
+          state.dialogVisible = false
+        },
         querySearch: (qs, cb) => querySearch(qs, cb, state.results),
         handleSelect(item) {
           if (item.link) {
@@ -123,15 +128,5 @@ $(function () {
       const lower = item.value.toLowerCase()
       return queryList.every((val) => lower.indexOf(val.toLowerCase()) > -1)
     }
-  }
-
-  function concatValue(item) {
-    const { text, href, link = href } = item
-    let tmp = [text, link].join('------')
-    // if (tmp.length > 30) {
-    // tmp = tmp.slice(0, 30) + "...";
-    // }
-    item.value = tmp
-    return item
   }
 })
