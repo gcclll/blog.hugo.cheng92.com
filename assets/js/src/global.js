@@ -25,7 +25,7 @@ $(function () {
 
   const { createApp } = Vue;
 
-  const app = createApp();
+  const app = createApp({});
 
   app.use(ElementPlus).mount("#search");
 });
