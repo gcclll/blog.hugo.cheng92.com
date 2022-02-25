@@ -31,6 +31,7 @@ $(function () {
         v-model="state"
         :fetch-suggestions="querySearch"
         :trigger-on-focus="false"
+        class="inline-input search-input"
         placeholder="Please Input"
         @select="handleSelect"
       />`,

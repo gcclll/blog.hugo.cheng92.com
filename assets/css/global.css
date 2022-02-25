@@ -7,6 +7,9 @@
   #postamble .author .follows img {
     margin-top: -4px; }
 
+#search .search-input {
+  width: 100%; }
+
 .MathJax_Display {
   overflow: scroll !important; }
 
