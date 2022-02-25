@@ -27,7 +27,7 @@ $(function () {
   // $(`<div id="search">Loading...</div>`).insertAfter("#table-of-contents>h2");
 
   const ElementPlusOptions = {
-    size: "small",
+    // size: "small",
   };
   const { createApp, ref } = Vue;
 
@@ -36,6 +36,7 @@ $(function () {
 
 <el-autocomplete
   v-model="search"
+  size="medium"
   :fetch-suggestions="querySearch"
   :trigger-on-focus="false"
   class="inline-input search-input"
@@ -43,7 +44,7 @@ $(function () {
   @select="handleSelect"
 >
 <template #suffix>
-<img src="/assets/img/command.svg" style="width:12px"/>K</template>
+<img class="command-k" src="/assets/img/command.svg" style="width:12px"/><span class="command-k">K</span></template>
 </el-autocomplete>
 <el-dialog v-model="dialogVisible" @open="handleOpen" @close="handleClose">
 <el-input v-model="search" placeholder="请输入搜索内容"/>
@@ -62,6 +63,8 @@ $(function () {
 
       Vue.onMounted(() => {
         state.results = loadAllItems();
+        $(document.body).on("keydown", keydownHandler);
+        $();
       });
 
       function keydownHandler(e) {
@@ -87,8 +90,6 @@ $(function () {
           }
         }
       );
-
-      $(document.body).on("keydown", keydownHandler);
 
       const clear = () => {
         state.filterResults = [];
