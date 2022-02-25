@@ -40,8 +40,8 @@ $(function () {
 <el-input v-model="search" placeholder="请输入搜索内容(仅限本文，TODO搜索全博客)"/>
 <ul class="search-list" style="max-height:500px;overflow-y:scroll;text-align:left">
   <li v-for="(result, i) in filterResults" :key="result.value" @click="locate(result.link)">
-    <div>{{result.value}}</div>
-    <div><el-tag effect="dark">{{result.file}}</el-tag></div>
+    <div class="title">{{result.value}}</div>
+    <div class="brief"><el-tag effect="dark">{{result.file}}</el-tag></div>
   </li>
 </ul>
 </el-dialog>
