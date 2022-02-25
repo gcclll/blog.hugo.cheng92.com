@@ -102,6 +102,6 @@ $(function () {
   }
 
   function trim(text = "") {
-    return text.replace(/\n/, "").relace(/\s+/, " ").trim();
+    return text.replace(/\n/, "").replace(/\s+/, " ").trim();
   }
 });
