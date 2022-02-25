@@ -84,7 +84,10 @@ $(function () {
     const items = [];
     // #text-table-of-contents a
     $("#content a").each(function () {
-      items.push({ value: $(this).text(), link: $(this).attr("href") });
+      const value = $(this.text());
+      if (/[a-z0-9 \.]+/.test(value)) {
+        items.push({ value, link: $(this).attr("href") });
+      }
     });
     return items;
   }
