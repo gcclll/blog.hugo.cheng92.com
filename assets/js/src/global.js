@@ -34,54 +34,54 @@ $(function () {
   const app = createApp({
     template: `
 <el-autocomplete
-  v-model="state"
+  v-model="tocValue"
   :fetch-suggestions="querySearch"
   :trigger-on-focus="false"
   class="inline-input search-input"
   placeholder="Please Input Search Content"
   @select="handleSelect"
-  @keydown.meta.capture="pressKey"
 />
 <el-dialog v-model="dialogVisible">
-<el-input v-model="state" placeholder="请输入搜索内容"/>
-<ul><li v-for="( result, i ) in results" :key="result.link">{{result.value}}</li></ul>
+<el-input v-model="dialogValue" placeholder="请输入搜索内容"/>
+<ul style="max-height:500px;overflow-y:scroll;text-align:left">
+  <li v-for="( result, i ) in results" :key="result.link">{{result.value}}</li>
+</ul>
 </el-dialog>
 `,
     setup() {
-      const results = ref([]);
-      const state = ref("");
-      const dialogVisible = ref(false);
+      const state = reactive({
+        results: [],
+        tocValue: "",
+        dialogValue: "",
+        dialogVisible: false,
+      });
 
       Vue.onMounted(() => {
-        results.value = loadAllItems();
-        console.log(results.value, "results");
+        state.results = loadAllItems();
       });
 
       function keydownHandler(e) {
         if (e.metaKey && e.keyCode === 75) {
-          dialogVisible.value = true;
+          state.dialogVisible = true;
         }
       }
       Vue.onUnmounted(() => {
         $(document.body).off("keydown", keydownHandler);
       });
 
-      Vue.watch(state, (newVal) => querySearch(newVal, null, results));
+      Vue.watch(state.dialogValue, (newVal) =>
+        querySearch(newVal, null, state.results)
+      );
 
       $(document.body).on("keydown", keydownHandler);
 
       return {
-        state,
-        results,
-        querySearch: (qs, cb) => querySearch(qs, cb, results),
-        dialogVisible,
-        pressKey(e) {
-          console.log(e, "press key");
-        },
+        ...Vue.toRefs(state),
+        querySearch: (qs, cb) => querySearch(qs, cb, state.results),
         handleSelect(item) {
           if (item.link) {
             location.href = item.link;
-            state.value = "";
+            state.tocValue = "";
           }
         },
       };
