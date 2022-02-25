@@ -96,7 +96,9 @@ $(function () {
     $("#content *[id]").each(function () {
       const id = $(this).attr("id");
       const value = trim($(this).text()) || id;
-      if (id && titleRE.test(value)) {
+      const tag = $(this).get(0).tagName;
+      const isValid = /h[1-9]|span/i.test(tag);
+      if (isValid && id && titleRE.test(value)) {
         items.push({ value, link: `#${id}` });
       }
     });
