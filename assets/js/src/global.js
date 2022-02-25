@@ -116,10 +116,11 @@ $(function () {
     cb(result);
   }
   function createFilter(queryString) {
-    return (restaurant) => {
+    return (item) => {
       // 支持叠加搜索
       const queryList = queryString.split(" ");
-      const lower = restaurant.value.toLowerCase();
+      console.log(item, "2222");
+      const lower = item.value.toLowerCase();
       return queryList.every((val) => lower.indexOf(val.toLowerCase()) > -1);
     };
   }
