@@ -49,7 +49,7 @@ $(function () {
 </el-dialog>
 `,
     setup() {
-      const state = reactive({
+      const state = Vue.reactive({
         results: [],
         tocValue: "",
         dialogValue: "",
