@@ -40,7 +40,7 @@ for index in range( len( list ) ):
 
 try:
    f = open("./assets/js/dist/stats.js", 'w', encoding = 'utf-8')
-   f.write("window.stats="+json.dumps(list))
+   f.write("window.$stats="+json.dumps(list))
    # perform file operations
 finally:
    f.close()

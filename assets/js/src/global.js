@@ -20,7 +20,7 @@ $(function () {
   const ElementPlusOptions = {
     // size: "small",
   }
-  const { createApp, ref } = Vue
+  const { createApp } = Vue
 
   const app = createApp({
     template: `
@@ -39,7 +39,7 @@ $(function () {
 <el-dialog v-model="dialogVisible" @open="handleOpen" @close="handleClose">
 <el-input v-model="search" placeholder="请输入搜索内容(仅限本文，TODO搜索全博客)"/>
 <ul style="max-height:500px;overflow-y:scroll;text-align:left">
-  <li v-for="(result, i) in filterResults" :key="result.link">{{result.value}}</li>
+  <li v-for="(result, i) in filterResults" :key="result.value">{{result.value}}</li>
 </ul>
 </el-dialog>
 `,
@@ -52,7 +52,14 @@ $(function () {
       })
 
       Vue.onMounted(() => {
-        state.results = window.stats
+        if ($.isArray(window.$stats)) {
+          window.$stats.forEach((stat) => {
+            if (!state.results.find((r) => r && r.value === stat.value)) {
+              state.results.push(stat)
+            }
+          })
+        }
+
         $(document.body).on('keydown', keydownHandler)
       })
 
