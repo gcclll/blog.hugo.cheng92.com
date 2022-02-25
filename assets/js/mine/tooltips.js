@@ -19,5 +19,6 @@ $(function () {
       scroll: true,
       tap: true,
     },
+    plugins: ["sideTip", "scrollableTip"],
   });
 });
