@@ -73,6 +73,7 @@ $(function () {
     $("#text-table-of-contents .nav>li>a").each(function () {
       items.push({ value: $(this).text(), link: $(this).attr("href") });
     });
+    console.log(items, "xx");
     return items;
   }
 });
