@@ -34,7 +34,7 @@ $(function () {
   const app = createApp({
     template: `
 <el-autocomplete
-  v-model="tocValue"
+  v-model="search"
   :fetch-suggestions="querySearch"
   :trigger-on-focus="false"
   class="inline-input search-input"
@@ -42,17 +42,16 @@ $(function () {
   @select="handleSelect"
 />
 <el-dialog v-model="dialogVisible">
-<el-input v-model="dialogValue" placeholder="请输入搜索内容"/>
+<el-input v-model="search" placeholder="请输入搜索内容"/>
 <ul style="max-height:500px;overflow-y:scroll;text-align:left">
-  <li v-for="( result, i ) in results" :key="result.link">{{result.value}}</li>
+  <li v-for="(result, i) in results" :key="result.link">{{result.value}}</li>
 </ul>
 </el-dialog>
 `,
     setup() {
       const state = Vue.reactive({
         results: [],
-        tocValue: "",
-        dialogValue: "",
+        search: "",
         dialogVisible: false,
       });
 
@@ -70,7 +69,7 @@ $(function () {
       });
 
       Vue.watch(
-        () => state.dialogValue,
+        () => state.search,
         (newVal) => querySearch(newVal, null, state.results)
       );
 
@@ -82,7 +81,7 @@ $(function () {
         handleSelect(item) {
           if (item.link) {
             location.href = item.link;
-            state.tocValue = "";
+            state.search = "";
           }
         },
       };
