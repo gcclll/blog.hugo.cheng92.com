@@ -21,5 +21,11 @@ $(function () {
   // </div>`)
   //   );
 
-  $("<p>搜索？？？</p>").insertAfter("h1.title");
+  $(`<div id="search"></div>`).insertAfter("h1.title");
+
+  const { createApp } = Vue;
+
+  const app = createApp();
+
+  app.use(ElementPlus).mount("#search");
 });
