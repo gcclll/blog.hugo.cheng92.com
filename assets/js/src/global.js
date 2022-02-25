@@ -69,6 +69,10 @@ $(function () {
     };
   }
   function loadAllItems() {
-    return [{ value: "vue", link: "https://github.com/vuejs/vue" }];
+    const items = [];
+    $("#text-table-of-contents .nav>li>a").each(function () {
+      items.push({ value: $(this).text(), link: $(this).attr("href") });
+    });
+    return items;
   }
 });
