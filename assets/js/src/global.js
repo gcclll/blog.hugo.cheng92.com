@@ -41,6 +41,7 @@ $(function () {
       />`,
     setup() {
       const results = ref([]);
+      const state = ref("");
 
       Vue.onMounted(() => {
         results.value = loadAllItems();
@@ -48,9 +49,13 @@ $(function () {
       });
 
       return {
-        state: ref(""),
+        state,
         querySearch: (qs, cb) => querySearch(qs, cb, results),
         handleSelect(item) {
+          state.value = state.value.replace(/\s+/, " ");
+          if (item.link) {
+            location.href = item.link;
+          }
           console.log(item, "select");
         },
       };
