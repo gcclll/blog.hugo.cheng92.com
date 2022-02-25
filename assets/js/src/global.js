@@ -33,8 +33,9 @@ $(function () {
   placeholder="Please Input Search Content"
   @select="handleSelect"
 >
-<template #suffix>
-<img class="command-k" src="/assets/img/command.svg"/><span class="command-k">K</span></template>
+  <template #suffix>
+    <img class="command-k" src="/assets/img/command.svg"/><span class="command-k">K</span>
+  </template>
 </el-autocomplete>
 <el-dialog v-model="dialogVisible" @open="clean" @close="clean">
 <el-input v-model="search" placeholder="请输入搜索内容(仅限本文，TODO搜索全博客)"/>

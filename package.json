@@ -6,7 +6,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "pub": "./scripts/publish.sh",
-    "index": "atomic-algolia"
+    "stats": "./scripts/parse.py"
   },
   "repository": {
     "type": "git",

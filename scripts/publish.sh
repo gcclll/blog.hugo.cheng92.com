@@ -2,7 +2,11 @@
 
 path=$(pwd)
 
+echo "> generate sites index..."
+npm run stats
+
 # build scss -> css
+echo "> building scss to css..."
 src=$path/assets/sass
 target=$path/assets/css
 for file in $(ls $src); do
@@ -17,6 +21,7 @@ for file in $(ls $src); do
 done
 
 # babel es6+ -> es5
+echo "> building es6+ to es5 js..."
 jsrc=$path/assets/js/src
 dist=$path/assets/js/dist
 for file in $(ls $jsrc); do
