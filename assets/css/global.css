@@ -10,6 +10,9 @@
 #search .search-input {
   width: 100%;
   margin-top: 2px; }
+#search .el-input__suffix {
+  top: 8px;
+  height: auto; }
 #search img.command-k,
 #search span.command-k {
   align-items: center;
