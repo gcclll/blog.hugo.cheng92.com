@@ -90,7 +90,11 @@ $(function () {
       const value = trim($(this).text());
       const tag = $(this).get(0).tagName;
       if (titleRE.test(value)) {
-        items.push({ value, link: $(this).attr("href"), tag });
+        items.push({
+          value: concatValue(value),
+          link: $(this).attr("href"),
+          tag,
+        });
       }
     });
 
@@ -100,7 +104,7 @@ $(function () {
       const tag = $(this).get(0).tagName;
       const isValid = /h[1-9]|span/i.test(tag);
       if (isValid && id && titleRE.test(value)) {
-        items.push({ value, link: `#${id}`, tag });
+        items.push({ value: concatValue(value), link: `#${id}`, tag });
       }
     });
     return items.sort();
@@ -108,5 +112,14 @@ $(function () {
 
   function trim(text = "") {
     return text.replace(/\n/g, "").replace(/\s+/g, " ").trim();
+  }
+
+  function concatValue(item) {
+    const { value, link } = item;
+    let tmp = [value, link].join("------");
+    if (tmp.length > 30) {
+      tmp = tmp.slice(0, 30) + "...";
+    }
+    return value;
   }
 });
