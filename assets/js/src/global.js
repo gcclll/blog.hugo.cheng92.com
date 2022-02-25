@@ -21,7 +21,8 @@ $(function () {
   // </div>`)
   //   );
 
-  $(`<div id="search">Loading...</div>`).insertAfter("#table-of-contents>h2");
+  $("#table-of-contents>h2").append(`<div id="search">Loading...</div>`);
+  // $(`<div id="search">Loading...</div>`).insertAfter("#table-of-contents>h2");
 
   const { createApp, ref } = Vue;
 
