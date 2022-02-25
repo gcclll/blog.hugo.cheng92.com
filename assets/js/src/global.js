@@ -84,7 +84,7 @@ $(function () {
     const items = [];
     // #text-table-of-contents a
     $("#content a").each(function () {
-      const value = $(this).text().replace(/\n/, "").replace(/\s+/, " ");
+      const value = $(this).text().replace(/\n/, "").replace(/\s+/, " ").trim();
       if (/[a-z0-9 \.:]+/.test(value)) {
         items.push({ value, link: $(this).attr("href") });
       }
