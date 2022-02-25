@@ -1,4 +1,6 @@
 $(function () {
+  const titleRE = /[a-z0-9 \.:#]+/gi;
+
   $("span").each(function () {
     const bgColor = $(this).css("background-color");
     if (bgColor === "rgb(35, 39, 46)") {
@@ -80,7 +82,7 @@ $(function () {
       return queryList.every((val) => lower.indexOf(val.toLowerCase()) > -1);
     };
   }
-  const titleRE = /[a-z0-9 \.:#]+/;
+
   function loadAllItems() {
     const items = [];
     // #text-table-of-contents a
