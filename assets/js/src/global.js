@@ -69,8 +69,9 @@ $(function () {
         $(document.body).off("keydown", keydownHandler);
       });
 
-      Vue.watch(state.dialogValue, (newVal) =>
-        querySearch(newVal, null, state.results)
+      Vue.watch(
+        () => state.dialogValue,
+        (newVal) => querySearch(newVal, null, state.results)
       );
 
       $(document.body).on("keydown", keydownHandler);
