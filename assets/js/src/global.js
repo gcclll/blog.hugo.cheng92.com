@@ -41,7 +41,9 @@ $(function () {
 <ul class="search-list" style="max-height:500px;overflow-y:scroll;text-align:left">
   <li v-for="(result, i) in filterResults" :key="result.value" @click="locate(result.link)">
     <div class="result-value">{{result.value}}</div>
-    <div class="result-tags"><el-tag effect="dark" type="info">{{result.file}}</el-tag></div>
+    <div class="result-tags">
+      <el-tag v-if="isCurrentPage(result.file)" effect="dark" type="info">{{result.file}}</el-tag>
+    </div>
   </li>
 </ul>
 </el-dialog>
@@ -98,6 +100,9 @@ $(function () {
       return {
         ...Vue.toRefs(state),
         clean,
+        isCurrentPage(file) {
+          return new RegExp(`${file}$`).test(location.pathname)
+        },
         locate(link) {
           location.href = link
           clean()
