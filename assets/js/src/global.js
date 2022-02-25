@@ -102,6 +102,7 @@ $(function () {
   }
 
   function trim($el) {
+    console.log($el, "xxx");
     return $el.text().replace(/\n/, "").relace(/\s+/, " ").trim();
   }
 });
