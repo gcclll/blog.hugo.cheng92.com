@@ -1,6 +1,6 @@
 /*请勿手动修改该文件，它是由 sass 编译生成的。*/
 /*
-Error: wrong number of arguments (1 for 3) for `rgb'
+Error: Expected 90/40% to be unitless or have a unit of % but got 90/40% for `rgb'
         on line 29 of /Users/gcl/github/mine/blog.cheng92.com/assets/sass/global.scss
 
 24:   span.command-k {
@@ -8,7 +8,7 @@ Error: wrong number of arguments (1 for 3) for `rgb'
 26:     background: rgba(125, 125, 125, 0.1);
 27:     border-radius: 3px;
 28:     box-shadow: inset 0 -2px 0 0 #cdcde6, inset 0 0 1px 1px #fff,
-29:       0 1px 2px 1px rgb(30 35 90 / 40%);
+29:       0 1px 2px 1px rgb(30, 35, 90 / 40%);
 30:     color: #909399;
 31:     display: flex;
 32:     height: 18px;
@@ -84,4 +84,4 @@ Backtrace:
 body:before {
   white-space: pre;
   font-family: monospace;
-  content: "Error: wrong number of arguments (1 for 3) for `rgb'\A         on line 29 of /Users/gcl/github/mine/blog.cheng92.com/assets/sass/global.scss\A \A 24:   span.command-k {\A 25:     align-items: center;\A 26:     background: rgba(125, 125, 125, 0.1);\A 27:     border-radius: 3px;\A 28:     box-shadow: inset 0 -2px 0 0 #cdcde6, inset 0 0 1px 1px #fff,\A 29:       0 1px 2px 1px rgb(30 35 90 / 40%);\A 30:     color: #909399;\A 31:     display: flex;\A 32:     height: 18px;\A 33:     justify-content: center;\A 34:     margin-right: 0.4em;"; }
+  content: "Error: Expected 90/40% to be unitless or have a unit of % but got 90/40% for `rgb'\A         on line 29 of /Users/gcl/github/mine/blog.cheng92.com/assets/sass/global.scss\A \A 24:   span.command-k {\A 25:     align-items: center;\A 26:     background: rgba(125, 125, 125, 0.1);\A 27:     border-radius: 3px;\A 28:     box-shadow: inset 0 -2px 0 0 #cdcde6, inset 0 0 1px 1px #fff,\A 29:       0 1px 2px 1px rgb(30, 35, 90 / 40%);\A 30:     color: #909399;\A 31:     display: flex;\A 32:     height: 18px;\A 33:     justify-content: center;\A 34:     margin-right: 0.4em;"; }
