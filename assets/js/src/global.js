@@ -93,8 +93,8 @@ $(function () {
 
   function querySearch(queryString, cb, results) {
     const result = queryString
-      ? results.value.filter(createFilter(queryString))
-      : results.value;
+      ? results.filter(createFilter(queryString))
+      : results;
     if (cb === null) {
       return result;
     }
