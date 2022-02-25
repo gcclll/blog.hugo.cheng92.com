@@ -28,5 +28,7 @@ for file in $(ls $jsrc); do
     ./node_modules/.bin/babel $jsrc/$file -d $dist
 done
 
+git status
+
 cd $path
 gpush
