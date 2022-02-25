@@ -93,7 +93,7 @@ $(function () {
       }
     });
 
-    $("#content span[id]").each(function () {
+    $("#content *[id]").each(function () {
       const id = $(this).attr("id");
       const value = trim($(this).text()) || id;
       if (id && titleRE.test(value)) {
