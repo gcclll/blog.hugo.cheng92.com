@@ -97,7 +97,7 @@ $(function () {
         querySearch: (qs, cb) => querySearch(qs, cb, state.results),
         handleSelect(item) {
           if (item.link) {
-            location.href = item.link
+            location.href = item.link || item.href
             state.search = ''
           }
         }
@@ -117,53 +117,14 @@ $(function () {
     return (item) => {
       // 支持叠加搜索
       const queryList = queryString.split(' ')
-      const lower = item.value.toLowerCase()
+      const lower = item.text.toLowerCase()
       return queryList.every((val) => lower.indexOf(val.toLowerCase()) > -1)
     }
   }
 
-  function loadAllItems() {
-    const items = []
-    // #text-table-of-contents a
-    $('#content a').each(function () {
-      const value = trim($(this).text())
-      const tag = $(this).get(0).tagName
-      if (titleRE.test(value)) {
-        const item = {
-          value,
-          link: $(this).attr('href'),
-          tag
-        }
-        items.push(concatValue(item))
-      }
-    })
-
-    $('#content *[id]').each(function () {
-      const id = $(this).attr('id')
-      const value = trim($(this).text()) || id
-      const tag = $(this).get(0).tagName
-      const isValid = /h[1-9]|span/i.test(tag)
-      if (isValid && id && titleRE.test(value)) {
-        const item = { value, link: `#${id}`, tag }
-        items.push(concatValue(item))
-      }
-    })
-
-    return items.reduce((list, next) => {
-      if (!list.find((it) => next.link === it.link)) {
-        list.push(next)
-      }
-      return list
-    }, [])
-  }
-
-  function trim(text = '') {
-    return text.replace(/\n/g, '').replace(/\s+/g, ' ').trim()
-  }
-
   function concatValue(item) {
-    const { value, link } = item
-    let tmp = [value, link].join('------')
+    const { text, href, link = href } = item
+    let tmp = [text, link].join('------')
     // if (tmp.length > 30) {
     // tmp = tmp.slice(0, 30) + "...";
     // }

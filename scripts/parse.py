@@ -3,8 +3,7 @@
 from bs4 import BeautifulSoup
 import json
 
-soup = BeautifulSoup(open("./posts/emacs_org_special_src_blocks.html"))
-print(soup.find_all('a'))
+soup = BeautifulSoup(open("./posts/emacs_org_special_src_blocks.html"), 'html.parser')
 
 list=[]
 for link in soup.find_all('a'):
@@ -13,6 +12,7 @@ for link in soup.find_all('a'):
         item[k]=v
 
     item['text'] = link.get_text()
+    item['tag'] = link.name
     list.append(item)
 
 try:
