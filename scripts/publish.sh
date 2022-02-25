@@ -1,6 +1,8 @@
 #!/usr/bin/env bash
 
 path=$(pwd)
+
+# build scss -> css
 src=$path/assets/sass
 target=$path/assets/css
 for file in $(ls $src); do
@@ -12,6 +14,13 @@ for file in $(ls $src); do
     if [ -f "$css.map" ]; then
         rm -f $css.map
     fi
+done
+
+# babel es6+ -> es5
+jsrc=$path/assets/js/src
+dist=$path/assets/js/dist
+for file in $(ls $jsrc); do
+    ./node_modules/.bin/babel $jsrc/$file $dist
 done
 
 cd $path
