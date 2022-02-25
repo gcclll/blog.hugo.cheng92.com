@@ -46,7 +46,7 @@ $(function () {
 <img class="command-k" src="/assets/img/command.svg"/><span class="command-k">K</span></template>
 </el-autocomplete>
 <el-dialog v-model="dialogVisible" @open="handleOpen" @close="handleClose">
-<el-input v-model="search" placeholder="请输入搜索内容"/>
+<el-input v-model="search" placeholder="请输入搜索内容(仅限本文，TODO搜索全博客)"/>
 <ul style="max-height:500px;overflow-y:scroll;text-align:left">
   <li v-for="(result, i) in filterResults" :key="result.link">{{result.value}}</li>
 </ul>
