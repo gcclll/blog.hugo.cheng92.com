@@ -34,6 +34,8 @@ for index in range( len( list ) ):
     if item['text'] == '' and item['href'] != '':
         item['text'] = item['href']
     if len(item['text']) > 0:
+        item['value'] = item['text']
+        item['link'] = item['href']
         list[index] = item
 
 try:

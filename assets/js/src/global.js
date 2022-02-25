@@ -52,7 +52,6 @@ $(function () {
       })
 
       Vue.onMounted(() => {
-        console.log(window.stats, '123')
         state.results = window.stats
         $(document.body).on('keydown', keydownHandler)
       })
@@ -97,7 +96,7 @@ $(function () {
         querySearch: (qs, cb) => querySearch(qs, cb, state.results),
         handleSelect(item) {
           if (item.link) {
-            location.href = item.link || item.href
+            location.href = item.href
             state.search = ''
           }
         }
@@ -117,8 +116,7 @@ $(function () {
     return (item) => {
       // 支持叠加搜索
       const queryList = queryString.split(' ')
-      const lower = item.text.toLowerCase()
-      console.log(item.text, queryList, '111')
+      const lower = item.value.toLowerCase()
       return queryList.every((val) => lower.indexOf(val.toLowerCase()) > -1)
     }
   }
