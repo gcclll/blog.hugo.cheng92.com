@@ -25,7 +25,7 @@ $(function () {
   // $(`<div id="search">Loading...</div>`).insertAfter("#table-of-contents>h2");
 
   const ElementPlusOptions = {
-    size: "mini",
+    size: "small",
   };
   const { createApp, ref } = Vue;
 
@@ -33,7 +33,6 @@ $(function () {
     template: `
       <el-autocomplete
         v-model="state"
-        size="mini"
         :fetch-suggestions="querySearch"
         :trigger-on-focus="false"
         class="inline-input search-input"
