@@ -115,6 +115,7 @@ $(function () {
   }
   function createFilter(queryString) {
     return (item) => {
+      console.log(item, '111')
       // 支持叠加搜索
       const queryList = queryString.split(' ')
       const lower = item.text.toLowerCase()
