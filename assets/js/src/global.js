@@ -74,6 +74,7 @@ $(function () {
   }
   function createFilter(queryString) {
     return (restaurant) => {
+      // 支持叠加搜索
       const queryList = queryString.split(" ");
       const lower = restaurant.value.toLowerCase();
       return queryList.every((val) => lower.indexOf(val.toLowerCase()) > -1);
@@ -81,7 +82,7 @@ $(function () {
   }
   function loadAllItems() {
     const items = [];
-    $("#text-table-of-contents .nav li>a").each(function () {
+    $("#text-table-of-contents a").each(function () {
       items.push({ value: $(this).text(), link: $(this).attr("href") });
     });
     return items;
