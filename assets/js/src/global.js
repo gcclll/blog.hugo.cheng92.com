@@ -51,6 +51,17 @@ $(function () {
         console.log(results.value, "results");
       });
 
+      function keydownHandler(e) {
+        if (e.metaKey && e.keyCode === 75) {
+          ElementPlus.ElMessage({ message: "xxx", type: "success" });
+        }
+      }
+      Vue.onUnmount(() => {
+        $(document.body).off("keydown", keydownHandler);
+      });
+
+      $(document.body).on("keydown", keydownHandler);
+
       return {
         state,
         querySearch: (qs, cb) => querySearch(qs, cb, results),
