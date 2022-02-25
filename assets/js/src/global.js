@@ -119,9 +119,9 @@ $(function () {
   function concatValue(item) {
     const { value, link } = item;
     let tmp = [value, link].join("------");
-    if (tmp.length > 30) {
-      tmp = tmp.slice(0, 30) + "...";
-    }
+    // if (tmp.length > 30) {
+    // tmp = tmp.slice(0, 30) + "...";
+    // }
     item.value = tmp;
     return item;
   }
