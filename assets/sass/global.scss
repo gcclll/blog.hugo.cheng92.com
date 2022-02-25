@@ -25,6 +25,13 @@
     height: auto;
   }
 
+  .search-list {
+    li {
+      cursor: pointer;
+      padding: 5px 0;
+    }
+  }
+
   img.command-k,
   span.command-k {
     align-items: center;

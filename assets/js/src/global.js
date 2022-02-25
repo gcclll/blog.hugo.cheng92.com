@@ -38,7 +38,7 @@ $(function () {
 </el-autocomplete>
 <el-dialog v-model="dialogVisible" @open="clean" @close="clean">
 <el-input v-model="search" placeholder="请输入搜索内容(仅限本文，TODO搜索全博客)"/>
-<ul style="max-height:500px;overflow-y:scroll;text-align:left">
+<ul class="search-list" style="max-height:500px;overflow-y:scroll;text-align:left">
   <li v-for="(result, i) in filterResults" :key="result.value" @click="locate(result.link)">
     {{result.value}}
   </li>

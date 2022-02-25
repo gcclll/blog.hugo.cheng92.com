@@ -13,6 +13,9 @@
 #search .el-input__suffix {
   top: 8px;
   height: auto; }
+#search .search-list li {
+  cursor: pointer;
+  padding: 5px 0; }
 #search img.command-k,
 #search span.command-k {
   align-items: center;
