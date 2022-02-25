@@ -42,7 +42,7 @@ $(function () {
   <li v-for="(result, i) in filterResults" :key="result.value" @click="locate(result.link)">
     <div class="result-value">{{result.value}}</div>
     <div class="result-tags">
-      <el-tag v-if="isCurrentPage(result.file)" effect="dark" type="info">{{result.file}}</el-tag>
+      <el-tag v-if="!isCurrentPage(result.file)" effect="dark" type="info">{{result.file}}</el-tag>
     </div>
   </li>
 </ul>
