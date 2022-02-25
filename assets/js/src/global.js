@@ -113,7 +113,6 @@ $(function () {
   app.use(ElementPlus, ElementPlusOptions).mount("#search");
 
   function querySearch(queryString, cb, results) {
-    console.log(queryString, "23333");
     const result = queryString
       ? results.filter(createFilter(queryString))
       : results;
@@ -123,7 +122,6 @@ $(function () {
     return (item) => {
       // 支持叠加搜索
       const queryList = queryString.split(" ");
-      console.log(item, "2222");
       const lower = item.value.toLowerCase();
       return queryList.every((val) => lower.indexOf(val.toLowerCase()) > -1);
     };
@@ -155,7 +153,13 @@ $(function () {
         items.push(concatValue(item));
       }
     });
-    return items.sort();
+
+    return items.reduce((list, next) => {
+      if (!list.find((it) => next.link === it.link)) {
+        list.push(next);
+      }
+      return list;
+    }, []);
   }
 
   function trim(text = "") {
