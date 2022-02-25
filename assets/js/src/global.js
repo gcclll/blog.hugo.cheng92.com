@@ -66,9 +66,8 @@ $(function () {
         restaurant.value.toLowerCase().indexOf(queryString.toLowerCase()) === 0
       );
     };
-
-    function loadAllItems() {
-      return [{ value: "vue", link: "https://github.com/vuejs/vue" }];
-    }
+  }
+  function loadAllItems() {
+    return [{ value: "vue", link: "https://github.com/vuejs/vue" }];
   }
 });
