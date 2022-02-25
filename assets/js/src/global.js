@@ -25,7 +25,19 @@ $(function () {
 
   const { createApp } = Vue;
 
-  const app = createApp({});
+  const app = createApp({
+    template: `
+      <el-input v-model="input" class="w-50 m-2" placeholder="Type something">
+        <template #prefix>
+          <el-icon class="el-input__icon"><search /></el-icon>
+        </template>
+      </el-input>`,
+    data() {
+      return {
+        input: "Input your search content...",
+      };
+    },
+  });
 
   app.use(ElementPlus).mount("#search");
 });
