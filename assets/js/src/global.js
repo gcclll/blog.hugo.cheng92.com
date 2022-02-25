@@ -40,7 +40,7 @@ $(function () {
         class="inline-input search-input"
         placeholder="Please Input Search Content"
         @select="handleSelect"
-        @press.meta="pressKey"
+        @keydown.meta.capture="pressKey"
       />`,
     setup() {
       const results = ref([]);
