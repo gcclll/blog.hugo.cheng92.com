@@ -72,15 +72,15 @@ $(function () {
       Vue.watch(
         () => state.search,
         (newVal) => {
-          querySearch(
-            newVal,
-            (results) => {
-              state.filterResults = results;
-              console.log(results, state.results, "xxxxx");
-            },
-            state.results
-          );
-          console.log(newVal, state.filterResults, "1111");
+          if (newVal) {
+            querySearch(
+              newVal,
+              (results) => (state.filterResults = results),
+              state.results
+            );
+          } else {
+            state.filterResults = [];
+          }
         }
       );
 
