@@ -64,6 +64,7 @@ $(function () {
   app.use(ElementPlus, ElementPlusOptions).mount("#search");
 
   function querySearch(queryString, cb, results) {
+    console.log(queryString, "xxx");
     cb(
       queryString
         ? results.value.filter(createFilter(queryString))
