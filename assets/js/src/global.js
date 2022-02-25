@@ -43,7 +43,7 @@ $(function () {
   @select="handleSelect"
 >
 <template #suffix>
-<img class="command-k" src="/assets/img/command.svg" style="width:12px"/><span class="command-k">K</span></template>
+<img class="command-k" src="/assets/img/command.svg"/><span class="command-k">K</span></template>
 </el-autocomplete>
 <el-dialog v-model="dialogVisible" @open="handleOpen" @close="handleClose">
 <el-input v-model="search" placeholder="请输入搜索内容"/>
