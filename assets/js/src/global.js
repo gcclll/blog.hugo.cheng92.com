@@ -23,21 +23,52 @@ $(function () {
 
   $(`<div id="search">Loading...</div>`).insertAfter("h1.title");
 
-  const { createApp } = Vue;
+  const { createApp, ref } = Vue;
 
   const app = createApp({
     template: `
-      <el-input v-model="input" class="w-50 m-2" placeholder="Type something">
-        <template #prefix>
-          <el-icon class="el-input__icon"><search /></el-icon>
-        </template>
-      </el-input>`,
-    data() {
+      <el-autocomplete
+        v-model="state"
+        :fetch-suggestions="querySearch"
+        :trigger-on-focus="false"
+        class="inline-input"
+        placeholder="Please Input"
+        @select="handleSelect"
+      />`,
+    setup() {
+      const results = ref([]);
+
+      Vue.onMounted(() => {
+        results.value = loadAllItems();
+      });
+
       return {
-        input: "Input your search content...",
+        state: ref(""),
+        querySearch,
+        handleSelect(item) {
+          console.log(item, "select");
+        },
       };
     },
   });
 
   app.use(ElementPlus).mount("#search");
+
+  function querySearch(queryString, cb) {
+    const results = queryString
+      ? results.value.filter(createFilter(queryString))
+      : results.value;
+    cb(results);
+  }
+  function createFilter(queryString) {
+    return (restaurant) => {
+      return (
+        restaurant.value.toLowerCase().indexOf(queryString.toLowerCase()) === 0
+      );
+    };
+
+    function loadAllItems() {
+      return [{ value: "vue", link: "https://github.com/vuejs/vue" }];
+    }
+  }
 });
