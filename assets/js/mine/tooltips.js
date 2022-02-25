@@ -10,13 +10,14 @@ $(function () {
     trigger: "custom",
     triggerOpen: {
       // mouseenter: true,
+      originClick: true,
       click: true,
-      touchstart: true,
+      tap: true,
     },
     triggerClose: {
       originClick: true,
       scroll: true,
-      touchleave: true,
+      tap: true,
     },
   });
 });
