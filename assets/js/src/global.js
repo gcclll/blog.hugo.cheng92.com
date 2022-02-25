@@ -74,7 +74,7 @@ $(function () {
   }
   function createFilter(queryString) {
     return (restaurant) => {
-      console.log(restaurant, "111");
+      console.log(queryString, "111");
       return (
         restaurant.value.toLowerCase().indexOf(queryString.toLowerCase()) > -1
       );
