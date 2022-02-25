@@ -52,11 +52,10 @@ $(function () {
         state,
         querySearch: (qs, cb) => querySearch(qs, cb, results),
         handleSelect(item) {
-          state.value = state.value.replace(/\s+/, " ");
           if (item.link) {
             location.href = item.link;
+            state.value = "";
           }
-          console.log(item, "select");
         },
       };
     },
