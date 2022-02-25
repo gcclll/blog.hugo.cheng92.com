@@ -11,9 +11,9 @@ for file in $(ls $src); do
     content=$(cat $css)
     echo "/*请勿手动修改该文件，它是由 sass 编译生成的。*/" >$css
     echo "$content" >>$css
-    if [ -f "$css.map" ]; then
-        rm -f $css.map
-    fi
+    # if [ -f "$css.map" ]; then
+    # rm -f $css.map
+    # fi
 done
 
 # babel es6+ -> es5
