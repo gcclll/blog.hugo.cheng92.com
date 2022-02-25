@@ -36,7 +36,6 @@ $(function () {
 
 <el-autocomplete
   v-model="search"
-  size="medium"
   :fetch-suggestions="querySearch"
   :trigger-on-focus="false"
   class="inline-input search-input"
