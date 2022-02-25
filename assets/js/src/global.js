@@ -33,7 +33,7 @@ $(function () {
 
   const app = createApp({
     template: `
-<i class="fa-solid fa-command"></i>K
+<img src="/assets/img/command.svg"/>K
 <el-autocomplete
   v-model="search"
   :fetch-suggestions="querySearch"
