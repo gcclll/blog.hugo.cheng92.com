@@ -74,10 +74,9 @@ $(function () {
   }
   function createFilter(queryString) {
     return (restaurant) => {
-      console.log(queryString, "111");
-      return (
-        restaurant.value.toLowerCase().indexOf(queryString.toLowerCase()) > -1
-      );
+      const queryList = queryString.split(" ");
+      const lower = restaurant.value.toLowerCase();
+      return queryList.some((val) => lower.indexOf(val.toLowerCase()) > -1);
     };
   }
   function loadAllItems() {
