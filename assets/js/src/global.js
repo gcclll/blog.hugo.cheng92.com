@@ -82,7 +82,8 @@ $(function () {
   }
   function loadAllItems() {
     const items = [];
-    $("#text-table-of-contents a").each(function () {
+    // #text-table-of-contents a
+    $("#content a").each(function () {
       items.push({ value: $(this).text(), link: $(this).attr("href") });
     });
     return items;
