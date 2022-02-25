@@ -88,8 +88,9 @@ $(function () {
     // #text-table-of-contents a
     $("#content a").each(function () {
       const value = trim($(this).text());
+      const tag = $(this).get(0).tagName;
       if (titleRE.test(value)) {
-        items.push({ value, link: $(this).attr("href") });
+        items.push({ value, link: $(this).attr("href"), tag });
       }
     });
 
@@ -99,7 +100,7 @@ $(function () {
       const tag = $(this).get(0).tagName;
       const isValid = /h[1-9]|span/i.test(tag);
       if (isValid && id && titleRE.test(value)) {
-        items.push({ value, link: `#${id}` });
+        items.push({ value, link: `#${id}`, tag });
       }
     });
     return items.sort();
