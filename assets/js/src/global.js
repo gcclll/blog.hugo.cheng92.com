@@ -72,6 +72,7 @@ $(function () {
 
       return {
         state,
+        results,
         querySearch: (qs, cb) => querySearch(qs, cb, results),
         dialogVisible,
         pressKey(e) {
