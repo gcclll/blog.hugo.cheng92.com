@@ -65,6 +65,7 @@ $(function () {
 
   function querySearch(queryString, cb, results) {
     console.log(queryString, "xxx");
+
     cb(
       queryString
         ? results.value.filter(createFilter(queryString))
@@ -73,6 +74,7 @@ $(function () {
   }
   function createFilter(queryString) {
     return (restaurant) => {
+      console.log(restaurant, "111");
       return (
         restaurant.value.toLowerCase().indexOf(queryString.toLowerCase()) > -1
       );
