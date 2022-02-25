@@ -8,7 +8,8 @@
     margin-top: -4px; }
 
 #search .search-input {
-  width: 100%; }
+  width: 100%;
+  margin-top: 2px; }
 
 .MathJax_Display {
   overflow: scroll !important; }

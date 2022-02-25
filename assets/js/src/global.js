@@ -30,10 +30,11 @@ $(function () {
     template: `
       <el-autocomplete
         v-model="state"
+        size="mini"
         :fetch-suggestions="querySearch"
         :trigger-on-focus="false"
         class="inline-input search-input"
-        placeholder="Please Input"
+        placeholder="Please Input Search Content"
         @select="handleSelect"
       />`,
     setup() {
