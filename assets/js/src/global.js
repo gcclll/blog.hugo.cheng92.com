@@ -74,7 +74,10 @@ $(function () {
         (newVal) => {
           querySearch(
             newVal,
-            (results) => (state.filterResults = [...results]),
+            (results) => {
+              state.filterResults = results;
+              console.log(results, state.results, "xxxxx");
+            },
             state.results
           );
           console.log(newVal, state.filterResults, "1111");
