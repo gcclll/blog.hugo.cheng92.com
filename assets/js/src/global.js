@@ -87,7 +87,7 @@ $(function () {
       $(document.body).on("keydown", keydownHandler);
 
       const clear = () => {
-        state.results = [];
+        state.filterResults = [];
         state.search = "";
       };
 
