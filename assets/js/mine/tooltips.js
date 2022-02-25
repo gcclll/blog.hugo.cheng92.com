@@ -11,10 +11,12 @@ $(function () {
     triggerOpen: {
       // mouseenter: true,
       click: true,
+      touchstart: true,
     },
     triggerClose: {
       originClick: true,
       scroll: true,
+      touchleave: true,
     },
   });
 });
