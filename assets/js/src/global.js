@@ -41,16 +41,17 @@ $(function () {
   placeholder="Please Input Search Content"
   @select="handleSelect"
 />
-<el-dialog v-model="dialogVisible">
+<el-dialog v-model="dialogVisible" @open="handleOpen" @close="handleClose">
 <el-input v-model="search" placeholder="请输入搜索内容"/>
 <ul style="max-height:500px;overflow-y:scroll;text-align:left">
-  <li v-for="(result, i) in results" :key="result.link">{{result.value}}</li>
+  <li v-for="(result, i) in filterResults" :key="result.link">{{result.value}}</li>
 </ul>
 </el-dialog>
 `,
     setup() {
       const state = Vue.reactive({
         results: [],
+        filterResults: [],
         search: "",
         dialogVisible: false,
       });
@@ -70,13 +71,29 @@ $(function () {
 
       Vue.watch(
         () => state.search,
-        (newVal) => querySearch(newVal, null, state.results)
+        (newVal) =>
+          querySearch(
+            newVal,
+            (results) => (state.filterResults = [...results]),
+            state.results
+          )
       );
 
       $(document.body).on("keydown", keydownHandler);
 
+      const clear = () => {
+        state.results = [];
+        state.search = "";
+      };
+
       return {
         ...Vue.toRefs(state),
+        handleOpen() {
+          clear();
+        },
+        handleClose() {
+          clear();
+        },
         querySearch: (qs, cb) => querySearch(qs, cb, state.results),
         handleSelect(item) {
           if (item.link) {
@@ -94,9 +111,6 @@ $(function () {
     const result = queryString
       ? results.filter(createFilter(queryString))
       : results;
-    if (cb === null) {
-      return result;
-    }
     cb(result);
   }
   function createFilter(queryString) {
