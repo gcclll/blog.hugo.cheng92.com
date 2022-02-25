@@ -85,7 +85,7 @@ $(function () {
     const items = [];
     // #text-table-of-contents a
     $("#content a").each(function () {
-      const value = trim($(this));
+      const value = trim($(this).text());
       if (titleRE.test(value)) {
         items.push({ value, link: $(this).attr("href") });
       }
@@ -93,7 +93,7 @@ $(function () {
 
     $("#content span[id]").each(function () {
       const id = $(this).attr("id");
-      const value = trim($(this)) || id;
+      const value = trim($(this).text()) || id;
       if (id && titleRE.test(value)) {
         items.push({ value, link: `#${id}` });
       }
@@ -101,7 +101,7 @@ $(function () {
     return items.sort();
   }
 
-  function trim($el) {
-    return $el.text()?.replace(/\n/, "").relace(/\s+/, " ").trim();
+  function trim(text = "") {
+    return text.replace(/\n/, "").relace(/\s+/, " ").trim();
   }
 });
