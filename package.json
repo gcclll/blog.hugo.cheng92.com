@@ -1,0 +1,20 @@
+{
+  "name": "blog.cheng92.com",
+  "version": "1.0.0",
+  "description": "[![Netlify Status](https://api.netlify.com/api/v1/badges/777346b1-16d8-4ea3-8035-087f1d2af3a7/deploy-status)](https://app.netlify.com/sites/cheng92/deploys)",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "pub": "./scripts/publish.sh"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/gcclll/blog.cheng92.com.git"
+  },
+  "author": "Zhicheng Lee",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/gcclll/blog.cheng92.com/issues"
+  },
+  "homepage": "https://github.com/gcclll/blog.cheng92.com#readme"
+}

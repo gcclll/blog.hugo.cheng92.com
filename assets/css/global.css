@@ -1,28 +1,28 @@
 #table-of-contents {
-  width: 316px !important;
-}
+  width: 316px !important; }
 
 #postamble .author .follows {
-  margin-left: 4px;
-}
+  margin-left: 4px; }
+
 #postamble .author .follows img {
-  margin-top: -4px;
-}
+  margin-top: -4px; }
 
 code {
-  white-space: normal !important;
-}
+  white-space: normal !important; }
 
 code,
 pre {
   padding: 2px 4px;
-  border-radius: 5px;
-}
+  border-radius: 5px; }
 
 details.code-details {
-  margin-bottom: 1rem;
-}
+  margin-bottom: 1rem; }
 
 blockquote {
-  border-left: 5px solid #ea4c89;
-}
+  border-left: 5px solid #ea4c89; }
+
+@media screen and (max-width: 768px) {
+  #table-of-contents {
+    width: 100% !important; } }
+
+/*# sourceMappingURL=global.css.map */

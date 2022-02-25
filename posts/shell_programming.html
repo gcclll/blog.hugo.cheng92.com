@@ -1,11 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <!-- 2022-02-25 Fri 10:42 -->
+  <!-- 2022-02-25 Fri 11:03 -->
   <meta charset="utf-8">
   <meta name="viewport" content=
   "width=device-width, initial-scale=1">
-  <title>Home</title>
+  <title>Shell Programming</title>
   <meta name="author" content="Zhicheng Lee">
   <meta name="generator" content="Org Mode">
   <style>
@@ -258,74 +258,80 @@
 </head>
 <body>
   <div id="content" class="content">
-    <h1 class="title">Home</h1>
+    <h1 class="title">Shell Programming</h1>
     <div id="table-of-contents" role="doc-toc">
       <h2>Table of Contents</h2>
       <div id="text-table-of-contents" role="doc-toc">
         <ul>
           <li>
-            <a href="#orgb047be5">1. Documentations</a>
-          </li>
-          <li>
-            <a href="#orga44638e">2. Emacs</a>
+            <a href="#org4165238">1. 正则表达式</a>
             <ul>
               <li>
-                <a href="#org658ead0">2.1. emacs
-                org-special-src-blocks</a>
+                <a href="#reg-match-delete">1.1. <code>${}</code>
+                删除</a>
               </li>
             </ul>
-          </li>
-          <li>
-            <a href="#orgc5d0afc">3. Vue</a>
-          </li>
-          <li>
-            <a href="#org3e4a92e">4. React</a>
-          </li>
-          <li>
-            <a href="#orgd2592ae">5. Shell Programming</a>
           </li>
         </ul>
       </div>
     </div>
-    <p>你好!!!!!!!!!!!!!!!</p>
-    <p>Good Love ❤ Home Page !!!</p>
-    <div id="outline-container-orgb047be5" class="outline-2">
-      <h2 id="orgb047be5"><span class="section-number-2">1.</span>
-      <a href=
-      "documentations.html#ID-aa445529-4f0e-48d8-833f-12c149603ca6">
-      Documentations</a></h2>
-    </div>
-    <div id="outline-container-orga44638e" class="outline-2">
-      <h2 id="orga44638e"><span class="section-number-2">2.</span>
-      Emacs</h2>
-      <div class="outline-text-2" id="text-2"></div>
-      <div id="outline-container-org658ead0" class="outline-3">
-        <h3 id="org658ead0"><span class=
-        "section-number-3">2.1.</span> <a href=
-        "emacs_org_special_src_blocks.html#ID-82acaa2e-9913-4c5b-83d9-57ac24698449">
-        emacs org-special-src-blocks</a></h3>
+    <p><a href="/"><img src=
+    "https://img.shields.io/badge/GCCLL-Homepage-green?logo=gnu-emacs"></a></p>
+    <div id="outline-container-org4165238" class="outline-2">
+      <h2 id="org4165238"><span class="section-number-2">1.</span>
+      正则表达式</h2>
+      <div class="outline-text-2" id="text-1"></div>
+      <div id="outline-container-reg-match-delete" class=
+      "outline-3">
+        <h3 id="reg-match-delete"><span class=
+        "section-number-3">1.1.</span> <code>${}</code> 删除</h3>
+        <div class="outline-text-3" id="text-reg-match-delete">
+          <ul class="org-ul">
+            <li><code>#</code> 从左边算起第一个</li>
+            <li><code>%</code> 从右边算起第一个</li>
+            <li><code>##</code> 从左边算起最后一个</li>
+            <li><code>%%</code> 从右边算起最后一个</li>
+            <li><code>*</code> 表示要删除的内容</li>
+          </ul>
+          <p><code>#</code>: 从左边开始， <code>%</code>: 从右边开始</p>
+          <div class="org-src-container">
+            <pre class="src src-sh"><span style=
+            "color: #5B6268;"># </span><span style=
+            "color: #5B6268;">从左边起最后一个 / 开始, 删除它及它之前的所有字符 =&gt; "file.txt"</span>
+<span style="color: #dcaeea;">var1</span>=/path/to/file.txt
+<span style="color: #ECBE7B;">echo</span> $<span style=
+"color: #51afef;">{</span><span style=
+"color: #dcaeea;">var1</span>##*/<span style=
+"color: #51afef;">}</span>
+<span style="color: #5B6268;"># </span><span style=
+"color: #5B6268;">从左边起第一个 to 开始, 删除它及它之前的所有字符 =&gt; "/path2/to/file.txt"</span>
+<span style=
+"color: #dcaeea;">var2</span>=/path1/to/path2/to/file.txt
+<span style="color: #ECBE7B;">echo</span> $<span style=
+"color: #51afef;">{</span><span style=
+"color: #dcaeea;">var2</span>#*to<span style=
+"color: #51afef;">}</span>
+<span style="color: #5B6268;"># </span><span style=
+"color: #5B6268;">从右边起最后一个 to 开始，删除它及它之后的所有字符 =&gt; "/path1/"</span>
+<span style="color: #ECBE7B;">echo</span> $<span style=
+"color: #51afef;">{</span><span style=
+"color: #dcaeea;">var2</span>%%to*<span style=
+"color: #51afef;">}</span>
+<span style="color: #5B6268;"># </span><span style=
+"color: #5B6268;">从右边起第一个 to 开始，删除它及它之后的所有字符 =&gt; "/path1/to/path2/"</span>
+<span style="color: #ECBE7B;">echo</span> $<span style=
+"color: #51afef;">{</span><span style=
+"color: #dcaeea;">var2</span>%to*<span style=
+"color: #51afef;">}</span>
+</pre>
+          </div>
+        </div>
       </div>
-    </div>
-    <div id="outline-container-orgc5d0afc" class="outline-2">
-      <h2 id="orgc5d0afc"><span class="section-number-2">3.</span>
-      <a href=
-      "vue.html#ID-e8a6f155-00b4-484d-8594-f1dfc20c78a9">Vue</a></h2>
-    </div>
-    <div id="outline-container-org3e4a92e" class="outline-2">
-      <h2 id="org3e4a92e"><span class="section-number-2">4.</span>
-      <a href=
-      "react.html#ID-c7622fa4-b827-4496-a53f-f5564d662af9">React</a></h2>
-    </div>
-    <div id="outline-container-orgd2592ae" class="outline-2">
-      <h2 id="orgd2592ae"><span class="section-number-2">5.</span>
-      <a href=
-      "shell_programming.html#ID-8863e473-3df8-49ae-8452-b2e3d64fabd8">
-      Shell Programming</a></h2>
     </div>
   </div>
   <div id="postamble" class="status">
     <p class="author">Author: Zhicheng Lee</p>
-    <p class="date">Created: 2022-02-25 Fri 10:42</p>
+    <p class="date">Created: 2022-02-25 Fri 11:03</p>
   </div>
 </body>
 </html>
