@@ -56,7 +56,7 @@ $(function () {
           ElementPlus.ElMessage({ message: "xxx", type: "success" });
         }
       }
-      Vue.onUnmount(() => {
+      Vue.onUnmounted(() => {
         $(document.body).off("keydown", keydownHandler);
       });
 
