@@ -7,6 +7,9 @@
   #postamble .author .follows .author .follows img {
     margin-top: -4px; }
 
+.MathJax_Display {
+  overflow: scroll; }
+
 code {
   white-space: normal !important; }
 
