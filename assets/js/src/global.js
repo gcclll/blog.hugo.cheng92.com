@@ -80,15 +80,28 @@ $(function () {
       return queryList.every((val) => lower.indexOf(val.toLowerCase()) > -1);
     };
   }
+  const titleRE = /[a-z0-9 \.:#]+/;
   function loadAllItems() {
     const items = [];
     // #text-table-of-contents a
     $("#content a").each(function () {
-      const value = $(this).text().replace(/\n/, "").replace(/\s+/, " ").trim();
-      if (/[a-z0-9 \.:]+/.test(value)) {
+      const value = trim(this);
+      if (titleRE.test(value)) {
         items.push({ value, link: $(this).attr("href") });
       }
     });
-    return items;
+
+    $("#content span[id]").each(function () {
+      const id = $(this).attr("id");
+      const value = trim(this) || id;
+      if (id && titleRE.test(value)) {
+        items.push({ value, link: `#${id}` });
+      }
+    });
+    return items.sort();
+  }
+
+  function trim(el) {
+    return $(el).text().replace(/\n/, "").relace(/\s+/, " ").trim();
   }
 });
