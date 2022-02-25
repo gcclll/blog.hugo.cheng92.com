@@ -2,11 +2,10 @@
 #table-of-contents {
   width: 316px !important; }
 
-#postamble .author .follows {
+#postamble .author .follows .author .follows {
   margin-left: 4px; }
-
-#postamble .author .follows img {
-  margin-top: -4px; }
+  #postamble .author .follows .author .follows img {
+    margin-top: -4px; }
 
 code {
   white-space: normal !important; }

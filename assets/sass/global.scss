@@ -3,10 +3,15 @@
 }
 
 #postamble .author .follows {
-  margin-left: 4px;
-}
-#postamble .author .follows img {
-  margin-top: -4px;
+  .author {
+    .follows {
+      margin-left: 4px;
+
+      & img {
+        margin-top: -4px;
+      }
+    }
+  }
 }
 
 code {
@@ -19,8 +24,10 @@ pre {
   border-radius: 5px;
 }
 
-details.code-details {
-  margin-bottom: 1rem;
+details {
+  &.code-details {
+    margin-bottom: 1rem;
+  }
 }
 
 blockquote {
