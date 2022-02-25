@@ -13,11 +13,13 @@ $(function () {
     )
   );
 
-  $("h1.title").append(
-    $(`
-<div>
-<script async src="https://cse.google.com/cse.js?cx=a0d16d11f3d4a3b9c"></script>
-<div class="gcse-search"></div>
-</div>`)
-  );
+  // $("h1.title").append(
+  //     $(`
+  // <div>
+  // <script async src="https://cse.google.com/cse.js?cx=a0d16d11f3d4a3b9c"></script>
+  // <div class="gcse-search"></div>
+  // </div>`)
+  //   );
+
+  $("<p>搜索？？？</p>").insertAfter("h1.title");
 });
