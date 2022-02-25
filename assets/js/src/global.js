@@ -110,6 +110,7 @@ $(function () {
   app.use(ElementPlus, ElementPlusOptions).mount("#search");
 
   function querySearch(queryString, cb, results) {
+    console.log(queryString, "23333");
     const result = queryString
       ? results.filter(createFilter(queryString))
       : results;
