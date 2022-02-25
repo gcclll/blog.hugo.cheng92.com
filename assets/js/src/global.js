@@ -76,7 +76,7 @@ $(function () {
     return (restaurant) => {
       const queryList = queryString.split(" ");
       const lower = restaurant.value.toLowerCase();
-      return queryList.some((val) => lower.indexOf(val.toLowerCase()) > -1);
+      return queryList.every((val) => lower.indexOf(val.toLowerCase()) > -1);
     };
   }
   function loadAllItems() {
