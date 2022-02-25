@@ -40,6 +40,7 @@ $(function () {
         class="inline-input search-input"
         placeholder="Please Input Search Content"
         @select="handleSelect"
+        @press.meta="pressKey"
       />`,
     setup() {
       const results = ref([]);
@@ -53,6 +54,9 @@ $(function () {
       return {
         state,
         querySearch: (qs, cb) => querySearch(qs, cb, results),
+        pressKey(e) {
+          console.log(e, "press key");
+        },
         handleSelect(item) {
           if (item.link) {
             location.href = item.link;
