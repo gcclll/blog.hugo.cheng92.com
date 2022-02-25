@@ -44,7 +44,7 @@ $(function () {
 
       return {
         state: ref(""),
-        querySearch,
+        querySearch: (qs, cb) => queryString(qs, cb, results),
         handleSelect(item) {
           console.log(item, "select");
         },
@@ -54,11 +54,12 @@ $(function () {
 
   app.use(ElementPlus).mount("#search");
 
-  function querySearch(queryString, cb) {
-    const results = queryString
-      ? results.value.filter(createFilter(queryString))
-      : results.value;
-    cb(results);
+  function querySearch(queryString, cb, results) {
+    cb(
+      queryString
+        ? results.value.filter(createFilter(queryString))
+        : results.value
+    );
   }
   function createFilter(queryString) {
     return (restaurant) => {
