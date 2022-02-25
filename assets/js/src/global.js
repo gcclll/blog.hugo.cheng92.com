@@ -24,6 +24,9 @@ $(function () {
   $("#table-of-contents>h2").append(`<div id="search">Loading...</div>`);
   // $(`<div id="search">Loading...</div>`).insertAfter("#table-of-contents>h2");
 
+  const ElementPlusOptions = {
+    size: "mini",
+  };
   const { createApp, ref } = Vue;
 
   const app = createApp({
@@ -55,7 +58,7 @@ $(function () {
     },
   });
 
-  app.use(ElementPlus).mount("#search");
+  app.use(ElementPlus, ElementPlusOptions).mount("#search");
 
   function querySearch(queryString, cb, results) {
     cb(
