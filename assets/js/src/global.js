@@ -33,18 +33,24 @@ $(function () {
 
   const app = createApp({
     template: `
-      <el-autocomplete
-        v-model="state"
-        :fetch-suggestions="querySearch"
-        :trigger-on-focus="false"
-        class="inline-input search-input"
-        placeholder="Please Input Search Content"
-        @select="handleSelect"
-        @keydown.meta.capture="pressKey"
-      />`,
+<el-autocomplete
+  v-model="state"
+  :fetch-suggestions="querySearch"
+  :trigger-on-focus="false"
+  class="inline-input search-input"
+  placeholder="Please Input Search Content"
+  @select="handleSelect"
+  @keydown.meta.capture="pressKey"
+/>
+<el-dialog v-model="dialogVisible">
+<el-input v-model="state" placeholder="请输入搜索内容"/>
+<ul><li v-for="( result, i ) in results" :key="result.link">{{result.value}}</li></ul>
+</el-dialog>
+`,
     setup() {
       const results = ref([]);
       const state = ref("");
+      const dialogVisible = ref(false);
 
       Vue.onMounted(() => {
         results.value = loadAllItems();
@@ -53,18 +59,21 @@ $(function () {
 
       function keydownHandler(e) {
         if (e.metaKey && e.keyCode === 75) {
-          ElementPlus.ElMessage({ message: "xxx", type: "success" });
+          dialogVisible.value = true;
         }
       }
       Vue.onUnmounted(() => {
         $(document.body).off("keydown", keydownHandler);
       });
 
+      Vue.watch(state, (newVal) => querySearch(newVal, null, results));
+
       $(document.body).on("keydown", keydownHandler);
 
       return {
         state,
         querySearch: (qs, cb) => querySearch(qs, cb, results),
+        dialogVisible,
         pressKey(e) {
           console.log(e, "press key");
         },
@@ -81,13 +90,13 @@ $(function () {
   app.use(ElementPlus, ElementPlusOptions).mount("#search");
 
   function querySearch(queryString, cb, results) {
-    console.log(queryString, "xxx");
-
-    cb(
-      queryString
-        ? results.value.filter(createFilter(queryString))
-        : results.value
-    );
+    const result = queryString
+      ? results.value.filter(createFilter(queryString))
+      : results.value;
+    if (cb === null) {
+      return result;
+    }
+    cb(result);
   }
   function createFilter(queryString) {
     return (restaurant) => {
