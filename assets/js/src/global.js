@@ -44,7 +44,7 @@ $(function () {
 
       return {
         state: ref(""),
-        querySearch: (qs, cb) => queryString(qs, cb, results),
+        querySearch: (qs, cb) => querySearch(qs, cb, results),
         handleSelect(item) {
           console.log(item, "select");
         },
