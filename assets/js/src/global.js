@@ -126,15 +126,13 @@ $(function () {
         // 高亮匹配内容
         highlight(value) {
           const words = state.search.split(' ')
-          let matched = Vue.toRaw(value)
           words.forEach((word) => {
-            matched = matched.replace(
+            value = value.replace(
               new RegExp(`${word}`, 'gi'),
               `<span class="hl-word">${word}</span>`
             )
           })
-          console.log(value, matched, '111')
-          return matched
+          return value
         },
         isCurrentPage(file) {
           return new RegExp(`${file}$`).test(location.pathname)
