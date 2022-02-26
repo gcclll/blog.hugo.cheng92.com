@@ -55,12 +55,12 @@ $(function () {
 <el-dialog v-model="dialogVisible" @open="clean" @close="clean">
 <el-input v-model="search" placeholder="请输入搜索内容(仅限本文，TODO搜索全博客)">
   <template #prepend>
-    <el-select v-model="scope" placeholder="Select" style="width:110px">
+    <el-select v-model="scope" placeholder="Select" style="width:80px">
       <el-option label="本文" value="1"/>
       <el-option label="全站" value="2"/>
     </el-select>
   </template>
-  <template #append><el-button icon="Search"/></template>
+  <template #append><img src="/assets/img/search.svg"></template>
 </el-input>
 <ul class="search-list" style="max-height:500px;overflow-y:scroll;text-align:left">
   <li v-for="(result, i) in filterResults" :key="result.value" @click="locate(result.link)">
