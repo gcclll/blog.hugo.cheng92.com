@@ -53,7 +53,7 @@ $(function () {
   </template>
 </el-autocomplete>
 <el-dialog v-model="dialogVisible" @open="clean" @close="clean" title="全文(站)搜索">
-<el-input v-model="search" placeholder="请输入搜索内容(暂只支持标题、链接、锚点)">
+<el-input autofocus v-model="search" placeholder="请输入搜索内容(暂只支持标题、链接、锚点)">
   <template #prepend>
     <el-select v-model="scope" placeholder="Select" style="width:80px">
       <el-option label="本文" value="1"/>
