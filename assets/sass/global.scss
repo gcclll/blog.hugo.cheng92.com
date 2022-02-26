@@ -2,8 +2,11 @@
   width: 316px !important;
 }
 
-#content img.my-search-icon {
-  max-width: 30px;
+#content {
+  img.my-search-icon,
+  img.title-phone {
+    max-width: 30px;
+  }
 }
 
 #postamble {

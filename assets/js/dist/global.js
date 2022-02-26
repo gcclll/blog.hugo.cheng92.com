@@ -34,7 +34,7 @@ $(function () {
   var md = new MobileDetect(window.navigator.userAgent);
 
   if (!md.mobile()) {
-    $('h1.title').append("<img src=\"/assets/img/phone.svg\"/>");
+    $('h1.title').append("<img class=\"title-phone\" src=\"/assets/img/phone.svg\"/>");
   } // n. 网站搜索功能 //////////////////////////////////////////////////////////
 
 

@@ -2,7 +2,8 @@
 #table-of-contents {
   width: 316px !important; }
 
-#content img.my-search-icon {
+#content img.my-search-icon,
+#content img.title-phone {
   max-width: 30px; }
 
 #postamble .author .follows {
