@@ -91,7 +91,7 @@ $(function () {
           words.forEach(function (word) {
             matched = matched.replace(new RegExp("".concat(word), 'gi'), "<span class=\"hl-word\">".concat(word, "</span>"));
           });
-          console.log(matched, '111');
+          console.log(value, matched, '111');
           return matched;
         },
         isCurrentPage: function isCurrentPage(file) {

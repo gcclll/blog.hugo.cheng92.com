@@ -133,7 +133,7 @@ $(function () {
               `<span class="hl-word">${word}</span>`
             )
           })
-          console.log(matched, '111')
+          console.log(value, matched, '111')
           return matched
         },
         isCurrentPage(file) {
