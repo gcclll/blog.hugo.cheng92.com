@@ -60,7 +60,7 @@ $(function () {
       <el-option label="全站" value="2"/>
     </el-select>
   </template>
-  <template #append><el-button :icon="Search"/></template>
+  <template #append><el-button icon="Search"/></template>
 </el-input>
 <ul class="search-list" style="max-height:500px;overflow-y:scroll;text-align:left">
   <li v-for="(result, i) in filterResults" :key="result.value" @click="locate(result.link)">
