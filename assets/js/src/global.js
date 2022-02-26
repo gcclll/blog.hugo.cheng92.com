@@ -1,5 +1,5 @@
 $(function () {
-  const titleRE = /[a-z0-9 \.:#]+/gi
+  // 0. 网站胡一些静态数据 ////////////////////////////////////////////////////
   const deduped = dedupStats()
   const cached = {
     current: deduped.reduce((arr, curr) => {
@@ -14,8 +14,8 @@ $(function () {
     }, []), // 本文
     whole: deduped // 全站
   }
-  console.log(cached)
 
+  // 1. add github badge /////////////////////////////////////////////////////////
   $('span').each(function () {
     const bgColor = $(this).css('background-color')
     if (bgColor === 'rgb(35, 39, 46)') {
@@ -30,6 +30,13 @@ $(function () {
     )
   )
 
+  // 3. 检测是不是移动端 //////////////////////////////////////////////////////
+  const md = new MobileDetect(window.navigator.userAgent)
+  if (md.mobile()) {
+    $('h1.title').append(`<img src="/assets/img/phone.svg"/>`)
+  }
+
+  // n. 网站搜索功能 //////////////////////////////////////////////////////////
   $('#table-of-contents>h2').append(`<div id="search">Loading...</div>`)
 
   const ElementPlusOptions = {

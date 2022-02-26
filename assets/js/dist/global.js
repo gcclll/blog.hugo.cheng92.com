@@ -7,7 +7,7 @@ function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { va
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
 $(function () {
-  var titleRE = /[a-z0-9 \.:#]+/gi;
+  // 0. 网站胡一些静态数据 ////////////////////////////////////////////////////
   var deduped = dedupStats();
   var cached = {
     current: deduped.reduce(function (arr, curr) {
@@ -20,8 +20,8 @@ $(function () {
     // 本文
     whole: deduped // 全站
 
-  };
-  console.log(cached);
+  }; // 1. add github badge /////////////////////////////////////////////////////////
+
   $('span').each(function () {
     var bgColor = $(this).css('background-color');
 
@@ -29,7 +29,15 @@ $(function () {
       $(this).css('background-color', 'rgba(35, 39, 46, .1)');
     }
   });
-  $('#postamble .author').append($('<span class="follows"><a href="https://www.github.com/gcclll?tab=followers">' + '<img src="https://img.shields.io/github/followers/gcclll?style=social"></a></span>'));
+  $('#postamble .author').append($('<span class="follows"><a href="https://www.github.com/gcclll?tab=followers">' + '<img src="https://img.shields.io/github/followers/gcclll?style=social"></a></span>')); // 3. 检测是不是移动端 //////////////////////////////////////////////////////
+
+  var md = new MobileDetect(window.navigator.userAgent);
+
+  if (md.mobile()) {
+    $('h1.title').append("<img src=\"/assets/img/phone.svg\"/>");
+  } // n. 网站搜索功能 //////////////////////////////////////////////////////////
+
+
   $('#table-of-contents>h2').append("<div id=\"search\">Loading...</div>");
   var ElementPlusOptions = {// size: "small",
   };
