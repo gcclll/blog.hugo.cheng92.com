@@ -78,7 +78,7 @@ $(function () {
         filterResults: [],
         search: '',
         dialogVisible: false,
-        scope: '1' // 1 - 本文, 2 - 全站
+        scope: '2' // 1 - 本文, 2 - 全站
       })
 
       Vue.onMounted(() => {
