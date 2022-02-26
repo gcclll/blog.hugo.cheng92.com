@@ -52,8 +52,8 @@ $(function () {
     <img class="command-k" src="/assets/img/command.svg"/><span class="command-k">K</span>
   </template>
 </el-autocomplete>
-<el-dialog v-model="dialogVisible" @open="clean" @close="clean">
-<el-input v-model="search" placeholder="请输入搜索内容(仅限本文，TODO搜索全博客)">
+<el-dialog v-model="dialogVisible" @open="clean" @close="clean" title="全文(站)搜索">
+<el-input v-model="search" placeholder="请输入搜索内容(暂只支持标题、链接、锚点)">
   <template #prepend>
     <el-select v-model="scope" placeholder="Select" style="width:80px">
       <el-option label="本文" value="1"/>
@@ -64,7 +64,7 @@ $(function () {
 </el-input>
 <ul class="search-list" style="max-height:500px;overflow-y:scroll;text-align:left">
   <li v-for="(result, i) in filterResults" :key="result.value" @click="locate(result.link)">
-    <div class="result-value">{{result.value}}</div>
+    <div class="result-value" v-html="highlight(result.value)"></div>
     <div class="result-tags">
       <el-tag v-if="!isCurrentPage(result.file)" effect="dark" type="info">{{result.file}}</el-tag>
     </div>
@@ -123,6 +123,17 @@ $(function () {
       return {
         ...Vue.toRefs(state),
         clean,
+        // 高亮匹配内容
+        highlight(value) {
+          const words = state.search.split(' ')
+          words.forEach((word) => {
+            value = value.replace(
+              new RegExp(`${word}`, 'gi'),
+              `<span class="hl-word">${word}</span>`
+            )
+          })
+          return value
+        },
         isCurrentPage(file) {
           return new RegExp(`${file}$`).test(location.pathname)
         },

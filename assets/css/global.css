@@ -19,6 +19,8 @@
 #search .search-list li {
   cursor: pointer;
   padding: 5px 0; }
+  #search .search-list li .hl-word {
+    color: blue; }
 #search img.command-k,
 #search span.command-k {
   align-items: center;
