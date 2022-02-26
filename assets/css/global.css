@@ -2,6 +2,9 @@
 #table-of-contents {
   width: 316px !important; }
 
+#content img.my-search-icon {
+  max-width: 30px; }
+
 #postamble .author .follows {
   margin-left: 4px; }
   #postamble .author .follows img {
