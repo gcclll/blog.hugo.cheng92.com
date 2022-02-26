@@ -1,5 +1,20 @@
 $(function () {
   const titleRE = /[a-z0-9 \.:#]+/gi
+  const deduped = dedupStats()
+  const cached = {
+    current: deduped.reduce((arr, curr) => {
+      if (
+        curr &&
+        curr.file &&
+        new RegExp(`${curr.file}$`).test(location.pathname)
+      ) {
+        arr.push(curr)
+      }
+      return arr
+    }, []), // 本文
+    whole: deduped // 全站
+  }
+  console.log(cached)
 
   $('span').each(function () {
     const bgColor = $(this).css('background-color')
@@ -38,7 +53,15 @@ $(function () {
   </template>
 </el-autocomplete>
 <el-dialog v-model="dialogVisible" @open="clean" @close="clean">
-<el-input v-model="search" placeholder="请输入搜索内容(仅限本文，TODO搜索全博客)"/>
+<el-input v-model="search" placeholder="请输入搜索内容(仅限本文，TODO搜索全博客)">
+  <template #prepend>
+    <el-select v-model="scope" placeholder="Select" style="width:110px">
+      <el-option label="本文" value="1"/>
+      <el-option label="全站" value="2"/>
+    </el-select>
+  </template>
+  <temlate #append><el-button :icon="Search"/></template>
+</el-input>
 <ul class="search-list" style="max-height:500px;overflow-y:scroll;text-align:left">
   <li v-for="(result, i) in filterResults" :key="result.value" @click="locate(result.link)">
     <div class="result-value">{{result.value}}</div>
@@ -54,18 +77,12 @@ $(function () {
         results: [],
         filterResults: [],
         search: '',
-        dialogVisible: false
+        dialogVisible: false,
+        scope: '1' // 1 - 本文, 2 - 全站
       })
 
       Vue.onMounted(() => {
-        if ($.isArray(window.$stats)) {
-          window.$stats.forEach((stat) => {
-            if (!state.results.find((r) => r && r.value === stat.value)) {
-              state.results.push(stat)
-            }
-          })
-        }
-
+        state.results = state.scope === '1' ? cached.current : cached.whole
         $(document.body).on('keydown', keydownHandler)
       })
 
@@ -77,6 +94,11 @@ $(function () {
       Vue.onUnmounted(() => {
         $(document.body).off('keydown', keydownHandler)
       })
+
+      Vue.watch(
+        () => state.scope,
+        (val) => (state.results = val === '1' ? cached.current : cached.whole)
+      )
 
       Vue.watch(
         () => state.search,
@@ -135,5 +157,15 @@ $(function () {
       const lower = item.value.toLowerCase()
       return queryList.every((val) => lower.indexOf(val.toLowerCase()) > -1)
     }
+  }
+
+  function dedupStats() {
+    const results = []
+    window.$stats.forEach((stat) => {
+      if (!results.find((r) => r && r.value === stat.value)) {
+        results.push(stat)
+      }
+    })
+    return results
   }
 })
