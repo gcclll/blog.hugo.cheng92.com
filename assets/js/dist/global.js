@@ -87,10 +87,11 @@ $(function () {
         // 高亮匹配内容
         highlight: function highlight(value) {
           var words = state.search.split(' ');
+          var matched = Vue.toRaw(value);
           words.forEach(function (word) {
-            value = value.replace(new RegExp("".concat(word), 'gi'), "<span class=\"hl-word\">".concat(word, "</span>"));
+            matched = value.replace(new RegExp("".concat(word), 'gi'), "<span class=\"hl-word\">".concat(word, "</span>"));
           });
-          return value;
+          return matched;
         },
         isCurrentPage: function isCurrentPage(file) {
           return new RegExp("".concat(file, "$")).test(location.pathname);
