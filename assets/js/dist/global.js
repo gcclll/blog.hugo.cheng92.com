@@ -89,8 +89,9 @@ $(function () {
           var words = state.search.split(' ');
           var matched = Vue.toRaw(value);
           words.forEach(function (word) {
-            matched = value.replace(new RegExp("".concat(word), 'gi'), "<span class=\"hl-word\">".concat(word, "</span>"));
+            matched = matched.replace(new RegExp("".concat(word), 'gi'), "<span class=\"hl-word\">".concat(word, "</span>"));
           });
+          console.log(matched, '111');
           return matched;
         },
         isCurrentPage: function isCurrentPage(file) {

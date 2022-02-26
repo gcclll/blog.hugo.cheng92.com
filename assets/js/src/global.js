@@ -128,11 +128,12 @@ $(function () {
           const words = state.search.split(' ')
           let matched = Vue.toRaw(value)
           words.forEach((word) => {
-            matched = value.replace(
+            matched = matched.replace(
               new RegExp(`${word}`, 'gi'),
               `<span class="hl-word">${word}</span>`
             )
           })
+          console.log(matched, '111')
           return matched
         },
         isCurrentPage(file) {
