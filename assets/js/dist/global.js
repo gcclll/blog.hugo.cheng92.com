@@ -33,7 +33,7 @@ $(function () {
 
   var md = new MobileDetect(window.navigator.userAgent);
 
-  if (md.mobile()) {
+  if (!md.mobile()) {
     $('h1.title').append("<img src=\"/assets/img/phone.svg\"/>");
   } // n. 网站搜索功能 //////////////////////////////////////////////////////////
 

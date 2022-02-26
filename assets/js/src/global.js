@@ -32,7 +32,7 @@ $(function () {
 
   // 3. 检测是不是移动端 //////////////////////////////////////////////////////
   const md = new MobileDetect(window.navigator.userAgent)
-  if (md.mobile()) {
+  if (!md.mobile()) {
     $('h1.title').append(`<img src="/assets/img/phone.svg"/>`)
   }
 
