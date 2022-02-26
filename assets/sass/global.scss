@@ -82,6 +82,11 @@ blockquote {
   }
 }
 
+.el-input-group__append img.my-search-icon {
+  width: 30px;
+  max-width: 30px;
+}
+
 @media screen and (max-width: 768px) {
   #table-of-contents {
     width: 100% !important;
