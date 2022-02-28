@@ -15,6 +15,8 @@ $(function () {
     whole: deduped // 全站
   }
 
+  console.log($('outline-container-*'), '111')
+
   // 1. add github badge /////////////////////////////////////////////////////////
   $('span').each(function () {
     const bgColor = $(this).css('background-color')

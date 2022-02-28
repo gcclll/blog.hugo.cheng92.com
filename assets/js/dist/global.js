@@ -20,7 +20,8 @@ $(function () {
     // 本文
     whole: deduped // 全站
 
-  }; // 1. add github badge /////////////////////////////////////////////////////////
+  };
+  console.log($('outline-container-*'), '111'); // 1. add github badge /////////////////////////////////////////////////////////
 
   $('span').each(function () {
     var bgColor = $(this).css('background-color');
