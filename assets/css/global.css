@@ -41,6 +41,12 @@
 .MathJax_Display {
   overflow: scroll !important; }
 
+h3 {
+  text-indent: 1rem; }
+
+h4 {
+  text-indent: 2rem; }
+
 code {
   white-space: normal !important; }
 
