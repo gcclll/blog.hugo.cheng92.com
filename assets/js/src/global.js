@@ -19,9 +19,7 @@ $(function () {
     // size: "small",
   }
 
-  $('#content').append(
-    `<script src="/assets/js/dist/client.js" repo="gcclll/cheng92-comments" issue-term="pathname" theme="github-light" crossorigin="anonymous" async></script>`
-  )
+  $('#content').append(`<script src="/assets/js/dist/client.js"></script>`)
 
   // valine ///////////////////////////////////////////////////////////////////
   $('#content').append(`
