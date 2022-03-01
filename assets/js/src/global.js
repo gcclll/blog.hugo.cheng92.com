@@ -25,7 +25,9 @@ $(function () {
 
   // valine ///////////////////////////////////////////////////////////////////
   $('#content').append(`
-<button type="button" class="btn btn-primary">显示 <a href="https://valine.js.org/">Valine</a> 评论系统</button>
+<button type="button" class="btn btn-primary">
+显示 <a target="_blank" href="https://valine.js.org/">Valine</a> 评论系统
+</button>
 <div id="vcomments"></div>
 <script>
         new Valine({
