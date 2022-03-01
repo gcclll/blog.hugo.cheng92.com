@@ -20,10 +20,23 @@ $(function () {
     // 本文
     whole: deduped // 全站
 
-  }; // 收集所有标题(id包含 'outline-container-' 且以它开头的 div)
+  }; // 自定义 TOC ///////////////////////////////////////////////////////////////
 
-  var outlines = findOutlines();
-  console.log(outlines, '111'); // 1. add github badge /////////////////////////////////////////////////////////
+  var isHome = /home\.html$/.test(location.pathname);
+
+  if (isHome) {
+    // 收集所有标题(id包含 'outline-container-' 且以它开头的 div)
+    $('#content').append("<div id=\"vue-toc\"></div>");
+    createApp({
+      template: "\n<el-menu clas=\"el-toc-menu\">\n  <template v-for=\"(ol,i) in outlines\">\n    <el-sub-menu v-if=\"ol.children.length\">\n      <template #title><span>{{ol.title}}</span></template>\n      <el-menu-item v-for=\"(child, ii) in ol.children\" :index=\"i+'-'+ii\">\n        <span>{{child.title}}</span>\n      </el-menu-item>\n    </el-sub-menu>\n    <el-menu-item v-else><span>{{ol.title}}</span></el-menu-item>\n  </template>\n</el-menu>",
+      data: function data() {
+        return {
+          outlines: findOutlines()
+        };
+      }
+    }).use(ElementPlus).mount('#vue-toc');
+  } // 1. add github badge /////////////////////////////////////////////////////////
+
 
   $('span').each(function () {
     var bgColor = $(this).css('background-color');
