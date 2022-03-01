@@ -206,14 +206,12 @@ $(function () {
     } else {
       parents = $(parent).children(selector)
     }
-    const eles = root
-      ? $(parent)
-      : eles.each(function () {
-          children.push({
-            title: trimText(this, `h${hn}`),
-            children: findOutlines(this, ++hn, false)
-          })
-        })
+    parents.each(function () {
+      children.push({
+        title: trimText(this, `h${hn}`),
+        children: findOutlines(this, ++hn, false)
+      })
+    })
     return children
   }
 })
