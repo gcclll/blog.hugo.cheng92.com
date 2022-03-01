@@ -27,7 +27,7 @@ $(function () {
       template: `
 <el-menu clas="el-toc-menu">
   <template v-for="(ol,i) in outlines">
-    <el-sub-menu v-if="ol.children.length" :index="i">
+    <el-sub-menu v-if="ol.children.length" :index="''+i">
       <template #title><span>{{ol.title}}</span></template>
       <el-menu-item v-for="(child, ii) in ol.children" :index="i+'-'+ii">
         <span>{{child.title}}</span>
