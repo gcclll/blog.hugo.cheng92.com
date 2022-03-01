@@ -1,9 +1,7 @@
 "use strict";
 
 /** jsx?|tsx? file header */
-;
-
-(function () {
+$(function () {
   console.log('xxxxx');
   var e = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'github-dark' : 'github-light',
       t = new URL(location.href),
@@ -40,4 +38,4 @@
     var t = e.data;
     t && 'resize' === t.type && t.height && (m.style.height = "".concat(t.height, "px"));
   });
-})();
+});

@@ -1,5 +1,5 @@
 /** jsx?|tsx? file header */
-;(() => {
+$(function () {
   console.log('xxxxx')
   const e = window.matchMedia('(prefers-color-scheme: dark)').matches
       ? 'github-dark'
@@ -62,5 +62,5 @@
       const t = e.data
       t && 'resize' === t.type && t.height && (m.style.height = `${t.height}px`)
     })
-})()
+})
 //# sourceMappingURL=client.js.map
