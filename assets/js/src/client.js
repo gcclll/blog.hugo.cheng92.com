@@ -15,17 +15,24 @@ $(function () {
     history.replaceState(undefined, document.title, url.href)
   }
 
-  const script = $('#utt-client')
+  let script = document.currentScript
+  if (script == null) {
+    script = document.querySelector('#utt-client')
+  }
 
-  console.log(script, 0)
   // gather script element's attributes
-  const attrs = script.attr()
-
-  console.log(attrs, 1)
+  const attrs = {}
+  for (let i = 0; i < script.attributes.length; i++) {
+    const attribute = script.attributes.item(i)
+    if (attribute) {
+      attrs[attribute.name.replace(/^data-/, '')] = attribute.value // permit using data-theme instead of theme.
+    }
+  }
 
   if (attrs.theme === preferredThemeId) {
     attrs.theme = preferredTheme
   }
+  console.log(attrs, 123)
 
   // gather page attributes
   const canonicalLink = document.querySelector(`link[rel='canonical']`)

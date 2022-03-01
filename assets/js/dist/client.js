@@ -13,16 +13,28 @@ $(function () {
     history.replaceState(undefined, document.title, url.href);
   }
 
-  var script = $('#utt-client');
-  console.log(script, 0); // gather script element's attributes
+  var script = document.currentScript;
 
-  var attrs = script.attr();
-  console.log(attrs, 1);
+  if (script == null) {
+    script = document.querySelector('#utt-client');
+  } // gather script element's attributes
+
+
+  var attrs = {};
+
+  for (var i = 0; i < script.attributes.length; i++) {
+    var attribute = script.attributes.item(i);
+
+    if (attribute) {
+      attrs[attribute.name.replace(/^data-/, '')] = attribute.value; // permit using data-theme instead of theme.
+    }
+  }
 
   if (attrs.theme === preferredThemeId) {
     attrs.theme = preferredTheme;
-  } // gather page attributes
+  }
 
+  console.log(attrs, 123); // gather page attributes
 
   var canonicalLink = document.querySelector("link[rel='canonical']");
   attrs.url = canonicalLink ? canonicalLink.href : url.origin + url.pathname + url.search;
