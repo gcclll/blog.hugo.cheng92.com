@@ -40,8 +40,9 @@ $(function () {
 
     Vue.createApp({
       template: `
+<el-input v-model="searchText"/>
 <el-menu clas="el-toc-menu">
-  <template v-for="(ol,i) in outlines">
+  <template v-for="(ol,i) in menus">
     <el-sub-menu v-if="ol.children.length" :index="''+i">
       <template #title><h2 :id="ol.id"><span>{{ol.title}}</span></h2></template>
       <el-menu-item style="padding-left:20px" v-for="(child, ii) in ol.children" :index="i+'-'+ii">
@@ -59,9 +60,20 @@ $(function () {
     </el-menu-item>
   </template>
 </el-menu>`,
-      data() {
+      setup() {
+        const searchText = Vue.ref('')
+        const menus = Vue.computed(() => {
+          return outlines
+            .map((ol) => {
+              if (ol.title.indexOf(searchText.value)) {
+                return ol
+              }
+            })
+            .filter(Boolean)
+        })
         return {
-          outlines
+          menus,
+          searchText
         }
       }
     })
