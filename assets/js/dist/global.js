@@ -155,7 +155,7 @@ $(function () {
 
   function findOutlines() {
     var outlines = [];
-    $('div[id^="outline-container-"]').forEach(function () {
+    $('div[id^="outline-container-"]').each(function () {
       var o = {
         title: '',
         children: []

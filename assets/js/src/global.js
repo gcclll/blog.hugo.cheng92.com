@@ -196,7 +196,7 @@ $(function () {
 
   function findOutlines() {
     const outlines = []
-    $('div[id^="outline-container-"]').forEach(function () {
+    $('div[id^="outline-container-"]').each(function () {
       const o = { title: '', children: [] }
       o.title = $(this).children('h2').text()
       $(this)
