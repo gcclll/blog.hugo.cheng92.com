@@ -161,7 +161,7 @@ $(function () {
         children: []
       };
       o.title = $(this).children('h2').text();
-      $(this).children('div[id^="outline-container-"]').forEach(function () {
+      $(this).children('div[id^="outline-container-"]').each(function () {
         o.children.push({
           title: $(this).children('h3').text()
         });

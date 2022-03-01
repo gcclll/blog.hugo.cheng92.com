@@ -201,7 +201,7 @@ $(function () {
       o.title = $(this).children('h2').text()
       $(this)
         .children('div[id^="outline-container-"]')
-        .forEach(function () {
+        .each(function () {
           o.children.push({ title: $(this).children('h3').text() })
         })
       outlines.push(o)
