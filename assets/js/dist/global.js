@@ -187,7 +187,7 @@ $(function () {
       if (title) {
         children.push({
           title: title,
-          href: $(this).find('h2>a').attr('href'),
+          href: $(this).find("h".concat(hn, ">a")).attr('href'),
           children: findOutlines(this, hn + 1)
         });
       }
