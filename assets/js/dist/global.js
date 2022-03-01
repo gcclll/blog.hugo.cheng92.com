@@ -88,8 +88,6 @@ $(function () {
   //     $('#table-of-contents').show()
   //   }
 
-  window.alert('isMobile:' + isMobile);
-
   if (isMobile) {
     $('h1.title').append("<img class=\"title-phone\" src=\"/assets/img/phone.svg\"/>");
   }
