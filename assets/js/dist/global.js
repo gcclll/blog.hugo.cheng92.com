@@ -49,6 +49,8 @@ $(function () {
         var searchText = Vue.ref('');
         var menus = Vue.computed(function () {
           return searchText.value ? outlines.map(function (ol) {
+            console.log(ol.title, 1111);
+
             if (ol.title.indexOf(searchText.value)) {
               return ol;
             }
