@@ -20,7 +20,7 @@ $(function () {
   }
 
   $('#content').append(
-    `<script type="text/javscript" src="/assets/js/dist/client.js"></script>`
+    `<script type="text/javascript" src="/assets/js/dist/client.js"></script>`
   )
 
   // valine ///////////////////////////////////////////////////////////////////
