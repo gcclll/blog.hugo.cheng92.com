@@ -29,7 +29,7 @@ $(function () {
   var searchTmpl = "<div id=\"search\">Loading...</div>";
 
   if (isHome) {
-    $('#table-of-contents').hide();
+    $('#table-of-contents').fadeOut();
     $('#content').css({
       margin: 'auto'
     });

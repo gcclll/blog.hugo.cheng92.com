@@ -23,7 +23,7 @@ $(function () {
   const isHome = /home\.html$/.test(location.pathname)
   const searchTmpl = `<div id="search">Loading...</div>`
   if (isHome) {
-    $('#table-of-contents').hide()
+    $('#table-of-contents').fadeOut()
     $('#content').css({
       margin: 'auto'
     })
