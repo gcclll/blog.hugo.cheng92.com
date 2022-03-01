@@ -25,10 +25,10 @@ $(function () {
 
   // valine ///////////////////////////////////////////////////////////////////
   $('#content').append(`
-<button type="button" class="btn btn-primary">
+<button id="toggle-valine" type="button" class="btn btn-success">
 显示 <a target="_blank" href="https://valine.js.org/">Valine</a> 评论系统
 </button>
-<div id="vcomments"></div>
+<div id="vcomments" style="display:none"></div>
 <script>
         new Valine({
             el: '#vcomments',
@@ -37,6 +37,10 @@ $(function () {
         })
 </script>
 `)
+
+  $('#toggle-valine').click(function () {
+    $('#vcomments').toggle()
+  })
 
   const searchTmpl = `<div id="search">Loading...</div>`
   // // 自定义 TOC ///////////////////////////////////////////////////////////////
