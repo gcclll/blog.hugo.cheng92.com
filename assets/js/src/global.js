@@ -19,6 +19,10 @@ $(function () {
     // size: "small",
   }
 
+  $('#content').append(
+    `<script src="https://utteranc.es/client.js" repo="gcclll/cheng92-comments" issue-term="pathname" theme="github-light" crossorigin="anonymous" async></script>`
+  )
+
   // valine ///////////////////////////////////////////////////////////////////
   $('#content').append(`
 <div id="vcomments"></div>
