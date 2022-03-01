@@ -154,7 +154,7 @@ $(function () {
   }
 
   function trimText(ele, h) {
-    console.log(ele, 10000);
+    console.log(ele, h, 10000);
     return $(ele).children(h).text().replace(/\n/g, '').replace(/\s+/g, ' ');
   }
 
