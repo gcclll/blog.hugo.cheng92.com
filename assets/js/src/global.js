@@ -69,10 +69,10 @@ $(function () {
   //       .mount('#vue-toc')
   //   } else {
   //     // n. 网站搜索功能 //////////////////////////////////////////////////////////
-  //     $('#table-of-contents>h2').append(searchTmpl)
   //     $('#table-of-contents').show()
   //   }
 
+  $('#table-of-contents>h2').append(searchTmpl)
   // 1. add github badge /////////////////////////////////////////////////////////
   $('span').each(function () {
     const bgColor = $(this).css('background-color')

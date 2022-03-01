@@ -72,10 +72,10 @@ $(function () {
   //       .mount('#vue-toc')
   //   } else {
   //     // n. 网站搜索功能 //////////////////////////////////////////////////////////
-  //     $('#table-of-contents>h2').append(searchTmpl)
   //     $('#table-of-contents').show()
   //   }
-  // 1. add github badge /////////////////////////////////////////////////////////
+
+  $('#table-of-contents>h2').append(searchTmpl); // 1. add github badge /////////////////////////////////////////////////////////
 
   $('span').each(function () {
     var bgColor = $(this).css('background-color');
