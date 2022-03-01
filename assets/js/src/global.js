@@ -63,13 +63,15 @@ $(function () {
       setup() {
         const searchText = Vue.ref('')
         const menus = Vue.computed(() => {
-          return outlines
-            .map((ol) => {
-              if (ol.title.indexOf(searchText.value)) {
-                return ol
-              }
-            })
-            .filter(Boolean)
+          return searchText.value
+            ? outlines
+                .map((ol) => {
+                  if (ol.title.indexOf(searchText.value)) {
+                    return ol
+                  }
+                })
+                .filter(Boolean)
+            : outlines
         })
         return {
           menus,

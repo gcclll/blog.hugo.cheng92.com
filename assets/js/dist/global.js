@@ -48,11 +48,11 @@ $(function () {
       setup: function setup() {
         var searchText = Vue.ref('');
         var menus = Vue.computed(function () {
-          return outlines.map(function (ol) {
+          return searchText.value ? outlines.map(function (ol) {
             if (ol.title.indexOf(searchText.value)) {
               return ol;
             }
-          }).filter(Boolean);
+          }).filter(Boolean) : outlines;
         });
         return {
           menus: menus,
