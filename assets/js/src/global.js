@@ -20,7 +20,7 @@ $(function () {
   }
 
   // valine ///////////////////////////////////////////////////////////////////
-  $(document.body).append(`
+  $('#content').append(`
 <div id="vcomments"></div>
 <script>
         new Valine({

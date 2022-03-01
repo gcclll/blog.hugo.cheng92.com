@@ -25,7 +25,7 @@ $(function () {
   var ElementPlusOptions = {// size: "small",
   }; // valine ///////////////////////////////////////////////////////////////////
 
-  $(document.body).append("\n<div id=\"vcomments\"></div>\n<script>\n        new Valine({\n            el: '#vcomments',\n            appId: 'dwjufJhAgWQzU3evb1th5SrC-gzGzoHsz',\n            appKey: 'z7BITHKt5oI9zuxdfp8X9tUN'\n        })\n</script>\n");
+  $('#content').append("\n<div id=\"vcomments\"></div>\n<script>\n        new Valine({\n            el: '#vcomments',\n            appId: 'dwjufJhAgWQzU3evb1th5SrC-gzGzoHsz',\n            appKey: 'z7BITHKt5oI9zuxdfp8X9tUN'\n        })\n</script>\n");
   var searchTmpl = "<div id=\"search\">Loading...</div>"; // // 自定义 TOC ///////////////////////////////////////////////////////////////
   //   const isHome = /home\.html$/.test(location.pathname)
   //   if (isHome) {
