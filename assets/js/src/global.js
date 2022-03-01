@@ -19,6 +19,18 @@ $(function () {
     // size: "small",
   }
 
+  // valine ///////////////////////////////////////////////////////////////////
+  $(document.body).append(`
+<div id="vcomments"></div>
+<script>
+        new Valine({
+            el: '#vcomments',
+            appId: 'dwjufJhAgWQzU3evb1th5SrC-gzGzoHsz',
+            appKey: 'z7BITHKt5oI9zuxdfp8X9tUN'
+        })
+</script>
+`)
+
   const searchTmpl = `<div id="search">Loading...</div>`
   // // 自定义 TOC ///////////////////////////////////////////////////////////////
   //   const isHome = /home\.html$/.test(location.pathname)
