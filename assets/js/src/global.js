@@ -22,6 +22,8 @@ $(function () {
     // size: "small",
   }
 
+  console.log($('#postamble .date').text())
+
   $('#toggle-valine').click(function () {
     $('#vcomments').toggle()
   })

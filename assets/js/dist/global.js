@@ -27,6 +27,7 @@ $(function () {
   };
   var ElementPlusOptions = {// size: "small",
   };
+  console.log($('#postamble .date').text());
   $('#toggle-valine').click(function () {
     $('#vcomments').toggle();
   }); // const isHome = /home\.html$/.test(location.pathname)
