@@ -26,10 +26,12 @@ $(function () {
   }; // 自定义 TOC ///////////////////////////////////////////////////////////////
 
   var isHome = /home\.html$/.test(location.pathname);
+  var searchTmpl = "<div id=\"search\">Loading...</div>";
 
   if (isHome) {
     // 收集所有标题(id包含 'outline-container-' 且以它开头的 div)
     $("<div id=\"vue-toc\"></div>").insertAfter('#content>h1');
+    $('h1.title').append(searchTmpl);
     var outlines = findOutlines();
     console.log(outlines, 1000);
     $(tocSelector).remove();
@@ -41,6 +43,9 @@ $(function () {
         };
       }
     }).use(ElementPlus).mount('#vue-toc');
+  } else {
+    // n. 网站搜索功能 //////////////////////////////////////////////////////////
+    $('#table-of-contents>h2').append(searchTmpl);
   } // 1. add github badge /////////////////////////////////////////////////////////
 
 
@@ -57,10 +62,8 @@ $(function () {
 
   if (md.mobile()) {
     $('h1.title').append("<img class=\"title-phone\" src=\"/assets/img/phone.svg\"/>");
-  } // n. 网站搜索功能 //////////////////////////////////////////////////////////
+  }
 
-
-  $('#table-of-contents>h2').append("<div id=\"search\">Loading...</div>");
   var app = Vue.createApp({
     template: "\n\n<el-autocomplete\n  v-model=\"search\"\n  :fetch-suggestions=\"querySearch\"\n  :trigger-on-focus=\"false\"\n  class=\"inline-input search-input\"\n  placeholder=\"Please Input Search Content\"\n  @select=\"handleSelect\"\n>\n  <template #suffix>\n    <img class=\"command-k\" src=\"/assets/img/command.svg\"/><span class=\"command-k\">K</span>\n  </template>\n</el-autocomplete>\n<el-dialog v-model=\"dialogVisible\" @open=\"clean\" @close=\"clean\" title=\"\u5168\u6587(\u7AD9)\u641C\u7D22\">\n<el-input autofocus v-model=\"search\" placeholder=\"\u8BF7\u8F93\u5165\u641C\u7D22\u5185\u5BB9(\u6682\u53EA\u652F\u6301\u6807\u9898\u3001\u94FE\u63A5\u3001\u951A\u70B9)\">\n  <template #prepend>\n    <el-select v-model=\"scope\" placeholder=\"Select\" style=\"width:80px\">\n      <el-option label=\"\u672C\u6587\" value=\"1\"/>\n      <el-option label=\"\u5168\u7AD9\" value=\"2\"/>\n    </el-select>\n  </template>\n  <template #append><img class=\"my-search-icon\" src=\"/assets/img/search.svg\"></template>\n</el-input>\n<ul class=\"search-list\" style=\"max-height:500px;overflow-y:scroll;text-align:left\">\n  <li v-for=\"(result, i) in filterResults\" :key=\"result.value\" @click=\"locate(result.link)\">\n    <div class=\"result-value\" v-html=\"highlight(result.value)\"></div>\n    <div class=\"result-tags\">\n      <el-tag v-if=\"!isCurrentPage(result.file)\" effect=\"dark\" type=\"info\">{{result.file}}</el-tag>\n    </div>\n  </li>\n</ul>\n</el-dialog>\n",
     setup: function setup() {

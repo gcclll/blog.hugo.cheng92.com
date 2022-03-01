@@ -21,9 +21,11 @@ $(function () {
 
   // 自定义 TOC ///////////////////////////////////////////////////////////////
   const isHome = /home\.html$/.test(location.pathname)
+  const searchTmpl = `<div id="search">Loading...</div>`
   if (isHome) {
     // 收集所有标题(id包含 'outline-container-' 且以它开头的 div)
     $(`<div id="vue-toc"></div>`).insertAfter('#content>h1')
+    $('h1.title').append(searchTmpl)
     const outlines = findOutlines()
     console.log(outlines, 1000)
     $(tocSelector).remove()
@@ -57,6 +59,9 @@ $(function () {
     })
       .use(ElementPlus)
       .mount('#vue-toc')
+  } else {
+    // n. 网站搜索功能 //////////////////////////////////////////////////////////
+    $('#table-of-contents>h2').append(searchTmpl)
   }
 
   // 1. add github badge /////////////////////////////////////////////////////////
@@ -81,9 +86,6 @@ $(function () {
       `<img class="title-phone" src="/assets/img/phone.svg"/>`
     )
   }
-
-  // n. 网站搜索功能 //////////////////////////////////////////////////////////
-  $('#table-of-contents>h2').append(`<div id="search">Loading...</div>`)
 
   const app = Vue.createApp({
     template: `
