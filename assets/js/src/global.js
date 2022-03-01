@@ -22,7 +22,8 @@ $(function () {
   const isHome = /home\.html$/.test(location.pathname)
   if (isHome) {
     // 收集所有标题(id包含 'outline-container-' 且以它开头的 div)
-    $('#content').append(`<div id="vue-toc"></div>`)
+    $(`<div id="vue-toc"></div>`).insertAfter('#content>h1')
+    // $('#content').append()
     Vue.createApp({
       template: `
 <el-menu clas="el-toc-menu">
