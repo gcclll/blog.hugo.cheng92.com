@@ -23,7 +23,8 @@ $(function () {
   if (isHome) {
     // 收集所有标题(id包含 'outline-container-' 且以它开头的 div)
     $(`<div id="vue-toc"></div>`).insertAfter('#content>h1')
-    // $('#content').append()
+    const outlines = findOutlines()
+    console.log(outlines, 1000)
     Vue.createApp({
       template: `
 <el-menu clas="el-toc-menu">
@@ -39,7 +40,7 @@ $(function () {
 </el-menu>`,
       data() {
         return {
-          outlines: findOutlines()
+          outlines
         }
       }
     })
@@ -233,6 +234,7 @@ $(function () {
       if (title) {
         children.push({
           title,
+          href: $(this).find('h2>a').attr('href'),
           children: findOutlines(this, hn + 1)
         })
       }
