@@ -20,7 +20,7 @@ $(function () {
   }
 
   $('#content').append(
-    `<script src="https://utteranc.es/client.js" repo="gcclll/cheng92-comments" issue-term="pathname" theme="github-light" crossorigin="anonymous" async></script>`
+    `<script src="https://utteranc.es/client.js?issue-term=pathname" repo="gcclll/cheng92-comments" issue-term="pathname" theme="github-light" crossorigin="anonymous" async></script>`
   )
 
   // valine ///////////////////////////////////////////////////////////////////
