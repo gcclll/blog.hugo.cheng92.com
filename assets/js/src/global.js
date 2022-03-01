@@ -62,16 +62,21 @@ $(function () {
 </el-menu>`,
       setup() {
         const searchText = Vue.ref('')
+        function filter(list) {
+          return list
+            .map((ol) => {
+              if (ol.children.length) {
+                ol.children = filter(ol.children)
+              }
+              if (ol.title.indexOf(searchText.value) > -1) {
+                return ol
+              }
+            })
+            .filter(Boolean)
+        }
         const menus = Vue.computed(() => {
           return searchText.value
-            ? outlines
-                .map((ol) => {
-                  console.log(ol.title, 1111)
-                  if (ol.title.indexOf(searchText.value)) {
-                    return ol
-                  }
-                })
-                .filter(Boolean)
+            ? filter(JSON.parse(JSON.stringify(Vue.toRaw(outlines))))
             : outlines
         })
         return {
