@@ -101,6 +101,7 @@ $(function () {
   //     $('#table-of-contents').show()
   //   }
 
+  $('h1.title').append(`<span>${navigator.userAgent}</span>`)
   if (isMobile) {
     $('h1.title').append(
       `<img class="title-phone" src="/assets/img/phone.svg"/>`
