@@ -23,40 +23,59 @@ $(function () {
 
   };
   var ElementPlusOptions = {// size: "small",
-  }; // 自定义 TOC ///////////////////////////////////////////////////////////////
-
-  var isHome = /home\.html$/.test(location.pathname);
-  var searchTmpl = "<div id=\"search\">Loading...</div>";
-
-  if (isHome) {
-    $('#table-of-contents').hide();
-    $('#content').css({
-      margin: 'auto'
-    });
-    $('#postamble').css({
-      width: '100%',
-      textAlign: 'center'
-    }); // 收集所有标题(id包含 'outline-container-' 且以它开头的 div)
-
-    $("<div id=\"vue-toc\"></div>").insertAfter('#content>h1');
-    $('h1.title').append(searchTmpl);
-    var outlines = findOutlines();
-    console.log(outlines, 1000);
-    $(tocSelector).remove();
-    Vue.createApp({
-      template: "\n<el-menu clas=\"el-toc-menu\">\n  <template v-for=\"(ol,i) in outlines\">\n    <el-sub-menu v-if=\"ol.children.length\" :index=\"''+i\">\n      <template #title><h2 :id=\"ol.id\"><span>{{ol.title}}</span></h2></template>\n      <el-menu-item style=\"padding-left:20px\" v-for=\"(child, ii) in ol.children\" :index=\"i+'-'+ii\">\n        <h3 :id=\"child.id\">\n          <a v-if=\"child.href\" :href=\"child.href\">{{child.title}}</a>\n          <span v-else>{{child.title}}</span>\n        </h3>\n      </el-menu-item>\n    </el-sub-menu>\n    <el-menu-item v-else style=\"padding:0\">\n      <h2 :id=\"ol.id\">\n        <a v-if=\"ol.href\" :href=\"ol.href\">{{ol.title}}</a>\n        <span v-else>{{ol.title}}</span>\n      </h2>\n    </el-menu-item>\n  </template>\n</el-menu>",
-      setup: function setup() {
-        return {
-          outlines: outlines
-        };
-      }
-    }).use(ElementPlus).mount('#vue-toc');
-  } else {
-    // n. 网站搜索功能 //////////////////////////////////////////////////////////
-    $('#table-of-contents>h2').append(searchTmpl);
-    $('#table-of-contents').show();
-  } // 1. add github badge /////////////////////////////////////////////////////////
-
+  }; // // 自定义 TOC ///////////////////////////////////////////////////////////////
+  //   const isHome = /home\.html$/.test(location.pathname)
+  //   const searchTmpl = `<div id="search">Loading...</div>`
+  //   if (isHome) {
+  //     $('#table-of-contents').hide()
+  //     $('#content').css({
+  //       margin: 'auto'
+  //     })
+  //     $('#postamble').css({
+  //       width: '100%',
+  //       textAlign: 'center'
+  //     })
+  //     // 收集所有标题(id包含 'outline-container-' 且以它开头的 div)
+  //     $(`<div id="vue-toc"></div>`).insertAfter('#content>h1')
+  //     $('h1.title').append(searchTmpl)
+  //     const outlines = findOutlines()
+  //     console.log(outlines, 1000)
+  //     $(tocSelector).remove()
+  //     Vue.createApp({
+  //       template: `
+  // <el-menu clas="el-toc-menu">
+  //   <template v-for="(ol,i) in outlines">
+  //     <el-sub-menu v-if="ol.children.length" :index="''+i">
+  //       <template #title><h2 :id="ol.id"><span>{{ol.title}}</span></h2></template>
+  //       <el-menu-item style="padding-left:20px" v-for="(child, ii) in ol.children" :index="i+'-'+ii">
+  //         <h3 :id="child.id">
+  //           <a v-if="child.href" :href="child.href">{{child.title}}</a>
+  //           <span v-else>{{child.title}}</span>
+  //         </h3>
+  //       </el-menu-item>
+  //     </el-sub-menu>
+  //     <el-menu-item v-else style="padding:0">
+  //       <h2 :id="ol.id">
+  //         <a v-if="ol.href" :href="ol.href">{{ol.title}}</a>
+  //         <span v-else>{{ol.title}}</span>
+  //       </h2>
+  //     </el-menu-item>
+  //   </template>
+  // </el-menu>`,
+  //       setup() {
+  //         return {
+  //           outlines
+  //         }
+  //       }
+  //     })
+  //       .use(ElementPlus)
+  //       .mount('#vue-toc')
+  //   } else {
+  //     // n. 网站搜索功能 //////////////////////////////////////////////////////////
+  //     $('#table-of-contents>h2').append(searchTmpl)
+  //     $('#table-of-contents').show()
+  //   }
+  // 1. add github badge /////////////////////////////////////////////////////////
 
   $('span').each(function () {
     var bgColor = $(this).css('background-color');

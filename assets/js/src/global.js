@@ -19,59 +19,59 @@ $(function () {
     // size: "small",
   }
 
-  // 自定义 TOC ///////////////////////////////////////////////////////////////
-  const isHome = /home\.html$/.test(location.pathname)
-  const searchTmpl = `<div id="search">Loading...</div>`
-  if (isHome) {
-    $('#table-of-contents').hide()
-    $('#content').css({
-      margin: 'auto'
-    })
-    $('#postamble').css({
-      width: '100%',
-      textAlign: 'center'
-    })
-    // 收集所有标题(id包含 'outline-container-' 且以它开头的 div)
-    $(`<div id="vue-toc"></div>`).insertAfter('#content>h1')
-    $('h1.title').append(searchTmpl)
-    const outlines = findOutlines()
-    console.log(outlines, 1000)
-    $(tocSelector).remove()
+  // // 自定义 TOC ///////////////////////////////////////////////////////////////
+  //   const isHome = /home\.html$/.test(location.pathname)
+  //   const searchTmpl = `<div id="search">Loading...</div>`
+  //   if (isHome) {
+  //     $('#table-of-contents').hide()
+  //     $('#content').css({
+  //       margin: 'auto'
+  //     })
+  //     $('#postamble').css({
+  //       width: '100%',
+  //       textAlign: 'center'
+  //     })
+  //     // 收集所有标题(id包含 'outline-container-' 且以它开头的 div)
+  //     $(`<div id="vue-toc"></div>`).insertAfter('#content>h1')
+  //     $('h1.title').append(searchTmpl)
+  //     const outlines = findOutlines()
+  //     console.log(outlines, 1000)
+  //     $(tocSelector).remove()
 
-    Vue.createApp({
-      template: `
-<el-menu clas="el-toc-menu">
-  <template v-for="(ol,i) in outlines">
-    <el-sub-menu v-if="ol.children.length" :index="''+i">
-      <template #title><h2 :id="ol.id"><span>{{ol.title}}</span></h2></template>
-      <el-menu-item style="padding-left:20px" v-for="(child, ii) in ol.children" :index="i+'-'+ii">
-        <h3 :id="child.id">
-          <a v-if="child.href" :href="child.href">{{child.title}}</a>
-          <span v-else>{{child.title}}</span>
-        </h3>
-      </el-menu-item>
-    </el-sub-menu>
-    <el-menu-item v-else style="padding:0">
-      <h2 :id="ol.id">
-        <a v-if="ol.href" :href="ol.href">{{ol.title}}</a>
-        <span v-else>{{ol.title}}</span>
-      </h2>
-    </el-menu-item>
-  </template>
-</el-menu>`,
-      setup() {
-        return {
-          outlines
-        }
-      }
-    })
-      .use(ElementPlus)
-      .mount('#vue-toc')
-  } else {
-    // n. 网站搜索功能 //////////////////////////////////////////////////////////
-    $('#table-of-contents>h2').append(searchTmpl)
-    $('#table-of-contents').show()
-  }
+  //     Vue.createApp({
+  //       template: `
+  // <el-menu clas="el-toc-menu">
+  //   <template v-for="(ol,i) in outlines">
+  //     <el-sub-menu v-if="ol.children.length" :index="''+i">
+  //       <template #title><h2 :id="ol.id"><span>{{ol.title}}</span></h2></template>
+  //       <el-menu-item style="padding-left:20px" v-for="(child, ii) in ol.children" :index="i+'-'+ii">
+  //         <h3 :id="child.id">
+  //           <a v-if="child.href" :href="child.href">{{child.title}}</a>
+  //           <span v-else>{{child.title}}</span>
+  //         </h3>
+  //       </el-menu-item>
+  //     </el-sub-menu>
+  //     <el-menu-item v-else style="padding:0">
+  //       <h2 :id="ol.id">
+  //         <a v-if="ol.href" :href="ol.href">{{ol.title}}</a>
+  //         <span v-else>{{ol.title}}</span>
+  //       </h2>
+  //     </el-menu-item>
+  //   </template>
+  // </el-menu>`,
+  //       setup() {
+  //         return {
+  //           outlines
+  //         }
+  //       }
+  //     })
+  //       .use(ElementPlus)
+  //       .mount('#vue-toc')
+  //   } else {
+  //     // n. 网站搜索功能 //////////////////////////////////////////////////////////
+  //     $('#table-of-contents>h2').append(searchTmpl)
+  //     $('#table-of-contents').show()
+  //   }
 
   // 1. add github badge /////////////////////////////////////////////////////////
   $('span').each(function () {
