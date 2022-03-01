@@ -24,7 +24,7 @@ $(function () {
   };
   var ElementPlusOptions = {// size: "small",
   };
-  $('#content').append("<script id=\"utt-client\" type=\"text/javascript\" src=\"/assets/js/dist/client.js\" issue-item=\"pathname\" repo=\"gcclll/cheng92-comments\" theme=\"github-light\" async></script>"); // valine ///////////////////////////////////////////////////////////////////
+  $('#content').append("<script id=\"utt-client\" type=\"text/javascript\" src=\"/assets/js/dist/client.js\" issue-term=\"pathname\" repo=\"gcclll/cheng92-comments\" theme=\"github-light\" async></script>"); // valine ///////////////////////////////////////////////////////////////////
 
   $('#content').append("\n<div id=\"vcomments\"></div>\n<script>\n        new Valine({\n            el: '#vcomments',\n            appId: 'dwjufJhAgWQzU3evb1th5SrC-gzGzoHsz',\n            appKey: 'z7BITHKt5oI9zuxdfp8X9tUN'\n        })\n</script>\n");
   var searchTmpl = "<div id=\"search\">Loading...</div>"; // // 自定义 TOC ///////////////////////////////////////////////////////////////
