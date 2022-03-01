@@ -173,9 +173,10 @@ $(function () {
     parents.each(function () {
       children.push({
         title: trimText(this, "h".concat(hn)),
-        children: findOutlines(this, ++hn, false)
+        children: findOutlines(this, hn, false)
       });
     });
+    hn++;
     return children;
   }
 });
