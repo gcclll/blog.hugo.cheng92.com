@@ -1,7 +1,10 @@
 $(function () {
-  // 0. 网站胡一些静态数据 ////////////////////////////////////////////////////
+  // 网站胡一些静态数据 ////////////////////////////////////////////////////
   const deduped = dedupStats()
   const tocSelector = 'div[id^="outline-container-"]'
+  // 检测是不是移动端 //////////////////////////////////////////////////////
+  const md = new MobileDetect(window.navigator.userAgent)
+  const isMobile = md.mobile()
   const cached = {
     current: deduped.reduce((arr, curr) => {
       if (
@@ -19,32 +22,35 @@ $(function () {
     // size: "small",
   }
 
+  $('#toggle-valine').click(function () {
+    $('#vcomments').toggle()
+  })
+
+  // const isHome = /home\.html$/.test(location.pathname)
+  // if (isHome) {
+  // ...
+  // } else {
   $('#content').append(
     `<script id="utt-client" type="text/javascript" src="/assets/js/dist/client.js" issue-term="pathname" repo="gcclll/cheng92-comments" theme="github-light" async></script>`
   )
 
   // valine ///////////////////////////////////////////////////////////////////
   $('#content').append(`
-<button id="toggle-valine" type="button" class="btn btn-success">
-显示 <a target="_blank" href="https://valine.js.org/">Valine</a> 评论系统
-</button>
-<div id="vcomments" style="display:none"></div>
-<script>
-        new Valine({
-            el: '#vcomments',
-            appId: 'dwjufJhAgWQzU3evb1th5SrC-gzGzoHsz',
-            appKey: 'z7BITHKt5oI9zuxdfp8X9tUN'
-        })
-</script>
-`)
-
-  $('#toggle-valine').click(function () {
-    $('#vcomments').toggle()
-  })
+    <button id="toggle-valine" type="button" class="btn btn-success">
+      显示 <a target="_blank" href="https://valine.js.org/">Valine</a> 评论系统
+    </button>
+    <div id="vcomments" style="display:none"></div>
+    <script>
+      new Valine({
+          el: '#vcomments',
+          appId: 'dwjufJhAgWQzU3evb1th5SrC-gzGzoHsz',
+          appKey: 'z7BITHKt5oI9zuxdfp8X9tUN'
+      })
+    </script>`)
+  // }
 
   const searchTmpl = `<div id="search">Loading...</div>`
   // // 自定义 TOC ///////////////////////////////////////////////////////////////
-  //   const isHome = /home\.html$/.test(location.pathname)
   //   if (isHome) {
   //     $('#table-of-contents').hide()
   //     $('#content').css({
@@ -95,6 +101,12 @@ $(function () {
   //     $('#table-of-contents').show()
   //   }
 
+  window.alert('isMobile:' + isMobile)
+  if (isMobile) {
+    $('h1.title').append(
+      `<img class="title-phone" src="/assets/img/phone.svg"/>`
+    )
+  }
   $('#table-of-contents>h2').append(searchTmpl)
   // 1. add github badge /////////////////////////////////////////////////////////
   $('span').each(function () {
@@ -110,14 +122,6 @@ $(function () {
         '<img src="https://img.shields.io/github/followers/gcclll?style=social"></a></span>'
     )
   )
-
-  // 3. 检测是不是移动端 //////////////////////////////////////////////////////
-  const md = new MobileDetect(window.navigator.userAgent)
-  if (md.mobile()) {
-    $('h1.title').append(
-      `<img class="title-phone" src="/assets/img/phone.svg"/>`
-    )
-  }
 
   const app = Vue.createApp({
     template: `
