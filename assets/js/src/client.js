@@ -19,7 +19,7 @@ $(function () {
 
   console.log(script, 0)
   // gather script element's attributes
-  const attrs = script.attrs()
+  const attrs = script.attr()
 
   console.log(attrs, 1)
 

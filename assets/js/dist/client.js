@@ -16,7 +16,7 @@ $(function () {
   var script = $('#utt-client');
   console.log(script, 0); // gather script element's attributes
 
-  var attrs = script.attrs();
+  var attrs = script.attr();
   console.log(attrs, 1);
 
   if (attrs.theme === preferredThemeId) {
