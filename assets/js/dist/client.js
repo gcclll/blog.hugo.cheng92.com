@@ -1,40 +1,65 @@
 "use strict";
 
 $(function () {
-  console.log('xxxxx');
-  var e = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'github-dark' : 'github-light',
-      t = new URL(location.href),
-      n = t.searchParams.get('utterances');
-  n && (localStorage.setItem('utterances-session', n), t.searchParams["delete"]('utterances'), history.replaceState(void 0, document.title, t.href));
-  var r = document.currentScript;
-  void 0 === r && (r = document.querySelector('script[src^="/assets/js/dist/client.js"],script[src^="http://localhost:4000/client.js"]'));
-  var i = {};
+  var preferredTheme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'github-dark' : 'github-light';
+  var preferredThemeId = 'preferred-color-scheme';
+  var url = new URL(location.href); // slice session from query string
 
-  for (var _e = 0; _e < r.attributes.length; _e++) {
-    var _t = r.attributes.item(_e);
+  var session = url.searchParams.get('utterances');
 
-    i[_t.name.replace(/^data-/, '')] = _t.value;
+  if (session) {
+    localStorage.setItem('utterances-session', session);
+    url.searchParams["delete"]('utterances');
+    history.replaceState(undefined, document.title, url.href);
   }
 
-  'preferred-color-scheme' === i.theme && (i.theme = e);
-  var a = document.querySelector("link[rel='canonical']");
-  i.url = a ? a.href : t.origin + t.pathname + t.search, i.origin = t.origin, i.pathname = t.pathname.length < 2 ? 'index' : t.pathname.substr(1).replace(/\.\w+$/, ''), i.title = document.title;
-  var s = document.querySelector("meta[name='description']");
-  i.description = s ? s.content : '';
-  var o = encodeURIComponent(i.description).length;
-  o > 1e3 && (i.description = i.description.substr(0, Math.floor(1e3 * i.description.length / o)));
-  var c = document.querySelector("meta[property='og:title'],meta[name='og:title']");
-  i['og:title'] = c ? c.content : '', i.session = n || localStorage.getItem('utterances-session') || '', document.head.insertAdjacentHTML('afterbegin', '<style>\n    .utterances {\n      position: relative;\n      box-sizing: border-box;\n      width: 100%;\n      max-width: 760px;\n      margin-left: auto;\n      margin-right: auto;\n    }\n    .utterances-frame {\n      color-scheme: light;\n      position: absolute;\n      left: 0;\n      right: 0;\n      width: 1px;\n      min-width: 100%;\n      max-width: 100%;\n      height: 100%;\n      border: 0;\n    }\n  </style>');
-  var l = r.src.match(/^https:\/\/utteranc\.es|http:\/\/localhost:\d+/)[0],
-      h = "".concat(l, "/utterances.html");
-  console.log({
-    i: i
-  }, new URLSearchParams(i));
-  r.insertAdjacentHTML('afterend', "<div class=\"utterances\">\n    <iframe class=\"utterances-frame\" title=\"Comments\" scrolling=\"no\" src=\"".concat(h, "?").concat(new URLSearchParams(i), "\" loading=\"lazy\"></iframe>\n  </div>"));
-  var m = r.nextElementSibling;
-  r.parentElement.removeChild(r), addEventListener('message', function (e) {
-    if (e.origin !== l) return;
-    var t = e.data;
-    t && 'resize' === t.type && t.height && (m.style.height = "".concat(t.height, "px"));
+  var script = $('#utt-client').get(0); // gather script element's attributes
+
+  var attrs = $(script).attrs();
+  console.log(attrs, 1);
+
+  if (attrs.theme === preferredThemeId) {
+    attrs.theme = preferredTheme;
+  } // gather page attributes
+
+
+  var canonicalLink = document.querySelector("link[rel='canonical']");
+  attrs.url = canonicalLink ? canonicalLink.href : url.origin + url.pathname + url.search;
+  attrs.origin = url.origin;
+  attrs.pathname = url.pathname.length < 2 ? 'index' : url.pathname.substr(1).replace(/\.\w+$/, '');
+  attrs.title = document.title;
+  var descriptionMeta = document.querySelector("meta[name='description']");
+  attrs.description = descriptionMeta ? descriptionMeta.content : ''; // truncate descriptions that would trigger 414 "URI Too Long"
+
+  var len = encodeURIComponent(attrs.description).length;
+
+  if (len > 1000) {
+    attrs.description = attrs.description.substr(0, Math.floor(attrs.description.length * 1000 / len));
+  }
+
+  var ogtitleMeta = document.querySelector("meta[property='og:title'],meta[name='og:title']");
+  attrs['og:title'] = ogtitleMeta ? ogtitleMeta.content : '';
+  attrs.session = session || localStorage.getItem('utterances-session') || ''; // create the standard utterances styles and insert them at the beginning of the
+  // <head> for easy overriding.
+  // NOTE: the craziness with "width" is for mobile safari :(
+
+  document.head.insertAdjacentHTML('afterbegin', "<style>\n    .utterances {\n      position: relative;\n      box-sizing: border-box;\n      width: 100%;\n      max-width: 760px;\n      margin-left: auto;\n      margin-right: auto;\n    }\n    .utterances-frame {\n      color-scheme: light;\n      position: absolute;\n      left: 0;\n      right: 0;\n      width: 1px;\n      min-width: 100%;\n      max-width: 100%;\n      height: 100%;\n      border: 0;\n    }\n  </style>"); // create the comments iframe and it's responsive container
+
+  var utterancesOrigin = 'https://utteranc.es';
+  var frameUrl = "".concat(utterancesOrigin, "/utterances.html");
+  script.insertAdjacentHTML('afterend', "<div class=\"utterances\">\n    <iframe class=\"utterances-frame\" title=\"Comments\" scrolling=\"no\" src=\"".concat(frameUrl, "?").concat(new URLSearchParams(attrs), "\" loading=\"lazy\"></iframe>\n  </div>"));
+  var container = script.nextElementSibling;
+  script.parentElement.removeChild(script); // adjust the iframe's height when the height of it's content changes
+
+  addEventListener('message', function (event) {
+    if (event.origin !== utterancesOrigin) {
+      return;
+    }
+
+    var data = event.data;
+
+    if (data && data.type === 'resize' && data.height) {
+      container.style.height = "".concat(data.height, "px");
+    }
   });
 });
