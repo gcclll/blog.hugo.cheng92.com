@@ -104,7 +104,7 @@ $(function () {
   :fetch-suggestions="querySearch"
   :trigger-on-focus="false"
   class="inline-input search-input"
-  placeholder="Please Input Search Content"
+  placeholder="全文或本文中搜索..."
   @select="handleSelect"
 >
   <template #suffix>
