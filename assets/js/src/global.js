@@ -68,6 +68,7 @@ $(function () {
               if (ol.children.length) {
                 ol.children = filter(ol.children)
               }
+              console.log(ol.children, 1000)
               if (
                 ol.title
                   .toLowerCase()
