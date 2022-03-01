@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <!-- 2022-03-01 Tue 11:41 -->
+  <!-- 2022-03-01 Tue 13:04 -->
   <meta charset="utf-8">
   <meta name="viewport" content=
   "width=device-width, initial-scale=1">
@@ -269,12 +269,46 @@
 <body>
   <div id="content" class="content">
     <h1 class="title">vue script setup</h1>
+    <div id="table-of-contents" role="doc-toc">
+      <h2>Table of Contents</h2>
+      <div id="text-table-of-contents" role="doc-toc">
+        <ul>
+          <li>
+            <a href="#orgeb0211b">1. 说明</a>
+          </li>
+        </ul>
+      </div>
+    </div>
     <p><a href="/"><img src=
     "https://img.shields.io/badge/GCCLL-Homepage-green?logo=gnu-emacs"></a></p>
+    <div id="outline-container-orgeb0211b" class="outline-2">
+      <h2 id="orgeb0211b"><span class="section-number-2">1.</span>
+      说明</h2>
+      <div class="outline-text-2" id="text-1">
+        <p>涉及的源码包： <a href=
+        "https://github.com/vuejs/vue-next/tree/master/packages/compiler-sfc">
+        compiler-sfc</a>, <a href=
+        "https://github.com/vuejs/vue-next/tree/master/packages/compiler-core">
+        compiler-core</a>。</p>
+        <p>SFC <code>&lt;script setup&gt;</code> 的编译相关代码在 <a href=
+        "https://github.com/vuejs/vue-next/blob/master/packages/compiler-sfc/src/compileScript.ts">
+        packages/compiler-sfc/src/compileScript.ts</a></p>
+        <p>使用到的第三方插件 ：</p>
+        <p><a href=
+        "https://babeljs.io/docs/en/babel-parser">@babel/parser-&gt;parse</a>
+        解析出 AST</p>
+        <p><a href=
+        "https://github.com/Rich-Harris/magic-string">magic-string</a>
+        字符串替换</p>
+        <p><a href=
+        "https://github.com/Rich-Harris/estree-walker">estree-walker</a>
+        AST 树遍历</p>
+      </div>
+    </div>
   </div>
   <div id="postamble" class="status">
     <p class="author">Author: Zhicheng Lee</p>
-    <p class="date">Created: 2022-03-01 Tue 11:41</p>
+    <p class="date">Created: 2022-03-01 Tue 13:04</p>
   </div>
 </body>
 </html>
