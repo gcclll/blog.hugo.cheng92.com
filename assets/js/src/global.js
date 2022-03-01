@@ -195,6 +195,7 @@ $(function () {
   }
 
   function trimText(ele, h) {
+    console.log(ele, 10000)
     return $(ele).children(h).text().replace(/\n/g, '').replace(/\s+/g, ' ')
   }
 
@@ -206,7 +207,6 @@ $(function () {
     } else {
       parents = $(parents).children(selector)
     }
-    console.log(parents, 10000)
     parents.each(function () {
       children.push({
         title: trimText(this, `h${hn}`),
