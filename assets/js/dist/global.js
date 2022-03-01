@@ -22,7 +22,7 @@ $(function () {
 
   }; // 收集所有标题(id包含 'outline-container-' 且以它开头的 div)
 
-  var outlines = findOutlines(null);
+  var outlines = findOutlines();
   console.log(outlines, '111'); // 1. add github badge /////////////////////////////////////////////////////////
 
   $('span').each(function () {
@@ -154,17 +154,15 @@ $(function () {
   }
 
   function trimText(ele, h) {
-    console.log(ele, h, 10000);
     return $(ele).children(h).text().replace(/\n/g, '').replace(/\s+/g, ' ');
   }
 
   function findOutlines(parents) {
     var hn = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 2;
-    var root = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : true;
     var children = [];
     var selector = 'div[id^="outline-container-"]';
 
-    if (parents === null) {
+    if (parents == null) {
       parents = $(selector);
     } else {
       parents = $(parents).children(selector);
@@ -176,7 +174,7 @@ $(function () {
       if (title) {
         children.push({
           title: title,
-          children: findOutlines(this, ++hn, false)
+          children: findOutlines(this, hn + 1)
         });
       }
     });
