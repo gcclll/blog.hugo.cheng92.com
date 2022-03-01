@@ -204,8 +204,9 @@ $(function () {
     if (parents === null) {
       parents = $(selector)
     } else {
-      parents = $(parent).children(selector)
+      parents = $(parents).children(selector)
     }
+    console.log(parents, 10000)
     parents.each(function () {
       children.push({
         title: trimText(this, `h${hn}`),
