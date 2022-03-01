@@ -14,13 +14,16 @@ $(function () {
     }, []), // 本文
     whole: deduped // 全站
   }
+  const ElementPlusOptions = {
+    // size: "small",
+  }
 
   // 自定义 TOC ///////////////////////////////////////////////////////////////
   const isHome = /home\.html$/.test(location.pathname)
   if (isHome) {
     // 收集所有标题(id包含 'outline-container-' 且以它开头的 div)
     $('#content').append(`<div id="vue-toc"></div>`)
-    createApp({
+    Vue.createApp({
       template: `
 <el-menu clas="el-toc-menu">
   <template v-for="(ol,i) in outlines">
@@ -69,12 +72,7 @@ $(function () {
   // n. 网站搜索功能 //////////////////////////////////////////////////////////
   $('#table-of-contents>h2').append(`<div id="search">Loading...</div>`)
 
-  const ElementPlusOptions = {
-    // size: "small",
-  }
-  const { createApp } = Vue
-
-  const app = createApp({
+  const app = Vue.createApp({
     template: `
 
 <el-autocomplete
