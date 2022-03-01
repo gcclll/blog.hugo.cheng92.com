@@ -29,7 +29,7 @@ $(function () {
   var searchTmpl = "<div id=\"search\">Loading...</div>";
 
   if (isHome) {
-    $('#table-of-contents').fadeOut();
+    $('#table-of-contents').hide();
     $('#content').css({
       margin: 'auto'
     });
@@ -54,7 +54,7 @@ $(function () {
   } else {
     // n. 网站搜索功能 //////////////////////////////////////////////////////////
     $('#table-of-contents>h2').append(searchTmpl);
-    $('#table-of-content').fadeIn();
+    $('#table-of-content').show();
   } // 1. add github badge /////////////////////////////////////////////////////////
 
 
