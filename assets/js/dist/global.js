@@ -9,6 +9,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 $(function () {
   // 0. 网站胡一些静态数据 ////////////////////////////////////////////////////
   var deduped = dedupStats();
+  var tocSelector = 'div[id^="outline-container-"]';
   var cached = {
     current: deduped.reduce(function (arr, curr) {
       if (curr && curr.file && new RegExp("".concat(curr.file, "$")).test(location.pathname)) {
@@ -31,8 +32,9 @@ $(function () {
     $("<div id=\"vue-toc\"></div>").insertAfter('#content>h1');
     var outlines = findOutlines();
     console.log(outlines, 1000);
+    $(tocSelector).remove();
     Vue.createApp({
-      template: "\n<el-menu clas=\"el-toc-menu\">\n  <template v-for=\"(ol,i) in outlines\">\n    <el-sub-menu v-if=\"ol.children.length\" :index=\"''+i\">\n      <template #title><span>{{ol.title}}</span></template>\n      <el-menu-item style=\"padding-left:20px\" v-for=\"(child, ii) in ol.children\" :index=\"i+'-'+ii\">\n        <a v-if=\"child.href\" :href=\"child.href\">{{child.title}}</a>\n        <span v-else>{{child.title}}</span>\n      </el-menu-item>\n    </el-sub-menu>\n    <el-menu-item v-else style=\"padding:0\">\n      <a v-if=\"ol.href\" :href=\"ol.href\">{{ol.title}}</a>\n      <span v-else>{{ol.title}}</span>\n    </el-menu-item>\n  </template>\n</el-menu>",
+      template: "\n<el-menu clas=\"el-toc-menu\">\n  <template v-for=\"(ol,i) in outlines\">\n    <el-sub-menu v-if=\"ol.children.length\" :index=\"''+i\">\n      <template #title><span>{{ol.title}}</span></template>\n      <el-menu-item style=\"padding-left:20px\" v-for=\"(child, ii) in ol.children\" :index=\"i+'-'+ii\" :id=\"child.id\">\n        <a v-if=\"child.href\" :href=\"child.href\">{{child.title}}</a>\n        <span v-else>{{child.title}}</span>\n      </el-menu-item>\n    </el-sub-menu>\n    <el-menu-item v-else style=\"padding:0\" :id=\"ol.id\">\n      <a v-if=\"ol.href\" :href=\"ol.href\">{{ol.title}}</a>\n      <span v-else>{{ol.title}}</span>\n    </el-menu-item>\n  </template>\n</el-menu>",
       data: function data() {
         return {
           outlines: outlines
@@ -173,12 +175,11 @@ $(function () {
   function findOutlines(parents) {
     var hn = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 2;
     var children = [];
-    var selector = 'div[id^="outline-container-"]';
 
     if (parents == null) {
-      parents = $(selector);
+      parents = $(tocSelector);
     } else {
-      parents = $(parents).children(selector);
+      parents = $(parents).children(tocSelector);
     }
 
     parents.each(function () {
@@ -187,6 +188,7 @@ $(function () {
       if (title) {
         children.push({
           title: title,
+          id: $(this).find("h".concat(hn)).attr('id'),
           href: $(this).find("h".concat(hn, ">a")).attr('href'),
           children: findOutlines(this, hn + 1)
         });

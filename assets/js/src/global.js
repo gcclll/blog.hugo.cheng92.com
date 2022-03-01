@@ -1,6 +1,7 @@
 $(function () {
   // 0. 网站胡一些静态数据 ////////////////////////////////////////////////////
   const deduped = dedupStats()
+  const tocSelector = 'div[id^="outline-container-"]'
   const cached = {
     current: deduped.reduce((arr, curr) => {
       if (
@@ -25,18 +26,20 @@ $(function () {
     $(`<div id="vue-toc"></div>`).insertAfter('#content>h1')
     const outlines = findOutlines()
     console.log(outlines, 1000)
+    $(tocSelector).remove()
+
     Vue.createApp({
       template: `
 <el-menu clas="el-toc-menu">
   <template v-for="(ol,i) in outlines">
     <el-sub-menu v-if="ol.children.length" :index="''+i">
       <template #title><span>{{ol.title}}</span></template>
-      <el-menu-item style="padding-left:20px" v-for="(child, ii) in ol.children" :index="i+'-'+ii">
+      <el-menu-item style="padding-left:20px" v-for="(child, ii) in ol.children" :index="i+'-'+ii" :id="child.id">
         <a v-if="child.href" :href="child.href">{{child.title}}</a>
         <span v-else>{{child.title}}</span>
       </el-menu-item>
     </el-sub-menu>
-    <el-menu-item v-else style="padding:0">
+    <el-menu-item v-else style="padding:0" :id="ol.id">
       <a v-if="ol.href" :href="ol.href">{{ol.title}}</a>
       <span v-else>{{ol.title}}</span>
     </el-menu-item>
@@ -227,17 +230,17 @@ $(function () {
 
   function findOutlines(parents, hn = 2) {
     const children = []
-    const selector = 'div[id^="outline-container-"]'
     if (parents == null) {
-      parents = $(selector)
+      parents = $(tocSelector)
     } else {
-      parents = $(parents).children(selector)
+      parents = $(parents).children(tocSelector)
     }
     parents.each(function () {
       const title = trimText(this, `h${hn}`)
       if (title) {
         children.push({
           title,
+          id: $(this).find(`h${hn}`).attr('id'),
           href: $(this).find(`h${hn}>a`).attr('href'),
           children: findOutlines(this, hn + 1)
         })
