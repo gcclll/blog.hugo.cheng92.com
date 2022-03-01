@@ -15,7 +15,7 @@ $(function () {
     history.replaceState(undefined, document.title, url.href)
   }
 
-  const script = $('#utt-client').get(0)
+  const script = $('#utt-client')
 
   // gather script element's attributes
   const attrs = $(script).attrs()

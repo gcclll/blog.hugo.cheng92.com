@@ -13,7 +13,7 @@ $(function () {
     history.replaceState(undefined, document.title, url.href);
   }
 
-  var script = $('#utt-client').get(0); // gather script element's attributes
+  var script = $('#utt-client'); // gather script element's attributes
 
   var attrs = $(script).attrs();
   console.log(attrs, 1);

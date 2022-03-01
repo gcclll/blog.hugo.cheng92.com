@@ -20,7 +20,7 @@ $(function () {
   }
 
   $('#content').append(
-    `<script id="utt-client" type="text/javascript" src="/assets/js/dist/client.js"></script>`
+    `<script id="utt-client" type="text/javascript" src="/assets/js/dist/client.js" issue-item="pathname" repo="gcclll/cheng92-comments" theme="github-light" async></script>`
   )
 
   // valine ///////////////////////////////////////////////////////////////////
