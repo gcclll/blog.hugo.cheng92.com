@@ -19,7 +19,9 @@ $(function () {
     // size: "small",
   }
 
-  $('#content').append(`<script src="/assets/js/dist/client.js"></script>`)
+  $('#content').append(
+    `<script type="text/javscript" src="/assets/js/dist/client.js"></script>`
+  )
 
   // valine ///////////////////////////////////////////////////////////////////
   $('#content').append(`
