@@ -206,6 +206,6 @@ $(function () {
         })
       outlines.push(o)
     })
+    return outlines
   }
-  return outlines
 })
