@@ -23,9 +23,9 @@ $(function () {
 
   };
   var ElementPlusOptions = {// size: "small",
-  }; // // 自定义 TOC ///////////////////////////////////////////////////////////////
+  };
+  var searchTmpl = "<div id=\"search\">Loading...</div>"; // // 自定义 TOC ///////////////////////////////////////////////////////////////
   //   const isHome = /home\.html$/.test(location.pathname)
-  //   const searchTmpl = `<div id="search">Loading...</div>`
   //   if (isHome) {
   //     $('#table-of-contents').hide()
   //     $('#content').css({
