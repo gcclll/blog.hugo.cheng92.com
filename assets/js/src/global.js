@@ -68,7 +68,11 @@ $(function () {
               if (ol.children.length) {
                 ol.children = filter(ol.children)
               }
-              if (ol.title.indexOf(searchText.value) > -1) {
+              if (
+                ol.title
+                  .toLowerCase()
+                  .indexOf((searchText.value || '').toLowerCase()) > -1
+              ) {
                 return ol
               }
             })
