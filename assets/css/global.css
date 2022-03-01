@@ -1,5 +1,6 @@
 /*请勿手动修改该文件，它是由 sass 编译生成的。*/
 #table-of-contents {
+  display: none;
   width: 316px !important; }
 
 #content img.my-search-icon,

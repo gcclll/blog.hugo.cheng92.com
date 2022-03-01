@@ -54,6 +54,7 @@ $(function () {
   } else {
     // n. 网站搜索功能 //////////////////////////////////////////////////////////
     $('#table-of-contents>h2').append(searchTmpl);
+    $('#table-of-content').fadeIn();
   } // 1. add github badge /////////////////////////////////////////////////////////
 
 
