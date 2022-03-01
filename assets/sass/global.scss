@@ -8,6 +8,15 @@
   img.title-phone {
     max-width: 30px;
   }
+
+  .todo {
+    &.DOING {
+      background-color: magenta;
+    }
+    &.TODO {
+      background-color: #f29f97;
+    }
+  }
 }
 
 #postamble {

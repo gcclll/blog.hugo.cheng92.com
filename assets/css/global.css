@@ -5,6 +5,10 @@
 #content img.my-search-icon,
 #content img.title-phone {
   max-width: 30px; }
+#content .todo.DOING {
+  background-color: magenta; }
+#content .todo.TODO {
+  background-color: #f29f97; }
 
 #postamble .author .follows {
   margin-left: 4px; }
