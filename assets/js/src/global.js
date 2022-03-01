@@ -27,6 +27,10 @@ $(function () {
     $('#content').css({
       margin: 'auto'
     })
+    $('#postamble').css({
+      width: '100%',
+      textAlign: 'center'
+    })
     // 收集所有标题(id包含 'outline-container-' 且以它开头的 div)
     $(`<div id="vue-toc"></div>`).insertAfter('#content>h1')
     $('h1.title').append(searchTmpl)
