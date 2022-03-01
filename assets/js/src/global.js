@@ -33,7 +33,7 @@ $(function () {
 <el-menu clas="el-toc-menu">
   <template v-for="(ol,i) in outlines">
     <el-sub-menu v-if="ol.children.length" :index="''+i">
-      <template #title><span>{{ol.title}}</span></template>
+      <template #title><h2 :id="ol.id"><span>{{ol.title}}</span></h2></template>
       <el-menu-item style="padding-left:20px" v-for="(child, ii) in ol.children" :index="i+'-'+ii">
         <h3 :id="child.id">
           <a v-if="child.href" :href="child.href">{{child.title}}</a>
