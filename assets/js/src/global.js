@@ -34,7 +34,7 @@ $(function () {
         <span>{{child.title}}</span>
       </el-menu-item>
     </el-sub-menu>
-    <el-menu-item v-else><span>{{ol.title}}</span></el-menu-item>
+    <el-menu-item v-else style="padding:0"><span>{{ol.title}}</span></el-menu-item>
   </template>
 </el-menu>`,
       data() {

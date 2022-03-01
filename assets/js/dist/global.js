@@ -31,7 +31,7 @@ $(function () {
     $("<div id=\"vue-toc\"></div>").insertAfter('#content>h1'); // $('#content').append()
 
     Vue.createApp({
-      template: "\n<el-menu clas=\"el-toc-menu\">\n  <template v-for=\"(ol,i) in outlines\">\n    <el-sub-menu v-if=\"ol.children.length\" :index=\"''+i\">\n      <template #title><span>{{ol.title}}</span></template>\n      <el-menu-item v-for=\"(child, ii) in ol.children\" :index=\"i+'-'+ii\">\n        <span>{{child.title}}</span>\n      </el-menu-item>\n    </el-sub-menu>\n    <el-menu-item v-else><span>{{ol.title}}</span></el-menu-item>\n  </template>\n</el-menu>",
+      template: "\n<el-menu clas=\"el-toc-menu\">\n  <template v-for=\"(ol,i) in outlines\">\n    <el-sub-menu v-if=\"ol.children.length\" :index=\"''+i\">\n      <template #title><span>{{ol.title}}</span></template>\n      <el-menu-item v-for=\"(child, ii) in ol.children\" :index=\"i+'-'+ii\">\n        <span>{{child.title}}</span>\n      </el-menu-item>\n    </el-sub-menu>\n    <el-menu-item v-else style=\"padding:0\"><span>{{ol.title}}</span></el-menu-item>\n  </template>\n</el-menu>",
       data: function data() {
         return {
           outlines: findOutlines()
