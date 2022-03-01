@@ -60,6 +60,7 @@ $(function () {
 
   var utterancesOrigin = 'https://utteranc.es';
   var frameUrl = "".concat(utterancesOrigin, "/utterances.html");
+  console.log(new URLSearchParams(attrs));
   script.insertAdjacentHTML('afterend', "<div class=\"utterances\">\n    <iframe class=\"utterances-frame\" title=\"Comments\" scrolling=\"no\" src=\"".concat(frameUrl, "?").concat(new URLSearchParams(attrs), "\" loading=\"lazy\"></iframe>\n  </div>"));
   var container = script.nextElementSibling;
   script.parentElement.removeChild(script); // adjust the iframe's height when the height of it's content changes

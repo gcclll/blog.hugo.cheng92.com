@@ -92,6 +92,7 @@ $(function () {
   // create the comments iframe and it's responsive container
   const utterancesOrigin = 'https://utteranc.es'
   const frameUrl = `${utterancesOrigin}/utterances.html`
+  console.log(new URLSearchParams(attrs))
   script.insertAdjacentHTML(
     'afterend',
     `<div class="utterances">
