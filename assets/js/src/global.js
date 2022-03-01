@@ -31,7 +31,7 @@ $(function () {
   <template v-for="(ol,i) in outlines">
     <el-sub-menu v-if="ol.children.length" :index="''+i">
       <template #title><span>{{ol.title}}</span></template>
-      <el-menu-item v-for="(child, ii) in ol.children" :index="i+'-'+ii">
+      <el-menu-item style="padding-left:20px" v-for="(child, ii) in ol.children" :index="i+'-'+ii">
         <a v-if="child.href" :href="child.href">{{child.title}}</a>
         <span v-else>{{child.title}}</span>
       </el-menu-item>
