@@ -26,7 +26,7 @@ $(function () {
     $(`<div id="vue-toc"></div>`).insertAfter('#content>h1')
     const outlines = findOutlines()
     console.log(outlines, 1000)
-    // $(tocSelector).remove()
+    $(tocSelector).remove()
 
     Vue.createApp({
       template: `
