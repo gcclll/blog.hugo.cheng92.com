@@ -1,4 +1,3 @@
-/** jsx?|tsx? file header */
 $(function () {
   console.log('xxxxx')
   const e = window.matchMedia('(prefers-color-scheme: dark)').matches

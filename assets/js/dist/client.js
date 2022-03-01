@@ -1,6 +1,5 @@
 "use strict";
 
-/** jsx?|tsx? file header */
 $(function () {
   console.log('xxxxx');
   var e = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'github-dark' : 'github-light',
