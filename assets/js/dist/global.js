@@ -31,10 +31,10 @@ $(function () {
     // 收集所有标题(id包含 'outline-container-' 且以它开头的 div)
     $("<div id=\"vue-toc\"></div>").insertAfter('#content>h1');
     var outlines = findOutlines();
-    console.log(outlines, 1000);
-    $(tocSelector).remove();
+    console.log(outlines, 1000); // $(tocSelector).remove()
+
     Vue.createApp({
-      template: "\n<el-menu clas=\"el-toc-menu\">\n  <template v-for=\"(ol,i) in outlines\">\n    <el-sub-menu v-if=\"ol.children.length\" :index=\"''+i\">\n      <template #title><span>{{ol.title}}</span></template>\n      <el-menu-item style=\"padding-left:20px\" v-for=\"(child, ii) in ol.children\" :index=\"i+'-'+ii\" :id=\"child.id\">\n        <a v-if=\"child.href\" :href=\"child.href\">{{child.title}}</a>\n        <span v-else>{{child.title}}</span>\n      </el-menu-item>\n    </el-sub-menu>\n    <el-menu-item v-else style=\"padding:0\" :id=\"ol.id\">\n      <a v-if=\"ol.href\" :href=\"ol.href\">{{ol.title}}</a>\n      <span v-else>{{ol.title}}</span>\n    </el-menu-item>\n  </template>\n</el-menu>",
+      template: "\n<el-menu clas=\"el-toc-menu\">\n  <template v-for=\"(ol,i) in outlines\">\n    <el-sub-menu v-if=\"ol.children.length\" :index=\"''+i\">\n      <template #title><span>{{ol.title}}</span></template>\n      <el-menu-item style=\"padding-left:20px\" v-for=\"(child, ii) in ol.children\" :index=\"i+'-'+ii\">\n        <h3 :id=\"child.id\">\n          <a v-if=\"child.href\" :href=\"child.href\">{{child.title}}</a>\n          <span v-else>{{child.title}}</span>\n        </h3>\n      </el-menu-item>\n    </el-sub-menu>\n    <el-menu-item v-else style=\"padding:0\">\n      <h2 :id=\"ol.id\">\n        <a v-if=\"ol.href\" :href=\"ol.href\">{{ol.title}}</a>\n        <span v-else>{{ol.title}}</span>\n      </h2>\n    </el-menu-item>\n  </template>\n</el-menu>",
       data: function data() {
         return {
           outlines: outlines

@@ -26,7 +26,7 @@ $(function () {
     $(`<div id="vue-toc"></div>`).insertAfter('#content>h1')
     const outlines = findOutlines()
     console.log(outlines, 1000)
-    $(tocSelector).remove()
+    // $(tocSelector).remove()
 
     Vue.createApp({
       template: `
@@ -34,14 +34,18 @@ $(function () {
   <template v-for="(ol,i) in outlines">
     <el-sub-menu v-if="ol.children.length" :index="''+i">
       <template #title><span>{{ol.title}}</span></template>
-      <el-menu-item style="padding-left:20px" v-for="(child, ii) in ol.children" :index="i+'-'+ii" :id="child.id">
-        <a v-if="child.href" :href="child.href">{{child.title}}</a>
-        <span v-else>{{child.title}}</span>
+      <el-menu-item style="padding-left:20px" v-for="(child, ii) in ol.children" :index="i+'-'+ii">
+        <h3 :id="child.id">
+          <a v-if="child.href" :href="child.href">{{child.title}}</a>
+          <span v-else>{{child.title}}</span>
+        </h3>
       </el-menu-item>
     </el-sub-menu>
-    <el-menu-item v-else style="padding:0" :id="ol.id">
-      <a v-if="ol.href" :href="ol.href">{{ol.title}}</a>
-      <span v-else>{{ol.title}}</span>
+    <el-menu-item v-else style="padding:0">
+      <h2 :id="ol.id">
+        <a v-if="ol.href" :href="ol.href">{{ol.title}}</a>
+        <span v-else>{{ol.title}}</span>
+      </h2>
     </el-menu-item>
   </template>
 </el-menu>`,
