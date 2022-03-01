@@ -15,7 +15,10 @@ $(function () {
     whole: deduped // 全站
   }
 
-  console.log($('outline-container-*'), '111')
+  // 收集所有标题(id包含 'outline-container-' 且以它开头的 div)
+  const outlines = findOutlines()
+
+  console.log(outlines, '111')
 
   // 1. add github badge /////////////////////////////////////////////////////////
   $('span').each(function () {
@@ -190,4 +193,19 @@ $(function () {
     })
     return results
   }
+
+  function findOutlines() {
+    const outlines = []
+    $('div[id^="outline-container-"]').forEach(function () {
+      const o = { title: '', children: [] }
+      o.title = $(this).children('h2').text()
+      $(this)
+        .children('div[id^="outline-container-"]')
+        .forEach(function () {
+          o.children.push({ title: $(this).children('h3').text() })
+        })
+      outlines.push(o)
+    })
+  }
+  return outlines
 })
