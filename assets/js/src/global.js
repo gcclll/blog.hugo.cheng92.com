@@ -212,11 +212,10 @@ $(function () {
       if (title) {
         children.push({
           title,
-          children: findOutlines(this, hn, false)
+          children: findOutlines(this, ++hn, false)
         })
       }
     })
-    hn++
     return children
   }
 })

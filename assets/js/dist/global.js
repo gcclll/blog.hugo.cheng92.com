@@ -176,11 +176,10 @@ $(function () {
       if (title) {
         children.push({
           title: title,
-          children: findOutlines(this, hn, false)
+          children: findOutlines(this, ++hn, false)
         });
       }
     });
-    hn++;
     return children;
   }
 });
