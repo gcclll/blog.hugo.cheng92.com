@@ -4,10 +4,9 @@ from bs4 import BeautifulSoup
 import json
 import re
 import os
+import time
 
 list=[]
-
-
 
 def find_h(file):
     for n in range(5):
@@ -45,9 +44,27 @@ def find_a(file):
             })
 
 
+def TimeStampToTime(timestamp):
+    timeStruct = time.localtime(timestamp)
+    return time.strftime('%Y-%m-%d %H:%M:%S', timeStruct)
+
+
+def get_FileCreateTime(file):
+    # filePath = unicode(filePath, 'utf8')
+    t = os.path.getctime(file)
+    return TimeStampToTime(t)
+
+
+timestamps={}
+
 for file in os.listdir("./posts/"):
     if file.endswith('html'):
         soup = BeautifulSoup(open("./posts/" + file), 'html.parser')
+        date = soup.find_all('')
+        timestamps[file] = {
+            "timestamp": get_FileCreateTime("./posts/" + file),
+            "title": soup.head.title.get_text()
+        }
         find_h(file)
         find_span(file)
         find_a(file)
@@ -71,7 +88,7 @@ for index in range( len( list ) ):
 
 try:
    f = open("./assets/js/dist/stats.js", 'w', encoding = 'utf-8')
-   f.write("window.$stats="+json.dumps(list))
+   f.write("window.$stats="+json.dumps(list)+";window.$timestamp="+json.dumps(timestamps))
    # perform file operations
 finally:
    f.close()
