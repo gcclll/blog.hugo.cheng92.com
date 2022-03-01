@@ -16,7 +16,7 @@ $(function () {
   }
 
   // 收集所有标题(id包含 'outline-container-' 且以它开头的 div)
-  const outlines = findOutlines()
+  const outlines = findOutlines(null)
 
   console.log(outlines, '111')
 
@@ -194,18 +194,26 @@ $(function () {
     return results
   }
 
-  function findOutlines() {
-    const outlines = []
-    $('div[id^="outline-container-"]').each(function () {
-      const o = { title: '', children: [] }
-      o.title = $(this).children('h2').text()
-      $(this)
-        .children('div[id^="outline-container-"]')
-        .each(function () {
-          o.children.push({ title: $(this).children('h3').text() })
+  function trimText(ele, h) {
+    return $(ele).children(h).text().replace(/\n/g, '').replace(/\s+/g, ' ')
+  }
+
+  function findOutlines(parents, hn = 2, root = true) {
+    const children = []
+    const selector = 'div[id^="outline-container-"]'
+    if (parents === null) {
+      parents = $(selector)
+    } else {
+      parents = $(parent).children(selector)
+    }
+    const eles = root
+      ? $(parent)
+      : eles.each(function () {
+          children.push({
+            title: trimText(this, `h${hn}`),
+            children: findOutlines(this, ++hn, false)
+          })
         })
-      outlines.push(o)
-    })
-    return outlines
+    return children
   }
 })
