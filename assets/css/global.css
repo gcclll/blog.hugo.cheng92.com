@@ -9,7 +9,7 @@
   background-color: magenta; }
 #content .todo.TODO {
   background-color: #f29f97; }
-#content .todo.DONE {
+#content .done.DONE {
   background-color: #ababab; }
 
 #postamble .author .follows {
