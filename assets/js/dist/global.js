@@ -171,10 +171,14 @@ $(function () {
     }
 
     parents.each(function () {
-      children.push({
-        title: trimText(this, "h".concat(hn)),
-        children: findOutlines(this, hn, false)
-      });
+      var title = trimText(this, "h".concat(hn));
+
+      if (title) {
+        children.push({
+          title: title,
+          children: findOutlines(this, hn, false)
+        });
+      }
     });
     hn++;
     return children;

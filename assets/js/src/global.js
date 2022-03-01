@@ -208,10 +208,13 @@ $(function () {
       parents = $(parents).children(selector)
     }
     parents.each(function () {
-      children.push({
-        title: trimText(this, `h${hn}`),
-        children: findOutlines(this, hn, false)
-      })
+      const title = trimText(this, `h${hn}`)
+      if (title) {
+        children.push({
+          title,
+          children: findOutlines(this, hn, false)
+        })
+      }
     })
     hn++
     return children
