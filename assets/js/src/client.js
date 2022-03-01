@@ -12,7 +12,7 @@ $(function () {
   let r = document.currentScript
   void 0 === r &&
     (r = document.querySelector(
-      'script[src^="https://utteranc.es/client.js"],script[src^="http://localhost:4000/client.js"]'
+      'script[src^="/assets/js/dist/client.js"],script[src^="http://localhost:4000/client.js"]'
     ))
   const i = {}
   for (let e = 0; e < r.attributes.length; e++) {

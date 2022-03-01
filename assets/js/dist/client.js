@@ -7,7 +7,7 @@ $(function () {
       n = t.searchParams.get('utterances');
   n && (localStorage.setItem('utterances-session', n), t.searchParams["delete"]('utterances'), history.replaceState(void 0, document.title, t.href));
   var r = document.currentScript;
-  void 0 === r && (r = document.querySelector('script[src^="https://utteranc.es/client.js"],script[src^="http://localhost:4000/client.js"]'));
+  void 0 === r && (r = document.querySelector('script[src^="/assets/js/dist/client.js"],script[src^="http://localhost:4000/client.js"]'));
   var i = {};
 
   for (var _e = 0; _e < r.attributes.length; _e++) {
