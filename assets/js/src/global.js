@@ -30,7 +30,7 @@ $(function () {
 
     Vue.createApp({
       template: `
-<el-menu clas="el-toc-menu">
+<el-menu clas="el-toc-menu" :collapse="true">
   <template v-for="(ol,i) in outlines">
     <el-sub-menu v-if="ol.children.length" :index="''+i">
       <template #title><h2 :id="ol.id"><span>{{ol.title}}</span></h2></template>
