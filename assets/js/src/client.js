@@ -17,8 +17,9 @@ $(function () {
 
   const script = $('#utt-client')
 
+  console.log(script, 0)
   // gather script element's attributes
-  const attrs = $(script).attrs()
+  const attrs = script.attrs()
 
   console.log(attrs, 1)
 
