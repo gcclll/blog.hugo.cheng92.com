@@ -1,11 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <!-- 2022-03-01 Tue 11:01 -->
+  <!-- 2022-03-01 Tue 11:02 -->
   <meta charset="utf-8">
   <meta name="viewport" content=
   "width=device-width, initial-scale=1">
-  <title>React</title>
+  <title>sed command</title>
   <meta name="author" content="Zhicheng Lee">
   <meta name="generator" content="Org Mode">
   <style>
@@ -268,13 +268,73 @@
 </head>
 <body>
   <div id="content" class="content">
-    <h1 class="title">React</h1>
-    <p>badge: GCCLL | Homepage | green | / | gnu-emacs&gt;</p>
-    <p>Hello 💖x React !!!</p>
+    <h1 class="title">sed command</h1>
+    <div id="table-of-contents" role="doc-toc">
+      <h2>Table of Contents</h2>
+      <div id="text-table-of-contents" role="doc-toc">
+        <ul>
+          <li>
+            <a href="#org58ece54">1. 执行 sed</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+    <p><a href="/"><img src=
+    "https://img.shields.io/badge/GCCLL-Homepage-green?logo=gnu-emacs"></a></p>
+    <p><a href=
+    "https://www.gnu.org/software/sed/manual/sed.html">sed, a
+    stream editor</a></p>
+    <p><code>sed</code> 是一个流编辑器，用来在一个输入流上执行基本的文本操作，输入流可以是一个文件或
+    管道。</p>
+    <div id="outline-container-org58ece54" class="outline-2">
+      <h2 id="org58ece54"><span class="section-number-2">1.</span>
+      执行 sed</h2>
+      <div class="outline-text-2" id="text-1">
+        <p><code>$ sed SCRIPT INPUTFILE...</code></p>
+        <p>如：用 ’world’ 替换 input.txt 中所有的 ’hello’</p>
+        <p><code>$ sed 's/hello/world/' input.txt &gt;
+        output.txt</code></p>
+        <div class="org-src-container">
+          <pre class="src src-sh"><span style=
+          "color: #ECBE7B;">echo</span> <span style=
+          "color: #98be65;">"</span>
+<span style="color: #98be65;">hello...</span>
+<span style="color: #98be65;">hello...</span>
+<span style="color: #98be65;">hello...</span>
+<span style="color: #98be65;">"</span>&gt;/tmp/input.txt
+sed <span style=
+"color: #98be65;">'s/hello/world/'</span> /tmp/input.txt &gt; /tmp/output.txt
+<span style="color: #ECBE7B;">cat</span> /tmp/output.txt
+</pre>
+        </div>
+        <p>如果没有指定 <i>INPUTFILE</i> 或者 <i>INPUTFILE</i> 是
+        <code>-</code>, sed 会将标准输入的内容做为处理目标， 下面的命令都是等价的:</p>
+        <div class="org-src-container">
+          <pre class="src src-sh">sed <span style=
+          "color: #98be65;">'s/hello/world/'</span> input.txt &gt; output.txt
+sed <span style=
+"color: #98be65;">'s/hello/world/'</span> &lt; input.txt &gt; output.txt
+<span style=
+"color: #ECBE7B;">cat</span> input.txt | sed <span style=
+"color: #98be65;">'s/hello/world/'</span> - &gt; output.txt
+</pre>
+        </div>
+        <p>sed 默认会将输出写入到标准输出，可以用 <code>i-</code> 去编辑来源文件从而代替打印到标准输出
+        (意思就是直接编辑原文件了)</p>
+        <div class="org-src-container">
+          <pre class="src src-sh"><span style=
+          "color: #ECBE7B;">cat</span> /tmp/input.txt
+sed -i<span style="color: #98be65;">''</span> -e <span style=
+"color: #98be65;">'s/world/hello/'</span> /tmp/input.txt
+<span style="color: #ECBE7B;">cat</span> /tmp/input.txt
+</pre>
+        </div>
+      </div>
+    </div>
   </div>
   <div id="postamble" class="status">
     <p class="author">Author: Zhicheng Lee</p>
-    <p class="date">Created: 2022-03-01 Tue 11:01</p>
+    <p class="date">Created: 2022-03-01 Tue 11:02</p>
   </div>
 </body>
 </html>

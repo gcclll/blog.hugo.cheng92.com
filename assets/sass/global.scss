@@ -107,6 +107,10 @@ blockquote {
   max-width: 30px;
 }
 
+.el-toc-menu {
+  border-right: none;
+}
+
 @media screen and (max-width: 768px) {
   #table-of-contents {
     width: 100% !important;

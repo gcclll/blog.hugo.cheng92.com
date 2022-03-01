@@ -1,11 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <!-- 2022-03-01 Tue 11:01 -->
+  <!-- 2022-03-01 Tue 11:02 -->
   <meta charset="utf-8">
   <meta name="viewport" content=
   "width=device-width, initial-scale=1">
-  <title>React</title>
+  <title>shell basis</title>
   <meta name="author" content="Zhicheng Lee">
   <meta name="generator" content="Org Mode">
   <style>
@@ -268,13 +268,68 @@
 </head>
 <body>
   <div id="content" class="content">
-    <h1 class="title">React</h1>
-    <p>badge: GCCLL | Homepage | green | / | gnu-emacs&gt;</p>
-    <p>Hello 💖x React !!!</p>
+    <h1 class="title">shell basis</h1>
+    <div id="table-of-contents" role="doc-toc">
+      <h2>Table of Contents</h2>
+      <div id="text-table-of-contents" role="doc-toc">
+        <ul>
+          <li>
+            <a href="#reg-delete">1. <code>${}</code> 删除</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+    <p><a href="/"><img src=
+    "https://img.shields.io/badge/GCCLL-Homepage-green?logo=gnu-emacs"></a></p>
+    <div id="outline-container-reg-delete" class="outline-2">
+      <h2 id="reg-delete"><span class="section-number-2">1.</span>
+      <code>${}</code> 删除</h2>
+      <div class="outline-text-2" id="text-reg-delete">
+        <ul class="org-ul">
+          <li><code>#</code> 从左边算起第一个</li>
+          <li><code>%</code> 从右边算起第一个</li>
+          <li><code>##</code> 从左边算起最后一个</li>
+          <li><code>%%</code> 从右边算起最后一个</li>
+          <li><code>*</code> 表示要删除的内容</li>
+        </ul>
+        <p><code>#</code>: 从左边开始， <code>%</code>: 从右边开始</p>
+        <div class="org-src-container">
+          <pre class="src src-sh"><span style=
+          "color: #5B6268;"># </span><span style=
+          "color: #5B6268;">从左边起最后一个 / 开始, 删除它及它之前的所有字符 =&gt; "file.txt"</span>
+<span style="color: #dcaeea;">var1</span>=/path/to/file.txt
+<span style="color: #ECBE7B;">echo</span> $<span style=
+"color: #51afef;">{</span><span style=
+"color: #dcaeea;">var1</span>##*/<span style=
+"color: #51afef;">}</span>
+<span style="color: #5B6268;"># </span><span style=
+"color: #5B6268;">从左边起第一个 to 开始, 删除它及它之前的所有字符 =&gt; "/path2/to/file.txt"</span>
+<span style=
+"color: #dcaeea;">var2</span>=/path1/to/path2/to/file.txt
+<span style="color: #ECBE7B;">echo</span> $<span style=
+"color: #51afef;">{</span><span style=
+"color: #dcaeea;">var2</span>#*to<span style=
+"color: #51afef;">}</span>
+<span style="color: #5B6268;"># </span><span style=
+"color: #5B6268;">从右边起最后一个 to 开始，删除它及它之后的所有字符 =&gt; "/path1/"</span>
+<span style="color: #ECBE7B;">echo</span> $<span style=
+"color: #51afef;">{</span><span style=
+"color: #dcaeea;">var2</span>%%to*<span style=
+"color: #51afef;">}</span>
+<span style="color: #5B6268;"># </span><span style=
+"color: #5B6268;">从右边起第一个 to 开始，删除它及它之后的所有字符 =&gt; "/path1/to/path2/"</span>
+<span style="color: #ECBE7B;">echo</span> $<span style=
+"color: #51afef;">{</span><span style=
+"color: #dcaeea;">var2</span>%to*<span style=
+"color: #51afef;">}</span>
+</pre>
+        </div>
+      </div>
+    </div>
   </div>
   <div id="postamble" class="status">
     <p class="author">Author: Zhicheng Lee</p>
-    <p class="date">Created: 2022-03-01 Tue 11:01</p>
+    <p class="date">Created: 2022-03-01 Tue 11:02</p>
   </div>
 </body>
 </html>
