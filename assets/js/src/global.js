@@ -40,9 +40,8 @@ $(function () {
 
     Vue.createApp({
       template: `
-<el-input v-model="searchText"/>
 <el-menu clas="el-toc-menu">
-  <template v-for="(ol,i) in menus">
+  <template v-for="(ol,i) in outlines">
     <el-sub-menu v-if="ol.children.length" :index="''+i">
       <template #title><h2 :id="ol.id"><span>{{ol.title}}</span></h2></template>
       <el-menu-item style="padding-left:20px" v-for="(child, ii) in ol.children" :index="i+'-'+ii">
@@ -61,32 +60,8 @@ $(function () {
   </template>
 </el-menu>`,
       setup() {
-        const searchText = Vue.ref('')
-        function filter(list) {
-          return list
-            .map((ol) => {
-              if (ol.children.length) {
-                ol.children = filter(ol.children)
-              }
-              console.log(ol.children, 1000)
-              if (
-                ol.title
-                  .toLowerCase()
-                  .indexOf((searchText.value || '').toLowerCase()) > -1
-              ) {
-                return ol
-              }
-            })
-            .filter(Boolean)
-        }
-        const menus = Vue.computed(() => {
-          return searchText.value
-            ? filter(JSON.parse(JSON.stringify(Vue.toRaw(outlines))))
-            : outlines
-        })
         return {
-          menus,
-          searchText
+          outlines
         }
       }
     })

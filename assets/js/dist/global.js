@@ -44,30 +44,10 @@ $(function () {
     console.log(outlines, 1000);
     $(tocSelector).remove();
     Vue.createApp({
-      template: "\n<el-input v-model=\"searchText\"/>\n<el-menu clas=\"el-toc-menu\">\n  <template v-for=\"(ol,i) in menus\">\n    <el-sub-menu v-if=\"ol.children.length\" :index=\"''+i\">\n      <template #title><h2 :id=\"ol.id\"><span>{{ol.title}}</span></h2></template>\n      <el-menu-item style=\"padding-left:20px\" v-for=\"(child, ii) in ol.children\" :index=\"i+'-'+ii\">\n        <h3 :id=\"child.id\">\n          <a v-if=\"child.href\" :href=\"child.href\">{{child.title}}</a>\n          <span v-else>{{child.title}}</span>\n        </h3>\n      </el-menu-item>\n    </el-sub-menu>\n    <el-menu-item v-else style=\"padding:0\">\n      <h2 :id=\"ol.id\">\n        <a v-if=\"ol.href\" :href=\"ol.href\">{{ol.title}}</a>\n        <span v-else>{{ol.title}}</span>\n      </h2>\n    </el-menu-item>\n  </template>\n</el-menu>",
+      template: "\n<el-menu clas=\"el-toc-menu\">\n  <template v-for=\"(ol,i) in outlines\">\n    <el-sub-menu v-if=\"ol.children.length\" :index=\"''+i\">\n      <template #title><h2 :id=\"ol.id\"><span>{{ol.title}}</span></h2></template>\n      <el-menu-item style=\"padding-left:20px\" v-for=\"(child, ii) in ol.children\" :index=\"i+'-'+ii\">\n        <h3 :id=\"child.id\">\n          <a v-if=\"child.href\" :href=\"child.href\">{{child.title}}</a>\n          <span v-else>{{child.title}}</span>\n        </h3>\n      </el-menu-item>\n    </el-sub-menu>\n    <el-menu-item v-else style=\"padding:0\">\n      <h2 :id=\"ol.id\">\n        <a v-if=\"ol.href\" :href=\"ol.href\">{{ol.title}}</a>\n        <span v-else>{{ol.title}}</span>\n      </h2>\n    </el-menu-item>\n  </template>\n</el-menu>",
       setup: function setup() {
-        var searchText = Vue.ref('');
-
-        function filter(list) {
-          return list.map(function (ol) {
-            if (ol.children.length) {
-              ol.children = filter(ol.children);
-            }
-
-            console.log(ol.children, 1000);
-
-            if (ol.title.toLowerCase().indexOf((searchText.value || '').toLowerCase()) > -1) {
-              return ol;
-            }
-          }).filter(Boolean);
-        }
-
-        var menus = Vue.computed(function () {
-          return searchText.value ? filter(JSON.parse(JSON.stringify(Vue.toRaw(outlines)))) : outlines;
-        });
         return {
-          menus: menus,
-          searchText: searchText
+          outlines: outlines
         };
       }
     }).use(ElementPlus).mount('#vue-toc');
