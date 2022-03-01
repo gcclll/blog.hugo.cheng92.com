@@ -32,10 +32,14 @@ $(function () {
     <el-sub-menu v-if="ol.children.length" :index="''+i">
       <template #title><span>{{ol.title}}</span></template>
       <el-menu-item v-for="(child, ii) in ol.children" :index="i+'-'+ii">
-        <span>{{child.title}}</span>
+        <a v-if="child.href" :href="child.href">{{child.title}}</a>
+        <span v-else>{{child.title}}</span>
       </el-menu-item>
     </el-sub-menu>
-    <el-menu-item v-else style="padding:0"><span>{{ol.title}}</span></el-menu-item>
+    <el-menu-item v-else style="padding:0">
+      <a v-if="ol.href" :href="ol.href">{{ol.title}}</a>
+      <span v-else>{{ol.title}}</span>
+    </el-menu-item>
   </template>
 </el-menu>`,
       data() {
