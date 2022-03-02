@@ -31,8 +31,8 @@ $(function () {
   console.log($('#postamble .date').text());
   $('#toggle-valine').click(function () {
     $('#vcomments').toggle();
-  }); // const isHome = /home\.html$/.test(location.pathname)
-  // if (isHome) {
+  });
+  var isHome = /home\.html$/.test(location.pathname); // if (isHome) {
   // ...
   // } else {
 

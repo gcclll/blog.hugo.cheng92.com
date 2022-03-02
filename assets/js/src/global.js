@@ -29,7 +29,7 @@ $(function () {
     $('#vcomments').toggle()
   })
 
-  // const isHome = /home\.html$/.test(location.pathname)
+  const isHome = /home\.html$/.test(location.pathname)
   // if (isHome) {
   // ...
   // } else {
