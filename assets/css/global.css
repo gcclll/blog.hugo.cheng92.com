@@ -1,5 +1,6 @@
 /*请勿手动修改该文件，它是由 sass 编译生成的。*/
 #table-of-contents {
+  display: none;
   width: 316px !important; }
 
 #content img.my-search-icon,
@@ -12,10 +13,12 @@
 #content .done.DONE {
   background-color: #ababab; }
 
-#postamble .author .follows {
-  margin-left: 4px; }
-  #postamble .author .follows img {
-    margin-top: -4px; }
+#postamble {
+  display: none; }
+  #postamble .author .follows {
+    margin-left: 4px; }
+    #postamble .author .follows img {
+      margin-top: -4px; }
 
 #search .search-input {
   width: 100%;

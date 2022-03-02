@@ -56,6 +56,8 @@ $(function () {
   // 自定义 TOC
   if (isHome) {
     $('#table-of-contents').hide()
+    $('#content').append($('#postamble'))
+    $('#postamble').hide()
     $('#content').css({
       margin: 'auto'
     })
@@ -102,6 +104,7 @@ $(function () {
     $('#table-of-contents>h2').append(searchTmpl)
     // n. 网站搜索功能
     $('#table-of-contents').show()
+    $('#postamble').show()
   }
 
   // $('h1.title').append(`<span>${navigator.userAgent}</span>`)
