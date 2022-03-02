@@ -77,15 +77,11 @@ $(function () {
 
     Vue.createApp({
       template: `
-  <el-menu clas="el-toc-menu">
-    <el-menu-item-group v-for="(month, val) in pages" :title="month">
-      <el-menu-item index="1-1">{{month}},{{val}}</el-menu-item>
-            <el-menu-item index="1-2">item one</el-menu-item>
+        <el-menu clas="el-toc-menu">
+          <el-menu-item-group v-for="(list, month) in pages" :title="month">
+            <el-menu-item v-for="( page, i ) in list" :index="i">{{page.title}}</el-menu-item>
           </el-menu-item-group>
-          <el-menu-item-group title="Group Two">
-            <el-menu-item index="1-3">item three</el-menu-item>
-          </el-menu-item-group>
-      </el-menu>`,
+        </el-menu>`,
       setup() {
         return {
           pages
