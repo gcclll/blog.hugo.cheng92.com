@@ -115,7 +115,8 @@
     tocSelector: 'div[id^="outline-container-"]',
     ElementPlusOptions: {// size: 'small'
     },
-    searchTmpl: "<div id=\"search\">Loading...</div>"
+    searchTmpl: "<div id=\"search\">Loading...</div>",
+    isHome: /home\.html$/.test(location.pathname)
   };
 
   /** jsx?|tsx? file header */
@@ -137,46 +138,6 @@
     whole: deduped // 全站
 
   };
-
-  /** jsx?|tsx? file header */
-  function home() {
-    var handleNotHome = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : noop;
-    // 是不是主页 home.html
-    var isHome = /home\.html$/.test(location.pathname);
-
-    if (!isHome) {
-      return handleNotHome();
-    }
-
-    $('#table-of-contents').hide();
-    setTimeout(function () {
-      $('#content').append($('#postamble'));
-      $('#postamble').css({
-        position: 'relative',
-        marginTop: '1rem'
-      });
-      $('#postamble').show();
-      $('#content').css({
-        margin: 'auto'
-      });
-      $('#postamble').css({
-        width: '100%',
-        textAlign: 'center'
-      });
-    }, 500); // 收集所有标题(id包含 'outline-container-' 且以它开头的 div)
-
-    $(config.searchTmpl).insertAfter('h1.title');
-    $("<div id=\"vue-toc\"></div>").insertAfter('#search');
-    $(config.tocSelector).remove();
-    Vue.createApp({
-      template: "\n        <el-menu clas=\"el-toc-menu\">\n          <el-menu-item-group v-for=\"(list, month) in pages\" :key=\"month\" :title=\"month\">\n            <el-menu-item v-for=\"(page, i) in list\" :index=\"i+''\" :key=\"page.timestamp\">\n            <span class=\"date\">{{page.date}}</span>\n            <span class=\"title\"><a :href=\"page.file\">{{page.title}}</a></span>\n            </el-menu-item>\n          </el-menu-item-group>\n        </el-menu>",
-      setup: function setup() {
-        return {
-          pages: cached.pages
-        };
-      }
-    }).use(ElementPlus).mount('#vue-toc');
-  }
 
   var Search = Vue.defineComponent({
     template: "\n    <el-dialog v-model=\"dialogVisible\" @open=\"clean\" @close=\"clean\" title=\"\u5168\u6587(\u7AD9)\u641C\u7D22\">\n      <el-input autofocus v-model=\"search\" placeholder=\"\u8BF7\u8F93\u5165\u641C\u7D22\u5185\u5BB9(\u6682\u53EA\u652F\u6301\u6807\u9898\u3001\u94FE\u63A5\u3001\u951A\u70B9)\">\n        <template #prepend>\n          <el-select v-model=\"scope\" placeholder=\"Select\" style=\"width:80px\">\n            <el-option label=\"\u672C\u6587\" value=\"1\"/>\n            <el-option label=\"\u5168\u7AD9\" value=\"2\"/>\n          </el-select>\n        </template>\n        <template #append><img class=\"my-search-icon\" src=\"/assets/img/search.svg\"></template>\n      </el-input>\n      <ul class=\"search-list\" style=\"max-height:500px;overflow-y:scroll;text-align:left\">\n        <li v-for=\"(result, i) in filterResults\" :key=\"result.value\" @click=\"locate(result.link)\">\n          <div class=\"result-value\" v-html=\"highlight(result.value)\"></div>\n          <div class=\"result-tags\">\n            <el-tag v-if=\"!isCurrentPage(result.file)\" effect=\"dark\" type=\"info\">{{result.file}}</el-tag>\n          </div>\n        </li>\n      </ul>\n    </el-dialog>",
@@ -257,6 +218,49 @@
   });
 
   /** jsx?|tsx? file header */
+  function home() {
+    var handleNotHome = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : noop;
+
+    // 是不是主页 home.html
+    if (!config.isHome) {
+      return handleNotHome();
+    }
+
+    $('#table-of-contents').hide();
+    setTimeout(function () {
+      $('#content').append($('#postamble'));
+      $('#postamble').css({
+        position: 'relative',
+        marginTop: '1rem'
+      });
+      $('#postamble').show();
+      $('#content').css({
+        margin: 'auto'
+      });
+      $('#postamble').css({
+        width: '100%',
+        textAlign: 'center'
+      });
+    }, 500); // 收集所有标题(id包含 'outline-container-' 且以它开头的 div)
+    // $(config.searchTmpl).insertAfter('h1.title')
+
+    $("<div id=\"vue-toc\"></div>").insertAfter('h1.title');
+    $(config.tocSelector).remove();
+    Vue.createApp({
+      template: "\n        <el-input\n          class=\"inline-input search-input\"\n          v-model=\"search\" placeholder=\"\u8BF7\u8F93\u5165\u6807\u9898\u641C\u7D22\">\n          <template #suffix>\n            <img class=\"command-k\" src=\"/assets/img/command.svg\"/><span class=\"command-k\">K</span>\n          </template>\n        </el-input>\n        <el-menu clas=\"el-toc-menu\">\n          <el-menu-item-group v-for=\"(list, month) in pages\" :key=\"month\" :title=\"month\">\n            <el-menu-item v-for=\"(page, i) in list\" :index=\"i+''\" :key=\"page.timestamp\">\n            <span class=\"date\">{{page.date}}</span>\n            <span class=\"title\"><a :href=\"page.file\">{{page.title}}</a></span>\n            </el-menu-item>\n          </el-menu-item-group>\n        </el-menu>\n        <search id=\"search\"/>",
+      components: {
+        Search: Search
+      },
+      data: function data() {
+        return {
+          pages: cached.pages,
+          search: ''
+        };
+      }
+    }).use(ElementPlus).mount('#vue-toc');
+  }
+
+  /** jsx?|tsx? file header */
   function loadSearchApp() {
     // search component
     Vue.createApp({
@@ -295,7 +299,9 @@
 
       $('#table-of-contents').show(); // 底部个人信息
 
-      $('#postamble').show();
+      $('#postamble').show(); // 搜索组件
+
+      loadSearchApp();
     }); // 基于 github,  gcclll/cheng92-comments  的评论系统
 
     $('#content').append("<script id=\"utt-client\" type=\"text/javascript\" src=\"/assets/js/dist/client.js\" issue-term=\"pathname\" repo=\"gcclll/cheng92-comments\" theme=\"github-light\" async></script>"); // 添加基于 valine 的评论系统
@@ -315,9 +321,7 @@
       }
     }); // 添加我的 github badge
 
-    $('#postamble .author').append($('<span class="follows"><a href="https://www.github.com/gcclll?tab=followers">' + '<img src="https://img.shields.io/github/followers/gcclll?style=social"></a></span>')); // 搜索组件
-
-    loadSearchApp();
+    $('#postamble .author').append($('<span class="follows"><a href="https://www.github.com/gcclll?tab=followers">' + '<img src="https://img.shields.io/github/followers/gcclll?style=social"></a></span>'));
   });
 
 })();

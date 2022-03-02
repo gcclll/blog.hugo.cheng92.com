@@ -5,5 +5,6 @@ export default {
   ElementPlusOptions: {
     // size: 'small'
   },
-  searchTmpl: `<div id="search">Loading...</div>`
+  searchTmpl: `<div id="search">Loading...</div>`,
+  isHome: /home\.html$/.test(location.pathname)
 }

@@ -21,6 +21,8 @@ $(function () {
     $('#table-of-contents').show()
     // 底部个人信息
     $('#postamble').show()
+    // 搜索组件
+    loadSearchApp()
   })
 
   // 基于 github,  gcclll/cheng92-comments  的评论系统
@@ -53,7 +55,4 @@ $(function () {
         '<img src="https://img.shields.io/github/followers/gcclll?style=social"></a></span>'
     )
   )
-
-  // 搜索组件
-  loadSearchApp()
 })

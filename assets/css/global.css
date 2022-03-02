@@ -40,21 +40,28 @@
     #postamble .author .follows img {
       margin-top: -4px; }
 
-#search {
+#search,
+#vue-toc {
   margin: 5px 0; }
-  #search .search-input {
+  #search .search-input,
+  #vue-toc .search-input {
     width: 100%;
     margin-top: 2px; }
-  #search .el-input__suffix {
+  #search .el-input__suffix,
+  #vue-toc .el-input__suffix {
     top: 8px;
     height: auto; }
-  #search .search-list li {
+  #search .search-list li,
+  #vue-toc .search-list li {
     cursor: pointer;
     padding: 5px 0; }
-    #search .search-list li .hl-word {
+    #search .search-list li .hl-word,
+    #vue-toc .search-list li .hl-word {
       color: blue; }
   #search img.command-k,
-  #search span.command-k {
+  #search span.command-k,
+  #vue-toc img.command-k,
+  #vue-toc span.command-k {
     align-items: center;
     background: rgba(125, 125, 125, 0.1);
     border-radius: 3px;
