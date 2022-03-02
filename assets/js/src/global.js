@@ -64,10 +64,9 @@ $(function () {
       textAlign: 'center'
     })
     // 收集所有标题(id包含 'outline-container-' 且以它开头的 div)
-    $(`<div id="vue-toc"></div>`).insertAfter('#content>h1+p')
-    $('h1.title+p').append(searchTmpl)
+    $(searchTmpl).insertAfter('h1.title')
+    $(`<div id="vue-toc"></div>`).insertAfter('#search')
     const outlines = findOutlines()
-    console.log(outlines, 1000)
     $(tocSelector).remove()
 
     Vue.createApp({
