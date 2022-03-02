@@ -9,6 +9,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 $(function () {
   // 网站胡一些静态数据 ////////////////////////////////////////////////////
   var deduped = dedupStats();
+  console.log(window.$stats, window.$timestamp);
   var tocSelector = 'div[id^="outline-container-"]'; // 检测是不是移动端 //////////////////////////////////////////////////////
 
   var md = new MobileDetect(window.navigator.userAgent);

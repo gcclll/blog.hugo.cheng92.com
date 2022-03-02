@@ -1,6 +1,7 @@
 $(function () {
   // 网站胡一些静态数据 ////////////////////////////////////////////////////
   const deduped = dedupStats()
+  console.log(window.$stats, window.$timestamp)
   const tocSelector = 'div[id^="outline-container-"]'
   // 检测是不是移动端 //////////////////////////////////////////////////////
   const md = new MobileDetect(window.navigator.userAgent)
