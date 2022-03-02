@@ -60,8 +60,8 @@ $(function () {
     }); // 收集所有标题(id包含 'outline-container-' 且以它开头的 div)
 
     $(searchTmpl).insertAfter('h1.title');
-    $("<div id=\"vue-toc\"></div>").insertAfter('#search');
-    $(tocSelector).remove();
+    $("<div id=\"vue-toc\"></div>").insertAfter('#search'); // $(tocSelector).remove()
+
     Vue.createApp({
       template: "\n        <el-menu clas=\"el-toc-menu\">\n          <el-menu-item-group v-for=\"(list, month) in pages\" :key=\"month\" :title=\"month\">\n            <el-menu-item v-for=\"( page, i ) in list\" :index=\"i\" :key=\"page.timestamp\">{{page.title}}</el-menu-item>\n          </el-menu-item-group>\n        </el-menu>",
       setup: function setup() {
