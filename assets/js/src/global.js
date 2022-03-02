@@ -57,6 +57,10 @@ $(function () {
   if (isHome) {
     $('#table-of-contents').hide()
     $('#content').append($('#postamble'))
+    $('#postamble').css({
+      position: 'relative',
+      marginTop: '1rem'
+    })
     // $('#postamble').hide()
     $('#content').css({
       margin: 'auto'
