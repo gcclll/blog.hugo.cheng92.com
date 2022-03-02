@@ -44,15 +44,15 @@ def find_a(file):
             })
 
 
-def TimeStampToTime(timestamp, format='%Y-%m-%d %H:%M:%S'):
+def TimeStampToTime(timestamp, format):
     timeStruct = time.localtime(timestamp)
     return time.strftime(format, timeStruct)
 
 
-def get_FileCreateTime(file):
+def get_FileCreateTime(file, format='%Y-%m-%d %H:%M:%S'):
     # filePath = unicode(filePath, 'utf8')
     t = os.path.getctime(file)
-    return TimeStampToTime(t)
+    return TimeStampToTime(t, format)
 
 
 timestamps={}

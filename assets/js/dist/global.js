@@ -9,7 +9,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 $(function () {
   // 网站胡一些静态数据 ////////////////////////////////////////////////////
   var deduped = dedupStats();
-  console.log(window.$stats, window.$timestamp);
+  var pages = formatPages();
+  console.log(pages, 123);
   var tocSelector = 'div[id^="outline-container-"]'; // 检测是不是移动端 //////////////////////////////////////////////////////
 
   var md = new MobileDetect(window.navigator.userAgent);
@@ -225,5 +226,22 @@ $(function () {
       }
     });
     return children;
+  }
+
+  function formatPages() {
+    var ts = window.$timestamp;
+    var pages = {};
+
+    for (var page in ts) {
+      var month = page.month;
+
+      if (pages[month] == null) {
+        pages[month] = [];
+      }
+
+      pages[month].push(page);
+    }
+
+    return pages;
   }
 });

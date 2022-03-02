@@ -1,7 +1,8 @@
 $(function () {
   // 网站胡一些静态数据 ////////////////////////////////////////////////////
   const deduped = dedupStats()
-  console.log(window.$stats, window.$timestamp)
+  const pages = formatPages()
+  console.log(pages, 123)
   const tocSelector = 'div[id^="outline-container-"]'
   // 检测是不是移动端 //////////////////////////////////////////////////////
   const md = new MobileDetect(window.navigator.userAgent)
@@ -305,5 +306,19 @@ $(function () {
       }
     })
     return children
+  }
+
+  function formatPages() {
+    const ts = window.$timestamp
+
+    const pages = {}
+    for (let page in ts) {
+      const month = page.month
+      if (pages[month] == null) {
+        pages[month] = []
+      }
+      pages[month].push(page)
+    }
+    return pages
   }
 })
