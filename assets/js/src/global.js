@@ -73,7 +73,6 @@ $(function () {
     // 收集所有标题(id包含 'outline-container-' 且以它开头的 div)
     $(searchTmpl).insertAfter('h1.title')
     $(`<div id="vue-toc"></div>`).insertAfter('#search')
-    const outlines = findOutlines()
     $(tocSelector).remove()
 
     Vue.createApp({
@@ -86,27 +85,10 @@ $(function () {
           <el-menu-item-group title="Group Two">
             <el-menu-item index="1-3">item three</el-menu-item>
           </el-menu-item-group>
-    <template v-for="(ol,i) in outlines">
-      <el-sub-menu v-if="ol.children.length" :index="''+i">
-        <template #title><h2 :id="ol.id"><span>{{ol.title}}</span></h2></template>
-        <el-menu-item style="padding-left:20px" v-for="(child, ii) in ol.children" :index="i+'-'+ii">
-          <h3 :id="child.id">
-            <a v-if="child.href" :href="child.href">{{child.title}}</a>
-            <span v-else>{{child.title}}</span>
-          </h3>
-        </el-menu-item>
-      </el-sub-menu>
-      <el-menu-item v-else style="padding:0">
-        <h2 :id="ol.id">
-          <a v-if="ol.href" :href="ol.href">{{ol.title}}</a>
-          <span v-else>{{ol.title}}</span>
-        </h2>
-      </el-menu-item>
-    </template>
-  </el-menu>`,
+      </el-menu>`,
       setup() {
         return {
-          outlines
+          pages
         }
       }
     })
