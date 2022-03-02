@@ -63,7 +63,8 @@ for file in os.listdir("./posts/"):
         date = soup.find_all('')
         timestamps[file] = {
             "timestamp": get_FileCreateTime("./posts/" + file),
-            "title": soup.head.title.get_text()
+            "title": soup.head.title.get_text(),
+            "file": file
         }
         find_h(file)
         find_span(file)
