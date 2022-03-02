@@ -63,7 +63,7 @@ $(function () {
     $("<div id=\"vue-toc\"></div>").insertAfter('#search'); // $(tocSelector).remove()
 
     Vue.createApp({
-      template: "\n        <el-menu clas=\"el-toc-menu\">\n          <el-menu-item-group v-for=\"(list, month) in pages\" :key=\"month\" :title=\"month\">\n            <el-menu-item v-for=\"(page, i) in list\" v-if=\"page.file !== 'index.html'\"  :index=\"i+''\" :key=\"page.timestamp\">{{page.title}}</el-menu-item>\n          </el-menu-item-group>\n        </el-menu>",
+      template: "\n        <el-menu clas=\"el-toc-menu\">\n          <el-menu-item-group v-for=\"(list, month) in pages\" :key=\"month\" :title=\"month\">\n            <el-menu-item v-for=\"(page, i) in list\" :index=\"i+''\" :key=\"page.timestamp\">{{page.title}}</el-menu-item>\n          </el-menu-item-group>\n        </el-menu>",
       setup: function setup() {
         return {
           pages: pages
