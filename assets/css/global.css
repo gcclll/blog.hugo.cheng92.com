@@ -15,6 +15,8 @@
 
 #vue-toc li {
   margin-left: 0; }
+#vue-toc .el-menu {
+  border-right: none; }
 #vue-toc .el-menu-item {
   border-left: 1px solid #cacaca;
   padding: 3px 20px; }
