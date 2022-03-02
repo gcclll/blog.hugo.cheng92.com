@@ -14,17 +14,18 @@
   background-color: #ababab; }
 
 #vue-toc li {
-  margin-left: 0;
+  margin-left: 0; }
+#vue-toc .el-menu-item {
   border-left: 1px solid #cacaca;
   padding: 3px 20px; }
-  #vue-toc li:hover {
+  #vue-toc .el-menu-item:hover {
     border-left: 3px solid #c05b4d;
     transition: 0.2s ease-out;
     transform: translateX(4px); }
-  #vue-toc li .date {
+  #vue-toc .el-menu-item .date {
     margin-right: 10px;
     color: #8a8a8a; }
-  #vue-toc li a {
+  #vue-toc .el-menu-item a {
     color: #c05b4d; }
 #vue-toc .el-menu-item-group__title {
   font-size: 28px;
