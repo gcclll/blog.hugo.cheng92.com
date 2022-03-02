@@ -78,6 +78,13 @@ $(function () {
     Vue.createApp({
       template: `
   <el-menu clas="el-toc-menu">
+<el-menu-item-group title="Group One">
+            <el-menu-item index="1-1">item one</el-menu-item>
+            <el-menu-item index="1-2">item one</el-menu-item>
+          </el-menu-item-group>
+          <el-menu-item-group title="Group Two">
+            <el-menu-item index="1-3">item three</el-menu-item>
+          </el-menu-item-group>
     <template v-for="(ol,i) in outlines">
       <el-sub-menu v-if="ol.children.length" :index="''+i">
         <template #title><h2 :id="ol.id"><span>{{ol.title}}</span></h2></template>
