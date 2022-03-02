@@ -61,7 +61,7 @@ $(function () {
       position: 'relative',
       marginTop: '1rem'
     })
-    // $('#postamble').hide()
+    $('#postamble').show()
     $('#content').css({
       margin: 'auto'
     })
