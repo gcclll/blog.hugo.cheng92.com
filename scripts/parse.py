@@ -64,6 +64,7 @@ for file in os.listdir("./posts/"):
         timestamps[file] = {
             "timestamp": get_FileCreateTime("./posts/" + file),
             "month": get_FileCreateTime("./posts/" + file, "%Y-%m"),
+            "date": get_FileCreateTime("./posts/" + file, "%m-%d"),
             "title": soup.head.title.get_text(),
             "file": file
         }
