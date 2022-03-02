@@ -79,7 +79,7 @@ $(function () {
       template: `
         <el-menu clas="el-toc-menu">
           <el-menu-item-group v-for="(list, month) in pages" :key="month" :title="month">
-            <el-menu-item v-for="(page, i) in list"  :index="i+''" :key="page.timestamp">{{page.title}}</el-menu-item>
+            <el-menu-item v-for="(page, i) in list" v-if="page.file !== 'index.html'"  :index="i+''" :key="page.timestamp">{{page.title}}</el-menu-item>
           </el-menu-item-group>
         </el-menu>`,
       setup() {
