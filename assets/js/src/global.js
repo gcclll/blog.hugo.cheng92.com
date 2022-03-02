@@ -73,7 +73,7 @@ $(function () {
     // 收集所有标题(id包含 'outline-container-' 且以它开头的 div)
     $(searchTmpl).insertAfter('h1.title')
     $(`<div id="vue-toc"></div>`).insertAfter('#search')
-    // $(tocSelector).remove()
+    $(tocSelector).remove()
 
     Vue.createApp({
       template: `
