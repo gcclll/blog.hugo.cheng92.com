@@ -24,6 +24,16 @@
   }
 }
 
+#vue-toc {
+  li {
+    margin-left: 0;
+  }
+
+  .el-menu-item-group__title {
+    padding-left: 0 !important;
+  }
+}
+
 #postamble {
   display: none;
   .author {

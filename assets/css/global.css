@@ -13,6 +13,11 @@
 #content .done.DONE {
   background-color: #ababab; }
 
+#vue-toc li {
+  margin-left: 0; }
+#vue-toc .el-menu-item-group__title {
+  padding-left: 0 !important; }
+
 #postamble {
   display: none; }
   #postamble .author .follows {
