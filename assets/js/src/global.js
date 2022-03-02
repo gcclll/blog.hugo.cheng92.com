@@ -57,7 +57,7 @@ $(function () {
   if (isHome) {
     $('#table-of-contents').hide()
     $('#content').append($('#postamble'))
-    $('#postamble').hide()
+    // $('#postamble').hide()
     $('#content').css({
       margin: 'auto'
     })
