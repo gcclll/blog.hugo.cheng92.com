@@ -44,9 +44,9 @@ def find_a(file):
             })
 
 
-def TimeStampToTime(timestamp):
+def TimeStampToTime(timestamp, format='%Y-%m-%d %H:%M:%S'):
     timeStruct = time.localtime(timestamp)
-    return time.strftime('%Y-%m-%d %H:%M:%S', timeStruct)
+    return time.strftime(format, timeStruct)
 
 
 def get_FileCreateTime(file):
@@ -63,6 +63,7 @@ for file in os.listdir("./posts/"):
         date = soup.find_all('')
         timestamps[file] = {
             "timestamp": get_FileCreateTime("./posts/" + file),
+            "month": get_FileCreateTime("./posts/" + file, "%Y-%m"),
             "title": soup.head.title.get_text(),
             "file": file
         }
