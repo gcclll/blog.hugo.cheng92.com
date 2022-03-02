@@ -247,7 +247,8 @@ $(function () {
     setup() {
       const search = Vue.ref('')
       return {
-        querySearch: (qs, cb) => querySearch(qs, cb, deduped),
+        search,
+        querySearch: (qs, cb) => querySearch(qs, cb, cached.current),
         handleSelect(item) {
           if (item.link) {
             search.value = ''

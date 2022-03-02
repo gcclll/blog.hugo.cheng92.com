@@ -180,8 +180,9 @@ $(function () {
     setup: function setup() {
       var search = Vue.ref('');
       return {
+        search: search,
         querySearch: function querySearch(qs, cb) {
-          return _querySearch(qs, cb, deduped);
+          return _querySearch(qs, cb, cached.current);
         },
         handleSelect: function handleSelect(item) {
           if (item.link) {
