@@ -291,11 +291,14 @@ $(function () {
 
     const pages = {}
     for (let page in ts) {
-      const month = ts[page].month
+      const obj = ts[page]
+      const month = obj.month
       if (pages[month] == null) {
         pages[month] = []
       }
-      pages[month].push(ts[page])
+      if (obj.file !== 'index.html') {
+        pages[month].push(obj)
+      }
     }
     return pages
   }

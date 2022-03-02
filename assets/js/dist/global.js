@@ -232,13 +232,16 @@ $(function () {
     var pages = {};
 
     for (var page in ts) {
-      var month = ts[page].month;
+      var obj = ts[page];
+      var month = obj.month;
 
       if (pages[month] == null) {
         pages[month] = [];
       }
 
-      pages[month].push(ts[page]);
+      if (obj.file !== 'index.html') {
+        pages[month].push(obj);
+      }
     }
 
     return pages;
