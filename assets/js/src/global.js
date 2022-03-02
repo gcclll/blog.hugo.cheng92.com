@@ -51,7 +51,7 @@ $(function () {
           appKey: 'z7BITHKt5oI9zuxdfp8X9tUN'
       })
     </script>`)
-  // }
+  $('#toggle-valine').click(() => $('#vcomments').toggle())
 
   const searchTmpl = `<div id="search">Loading...</div>`
   // 自定义 TOC
