@@ -313,11 +313,11 @@ $(function () {
 
     const pages = {}
     for (let page in ts) {
-      const month = page.month
+      const month = ts[page].month
       if (pages[month] == null) {
         pages[month] = []
       }
-      pages[month].push(page)
+      pages[month].push(ts[page])
     }
     return pages
   }
