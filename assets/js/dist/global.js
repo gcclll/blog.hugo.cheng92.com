@@ -178,7 +178,7 @@ $(function () {
       Search: Search
     },
     setup: function setup() {
-      var search = ref('');
+      var search = Vue.ref('');
       return {
         querySearch: function querySearch(qs, cb) {
           return _querySearch(qs, cb, deduped);
