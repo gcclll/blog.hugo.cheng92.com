@@ -30,6 +30,8 @@ for file in $(ls $jsrc); do
     ./node_modules/.bin/babel $jsrc/$file -d $dist
 done
 
+rollup -c
+
 git status
 
 cd $path
