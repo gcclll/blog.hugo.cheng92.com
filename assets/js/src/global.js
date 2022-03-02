@@ -79,8 +79,8 @@ $(function () {
     Vue.createApp({
       template: `
   <el-menu clas="el-toc-menu">
-<el-menu-item-group title="Group One">
-            <el-menu-item index="1-1">item one</el-menu-item>
+    <el-menu-item-group v-for="(month, val) in pages" :title="month">
+      <el-menu-item index="1-1">{{month}},{{val}}</el-menu-item>
             <el-menu-item index="1-2">item one</el-menu-item>
           </el-menu-item-group>
           <el-menu-item-group title="Group Two">
