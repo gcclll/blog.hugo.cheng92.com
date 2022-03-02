@@ -60,9 +60,6 @@
     $('#toggle-valine').click(function () {
       $('#vcomments').toggle();
     });
-    $('#toggle-valine').click(function () {
-      return $('#vcomments').toggle();
-    });
   }
 
   /** jsx?|tsx? file header */
@@ -113,95 +110,22 @@
     return pages;
   }
 
-  function SearchFunction (_ref) {
-    var cached = _ref.cached;
-    return Vue.defineComponent({
-      template: "\n    <el-dialog v-model=\"dialogVisible\" @open=\"clean\" @close=\"clean\" title=\"\u5168\u6587(\u7AD9)\u641C\u7D22\">\n      <el-input autofocus v-model=\"search\" placeholder=\"\u8BF7\u8F93\u5165\u641C\u7D22\u5185\u5BB9(\u6682\u53EA\u652F\u6301\u6807\u9898\u3001\u94FE\u63A5\u3001\u951A\u70B9)\">\n        <template #prepend>\n          <el-select v-model=\"scope\" placeholder=\"Select\" style=\"width:80px\">\n            <el-option label=\"\u672C\u6587\" value=\"1\"/>\n            <el-option label=\"\u5168\u7AD9\" value=\"2\"/>\n          </el-select>\n        </template>\n        <template #append><img class=\"my-search-icon\" src=\"/assets/img/search.svg\"></template>\n      </el-input>\n      <ul class=\"search-list\" style=\"max-height:500px;overflow-y:scroll;text-align:left\">\n        <li v-for=\"(result, i) in filterResults\" :key=\"result.value\" @click=\"locate(result.link)\">\n          <div class=\"result-value\" v-html=\"highlight(result.value)\"></div>\n          <div class=\"result-tags\">\n            <el-tag v-if=\"!isCurrentPage(result.file)\" effect=\"dark\" type=\"info\">{{result.file}}</el-tag>\n          </div>\n        </li>\n      </ul>\n    </el-dialog>",
-      setup: function setup() {
-        var state = Vue.reactive({
-          results: [],
-          filterResults: [],
-          search: '',
-          dialogVisible: false,
-          scope: '2' // 1 - 本文, 2 - 全站
-
-        });
-        Vue.onMounted(function () {
-          state.results = state.scope === '1' ? cached.current : cached.whole;
-          $(document.body).on('keydown', keydownHandler);
-        });
-
-        function keydownHandler(e) {
-          if (e.metaKey && e.keyCode === 75) {
-            state.dialogVisible = true;
-          }
-        }
-
-        Vue.onUnmounted(function () {
-          $(document.body).off('keydown', keydownHandler);
-        });
-        Vue.watch(function () {
-          return state.scope;
-        }, function (val) {
-          return state.results = val === '1' ? cached.current : cached.whole;
-        });
-        Vue.watch(function () {
-          return state.search;
-        }, function (newVal) {
-          if (newVal) {
-            querySearch(newVal, function (results) {
-              return state.filterResults = results;
-            }, state.results);
-          } else {
-            state.filterResults = [];
-          }
-        });
-
-        var clean = function clean() {
-          state.filterResults = [];
-          state.search = '';
-        };
-
-        return _objectSpread2(_objectSpread2({}, Vue.toRefs(state)), {}, {
-          clean: clean,
-          // 高亮匹配内容
-          highlight: function highlight(value) {
-            var words = state.search.split(' ');
-            words.forEach(function (word) {
-              value = value.replace(new RegExp("".concat(word), 'gi'), "<span class=\"hl-word\">".concat(word, "</span>"));
-            });
-            return value;
-          },
-          isCurrentPage: function isCurrentPage(file) {
-            return new RegExp("".concat(file, "$")).test(location.pathname);
-          },
-          locate: function locate(link) {
-            location.href = link;
-            clean();
-            state.dialogVisible = false;
-          },
-          querySearch: function querySearch$1(qs, cb) {
-            return querySearch(qs, cb, state.results);
-          },
-          handleSelect: function handleSelect(item) {
-            if (item.link) {
-              location.href = item.href;
-              state.search = '';
-            }
-          }
-        });
-      }
-    });
-  }
+  /** jsx?|tsx? file header */
+  var config = {
+    tocSelector: 'div[id^="outline-container-"]',
+    ElementPlusOptions: {// size: 'small'
+    },
+    searchTmpl: "<div id=\"search\">Loading...</div>"
+  };
 
   /** jsx?|tsx? file header */
 
   var deduped = dedupStats(); // 包含页面创建时间，用来创建主页的 TOC
 
-  var pages$1 = formatPages(); // 取出由 parse.py 生成的网站资源信息
+  var pages = formatPages(); // 取出由 parse.py 生成的网站资源信息
 
   var cached = {
-    pages: pages$1,
+    pages: pages,
     current: deduped.reduce(function (arr, curr) {
       if (curr && curr.file && new RegExp("".concat(curr.file, "$")).test(location.pathname)) {
         arr.push(curr);
@@ -215,14 +139,6 @@
   };
 
   /** jsx?|tsx? file header */
-  var config = {
-    tocSelector: 'div[id^="outline-container-"]',
-    ElementPlusOptions: {// size: 'small'
-    },
-    searchTmpl: "<div id=\"search\">Loading...</div>"
-  };
-
-  /** jsx?|tsx? file header */
   function home() {
     var handleNotHome = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : noop;
     // 是不是主页 home.html
@@ -233,19 +149,21 @@
     }
 
     $('#table-of-contents').hide();
-    $('#content').append($('#postamble'));
-    $('#postamble').css({
-      position: 'relative',
-      marginTop: '1rem'
-    });
-    $('#postamble').show();
-    $('#content').css({
-      margin: 'auto'
-    });
-    $('#postamble').css({
-      width: '100%',
-      textAlign: 'center'
-    }); // 收集所有标题(id包含 'outline-container-' 且以它开头的 div)
+    setTimeout(function () {
+      $('#content').append($('#postamble'));
+      $('#postamble').css({
+        position: 'relative',
+        marginTop: '1rem'
+      });
+      $('#postamble').show();
+      $('#content').css({
+        margin: 'auto'
+      });
+      $('#postamble').css({
+        width: '100%',
+        textAlign: 'center'
+      });
+    }, 500); // 收集所有标题(id包含 'outline-container-' 且以它开头的 div)
 
     $(config.searchTmpl).insertAfter('h1.title');
     $("<div id=\"vue-toc\"></div>").insertAfter('#search');
@@ -254,24 +172,120 @@
       template: "\n        <el-menu clas=\"el-toc-menu\">\n          <el-menu-item-group v-for=\"(list, month) in pages\" :key=\"month\" :title=\"month\">\n            <el-menu-item v-for=\"(page, i) in list\" :index=\"i+''\" :key=\"page.timestamp\">\n            <span class=\"date\">{{page.date}}</span>\n            <span class=\"title\"><a :href=\"page.file\">{{page.title}}</a></span>\n            </el-menu-item>\n          </el-menu-item-group>\n        </el-menu>",
       setup: function setup() {
         return {
-          pages: pages
+          pages: cached.pages
         };
       }
     }).use(ElementPlus).mount('#vue-toc');
   }
 
-  $(function () {
-    var scope = {
-      cached: cached
-    };
-    SearchFunction(scope); // 检测是不是移动端
+  var Search = Vue.defineComponent({
+    template: "\n    <el-dialog v-model=\"dialogVisible\" @open=\"clean\" @close=\"clean\" title=\"\u5168\u6587(\u7AD9)\u641C\u7D22\">\n      <el-input autofocus v-model=\"search\" placeholder=\"\u8BF7\u8F93\u5165\u641C\u7D22\u5185\u5BB9(\u6682\u53EA\u652F\u6301\u6807\u9898\u3001\u94FE\u63A5\u3001\u951A\u70B9)\">\n        <template #prepend>\n          <el-select v-model=\"scope\" placeholder=\"Select\" style=\"width:80px\">\n            <el-option label=\"\u672C\u6587\" value=\"1\"/>\n            <el-option label=\"\u5168\u7AD9\" value=\"2\"/>\n          </el-select>\n        </template>\n        <template #append><img class=\"my-search-icon\" src=\"/assets/img/search.svg\"></template>\n      </el-input>\n      <ul class=\"search-list\" style=\"max-height:500px;overflow-y:scroll;text-align:left\">\n        <li v-for=\"(result, i) in filterResults\" :key=\"result.value\" @click=\"locate(result.link)\">\n          <div class=\"result-value\" v-html=\"highlight(result.value)\"></div>\n          <div class=\"result-tags\">\n            <el-tag v-if=\"!isCurrentPage(result.file)\" effect=\"dark\" type=\"info\">{{result.file}}</el-tag>\n          </div>\n        </li>\n      </ul>\n    </el-dialog>",
+    setup: function setup() {
+      var state = Vue.reactive({
+        results: [],
+        filterResults: [],
+        search: '',
+        dialogVisible: false,
+        scope: '2' // 1 - 本文, 2 - 全站
 
+      });
+      Vue.onMounted(function () {
+        state.results = state.scope === '1' ? cached.current : cached.whole;
+        $(document.body).on('keydown', keydownHandler);
+      });
+
+      function keydownHandler(e) {
+        if (e.metaKey && e.keyCode === 75) {
+          state.dialogVisible = true;
+        }
+      }
+
+      Vue.onUnmounted(function () {
+        $(document.body).off('keydown', keydownHandler);
+      });
+      Vue.watch(function () {
+        return state.scope;
+      }, function (val) {
+        return state.results = val === '1' ? cached.current : cached.whole;
+      });
+      Vue.watch(function () {
+        return state.search;
+      }, function (newVal) {
+        if (newVal) {
+          querySearch(newVal, function (results) {
+            return state.filterResults = results;
+          }, state.results);
+        } else {
+          state.filterResults = [];
+        }
+      });
+
+      var clean = function clean() {
+        state.filterResults = [];
+        state.search = '';
+      };
+
+      return _objectSpread2(_objectSpread2({}, Vue.toRefs(state)), {}, {
+        clean: clean,
+        // 高亮匹配内容
+        highlight: function highlight(value) {
+          var words = state.search.split(' ');
+          words.forEach(function (word) {
+            value = value.replace(new RegExp("".concat(word), 'gi'), "<span class=\"hl-word\">".concat(word, "</span>"));
+          });
+          return value;
+        },
+        isCurrentPage: function isCurrentPage(file) {
+          return new RegExp("".concat(file, "$")).test(location.pathname);
+        },
+        locate: function locate(link) {
+          location.href = link;
+          clean();
+          state.dialogVisible = false;
+        },
+        querySearch: function querySearch$1(qs, cb) {
+          return querySearch(qs, cb, state.results);
+        },
+        handleSelect: function handleSelect(item) {
+          if (item.link) {
+            location.href = item.href;
+            state.search = '';
+          }
+        }
+      });
+    }
+  });
+
+  /** jsx?|tsx? file header */
+  function loadSearchApp() {
+    // search component
+    Vue.createApp({
+      template: "\n      <el-autocomplete\n        v-model=\"search\"\n        :fetch-suggestions=\"querySearch\"\n        :trigger-on-focus=\"false\"\n        class=\"inline-input search-input\"\n        placeholder=\"\u5168\u6587\u6216\u672C\u6587\u4E2D\u641C\u7D22...\"\n        @select=\"handleSelect\"\n      >\n        <template #suffix>\n          <img class=\"command-k\" src=\"/assets/img/command.svg\"/><span class=\"command-k\">K</span>\n        </template>\n      </el-autocomplete>\n      <search/>",
+      components: {
+        Search: Search
+      },
+      data: function data() {
+        return {
+          search: ''
+        };
+      },
+      methods: {
+        handleSelect: function handleSelect(item) {
+          this.search = '';
+          location.href = item.href;
+        }
+      }
+    }).use(ElementPlus, config.ElementPlusOptions).mount('#search');
+  }
+
+  $(function () {
+    // 检测是不是移动端
     var md = null,
         isMobile = false;
 
     if ((typeof MobileDetect === "undefined" ? "undefined" : _typeof(MobileDetect)) !== undefined) {
       md = new MobileDetect(window.navigator.userAgent);
-      isMobile = md.mobiliei(i);
+      isMobile = md.mobile();
     } // 主页
 
 
@@ -301,7 +315,9 @@
       }
     }); // 添加我的 github badge
 
-    $('#postamble .author').append($('<span class="follows"><a href="https://www.github.com/gcclll?tab=followers">' + '<img src="https://img.shields.io/github/followers/gcclll?style=social"></a></span>'));
+    $('#postamble .author').append($('<span class="follows"><a href="https://www.github.com/gcclll?tab=followers">' + '<img src="https://img.shields.io/github/followers/gcclll?style=social"></a></span>')); // 搜索组件
+
+    loadSearchApp();
   });
 
 })();

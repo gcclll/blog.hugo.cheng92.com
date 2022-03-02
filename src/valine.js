@@ -18,6 +18,4 @@ export function addValine() {
   $('#toggle-valine').click(function () {
     $('#vcomments').toggle()
   })
-
-  $('#toggle-valine').click(() => $('#vcomments').toggle())
 }

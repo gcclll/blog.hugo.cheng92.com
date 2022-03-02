@@ -2,6 +2,7 @@
 
 import { noop } from './utils'
 import config from './config'
+import { cached } from './cache'
 
 export default function home(handleNotHome = noop) {
   // 是不是主页 home.html
@@ -10,19 +11,22 @@ export default function home(handleNotHome = noop) {
     return handleNotHome()
   }
   $('#table-of-contents').hide()
-  $('#content').append($('#postamble'))
-  $('#postamble').css({
-    position: 'relative',
-    marginTop: '1rem'
-  })
-  $('#postamble').show()
-  $('#content').css({
-    margin: 'auto'
-  })
-  $('#postamble').css({
-    width: '100%',
-    textAlign: 'center'
-  })
+
+  setTimeout(() => {
+    $('#content').append($('#postamble'))
+    $('#postamble').css({
+      position: 'relative',
+      marginTop: '1rem'
+    })
+    $('#postamble').show()
+    $('#content').css({
+      margin: 'auto'
+    })
+    $('#postamble').css({
+      width: '100%',
+      textAlign: 'center'
+    })
+  }, 500)
 
   // 收集所有标题(id包含 'outline-container-' 且以它开头的 div)
   $(config.searchTmpl).insertAfter('h1.title')
@@ -41,7 +45,7 @@ export default function home(handleNotHome = noop) {
         </el-menu>`,
     setup() {
       return {
-        pages
+        pages: cached.pages
       }
     }
   })

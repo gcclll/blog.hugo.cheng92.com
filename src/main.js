@@ -1,23 +1,16 @@
 import { addValine } from './valine'
-import SearchFunction from './components/Search'
-import { cached } from './cache'
 import home from './home'
 import config from './config'
+import loadSearchApp from './apps/search'
 
 $(function () {
-  const scope = {
-    cached
-  }
-
-  const Search = SearchFunction(scope)
-
   // 检测是不是移动端
   let md = null,
     isMobile = false
 
   if (typeof MobileDetect !== undefined) {
     md = new MobileDetect(window.navigator.userAgent)
-    isMobile = md.mobiliei(i)
+    isMobile = md.mobile()
   }
 
   // 主页
@@ -60,4 +53,7 @@ $(function () {
         '<img src="https://img.shields.io/github/followers/gcclll?style=social"></a></span>'
     )
   )
+
+  // 搜索组件
+  loadSearchApp()
 })

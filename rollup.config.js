@@ -9,6 +9,6 @@ export default {
   },
   plugins: [resolve(), babel({ babelHelpers: 'bundled' })],
   watch: {
-    include: ['./src']
+    include: 'src/**'
   }
 }
