@@ -3,8 +3,6 @@
   display: none;
   width: 316px !important; }
 
-#content div[id^='outline-container-'] {
-  display: none; }
 #content img.my-search-icon,
 #content img.title-phone {
   max-width: 30px; }
