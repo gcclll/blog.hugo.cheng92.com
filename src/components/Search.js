@@ -57,7 +57,10 @@ export default Vue.defineComponent({
         if (newVal) {
           querySearch(
             newVal,
-            (results) => (state.filterResults = results),
+            (results) => {
+              state.filterResults = results
+              console.log(state, '1000')
+            },
             state.results
           )
         } else {

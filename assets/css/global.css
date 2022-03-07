@@ -40,6 +40,9 @@
     #postamble .author .follows img {
       margin-top: -4px; }
 
+.el-toc-menu .hl-word {
+  color: blue; }
+
 #search,
 #vue-toc {
   margin: 5px 0; }

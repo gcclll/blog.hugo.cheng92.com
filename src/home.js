@@ -33,6 +33,7 @@ export default function home(handleNotHome = noop) {
   $(`<div id="vue-toc"></div>`).insertAfter('h1.title')
   $(config.tocSelector).remove()
 
+  const pages = JSON.parse(JSON.stringify(cached.pages))
   Vue.createApp({
     template: `
         <el-input
@@ -46,7 +47,7 @@ export default function home(handleNotHome = noop) {
           <el-menu-item-group v-for="(list, month) in pages" :key="month" :title="month">
             <el-menu-item v-for="(page, i) in list" :index="i+''" :key="page.timestamp">
             <span class="date">{{page.date}}</span>
-            <span class="title"><a :href="page.file">{{page.title}}</a></span>
+            <span class="title"><a :href="page.file" v-html="page.title"></a></span>
             </el-menu-item>
           </el-menu-item-group>
         </el-menu>
@@ -56,8 +57,44 @@ export default function home(handleNotHome = noop) {
     },
     data() {
       return {
-        pages: cached.pages,
         search: ''
+      }
+    },
+    computed: {
+      pages() {
+        const result = {}
+        for (let prop in pages) {
+          const pageList = pages[prop]
+          if (result[prop] == null) {
+            result[prop] = []
+          }
+          const queryList = this.search.toLowerCase().split(' ')
+          result[prop] =
+            queryList.length > 0
+              ? pageList
+                  .map((page) => {
+                    if (
+                      page &&
+                      queryList.every(
+                        (q) => page.title.toLowerCase().indexOf(q) > -1
+                      )
+                    )
+                      queryList.forEach((q) => {
+                        const text = $(`<span>${page.title}</span>`).text()
+                        if ((text, q)) {
+                          page.title = text.replace(
+                            new RegExp(`(${q})`, 'ig'),
+                            `<span class="hl-word">$1</span>`
+                          )
+                        }
+                        console.log({ q, t: page.title, text }, 111)
+                      })
+                    return { ...page }
+                  })
+                  .filter(Boolean)
+              : pageList
+        }
+        return result
       }
     }
   })
