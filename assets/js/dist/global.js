@@ -223,7 +223,6 @@
         if (newVal) {
           querySearch(newVal, function (results) {
             state.filterResults = results;
-            console.log(state, '1000');
           }, state.results);
         } else {
           state.filterResults = [];

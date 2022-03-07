@@ -59,7 +59,6 @@ export default Vue.defineComponent({
             newVal,
             (results) => {
               state.filterResults = results
-              console.log(state, '1000')
             },
             state.results
           )
