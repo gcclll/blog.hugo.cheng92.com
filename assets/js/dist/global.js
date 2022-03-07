@@ -96,7 +96,7 @@
       }
 
       if (page !== 'index.html') {
-        pages[key].push(obj);
+        pages[key].push(_objectSpread2({}, obj));
       }
     } // sort by `timestamp`
 

@@ -134,11 +134,17 @@ function parseRoots(roots) {
       roots.reduce((o, next) => {
         const { birthtime, ctime } = next.stats
         const d = new Date(birthtime)
+        let month = d.getMonth() + 1,
+          year = d.getFullYear(),
+          day = d.getDate()
+        month = String(month).length < 2 ? `0${month}` : month
         o[next.file] = {
           birthtime,
           ctime,
-          month: d.getMonth() + 1,
-          year: d.getFullYear(),
+          month,
+          year,
+          day,
+          date: `${month}-${day}`,
           title: next.root.querySelector('title').text
         }
 

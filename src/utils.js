@@ -68,7 +68,7 @@ export function formatPages() {
       pages[key] = []
     }
     if (page !== 'index.html') {
-      pages[key].push(obj)
+      pages[key].push({ ...obj })
     }
   }
   // sort by `timestamp`
