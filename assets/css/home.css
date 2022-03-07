@@ -1,0 +1,9 @@
+div[id^='outline-container-'] {
+  display: none;
+}
+#table-of-contents {
+  display: none;
+}
+#content {
+  margin: auto;
+}

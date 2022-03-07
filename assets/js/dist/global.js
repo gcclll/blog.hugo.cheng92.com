@@ -105,6 +105,17 @@
       if (obj.file !== 'index.html') {
         pages[month].push(obj);
       }
+    } // sort by `timestamp`
+
+
+    for (var prop in pages) {
+      var arr = pages[prop];
+
+      if (arr && arr.length) {
+        pages[prop] = arr.sort(function (a, b) {
+          return new Date(b.timestamp) - new Date(a.timestamp);
+        });
+      }
     }
 
     return pages;
@@ -264,7 +275,6 @@
       return handleNotHome();
     }
 
-    $('#table-of-contents').hide();
     setTimeout(function () {
       $('#content').append($('#postamble'));
       $('#postamble').css({
@@ -272,9 +282,6 @@
         marginTop: '1rem'
       });
       $('#postamble').show();
-      $('#content').css({
-        margin: 'auto'
-      });
       $('#postamble').css({
         width: '100%',
         textAlign: 'center'
@@ -283,7 +290,6 @@
     // $(config.searchTmpl).insertAfter('h1.title')
 
     $("<div id=\"vue-toc\"></div>").insertAfter('h1.title');
-    $(config.tocSelector).remove();
 
     var _pages = JSON.parse(JSON.stringify(cached.pages));
 
@@ -340,9 +346,7 @@
 
     home(function () {
       // 非主页搜索放在 TOC 标题下面，主页的放在内容标题下面
-      $('#table-of-contents>h2').append(config.searchTmpl); // TOC
-
-      $('#table-of-contents').show(); // 底部个人信息
+      $('#table-of-contents>h2').append(config.searchTmpl); // 底部个人信息
 
       $('#postamble').show(); // 搜索组件
 

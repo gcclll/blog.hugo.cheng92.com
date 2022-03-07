@@ -17,8 +17,6 @@ $(function () {
   home(() => {
     // 非主页搜索放在 TOC 标题下面，主页的放在内容标题下面
     $('#table-of-contents>h2').append(config.searchTmpl)
-    // TOC
-    $('#table-of-contents').show()
     // 底部个人信息
     $('#postamble').show()
     // 搜索组件

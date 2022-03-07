@@ -66,6 +66,15 @@ export function formatPages() {
       pages[month].push(obj)
     }
   }
+  // sort by `timestamp`
+  for (let prop in pages) {
+    const arr = pages[prop]
+    if (arr && arr.length) {
+      pages[prop] = arr.sort(
+        (a, b) => new Date(b.timestamp) - new Date(a.timestamp)
+      )
+    }
+  }
   return pages
 }
 

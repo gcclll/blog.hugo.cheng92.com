@@ -10,7 +10,6 @@ export default function home(handleNotHome = noop) {
   if (!config.isHome) {
     return handleNotHome()
   }
-  $('#table-of-contents').hide()
 
   setTimeout(() => {
     $('#content').append($('#postamble'))
@@ -19,9 +18,6 @@ export default function home(handleNotHome = noop) {
       marginTop: '1rem'
     })
     $('#postamble').show()
-    $('#content').css({
-      margin: 'auto'
-    })
     $('#postamble').css({
       width: '100%',
       textAlign: 'center'
@@ -31,7 +27,6 @@ export default function home(handleNotHome = noop) {
   // 收集所有标题(id包含 'outline-container-' 且以它开头的 div)
   // $(config.searchTmpl).insertAfter('h1.title')
   $(`<div id="vue-toc"></div>`).insertAfter('h1.title')
-  $(config.tocSelector).remove()
 
   const pages = JSON.parse(JSON.stringify(cached.pages))
   Vue.createApp({
