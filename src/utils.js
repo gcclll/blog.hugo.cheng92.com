@@ -53,17 +53,22 @@ export function findOutlines(parents, hn = 2) {
 }
 
 export function formatPages() {
-  const ts = window.$timestamp
+  const ts = window.$pages
 
   const pages = {}
   for (let page in ts) {
     const obj = ts[page]
-    const month = obj.month
-    if (pages[month] == null) {
-      pages[month] = []
+    const { month, year } = obj
+    const key = `${year}-${String(month).length === 1 ? '0' + month : month}`
+
+    const url = obj.url || obj.href
+    if (!url) obj.href = obj.url = page
+
+    if (pages[key] == null) {
+      pages[key] = []
     }
-    if (obj.file !== 'index.html') {
-      pages[month].push(obj)
+    if (page !== 'index.html') {
+      pages[key].push(obj)
     }
   }
   // sort by `timestamp`
@@ -71,7 +76,7 @@ export function formatPages() {
     const arr = pages[prop]
     if (arr && arr.length) {
       pages[prop] = arr.sort(
-        (a, b) => new Date(b.timestamp) - new Date(a.timestamp)
+        (a, b) => new Date(b.birthtime) - new Date(a.birthtime)
       )
     }
   }

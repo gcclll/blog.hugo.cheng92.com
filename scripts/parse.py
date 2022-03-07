@@ -33,6 +33,32 @@ def find_span(file):
                 'file': file
             })
 
+
+def find_tags(title):
+    tags_obj = {}
+    for outline in soup.find_all('div[id^="outline-container-"]'):
+        title = ''
+        tags = []
+        try:
+            title = outline.find('a').get_text()
+            todo = outline.find('span.todo')['class']
+            done = outline.find('span.done')['class']
+            tagEles = outline.find_all('span.tag > span')
+            for tag in tagEles:
+                tags.append(tag.get_text())
+        except Exception:
+            title = ''
+
+        if title:
+            tags_obj[title] = {
+                'todo': todo,
+                'done': done,
+                'tags': tags
+            }
+
+    return tags_obj[title]
+
+
 def find_a(file):
     for a in soup.find_all('a'):
         if a.has_attr('href'):
@@ -61,12 +87,14 @@ for file in os.listdir("./posts/"):
     if file.endswith('html'):
         soup = BeautifulSoup(open("./posts/" + file), 'html.parser')
         date = soup.find_all('')
+        title = soup.head.title.get_text()
         timestamps[file] = {
             "timestamp": get_FileCreateTime("./posts/" + file),
             "month": get_FileCreateTime("./posts/" + file, "%Y-%m"),
             "date": get_FileCreateTime("./posts/" + file, "%m-%d"),
-            "title": soup.head.title.get_text(),
-            "file": file
+            "title": title,
+            "file": file,
+            "tags": find_tags(title)
         }
         find_h(file)
         find_span(file)

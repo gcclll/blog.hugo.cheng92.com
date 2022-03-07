@@ -79,31 +79,24 @@
       });
     };
   }
-  function dedupStats() {
-    var results = [];
-    window.$stats.forEach(function (stat) {
-      if (!results.find(function (r) {
-        return r && r.value === stat.value;
-      })) {
-        results.push(stat);
-      }
-    });
-    return results;
-  }
   function formatPages() {
-    var ts = window.$timestamp;
+    var ts = window.$pages;
     var pages = {};
 
     for (var page in ts) {
       var obj = ts[page];
-      var month = obj.month;
+      var month = obj.month,
+          year = obj.year;
+      var key = "".concat(year, "-").concat(String(month).length === 1 ? '0' + month : month);
+      var url = obj.url || obj.href;
+      if (!url) obj.href = obj.url = page;
 
-      if (pages[month] == null) {
-        pages[month] = [];
+      if (pages[key] == null) {
+        pages[key] = [];
       }
 
-      if (obj.file !== 'index.html') {
-        pages[month].push(obj);
+      if (page !== 'index.html') {
+        pages[key].push(obj);
       }
     } // sort by `timestamp`
 
@@ -113,7 +106,7 @@
 
       if (arr && arr.length) {
         pages[prop] = arr.sort(function (a, b) {
-          return new Date(b.timestamp) - new Date(a.timestamp);
+          return new Date(b.birthtime) - new Date(a.birthtime);
         });
       }
     }
@@ -169,7 +162,8 @@
 
   /** jsx?|tsx? file header */
 
-  var deduped = dedupStats(); // 包含页面创建时间，用来创建主页的 TOC
+  var deduped = []; // dedupStats()
+  // 包含页面创建时间，用来创建主页的 TOC
 
   var pages = formatPages(); // 取出由 parse.py 生成的网站资源信息
 
@@ -197,6 +191,9 @@
         dialogVisible: false,
         scope: '2' // 1 - 本文, 2 - 全站
 
+      });
+      Vue.onBeforeMount(function () {
+        console.log('on before mount');
       });
       Vue.onMounted(function () {
         state.results = state.scope === '1' ? cached.current : cached.whole;
@@ -293,7 +290,7 @@
     var _pages = JSON.parse(JSON.stringify(cached.pages));
 
     Vue.createApp({
-      template: "\n        <el-input\n          class=\"inline-input search-input\"\n          v-model=\"search\" placeholder=\"\u8BF7\u8F93\u5165\u6807\u9898\u641C\u7D22\">\n          <template #suffix>\n            <img class=\"command-k\" src=\"/assets/img/command.svg\"/><span class=\"command-k\">K</span>\n          </template>\n        </el-input>\n        <el-menu class=\"el-toc-menu\">\n          <el-menu-item-group v-for=\"(list, month) in pages\" :key=\"month\" :title=\"month\">\n            <el-menu-item v-for=\"(page, i) in list\" :index=\"i+''\" :key=\"page.timestamp\">\n            <span class=\"date\">{{page.date}}</span>\n            <span class=\"title\"><a :href=\"page.file\" v-html=\"page.title\"></a></span>\n            </el-menu-item>\n          </el-menu-item-group>\n        </el-menu>\n        <div id=\"search\"><search/></div>",
+      template: "\n        <el-input\n          class=\"inline-input search-input\"\n          v-model=\"search\" placeholder=\"\u8BF7\u8F93\u5165\u6807\u9898\u641C\u7D22\">\n          <template #suffix>\n            <img class=\"command-k\" src=\"/assets/img/command.svg\"/><span class=\"command-k\">K</span>\n          </template>\n        </el-input>\n        <el-menu class=\"el-toc-menu\">\n          <el-menu-item-group v-for=\"(list, month) in pages\" :key=\"month\" :title=\"month\">\n            <el-menu-item v-for=\"(page, i) in list\" :index=\"i+''\" :key=\"page.timestamp\">\n            <span class=\"date\">{{page.date}}</span>\n            <span class=\"title\"><a :href=\"page.url\" v-html=\"page.title\"></a></span>\n            </el-menu-item>\n          </el-menu-item-group>\n        </el-menu>\n        <div id=\"search\"><search/></div>",
       components: {
         Search: Search
       },

@@ -32,6 +32,10 @@ export default Vue.defineComponent({
       scope: '2' // 1 - 本文, 2 - 全站
     })
 
+    Vue.onBeforeMount(() => {
+      console.log('on before mount')
+    })
+
     Vue.onMounted(() => {
       state.results = state.scope === '1' ? cached.current : cached.whole
       $(document.body).on('keydown', keydownHandler)

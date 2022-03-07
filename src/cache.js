@@ -2,7 +2,7 @@
 import { dedupStats, formatPages } from './utils'
 
 // 页面中的链接，锚点数据，用来全站搜索
-const deduped = dedupStats()
+const deduped = [] // dedupStats()
 // 包含页面创建时间，用来创建主页的 TOC
 const pages = formatPages()
 

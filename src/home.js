@@ -42,7 +42,7 @@ export default function home(handleNotHome = noop) {
           <el-menu-item-group v-for="(list, month) in pages" :key="month" :title="month">
             <el-menu-item v-for="(page, i) in list" :index="i+''" :key="page.timestamp">
             <span class="date">{{page.date}}</span>
-            <span class="title"><a :href="page.file" v-html="page.title"></a></span>
+            <span class="title"><a :href="page.url" v-html="page.title"></a></span>
             </el-menu-item>
           </el-menu-item-group>
         </el-menu>
