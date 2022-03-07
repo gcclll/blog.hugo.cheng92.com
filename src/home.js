@@ -1,6 +1,6 @@
 /** jsx?|tsx? file header */
 
-import { noop } from './utils'
+import { noop, filterByTitle } from './utils'
 import config from './config'
 import { cached } from './cache'
 import Search from './components/Search'
@@ -43,7 +43,7 @@ export default function home(handleNotHome = noop) {
             <img class="command-k" src="/assets/img/command.svg"/><span class="command-k">K</span>
           </template>
         </el-input>
-        <el-menu clas="el-toc-menu">
+        <el-menu class="el-toc-menu">
           <el-menu-item-group v-for="(list, month) in pages" :key="month" :title="month">
             <el-menu-item v-for="(page, i) in list" :index="i+''" :key="page.timestamp">
             <span class="date">{{page.date}}</span>
@@ -51,7 +51,8 @@ export default function home(handleNotHome = noop) {
             </el-menu-item>
           </el-menu-item-group>
         </el-menu>
-        <search id="search"/>`,
+        <div id="search"><search/></div>`,
+
     components: {
       Search
     },
@@ -62,39 +63,7 @@ export default function home(handleNotHome = noop) {
     },
     computed: {
       pages() {
-        const result = {}
-        for (let prop in pages) {
-          const pageList = pages[prop]
-          if (result[prop] == null) {
-            result[prop] = []
-          }
-          const queryList = this.search.toLowerCase().split(' ')
-          result[prop] =
-            queryList.length > 0
-              ? pageList
-                  .map((page) => {
-                    if (
-                      page &&
-                      queryList.every(
-                        (q) => page.title.toLowerCase().indexOf(q) > -1
-                      )
-                    )
-                      queryList.forEach((q) => {
-                        const text = $(`<span>${page.title}</span>`).text()
-                        if ((text, q)) {
-                          page.title = text.replace(
-                            new RegExp(`(${q})`, 'ig'),
-                            `<span class="hl-word">$1</span>`
-                          )
-                        }
-                        console.log({ q, t: page.title, text }, 111)
-                      })
-                    return { ...page }
-                  })
-                  .filter(Boolean)
-              : pageList
-        }
-        return result
+        return filterByTitle(this.search, pages)
       }
     }
   })

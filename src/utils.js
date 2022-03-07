@@ -68,3 +68,36 @@ export function formatPages() {
   }
   return pages
 }
+
+export function filterByTitle(search = '', list = []) {
+  const result = {}
+  const pages = JSON.parse(JSON.stringify(list))
+  for (let prop in pages) {
+    const pageList = pages[prop]
+    if (result[prop] == null) {
+      result[prop] = []
+    }
+    const queryList = search
+      ? search.replace(/\s+/g, ' ').toLowerCase().split(' ')
+      : []
+    result[prop] =
+      queryList.length > 0
+        ? pageList
+            .map((page) => {
+              let text = $(`<p>${page.title}</p>`).text().toLowerCase()
+              if (queryList.every((q) => text.indexOf(q.toLowerCase()) > -1)) {
+                const r = new RegExp('(' + queryList.join('|') + ')', 'ig')
+                page.title = text.replace(r, `<span class="hl-word">$1</span>`)
+                return { ...page }
+              }
+            })
+            .filter(Boolean)
+        : pageList
+
+    if (result[prop].length === 0) {
+      delete result[prop]
+    }
+  }
+
+  return result
+}

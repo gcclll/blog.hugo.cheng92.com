@@ -109,6 +109,43 @@
 
     return pages;
   }
+  function filterByTitle() {
+    var search = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : '';
+    var list = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : [];
+    var result = {};
+    var pages = JSON.parse(JSON.stringify(list));
+
+    var _loop = function _loop(prop) {
+      var pageList = pages[prop];
+
+      if (result[prop] == null) {
+        result[prop] = [];
+      }
+
+      var queryList = search ? search.replace(/\s+/g, ' ').toLowerCase().split(' ') : [];
+      result[prop] = queryList.length > 0 ? pageList.map(function (page) {
+        var text = $("<p>".concat(page.title, "</p>")).text().toLowerCase();
+
+        if (queryList.every(function (q) {
+          return text.indexOf(q.toLowerCase()) > -1;
+        })) {
+          var r = new RegExp('(' + queryList.join('|') + ')', 'ig');
+          page.title = text.replace(r, "<span class=\"hl-word\">$1</span>");
+          return _objectSpread2({}, page);
+        }
+      }).filter(Boolean) : pageList;
+
+      if (result[prop].length === 0) {
+        delete result[prop];
+      }
+    };
+
+    for (var prop in pages) {
+      _loop(prop);
+    }
+
+    return result;
+  }
 
   /** jsx?|tsx? file header */
   var config = {
@@ -218,6 +255,7 @@
     }
   });
 
+  /** jsx?|tsx? file header */
   function home() {
     var handleNotHome = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : noop;
 
@@ -250,7 +288,7 @@
     var _pages = JSON.parse(JSON.stringify(cached.pages));
 
     Vue.createApp({
-      template: "\n        <el-input\n          class=\"inline-input search-input\"\n          v-model=\"search\" placeholder=\"\u8BF7\u8F93\u5165\u6807\u9898\u641C\u7D22\">\n          <template #suffix>\n            <img class=\"command-k\" src=\"/assets/img/command.svg\"/><span class=\"command-k\">K</span>\n          </template>\n        </el-input>\n        <el-menu clas=\"el-toc-menu\">\n          <el-menu-item-group v-for=\"(list, month) in pages\" :key=\"month\" :title=\"month\">\n            <el-menu-item v-for=\"(page, i) in list\" :index=\"i+''\" :key=\"page.timestamp\">\n            <span class=\"date\">{{page.date}}</span>\n            <span class=\"title\"><a :href=\"page.file\" v-html=\"page.title\"></a></span>\n            </el-menu-item>\n          </el-menu-item-group>\n        </el-menu>\n        <search id=\"search\"/>",
+      template: "\n        <el-input\n          class=\"inline-input search-input\"\n          v-model=\"search\" placeholder=\"\u8BF7\u8F93\u5165\u6807\u9898\u641C\u7D22\">\n          <template #suffix>\n            <img class=\"command-k\" src=\"/assets/img/command.svg\"/><span class=\"command-k\">K</span>\n          </template>\n        </el-input>\n        <el-menu class=\"el-toc-menu\">\n          <el-menu-item-group v-for=\"(list, month) in pages\" :key=\"month\" :title=\"month\">\n            <el-menu-item v-for=\"(page, i) in list\" :index=\"i+''\" :key=\"page.timestamp\">\n            <span class=\"date\">{{page.date}}</span>\n            <span class=\"title\"><a :href=\"page.file\" v-html=\"page.title\"></a></span>\n            </el-menu-item>\n          </el-menu-item-group>\n        </el-menu>\n        <div id=\"search\"><search/></div>",
       components: {
         Search: Search
       },
@@ -261,44 +299,7 @@
       },
       computed: {
         pages: function pages() {
-          var _this = this;
-
-          var result = {};
-
-          var _loop = function _loop(prop) {
-            var pageList = _pages[prop];
-
-            if (result[prop] == null) {
-              result[prop] = [];
-            }
-
-            var queryList = _this.search.toLowerCase().split(' ');
-
-            result[prop] = queryList.length > 0 ? pageList.map(function (page) {
-              if (page && queryList.every(function (q) {
-                return page.title.toLowerCase().indexOf(q) > -1;
-              })) queryList.forEach(function (q) {
-                var text = $("<span>".concat(page.title, "</span>")).text();
-
-                if (q) {
-                  page.title = text.replace(new RegExp("(".concat(q, ")"), 'ig'), "<span class=\"hl-word\">$1</span>");
-                }
-
-                console.log({
-                  q: q,
-                  t: page.title,
-                  text: text
-                }, 111);
-              });
-              return _objectSpread2({}, page);
-            }).filter(Boolean) : pageList;
-          };
-
-          for (var prop in _pages) {
-            _loop(prop);
-          }
-
-          return result;
+          return filterByTitle(this.search, _pages);
         }
       }
     }).use(ElementPlus).mount('#vue-toc');
