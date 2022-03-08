@@ -1,5 +1,5 @@
 /** jsx?|tsx? file header */
-import { querySearch, filterList } from '../utils'
+import { querySearch } from '../utils'
 import { cached } from '../cache'
 
 const WHOLE = '1'

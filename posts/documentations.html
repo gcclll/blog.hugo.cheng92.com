@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <!-- 2022-03-01 Tue 10:58 -->
+  <!-- 2022-03-08 Tue 16:43 -->
   <meta charset="utf-8">
   <meta name="viewport" content=
   "width=device-width, initial-scale=1">
@@ -192,6 +192,16 @@
     { background-color: #ffff00; color: #000000; font-weight: bold; }
   .org-svg { width: 90%; }
   </style>
+  <link rel="stylesheet" href=
+  "https://cdn.jsdelivr.net/npm/bootstrap@3.4.1/dist/css/bootstrap.min.css"
+  integrity=
+  "sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu"
+  crossorigin="anonymous">
+  <link rel="stylesheet" href=
+  "https://cdn.jsdelivr.net/npm/bootstrap@3.4.1/dist/css/bootstrap-theme.min.css"
+  integrity=
+  "sha384-6pzBo3FDv/PJ8r2KRkGHifhEocL+1X2rVCTTkUfGk7/0pbek5mMa1upzvWbrUbOZ"
+  crossorigin="anonymous">
   <link rel="stylesheet" type="text/css" href=
   "https://fniessen.github.io/org-html-themes/src/readtheorg_theme/css/htmlize.css">
   <link rel="stylesheet" type="text/css" href=
@@ -203,9 +213,13 @@
   <script src=
   "https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
   <script src=
-  "https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+  "https://cdn.jsdelivr.net/npm/bootstrap@3.4.1/dist/js/bootstrap.min.js"
+  integrity=
+  "sha384-aJ21OjlMXNL5UyIl/XNwTMqvzeRMZH2w8c5cRVpzpU8Y5bApTppSuUkhZXN0VxHd"
+  crossorigin="anonymous"></script>
   <script src=
   "https://cdnjs.cloudflare.com/ajax/libs/mobile-detect/1.4.5/mobile-detect.min.js"></script>
+  <script src='//unpkg.com/valine/dist/Valine.min.js'></script>
   <script src="//unpkg.com/vue@next"></script>
   <script src="//unpkg.com/element-plus"></script>
   <script type="text/javascript" src=
@@ -337,7 +351,6 @@
     MacID login: <a href=
     "http://catalogue.mcmaster.ca/catalogue/Record/1950176">http://catalogue.mcmaster.ca/catalogue/Record/1950176</a>
     )</p>
-    <p></p>
     <p><abbr class="tooltip" title="">temp</abbr></p>
     <div style=
     "padding: 1em; background-color: #CCFFFF;border-radius: 15px; font-size: 0.9em; box-shadow: 0.05em 0.1em 5px 0.01em #00000057;">
@@ -557,7 +570,7 @@
           <p>An <i>expression</i> is either a ‘variable’ or a
           ‘function application’; i.e., the name of a function
           along with a number of existing expressions.</p>
-          <pre class="example" id="org33bbf3c">
+          <pre class="example" id="orgfec76d0">
  Expr ::= Constant    -- E.g., 1 or “apple”
       |  Variable    -- E.g., x or apple (no quotes!)
       |  Application -- E.g., f(x₁, x₂, …, xₙ)
@@ -796,7 +809,7 @@
           and their sum below the line, so too is that notation
           reused for inference rules: Premises are above the
           fraction’s bar and the conclusion is below.</p>
-          <pre class="example" id="org03b4355">
+          <pre class="example" id="org3690b66">
                                    12
 P₁, P₂, …, Pn                    +  7
 ---------------R     versues     ----
@@ -1999,7 +2012,7 @@ P₁, P₂, …, Pn                    +  7
   </div>
   <div id="postamble" class="status">
     <p class="author">Author: Zhicheng Lee</p>
-    <p class="date">Created: 2022-03-01 Tue 10:58</p>
+    <p class="date">Created: 2022-03-08 Tue 16:43</p>
   </div>
 </body>
 </html>

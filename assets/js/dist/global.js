@@ -133,7 +133,6 @@
       queryList = queryList.replace(/\s+/g, ' ').toLowerCase().split(' ');
     }
 
-    console.log(queryList, '1111');
     var cached = {}; // map<string, boolean>
 
     return list.map(function (page) {
@@ -162,6 +161,33 @@
     searchTmpl: "<div id=\"search\">Loading...</div>",
     isHome: /home\.html$/.test(location.pathname)
   };
+
+  /** jsx?|tsx? file header */
+  function home() {
+    var handleNotHome = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : noop;
+
+    // 是不是主页 home.html
+    if (!config.isHome) {
+      handleNotHome();
+      return config.isHome;
+    }
+
+    setTimeout(function () {
+      $('#content').append($('#postamble'));
+      $('#postamble').css({
+        position: 'relative',
+        marginTop: '1rem'
+      });
+      $('#postamble').show();
+      $('#postamble').css({
+        width: '100%',
+        textAlign: 'center'
+      });
+    }, 500); // 收集所有标题(id包含 'outline-container-' 且以它开头的 div)
+
+    $("<div id=\"vue-toc\"></div>").insertAfter('h1.title');
+    return config.isHome;
+  }
 
   // 包含页面创建时间，用来创建主页的 TOC
 
@@ -318,40 +344,20 @@
   });
 
   /** jsx?|tsx? file header */
-  function home() {
-    var handleNotHome = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : noop;
-
-    // 是不是主页 home.html
-    if (!config.isHome) {
-      return handleNotHome();
-    }
-
-    setTimeout(function () {
-      $('#content').append($('#postamble'));
-      $('#postamble').css({
-        position: 'relative',
-        marginTop: '1rem'
-      });
-      $('#postamble').show();
-      $('#postamble').css({
-        width: '100%',
-        textAlign: 'center'
-      });
-    }, 500); // 收集所有标题(id包含 'outline-container-' 且以它开头的 div)
-    // $(config.searchTmpl).insertAfter('h1.title')
-
-    $("<div id=\"vue-toc\"></div>").insertAfter('h1.title');
+  function loadSearchApp() {
+    var showToc = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : true;
 
     var _pages = JSON.parse(JSON.stringify(cached.pages));
 
     Vue.createApp({
-      template: "\n        <el-input\n          class=\"inline-input search-input\"\n          v-model=\"search\" placeholder=\"\u641C\u7D22\u672C\u6587(\u8BF7\u6309Alt/Cmd+K \u5168\u7AD9\u641C\u7D22)\">\n          <template #suffix>\n            <img class=\"command-k\" src=\"/assets/img/command.svg\"/><span class=\"command-k\">K</span>\n          </template>\n        </el-input>\n        <el-menu class=\"el-toc-menu\">\n          <el-menu-item-group v-for=\"(list, month) in pages\" :key=\"month\" :title=\"month\">\n            <el-menu-item v-for=\"(page, i) in list\" :index=\"i+''\" :key=\"page.timestamp\">\n            <span class=\"date\">{{page.date}}</span>\n            <span class=\"title\"><a :href=\"page.url\" v-html=\"page.title\"></a></span>\n            </el-menu-item>\n          </el-menu-item-group>\n        </el-menu>\n        <div id=\"search\"><search/></div>",
+      template: "\n        <el-input\n          class=\"inline-input search-input\"\n          v-model=\"search\" placeholder=\"\u641C\u7D22\u672C\u6587(Alt/Cmd+K \u5168\u7AD9\u641C\u7D22)\">\n          <template #suffix>\n            <img class=\"command-k\" src=\"/assets/img/command.svg\"/><span class=\"command-k\">K</span>\n          </template>\n        </el-input>\n        <el-menu v-if=\"showToc\" class=\"el-toc-menu\">\n          <el-menu-item-group v-for=\"(list, month) in pages\" :key=\"month\" :title=\"month\">\n            <el-menu-item v-for=\"(page, i) in list\" :index=\"i+''\" :key=\"page.timestamp\">\n            <span class=\"date\">{{page.date}}</span>\n            <span class=\"title\"><a :href=\"page.url\" v-html=\"page.title\"></a></span>\n            </el-menu-item>\n          </el-menu-item-group>\n        </el-menu>\n        <div id=\"search\"><search/></div>",
       components: {
         Search: Search
       },
       data: function data() {
         return {
-          search: ''
+          search: '',
+          showToc: showToc
         };
       },
       computed: {
@@ -359,29 +365,7 @@
           return filterByTitle(this.search, _pages);
         }
       }
-    }).use(ElementPlus).mount('#vue-toc');
-  }
-
-  /** jsx?|tsx? file header */
-  function loadSearchApp() {
-    // search component
-    Vue.createApp({
-      template: "\n      <el-autocomplete\n        v-model=\"search\"\n        :fetch-suggestions=\"querySearch\"\n        :trigger-on-focus=\"false\"\n        class=\"inline-input search-input\"\n        placeholder=\"\u5168\u6587\u6216\u672C\u6587\u4E2D\u641C\u7D22...\"\n        @select=\"handleSelect\"\n      >\n        <template #suffix>\n          <img class=\"command-k\" src=\"/assets/img/command.svg\"/><span class=\"command-k\">K</span>\n        </template>\n      </el-autocomplete>\n      <search/>",
-      components: {
-        Search: Search
-      },
-      data: function data() {
-        return {
-          search: ''
-        };
-      },
-      methods: {
-        handleSelect: function handleSelect(item) {
-          this.search = '';
-          location.href = item.href;
-        }
-      }
-    }).use(ElementPlus, config.ElementPlusOptions).mount('#search');
+    }).use(ElementPlus).mount(showToc ? '#vue-toc' : '#search');
   }
 
   $(function () {
@@ -395,14 +379,14 @@
     } // 主页
 
 
-    home(function () {
+    var isHome = home(function () {
       // 非主页搜索放在 TOC 标题下面，主页的放在内容标题下面
       $('#table-of-contents>h2').append(config.searchTmpl); // 底部个人信息
 
-      $('#postamble').show(); // 搜索组件
+      $('#postamble').show();
+    }); // 搜索组件
 
-      loadSearchApp();
-    }); // 基于 github,  gcclll/cheng92-comments  的评论系统
+    loadSearchApp(isHome); // 基于 github,  gcclll/cheng92-comments  的评论系统
 
     $('#content').append("<script id=\"utt-client\" type=\"text/javascript\" src=\"/assets/js/dist/client.js\" issue-term=\"pathname\" repo=\"gcclll/cheng92-comments\" theme=\"github-light\" async></script>"); // 添加基于 valine 的评论系统
 

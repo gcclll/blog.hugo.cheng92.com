@@ -107,7 +107,6 @@ export function filterList(queryList, list = []) {
   if (typeof queryList === 'string') {
     queryList = queryList.replace(/\s+/g, ' ').toLowerCase().split(' ')
   }
-  console.log(queryList, '1111')
   const cached = {} // map<string, boolean>
   return list
     .map((page) => {
