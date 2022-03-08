@@ -118,8 +118,8 @@ function parseRoots(roots) {
     file.toc = findTOC(item.root, name)
     fs.writeFile(
       `./assets/js/stats/${name}.js`,
-      `window.$stats=(window.$stats||{});window.$stats['${name}']=${JSON.stringify(
-        stats
+      `window.$stats=window.$stats||{};window.$stats['${name}']=${JSON.stringify(
+        file
       )}`,
       {
         encoding: 'utf8'

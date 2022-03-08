@@ -1,10 +1,13 @@
 /** jsx?|tsx? file header */
-import { querySearch } from '../utils'
+import { querySearch, filterList } from '../utils'
 import { cached } from '../cache'
 
+const WHOLE = '1'
+const CURRENT = '2'
 export default Vue.defineComponent({
   template: `
-    <el-dialog v-model="dialogVisible" @open="clean" @close="clean" title="全文(站)搜索">
+    <el-dialog  v-model="dialogVisible" @open="clean" @close="clean" title="全文(站)搜索">
+     <div v-loading="loading" element-loading-text="全站资源加载中，请耐心等待...">
       <el-input autofocus v-model="search" placeholder="请输入搜索内容(暂只支持标题、链接、锚点)">
         <template #prepend>
           <el-select v-model="scope" placeholder="Select" style="width:80px">
@@ -15,21 +18,25 @@ export default Vue.defineComponent({
         <template #append><img class="my-search-icon" src="/assets/img/search.svg"></template>
       </el-input>
       <ul class="search-list" style="max-height:500px;overflow-y:scroll;text-align:left">
-        <li v-for="(result, i) in filterResults" :key="result.value" @click="locate(result.link)">
-          <div class="result-value" v-html="highlight(result.value)"></div>
+        <li v-for="(result, i) in filterResults" :key="i" @click="locate(result.url)">
+          <div class="result-value" v-html="result.title"></div>
           <div class="result-tags">
-            <el-tag v-if="!isCurrentPage(result.file)" effect="dark" type="info">{{result.file}}</el-tag>
+            <el-tag v-if="result.filename&&!isCurrentPage(result.filename)" effect="dark" type="info">{{result.filename}}</el-tag>
           </div>
         </li>
       </ul>
+     </div>
     </el-dialog>`,
   setup() {
     const state = Vue.reactive({
       results: [],
-      filterResults: [],
-      search: '',
+      filterResults: [], // 实时搜索到的数据
+      search: '', // 搜索关键词
       dialogVisible: false,
-      scope: '2' // 1 - 本文, 2 - 全站
+      loading: true,
+      scope: WHOLE, // 1 - 本文, 2 - 全站
+      stats: {},
+      pages: {}
     })
 
     Vue.onBeforeMount(() => {
@@ -37,13 +44,15 @@ export default Vue.defineComponent({
     })
 
     Vue.onMounted(() => {
-      state.results = state.scope === '1' ? cached.current : cached.whole
       $(document.body).on('keydown', keydownHandler)
     })
 
     function keydownHandler(e) {
       if (e.metaKey && e.keyCode === 75) {
         state.dialogVisible = true
+        cached.loadPageStats()
+        state.loading = false
+        state.results = state.scope === WHOLE ? cached.whole : cached.current
       }
     }
     Vue.onUnmounted(() => {
@@ -52,13 +61,20 @@ export default Vue.defineComponent({
 
     Vue.watch(
       () => state.scope,
-      (val) => (state.results = val === '1' ? cached.current : cached.whole)
+      (val) => (state.results = val === CURRENT ? cached.current : cached.whole)
     )
 
     Vue.watch(
       () => state.search,
-      (newVal) => {
+      (newVal, oldVal) => {
         if (newVal) {
+          // 当前输入的是空格，不需要触发搜索
+          if (
+            oldVal &&
+            newVal.replace(new RegExp(`^${oldVal}`), '').trim() === ''
+          ) {
+            return
+          }
           querySearch(
             newVal,
             (results) => {
@@ -80,17 +96,6 @@ export default Vue.defineComponent({
     return {
       ...Vue.toRefs(state),
       clean,
-      // 高亮匹配内容
-      highlight(value) {
-        const words = state.search.split(' ')
-        words.forEach((word) => {
-          value = value.replace(
-            new RegExp(`${word}`, 'gi'),
-            `<span class="hl-word">${word}</span>`
-          )
-        })
-        return value
-      },
       isCurrentPage(file) {
         return new RegExp(`${file}$`).test(location.pathname)
       },
@@ -98,6 +103,7 @@ export default Vue.defineComponent({
         location.href = link
         clean()
         state.dialogVisible = false
+        console.log({ link }, 'locate')
       },
       querySearch: (qs, cb) => querySearch(qs, cb, state.results),
       handleSelect(item) {

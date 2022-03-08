@@ -33,7 +33,7 @@ export default function home(handleNotHome = noop) {
     template: `
         <el-input
           class="inline-input search-input"
-          v-model="search" placeholder="请输入标题搜索">
+          v-model="search" placeholder="搜索本文(请按Alt/Cmd+K 全站搜索)">
           <template #suffix>
             <img class="command-k" src="/assets/img/command.svg"/><span class="command-k">K</span>
           </template>

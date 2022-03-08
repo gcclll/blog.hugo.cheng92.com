@@ -2,9 +2,7 @@
 
 export const noop = () => {}
 export function querySearch(queryString, cb, results = []) {
-  const result = queryString
-    ? results.filter(createFilter(queryString))
-    : results
+  const result = queryString ? filterList(queryString, results) : results
   cb(result)
 }
 
@@ -95,18 +93,7 @@ export function filterByTitle(search = '', list = []) {
       ? search.replace(/\s+/g, ' ').toLowerCase().split(' ')
       : []
     result[prop] =
-      queryList.length > 0
-        ? pageList
-            .map((page) => {
-              let text = $(`<p>${page.title}</p>`).text().toLowerCase()
-              if (queryList.every((q) => text.indexOf(q.toLowerCase()) > -1)) {
-                const r = new RegExp('(' + queryList.join('|') + ')', 'ig')
-                page.title = text.replace(r, `<span class="hl-word">$1</span>`)
-                return { ...page }
-              }
-            })
-            .filter(Boolean)
-        : pageList
+      queryList.length > 0 ? filterList(queryList, pageList) : pageList
 
     if (result[prop].length === 0) {
       delete result[prop]
@@ -114,4 +101,29 @@ export function filterByTitle(search = '', list = []) {
   }
 
   return result
+}
+
+export function filterList(queryList, list = []) {
+  if (typeof queryList === 'string') {
+    queryList = queryList.replace(/\s+/g, ' ').toLowerCase().split(' ')
+  }
+  console.log(queryList, '1111')
+  const cached = {} // map<string, boolean>
+  return list
+    .map((page) => {
+      let text = $(`<p>${page.title || page.text || page.value}</p>`)
+        .text()
+        .toLowerCase()
+      // 去重
+      if (cached[text]) {
+        return
+      }
+      if (queryList.every((q) => text.indexOf(q.toLowerCase()) > -1)) {
+        const r = new RegExp('(' + queryList.join('|') + ')', 'ig')
+        page.title = text.replace(r, `<span class="hl-word">$1</span>`)
+        cached[text] = true
+        return { ...page }
+      }
+    })
+    .filter(Boolean)
 }

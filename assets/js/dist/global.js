@@ -66,18 +66,8 @@
   var noop = function noop() {};
   function querySearch(queryString, cb) {
     var results = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : [];
-    var result = queryString ? results.filter(createFilter(queryString)) : results;
+    var result = queryString ? filterList(queryString, results) : results;
     cb(result);
-  }
-  function createFilter(queryString) {
-    return function (item) {
-      // 支持叠加搜索
-      var queryList = queryString.split(' ');
-      var lower = item.value.toLowerCase();
-      return queryList.every(function (val) {
-        return lower.indexOf(val.toLowerCase()) > -1;
-      });
-    };
   }
   function formatPages() {
     var ts = window.$pages;
@@ -119,7 +109,7 @@
     var result = {};
     var pages = JSON.parse(JSON.stringify(list));
 
-    var _loop = function _loop(prop) {
+    for (var prop in pages) {
       var pageList = pages[prop];
 
       if (result[prop] == null) {
@@ -127,28 +117,41 @@
       }
 
       var queryList = search ? search.replace(/\s+/g, ' ').toLowerCase().split(' ') : [];
-      result[prop] = queryList.length > 0 ? pageList.map(function (page) {
-        var text = $("<p>".concat(page.title, "</p>")).text().toLowerCase();
-
-        if (queryList.every(function (q) {
-          return text.indexOf(q.toLowerCase()) > -1;
-        })) {
-          var r = new RegExp('(' + queryList.join('|') + ')', 'ig');
-          page.title = text.replace(r, "<span class=\"hl-word\">$1</span>");
-          return _objectSpread2({}, page);
-        }
-      }).filter(Boolean) : pageList;
+      result[prop] = queryList.length > 0 ? filterList(queryList, pageList) : pageList;
 
       if (result[prop].length === 0) {
         delete result[prop];
       }
-    };
-
-    for (var prop in pages) {
-      _loop(prop);
     }
 
     return result;
+  }
+  function filterList(queryList) {
+    var list = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : [];
+
+    if (typeof queryList === 'string') {
+      queryList = queryList.replace(/\s+/g, ' ').toLowerCase().split(' ');
+    }
+
+    console.log(queryList, '1111');
+    var cached = {}; // map<string, boolean>
+
+    return list.map(function (page) {
+      var text = $("<p>".concat(page.title || page.text || page.value, "</p>")).text().toLowerCase(); // 去重
+
+      if (cached[text]) {
+        return;
+      }
+
+      if (queryList.every(function (q) {
+        return text.indexOf(q.toLowerCase()) > -1;
+      })) {
+        var r = new RegExp('(' + queryList.join('|') + ')', 'ig');
+        page.title = text.replace(r, "<span class=\"hl-word\">$1</span>");
+        cached[text] = true;
+        return _objectSpread2({}, page);
+      }
+    }).filter(Boolean);
   }
 
   /** jsx?|tsx? file header */
@@ -160,49 +163,101 @@
     isHome: /home\.html$/.test(location.pathname)
   };
 
-  /** jsx?|tsx? file header */
-
-  var deduped = []; // dedupStats()
   // 包含页面创建时间，用来创建主页的 TOC
 
-  var pages = formatPages(); // 取出由 parse.py 生成的网站资源信息
+  var pages = formatPages();
+  var filename = location.pathname.replace(/.*\//g, '');
+  var loaded = false;
+
+  function loadPageStats(cb) {
+    if (loaded) {
+      ElementPlus.ElMessage({
+        type: 'success',
+        message: '全站资源已就绪。'
+      });
+      return;
+    }
+
+    var path = '/assets/js/stats';
+    var html = '';
+
+    for (var page in window.$pages) {
+      var jsFile = "".concat(path, "/").concat(page, ".js");
+      html += "<script src=\"".concat(jsFile, "\" type=\"text/javascript\" sync></script>");
+    }
+
+    $('head').append(html);
+    loaded = true;
+    if (cb) cb(window.$stats, window.$pages);
+
+    for (var prop in window.$stats) {
+      var _window$$stats$prop = window.$stats[prop],
+          IDLinks = _window$$stats$prop.IDLinks,
+          aLinks = _window$$stats$prop.aLinks;
+      IDLinks.forEach(function (link) {
+        return cached.whole.push(_objectSpread2({}, link));
+      });
+      aLinks.forEach(function (link) {
+        return cached.whole.push(_objectSpread2({}, link));
+      });
+    }
+
+    cached.current = cached.whole.filter(function (result) {
+      var url = result.url,
+          text = result.text,
+          value = result.value,
+          href = result.href,
+          id = result.id,
+          filename = result.filename;
+      result.value = value || text;
+      result.url = url || href || "".concat(filename, "#").concat(id);
+      return result.filename === cached.filename;
+    });
+    console.log(cached, 333);
+  } // 取出由 parse.py 生成的网站资源信息
+
 
   var cached = {
     pages: pages,
-    current: deduped.reduce(function (arr, curr) {
-      if (curr && curr.file && new RegExp("".concat(curr.file, "$")).test(location.pathname)) {
-        arr.push(curr);
-      }
-
-      return arr;
-    }, []),
+    loadPageStats: loadPageStats,
+    filename: filename,
+    current: [],
     // 本文
-    whole: deduped // 全站
+    whole: [] // 全站
 
   };
 
+  var WHOLE = '1';
+  var CURRENT = '2';
   var Search = Vue.defineComponent({
-    template: "\n    <el-dialog v-model=\"dialogVisible\" @open=\"clean\" @close=\"clean\" title=\"\u5168\u6587(\u7AD9)\u641C\u7D22\">\n      <el-input autofocus v-model=\"search\" placeholder=\"\u8BF7\u8F93\u5165\u641C\u7D22\u5185\u5BB9(\u6682\u53EA\u652F\u6301\u6807\u9898\u3001\u94FE\u63A5\u3001\u951A\u70B9)\">\n        <template #prepend>\n          <el-select v-model=\"scope\" placeholder=\"Select\" style=\"width:80px\">\n            <el-option label=\"\u672C\u6587\" value=\"1\"/>\n            <el-option label=\"\u5168\u7AD9\" value=\"2\"/>\n          </el-select>\n        </template>\n        <template #append><img class=\"my-search-icon\" src=\"/assets/img/search.svg\"></template>\n      </el-input>\n      <ul class=\"search-list\" style=\"max-height:500px;overflow-y:scroll;text-align:left\">\n        <li v-for=\"(result, i) in filterResults\" :key=\"result.value\" @click=\"locate(result.link)\">\n          <div class=\"result-value\" v-html=\"highlight(result.value)\"></div>\n          <div class=\"result-tags\">\n            <el-tag v-if=\"!isCurrentPage(result.file)\" effect=\"dark\" type=\"info\">{{result.file}}</el-tag>\n          </div>\n        </li>\n      </ul>\n    </el-dialog>",
+    template: "\n    <el-dialog  v-model=\"dialogVisible\" @open=\"clean\" @close=\"clean\" title=\"\u5168\u6587(\u7AD9)\u641C\u7D22\">\n     <div v-loading=\"loading\" element-loading-text=\"\u5168\u7AD9\u8D44\u6E90\u52A0\u8F7D\u4E2D\uFF0C\u8BF7\u8010\u5FC3\u7B49\u5F85...\">\n      <el-input autofocus v-model=\"search\" placeholder=\"\u8BF7\u8F93\u5165\u641C\u7D22\u5185\u5BB9(\u6682\u53EA\u652F\u6301\u6807\u9898\u3001\u94FE\u63A5\u3001\u951A\u70B9)\">\n        <template #prepend>\n          <el-select v-model=\"scope\" placeholder=\"Select\" style=\"width:80px\">\n            <el-option label=\"\u672C\u6587\" value=\"1\"/>\n            <el-option label=\"\u5168\u7AD9\" value=\"2\"/>\n          </el-select>\n        </template>\n        <template #append><img class=\"my-search-icon\" src=\"/assets/img/search.svg\"></template>\n      </el-input>\n      <ul class=\"search-list\" style=\"max-height:500px;overflow-y:scroll;text-align:left\">\n        <li v-for=\"(result, i) in filterResults\" :key=\"i\" @click=\"locate(result.url)\">\n          <div class=\"result-value\" v-html=\"result.title\"></div>\n          <div class=\"result-tags\">\n            <el-tag v-if=\"result.filename&&!isCurrentPage(result.filename)\" effect=\"dark\" type=\"info\">{{result.filename}}</el-tag>\n          </div>\n        </li>\n      </ul>\n     </div>\n    </el-dialog>",
     setup: function setup() {
       var state = Vue.reactive({
         results: [],
         filterResults: [],
+        // 实时搜索到的数据
         search: '',
+        // 搜索关键词
         dialogVisible: false,
-        scope: '2' // 1 - 本文, 2 - 全站
-
+        loading: true,
+        scope: WHOLE,
+        // 1 - 本文, 2 - 全站
+        stats: {},
+        pages: {}
       });
       Vue.onBeforeMount(function () {
         console.log('on before mount');
       });
       Vue.onMounted(function () {
-        state.results = state.scope === '1' ? cached.current : cached.whole;
         $(document.body).on('keydown', keydownHandler);
       });
 
       function keydownHandler(e) {
         if (e.metaKey && e.keyCode === 75) {
           state.dialogVisible = true;
+          cached.loadPageStats();
+          state.loading = false;
+          state.results = state.scope === WHOLE ? cached.whole : cached.current;
         }
       }
 
@@ -212,12 +267,17 @@
       Vue.watch(function () {
         return state.scope;
       }, function (val) {
-        return state.results = val === '1' ? cached.current : cached.whole;
+        return state.results = val === CURRENT ? cached.current : cached.whole;
       });
       Vue.watch(function () {
         return state.search;
-      }, function (newVal) {
+      }, function (newVal, oldVal) {
         if (newVal) {
+          // 当前输入的是空格，不需要触发搜索
+          if (oldVal && newVal.replace(new RegExp("^".concat(oldVal)), '').trim() === '') {
+            return;
+          }
+
           querySearch(newVal, function (results) {
             state.filterResults = results;
           }, state.results);
@@ -233,14 +293,6 @@
 
       return _objectSpread2(_objectSpread2({}, Vue.toRefs(state)), {}, {
         clean: clean,
-        // 高亮匹配内容
-        highlight: function highlight(value) {
-          var words = state.search.split(' ');
-          words.forEach(function (word) {
-            value = value.replace(new RegExp("".concat(word), 'gi'), "<span class=\"hl-word\">".concat(word, "</span>"));
-          });
-          return value;
-        },
         isCurrentPage: function isCurrentPage(file) {
           return new RegExp("".concat(file, "$")).test(location.pathname);
         },
@@ -248,6 +300,9 @@
           location.href = link;
           clean();
           state.dialogVisible = false;
+          console.log({
+            link: link
+          }, 'locate');
         },
         querySearch: function querySearch$1(qs, cb) {
           return querySearch(qs, cb, state.results);
@@ -290,7 +345,7 @@
     var _pages = JSON.parse(JSON.stringify(cached.pages));
 
     Vue.createApp({
-      template: "\n        <el-input\n          class=\"inline-input search-input\"\n          v-model=\"search\" placeholder=\"\u8BF7\u8F93\u5165\u6807\u9898\u641C\u7D22\">\n          <template #suffix>\n            <img class=\"command-k\" src=\"/assets/img/command.svg\"/><span class=\"command-k\">K</span>\n          </template>\n        </el-input>\n        <el-menu class=\"el-toc-menu\">\n          <el-menu-item-group v-for=\"(list, month) in pages\" :key=\"month\" :title=\"month\">\n            <el-menu-item v-for=\"(page, i) in list\" :index=\"i+''\" :key=\"page.timestamp\">\n            <span class=\"date\">{{page.date}}</span>\n            <span class=\"title\"><a :href=\"page.url\" v-html=\"page.title\"></a></span>\n            </el-menu-item>\n          </el-menu-item-group>\n        </el-menu>\n        <div id=\"search\"><search/></div>",
+      template: "\n        <el-input\n          class=\"inline-input search-input\"\n          v-model=\"search\" placeholder=\"\u641C\u7D22\u672C\u6587(\u8BF7\u6309Alt/Cmd+K \u5168\u7AD9\u641C\u7D22)\">\n          <template #suffix>\n            <img class=\"command-k\" src=\"/assets/img/command.svg\"/><span class=\"command-k\">K</span>\n          </template>\n        </el-input>\n        <el-menu class=\"el-toc-menu\">\n          <el-menu-item-group v-for=\"(list, month) in pages\" :key=\"month\" :title=\"month\">\n            <el-menu-item v-for=\"(page, i) in list\" :index=\"i+''\" :key=\"page.timestamp\">\n            <span class=\"date\">{{page.date}}</span>\n            <span class=\"title\"><a :href=\"page.url\" v-html=\"page.title\"></a></span>\n            </el-menu-item>\n          </el-menu-item-group>\n        </el-menu>\n        <div id=\"search\"><search/></div>",
       components: {
         Search: Search
       },
