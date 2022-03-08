@@ -6,7 +6,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "pub": "./scripts/publish.sh",
-    "stats": "./scripts/parse.py",
+    "stats": "node ./scripts/parse.js",
     "dev": "./node_modules/.bin/rollup -c -w"
   },
   "repository": {
