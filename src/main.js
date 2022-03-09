@@ -1,5 +1,6 @@
 import { addValine } from './valine'
 import home from './home'
+import { cached } from './cache'
 import config from './config'
 import loadSearchApp from './apps/search'
 
@@ -13,8 +14,10 @@ $(function () {
     isMobile = md.mobile()
   }
 
+  cached.loadPageStats(cached.filename)
+
   // 主页
-  const isHome = home(() => {
+  home(() => {
     // 非主页搜索放在 TOC 标题下面，主页的放在内容标题下面
     $('#table-of-contents>h2').append(config.searchTmpl)
     // 底部个人信息
@@ -22,7 +25,7 @@ $(function () {
   })
 
   // 搜索组件
-  loadSearchApp(isHome)
+  loadSearchApp()
   // 基于 github,  gcclll/cheng92-comments  的评论系统
   $('#content').append(
     `<script id="utt-client" type="text/javascript" src="/assets/js/dist/client.js" issue-term="pathname" repo="gcclll/cheng92-comments" theme="github-light" async></script>`

@@ -1,20 +1,40 @@
 /** jsx?|tsx? file header */
 import Search from '../components/Search'
 import { cached } from '../cache'
-import { filterByTitle } from '../utils'
+import { filterByTitle, filterList } from '../utils'
+import config from '../config'
 
-export default function loadSearchApp(showToc = true) {
-  const pages = JSON.parse(JSON.stringify(cached.pages))
+const SearchSuffix = Vue.defineComponent({
+  template: `<img class="command-k" src="/assets/img/command.svg"/><span class="command-k">K</span>`
+})
+
+export default function loadSearchApp() {
+  const pages = _.cloneDeep(cached.pages)
+  const pageValues = _.flatten(_.values(pages))
+    .sort((a, b) => (a.title < b.title ? -1 : 1))
+    .map((item) => ({
+      ...item,
+      value: item.title,
+      link: item.href
+    }))
   Vue.createApp({
     template: `
         <el-input
+          v-if="isHome"
           class="inline-input search-input"
           v-model="search" placeholder="搜索本文(Alt/Cmd+K 全站搜索)">
-          <template #suffix>
-            <img class="command-k" src="/assets/img/command.svg"/><span class="command-k">K</span>
-          </template>
+          <template #suffix><search-suffix /></template>
         </el-input>
-        <el-menu v-if="showToc" class="el-toc-menu">
+<el-autocomplete
+  v-model="search"
+  :fetch-suggestions="querySearch"
+  class="inline-input search-input"
+  placeholder="搜索本文(Alt/Cmd+K 全站搜索)"
+  @select="handleSelect"
+>
+<template #suffix><search-suffix /></template>
+</el-autocomplete>
+        <el-menu v-if="isHome" class="el-toc-menu">
           <el-menu-item-group v-for="(list, month) in pages" :key="month" :title="month">
             <el-menu-item v-for="(page, i) in list" :index="i+''" :key="page.timestamp">
             <span class="date">{{page.date}}</span>
@@ -25,12 +45,23 @@ export default function loadSearchApp(showToc = true) {
         <div id="search"><search/></div>`,
 
     components: {
-      Search
+      Search,
+      SearchSuffix
     },
     data() {
       return {
         search: '',
-        showToc
+        isHome: config.isHome
+      }
+    },
+    methods: {
+      querySearch(s, cb) {
+        const list = s ? filterList(s, pageValues) : pageValues
+        console.log(list, 1)
+        cb(list)
+      },
+      handleSelect(value) {
+        console.log(value, 'select')
       }
     },
     computed: {
@@ -40,5 +71,5 @@ export default function loadSearchApp(showToc = true) {
     }
   })
     .use(ElementPlus)
-    .mount(showToc ? '#vue-toc' : '#search')
+    .mount(config.isHome ? '#vue-toc' : '#search')
 }

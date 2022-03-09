@@ -194,8 +194,19 @@
   var pages = formatPages();
   var filename = location.pathname.replace(/.*\//g, '');
   var loaded = false;
+  var path = '/assets/js/stats';
 
-  function loadPageStats(cb) {
+  function getPageScript(pageName) {
+    var jsFile = "".concat(path, "/").concat(pageName, ".js");
+
+    if ($("script#".concat(pageName)).get(0)) {
+      return '';
+    }
+
+    return "<script id=\"".concat(pageName, "\" src=\"").concat(jsFile, "\" type=\"text/javascript\" sync></script>");
+  }
+
+  function loadPageStats(cbOrPage) {
     if (loaded) {
       ElementPlus.ElMessage({
         type: 'success',
@@ -204,27 +215,33 @@
       return;
     }
 
-    var path = '/assets/js/stats';
     var html = '';
 
-    for (var page in window.$pages) {
-      var jsFile = "".concat(path, "/").concat(page, ".js");
-      html += "<script src=\"".concat(jsFile, "\" type=\"text/javascript\" sync></script>");
+    if (_.isString(cbOrPage)) {
+      html = getPageScript(cbOrPage);
+    } else {
+      for (var page in window.$pages) {
+        html += getPageScript(page);
+      }
     }
 
     $('head').append(html);
     loaded = true;
-    if (cb) cb(window.$stats, window.$pages);
+    if (_.isFunction(cbOrPage)) cbOrPage(window.$stats, window.$pages);
 
     for (var prop in window.$stats) {
       var _window$$stats$prop = window.$stats[prop],
           IDLinks = _window$$stats$prop.IDLinks,
           aLinks = _window$$stats$prop.aLinks;
       IDLinks.forEach(function (link) {
-        return cached.whole.push(_objectSpread2({}, link));
+        return !_.find(cached.whole, function (i) {
+          return i.text === link.text;
+        }) && cached.whole.push(_objectSpread2({}, link));
       });
       aLinks.forEach(function (link) {
-        return cached.whole.push(_objectSpread2({}, link));
+        return !_.find(cached.whole, function (i) {
+          return i.text === link.text;
+        }) && cached.whole.push(_objectSpread2({}, link));
       });
     }
 
@@ -343,29 +360,49 @@
     }
   });
 
-  /** jsx?|tsx? file header */
+  var SearchSuffix = Vue.defineComponent({
+    template: "<img class=\"command-k\" src=\"/assets/img/command.svg\"/><span class=\"command-k\">K</span>"
+  });
   function loadSearchApp() {
-    var showToc = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : true;
+    var _pages = _.cloneDeep(cached.pages);
 
-    var _pages = JSON.parse(JSON.stringify(cached.pages));
+    var pageValues = _.flatten(_.values(_pages)).sort(function (a, b) {
+      return a.title < b.title ? -1 : 1;
+    }).map(function (item) {
+      return _objectSpread2(_objectSpread2({}, item), {}, {
+        value: item.title,
+        link: item.href
+      });
+    });
 
     Vue.createApp({
-      template: "\n        <el-input\n          class=\"inline-input search-input\"\n          v-model=\"search\" placeholder=\"\u641C\u7D22\u672C\u6587(Alt/Cmd+K \u5168\u7AD9\u641C\u7D22)\">\n          <template #suffix>\n            <img class=\"command-k\" src=\"/assets/img/command.svg\"/><span class=\"command-k\">K</span>\n          </template>\n        </el-input>\n        <el-menu v-if=\"showToc\" class=\"el-toc-menu\">\n          <el-menu-item-group v-for=\"(list, month) in pages\" :key=\"month\" :title=\"month\">\n            <el-menu-item v-for=\"(page, i) in list\" :index=\"i+''\" :key=\"page.timestamp\">\n            <span class=\"date\">{{page.date}}</span>\n            <span class=\"title\"><a :href=\"page.url\" v-html=\"page.title\"></a></span>\n            </el-menu-item>\n          </el-menu-item-group>\n        </el-menu>\n        <div id=\"search\"><search/></div>",
+      template: "\n        <el-input\n          v-if=\"isHome\"\n          class=\"inline-input search-input\"\n          v-model=\"search\" placeholder=\"\u641C\u7D22\u672C\u6587(Alt/Cmd+K \u5168\u7AD9\u641C\u7D22)\">\n          <template #suffix><search-suffix /></template>\n        </el-input>\n<el-autocomplete\n  v-model=\"search\"\n  :fetch-suggestions=\"querySearch\"\n  class=\"inline-input search-input\"\n  placeholder=\"\u641C\u7D22\u672C\u6587(Alt/Cmd+K \u5168\u7AD9\u641C\u7D22)\"\n  @select=\"handleSelect\"\n>\n<template #suffix><search-suffix /></template>\n</el-autocomplete>\n        <el-menu v-if=\"isHome\" class=\"el-toc-menu\">\n          <el-menu-item-group v-for=\"(list, month) in pages\" :key=\"month\" :title=\"month\">\n            <el-menu-item v-for=\"(page, i) in list\" :index=\"i+''\" :key=\"page.timestamp\">\n            <span class=\"date\">{{page.date}}</span>\n            <span class=\"title\"><a :href=\"page.url\" v-html=\"page.title\"></a></span>\n            </el-menu-item>\n          </el-menu-item-group>\n        </el-menu>\n        <div id=\"search\"><search/></div>",
       components: {
-        Search: Search
+        Search: Search,
+        SearchSuffix: SearchSuffix
       },
       data: function data() {
         return {
           search: '',
-          showToc: showToc
+          isHome: config.isHome
         };
+      },
+      methods: {
+        querySearch: function querySearch(s, cb) {
+          var list = s ? filterList(s, pageValues) : pageValues;
+          console.log(list, 1);
+          cb(list);
+        },
+        handleSelect: function handleSelect(value) {
+          console.log(value, 'select');
+        }
       },
       computed: {
         pages: function pages() {
           return filterByTitle(this.search, _pages);
         }
       }
-    }).use(ElementPlus).mount(showToc ? '#vue-toc' : '#search');
+    }).use(ElementPlus).mount(config.isHome ? '#vue-toc' : '#search');
   }
 
   $(function () {
@@ -376,17 +413,18 @@
     if ((typeof MobileDetect === "undefined" ? "undefined" : _typeof(MobileDetect)) !== undefined) {
       md = new MobileDetect(window.navigator.userAgent);
       isMobile = md.mobile();
-    } // 主页
+    }
 
+    cached.loadPageStats(cached.filename); // 主页
 
-    var isHome = home(function () {
+    home(function () {
       // 非主页搜索放在 TOC 标题下面，主页的放在内容标题下面
       $('#table-of-contents>h2').append(config.searchTmpl); // 底部个人信息
 
       $('#postamble').show();
     }); // 搜索组件
 
-    loadSearchApp(isHome); // 基于 github,  gcclll/cheng92-comments  的评论系统
+    loadSearchApp(); // 基于 github,  gcclll/cheng92-comments  的评论系统
 
     $('#content').append("<script id=\"utt-client\" type=\"text/javascript\" src=\"/assets/js/dist/client.js\" issue-term=\"pathname\" repo=\"gcclll/cheng92-comments\" theme=\"github-light\" async></script>"); // 添加基于 valine 的评论系统
 
