@@ -80,6 +80,16 @@ export default function loadSearchApp() {
         console.log(value, 'select')
       }
     },
+    mounted() {
+      $('.el-scrollbar__view.el-autocomplete-suggestion__list').on(
+        'mouseenter mouseleave',
+        'li',
+        function (e) {
+          $(this).attr('aria-selected', e.type === 'mouseenter')
+        }
+      )
+    },
+    unmounted() {},
     computed: {
       pages() {
         return filterByTitle(this.search, pages)

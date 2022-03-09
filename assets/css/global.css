@@ -152,6 +152,8 @@ blockquote {
           font-size: 0.75em; }
     .el-scrollbar__view.el-autocomplete-suggestion__list li[aria-selected='true'] a {
       background-color: #42b883; }
+      .el-scrollbar__view.el-autocomplete-suggestion__list li[aria-selected='true'] a .hit-container {
+        color: #ffffff; }
 
 .el-input-group__append img.my-search-icon {
   width: 30px;

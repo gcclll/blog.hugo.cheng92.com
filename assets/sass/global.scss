@@ -218,6 +218,9 @@ blockquote {
 
     &[aria-selected='true'] a {
       background-color: #42b883;
+      .hit-container {
+        color: #ffffff;
+      }
     }
   }
 }

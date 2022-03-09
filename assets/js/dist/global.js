@@ -397,6 +397,12 @@
           console.log(value, 'select');
         }
       },
+      mounted: function mounted() {
+        $('.el-scrollbar__view.el-autocomplete-suggestion__list').on('mouseenter mouseleave', 'li', function (e) {
+          $(this).attr('aria-selected', e.type === 'mouseenter');
+        });
+      },
+      unmounted: function unmounted() {},
       computed: {
         pages: function pages() {
           return filterByTitle(this.search, _pages);
