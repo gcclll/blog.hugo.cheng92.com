@@ -1,12 +1,10 @@
 /** jsx?|tsx? file header */
 import Search from '../components/Search'
+import SearchItem from '../components/SearchItem'
+import SearchSuffix from '../components/SearchSuffix'
 import { cached } from '../cache'
 import { filterByTitle, filterList } from '../utils'
 import config from '../config'
-
-const SearchSuffix = Vue.defineComponent({
-  template: `<img class="command-k" src="/assets/img/command.svg"/><span class="command-k">K</span>`
-})
 
 export default function loadSearchApp() {
   const pages = _.cloneDeep(cached.pages)
@@ -20,12 +18,13 @@ export default function loadSearchApp() {
   Vue.createApp({
     template: `
         <el-input
-          v-if="false"
+          v-if="isHome"
           class="inline-input search-input"
           v-model="search" placeholder="搜索本文(Alt/Cmd+K 全站搜索)">
           <template #suffix><search-suffix /></template>
         </el-input>
         <el-autocomplete
+          v-else
           v-model="search"
           :fetch-suggestions="querySearch"
           class="inline-input search-input"
@@ -33,20 +32,7 @@ export default function loadSearchApp() {
           @select="handleSelect"
         >
           <template #default="{item}">
-            <a :href="item.link">
-              <div class="hit-container">
-                <div class="hit-icon">
-                  <svg width="20" height="20" viewBox="0 0 20 20"><path d="M13 13h4-4V8H7v5h6v4-4H7V8H3h4V3v5h6V3v5h4-4v5zm-6 0v4-4H3h4z" stroke="currentColor" fill="none" fill-rule="evenodd" stroke-linecap="round" stroke-linejoin="round"></path></svg>
-                </div>
-                <div class="hit-content-wrap">
-                  <span class="hit-title" v-html="item.title"></span>
-                  <span class="hit-path">{{item.link}}</span>
-                </div>
-                <div class="hit-action">
-                  <svg class="DocSearch-Hit-Select-Icon" width="20" height="20" viewBox="0 0 20 20"><g stroke="currentColor" fill="none" fill-rule="evenodd" stroke-linecap="round" stroke-linejoin="round"><path d="M18 3v4c0 2-2 4-4 4H2"></path><path d="M8 17l-6-6 6-6"></path></g></svg>
-                </div>
-              </div>
-            </a>
+            <search-item :item="item"/>
           </template>
           <template #suffix><search-suffix /></template>
         </el-autocomplete>
@@ -62,7 +48,8 @@ export default function loadSearchApp() {
 
     components: {
       Search,
-      SearchSuffix
+      SearchSuffix,
+      SearchItem
     },
     data() {
       return {

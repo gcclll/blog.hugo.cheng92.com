@@ -270,10 +270,27 @@
 
   };
 
+  /** jsx?|tsx? file header */
+  var SearchItem = Vue.defineComponent({
+    template: "\n<a :href=\"item.link\">\n  <div class=\"hit-container\">\n    <div class=\"hit-icon\">\n      <svg width=\"20\" height=\"20\" viewBox=\"0 0 20 20\"><path d=\"M13 13h4-4V8H7v5h6v4-4H7V8H3h4V3v5h6V3v5h4-4v5zm-6 0v4-4H3h4z\" stroke=\"currentColor\" fill=\"none\" fill-rule=\"evenodd\" stroke-linecap=\"round\" stroke-linejoin=\"round\"></path></svg>\n    </div>\n    <div class=\"hit-content-wrap\">\n      <span class=\"hit-title\" v-html=\"item.title\"></span>\n      <span class=\"hit-path\">{{item.link}}</span>\n    </div>\n    <div class=\"hit-action\">\n      <svg class=\"DocSearch-Hit-Select-Icon\" width=\"20\" height=\"20\" viewBox=\"0 0 20 20\"><g stroke=\"currentColor\" fill=\"none\" fill-rule=\"evenodd\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M18 3v4c0 2-2 4-4 4H2\"></path><path d=\"M8 17l-6-6 6-6\"></path></g></svg>\n    </div>\n  </div>\n</a>",
+    props: {
+      item: Object
+    }
+  });
+
+  /** jsx?|tsx? file header */
+  var SearchSuffix = Vue.defineComponent({
+    template: "<img class=\"command-k\" src=\"/assets/img/command.svg\"/><span class=\"command-k\">K</span>"
+  });
+
   var WHOLE = '1';
   var CURRENT = '2';
   var Search = Vue.defineComponent({
-    template: "\n    <el-dialog  v-model=\"dialogVisible\" @open=\"clean\" @close=\"clean\" title=\"\u5168\u6587(\u7AD9)\u641C\u7D22\">\n     <div v-loading=\"loading\" element-loading-text=\"\u5168\u7AD9\u8D44\u6E90\u52A0\u8F7D\u4E2D\uFF0C\u8BF7\u8010\u5FC3\u7B49\u5F85...\">\n      <el-input autofocus v-model=\"search\" placeholder=\"\u8BF7\u8F93\u5165\u641C\u7D22\u5185\u5BB9(\u6682\u53EA\u652F\u6301\u6807\u9898\u3001\u94FE\u63A5\u3001\u951A\u70B9)\">\n        <template #prepend>\n          <el-select v-model=\"scope\" placeholder=\"Select\" style=\"width:80px\">\n            <el-option label=\"\u672C\u6587\" value=\"1\"/>\n            <el-option label=\"\u5168\u7AD9\" value=\"2\"/>\n          </el-select>\n        </template>\n        <template #append><img class=\"my-search-icon\" src=\"/assets/img/search.svg\"></template>\n      </el-input>\n      <ul class=\"search-list\" style=\"max-height:500px;overflow-y:scroll;text-align:left\">\n        <li v-for=\"(result, i) in filterResults\" :key=\"i\" @click=\"locate(result.url)\">\n          <div class=\"result-value\" v-html=\"result.title\"></div>\n          <div class=\"result-tags\">\n            <el-tag v-if=\"result.filename&&!isCurrentPage(result.filename)\" effect=\"dark\" type=\"info\">{{result.filename}}</el-tag>\n          </div>\n        </li>\n      </ul>\n     </div>\n    </el-dialog>",
+    template: "\n    <el-dialog  v-model=\"dialogVisible\" @open=\"clean\" @close=\"clean\" title=\"\u5168\u6587(\u7AD9)\u641C\u7D22\">\n     <div v-loading=\"loading\" element-loading-text=\"\u5168\u7AD9\u8D44\u6E90\u52A0\u8F7D\u4E2D\uFF0C\u8BF7\u8010\u5FC3\u7B49\u5F85...\">\n      <el-input autofocus v-model=\"search\" placeholder=\"\u8BF7\u8F93\u5165\u641C\u7D22\u5185\u5BB9(\u6682\u53EA\u652F\u6301\u6807\u9898\u3001\u94FE\u63A5\u3001\u951A\u70B9)\">\n        <template #prepend>\n          <el-select v-model=\"scope\" placeholder=\"Select\" style=\"width:80px\">\n            <el-option label=\"\u672C\u6587\" value=\"1\"/>\n            <el-option label=\"\u5168\u7AD9\" value=\"2\"/>\n          </el-select>\n        </template>\n        <template #append><search-suffix/></template>\n      </el-input>\n      <ul class=\"search-list\" style=\"max-height:500px;overflow-y:scroll;text-align:left\">\n        <li v-for=\"(result, i) in filterResults\" :key=\"i\" @click=\"locate(result.url)\">\n          <search-item :item=\"result\"/>\n        </li>\n      </ul>\n     </div>\n    </el-dialog>",
+    components: {
+      SearchItem: SearchItem,
+      SearchSuffix: SearchSuffix
+    },
     setup: function setup() {
       var state = Vue.reactive({
         results: [],
@@ -360,9 +377,6 @@
     }
   });
 
-  var SearchSuffix = Vue.defineComponent({
-    template: "<img class=\"command-k\" src=\"/assets/img/command.svg\"/><span class=\"command-k\">K</span>"
-  });
   function loadSearchApp() {
     var _pages = _.cloneDeep(cached.pages);
 
@@ -376,10 +390,11 @@
     });
 
     Vue.createApp({
-      template: "\n        <el-input\n          v-if=\"false\"\n          class=\"inline-input search-input\"\n          v-model=\"search\" placeholder=\"\u641C\u7D22\u672C\u6587(Alt/Cmd+K \u5168\u7AD9\u641C\u7D22)\">\n          <template #suffix><search-suffix /></template>\n        </el-input>\n        <el-autocomplete\n          v-model=\"search\"\n          :fetch-suggestions=\"querySearch\"\n          class=\"inline-input search-input\"\n          placeholder=\"\u641C\u7D22\u672C\u6587(Alt/Cmd+K \u5168\u7AD9\u641C\u7D22)\"\n          @select=\"handleSelect\"\n        >\n          <template #default=\"{item}\">\n            <a :href=\"item.link\">\n              <div class=\"hit-container\">\n                <div class=\"hit-icon\">\n                  <svg width=\"20\" height=\"20\" viewBox=\"0 0 20 20\"><path d=\"M13 13h4-4V8H7v5h6v4-4H7V8H3h4V3v5h6V3v5h4-4v5zm-6 0v4-4H3h4z\" stroke=\"currentColor\" fill=\"none\" fill-rule=\"evenodd\" stroke-linecap=\"round\" stroke-linejoin=\"round\"></path></svg>\n                </div>\n                <div class=\"hit-content-wrap\">\n                  <span class=\"hit-title\" v-html=\"item.title\"></span>\n                  <span class=\"hit-path\">{{item.link}}</span>\n                </div>\n                <div class=\"hit-action\">\n                  <svg class=\"DocSearch-Hit-Select-Icon\" width=\"20\" height=\"20\" viewBox=\"0 0 20 20\"><g stroke=\"currentColor\" fill=\"none\" fill-rule=\"evenodd\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M18 3v4c0 2-2 4-4 4H2\"></path><path d=\"M8 17l-6-6 6-6\"></path></g></svg>\n                </div>\n              </div>\n            </a>\n          </template>\n          <template #suffix><search-suffix /></template>\n        </el-autocomplete>\n        <el-menu v-if=\"isHome\" class=\"el-toc-menu\">\n          <el-menu-item-group v-for=\"(list, month) in pages\" :key=\"month\" :title=\"month\">\n            <el-menu-item v-for=\"(page, i) in list\" :index=\"i+''\" :key=\"page.timestamp\">\n            <span class=\"date\">{{page.date}}</span>\n            <span class=\"title\"><a :href=\"page.url\" v-html=\"page.title\"></a></span>\n            </el-menu-item>\n          </el-menu-item-group>\n        </el-menu>\n        <div id=\"search\"><search/></div>",
+      template: "\n        <el-input\n          v-if=\"isHome\"\n          class=\"inline-input search-input\"\n          v-model=\"search\" placeholder=\"\u641C\u7D22\u672C\u6587(Alt/Cmd+K \u5168\u7AD9\u641C\u7D22)\">\n          <template #suffix><search-suffix /></template>\n        </el-input>\n        <el-autocomplete\n          v-else\n          v-model=\"search\"\n          :fetch-suggestions=\"querySearch\"\n          class=\"inline-input search-input\"\n          placeholder=\"\u641C\u7D22\u672C\u6587(Alt/Cmd+K \u5168\u7AD9\u641C\u7D22)\"\n          @select=\"handleSelect\"\n        >\n          <template #default=\"{item}\">\n            <search-item :item=\"item\"/>\n          </template>\n          <template #suffix><search-suffix /></template>\n        </el-autocomplete>\n        <el-menu v-if=\"isHome\" class=\"el-toc-menu\">\n          <el-menu-item-group v-for=\"(list, month) in pages\" :key=\"month\" :title=\"month\">\n            <el-menu-item v-for=\"(page, i) in list\" :index=\"i+''\" :key=\"page.timestamp\">\n            <span class=\"date\">{{page.date}}</span>\n            <span class=\"title\"><a :href=\"page.url\" v-html=\"page.title\"></a></span>\n            </el-menu-item>\n          </el-menu-item-group>\n        </el-menu>\n        <div id=\"search\"><search/></div>",
       components: {
         Search: Search,
-        SearchSuffix: SearchSuffix
+        SearchSuffix: SearchSuffix,
+        SearchItem: SearchItem
       },
       data: function data() {
         return {

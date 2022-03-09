@@ -90,13 +90,6 @@
     height: auto;
   }
 
-  .search-list {
-    li {
-      cursor: pointer;
-      padding: 5px 0;
-    }
-  }
-
   img.command-k,
   span.command-k {
     align-items: center;
@@ -152,7 +145,8 @@ blockquote {
   border-left: 5px solid #ea4c89;
 }
 
-.el-scrollbar__view.el-autocomplete-suggestion__list {
+.el-scrollbar__view.el-autocomplete-suggestion__list,
+.search-list {
   padding-top: 1em;
 
   li {
