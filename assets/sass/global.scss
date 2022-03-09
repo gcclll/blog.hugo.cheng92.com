@@ -159,6 +159,8 @@ blockquote {
 }
 
 .el-scrollbar__view.el-autocomplete-suggestion__list {
+  padding-top: 1em;
+
   li {
     width: 100%;
     text-overflow: ellipsis;
@@ -174,6 +176,10 @@ blockquote {
       display: block;
       padding-left: 12px;
       width: 100%;
+
+      a:hover {
+        background-color: #42b883;
+      }
 
       .hit-container {
         align-items: center;
