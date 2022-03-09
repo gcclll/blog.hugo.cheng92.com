@@ -2,7 +2,6 @@
 import { querySearch } from '../utils'
 import { cached } from '../cache'
 import SearchItem from './SearchItem'
-import SearchSuffix from './SearchSuffix'
 
 const WHOLE = '1'
 const CURRENT = '2'
@@ -17,7 +16,6 @@ export default Vue.defineComponent({
             <el-option label="全站" value="2"/>
           </el-select>
         </template>
-        <template #append><search-suffix/></template>
       </el-input>
       <ul class="search-list" style="max-height:500px;overflow-y:scroll;text-align:left">
         <li v-for="(result, i) in filterResults" :key="i" @click="locate(result.url)">
@@ -27,8 +25,7 @@ export default Vue.defineComponent({
      </div>
     </el-dialog>`,
   components: {
-    SearchItem,
-    SearchSuffix
+    SearchItem
   },
   setup() {
     const state = Vue.reactive({

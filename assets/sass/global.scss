@@ -148,6 +148,12 @@ blockquote {
   border-left: 5px solid #ea4c89;
 }
 
+.search-list {
+  a:hover {
+    background-color: #42b883;
+  }
+}
+
 .el-scrollbar__view.el-autocomplete-suggestion__list,
 .search-list {
   padding-top: 1em;

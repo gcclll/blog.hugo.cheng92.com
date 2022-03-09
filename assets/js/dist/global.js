@@ -278,18 +278,12 @@
     }
   });
 
-  /** jsx?|tsx? file header */
-  var SearchSuffix = Vue.defineComponent({
-    template: "<div class=\"search-suffix\"><img class=\"command-k\" src=\"/assets/img/command.svg\"/><span class=\"command-k\">K</span></div>"
-  });
-
   var WHOLE = '1';
   var CURRENT = '2';
   var Search = Vue.defineComponent({
-    template: "\n    <el-dialog  v-model=\"dialogVisible\" @open=\"clean\" @close=\"clean\" title=\"\u5168\u6587(\u7AD9)\u641C\u7D22\">\n     <div v-loading=\"loading\" element-loading-text=\"\u5168\u7AD9\u8D44\u6E90\u52A0\u8F7D\u4E2D\uFF0C\u8BF7\u8010\u5FC3\u7B49\u5F85...\">\n      <el-input autofocus v-model=\"search\" placeholder=\"\u8BF7\u8F93\u5165\u641C\u7D22\u5185\u5BB9(\u6682\u53EA\u652F\u6301\u6807\u9898\u3001\u94FE\u63A5\u3001\u951A\u70B9)\">\n        <template #prepend>\n          <el-select v-model=\"scope\" placeholder=\"Select\" style=\"width:80px\">\n            <el-option label=\"\u672C\u6587\" value=\"1\"/>\n            <el-option label=\"\u5168\u7AD9\" value=\"2\"/>\n          </el-select>\n        </template>\n        <template #append><search-suffix/></template>\n      </el-input>\n      <ul class=\"search-list\" style=\"max-height:500px;overflow-y:scroll;text-align:left\">\n        <li v-for=\"(result, i) in filterResults\" :key=\"i\" @click=\"locate(result.url)\">\n          <search-item :item=\"result\"/>\n        </li>\n      </ul>\n     </div>\n    </el-dialog>",
+    template: "\n    <el-dialog  v-model=\"dialogVisible\" @open=\"clean\" @close=\"clean\" title=\"\u5168\u6587(\u7AD9)\u641C\u7D22\">\n     <div v-loading=\"loading\" element-loading-text=\"\u5168\u7AD9\u8D44\u6E90\u52A0\u8F7D\u4E2D\uFF0C\u8BF7\u8010\u5FC3\u7B49\u5F85...\">\n      <el-input autofocus v-model=\"search\" placeholder=\"\u8BF7\u8F93\u5165\u641C\u7D22\u5185\u5BB9(\u6682\u53EA\u652F\u6301\u6807\u9898\u3001\u94FE\u63A5\u3001\u951A\u70B9)\">\n        <template #prepend>\n          <el-select v-model=\"scope\" placeholder=\"Select\" style=\"width:80px\">\n            <el-option label=\"\u672C\u6587\" value=\"1\"/>\n            <el-option label=\"\u5168\u7AD9\" value=\"2\"/>\n          </el-select>\n        </template>\n      </el-input>\n      <ul class=\"search-list\" style=\"max-height:500px;overflow-y:scroll;text-align:left\">\n        <li v-for=\"(result, i) in filterResults\" :key=\"i\" @click=\"locate(result.url)\">\n          <search-item :item=\"result\"/>\n        </li>\n      </ul>\n     </div>\n    </el-dialog>",
     components: {
-      SearchItem: SearchItem,
-      SearchSuffix: SearchSuffix
+      SearchItem: SearchItem
     },
     setup: function setup() {
       var state = Vue.reactive({
@@ -375,6 +369,11 @@
         }
       });
     }
+  });
+
+  /** jsx?|tsx? file header */
+  var SearchSuffix = Vue.defineComponent({
+    template: "<div class=\"search-suffix\"><img class=\"command-k\" src=\"/assets/img/command.svg\"/><span class=\"command-k\">K</span></div>"
   });
 
   function loadSearchApp() {
