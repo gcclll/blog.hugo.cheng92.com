@@ -151,6 +151,10 @@ blockquote {
 .search-list {
   a:hover {
     background-color: #42b883 !important;
+    .hit-title,
+    .hit-path {
+      color: #ffffff !important;
+    }
   }
 
   &::-webkit-scrollbar-thumb {

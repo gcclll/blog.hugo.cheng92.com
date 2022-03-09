@@ -101,6 +101,9 @@ blockquote {
 
 .search-list a:hover {
   background-color: #42b883 !important; }
+  .search-list a:hover .hit-title,
+  .search-list a:hover .hit-path {
+    color: #ffffff !important; }
 .search-list::-webkit-scrollbar-thumb {
   border-radius: 10px;
   background-color: #fff;
