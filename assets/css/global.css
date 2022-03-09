@@ -1,6 +1,6 @@
 /*请勿手动修改该文件，它是由 sass 编译生成的。*/
 /*
-Error: wrong number of arguments (1 for 3) for `rgb'
+Error: $color: (0 0 0) is not a color for `rgba'
         on line 169 of /Users/gcl/github/mine/blog.cheng92.com/assets/sass/global.scss
 
 164:       to(#19911d),
@@ -8,7 +8,7 @@ Error: wrong number of arguments (1 for 3) for `rgb'
 166:     );
 167:   }
 168:   &::-webkit-scrollbar-track {
-169:     box-shadow: inset 0 0 6px rgb(0 0 0 / 10%);
+169:     box-shadow: inset 0 0 6px rgba(0 0 0, 0.1);
 170:     background-color: #f5f5f5;
 171:     border-radius: 10px;
 172:   }
@@ -80,4 +80,4 @@ Backtrace:
 body:before {
   white-space: pre;
   font-family: monospace;
-  content: "Error: wrong number of arguments (1 for 3) for `rgb'\A         on line 169 of /Users/gcl/github/mine/blog.cheng92.com/assets/sass/global.scss\A \A 164:       to(#19911d),\A 165:       color-stop(0.6, #54de5d)\A 166:     );\A 167:   }\A 168:   &::-webkit-scrollbar-track {\A 169:     box-shadow: inset 0 0 6px rgb(0 0 0 / 10%);\A 170:     background-color: #f5f5f5;\A 171:     border-radius: 10px;\A 172:   }\A 173: }\A 174: "; }
+  content: "Error: $color: (0 0 0) is not a color for `rgba'\A         on line 169 of /Users/gcl/github/mine/blog.cheng92.com/assets/sass/global.scss\A \A 164:       to(#19911d),\A 165:       color-stop(0.6, #54de5d)\A 166:     );\A 167:   }\A 168:   &::-webkit-scrollbar-track {\A 169:     box-shadow: inset 0 0 6px rgba(0 0 0, 0.1);\A 170:     background-color: #f5f5f5;\A 171:     border-radius: 10px;\A 172:   }\A 173: }\A 174: "; }
