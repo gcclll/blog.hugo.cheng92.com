@@ -20,7 +20,7 @@ export default function loadSearchApp() {
         <el-input
           v-if="isHome"
           class="inline-input search-input"
-          v-model="search" placeholder="搜索本文(Alt/Cmd+K 全站搜索)">
+          v-model="search" placeholder="搜索">
           <template #suffix><search-suffix /></template>
         </el-input>
         <el-autocomplete
@@ -28,7 +28,7 @@ export default function loadSearchApp() {
           v-model="search"
           :fetch-suggestions="querySearch"
           class="inline-input search-input"
-          placeholder="搜索本文(Alt/Cmd+K 全站搜索)"
+          placeholder="搜索"
           @select="handleSelect"
         >
           <template #default="{item}">
