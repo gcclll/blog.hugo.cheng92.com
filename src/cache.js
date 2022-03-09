@@ -41,24 +41,21 @@ function loadPageStats(cbOrPage) {
   if (_.isFunction(cbOrPage)) cbOrPage(window.$stats, window.$pages)
   for (let prop in window.$stats) {
     const { IDLinks, aLinks } = window.$stats[prop]
-    IDLinks.forEach(
-      (link) =>
-        !_.find(cached.whole, (i) => i.text === link.text) &&
-        cached.whole.push({ ...link })
-    )
-    aLinks.forEach(
-      (link) =>
-        !_.find(cached.whole, (i) => i.text === link.text) &&
-        cached.whole.push({ ...link })
-    )
+    IDLinks.forEach(forEachHandler)
+    aLinks.forEach(forEachHandler)
   }
   cached.current = cached.whole.filter((result) => {
     const { url, text, value, href, id, filename } = result
     result.value = value || text
-    result.url = url || href || `${filename}#${id}`
+    result.url = result.link = url || href || `${filename}#${id}`
     return result.filename === cached.filename
   })
   console.log(cached, 333)
+}
+
+function forEachHandler(link) {
+  !_.find(cached.whole, (i) => i.text === link.text) &&
+    cached.whole.push({ ...link, link: link.url || link.href })
 }
 
 // 取出由 parse.py 生成的网站资源信息

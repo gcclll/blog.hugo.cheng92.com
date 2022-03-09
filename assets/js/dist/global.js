@@ -233,16 +233,8 @@
       var _window$$stats$prop = window.$stats[prop],
           IDLinks = _window$$stats$prop.IDLinks,
           aLinks = _window$$stats$prop.aLinks;
-      IDLinks.forEach(function (link) {
-        return !_.find(cached.whole, function (i) {
-          return i.text === link.text;
-        }) && cached.whole.push(_objectSpread2({}, link));
-      });
-      aLinks.forEach(function (link) {
-        return !_.find(cached.whole, function (i) {
-          return i.text === link.text;
-        }) && cached.whole.push(_objectSpread2({}, link));
-      });
+      IDLinks.forEach(forEachHandler);
+      aLinks.forEach(forEachHandler);
     }
 
     cached.current = cached.whole.filter(function (result) {
@@ -253,10 +245,18 @@
           id = result.id,
           filename = result.filename;
       result.value = value || text;
-      result.url = url || href || "".concat(filename, "#").concat(id);
+      result.url = result.link = url || href || "".concat(filename, "#").concat(id);
       return result.filename === cached.filename;
     });
     console.log(cached, 333);
+  }
+
+  function forEachHandler(link) {
+    !_.find(cached.whole, function (i) {
+      return i.text === link.text;
+    }) && cached.whole.push(_objectSpread2(_objectSpread2({}, link), {}, {
+      link: link.url || link.href
+    }));
   } // 取出由 parse.py 生成的网站资源信息
 
 
@@ -376,7 +376,7 @@
     });
 
     Vue.createApp({
-      template: "\n        <el-input\n          v-if=\"isHome\"\n          class=\"inline-input search-input\"\n          v-model=\"search\" placeholder=\"\u641C\u7D22\u672C\u6587(Alt/Cmd+K \u5168\u7AD9\u641C\u7D22)\">\n          <template #suffix><search-suffix /></template>\n        </el-input>\n<el-autocomplete\n  v-model=\"search\"\n  :fetch-suggestions=\"querySearch\"\n  class=\"inline-input search-input\"\n  placeholder=\"\u641C\u7D22\u672C\u6587(Alt/Cmd+K \u5168\u7AD9\u641C\u7D22)\"\n  @select=\"handleSelect\"\n>\n<template #suffix><search-suffix /></template>\n</el-autocomplete>\n        <el-menu v-if=\"isHome\" class=\"el-toc-menu\">\n          <el-menu-item-group v-for=\"(list, month) in pages\" :key=\"month\" :title=\"month\">\n            <el-menu-item v-for=\"(page, i) in list\" :index=\"i+''\" :key=\"page.timestamp\">\n            <span class=\"date\">{{page.date}}</span>\n            <span class=\"title\"><a :href=\"page.url\" v-html=\"page.title\"></a></span>\n            </el-menu-item>\n          </el-menu-item-group>\n        </el-menu>\n        <div id=\"search\"><search/></div>",
+      template: "\n        <el-input\n          v-if=\"isHome\"\n          class=\"inline-input search-input\"\n          v-model=\"search\" placeholder=\"\u641C\u7D22\u672C\u6587(Alt/Cmd+K \u5168\u7AD9\u641C\u7D22)\">\n          <template #suffix><search-suffix /></template>\n        </el-input>\n        <el-autocomplete\n          v-model=\"search\"\n          :fetch-suggestions=\"querySearch\"\n          class=\"inline-input search-input\"\n          placeholder=\"\u641C\u7D22\u672C\u6587(Alt/Cmd+K \u5168\u7AD9\u641C\u7D22)\"\n          @select=\"handleSelect\"\n        >\n          <template #default=\"{item}\">\n            <a :href=\"item.link\">\n              <div class=\"hit-container\">\n                <div class=\"hit-icon\">\n                  <svg width=\"20\" height=\"20\" viewBox=\"0 0 20 20\"><path d=\"M13 13h4-4V8H7v5h6v4-4H7V8H3h4V3v5h6V3v5h4-4v5zm-6 0v4-4H3h4z\" stroke=\"currentColor\" fill=\"none\" fill-rule=\"evenodd\" stroke-linecap=\"round\" stroke-linejoin=\"round\"></path></svg>\n                </div>\n                <div class=\"hit-content-wrap\">\n                  <span class=\"hit-title\">{{item.title}}</span>\n                  <span class=\"hit-path\">{{item.link}}</span>\n                </div>\n                <div class=\"hit-action\">\n                  <svg class=\"DocSearch-Hit-Select-Icon\" width=\"20\" height=\"20\" viewBox=\"0 0 20 20\"><g stroke=\"currentColor\" fill=\"none\" fill-rule=\"evenodd\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M18 3v4c0 2-2 4-4 4H2\"></path><path d=\"M8 17l-6-6 6-6\"></path></g></svg>\n                </div>\n              </div>\n            </a>\n          </template>\n          <template #suffix><search-suffix /></template>\n        </el-autocomplete>\n        <el-menu v-if=\"isHome\" class=\"el-toc-menu\">\n          <el-menu-item-group v-for=\"(list, month) in pages\" :key=\"month\" :title=\"month\">\n            <el-menu-item v-for=\"(page, i) in list\" :index=\"i+''\" :key=\"page.timestamp\">\n            <span class=\"date\">{{page.date}}</span>\n            <span class=\"title\"><a :href=\"page.url\" v-html=\"page.title\"></a></span>\n            </el-menu-item>\n          </el-menu-item-group>\n        </el-menu>\n        <div id=\"search\"><search/></div>",
       components: {
         Search: Search,
         SearchSuffix: SearchSuffix
