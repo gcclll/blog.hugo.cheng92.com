@@ -40,7 +40,7 @@
     #postamble .author .follows img {
       margin-top: -4px; }
 
-.el-toc-menu .hl-word {
+.hl-word {
   color: blue; }
 
 #search,
@@ -58,9 +58,6 @@
   #vue-toc .search-list li {
     cursor: pointer;
     padding: 5px 0; }
-    #search .search-list li .hl-word,
-    #vue-toc .search-list li .hl-word {
-      color: blue; }
   #search img.command-k,
   #search span.command-k,
   #vue-toc img.command-k,
@@ -121,8 +118,6 @@ blockquote {
       display: block;
       padding-left: 12px;
       width: 100%; }
-      .el-scrollbar__view.el-autocomplete-suggestion__list li a a:hover {
-        background-color: #42b883; }
       .el-scrollbar__view.el-autocomplete-suggestion__list li a .hit-container {
         align-items: center;
         color: #444950;
@@ -155,6 +150,8 @@ blockquote {
         .el-scrollbar__view.el-autocomplete-suggestion__list li a .hit-content-wrap .hit-path {
           color: rgba(60, 60, 60, 0.7);
           font-size: 0.75em; }
+    .el-scrollbar__view.el-autocomplete-suggestion__list li[aria-selected='true'] a {
+      background-color: #42b883; }
 
 .el-input-group__append img.my-search-icon {
   width: 30px;

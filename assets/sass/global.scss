@@ -73,10 +73,8 @@
   }
 }
 
-.el-toc-menu {
-  .hl-word {
-    color: blue;
-  }
+.hl-word {
+  color: blue;
 }
 
 #search,
@@ -96,10 +94,6 @@
     li {
       cursor: pointer;
       padding: 5px 0;
-
-      .hl-word {
-        color: blue;
-      }
     }
   }
 
@@ -177,10 +171,6 @@ blockquote {
       padding-left: 12px;
       width: 100%;
 
-      a:hover {
-        background-color: #42b883;
-      }
-
       .hit-container {
         align-items: center;
         color: #444950;
@@ -224,6 +214,10 @@ blockquote {
           font-size: 0.75em;
         }
       }
+    }
+
+    &[aria-selected='true'] a {
+      background-color: #42b883;
     }
   }
 }
