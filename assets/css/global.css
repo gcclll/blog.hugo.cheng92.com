@@ -54,6 +54,9 @@
   #vue-toc .el-input__suffix {
     top: 8px;
     height: auto; }
+  #search .search-suffix,
+  #vue-toc .search-suffix {
+    display: flex; }
   #search img.command-k,
   #search span.command-k,
   #vue-toc img.command-k,

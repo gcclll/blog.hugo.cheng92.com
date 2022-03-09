@@ -280,7 +280,7 @@
 
   /** jsx?|tsx? file header */
   var SearchSuffix = Vue.defineComponent({
-    template: "<img class=\"command-k\" src=\"/assets/img/command.svg\"/><span class=\"command-k\">K</span>"
+    template: "<div class=\"search-suffix\"><img class=\"command-k\" src=\"/assets/img/command.svg\"/><span class=\"command-k\">K</span></div>"
   });
 
   var WHOLE = '1';
