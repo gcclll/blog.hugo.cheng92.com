@@ -7,8 +7,14 @@ const deduped = [] // dedupStats()
 const pages = formatPages()
 const filename = location.pathname.replace(/.*\//g, '')
 
-let loaded = false
+const loadedMap = {}
 const path = '/assets/js/stats'
+
+function allLoaded() {
+  const loaded = _.keys(loadedMap).length === _.keys(window.$pages).length
+  console.log('loaded=', loaded)
+  return loaded
+}
 
 function getPageScript(pageName) {
   const jsFile = `${path}/${pageName}.js`
@@ -19,25 +25,23 @@ function getPageScript(pageName) {
 }
 
 function loadPageStats(cbOrPage) {
-  if (loaded) {
-    ElementPlus.ElMessage({
-      type: 'success',
-      message: '全站资源已就绪。'
-    })
-    return
-  }
+  if (allLoaded()) return
 
   let html = ''
-  if (_.isString(cbOrPage)) {
+  if (_.isString(cbOrPage) && !loadedMap[cbOrPage]) {
     html = getPageScript(cbOrPage)
+    loadedMap[cbOrPage] = true
   } else {
     for (let page in window.$pages) {
+      if (loadedMap[page]) {
+        continue
+      }
       html += getPageScript(page)
+      loadedMap[page] = true
     }
   }
 
   $('head').append(html)
-  loaded = true
   if (_.isFunction(cbOrPage)) cbOrPage(window.$stats, window.$pages)
   for (let prop in window.$stats) {
     const { IDLinks, aLinks } = window.$stats[prop]

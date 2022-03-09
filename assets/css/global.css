@@ -1,183 +1,83 @@
 /*请勿手动修改该文件，它是由 sass 编译生成的。*/
-#table-of-contents {
-  width: 316px !important; }
+/*
+Error: wrong number of arguments (1 for 3) for `rgb'
+        on line 169 of /Users/gcl/github/mine/blog.cheng92.com/assets/sass/global.scss
 
-#content img.my-search-icon,
-#content img.title-phone {
-  max-width: 30px; }
-#content .todo.DOING {
-  background-color: magenta; }
-#content .todo.TODO {
-  background-color: #f29f97; }
-#content .done.DONE {
-  background-color: #ababab; }
+164:       to(#19911d),
+165:       color-stop(0.6, #54de5d)
+166:     );
+167:   }
+168:   &::-webkit-scrollbar-track {
+169:     box-shadow: inset 0 0 6px rgb(0 0 0 / 10%);
+170:     background-color: #f5f5f5;
+171:     border-radius: 10px;
+172:   }
+173: }
+174: 
 
-#vue-toc li {
-  margin-left: 0; }
-#vue-toc .el-menu {
-  border-right: none; }
-#vue-toc .el-menu-item {
-  border-left: 1px solid #cacaca;
-  padding: 3px 20px; }
-  #vue-toc .el-menu-item:hover {
-    border-left: 3px solid #c05b4d;
-    transition: 0.2s ease-out;
-    transform: translateX(4px); }
-  #vue-toc .el-menu-item .date {
-    margin-right: 10px;
-    color: #8a8a8a; }
-  #vue-toc .el-menu-item a {
-    color: #c05b4d;
-    font-size: 18px; }
-#vue-toc .el-menu-item-group__title {
-  font-size: 28px;
-  font-family: Athelas, STHeiti, Microsoft Yahei, serif; }
-
-#postamble {
-  display: none; }
-  #postamble .author .follows {
-    margin-left: 4px; }
-    #postamble .author .follows img {
-      margin-top: -4px; }
-
-.hl-word {
-  color: blue; }
-
-#search,
-#vue-toc {
-  margin: 5px 0; }
-  #search .search-input,
-  #vue-toc .search-input {
-    width: 100%;
-    margin-top: 2px; }
-  #search .el-input__suffix,
-  #vue-toc .el-input__suffix {
-    top: 8px;
-    height: auto; }
-  #search .search-suffix,
-  #vue-toc .search-suffix {
-    display: flex; }
-  #search img.command-k,
-  #search span.command-k,
-  #vue-toc img.command-k,
-  #vue-toc span.command-k {
-    align-items: center;
-    background: rgba(125, 125, 125, 0.1);
-    border-radius: 3px;
-    box-shadow: inset 0 -2px 0 0 #cdcde6, inset 0 0 1px 1px #fff, 0 1px 2px 1px rgba(30, 35, 90, 0.4);
-    color: #909399;
-    display: flex;
-    height: 18px;
-    justify-content: center;
-    margin-right: 0.4em;
-    padding-bottom: 2px;
-    position: relative;
-    top: -1px;
-    width: 20px; }
-
-.MathJax_Display {
-  overflow: scroll !important; }
-
-.utterances {
-  margin-top: 3rem; }
-
-h3 {
-  text-indent: 1rem; }
-
-h4 {
-  text-indent: 2rem; }
-
-code {
-  white-space: normal !important; }
-
-code,
-pre {
-  padding: 2px 4px;
-  border-radius: 5px; }
-
-details.code-details {
-  margin-bottom: 1rem; }
-
-blockquote {
-  border-left: 5px solid #ea4c89; }
-
-.search-list a:hover {
-  background-color: #42b883 !important; }
-
-.el-scrollbar__view.el-autocomplete-suggestion__list,
-.search-list {
-  padding-top: 1em; }
-  .el-scrollbar__view.el-autocomplete-suggestion__list li,
-  .search-list li {
-    width: 100%;
-    text-overflow: ellipsis;
-    border-radius: 4px;
-    display: flex;
-    padding-bottom: 4px;
-    position: relative; }
-    .el-scrollbar__view.el-autocomplete-suggestion__list li a,
-    .search-list li a {
-      background: #ffffff;
-      border-radius: 4px;
-      box-shadow: 0 1px 3px 0 #d4d9e1;
-      display: block;
-      padding-left: 12px;
-      width: 100%; }
-      .el-scrollbar__view.el-autocomplete-suggestion__list li a .hit-container,
-      .search-list li a .hit-container {
-        align-items: center;
-        color: #444950;
-        display: flex;
-        flex-direction: row;
-        height: 56px;
-        padding: 0 12px 0 0; }
-      .el-scrollbar__view.el-autocomplete-suggestion__list li a .hit-icon,
-      .el-scrollbar__view.el-autocomplete-suggestion__list li a .hit-action,
-      .search-list li a .hit-icon,
-      .search-list li a .hit-action {
-        color: rgba(60, 60, 60, 0.7);
-        stroke-width: 1.4; }
-      .el-scrollbar__view.el-autocomplete-suggestion__list li a .hit-icon,
-      .search-list li a .hit-icon {
-        width: 20px;
-        height: 20px; }
-      .el-scrollbar__view.el-autocomplete-suggestion__list li a .hit-content-wrap,
-      .search-list li a .hit-content-wrap {
-        display: flex;
-        flex: 1 1 auto;
-        flex-direction: column;
-        font-weight: 500;
-        justify-content: center;
-        line-height: 1.2em;
-        margin: 0 8px;
-        overflow-x: hidden;
-        position: relative;
-        text-overflow: ellipsis;
-        white-space: nowrap;
-        width: 80%; }
-        .el-scrollbar__view.el-autocomplete-suggestion__list li a .hit-content-wrap .hit-title,
-        .search-list li a .hit-content-wrap .hit-title {
-          font-size: 0.9em; }
-        .el-scrollbar__view.el-autocomplete-suggestion__list li a .hit-content-wrap .hit-path,
-        .search-list li a .hit-content-wrap .hit-path {
-          color: rgba(60, 60, 60, 0.7);
-          font-size: 0.75em; }
-    .el-scrollbar__view.el-autocomplete-suggestion__list li[aria-selected='true'] a,
-    .search-list li[aria-selected='true'] a {
-      background-color: #42b883; }
-      .el-scrollbar__view.el-autocomplete-suggestion__list li[aria-selected='true'] a .hit-container,
-      .search-list li[aria-selected='true'] a .hit-container {
-        color: #ffffff; }
-
-.el-input-group__append img.my-search-icon {
-  width: 30px;
-  max-width: 30px; }
-
-.el-toc-menu {
-  border-right: none; }
-
-@media screen and (max-width: 768px) {
-  #table-of-contents {
-    width: 100% !important; } }
-
-/*# sourceMappingURL=global.css.map */
+Backtrace:
+/Users/gcl/github/mine/blog.cheng92.com/assets/sass/global.scss:169
+/Library/Ruby/Gems/2.6.0/gems/sass-3.4.25/lib/sass/script/tree/funcall.rb:310:in `reformat_argument_error'
+/Library/Ruby/Gems/2.6.0/gems/sass-3.4.25/lib/sass/script/tree/funcall.rb:149:in `rescue in _perform'
+/Library/Ruby/Gems/2.6.0/gems/sass-3.4.25/lib/sass/script/tree/funcall.rb:122:in `_perform'
+/Library/Ruby/Gems/2.6.0/gems/sass-3.4.25/lib/sass/script/tree/node.rb:58:in `perform'
+/Library/Ruby/Gems/2.6.0/gems/sass-3.4.25/lib/sass/script/tree/list_literal.rb:63:in `block in _perform'
+/Library/Ruby/Gems/2.6.0/gems/sass-3.4.25/lib/sass/script/tree/list_literal.rb:63:in `map'
+/Library/Ruby/Gems/2.6.0/gems/sass-3.4.25/lib/sass/script/tree/list_literal.rb:63:in `_perform'
+/Library/Ruby/Gems/2.6.0/gems/sass-3.4.25/lib/sass/script/tree/node.rb:58:in `perform'
+/Library/Ruby/Gems/2.6.0/gems/sass-3.4.25/lib/sass/tree/visitors/perform.rb:398:in `visit_prop'
+/Library/Ruby/Gems/2.6.0/gems/sass-3.4.25/lib/sass/tree/visitors/base.rb:36:in `visit'
+/Library/Ruby/Gems/2.6.0/gems/sass-3.4.25/lib/sass/tree/visitors/perform.rb:162:in `block in visit'
+/Library/Ruby/Gems/2.6.0/gems/sass-3.4.25/lib/sass/stack.rb:79:in `block in with_base'
+/Library/Ruby/Gems/2.6.0/gems/sass-3.4.25/lib/sass/stack.rb:115:in `with_frame'
+/Library/Ruby/Gems/2.6.0/gems/sass-3.4.25/lib/sass/stack.rb:79:in `with_base'
+/Library/Ruby/Gems/2.6.0/gems/sass-3.4.25/lib/sass/tree/visitors/perform.rb:162:in `visit'
+/Library/Ruby/Gems/2.6.0/gems/sass-3.4.25/lib/sass/tree/visitors/perform.rb:434:in `block (2 levels) in visit_rule'
+/Library/Ruby/Gems/2.6.0/gems/sass-3.4.25/lib/sass/tree/visitors/perform.rb:434:in `map'
+/Library/Ruby/Gems/2.6.0/gems/sass-3.4.25/lib/sass/tree/visitors/perform.rb:434:in `block in visit_rule'
+/Library/Ruby/Gems/2.6.0/gems/sass-3.4.25/lib/sass/tree/visitors/perform.rb:183:in `with_environment'
+/Library/Ruby/Gems/2.6.0/gems/sass-3.4.25/lib/sass/tree/visitors/perform.rb:432:in `visit_rule'
+/Library/Ruby/Gems/2.6.0/gems/sass-3.4.25/lib/sass/tree/visitors/base.rb:36:in `visit'
+/Library/Ruby/Gems/2.6.0/gems/sass-3.4.25/lib/sass/tree/visitors/perform.rb:162:in `block in visit'
+/Library/Ruby/Gems/2.6.0/gems/sass-3.4.25/lib/sass/stack.rb:79:in `block in with_base'
+/Library/Ruby/Gems/2.6.0/gems/sass-3.4.25/lib/sass/stack.rb:115:in `with_frame'
+/Library/Ruby/Gems/2.6.0/gems/sass-3.4.25/lib/sass/stack.rb:79:in `with_base'
+/Library/Ruby/Gems/2.6.0/gems/sass-3.4.25/lib/sass/tree/visitors/perform.rb:162:in `visit'
+/Library/Ruby/Gems/2.6.0/gems/sass-3.4.25/lib/sass/tree/visitors/perform.rb:434:in `block (2 levels) in visit_rule'
+/Library/Ruby/Gems/2.6.0/gems/sass-3.4.25/lib/sass/tree/visitors/perform.rb:434:in `map'
+/Library/Ruby/Gems/2.6.0/gems/sass-3.4.25/lib/sass/tree/visitors/perform.rb:434:in `block in visit_rule'
+/Library/Ruby/Gems/2.6.0/gems/sass-3.4.25/lib/sass/tree/visitors/perform.rb:183:in `with_environment'
+/Library/Ruby/Gems/2.6.0/gems/sass-3.4.25/lib/sass/tree/visitors/perform.rb:432:in `visit_rule'
+/Library/Ruby/Gems/2.6.0/gems/sass-3.4.25/lib/sass/tree/visitors/base.rb:36:in `visit'
+/Library/Ruby/Gems/2.6.0/gems/sass-3.4.25/lib/sass/tree/visitors/perform.rb:162:in `block in visit'
+/Library/Ruby/Gems/2.6.0/gems/sass-3.4.25/lib/sass/stack.rb:79:in `block in with_base'
+/Library/Ruby/Gems/2.6.0/gems/sass-3.4.25/lib/sass/stack.rb:115:in `with_frame'
+/Library/Ruby/Gems/2.6.0/gems/sass-3.4.25/lib/sass/stack.rb:79:in `with_base'
+/Library/Ruby/Gems/2.6.0/gems/sass-3.4.25/lib/sass/tree/visitors/perform.rb:162:in `visit'
+/Library/Ruby/Gems/2.6.0/gems/sass-3.4.25/lib/sass/tree/visitors/base.rb:52:in `block in visit_children'
+/Library/Ruby/Gems/2.6.0/gems/sass-3.4.25/lib/sass/tree/visitors/base.rb:52:in `map'
+/Library/Ruby/Gems/2.6.0/gems/sass-3.4.25/lib/sass/tree/visitors/base.rb:52:in `visit_children'
+/Library/Ruby/Gems/2.6.0/gems/sass-3.4.25/lib/sass/tree/visitors/perform.rb:171:in `block in visit_children'
+/Library/Ruby/Gems/2.6.0/gems/sass-3.4.25/lib/sass/tree/visitors/perform.rb:183:in `with_environment'
+/Library/Ruby/Gems/2.6.0/gems/sass-3.4.25/lib/sass/tree/visitors/perform.rb:170:in `visit_children'
+/Library/Ruby/Gems/2.6.0/gems/sass-3.4.25/lib/sass/tree/visitors/base.rb:36:in `block in visit'
+/Library/Ruby/Gems/2.6.0/gems/sass-3.4.25/lib/sass/tree/visitors/perform.rb:190:in `visit_root'
+/Library/Ruby/Gems/2.6.0/gems/sass-3.4.25/lib/sass/tree/visitors/base.rb:36:in `visit'
+/Library/Ruby/Gems/2.6.0/gems/sass-3.4.25/lib/sass/tree/visitors/perform.rb:161:in `visit'
+/Library/Ruby/Gems/2.6.0/gems/sass-3.4.25/lib/sass/tree/visitors/perform.rb:10:in `visit'
+/Library/Ruby/Gems/2.6.0/gems/sass-3.4.25/lib/sass/tree/root_node.rb:36:in `css_tree'
+/Library/Ruby/Gems/2.6.0/gems/sass-3.4.25/lib/sass/tree/root_node.rb:29:in `render_with_sourcemap'
+/Library/Ruby/Gems/2.6.0/gems/sass-3.4.25/lib/sass/engine.rb:384:in `_render_with_sourcemap'
+/Library/Ruby/Gems/2.6.0/gems/sass-3.4.25/lib/sass/engine.rb:301:in `render_with_sourcemap'
+/Library/Ruby/Gems/2.6.0/gems/sass-3.4.25/lib/sass/exec/sass_scss.rb:391:in `run'
+/Library/Ruby/Gems/2.6.0/gems/sass-3.4.25/lib/sass/exec/sass_scss.rb:63:in `process_result'
+/Library/Ruby/Gems/2.6.0/gems/sass-3.4.25/lib/sass/exec/base.rb:52:in `parse'
+/Library/Ruby/Gems/2.6.0/gems/sass-3.4.25/lib/sass/exec/base.rb:19:in `parse!'
+/Library/Ruby/Gems/2.6.0/gems/sass-3.4.25/bin/sass:13:in `<top (required)>'
+/usr/local/bin/sass:23:in `load'
+/usr/local/bin/sass:23:in `<main>'
+*/
+body:before {
+  white-space: pre;
+  font-family: monospace;
+  content: "Error: wrong number of arguments (1 for 3) for `rgb'\A         on line 169 of /Users/gcl/github/mine/blog.cheng92.com/assets/sass/global.scss\A \A 164:       to(#19911d),\A 165:       color-stop(0.6, #54de5d)\A 166:     );\A 167:   }\A 168:   &::-webkit-scrollbar-track {\A 169:     box-shadow: inset 0 0 6px rgb(0 0 0 / 10%);\A 170:     background-color: #f5f5f5;\A 171:     border-radius: 10px;\A 172:   }\A 173: }\A 174: "; }

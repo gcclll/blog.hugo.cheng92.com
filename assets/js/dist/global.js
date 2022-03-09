@@ -193,8 +193,15 @@
 
   var pages = formatPages();
   var filename = location.pathname.replace(/.*\//g, '');
-  var loaded = false;
+  var loadedMap = {};
   var path = '/assets/js/stats';
+
+  function allLoaded() {
+    var loaded = _.keys(loadedMap).length === _.keys(window.$pages).length;
+
+    console.log('loaded=', loaded);
+    return loaded;
+  }
 
   function getPageScript(pageName) {
     var jsFile = "".concat(path, "/").concat(pageName, ".js");
@@ -207,26 +214,24 @@
   }
 
   function loadPageStats(cbOrPage) {
-    if (loaded) {
-      ElementPlus.ElMessage({
-        type: 'success',
-        message: '全站资源已就绪。'
-      });
-      return;
-    }
-
+    if (allLoaded()) return;
     var html = '';
 
-    if (_.isString(cbOrPage)) {
+    if (_.isString(cbOrPage) && !loadedMap[cbOrPage]) {
       html = getPageScript(cbOrPage);
+      loadedMap[cbOrPage] = true;
     } else {
       for (var page in window.$pages) {
+        if (loadedMap[page]) {
+          continue;
+        }
+
         html += getPageScript(page);
+        loadedMap[page] = true;
       }
     }
 
     $('head').append(html);
-    loaded = true;
     if (_.isFunction(cbOrPage)) cbOrPage(window.$stats, window.$pages);
 
     for (var prop in window.$stats) {
