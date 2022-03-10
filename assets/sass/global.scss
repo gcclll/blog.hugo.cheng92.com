@@ -257,9 +257,8 @@ blockquote {
 
 .el-toc-menu {
   border-right: none;
-  span.title {
-    display: flex;
-    justify-content: space-between;
+  .tags .el-tag {
+    margin-right: 0.5em;
   }
 }
 

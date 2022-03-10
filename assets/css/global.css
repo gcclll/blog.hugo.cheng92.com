@@ -184,9 +184,8 @@ blockquote {
 
 .el-toc-menu {
   border-right: none; }
-  .el-toc-menu span.title {
-    display: flex;
-    justify-content: space-between; }
+  .el-toc-menu .tags .el-tag {
+    margin-right: 0.5em; }
 
 @media screen and (max-width: 768px) {
   #table-of-contents {
