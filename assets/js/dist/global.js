@@ -169,7 +169,11 @@
     ElementPlusOptions: {// size: 'small'
     },
     searchTmpl: "<div id=\"search\">Loading...</div>",
-    isHome: /home\.html$/.test(location.pathname)
+    isHome: /home\.html$/.test(location.pathname),
+    "enum": {
+      TYPE_ARCHIVES: 0,
+      TYPE_CATEGORY: 1
+    }
   };
 
   /** jsx?|tsx? file header */
@@ -394,6 +398,30 @@
     template: "<div class=\"search-suffix\"><img class=\"command-k\" src=\"/assets/img/command.svg\"/><span class=\"command-k\">K</span></div>"
   });
 
+  /** jsx?|tsx? file header */
+  var HomeToc = Vue.defineComponent({
+    template: "\n<el-menu class=\"el-head-menu\"  mode=\"horizontal\">\n<el-menu-item>\u65F6\u95F4\u6233</el-menu-item>\n<el-menu-item>\u5206\u7C7B</el-menu-item>\n</el-menu>\n  <el-menu class=\"el-toc-menu\">\n    <el-menu-item-group v-if=\"listType===types.TYPE_ARCHIVES\" v-for=\"(list, month) in listData\" :key=\"month\" :title=\"month\">\n      <el-menu-item v-for=\"(page, i) in list\" :index=\"i+''\" :key=\"page.timestamp\">\n      <span class=\"date\">{{page.date}}</span>\n      <span class=\"title\">\n        <a :href=\"page.url\" v-html=\"page.title\"></a>\n      </span>\n      <div/>\n      <div class=\"tags\">\n        <el-tag size=\"small\" v-for=\"cat in page.category\" :key=\"cat\" type=\"success\">{{cat}}</el-tag>\n        <el-tag size=\"small\" v-for=\"tag in page.tags\" :key=\"tag\">{{tag}}</el-tag>\n      </div>\n      </el-menu-item>\n    </el-menu-item-group>\n  </el-menu>",
+    props: {
+      listData: {
+        type: Object,
+        "default": function _default() {}
+      },
+      listType: {
+        type: Number,
+        "default": config["enum"].TYPE_ARCHIVES // category
+
+      }
+    },
+    beforeMount: function beforeMount() {
+      console.log(this.listData, '111');
+    },
+    data: function data() {
+      return {
+        types: config["enum"]
+      };
+    }
+  });
+
   function loadSearchApp() {
     var _pages = _.cloneDeep(cached.pages);
 
@@ -409,16 +437,18 @@
     });
 
     Vue.createApp({
-      template: "\n        <el-input\n          v-if=\"isHome\"\n          class=\"inline-input search-input\"\n          v-model=\"search\" placeholder=\"\u641C\u7D22\">\n          <template #suffix><search-suffix /></template>\n        </el-input>\n        <el-autocomplete\n          v-else\n          v-model=\"search\"\n          :fetch-suggestions=\"querySearch\"\n          class=\"inline-input search-input\"\n          placeholder=\"\u641C\u7D22\"\n          @select=\"handleSelect\"\n        >\n          <template #default=\"{item}\">\n            <search-item :item=\"item\"/>\n          </template>\n          <template #suffix><search-suffix /></template>\n        </el-autocomplete>\n        <el-menu v-if=\"isHome\" class=\"el-toc-menu\">\n          <el-menu-item-group v-for=\"(list, month) in pages\" :key=\"month\" :title=\"month\">\n            <el-menu-item v-for=\"(page, i) in list\" :index=\"i+''\" :key=\"page.timestamp\">\n            <span class=\"date\">{{page.date}}</span>\n            <span class=\"title\">\n              <a :href=\"page.url\" v-html=\"page.title\"></a>\n            </span>\n            <div/>\n            <div class=\"tags\">\n              <el-tag v-for=\"cat in page.category\" :key=\"cat\" type=\"success\">{{cat}}</el-tag>\n              <el-tag v-for=\"tag in page.tags\" :key=\"tag\">{{tag}}</el-tag>\n            </div>\n            </el-menu-item>\n          </el-menu-item-group>\n        </el-menu>\n        <div id=\"search\"><search/></div>",
+      template: "\n        <el-input\n          v-if=\"isHome\"\n          class=\"inline-input search-input\"\n          v-model=\"search\" placeholder=\"\u641C\u7D22\">\n          <template #suffix><search-suffix /></template>\n        </el-input>\n        <el-autocomplete\n          v-else\n          v-model=\"search\"\n          :fetch-suggestions=\"querySearch\"\n          class=\"inline-input search-input\"\n          placeholder=\"\u641C\u7D22\"\n          @select=\"handleSelect\"\n        >\n          <template #default=\"{item}\">\n            <search-item :item=\"item\"/>\n          </template>\n          <template #suffix><search-suffix /></template>\n        </el-autocomplete>\n        <home-toc v-if=\"isHome\" :list-type=\"listType\" :list-data=\"pages\"/>\n        <div id=\"search\"><search/></div>",
       components: {
         Search: Search,
         SearchSuffix: SearchSuffix,
-        SearchItem: SearchItem
+        SearchItem: SearchItem,
+        HomeToc: HomeToc
       },
       data: function data() {
         return {
           search: '',
-          isHome: config.isHome
+          isHome: config.isHome,
+          listType: config["enum"].TYPE_ARCHIVES
         };
       },
       methods: {

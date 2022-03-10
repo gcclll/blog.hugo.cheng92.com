@@ -30,34 +30,33 @@
     margin-left: 0;
   }
 
-  .el-menu {
+  .el-toc-menu {
     border-right: none;
-  }
+    .el-menu-item {
+      border-left: 1px solid #cacaca;
+      padding: 3px 20px;
 
-  .el-menu-item {
-    border-left: 1px solid #cacaca;
-    padding: 3px 20px;
+      &:hover {
+        border-left: 3px solid #c05b4d;
+        transition: 0.2s ease-out;
+        transform: translateX(4px);
+      }
 
-    &:hover {
-      border-left: 3px solid #c05b4d;
-      transition: 0.2s ease-out;
-      transform: translateX(4px);
+      .date {
+        margin-right: 10px;
+        color: #8a8a8a;
+      }
+
+      a {
+        color: #c05b4d;
+        font-size: 18px;
+      }
     }
 
-    .date {
-      margin-right: 10px;
-      color: #8a8a8a;
+    .el-menu-item-group__title {
+      font-size: 28px;
+      font-family: Athelas, STHeiti, Microsoft Yahei, serif;
     }
-
-    a {
-      color: #c05b4d;
-      font-size: 18px;
-    }
-  }
-
-  .el-menu-item-group__title {
-    font-size: 28px;
-    font-family: Athelas, STHeiti, Microsoft Yahei, serif;
   }
 }
 

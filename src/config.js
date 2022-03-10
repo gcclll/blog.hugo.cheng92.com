@@ -6,5 +6,9 @@ export default {
     // size: 'small'
   },
   searchTmpl: `<div id="search">Loading...</div>`,
-  isHome: /home\.html$/.test(location.pathname)
+  isHome: /home\.html$/.test(location.pathname),
+  enum: {
+    TYPE_ARCHIVES: 0,
+    TYPE_CATEGORY: 1
+  }
 }

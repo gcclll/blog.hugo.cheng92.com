@@ -16,24 +16,24 @@
 
 #vue-toc li {
   margin-left: 0; }
-#vue-toc .el-menu {
+#vue-toc .el-toc-menu {
   border-right: none; }
-#vue-toc .el-menu-item {
-  border-left: 1px solid #cacaca;
-  padding: 3px 20px; }
-  #vue-toc .el-menu-item:hover {
-    border-left: 3px solid #c05b4d;
-    transition: 0.2s ease-out;
-    transform: translateX(4px); }
-  #vue-toc .el-menu-item .date {
-    margin-right: 10px;
-    color: #8a8a8a; }
-  #vue-toc .el-menu-item a {
-    color: #c05b4d;
-    font-size: 18px; }
-#vue-toc .el-menu-item-group__title {
-  font-size: 28px;
-  font-family: Athelas, STHeiti, Microsoft Yahei, serif; }
+  #vue-toc .el-toc-menu .el-menu-item {
+    border-left: 1px solid #cacaca;
+    padding: 3px 20px; }
+    #vue-toc .el-toc-menu .el-menu-item:hover {
+      border-left: 3px solid #c05b4d;
+      transition: 0.2s ease-out;
+      transform: translateX(4px); }
+    #vue-toc .el-toc-menu .el-menu-item .date {
+      margin-right: 10px;
+      color: #8a8a8a; }
+    #vue-toc .el-toc-menu .el-menu-item a {
+      color: #c05b4d;
+      font-size: 18px; }
+  #vue-toc .el-toc-menu .el-menu-item-group__title {
+    font-size: 28px;
+    font-family: Athelas, STHeiti, Microsoft Yahei, serif; }
 
 #postamble {
   display: none; }

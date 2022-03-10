@@ -2,6 +2,7 @@
 import Search from '../components/Search'
 import SearchItem from '../components/SearchItem'
 import SearchSuffix from '../components/SearchSuffix'
+import HomeToc from '../components/HomeToc'
 import { cached } from '../cache'
 import { filterByTitle, filterList } from '../utils'
 import config from '../config'
@@ -37,32 +38,20 @@ export default function loadSearchApp() {
           </template>
           <template #suffix><search-suffix /></template>
         </el-autocomplete>
-        <el-menu v-if="isHome" class="el-toc-menu">
-          <el-menu-item-group v-for="(list, month) in pages" :key="month" :title="month">
-            <el-menu-item v-for="(page, i) in list" :index="i+''" :key="page.timestamp">
-            <span class="date">{{page.date}}</span>
-            <span class="title">
-              <a :href="page.url" v-html="page.title"></a>
-            </span>
-            <div/>
-            <div class="tags">
-              <el-tag v-for="cat in page.category" :key="cat" type="success">{{cat}}</el-tag>
-              <el-tag v-for="tag in page.tags" :key="tag">{{tag}}</el-tag>
-            </div>
-            </el-menu-item>
-          </el-menu-item-group>
-        </el-menu>
+        <home-toc v-if="isHome" :list-type="listType" :list-data="pages"/>
         <div id="search"><search/></div>`,
 
     components: {
       Search,
       SearchSuffix,
-      SearchItem
+      SearchItem,
+      HomeToc
     },
     data() {
       return {
         search: '',
-        isHome: config.isHome
+        isHome: config.isHome,
+        listType: config.enum.TYPE_ARCHIVES
       }
     },
     methods: {
