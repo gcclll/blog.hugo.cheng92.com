@@ -41,7 +41,13 @@ export default function loadSearchApp() {
           <el-menu-item-group v-for="(list, month) in pages" :key="month" :title="month">
             <el-menu-item v-for="(page, i) in list" :index="i+''" :key="page.timestamp">
             <span class="date">{{page.date}}</span>
-            <span class="title"><a :href="page.url" v-html="page.title"></a></span>
+            <span class="title">
+<a :href="page.url" v-html="page.title"></a>
+<span>
+<el-tag v-for="cat in page.category" :key="cat" type="success"/>
+<el-tag v-for="tag in page.tags" :key="tag"/>
+</span>
+</span>
             </el-menu-item>
           </el-menu-item-group>
         </el-menu>
