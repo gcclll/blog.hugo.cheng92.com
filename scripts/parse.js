@@ -138,6 +138,18 @@ function parseRoots(roots) {
           year = d.getFullYear(),
           day = d.getDate()
         month = String(month).length < 2 ? `0${month}` : month
+
+        let category = [],
+          tags = []
+        const meta = next.root.querySelector('meta[name=category]')
+        if (meta) {
+          category = (meta.getAttribute('content') || '').split(',')
+        }
+        const metaTag = next.root.querySelector('meta[name=tags]')
+        if (metaTag) {
+          tags = (metaTag.getAttribute('content') || '').split(',')
+        }
+
         o[next.file] = {
           birthtime,
           ctime,
@@ -145,7 +157,9 @@ function parseRoots(roots) {
           year,
           day,
           date: `${month}-${day}`,
-          title: next.root.querySelector('title').text
+          title: next.root.querySelector('title').text,
+          category,
+          tags
         }
 
         return o
