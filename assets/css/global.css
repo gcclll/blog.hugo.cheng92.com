@@ -17,7 +17,7 @@
 #vue-toc li {
   margin-left: 0; }
 #vue-toc .el-head-menu {
-  margin: 10px 0; }
+  margin-top: 1rem; }
 #vue-toc .el-toc-menu {
   border-right: none; }
   #vue-toc .el-toc-menu .el-menu-item {
