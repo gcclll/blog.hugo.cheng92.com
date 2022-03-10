@@ -39,6 +39,7 @@
     .el-menu-item {
       border-left: 1px solid #cacaca;
       padding: 3px 20px;
+      justify-content: space-between;
 
       &:hover {
         border-left: 3px solid #c05b4d;

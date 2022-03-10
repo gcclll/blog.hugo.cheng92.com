@@ -22,7 +22,8 @@
   border-right: none; }
   #vue-toc .el-toc-menu .el-menu-item {
     border-left: 1px solid #cacaca;
-    padding: 3px 20px; }
+    padding: 3px 20px;
+    justify-content: space-between; }
     #vue-toc .el-toc-menu .el-menu-item:hover {
       border-left: 3px solid #c05b4d;
       transition: 0.2s ease-out;
