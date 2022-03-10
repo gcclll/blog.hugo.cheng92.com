@@ -44,10 +44,11 @@ export default function loadSearchApp() {
             <span class="title">
               <a :href="page.url" v-html="page.title"></a>
             </span>
-            <span class="tags">
+            <div/>
+            <div class="tags">
               <el-tag v-for="cat in page.category" :key="cat" type="success">{{cat}}</el-tag>
               <el-tag v-for="tag in page.tags" :key="tag">{{tag}}</el-tag>
-            </span>
+            </div>
             </el-menu-item>
           </el-menu-item-group>
         </el-menu>

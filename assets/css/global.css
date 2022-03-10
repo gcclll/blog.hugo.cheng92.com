@@ -2,15 +2,17 @@
 #table-of-contents {
   width: 316px !important; }
 
-#content img.my-search-icon,
-#content img.title-phone {
-  max-width: 30px; }
-#content .todo.DOING {
-  background-color: magenta; }
-#content .todo.TODO {
-  background-color: #f29f97; }
-#content .done.DONE {
-  background-color: #ababab; }
+#content {
+  overflow: auto; }
+  #content img.my-search-icon,
+  #content img.title-phone {
+    max-width: 30px; }
+  #content .todo.DOING {
+    background-color: magenta; }
+  #content .todo.TODO {
+    background-color: #f29f97; }
+  #content .done.DONE {
+    background-color: #ababab; }
 
 #vue-toc li {
   margin-left: 0; }
@@ -184,8 +186,10 @@ blockquote {
 
 .el-toc-menu {
   border-right: none; }
-  .el-toc-menu .tags .el-tag {
-    margin-right: 0.5em; }
+  .el-toc-menu .tags {
+    display: flex; }
+    .el-toc-menu .tags .el-tag {
+      margin-right: 0.5em; }
 
 @media screen and (max-width: 768px) {
   #table-of-contents {

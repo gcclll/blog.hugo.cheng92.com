@@ -173,15 +173,7 @@
   };
 
   /** jsx?|tsx? file header */
-  function home() {
-    var handleNotHome = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : noop;
-
-    // 是不是主页 home.html
-    if (!config.isHome) {
-      handleNotHome();
-      return config.isHome;
-    }
-
+  function setFooter() {
     setTimeout(function () {
       $('#content').append($('#postamble'));
       $('#postamble').css({
@@ -193,7 +185,18 @@
         width: '100%',
         textAlign: 'center'
       });
-    }, 500); // 收集所有标题(id包含 'outline-container-' 且以它开头的 div)
+    }, 500);
+  }
+  function home() {
+    var handleNotHome = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : noop;
+
+    // 是不是主页 home.html
+    if (!config.isHome) {
+      handleNotHome();
+      return config.isHome;
+    }
+
+    setFooter(); // 收集所有标题(id包含 'outline-container-' 且以它开头的 div)
 
     $("<div id=\"vue-toc\"></div>").insertAfter('h1.title');
     return config.isHome;
@@ -406,7 +409,7 @@
     });
 
     Vue.createApp({
-      template: "\n        <el-input\n          v-if=\"isHome\"\n          class=\"inline-input search-input\"\n          v-model=\"search\" placeholder=\"\u641C\u7D22\">\n          <template #suffix><search-suffix /></template>\n        </el-input>\n        <el-autocomplete\n          v-else\n          v-model=\"search\"\n          :fetch-suggestions=\"querySearch\"\n          class=\"inline-input search-input\"\n          placeholder=\"\u641C\u7D22\"\n          @select=\"handleSelect\"\n        >\n          <template #default=\"{item}\">\n            <search-item :item=\"item\"/>\n          </template>\n          <template #suffix><search-suffix /></template>\n        </el-autocomplete>\n        <el-menu v-if=\"isHome\" class=\"el-toc-menu\">\n          <el-menu-item-group v-for=\"(list, month) in pages\" :key=\"month\" :title=\"month\">\n            <el-menu-item v-for=\"(page, i) in list\" :index=\"i+''\" :key=\"page.timestamp\">\n            <span class=\"date\">{{page.date}}</span>\n            <span class=\"title\">\n              <a :href=\"page.url\" v-html=\"page.title\"></a>\n            </span>\n            <span class=\"tags\">\n              <el-tag v-for=\"cat in page.category\" :key=\"cat\" type=\"success\">{{cat}}</el-tag>\n              <el-tag v-for=\"tag in page.tags\" :key=\"tag\">{{tag}}</el-tag>\n            </span>\n            </el-menu-item>\n          </el-menu-item-group>\n        </el-menu>\n        <div id=\"search\"><search/></div>",
+      template: "\n        <el-input\n          v-if=\"isHome\"\n          class=\"inline-input search-input\"\n          v-model=\"search\" placeholder=\"\u641C\u7D22\">\n          <template #suffix><search-suffix /></template>\n        </el-input>\n        <el-autocomplete\n          v-else\n          v-model=\"search\"\n          :fetch-suggestions=\"querySearch\"\n          class=\"inline-input search-input\"\n          placeholder=\"\u641C\u7D22\"\n          @select=\"handleSelect\"\n        >\n          <template #default=\"{item}\">\n            <search-item :item=\"item\"/>\n          </template>\n          <template #suffix><search-suffix /></template>\n        </el-autocomplete>\n        <el-menu v-if=\"isHome\" class=\"el-toc-menu\">\n          <el-menu-item-group v-for=\"(list, month) in pages\" :key=\"month\" :title=\"month\">\n            <el-menu-item v-for=\"(page, i) in list\" :index=\"i+''\" :key=\"page.timestamp\">\n            <span class=\"date\">{{page.date}}</span>\n            <span class=\"title\">\n              <a :href=\"page.url\" v-html=\"page.title\"></a>\n            </span>\n            <div/>\n            <div class=\"tags\">\n              <el-tag v-for=\"cat in page.category\" :key=\"cat\" type=\"success\">{{cat}}</el-tag>\n              <el-tag v-for=\"tag in page.tags\" :key=\"tag\">{{tag}}</el-tag>\n            </div>\n            </el-menu-item>\n          </el-menu-item-group>\n        </el-menu>\n        <div id=\"search\"><search/></div>",
       components: {
         Search: Search,
         SearchSuffix: SearchSuffix,
@@ -454,11 +457,16 @@
 
     cached.loadPageStats(cached.filename); // 主页
 
-    home(function () {
+    home(function (setFooter) {
       // 非主页搜索放在 TOC 标题下面，主页的放在内容标题下面
-      $('#table-of-contents>h2').append(config.searchTmpl); // 底部个人信息
+      $('#table-of-contents>h2').append(config.searchTmpl);
 
-      $('#postamble').show();
+      if (isMobile) {
+        setFooter();
+      } else {
+        // 底部个人信息
+        $('#postamble').show();
+      }
     }); // 搜索组件
 
     loadSearchApp(); // 基于 github,  gcclll/cheng92-comments  的评论系统

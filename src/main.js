@@ -17,11 +17,16 @@ $(function () {
   cached.loadPageStats(cached.filename)
 
   // 主页
-  home(() => {
+  home((setFooter) => {
     // 非主页搜索放在 TOC 标题下面，主页的放在内容标题下面
     $('#table-of-contents>h2').append(config.searchTmpl)
-    // 底部个人信息
-    $('#postamble').show()
+
+    if (isMobile) {
+      setFooter()
+    } else {
+      // 底部个人信息
+      $('#postamble').show()
+    }
   })
 
   // 搜索组件

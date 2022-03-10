@@ -4,6 +4,7 @@
 }
 
 #content {
+  overflow: auto;
   img.my-search-icon,
   img.title-phone {
     max-width: 30px;
@@ -257,8 +258,11 @@ blockquote {
 
 .el-toc-menu {
   border-right: none;
-  .tags .el-tag {
-    margin-right: 0.5em;
+  .tags {
+    display: flex;
+    .el-tag {
+      margin-right: 0.5em;
+    }
   }
 }
 
