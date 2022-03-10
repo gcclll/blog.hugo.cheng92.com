@@ -110,16 +110,24 @@ export function filterList(queryList, list = []) {
   const cached = {} // map<string, boolean>
   return list
     .map((page) => {
-      let text = $(`<p>${page.title || page.text || page.value}</p>`)
-        .text()
-        .toLowerCase()
+      let text = $(`<p>${page.title || page.text || page.value}</p>`).text()
+      // .toLowerCase()
       // 去重
       if (cached[text]) {
         return
       }
-      if (queryList.every((q) => text.indexOf(q.toLowerCase()) > -1)) {
+      if (
+        queryList.every((q) => text.toLowerCase().indexOf(q.toLowerCase()) > -1)
+      ) {
         const r = new RegExp('(' + queryList.join('|') + ')', 'ig')
-        page.title = text.replace(r, `<span class="hl-word">$1</span>`)
+        page.title = text.replace(r, (match) => {
+          const first = match[0]
+          let word = match
+          if (first >= 'A' && first <= 'Z') {
+            word = _.upperFirst(match)
+          }
+          return `<span class="hl-word">${word}</span>`
+        })
         cached[text] = true
         return { ...page }
       }

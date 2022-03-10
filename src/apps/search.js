@@ -8,6 +8,7 @@ import config from '../config'
 
 export default function loadSearchApp() {
   const pages = _.cloneDeep(cached.pages)
+  const current = _.cloneDeep(cached.current)
   const pageValues = _.flatten(_.values(pages))
     .sort((a, b) => (a.title < b.title ? -1 : 1))
     .map((item) => ({
@@ -59,9 +60,8 @@ export default function loadSearchApp() {
     },
     methods: {
       querySearch(s, cb) {
-        const list = s ? filterList(s, pageValues) : pageValues
-        console.log(list, 1)
-        cb(list)
+        const target = current // pageValues
+        cb(s ? filterList(s, target) : target)
       },
       handleSelect(value) {
         console.log(value, 'select')

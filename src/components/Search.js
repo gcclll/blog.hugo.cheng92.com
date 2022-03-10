@@ -7,7 +7,7 @@ const WHOLE = '1'
 const CURRENT = '2'
 export default Vue.defineComponent({
   template: `
-    <el-dialog  v-model="dialogVisible" @open="clean" @close="clean" title="全文(站)搜索">
+    <el-dialog  v-model="dialogVisible" @open="clean" @close="clean" title="搜索">
      <div v-loading="loading" element-loading-text="全站资源加载中，请耐心等待...">
       <el-input autofocus v-model="search" placeholder="请输入搜索内容(暂只支持标题、链接、锚点)">
         <template #prepend>
