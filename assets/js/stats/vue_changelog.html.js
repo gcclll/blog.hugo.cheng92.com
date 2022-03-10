@@ -1,0 +1,1 @@
+window.$stats=window.$stats||{};window.$stats['vue_changelog.html']={"IDLinks":[],"aLinks":[],"toc":null}

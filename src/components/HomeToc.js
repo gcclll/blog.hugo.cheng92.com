@@ -4,7 +4,7 @@ import config from '../config'
 
 export default Vue.defineComponent({
   template: `
-<el-menu class="el-head-menu"  mode="horizontal" :default-active="activeIndex" @select="handleSelect">
+<el-menu active-text-color="#c05b4d" class="el-head-menu"  mode="horizontal" :default-active="activeIndex" @select="handleSelect">
   <el-menu-item index="1">时间戳</el-menu-item>
   <el-menu-item index="2">分类</el-menu-item>
 </el-menu>
