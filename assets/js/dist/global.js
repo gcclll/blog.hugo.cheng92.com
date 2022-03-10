@@ -171,8 +171,8 @@
     searchTmpl: "<div id=\"search\">Loading...</div>",
     isHome: /home\.html$/.test(location.pathname),
     "enum": {
-      TYPE_ARCHIVES: 0,
-      TYPE_CATEGORY: 1
+      TYPE_ARCHIVES: '1',
+      TYPE_CATEGORY: '2'
     }
   };
 
@@ -400,16 +400,25 @@
 
   /** jsx?|tsx? file header */
   var HomeToc = Vue.defineComponent({
-    template: "\n<el-menu class=\"el-head-menu\"  mode=\"horizontal\">\n<el-menu-item>\u65F6\u95F4\u6233</el-menu-item>\n<el-menu-item>\u5206\u7C7B</el-menu-item>\n</el-menu>\n  <el-menu class=\"el-toc-menu\">\n    <el-menu-item-group v-if=\"listType===types.TYPE_ARCHIVES\" v-for=\"(list, month) in listData\" :key=\"month\" :title=\"month\">\n      <el-menu-item v-for=\"(page, i) in list\" :index=\"i+''\" :key=\"page.timestamp\">\n      <span class=\"date\">{{page.date}}</span>\n      <span class=\"title\">\n        <a :href=\"page.url\" v-html=\"page.title\"></a>\n      </span>\n      <div/>\n      <div class=\"tags\">\n        <el-tag size=\"small\" v-for=\"cat in page.category\" :key=\"cat\" type=\"success\">{{cat}}</el-tag>\n        <el-tag size=\"small\" v-for=\"tag in page.tags\" :key=\"tag\">{{tag}}</el-tag>\n      </div>\n      </el-menu-item>\n    </el-menu-item-group>\n  </el-menu>",
+    template: "\n<el-menu class=\"el-head-menu\"  mode=\"horizontal\" :default-active=\"activeIndex\" @select=\"handleSelect\">\n  <el-menu-item index=\"1\">\u65F6\u95F4\u6233</el-menu-item>\n  <el-menu-item index=\"2\">\u5206\u7C7B</el-menu-item>\n</el-menu>\n  <el-menu class=\"el-toc-menu\" v-if=\"activeIndex===types.TYPE_ARCHIVES\">\n    <el-menu-item-group v-if=\"listType===types.TYPE_ARCHIVES\" v-for=\"(list, month) in listData\" :key=\"month\" :title=\"month\">\n      <el-menu-item v-for=\"(page, i) in list\" :index=\"i+''\" :key=\"page.timestamp\">\n      <span class=\"date\">{{page.date}}</span>\n      <span class=\"title\">\n        <a :href=\"page.url\" v-html=\"page.title\"></a>\n      </span>\n      <div/>\n      <div class=\"tags\">\n        <el-tag size=\"small\" v-for=\"cat in page.category\" :key=\"cat\" type=\"success\">{{cat}}</el-tag>\n        <el-tag size=\"small\" v-for=\"tag in page.tags\" :key=\"tag\">{{tag}}</el-tag>\n      </div>\n      </el-menu-item>\n    </el-menu-item-group>\n  </el-menu>",
     props: {
       listData: {
         type: Object,
         "default": function _default() {}
       },
       listType: {
-        type: Number,
+        type: String,
         "default": config["enum"].TYPE_ARCHIVES // category
 
+      }
+    },
+    methods: {
+      handleSelect: function handleSelect(key, keyPath) {
+        this.activeIndex = key;
+        console.log({
+          key: key,
+          keyPath: keyPath
+        });
       }
     },
     beforeMount: function beforeMount() {
@@ -417,7 +426,8 @@
     },
     data: function data() {
       return {
-        types: config["enum"]
+        types: config["enum"],
+        activeIndex: config["enum"].TYPE_ARCHIVES
       };
     }
   });
