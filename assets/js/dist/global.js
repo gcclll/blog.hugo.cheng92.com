@@ -52,6 +52,39 @@
     return obj;
   }
 
+  function _toConsumableArray(arr) {
+    return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _unsupportedIterableToArray(arr) || _nonIterableSpread();
+  }
+
+  function _arrayWithoutHoles(arr) {
+    if (Array.isArray(arr)) return _arrayLikeToArray(arr);
+  }
+
+  function _iterableToArray(iter) {
+    if (typeof Symbol !== "undefined" && iter[Symbol.iterator] != null || iter["@@iterator"] != null) return Array.from(iter);
+  }
+
+  function _unsupportedIterableToArray(o, minLen) {
+    if (!o) return;
+    if (typeof o === "string") return _arrayLikeToArray(o, minLen);
+    var n = Object.prototype.toString.call(o).slice(8, -1);
+    if (n === "Object" && o.constructor) n = o.constructor.name;
+    if (n === "Map" || n === "Set") return Array.from(o);
+    if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen);
+  }
+
+  function _arrayLikeToArray(arr, len) {
+    if (len == null || len > arr.length) len = arr.length;
+
+    for (var i = 0, arr2 = new Array(len); i < len; i++) arr2[i] = arr[i];
+
+    return arr2;
+  }
+
+  function _nonIterableSpread() {
+    throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");
+  }
+
   /** jsx?|tsx? file header */
   function addValine() {
     // valine ///////////////////////////////////////////////////////////////////
@@ -172,7 +205,8 @@
     isHome: /home\.html$/.test(location.pathname),
     "enum": {
       TYPE_ARCHIVES: '1',
-      TYPE_CATEGORY: '2'
+      TYPE_CATEGORY: '2',
+      TYPE_TAG: '3'
     }
   };
 
@@ -398,9 +432,8 @@
     template: "<div class=\"search-suffix\"><img class=\"command-k\" src=\"/assets/img/command.svg\"/><span class=\"command-k\">K</span></div>"
   });
 
-  /** jsx?|tsx? file header */
   var HomeToc = Vue.defineComponent({
-    template: "\n<el-menu active-text-color=\"#c05b4d\" class=\"el-head-menu\"  mode=\"horizontal\" :default-active=\"activeIndex\" @select=\"handleSelect\">\n  <el-menu-item index=\"1\">\u65F6\u95F4\u6233</el-menu-item>\n  <el-menu-item index=\"2\">\u5206\u7C7B</el-menu-item>\n</el-menu>\n  <el-menu class=\"el-toc-menu\" v-if=\"activeIndex===types.TYPE_ARCHIVES\">\n    <el-menu-item-group v-if=\"listType===types.TYPE_ARCHIVES\" v-for=\"(list, month) in listData\" :key=\"month\" :title=\"month\">\n      <el-menu-item v-for=\"(page, i) in list\" :index=\"i+''\" :key=\"page.timestamp\">\n      <div class=\"date-title\">\n        <span class=\"date\">{{page.date}}</span>\n        <span class=\"title\">\n          <a :href=\"page.url\" v-html=\"page.title\"></a>\n        </span>\n      </div>\n      <div class=\"tags\">\n        <el-tag size=\"small\" v-for=\"cat in page.category\" :key=\"cat\" type=\"success\">{{cat}}</el-tag>\n        <el-tag size=\"small\" v-for=\"tag in page.tags\" :key=\"tag\">{{tag}}</el-tag>\n      </div>\n      </el-menu-item>\n    </el-menu-item-group>\n  </el-menu>",
+    template: "\n<el-menu active-text-color=\"#c05b4d\" class=\"el-head-menu\"  mode=\"horizontal\" :default-active=\"activeIndex\" @select=\"handleSelect\">\n  <el-menu-item index=\"1\">\u65F6\u95F4\u6233</el-menu-item>\n  <el-menu-item index=\"2\">\u5206\u7C7B</el-menu-item>\n  <el-menu-item index=\"3\">\u6807\u7B7E</el-menu-item>\n</el-menu>\n  <el-menu class=\"el-toc-menu\">\n    <el-menu-item-group v-for=\"(list, key) in menuList\" :key=\"key\" :title=\"key\">\n      <el-menu-item v-for=\"(page, i) in list\" :index=\"i+''\" :key=\"page.timestamp\">\n      <div class=\"date-title\">\n        <span class=\"date\" v-if=\"activeIndex===types.TYPE_ARCHIVES\">{{page.date}}</span>\n        <span class=\"title\">\n          <a :href=\"page.url\" v-html=\"page.title\"></a>\n        </span>\n      </div>\n      <div class=\"tags\">\n        <el-tag size=\"small\" v-for=\"cat in page.category\" :key=\"cat\" type=\"success\">{{cat}}</el-tag>\n        <el-tag size=\"small\" v-for=\"tag in page.tags\" :key=\"tag\">{{tag}}</el-tag>\n      </div>\n      </el-menu-item>\n    </el-menu-item-group>\n  </el-menu>",
     props: {
       listData: {
         type: Object,
@@ -412,6 +445,22 @@
 
       }
     },
+    computed: {
+      menuList: function menuList() {
+        switch (this.activeIndex) {
+          case config["enum"].TYPE_ARCHIVES:
+            return this.listData;
+
+          case config["enum"].TYPE_CATEGORY:
+            return this.archives;
+
+          case config["enum"].TYPE_TAG:
+            return this.tagPosts;
+        }
+
+        return [];
+      }
+    },
     methods: {
       handleSelect: function handleSelect(key, keyPath) {
         this.activeIndex = key;
@@ -419,15 +468,52 @@
           key: key,
           keyPath: keyPath
         });
+      },
+      addArchive: function addArchive(cat, post) {
+        if (!post) return;
+
+        if (this.archives[cat] == null) {
+          this.archives[cat] = [];
+        }
+
+        this.archives[cat].push(_objectSpread2({}, post));
+      },
+      addTagPost: function addTagPost(tag, post) {
+        if (!post) return;
+
+        if (this.tagPosts[tag] == null) {
+          this.tagPosts[tag] = [];
+        }
+
+        this.tagPosts[tag].push(_objectSpread2({}, post));
       }
     },
     beforeMount: function beforeMount() {
-      console.log(this.listData, '111');
+      var _this = this;
+
+      var list = _.flatten(_toConsumableArray(_.values(this.listData)));
+
+      list.forEach(function (item) {
+        var _ref = item || {},
+            _ref$category = _ref.category,
+            category = _ref$category === void 0 ? [] : _ref$category,
+            _ref$tags = _ref.tags,
+            tags = _ref$tags === void 0 ? [] : _ref$tags;
+
+        category.forEach(function (cat) {
+          return _this.addArchive(cat, item);
+        });
+        tags.forEach(function (tag) {
+          return _this.addTagPost(tag, item);
+        });
+      });
     },
     data: function data() {
       return {
         types: config["enum"],
-        activeIndex: config["enum"].TYPE_ARCHIVES
+        activeIndex: config["enum"].TYPE_ARCHIVES,
+        archives: {},
+        tagPosts: {}
       };
     }
   });

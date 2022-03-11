@@ -9,6 +9,7 @@ export default {
   isHome: /home\.html$/.test(location.pathname),
   enum: {
     TYPE_ARCHIVES: '1',
-    TYPE_CATEGORY: '2'
+    TYPE_CATEGORY: '2',
+    TYPE_TAG: '3'
   }
 }
