@@ -2,10 +2,19 @@
 import { querySearch } from '../utils'
 import { cached } from '../cache'
 import SearchItem from './SearchItem'
+import {
+  defineComponent,
+  onBeforeMount,
+  onMounted,
+  onUnmounted,
+  reactive,
+  toRefs,
+  watch
+} from 'vue'
 
 const WHOLE = '1'
 const CURRENT = '2'
-export default Vue.defineComponent({
+export default defineComponent({
   template: `
     <el-dialog  v-model="dialogVisible" @open="clean" @close="clean" title="搜索">
      <div v-loading="loading" element-loading-text="全站资源加载中，请耐心等待...">
@@ -28,7 +37,7 @@ export default Vue.defineComponent({
     SearchItem
   },
   setup() {
-    const state = Vue.reactive({
+    const state = reactive({
       results: [],
       filterResults: [], // 实时搜索到的数据
       search: '', // 搜索关键词
@@ -39,11 +48,11 @@ export default Vue.defineComponent({
       pages: {}
     })
 
-    Vue.onBeforeMount(() => {
+    onBeforeMount(() => {
       console.log('on before mount')
     })
 
-    Vue.onMounted(() => {
+    onMounted(() => {
       $(document.body).on('keydown', keydownHandler)
     })
 
@@ -55,16 +64,16 @@ export default Vue.defineComponent({
         state.results = state.scope === WHOLE ? cached.whole : cached.current
       }
     }
-    Vue.onUnmounted(() => {
+    onUnmounted(() => {
       $(document.body).off('keydown', keydownHandler)
     })
 
-    Vue.watch(
+    watch(
       () => state.scope,
       (val) => (state.results = val === CURRENT ? cached.current : cached.whole)
     )
 
-    Vue.watch(
+    watch(
       () => state.search,
       (newVal, oldVal) => {
         if (newVal) {
@@ -94,7 +103,7 @@ export default Vue.defineComponent({
     }
 
     return {
-      ...Vue.toRefs(state),
+      ...toRefs(state),
       clean,
       isCurrentPage(file) {
         return new RegExp(`${file}$`).test(location.pathname)

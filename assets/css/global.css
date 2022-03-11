@@ -37,6 +37,8 @@
   #vue-toc .el-toc-menu .el-menu-item-group__title {
     font-size: 28px;
     font-family: Athelas, STHeiti, Microsoft Yahei, serif; }
+#vue-toc .el-tabs__item .el-icon .is-icon-close {
+  vertical-align: middle; }
 
 #postamble {
   display: none; }

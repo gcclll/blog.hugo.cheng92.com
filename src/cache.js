@@ -1,5 +1,5 @@
 /** jsx?|tsx? file header */
-import { dedupStats, formatPages } from './utils'
+import { formatPages } from './utils'
 
 // 页面中的链接，锚点数据，用来全站搜索
 const deduped = [] // dedupStats()
@@ -54,7 +54,6 @@ function loadPageStats(cbOrPage) {
     result.url = result.link = url || href || `${filename}#${id}`
     return result.filename === cached.filename
   })
-  console.log(cached, 333)
 }
 
 function forEachHandler(link) {

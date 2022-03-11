@@ -5,14 +5,10 @@ import config from '../config'
 import { filterByTitle } from '../utils'
 
 const pages = _.cloneDeep(cached.pages)
-export default Vue.defineComponent({
+
+const GlMenuItem = Vue.defineComponent({
   template: `
-  <el-tabs v-model="activeName" @tab-click="$emit('change-tab')">
-    <el-tab-pane v-for="tab in tabs" :key="tab.value" :label="tab.label" :name="tab.value"/>
-  </el-tabs>
-  <el-menu class="el-toc-menu">
-    <el-menu-item-group v-for="(list, key) in pages" :key="key" :title="key">
-      <el-menu-item v-for="(page, i) in list" :index="i+''" :key="page.timestamp">
+    <el-menu-item v-for="(page, i) in list" :index="i+''" :key="page.timestamp">
       <div class="date-title">
         <span class="date">{{page.date}}</span>
         <span class="title">
@@ -20,12 +16,43 @@ export default Vue.defineComponent({
         </span>
       </div>
       <div class="tags">
-        <el-tag size="small" v-for="cat in page.category" :key="cat" type="success">{{cat}}</el-tag>
+        <el-tag  size="small" v-for="cat in page.category" :key="cat" type="success" @click="$emit('addTab', cat)">{{cat}}</el-tag>
         <el-tag size="small" v-for="tag in page.tags" :key="tag">{{tag}}</el-tag>
       </div>
-      </el-menu-item>
-    </el-menu-item-group>
-  </el-menu>`,
+    </el-menu-item>`,
+  emits: ['addTab'],
+  props: {
+    list: {
+      type: Array,
+      default: () => []
+    }
+  }
+})
+
+export default Vue.defineComponent({
+  template: `
+  <el-tabs v-model="activeName" @tab-click="$emit('change-tab')" @tab-remove="removeTab">
+    <el-tab-pane v-for="( tab, i ) in tabs" :key="i" :name="tab.value" :closable="tab.isSub">
+      <template #label>
+        <div style="display:flex;align-items:center">
+          <el-icon v-if="tab.Icon"><component :is="tab.Icon"/></el-icon>
+          <span style="padding-left:4px">{{tab.label}}</span>
+        </div>
+      </template>
+      <el-menu class="el-toc-menu">
+        <template v-for="(list, key) in pages" :key="key">
+          <gl-menu-item v-if="tab.isSub" :list="list" @add-tab="addTab"/>
+          <el-menu-item-group v-else :title="key">
+            <gl-menu-item :list="list" @add-tab="addTab"/>
+          </el-menu-item-group>
+        </template>
+      </el-menu>
+    </el-tab-pane>
+  </el-tabs>
+  `,
+  components: {
+    GlMenuItem
+  },
   emits: ['change-tab'],
   props: {
     searchText: {
@@ -36,43 +63,76 @@ export default Vue.defineComponent({
   data() {
     return {
       tabs: config.tabs,
-      category: {},
-      tags: {},
-      archives: {},
-      activeName: 'archives'
+      activeName: 'archives',
+      cached: {}
     }
   },
   computed: {
     pages() {
       const tab = _.find(this.tabs, (tab) => tab.value === this.activeName)
-      const posts = this[tab.value]
-      console.log(tab, posts, '11111')
-      return posts ? filterByTitle(this.searchText, posts) : []
+      if (!tab || !tab.list) return []
+      return filterByTitle(this.searchText, tab.list)
     }
   },
   methods: {
-    addCategory(cat, post) {
-      if (!post) return
-      if (this.category[cat] == null) {
-        this.category[cat] = []
-      }
-      this.category[cat].push({ ...post })
+    removeTab(name) {
+      console.log({ name })
     },
-    addTagPost(tag, post) {
-      if (!post) return
-      if (this.tags[tag] == null) {
-        this.tags[tag] = []
+    // 添加子分类标签
+    addTab(name) {
+      const existed = _.find(this.tabs, (tab) => tab.value === name)
+      if (existed == null) {
+        const cached = this.cached[name]
+        if (cached) {
+          this.tabs.push(cached)
+        } else {
+          // 大分类
+          const category =
+            _.find(this.tabs, (tab) => tab.value === 'category') || {}
+          this.tabs.push({
+            label: name.toUpperCase(),
+            value: name,
+            Icon: config.Icons[name],
+            Close: config.Icons.Close,
+            isSub: true, // 标识分子分类
+            list: { [name]: category.list[name] || [] }
+          })
+        }
       }
-      this.tags[tag].push({ ...post })
+      this.activeName = name
     }
   },
   beforeMount() {
-    this.archives = _.cloneDeep(pages)
-    const list = _.flatten([..._.values(this.archives)])
-    list.forEach((item) => {
-      const { category = [], tags = [] } = item || {}
-      category.forEach((cat) => this.addCategory(cat, item))
-      tags.forEach((tag) => this.addTagPost(tag, item))
+    const list = _.flatten([..._.values(pages)])
+    this.tabs.forEach((tab) => {
+      switch (tab.value) {
+        case 'archives':
+          tab.list = pages
+          break
+        case 'category':
+          tab.list = filterOutPages(list)
+          break
+        case 'tags':
+          tab.list = filterOutPages(list, 'tag')
+          break
+      }
     })
   }
 })
+
+function filterOutPages(list = [], type = 'category') {
+  return list.reduce((result, curr) => {
+    if (curr) {
+      const { category = [], tags = [] } = curr
+      const target = type === 'category' ? category : tags
+      target.forEach((key) => {
+        if (result[key] == null) {
+          result[key] = []
+        }
+        result[key].push({ ...curr })
+      })
+    }
+
+    return result
+  }, {})
+}

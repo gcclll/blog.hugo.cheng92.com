@@ -124,7 +124,7 @@ export function filterList(queryList, list = []) {
           const first = match[0]
           let word = match
           if (first >= 'A' && first <= 'Z') {
-            word = _.upperFirst(match)
+            word = `${match[0].toUpperCase() + match.substring(1)}`
           }
           return `<span class="hl-word">${word}</span>`
         })
