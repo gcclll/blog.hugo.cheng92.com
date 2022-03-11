@@ -64,8 +64,17 @@
     }
   }
 
-  .el-tabs__item .el-icon .is-icon-close {
-    vertical-align: middle;
+  .el-tabs__item {
+    .is-icon-close {
+      vertical-align: middle;
+    }
+    .tab-label {
+      display: flex;
+      align-items: center;
+      &.is-sub {
+        float: left;
+      }
+    }
   }
 }
 

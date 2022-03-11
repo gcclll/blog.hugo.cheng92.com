@@ -3,6 +3,7 @@ import home from './home'
 import { cached } from './cache'
 import config from './config'
 import loadSearchApp from './apps/search'
+import './css/global.scss'
 
 $(function () {
   // 检测是不是移动端

@@ -34,7 +34,7 @@ export default Vue.defineComponent({
   <el-tabs v-model="activeName" @tab-click="$emit('change-tab')" @tab-remove="removeTab">
     <el-tab-pane v-for="( tab, i ) in tabs" :key="i" :name="tab.value" :closable="tab.isSub">
       <template #label>
-        <div style="display:flex;align-items:center">
+        <div :class="{'tab-label':true,'is-sub':tab.isSub}">
           <el-icon v-if="tab.Icon"><component :is="tab.Icon"/></el-icon>
           <span style="padding-left:4px">{{tab.label}}</span>
         </div>
@@ -76,7 +76,19 @@ export default Vue.defineComponent({
   },
   methods: {
     removeTab(name) {
-      console.log({ name })
+      const index = _.findIndex(this.tabs, (tab) => tab.value === name)
+      if (index > -1) {
+        const target = this.tabs[index]
+        if (this.cached[target.name] == null) {
+          this.cached[target.name] = target
+        }
+        const nextTab = this.tabs[index + 1] || this.tabs[index - 1]
+        if (nextTab) {
+          this.activeName = nextTab.value
+        }
+
+        this.tabs = this.tabs.filter((tab) => tab.value !== name)
+      }
     },
     // 添加子分类标签
     addTab(name) {
