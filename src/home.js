@@ -27,6 +27,6 @@ export default function home(handleNotHome = noop) {
   setFooter()
 
   // 收集所有标题(id包含 'outline-container-' 且以它开头的 div)
-  $(`<div id="vue-toc"></div>`).insertAfter('h1.title')
+  $(`<div id="vue-toc"></div>`).insertAfter('#start')
   return config.isHome
 }

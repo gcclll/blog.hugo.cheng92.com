@@ -17,7 +17,7 @@ const GlMenuItem = Vue.defineComponent({
       </div>
       <div class="tags">
         <el-tag  size="small" v-for="cat in page.category" :key="cat" type="success" @click="$emit('addTab', cat)">{{cat}}</el-tag>
-        <el-tag size="small" v-for="tag in page.tags" :key="tag">{{tag}}</el-tag>
+        <el-tag size="small" v-for="tag in page.tags" :key="tag" @click="$emit('addTab', 'TAG:'+tag, true)">{{tag}}</el-tag>
       </div>
     </el-menu-item>`,
   emits: ['addTab'],
@@ -91,23 +91,30 @@ export default Vue.defineComponent({
       }
     },
     // 添加子分类标签
-    addTab(name) {
+    addTab(maybeTag, isTag) {
+      let [name, tagValue] = maybeTag.split(':')
+      if (tagValue) {
+        name = tagValue
+      }
+
       const existed = _.find(this.tabs, (tab) => tab.value === name)
       if (existed == null) {
-        const cached = this.cached[name]
+        const cached = this.cached[maybeTag]
         if (cached) {
           this.tabs.push(cached)
         } else {
+          const valueName = isTag ? 'tags' : 'category'
           // 大分类
-          const category =
-            _.find(this.tabs, (tab) => tab.value === 'category') || {}
+          const target =
+            _.find(this.tabs, (tab) => tab.value === valueName) || {}
           this.tabs.push({
-            label: name.toUpperCase(),
+            label: maybeTag.toUpperCase(),
             value: name,
             Icon: config.Icons[name],
             Close: config.Icons.Close,
+            isTag,
             isSub: true, // 标识分子分类
-            list: { [name]: category.list[name] || [] }
+            list: { [name]: target.list[name] || [] }
           })
         }
       }
