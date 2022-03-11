@@ -4,19 +4,12 @@ import SearchItem from '../components/SearchItem'
 import SearchSuffix from '../components/SearchSuffix'
 import HomeToc from '../components/HomeToc'
 import { cached } from '../cache'
-import { filterByTitle, filterList } from '../utils'
+import { filterList } from '../utils'
 import config from '../config'
 
 export default function loadSearchApp() {
-  const pages = _.cloneDeep(cached.pages)
   const current = _.cloneDeep(cached.current)
-  const pageValues = _.flatten(_.values(pages))
-    .sort((a, b) => (a.title < b.title ? -1 : 1))
-    .map((item) => ({
-      ...item,
-      value: item.title,
-      link: item.href
-    }))
+
   Vue.createApp({
     template: `
         <el-input
@@ -38,7 +31,7 @@ export default function loadSearchApp() {
           </template>
           <template #suffix><search-suffix /></template>
         </el-autocomplete>
-        <home-toc v-if="isHome" :list-type="listType" :list-data="pages"/>
+        <home-toc v-if="isHome" :search-text="search" @change-tab="search=''"/>
         <div id="search"><search/></div>`,
 
     components: {
@@ -50,8 +43,7 @@ export default function loadSearchApp() {
     data() {
       return {
         search: '',
-        isHome: config.isHome,
-        listType: config.enum.TYPE_ARCHIVES
+        isHome: config.isHome
       }
     },
     methods: {
@@ -71,12 +63,6 @@ export default function loadSearchApp() {
           $(this).attr('aria-selected', e.type === 'mouseenter')
         }
       )
-    },
-    unmounted() {},
-    computed: {
-      pages() {
-        return filterByTitle(this.search, pages)
-      }
     }
   })
     .use(ElementPlus)

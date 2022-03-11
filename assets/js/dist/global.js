@@ -203,11 +203,17 @@
     },
     searchTmpl: "<div id=\"search\">Loading...</div>",
     isHome: /home\.html$/.test(location.pathname),
-    "enum": {
-      TYPE_ARCHIVES: '1',
-      TYPE_CATEGORY: '2',
-      TYPE_TAG: '3'
-    }
+    "enum": {},
+    tabs: [{
+      label: '时间戳',
+      value: 'archives'
+    }, {
+      label: '分类',
+      value: 'category'
+    }, {
+      label: '标签',
+      value: 'tags'
+    }]
   };
 
   /** jsx?|tsx? file header */
@@ -242,7 +248,7 @@
 
   // 包含页面创建时间，用来创建主页的 TOC
 
-  var pages = formatPages();
+  var pages$1 = formatPages();
   var filename = location.pathname.replace(/.*\//g, '');
   var loadedMap = {};
   var path = '/assets/js/stats';
@@ -317,7 +323,7 @@
 
 
   var cached = {
-    pages: pages,
+    pages: pages$1,
     loadPageStats: loadPageStats,
     filename: filename,
     current: [],
@@ -432,66 +438,65 @@
     template: "<div class=\"search-suffix\"><img class=\"command-k\" src=\"/assets/img/command.svg\"/><span class=\"command-k\">K</span></div>"
   });
 
-  var HomeToc = Vue.defineComponent({
-    template: "\n<el-menu active-text-color=\"#c05b4d\" class=\"el-head-menu\"  mode=\"horizontal\" :default-active=\"activeIndex\" @select=\"handleSelect\">\n  <el-menu-item index=\"1\">\u65F6\u95F4\u6233</el-menu-item>\n  <el-menu-item index=\"2\">\u5206\u7C7B</el-menu-item>\n  <el-menu-item index=\"3\">\u6807\u7B7E</el-menu-item>\n</el-menu>\n  <el-menu class=\"el-toc-menu\">\n    <el-menu-item-group v-for=\"(list, key) in menuList\" :key=\"key\" :title=\"key\">\n      <el-menu-item v-for=\"(page, i) in list\" :index=\"i+''\" :key=\"page.timestamp\">\n      <div class=\"date-title\">\n        <span class=\"date\" v-if=\"activeIndex===types.TYPE_ARCHIVES\">{{page.date}}</span>\n        <span class=\"title\">\n          <a :href=\"page.url\" v-html=\"page.title\"></a>\n        </span>\n      </div>\n      <div class=\"tags\">\n        <el-tag size=\"small\" v-for=\"cat in page.category\" :key=\"cat\" type=\"success\">{{cat}}</el-tag>\n        <el-tag size=\"small\" v-for=\"tag in page.tags\" :key=\"tag\">{{tag}}</el-tag>\n      </div>\n      </el-menu-item>\n    </el-menu-item-group>\n  </el-menu>",
-    props: {
-      listData: {
-        type: Object,
-        "default": function _default() {}
-      },
-      listType: {
-        type: String,
-        "default": config["enum"].TYPE_ARCHIVES // category
+  var pages = _.cloneDeep(cached.pages);
 
+  var HomeToc = Vue.defineComponent({
+    template: "\n  <el-tabs v-model=\"activeName\" @tab-click=\"$emit('change-tab')\">\n    <el-tab-pane v-for=\"tab in tabs\" :key=\"tab.value\" :label=\"tab.label\" :name=\"tab.value\"/>\n  </el-tabs>\n  <el-menu class=\"el-toc-menu\">\n    <el-menu-item-group v-for=\"(list, key) in pages\" :key=\"key\" :title=\"key\">\n      <el-menu-item v-for=\"(page, i) in list\" :index=\"i+''\" :key=\"page.timestamp\">\n      <div class=\"date-title\">\n        <span class=\"date\">{{page.date}}</span>\n        <span class=\"title\">\n          <a :href=\"page.url\" v-html=\"page.title\"></a>\n        </span>\n      </div>\n      <div class=\"tags\">\n        <el-tag size=\"small\" v-for=\"cat in page.category\" :key=\"cat\" type=\"success\">{{cat}}</el-tag>\n        <el-tag size=\"small\" v-for=\"tag in page.tags\" :key=\"tag\">{{tag}}</el-tag>\n      </div>\n      </el-menu-item>\n    </el-menu-item-group>\n  </el-menu>",
+    emits: ['change-tab'],
+    props: {
+      searchText: {
+        type: String,
+        "default": ''
       }
     },
+    data: function data() {
+      return {
+        tabs: config.tabs,
+        category: {},
+        tags: {},
+        archives: {},
+        activeName: 'archives'
+      };
+    },
     computed: {
-      menuList: function menuList() {
-        switch (this.activeIndex) {
-          case config["enum"].TYPE_ARCHIVES:
-            return this.listData;
+      pages: function pages() {
+        var _this = this;
 
-          case config["enum"].TYPE_CATEGORY:
-            return this.archives;
+        var tab = _.find(this.tabs, function (tab) {
+          return tab.value === _this.activeName;
+        });
 
-          case config["enum"].TYPE_TAG:
-            return this.tagPosts;
-        }
-
-        return [];
+        var posts = this[tab.value];
+        console.log(tab, posts, '11111');
+        return posts ? filterByTitle(this.searchText, posts) : [];
       }
     },
     methods: {
-      handleSelect: function handleSelect(key, keyPath) {
-        this.activeIndex = key;
-        console.log({
-          key: key,
-          keyPath: keyPath
-        });
-      },
-      addArchive: function addArchive(cat, post) {
+      addCategory: function addCategory(cat, post) {
         if (!post) return;
 
-        if (this.archives[cat] == null) {
-          this.archives[cat] = [];
+        if (this.category[cat] == null) {
+          this.category[cat] = [];
         }
 
-        this.archives[cat].push(_objectSpread2({}, post));
+        this.category[cat].push(_objectSpread2({}, post));
       },
       addTagPost: function addTagPost(tag, post) {
         if (!post) return;
 
-        if (this.tagPosts[tag] == null) {
-          this.tagPosts[tag] = [];
+        if (this.tags[tag] == null) {
+          this.tags[tag] = [];
         }
 
-        this.tagPosts[tag].push(_objectSpread2({}, post));
+        this.tags[tag].push(_objectSpread2({}, post));
       }
     },
     beforeMount: function beforeMount() {
-      var _this = this;
+      var _this2 = this;
 
-      var list = _.flatten(_toConsumableArray(_.values(this.listData)));
+      this.archives = _.cloneDeep(pages);
+
+      var list = _.flatten(_toConsumableArray(_.values(this.archives)));
 
       list.forEach(function (item) {
         var _ref = item || {},
@@ -501,39 +506,21 @@
             tags = _ref$tags === void 0 ? [] : _ref$tags;
 
         category.forEach(function (cat) {
-          return _this.addArchive(cat, item);
+          return _this2.addCategory(cat, item);
         });
         tags.forEach(function (tag) {
-          return _this.addTagPost(tag, item);
+          return _this2.addTagPost(tag, item);
         });
       });
-    },
-    data: function data() {
-      return {
-        types: config["enum"],
-        activeIndex: config["enum"].TYPE_ARCHIVES,
-        archives: {},
-        tagPosts: {}
-      };
     }
   });
 
+  /** jsx?|tsx? file header */
   function loadSearchApp() {
-    var _pages = _.cloneDeep(cached.pages);
-
     var current = _.cloneDeep(cached.current);
 
-    _.flatten(_.values(_pages)).sort(function (a, b) {
-      return a.title < b.title ? -1 : 1;
-    }).map(function (item) {
-      return _objectSpread2(_objectSpread2({}, item), {}, {
-        value: item.title,
-        link: item.href
-      });
-    });
-
     Vue.createApp({
-      template: "\n        <el-input\n          v-if=\"isHome\"\n          class=\"inline-input search-input\"\n          v-model=\"search\" placeholder=\"\u641C\u7D22\">\n          <template #suffix><search-suffix /></template>\n        </el-input>\n        <el-autocomplete\n          v-else\n          v-model=\"search\"\n          :fetch-suggestions=\"querySearch\"\n          class=\"inline-input search-input\"\n          placeholder=\"\u641C\u7D22\"\n          @select=\"handleSelect\"\n        >\n          <template #default=\"{item}\">\n            <search-item :item=\"item\"/>\n          </template>\n          <template #suffix><search-suffix /></template>\n        </el-autocomplete>\n        <home-toc v-if=\"isHome\" :list-type=\"listType\" :list-data=\"pages\"/>\n        <div id=\"search\"><search/></div>",
+      template: "\n        <el-input\n          v-if=\"isHome\"\n          class=\"inline-input search-input\"\n          v-model=\"search\" placeholder=\"\u641C\u7D22\">\n          <template #suffix><search-suffix /></template>\n        </el-input>\n        <el-autocomplete\n          v-else\n          v-model=\"search\"\n          :fetch-suggestions=\"querySearch\"\n          class=\"inline-input search-input\"\n          placeholder=\"\u641C\u7D22\"\n          @select=\"handleSelect\"\n        >\n          <template #default=\"{item}\">\n            <search-item :item=\"item\"/>\n          </template>\n          <template #suffix><search-suffix /></template>\n        </el-autocomplete>\n        <home-toc v-if=\"isHome\" :search-text=\"search\" @change-tab=\"search=''\"/>\n        <div id=\"search\"><search/></div>",
       components: {
         Search: Search,
         SearchSuffix: SearchSuffix,
@@ -543,8 +530,7 @@
       data: function data() {
         return {
           search: '',
-          isHome: config.isHome,
-          listType: config["enum"].TYPE_ARCHIVES
+          isHome: config.isHome
         };
       },
       methods: {
@@ -561,12 +547,6 @@
         $('.el-scrollbar__view.el-autocomplete-suggestion__list').on('mouseenter mouseleave', 'li', function (e) {
           $(this).attr('aria-selected', e.type === 'mouseenter');
         });
-      },
-      unmounted: function unmounted() {},
-      computed: {
-        pages: function pages() {
-          return filterByTitle(this.search, _pages);
-        }
       }
     }).use(ElementPlus).mount(config.isHome ? '#vue-toc' : '#search');
   }

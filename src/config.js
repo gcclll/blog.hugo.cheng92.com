@@ -1,15 +1,18 @@
 /** jsx?|tsx? file header */
 
-export default {
+const config = {
   tocSelector: 'div[id^="outline-container-"]',
   ElementPlusOptions: {
     // size: 'small'
   },
   searchTmpl: `<div id="search">Loading...</div>`,
   isHome: /home\.html$/.test(location.pathname),
-  enum: {
-    TYPE_ARCHIVES: '1',
-    TYPE_CATEGORY: '2',
-    TYPE_TAG: '3'
-  }
+  enum: {},
+  tabs: [
+    { label: '时间戳', value: 'archives' },
+    { label: '分类', value: 'category' },
+    { label: '标签', value: 'tags' }
+  ]
 }
+
+export default config
