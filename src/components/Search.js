@@ -12,8 +12,8 @@ export default Vue.defineComponent({
       <el-input autofocus v-model="search" placeholder="请输入搜索内容(暂只支持标题、链接、锚点)">
         <template #prepend>
           <el-select v-model="scope" placeholder="Select" style="width:80px">
-            <el-option label="本文" value="1"/>
-            <el-option label="全站" value="2"/>
+            <el-option label="全站" value="1"/>
+            <el-option label="本文" value="2"/>
           </el-select>
         </template>
       </el-input>
@@ -34,7 +34,7 @@ export default Vue.defineComponent({
       search: '', // 搜索关键词
       dialogVisible: false,
       loading: true,
-      scope: WHOLE, // 1 - 本文, 2 - 全站
+      scope: WHOLE, // 2 - 本文, 1 - 全站
       stats: {},
       pages: {}
     })

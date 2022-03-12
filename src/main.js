@@ -1,3 +1,4 @@
+import './scroll2Top'
 import { addValine } from './valine'
 import home from './home'
 import { cached } from './cache'

@@ -18,6 +18,9 @@
 #content .done.DONE {
   background-color: #ababab;
 }
+#content li.on > code + p {
+  display: inline;
+}
 
 #vue-toc li {
   margin-left: 0;
@@ -252,6 +255,14 @@ blockquote {
 }
 .el-toc-menu .tags .el-tag {
   margin-right: 0.5em;
+}
+
+.gl-tag-card {
+  margin-top: 3rem;
+}
+.gl-tag-card .el-badge {
+  margin: 0 15px 15px 0;
+  cursor: pointer;
 }
 
 @media screen and (max-width: 768px) {

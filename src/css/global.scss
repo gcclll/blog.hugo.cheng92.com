@@ -23,6 +23,10 @@
       background-color: #ababab;
     }
   }
+
+  li.on > code + p {
+    display: inline;
+  }
 }
 
 #vue-toc {
@@ -281,6 +285,14 @@ blockquote {
     .el-tag {
       margin-right: 0.5em;
     }
+  }
+}
+
+.gl-tag-card {
+  margin-top: 3rem;
+  .el-badge {
+    margin: 0 15px 15px 0;
+    cursor: pointer;
   }
 }
 

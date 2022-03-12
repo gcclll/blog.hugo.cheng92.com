@@ -49,6 +49,25 @@ export default Vue.defineComponent({
       </el-menu>
     </el-tab-pane>
   </el-tabs>
+  <el-card class="gl-tag-card">
+    <template v-for="( n, name ) in tags.c">
+      <el-badge :value="n">
+        <el-tag
+          size="small"
+          type="success"
+          @click="addTab(name)"
+        >{{name}}</el-tag>
+      </el-badge>
+    </template>
+    <template v-for="( n, name ) in tags.t">
+      <el-badge :value="n">
+        <el-tag
+          size="small"
+          @click="addTab('TAG:'+name, true)"
+        >{{name}}</el-tag>
+      </el-badge>
+    </template>
+  </el-card>
   `,
   components: {
     GlMenuItem
@@ -64,7 +83,11 @@ export default Vue.defineComponent({
     return {
       tabs: config.tabs,
       activeName: 'archives',
-      cached: {}
+      cached: {},
+      tags: {
+        c: {}, // cat
+        t: {} // tags
+      } // 所有 tag
     }
   },
   computed: {
@@ -119,10 +142,38 @@ export default Vue.defineComponent({
         }
       }
       this.activeName = name
+
+      if (window.scrolltotop) {
+        window.scrolltotop.scrollup()
+      }
     }
   },
   beforeMount() {
     const list = _.flatten([..._.values(pages)])
+
+    const t = this.tags.t
+    const c = this.tags.c
+
+    list.forEach((item) => {
+      const { tags = [], category = [] } = item
+
+      tags.forEach((tag) => {
+        if (t[tag] == null) {
+          t[tag] = 1
+        } else {
+          t[tag]++
+        }
+      })
+
+      category.forEach((cat) => {
+        if (c[cat] == null) {
+          c[cat] = 1
+        } else {
+          c[cat]++
+        }
+      })
+    })
+    console.log(this.tags, 1000)
     this.tabs.forEach((tab) => {
       switch (tab.value) {
         case 'archives':

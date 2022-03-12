@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <!-- 2022-03-10 Thu 11:36 -->
+  <!-- 2022-03-12 Sat 15:22 -->
   <meta charset="utf-8">
   <meta name="viewport" content=
   "width=device-width, initial-scale=1">
@@ -192,42 +192,31 @@
     { background-color: #ffff00; color: #000000; font-weight: bold; }
   .org-svg { width: 90%; }
   </style>
-  <link rel="stylesheet" href=
-  "https://cdn.jsdelivr.net/npm/bootstrap@3.4.1/dist/css/bootstrap.min.css"
-  integrity=
-  "sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu"
-  crossorigin="anonymous">
-  <link rel="stylesheet" href=
-  "https://cdn.jsdelivr.net/npm/bootstrap@3.4.1/dist/css/bootstrap-theme.min.css"
-  integrity=
-  "sha384-6pzBo3FDv/PJ8r2KRkGHifhEocL+1X2rVCTTkUfGk7/0pbek5mMa1upzvWbrUbOZ"
-  crossorigin="anonymous">
   <link rel="stylesheet" type="text/css" href=
-  "https://fniessen.github.io/org-html-themes/src/readtheorg_theme/css/htmlize.css">
+  "/assets/css/htmlize.css">
   <link rel="stylesheet" type="text/css" href=
-  "https://fniessen.github.io/org-html-themes/src/readtheorg_theme/css/readtheorg.css">
+  "/assets/css/readtheorg.css">
   <link rel="stylesheet" type="text/css" href=
   "/assets/css/global.css">
-  <link rel="stylesheet" href=
-  "//unpkg.com/element-plus/dist/index.css">
-  <script src=
-  "https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
-  <script src=
-  "https://cdn.jsdelivr.net/npm/bootstrap@3.4.1/dist/js/bootstrap.min.js"
-  integrity=
-  "sha384-aJ21OjlMXNL5UyIl/XNwTMqvzeRMZH2w8c5cRVpzpU8Y5bApTppSuUkhZXN0VxHd"
-  crossorigin="anonymous"></script>
-  <script src=
-  "https://cdn.jsdelivr.net/npm/lodash@4.17.21/lodash.min.js"></script>
-  <script src=
-  "https://cdnjs.cloudflare.com/ajax/libs/mobile-detect/1.4.5/mobile-detect.min.js"></script>
-  <script src='//unpkg.com/valine/dist/Valine.min.js'></script>
-  <script src="//unpkg.com/vue@next"></script>
-  <script src="//unpkg.com/element-plus"></script>
+  <link rel="stylesheet" type="text/css" href=
+  "/assets/css/element-plus.css">
   <script type="text/javascript" src=
-  "https://fniessen.github.io/org-html-themes/src/lib/js/jquery.stickytableheaders.min.js"></script>
+  "/assets/js/jquery.min.js"></script>
   <script type="text/javascript" src=
-  "https://fniessen.github.io/org-html-themes/src/readtheorg_theme/js/readtheorg.js"></script>
+  "/assets/js/jquery.stickytableheaders.min.js"></script>
+  <script type="text/javascript" src=
+  "/assets/js/bootstrap.min.js"></script>
+  <script type="text/javascript" src=
+  "/assets/js/lodash.min.js"></script>
+  <script type="text/javascript" src=
+  "/assets/js/mobile-detect.min.js"></script>
+  <script type="text/javascript" src=
+  "/assets/js/Valine.min.js"></script>
+  <script type="text/javascript" src="/assets/js/vue.js"></script>
+  <script type="text/javascript" src=
+  "/assets/js/element-plus.js"></script>
+  <script type="text/javascript" src=
+  "/assets/js/readtheorg.js"></script>
   <script type="text/javascript" src=
   "/assets/js/dist/stats.js"></script>
   <script type="text/javascript" src=
@@ -287,13 +276,177 @@
 <body>
   <div id="content" class="content">
     <h1 class="title">Vue ChangeLog</h1>
+    <div id="table-of-contents" role="doc-toc">
+      <h2>Table of Contents</h2>
+      <div id="text-table-of-contents" role="doc-toc">
+        <ul>
+          <li>
+            <a href="#orgf28808f">1. blue: 3.0.5 ~ 3.0.8</a>
+            <ul>
+              <li>
+                <a href="#org1f818ef">1.1. <span class=
+                "done DONE">DONE</span> <b>Bug Fixes</b>
+                <code>[2/2]</code></a>
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </div>
+    </div>
     <p><a href="/"><img src=
-    "https://img.shields.io/badge/GCCLL-Homepage-green?logo=gnu-emacs"></a>
-    …</p>
+    "https://img.shields.io/badge/GCCLL-Homepage-green?logo=gnu-emacs"></a></p>
+    <div style=
+    "padding: 1em; background-color: #CCFFCC;border-radius: 15px; font-size: 0.9em; box-shadow: 0.05em 0.1em 5px 0.01em #00000057;">
+      <h3>说明</h3>
+      <p><a href=
+      "https://github.com/vuejs/vue-next/blob/master/CHANGELOG.md">https://github.com/vuejs/vue-next/blob/master/CHANGELOG.md</a></p>
+      <p>本文只记录 <abbr class="tooltip" title=
+      "The Progressive JavaScript Framework !&lt;br&gt;&lt;br&gt;An approachable, performant and versatile framework for building web user interfaces.&lt;br&gt;&lt;br&gt;&lt;strong&gt;Installation&lt;/strong&gt;:&lt;br&gt;&lt;br&gt;=$ npm init vue@latest=&lt;br&gt;&lt;br&gt;&lt;strong&gt;Without Build Tools&lt;/strong&gt;:">
+      Vue3</abbr> 的一些重要更新点或重要的 BUG 修复，目的是为了对 <abbr class="tooltip"
+      title=
+      "The Progressive JavaScript Framework !&lt;br&gt;&lt;br&gt;An approachable, performant and versatile framework for building web user interfaces.&lt;br&gt;&lt;br&gt;&lt;strong&gt;Installation&lt;/strong&gt;:&lt;br&gt;&lt;br&gt;=$ npm init vue@latest=&lt;br&gt;&lt;br&gt;&lt;strong&gt;Without Build Tools&lt;/strong&gt;:">
+      Vue3</abbr> 的 持续关注，本人主要致力于 <abbr class="tooltip" title=
+      "The Progressive JavaScript Framework !&lt;br&gt;&lt;br&gt;An approachable, performant and versatile framework for building web user interfaces.&lt;br&gt;&lt;br&gt;&lt;strong&gt;Installation&lt;/strong&gt;:&lt;br&gt;&lt;br&gt;=$ npm init vue@latest=&lt;br&gt;&lt;br&gt;&lt;strong&gt;Without Build Tools&lt;/strong&gt;:">
+      Vue3</abbr> 技术栈的开发。</p>
+    </div><br>
+    <br>
+    <div id="outline-container-orgf28808f" class="outline-2">
+      <h2 id="orgf28808f"><span class="section-number-2">1.</span>
+      <span style="color:blue;">3.0.5 ~ 3.0.8</span></h2>
+      <div class="outline-text-2" id="text-1"></div>
+      <div id="outline-container-org1f818ef" class="outline-3">
+        <h3 id="org1f818ef"><span class=
+        "section-number-3">1.1.</span> <span class=
+        "done DONE">DONE</span> <b>Bug Fixes</b>
+        <code>[2/2]</code></h3>
+        <div class="outline-text-3" id="text-1-1">
+          <ul class="org-ul">
+            <li class="on">
+              <code>[X]</code>
+              <p>compiler-sfc: support transforming asset urls with
+              full base url. (<a href=
+              "https://github.com/vuejs/vue-next/issues/2477">#2477</a>)
+              (<a href=
+              "https://github.com/vuejs/vue-next/commit/db786b1afe41c26611a215e6d6599d50312b9c2f">db786b1</a>)</p>
+              <p>针对相对路径而言，当提供了 base 选项的时候，会使用这个值去拼接，如：</p>
+              <p><code>{ transformAssetUrls: { base:
+              'https://www.cheng92.com' } }</code></p>
+              <p><code>&lt;img src="./vue/img/test.png"
+              /&gt;</code> 会被编译成：</p>
+              <p><code>createVNode('img', { src:
+              'https://www.cheng92.com/vue/img/test.png'
+              })</code></p>
+            </li>
+            <li class="on">
+              <code>[X]</code>
+              <p>skip patchBlockChildren if n1.dynamicChildren is
+              null (<a href=
+              "https://github.com/vuejs/vue-next/issues/2717">#2717</a>)
+              (<a href=
+              "https://github.com/vuejs/vue-next/commit/c59897c7b0dbd82b5bbf3fbca945c0639ac37fb8">c59897c</a>),
+              closes <a href=
+              "https://github.com/vuejs/vue-next/issues/2715">#2715</a>
+              <a href=
+              "https://github.com/vuejs/vue-next/issues/2485">#2485</a></p>
+              <div id="IR8Cl"></div>
+              <script src="/assets/js/vue/tests/IR8Cl.js"></script>
+              <p>这个问题原因是，一开始 HelloWorld 的 dynamicChildren 是
+              null。</p>
+              <p>当点击 ADD 按钮的时候增加了一项数据，会进入 mountChildren -&gt;
+              patchBlockChildren</p>
+              <div class="org-src-container">
+                <pre class="src src-typescript">  <span style=
+                "color: #51afef;">const</span> <span style=
+                "color: #dcaeea;">patchBlockChildren</span>: <span style=
+                "color: #ECBE7B;">PatchBlockChildrenFn</span> = <span style=
+                "color: #51afef;">(</span>
+    oldChildren,
+    newChildren,
+    fallbackContainer,
+    parentComponent,
+    parentSuspense,
+    isSVG,
+    slotScopeIds
+  <span style="color: #51afef;">)</span> <span style=
+"color: #51afef;">=&gt;</span> <span style=
+"color: #51afef;">{</span>
+    <span style="color: #51afef;">for</span> <span style=
+"color: #c678dd;">(</span><span style=
+"color: #51afef;">let</span> <span style=
+"color: #dcaeea;">i</span> = <span style=
+"color: #da8548; font-weight: bold;">0</span>; i &lt; <span style=
+"color: #ECBE7B;">newChildren</span>.<span style=
+"color: #ECBE7B;">length</span>; <span style=
+"color: #ECBE7B;">i</span>++<span style=
+"color: #c678dd;">)</span> <span style="color: #c678dd;">{</span>
+      <span style="color: #51afef;">const</span> <span style=
+"color: #dcaeea;">oldVNode</span> = oldChildren<span style=
+"color: #98be65;">[</span>i<span style=
+"color: #98be65;">]</span> <span style=
+"color: #5B6268;">// </span><span style=
+"color: #5B6268;">dynamicChildren</span>
+      <span style="color: #51afef;">const</span> <span style=
+"color: #dcaeea;">newVNode</span> = newChildren<span style=
+"color: #98be65;">[</span>i<span style="color: #98be65;">]</span>
+
+      <span style="color: #5B6268;">// </span><span style=
+"color: #5B6268;">...</span>
+      <span style="color: #c678dd;">}</span>
+    <span style="color: #51afef;">}</span>
+</pre>
+              </div>
+              <p>而 <code>dynamicChildren</code> 在初始化的时候是个
+              <code>null</code> 值, 一开始就访问了
+              <code>dynamicChildren[i]</code> 所以导致报错。</p>
+              <p>修复代码(<a href=
+              "https://github.com/vuejs/vue-next/commit/c59897c7b0dbd82b5bbf3fbca945c0639ac37fb8">c59897c</a>)，加个判断条件：</p>
+              <div class="org-src-container">
+                <pre class="src src-diff"><span style=
+                "color: #a4aab6;">  if (</span>
+<span style=
+"color: #a4aab6;">        patchFlag &gt; 0 &amp;&</span>
+<span style=
+"color: #a4aab6;">        patchFlag & PatchFlags.STABLE_FRAGMENT &amp;&</span>
+<span style=
+"color: #aa2222; background-color: #23272e;">-</span><span style=
+"color: #ff6c6b; background-color: #23272e;">        dynamicChildren &amp;&</span>
+<span style=
+"color: #22aa22; background-color: #21242b;">+</span><span style=
+"color: #98be65; background-color: #21242b;">        dynamicChildren &amp;&</span>
+<span style=
+"color: #22aa22; background-color: #21242b;">+</span><span style=
+"color: #98be65; background-color: #21242b;">        n1.dynamicChildren</span>
+<span style="color: #a4aab6;">      ) {</span>
+<span style=
+"color: #a4aab6;">        // a stable fragment (template root or &lt;template v-for&gt;) doesn't need to</span>
+<span style=
+"color: #a4aab6;">        // patch children order, but it may contain dynamicChildren.</span>
+<span style="color: #a4aab6;">        patchBlockChildren(</span>
+<span style=
+"color: #aa2222; background-color: #23272e;">-</span><span style=
+"color: #ff6c6b; background-color: #23272e;">         n1.dynamicChildren!,</span>
+<span style=
+"color: #22aa22; background-color: #21242b;">+</span><span style=
+"color: #98be65; background-color: #21242b;">          n1.dynamicChildren,</span>
+<span style="color: #a4aab6;">          dynamicChildren,</span>
+<span style="color: #a4aab6;">          container,</span>
+<span style="color: #a4aab6;">          parentComponent,</span>
+<span style="color: #a4aab6;">          parentSuspense,</span>
+<span style="color: #a4aab6;">          isSVG,</span>
+<span style="color: #a4aab6;">          slotScopeIds</span>
+<span style="color: #a4aab6;">        )</span>
+
+</pre>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
   </div>
   <div id="postamble" class="status">
     <p class="author">Author: Zhicheng Lee</p>
-    <p class="date">Created: 2022-03-10 Thu 11:36</p>
+    <p class="date">Created: 2022-03-12 Sat 15:22</p>
   </div>
 </body>
 </html>
