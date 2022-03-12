@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <!-- 2022-03-12 Sat 15:22 -->
+  <!-- 2022-03-12 Sat 19:18 -->
   <meta charset="utf-8">
   <meta name="viewport" content=
   "width=device-width, initial-scale=1">
@@ -281,10 +281,20 @@
       <div id="text-table-of-contents" role="doc-toc">
         <ul>
           <li>
-            <a href="#orgf28808f">1. blue: 3.0.5 ~ 3.0.8</a>
+            <a href="#org96e9ec9">1. blue: 3.0.6</a>
             <ul>
               <li>
-                <a href="#org1f818ef">1.1. <span class=
+                <a href="#orgcc44958">1.1. <span class=
+                "done CANCELLED">CANCELLED</span> Bug Fixes
+                <code>[1/1]</code></a>
+              </li>
+            </ul>
+          </li>
+          <li>
+            <a href="#org41f3693">2. blue: 3.0.5</a>
+            <ul>
+              <li>
+                <a href="#orge72bf9d">2.1. <span class=
                 "done DONE">DONE</span> <b>Bug Fixes</b>
                 <code>[2/2]</code></a>
               </li>
@@ -310,16 +320,143 @@
       Vue3</abbr> 技术栈的开发。</p>
     </div><br>
     <br>
-    <div id="outline-container-orgf28808f" class="outline-2">
-      <h2 id="orgf28808f"><span class="section-number-2">1.</span>
-      <span style="color:blue;">3.0.5 ~ 3.0.8</span></h2>
-      <div class="outline-text-2" id="text-1"></div>
-      <div id="outline-container-org1f818ef" class="outline-3">
-        <h3 id="org1f818ef"><span class=
+    <div id="outline-container-org96e9ec9" class="outline-2">
+      <h2 id="org96e9ec9"><span class="section-number-2">1.</span>
+      <span style="color:blue;">3.0.6</span></h2>
+      <div class="outline-text-2" id="text-1">
+        <p>此次更新重点内容(值得关注的点)：</p>
+        <ol class="org-ol">
+          <li>
+            <b><span style="color:green;">ADD</span></b>:
+            <code>BigInt</code> 类型和 <i><abbr class="tooltip" title=
+            "Single File Component, 单文件组件，其中包含了 script , style , template, 三种标签&lt;br&gt;为一体的文件， vue 框架所使用的及推崇的一种新的开发方式。">
+            SFC</abbr></i> 支持 <a class="anchor" aria-hidden="true"
+            id="add-bigint" href="#add-bigint"><svg xmlns=
+            "http://www.w3.org/2000/svg" viewbox="0 0 16 16" width=
+            "16" height="16">
+            <path fill-rule="evenodd" d=
+            "M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z">
+            </path></svg></a>
+          </li>
+          <li>
+            <b><span style="color:red;">FIX</span></b>: 修复
+            <code>class: ['foo', false, undefined, 'bar']</code>
+            被解析成 <code>&lt;div class="foo bar"/&gt;</code> 问题
+            <a class="anchor" aria-hidden="true" id=
+            "fix-array-class" href="#fix-array-class"><svg xmlns=
+            "http://www.w3.org/2000/svg" viewbox="0 0 16 16" width=
+            "16" height="16">
+            <path fill-rule="evenodd" d=
+            "M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z">
+            </path></svg></a> 。
+          </li>
+          <li>
+            <b><span style="color:red;">FIX</span></b>: 修复
+            <code>foo-bar</code> 事件名无法触发问题 <a class="anchor"
+            aria-hidden="true" id="fix-kebab-event-name" href=
+            "#fix-kebab-event-name"><svg xmlns=
+            "http://www.w3.org/2000/svg" viewbox="0 0 16 16" width=
+            "16" height="16">
+            <path fill-rule="evenodd" d=
+            "M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z">
+            </path></svg></a> 。
+          </li>
+          <li>
+            <b><span style="color:red;">FIX</span></b>:
+            <code>this.$watch(fn, callback)</code> 的
+            <code>fn</code> 第一个参数是 <code>instance.proxy</code>
+            <a class="anchor" aria-hidden="true" id="instanceWatch"
+            href="#instanceWatch"><svg xmlns=
+            "http://www.w3.org/2000/svg" viewbox="0 0 16 16" width=
+            "16" height="16">
+            <path fill-rule="evenodd" d=
+            "M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z">
+            </path></svg></a>
+          </li>
+        </ol>
+      </div>
+      <div id="outline-container-orgcc44958" class="outline-3">
+        <h3 id="orgcc44958"><span class=
         "section-number-3">1.1.</span> <span class=
+        "done CANCELLED">CANCELLED</span> Bug Fixes
+        <code>[1/1]</code></h3>
+        <div class="outline-text-3" id="text-1-1">
+          <ul class="org-ul">
+            <li class="on">
+              <code>[X]</code>
+              <p>runtime-core: props type support BigInt (<a href=
+              "https://github.com/vuejs/vue-next/issues/2891">#2891</a>)
+              (<a href=
+              "https://github.com/vuejs/vue-next/commit/ffd52885453d1621e45dff645ff1101e74ea40b2">ffd5288</a>)
+              <span id="add-bigint"></span></p>
+              <p>修改代码：</p>
+              <div class="org-src-container">
+                <pre class="src src-diff"><span style=
+                "color: #a4aab6;">const isSimpleType = /*#__PURE__*/ makeMap(</span>
+<span style=
+"color: #aa2222; background-color: #23272e;">-</span><span style=
+"color: #ff6c6b; background-color: #23272e;">  'String,Number,Boolean,Function,Symbol'</span>
+<span style=
+"color: #22aa22; background-color: #21242b;">+</span><span style=
+"color: #98be65; background-color: #21242b;">  'String,Number,Boolean,Function,Symbol,BigInt'</span>
+)
+</pre>
+              </div>
+              <p>测试</p>
+              <div class="org-src-container">
+                <pre class="src src-js"><span style=
+                "color: #51afef;">const</span> <span style=
+                "color: #dcaeea;">url</span> = process.env.VNEXT_PKG_RC +<span style="color: #98be65;">'/../runtime-test/dist/runtime-test.cjs.js'</span>
+<span style="color: #51afef;">const</span> <span style=
+"color: #dcaeea;">value</span> = require(url.replace(<span style=
+"color: #98be65;">'stb-'</span>, <span style=
+"color: #98be65;">''</span>))
+<span style=
+"color: #51afef;">const</span> { nodeOps, render, h, serializeInner: s } = value
+
+<span style="color: #51afef;">const</span> <span style=
+"color: #dcaeea;">Comp</span> = {
+  props: { foo: BigInt },
+  render() {
+    <span style="color: #51afef;">return</span> h(<span style=
+"color: #98be65;">'div'</span>, [<span style=
+"color: #a9a1e1;">this</span>.foo])
+  }
+}
+
+<span style="color: #51afef;">const</span> <span style=
+"color: #dcaeea;">root</span> = nodeOps.createElement(<span style=
+"color: #98be65;">'div'</span>)
+render(h(Comp,  {
+  foo: BigInt(BigInt(<span style=
+"color: #da8548; font-weight: bold;">100000111</span>)) + BigInt(<span style="color: #da8548; font-weight: bold;">2000000000</span>) * BigInt(<span style="color: #da8548; font-weight: bold;">30000000</span>)
+}), root)
+
+console.log(s(root))
+<span style="color: #51afef;">return</span> <span style=
+"color: #da8548; font-weight: bold;">0</span>
+</pre>
+              </div>
+              <p>+RESULTS:</p>
+              <pre class="example">
+&lt;div&gt;60000000100000111&lt;/div&gt;
+0
+</pre>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div id="outline-container-org41f3693" class="outline-2">
+      <h2 id="org41f3693"><span class="section-number-2">2.</span>
+      <span style="color:blue;">3.0.5</span></h2>
+      <div class="outline-text-2" id="text-2"></div>
+      <div id="outline-container-orge72bf9d" class="outline-3">
+        <h3 id="orge72bf9d"><span class=
+        "section-number-3">2.1.</span> <span class=
         "done DONE">DONE</span> <b>Bug Fixes</b>
         <code>[2/2]</code></h3>
-        <div class="outline-text-3" id="text-1-1">
+        <div class="outline-text-3" id="text-2-1">
           <ul class="org-ul">
             <li class="on">
               <code>[X]</code>
@@ -446,7 +583,7 @@
   </div>
   <div id="postamble" class="status">
     <p class="author">Author: Zhicheng Lee</p>
-    <p class="date">Created: 2022-03-12 Sat 15:22</p>
+    <p class="date">Created: 2022-03-12 Sat 19:18</p>
   </div>
 </body>
 </html>
