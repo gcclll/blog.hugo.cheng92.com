@@ -79,11 +79,19 @@ function findIDLinks(root, filename) {
 function findALinks(root) {
   return root
     .querySelectorAll('a')
-    .map((a) => ({
-      text: trim(a.text),
-      url: a.attributes.href,
-      tag: a.tagName
-    }))
+    .map((a) => {
+      const item = {
+        text: trim(a.text),
+        url: a.attributes.href,
+        tag: a.tagName
+      }
+
+      if (item.text === ' ') {
+        item.text = item.url
+      }
+
+      return item
+    })
     .filter((a) => a.url && a.text)
 }
 
