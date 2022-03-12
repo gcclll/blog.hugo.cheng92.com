@@ -1,0 +1,38 @@
+@mixin gen-block($name, $bgcolor, $color, $border-color) {
+  .#{$name}-block {
+    padding: 0.1rem 1.5rem;
+    border-left-width: 0.5rem;
+    border-left-style: solid;
+    margin: 1rem 0;
+
+    background-color: $bgcolor;
+    border-color: $border-color;
+    color: $color;
+
+    strong {
+      color: $color;
+    }
+  }
+}
+@mixin colorful-text($color) {
+  .#{'' + $color}-block {
+    color: $color;
+  }
+}
+
+.post-content {
+  @include gen-block('warn', rgba(255, 229, 100, 0.3), #6b5900, #e7c000);
+  @include gen-block('danger', #ffe6e6, #4d0000, #c00);
+  @include gen-block('tip', #f3f5f7, #000000, #42b983);
+  @include gen-block('info', #f3f5f7, #000000, #42b983);
+  @include gen-block('success', #f3f5f7, #42b983, #42b983);
+  @include gen-block('comment', #f3f5f7, #6a737d, #e0e3e6);
+  .comment-block {
+    padding: 0.5rem;
+    p {
+      margin-bottom: 0;
+    }
+  }
+
+  @include colorful-text(red);
+}

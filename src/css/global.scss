@@ -1,3 +1,5 @@
+@import './block.scss';
+
 #table-of-contents {
   // display: none;
   width: 316px !important;
@@ -26,6 +28,16 @@
 
   li.on > code + p {
     display: inline;
+  }
+
+  li.on > code + p + p {
+    margin-top: 24px;
+  }
+
+  h3,
+  h4,
+  h5 {
+    text-indent: 0;
   }
 }
 

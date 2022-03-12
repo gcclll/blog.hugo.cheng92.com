@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <!-- 2022-03-12 Sat 19:13 -->
+  <!-- 2022-03-12 Sat 20:18 -->
   <meta charset="utf-8">
   <meta name="viewport" content=
   "width=device-width, initial-scale=1">
@@ -326,7 +326,7 @@
             Properties of <i>Heterogeneous</i> Relations</a>
           </li>
           <li>
-            <a href="#org1be1291">5. Programming Development
+            <a href="#orgc9bf56a">5. Programming Development
             Relations</a>
           </li>
         </ul>
@@ -568,7 +568,7 @@
           <p>An <i>expression</i> is either a ‘variable’ or a
           ‘function application’; i.e., the name of a function
           along with a number of existing expressions.</p>
-          <pre class="example" id="orge7f7579">
+          <pre class="example" id="org7ffa0a7">
  Expr ::= Constant    -- E.g., 1 or “apple”
       |  Variable    -- E.g., x or apple (no quotes!)
       |  Application -- E.g., f(x₁, x₂, …, xₙ)
@@ -807,7 +807,7 @@
           and their sum below the line, so too is that notation
           reused for inference rules: Premises are above the
           fraction’s bar and the conclusion is below.</p>
-          <pre class="example" id="orgede2edf">
+          <pre class="example" id="org616448d">
                                    12
 P₁, P₂, …, Pn                    +  7
 ---------------R     versues     ----
@@ -2007,8 +2007,8 @@ P₁, P₂, …, Pn                    +  7
         </div>
       </div>
     </div>
-    <div id="outline-container-org1be1291" class="outline-2">
-      <h2 id="org1be1291"><span class="section-number-2">5.</span>
+    <div id="outline-container-orgc9bf56a" class="outline-2">
+      <h2 id="orgc9bf56a"><span class="section-number-2">5.</span>
       Programming Development Relations</h2>
       <div class="outline-text-2" id="text-5">
         <p><abbr class="tooltip" title=
@@ -2033,12 +2033,92 @@ P₁, P₂, …, Pn                    +  7
           <p>Single File Component, 单文件组件，其中包含了 script , style ,
           template, 三种标签 为一体的文件， vue 框架所使用的及推崇的一种新的开发方式。</p>
         </div>
+        <p><abbr class="tooltip" title=
+        "Toggle the element's visibility based on the truthy-ness of the expression&lt;br&gt;value.&lt;br&gt;&lt;br&gt;Expects: &lt;strong&gt;any&lt;/strong&gt;&lt;br&gt;&lt;br&gt;Details&lt;br&gt;&lt;br&gt;&lt;strong&gt;v-show&lt;/strong&gt; works by setting the red:display CSS property via inline styles, and will try&lt;br&gt;to respect the initial display value when the element is visible. It also&lt;br&gt;triggers transitions when its condition changes.&lt;br&gt;&lt;br&gt;See also: Conditional Rendering - v-show (https://vuejs.org/guide/essentials/conditional.html#v-show)">
+        v-show</abbr></p>
+        <div style=
+        "padding: 1em; background-color: #CCFFFF;border-radius: 15px; font-size: 0.9em; box-shadow: 0.05em 0.1em 5px 0.01em #00000057;">
+          <h3>v-show</h3>
+          <p>Toggle the element’s visibility based on the
+          truthy-ness of the expression value.</p>
+          <p>Expects: <b>any</b></p>
+          <p>Details</p>
+          <p><b>v-show</b> works by setting the <span style=
+          "color:red;">display</span> CSS property via inline
+          styles, and will try to respect the initial display value
+          when the element is visible. It also triggers transitions
+          when its condition changes.</p>
+          <p>See also: <a href=
+          "https://vuejs.org/guide/essentials/conditional.html#v-show">
+          Conditional Rendering - v-show</a></p>
+        </div>
+        <p><abbr class="tooltip" title=
+        "&lt;strong&gt;3.2+&lt;/strong&gt;&lt;br&gt;&lt;br&gt;Expects: &lt;strong&gt;any[]&lt;/strong&gt;&lt;br&gt;&lt;br&gt;Details&lt;br&gt;&lt;br&gt;Memoize a sub-tree of the template. Can be used on both elements and components.&lt;br&gt;The directive expects a fixed-length array of dependency values to compare for&lt;br&gt;the memoization. If every value in the array was the same as last render, then&lt;br&gt;updates for the entire sub-tree will be skipped. For example:&lt;br&gt;&lt;br&gt;&lt;div v-memo=''[valueA, valueB]''&gt;&lt;br&gt; ...&lt;br&gt;&lt;/div&gt;&lt;br&gt;&lt;br&gt;When the component re-renders, if both valueA and valueB remain the same, all&lt;br&gt;updates for this &lt;div&gt; and its children will be skipped. In fact, even the&lt;br&gt;Virtual DOM VNode creation will also be skipped since the memoized copy of the&lt;br&gt;sub-tree can be reused.&lt;br&gt;&lt;br&gt;It is important to specify the memoization array correctly, otherwise we may&lt;br&gt;skip updates that should indeed be applied. v-memo with an empty dependency&lt;br&gt;array (v-memo=''[]'') would be functionally equivalent to v-once.&lt;br&gt;&lt;br&gt;Usage with v-for&lt;br&gt;&lt;br&gt;v-memo is provided solely for micro optimizations in performance-critical&lt;br&gt;scenarios and should be rarely needed. The most common case where this may prove&lt;br&gt;helpful is when rendering large v-for lists (where length &gt; 1000):&lt;br&gt;&lt;br&gt;&lt;div v-for=''item in list'' :key=''item.id'' v-memo=''[item.id === selected]''&gt;&lt;br&gt; &lt;p&gt;ID: {{ item.id }} - selected: {{ item.id === selected }}&lt;/p&gt;&lt;br&gt; &lt;p&gt;...more child nodes&lt;/p&gt;&lt;br&gt;&lt;/div&gt;&lt;br&gt;&lt;br&gt;When the component's selected state changes, a large amount of VNodes will be&lt;br&gt;created even though most of the items remained exactly the same. The v-memo&lt;br&gt;usage here is essentially saying ''only update this item if it went from&lt;br&gt;non-selected to selected, or the other way around''. This allows every unaffected&lt;br&gt;item to reuse its previous VNode and skip diffing entirely. Note we don't need&lt;br&gt;to include item.id in the memo dependency array here since Vue automatically&lt;br&gt;infers it from the item's :key.&lt;br&gt;&lt;br&gt;WARNING&lt;br&gt;&lt;br&gt;When using v-memo with v-for, make sure they are used on the same element.&lt;br&gt;v-memo does not work inside v-for.&lt;br&gt;&lt;br&gt;v-memo can also be used on components to manually prevent unwanted updates in&lt;br&gt;certain edge cases where the child component update check has been de-optimized.&lt;br&gt;But again, it is the developer's responsibility to specify correct dependency&lt;br&gt;arrays to avoid skipping necessary updates.&lt;br&gt;&lt;br&gt;See also:&lt;br&gt;&lt;br&gt;v-once (https://vuejs.org/api/built-in-directives.html#v-once)">
+        v-memo</abbr></p>
+        <div style=
+        "padding: 1em; background-color: #CCFFFF;border-radius: 15px; font-size: 0.9em; box-shadow: 0.05em 0.1em 5px 0.01em #00000057;">
+          <h3>v-memo</h3>
+          <p><b>3.2+</b></p>
+          <p>Expects: <b>any[]</b></p>
+          <p>Details</p>
+          <p>Memoize a sub-tree of the template. Can be used on
+          both elements and components. The directive expects a
+          fixed-length array of dependency values to compare for
+          the memoization. If every value in the array was the same
+          as last render, then updates for the entire sub-tree will
+          be skipped. For example:</p>
+          <p>&lt;div v-memo=“[valueA, valueB]”&gt; …
+          &lt;/div&gt;</p>
+          <p>When the component re-renders, if both valueA and
+          valueB remain the same, all updates for this &lt;div&gt;
+          and its children will be skipped. In fact, even the
+          Virtual DOM VNode creation will also be skipped since the
+          memoized copy of the sub-tree can be reused.</p>
+          <p>It is important to specify the memoization array
+          correctly, otherwise we may skip updates that should
+          indeed be applied. v-memo with an empty dependency array
+          (v-memo=“[]”) would be functionally equivalent to
+          v-once.</p>
+          <p>Usage with v-for</p>
+          <p>v-memo is provided solely for micro optimizations in
+          performance-critical scenarios and should be rarely
+          needed. The most common case where this may prove helpful
+          is when rendering large v-for lists (where length &gt;
+          1000):</p>
+          <p>&lt;div v-for=“item in list” :key=“item.id”
+          v-memo=“[item.id <code>=</code> selected]”&gt;
+          &lt;p&gt;ID: {{ item.id }} - selected: {{ item.id
+          <code>=</code> selected }}&lt;/p&gt; &lt;p&gt;…more child
+          nodes&lt;/p&gt; &lt;/div&gt;</p>
+          <p>When the component’s selected state changes, a large
+          amount of VNodes will be created even though most of the
+          items remained exactly the same. The v-memo usage here is
+          essentially saying “only update this item if it went from
+          non-selected to selected, or the other way around”. This
+          allows every unaffected item to reuse its previous VNode
+          and skip diffing entirely. Note we don’t need to include
+          item.id in the memo dependency array here since Vue
+          automatically infers it from the item’s :key.</p>
+          <p>WARNING</p>
+          <p>When using v-memo with v-for, make sure they are used
+          on the same element. v-memo does not work inside
+          v-for.</p>
+          <p>v-memo can also be used on components to manually
+          prevent unwanted updates in certain edge cases where the
+          child component update check has been de-optimized. But
+          again, it is the developer’s responsibility to specify
+          correct dependency arrays to avoid skipping necessary
+          updates.</p>
+          <p>See also:</p>
+          <p><a href=
+          "https://vuejs.org/api/built-in-directives.html#v-once">v-once</a></p>
+        </div>
       </div>
     </div>
   </div>
   <div id="postamble" class="status">
     <p class="author">Author: Zhicheng Lee</p>
-    <p class="date">Created: 2022-03-12 Sat 19:13</p>
+    <p class="date">Created: 2022-03-12 Sat 20:18</p>
   </div>
 </body>
 </html>
