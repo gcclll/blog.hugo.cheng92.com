@@ -257,9 +257,10 @@ blockquote {
   margin-right: 0.5em;
 }
 
-.gl-tag-card {
+.gl-tag-divider {
   margin-top: 3rem;
 }
+
 .gl-tag-card .el-badge {
   margin: 0 15px 15px 0;
   cursor: pointer;

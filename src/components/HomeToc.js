@@ -49,6 +49,7 @@ export default Vue.defineComponent({
       </el-menu>
     </el-tab-pane>
   </el-tabs>
+  <el-divider class="gl-tag-divider" content-position="left">分类和标签</el-divider>
   <el-card class="gl-tag-card">
     <template v-for="( n, name ) in tags.c">
       <el-badge :value="n">
