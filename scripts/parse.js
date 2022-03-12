@@ -76,14 +76,15 @@ function findIDLinks(root, filename) {
     .filter(Boolean)
 }
 
-function findALinks(root) {
+function findALinks(root, filename) {
   return root
     .querySelectorAll('a')
     .map((a) => {
       const item = {
         text: trim(a.text),
         url: a.attributes.href,
-        tag: a.tagName
+        tag: a.tagName,
+        filename
       }
 
       if (item.text === ' ') {

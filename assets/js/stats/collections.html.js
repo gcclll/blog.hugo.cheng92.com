@@ -1,1 +1,1 @@
-window.$stats=window.$stats||{};window.$stats['collections.html']={"IDLinks":[],"aLinks":[{"text":"Free Scroll to Top Buttons","url":"https://www.scrolltotop.com/","tag":"A"}],"toc":null}
+window.$stats=window.$stats||{};window.$stats['collections.html']={"IDLinks":[],"aLinks":[{"text":"Free Scroll to Top Buttons","url":"https://www.scrolltotop.com/","tag":"A","filename":"collections.html"}],"toc":null}
