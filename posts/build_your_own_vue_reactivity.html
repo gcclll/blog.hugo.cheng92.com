@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <!-- 2022-03-15 Tue 21:45 -->
+  <!-- 2022-03-15 Tue 22:42 -->
   <meta charset="utf-8">
   <meta name="viewport" content=
   "width=device-width, initial-scale=1">
@@ -225,6 +225,12 @@
   "/assets/js/dist/global.js"></script>
   <meta name="category" content="vue">
   <meta name="tags" content="reactivity">
+  <script>
+  window.linkHome=true
+  </script>
+  <style>
+  #content{width:100%;max-width:80%;margin:auto;}
+  </style>
   <style>
         /* From: https://endlessparentheses.com/public/css/endless.css */
         /* See also: https://meta.superuser.com/questions/4788/css-for-the-new-kbd-style */
@@ -283,13 +289,14 @@
     <div style=
     "padding: 1em; background-color: #CCFFCC;border-radius: 15px; font-size: 0.9em; box-shadow: 0.05em 0.1em 5px 0.01em #00000057;">
       <h3>Vue3 Reactivity</h3>
+      <p><span style=
+      "color:red;">本文完全由vue+element-plus加上markdown的支持实现</span></p>
       <p>从零开始实现 <abbr class="tooltip" title=
       "The Progressive JavaScript Framework !&lt;br&gt;&lt;br&gt;An approachable, performant and versatile framework for building web user interfaces.&lt;br&gt;&lt;br&gt;&lt;strong&gt;Installation&lt;/strong&gt;:&lt;br&gt;&lt;br&gt;=$ npm init vue@latest=&lt;br&gt;&lt;br&gt;&lt;strong&gt;Without Build Tools&lt;/strong&gt;:">
       Vue3</abbr> 的 reactivity 模块，基于 Proxy + Reflect api 实现响应式。大致
       实现路径 reactive -&gt; proxy 开启代理 -&gt; reflect 映射到原子操作，监听
       get/set 执行 track & trigger 收集信赖。</p>
     </div><br>
-    <p>test apps</p>
     <div id="app"></div>
     <script type="text/javascript">
     window.loadApp('vue')
@@ -297,7 +304,7 @@
   </div>
   <div id="postamble" class="status">
     <p class="author">Author: Zhicheng Lee</p>
-    <p class="date">Created: 2022-03-15 Tue 21:45</p>
+    <p class="date">Created: 2022-03-15 Tue 22:42</p>
   </div>
 </body>
 </html>

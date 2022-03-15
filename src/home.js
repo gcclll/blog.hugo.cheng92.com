@@ -21,6 +21,9 @@ export default function home(handleNotHome = noop) {
   // 是不是主页 home.html
   if (!config.isHome) {
     handleNotHome()
+    if (window.linkHome) {
+      setFooter()
+    }
     return config.isHome
   }
 

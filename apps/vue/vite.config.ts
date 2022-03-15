@@ -9,6 +9,7 @@ const pathSrc = path.resolve(__dirname, 'src')
 
 // https://vitejs.dev/config/
 export default defineConfig({
+  base: process.env.NODE_ENV === 'development' ? '/' : '/apps/vue/dist/',
   resolve: {
     alias: {
       '~/': `${pathSrc}/`,

@@ -65,25 +65,29 @@ $(function () {
   )
 })
 
+function loadScript(file) {
+  const script = document.createElement('script')
+  script.type = 'module'
+  script.setAttribute('scrollorigin', true)
+  script.src = file.src
+  document.head.appendChild(script)
+}
+
+function loadLink(file) {
+  const link = document.createElement('link')
+  link.rel = file.rel
+  link.href = file.href
+  document.head.appendChild(link)
+}
+
 window.loadApp = function (name) {
   $(function () {
     if (window.$apps) {
       const app = window.$apps[name]
       console.log('loading app>>>', app)
       if (!app) return
-      $('head').append(
-        app.scripts
-          .map(
-            (s) =>
-              `<script type="${s.type}" crossorigin  src="${s.src}"></script>`
-          )
-          .join('')
-      )
-      $('head').append(
-        app.links
-          .map((l) => `<link rel="${l.rel}" href="${s.href}"></script>`)
-          .join('')
-      )
+      app.scripts.forEach(loadScript)
+      app.links.forEach(loadLink)
     }
   })
 }
