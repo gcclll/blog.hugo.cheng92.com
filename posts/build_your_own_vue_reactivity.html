@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <!-- 2022-03-15 Tue 21:38 -->
+  <!-- 2022-03-15 Tue 21:45 -->
   <meta charset="utf-8">
   <meta name="viewport" content=
   "width=device-width, initial-scale=1">
@@ -292,20 +292,12 @@
     <p>test apps</p>
     <div id="app"></div>
     <script type="text/javascript">
-    if (window.$pages && window.$pages.vue) {
-     var vue = window.$pages.vue
-     $("head").append(vue.scripts.map(function(s) {
-       return '<script type="' + s.type + '" src="' + s.src + '"><\/script>'
-     }).join(''))
-     $('head').append(vue.links.map(function(l) {
-       return '<link rel="' + l.rel + '" href="' + s.href + '"><\/script>'
-     }).join(""))
-    }
+    window.loadApp('vue')
     </script>
   </div>
   <div id="postamble" class="status">
     <p class="author">Author: Zhicheng Lee</p>
-    <p class="date">Created: 2022-03-15 Tue 21:38</p>
+    <p class="date">Created: 2022-03-15 Tue 21:45</p>
   </div>
 </body>
 </html>

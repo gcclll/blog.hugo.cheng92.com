@@ -67,8 +67,9 @@ $(function () {
 
 window.loadApp = function (name) {
   $(function () {
-    if (window.$pages) {
-      const app = window.$pages[name]
+    if (window.$apps) {
+      const app = window.$apps[name]
+      console.log('loading app>>>', app)
       if (!app) return
       $('head').append(
         app.scripts
