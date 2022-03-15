@@ -7,6 +7,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "pub": "./scripts/publish.sh",
     "stats": "node ./scripts/parse.js",
+    "apps": "node ./scripts/parse-app.js",
     "dev": "rollup -c -w"
   },
   "repository": "git+https://github.com/gcclll/blog.cheng92.com.git",

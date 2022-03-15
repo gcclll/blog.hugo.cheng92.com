@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <!-- 2022-03-15 Tue 19:01 -->
+  <!-- 2022-03-15 Tue 21:38 -->
   <meta charset="utf-8">
   <meta name="viewport" content=
   "width=device-width, initial-scale=1">
@@ -220,6 +220,8 @@
   <script type="text/javascript" src=
   "/assets/js/dist/stats.js"></script>
   <script type="text/javascript" src=
+  "/assets/js/dist/apps.js"></script>
+  <script type="text/javascript" src=
   "/assets/js/dist/global.js"></script>
   <meta name="category" content="vue">
   <meta name="tags" content="reactivity">
@@ -276,16 +278,6 @@
 <body>
   <div id="content" class="content">
     <h1 class="title">build your own vue reactivity</h1>
-    <div id="table-of-contents" role="doc-toc">
-      <h2>Table of Contents</h2>
-      <div id="text-table-of-contents" role="doc-toc">
-        <ul>
-          <li>
-            <a href="#org3f75836">1. reactive(target)</a>
-          </li>
-        </ul>
-      </div>
-    </div>
     <p><a href="/"><img src=
     "https://img.shields.io/badge/GCCLL-Homepage-green?logo=gnu-emacs"></a></p>
     <div style=
@@ -297,59 +289,23 @@
       实现路径 reactive -&gt; proxy 开启代理 -&gt; reflect 映射到原子操作，监听
       get/set 执行 track & trigger 收集信赖。</p>
     </div><br>
-    <div id="outline-container-org3f75836" class="outline-2">
-      <h2 id="org3f75836"><span class="section-number-2">1.</span>
-      reactive(target)</h2>
-      <div class="outline-text-2" id="text-1">
-        <div class="org-src-container">
-          <pre class="src src-js" id="orgcea1ed5"><span class=
-          "org-keyword">function</span> <span class=
-          "org-function-name">reactive</span>(<span class=
-          "org-variable-name">target</span>) {
-  <span class="org-comment-delimiter">// </span><span class=
-"org-comment">...</span>
-  console.log(target, <span class="org-string">'111'</span>)
-}
-
-console.log(<span class=
-"org-string">'build_your_own_vue_reactivity.org reactive function...'</span> )
-</pre>
-        </div>
-        <p>使用</p>
-        <div class="org-src-container">
-          <pre class="src src-js"><span class=
-          "org-keyword">function</span> <span class=
-          "org-function-name">reactive</span>(<span class=
-          "org-variable-name">target</span>) {
-  <span class="org-comment-delimiter">// </span><span class=
-"org-comment">...</span>
-  console.log(target, <span class="org-string">'111'</span>)
-}
-
-console.log(<span class=
-"org-string">'build_your_own_vue_reactivity.org reactive function...'</span> )
-
-reactive({ a: <span class=
-"org-highlight-numbers-number">111</span> })
-</pre>
-        </div>
-        <div class="org-src-container">
-          <pre class="src src-js">reactive()
-</pre>
-        </div>
-        <div class="org-src-container">
-          <pre class="src src-js"><span class=
-          "org-doc">/** jsx?|tsx? file header */</span>
-
-console.log(<span class="org-string">"xxxxxx js include"</span>);
-</pre>
-        </div>
-      </div>
-    </div>
+    <p>test apps</p>
+    <div id="app"></div>
+    <script type="text/javascript">
+    if (window.$pages && window.$pages.vue) {
+     var vue = window.$pages.vue
+     $("head").append(vue.scripts.map(function(s) {
+       return '<script type="' + s.type + '" src="' + s.src + '"><\/script>'
+     }).join(''))
+     $('head').append(vue.links.map(function(l) {
+       return '<link rel="' + l.rel + '" href="' + s.href + '"><\/script>'
+     }).join(""))
+    }
+    </script>
   </div>
   <div id="postamble" class="status">
     <p class="author">Author: Zhicheng Lee</p>
-    <p class="date">Created: 2022-03-15 Tue 19:01</p>
+    <p class="date">Created: 2022-03-15 Tue 21:38</p>
   </div>
 </body>
 </html>

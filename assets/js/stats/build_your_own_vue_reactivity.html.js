@@ -1,1 +1,1 @@
-window.$stats=window.$stats||{};window.$stats['build_your_own_vue_reactivity.html']={"IDLinks":[{"text":"reactive(target)","tagName":"H2","id":"org3f75836","filename":"build_your_own_vue_reactivity.html"}],"aLinks":[{"text":"reactive(target)","url":"#org3f75836","tag":"A","filename":"build_your_own_vue_reactivity.html"}],"toc":null}
+window.$stats=window.$stats||{};window.$stats['build_your_own_vue_reactivity.html']={"IDLinks":[],"aLinks":[],"toc":null}

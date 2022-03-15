@@ -64,3 +64,23 @@ $(function () {
     )
   )
 })
+
+window.loadApp = function (name) {
+  if (window.$pages) {
+    const app = window.$pages[name]
+    if (!app) return
+    $('head').append(
+      app.scripts
+        .map(
+          (s) =>
+            `<script type="${s.type}" crossorigin  src="${s.src}"></script>`
+        )
+        .join('')
+    )
+    $('head').append(
+      app.links
+        .map((l) => `<link rel="${l.rel}" href="${s.href}"></script>`)
+        .join('')
+    )
+  }
+}
