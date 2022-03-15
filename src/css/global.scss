@@ -1,3 +1,4 @@
+@import './theme.my.scss';
 @import './block.scss';
 
 #table-of-contents {
@@ -170,6 +171,10 @@ code,
 pre {
   padding: 2px 4px;
   border-radius: 5px;
+
+  &.src {
+    background: #eeffcc;
+  }
 }
 
 details {

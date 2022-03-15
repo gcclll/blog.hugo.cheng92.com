@@ -1,0 +1,106 @@
+/* Set the colors in <pre> blocks from the Leuven theme */
+
+pre {
+  background-color: #ffffff;
+
+  span.org-builtin {
+    color: #006fe0;
+    font-weight: bold;
+  }
+
+  span.org-string {
+    color: #008000;
+  }
+  span.org-keyword {
+    color: #0000ff;
+  }
+  span.org-variable-name {
+    color: #ba36a5;
+  }
+  span.org-function-name {
+    color: #006699;
+  }
+  span.org-type {
+    color: #6434a3;
+  }
+  span.org-preprocessor {
+    color: #808080;
+    font-weight: bold;
+  }
+  span.org-constant {
+    color: #d0372d;
+  }
+  span.org-comment-delimiter {
+    color: #8d8d84;
+  }
+  span.org-comment {
+    color: #8d8d84;
+    font-style: italic;
+  }
+  span.org-outshine-level-1 {
+    color: #8d8d84;
+    font-style: italic;
+  }
+  span.org-outshine-level-2 {
+    color: #8d8d84;
+    font-style: italic;
+  }
+  span.org-outshine-level-3 {
+    color: #8d8d84;
+    font-style: italic;
+  }
+  span.org-outshine-level-4 {
+    color: #8d8d84;
+    font-style: italic;
+  }
+  span.org-outshine-level-5 {
+    color: #8d8d84;
+    font-style: italic;
+  }
+  span.org-outshine-level-6 {
+    color: #8d8d84;
+    font-style: italic;
+  }
+  span.org-outshine-level-7 {
+    color: #8d8d84;
+    font-style: italic;
+  }
+  span.org-outshine-level-8 {
+    color: #8d8d84;
+    font-style: italic;
+  }
+  span.org-outshine-level-9 {
+    color: #8d8d84;
+    font-style: italic;
+  }
+  span.org-rainbow-delimiters-depth-1 {
+    color: #707183;
+  }
+  span.org-rainbow-delimiters-depth-2 {
+    color: #7388d6;
+  }
+  span.org-rainbow-delimiters-depth-3 {
+    color: #909183;
+  }
+  span.org-rainbow-delimiters-depth-4 {
+    color: #709870;
+  }
+  span.org-rainbow-delimiters-depth-5 {
+    color: #907373;
+  }
+  span.org-rainbow-delimiters-depth-6 {
+    color: #6276ba;
+  }
+  span.org-rainbow-delimiters-depth-7 {
+    color: #858580;
+  }
+  span.org-rainbow-delimiters-depth-8 {
+    color: #80a880;
+  }
+  span.org-rainbow-delimiters-depth-9 {
+    color: #887070;
+  }
+  span.org-sh-quoted-exec {
+    color: #ff1493;
+  }
+}
