@@ -57,21 +57,6 @@ function parseApps() {
   })
 }
 
-function replaceRootDir(ss) {
-  return ss
-    .map((s) => {
-      if (s.src) {
-        s.src = s.src.replace(/assets/, 'apps/vue/dist/assets')
-      } else if (s.href) {
-        s.href = s.href.replace(/assets/, 'apps/vue/dist/assets')
-      } else {
-        return null
-      }
-      return s
-    })
-    .filter(Boolean)
-}
-
 function handleError() {}
 
 parseApps().then((roots) => {
@@ -79,8 +64,6 @@ parseApps().then((roots) => {
     './assets/js/dist/apps.js',
     `window.$apps=${JSON.stringify(
       roots.reduce((result, root) => {
-        root.scripts = replaceRootDir(root.scripts)
-        root.links = replaceRootDir(root.links)
         result[root.appName] = root
         return result
       }, {})
