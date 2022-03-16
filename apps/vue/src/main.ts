@@ -1,5 +1,5 @@
-import { createApp } from "vue";
-import App from "./App.vue";
+import { createApp } from 'vue'
+import App from './App.vue'
 
 // import "~/styles/element/index.scss";
 
@@ -9,11 +9,13 @@ import App from "./App.vue";
 
 // or use cdn, uncomment cdn link in `index.html`
 
-import "~/styles/index.scss";
+import '~/styles/index.scss'
 
 // If you want to use ElMessage, import it.
-import "element-plus/theme-chalk/src/message.scss"
+import 'element-plus/theme-chalk/src/message.scss'
+import 'prism-theme-vars/base.css'
+import '~/styles/themes/my.scss'
 
-const app = createApp(App);
+const app = createApp(App)
 // app.use(ElementPlus);
-app.mount("#app");
+app.mount('#app')

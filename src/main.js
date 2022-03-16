@@ -4,6 +4,7 @@ import home from './home'
 import { cached } from './cache'
 import config from './config'
 import loadSearchApp from './apps/search'
+import { switchTheme } from './switch'
 import './css/global.scss'
 
 $(function () {
@@ -63,6 +64,8 @@ $(function () {
         '<img src="https://img.shields.io/github/followers/gcclll?style=social"></a></span>'
     )
   )
+
+  switchTheme()
 })
 
 function loadScript(file) {

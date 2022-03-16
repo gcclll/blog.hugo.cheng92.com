@@ -467,6 +467,13 @@ blockquote {
   cursor: pointer;
 }
 
+#theme-switcher svg {
+  width: 30px;
+  height: 30px;
+  vertical-align: middle;
+  margin-left: 1rem;
+}
+
 @media screen and (max-width: 768px) {
   #table-of-contents {
     width: 100% !important;
