@@ -23,9 +23,10 @@ fs.watch(
       }
       code = -1
       try {
-        execSync(
+        const output = execSync(
           'cd ~/github/mine/blog.cheng92.com/apps/vue && pnpm run build && cd ../.. && npm run pub'
         )
+        console.log(output)
         code = 0
       } catch (e) {
         code = -1
