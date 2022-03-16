@@ -5,6 +5,8 @@ path=$(pwd)
 echo "> generate sites index..."
 npm run stats
 
+npm run apps
+
 # build scss -> css
 echo
 echo "> building themes scss to css..."
