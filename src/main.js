@@ -5,6 +5,8 @@ import { cached } from './cache'
 import config from './config'
 import loadSearchApp from './apps/search'
 import { switchTheme } from './switch'
+import './css/theme.my.scss'
+import './css/link.scss'
 import './css/global.scss'
 
 $(function () {

@@ -1,0 +1,14 @@
+div[id^='outline-container-'] a {
+  font-family: 'EB Garamond';
+  text-decoration: none;
+  background: linear-gradient(
+    to bottom,
+    transparent 70%,
+    rgba(49, 184, 204, 0.5) 70%
+  );
+
+  &.footref,
+  &.coderef {
+    background: none;
+  }
+}

@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <!-- 2022-03-15 Tue 19:11 -->
+  <!-- 2022-03-20 Sun 11:05 -->
   <meta charset="utf-8">
   <meta name="viewport" content=
   "width=device-width, initial-scale=1">
@@ -220,6 +220,8 @@
   <script type="text/javascript" src=
   "/assets/js/dist/stats.js"></script>
   <script type="text/javascript" src=
+  "/assets/js/dist/apps.js"></script>
+  <script type="text/javascript" src=
   "/assets/js/dist/global.js"></script>
   <meta name="category" content="emacs">
   <meta name="tags" content="org">
@@ -281,30 +283,38 @@
       <div id="text-table-of-contents" role="doc-toc">
         <ul>
           <li>
-            <a href="#org2f58039">1. 代码块</a>
+            <a href="#org9120157">1. code block</a>
             <ul>
               <li>
-                <a href="#org7449e10">1.1. 引用其它代码</a>
+                <a href="#org6bb6431">1.1. reference other code
+                block</a>
               </li>
             </ul>
+          </li>
+          <li>
+            <a href="#orgc52adb4">2. foot notes</a>
+          </li>
+          <li>
+            <a href="#orge1a2f45">3. FootNotes</a>
           </li>
         </ul>
       </div>
     </div>
     <p><a href="/"><img src=
     "https://img.shields.io/badge/GCCLL-Homepage-green?logo=gnu-emacs"></a></p>
-    <div id="outline-container-org2f58039" class="outline-2">
-      <h2 id="org2f58039"><span class="section-number-2">1.</span>
-      代码块</h2>
+    <div id="outline-container-org9120157" class="outline-2">
+      <h2 id="org9120157"><span class="section-number-2">1.</span>
+      code block</h2>
       <div class="outline-text-2" id="text-1"></div>
-      <div id="outline-container-org7449e10" class="outline-3">
-        <h3 id="org7449e10"><span class=
-        "section-number-3">1.1.</span> 引用其它代码</h3>
+      <div id="outline-container-org6bb6431" class="outline-3">
+        <h3 id="org6bb6431"><span class=
+        "section-number-3">1.1.</span> reference other code
+        block</h3>
         <div class="outline-text-3" id="text-1-1">
           <p><b>引用本文的其它代码</b></p>
           <p>被引用的代码块:</p>
           <div class="org-src-container">
-            <pre class="src src-js" id="org8f3eda1"><span class=
+            <pre class="src src-js" id="orgdd9cc6e"><span class=
             "org-keyword">function</span> <span class=
             "org-function-name">reactive</span>(<span class=
             "org-variable-name">target</span>) {
@@ -327,7 +337,7 @@ reactive({ a: <span class=
 "org-highlight-numbers-number">1</span> })
 </pre>
           </div>
-          <div class="tip" id="org4851893">
+          <div class="tip" id="org4ba9fb0">
             <p>注意点：引用都需要指定 <abbr class="tooltip" title=
             "zsh:1: command not found: wn&lt;br&gt;">noweb</abbr>
             参数为 <code>yes</code> 。</p>
@@ -335,10 +345,44 @@ reactive({ a: <span class=
         </div>
       </div>
     </div>
+    <div id="outline-container-orgc52adb4" class="outline-2">
+      <h2 id="orgc52adb4"><span class="section-number-2">2.</span>
+      foot notes</h2>
+      <div class="outline-text-2" id="text-2">
+        <p>number foot notes<sup><a id="fnr.1" class="footref"
+        href="#fn.1" role="doc-backlink">1</a></sup></p>
+        <p>named foot notes<sup><a id="fnr.2" class="footref" href=
+        "#fn.2" role="doc-backlink">2</a></sup></p>
+      </div>
+    </div>
+    <div id="outline-container-orge1a2f45" class="outline-2">
+      <h2 id="orge1a2f45"><span class="section-number-2">3.</span>
+      FootNotes</h2>
+      <div class="outline-text-2" id="text-3"></div>
+    </div>
+    <div id="footnotes">
+      <h2 class="footnotes">Footnotes:</h2>
+      <div id="text-footnotes">
+        <div class="footdef">
+          <sup><a id="fn.1" class="footnum" href="#fnr.1" role=
+          "doc-backlink">1</a></sup>
+          <div class="footpara" role="doc-footnote">
+            <p class="footpara">I am a number footnote.</p>
+          </div>
+        </div>
+        <div class="footdef">
+          <sup><a id="fn.2" class="footnum" href="#fnr.2" role=
+          "doc-backlink">2</a></sup>
+          <div class="footpara" role="doc-footnote">
+            <p class="footpara">I am a named footnote.</p>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
   <div id="postamble" class="status">
     <p class="author">Author: Zhicheng Lee</p>
-    <p class="date">Created: 2022-03-15 Tue 19:11</p>
+    <p class="date">Created: 2022-03-20 Sun 11:05</p>
   </div>
 </body>
 </html>

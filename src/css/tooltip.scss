@@ -1,0 +1,20 @@
+.tooltipster-base {
+  max-width: 100vw;
+}
+
+.tooltipster-box {
+  .tooltipster-content {
+    strong {
+      color: green;
+    }
+
+    h2 {
+      color: aqua;
+    }
+
+    h3 {
+      text-indent: 0;
+      color: cyan;
+    }
+  }
+}

@@ -1,5 +1,20 @@
 /* Set the colors in <pre> blocks from the Leuven theme */
 
+body {
+  font-family: 'EB Garamond', 'Lato', 'proxima-nova', 'Helvetica Neue', Arial,
+    sans-serif;
+}
+
+h2,
+h3 {
+  font-family: 'Cinzel Decorative';
+}
+
+a,
+abbr {
+  font-family: 'EB Garamond';
+}
+
 pre {
   // background-color: #292d3e !important;
 

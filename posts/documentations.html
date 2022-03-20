@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <!-- 2022-03-12 Sat 20:18 -->
+  <!-- 2022-03-20 Sun 09:53 -->
   <meta charset="utf-8">
   <meta name="viewport" content=
   "width=device-width, initial-scale=1">
@@ -209,6 +209,8 @@
   <script type="text/javascript" src=
   "/assets/js/lodash.min.js"></script>
   <script type="text/javascript" src=
+  "/assets/js/readtheorg.js"></script>
+  <script type="text/javascript" src=
   "/assets/js/mobile-detect.min.js"></script>
   <script type="text/javascript" src=
   "/assets/js/Valine.min.js"></script>
@@ -216,9 +218,9 @@
   <script type="text/javascript" src=
   "/assets/js/element-plus.js"></script>
   <script type="text/javascript" src=
-  "/assets/js/readtheorg.js"></script>
-  <script type="text/javascript" src=
   "/assets/js/dist/stats.js"></script>
+  <script type="text/javascript" src=
+  "/assets/js/dist/apps.js"></script>
   <script type="text/javascript" src=
   "/assets/js/dist/global.js"></script>
   <meta name="category" content="emacs">
@@ -326,7 +328,7 @@
             Properties of <i>Heterogeneous</i> Relations</a>
           </li>
           <li>
-            <a href="#orgc9bf56a">5. Programming Development
+            <a href="#orgb79ba15">5. Programming Development
             Relations</a>
           </li>
         </ul>
@@ -568,7 +570,7 @@
           <p>An <i>expression</i> is either a ‘variable’ or a
           ‘function application’; i.e., the name of a function
           along with a number of existing expressions.</p>
-          <pre class="example" id="org7ffa0a7">
+          <pre class="example" id="org2357e8d">
  Expr ::= Constant    -- E.g., 1 or “apple”
       |  Variable    -- E.g., x or apple (no quotes!)
       |  Application -- E.g., f(x₁, x₂, …, xₙ)
@@ -807,7 +809,7 @@
           and their sum below the line, so too is that notation
           reused for inference rules: Premises are above the
           fraction’s bar and the conclusion is below.</p>
-          <pre class="example" id="org616448d">
+          <pre class="example" id="orgc10f69e">
                                    12
 P₁, P₂, …, Pn                    +  7
 ---------------R     versues     ----
@@ -2007,8 +2009,8 @@ P₁, P₂, …, Pn                    +  7
         </div>
       </div>
     </div>
-    <div id="outline-container-orgc9bf56a" class="outline-2">
-      <h2 id="orgc9bf56a"><span class="section-number-2">5.</span>
+    <div id="outline-container-orgb79ba15" class="outline-2">
+      <h2 id="orgb79ba15"><span class="section-number-2">5.</span>
       Programming Development Relations</h2>
       <div class="outline-text-2" id="text-5">
         <p><abbr class="tooltip" title=
@@ -2113,12 +2115,276 @@ P₁, P₂, …, Pn                    +  7
           <p><a href=
           "https://vuejs.org/api/built-in-directives.html#v-once">v-once</a></p>
         </div>
+        <p><abbr class="tooltip" title=
+        "&lt;strong&gt;Proxy&lt;/strong&gt; &lt;hr&gt;&lt;br&gt;The Proxy object enables you to create a proxy for another object, which&lt;br&gt;can intercept and redefine fundamental operations for that object.&lt;br&gt;&lt;br&gt;&lt;strong&gt;Description&lt;/strong&gt; &lt;hr&gt;&lt;br&gt;A Proxy is created with two parameters:&lt;br&gt;&lt;br&gt;- target: the original object which you want to proxy&lt;br&gt;&lt;br&gt;- handler: an object that defines which operations will be intercepted and how&lt;br&gt;to redefine intercepted operations. For example, this code defines a simple&lt;br&gt;target with just two properties, and an even simpler handler with no properties:&lt;br&gt;&lt;br&gt;&lt;pre class='tooltip'&gt;const target = {&lt;br&gt; message1: ''hello'',&lt;br&gt; message2: ''everyone''&lt;br&gt;};&lt;br&gt;&lt;br&gt;const handler1 = {};&lt;br&gt;&lt;br&gt;const proxy1 = new Proxy(target, handler1);&lt;br&gt;&lt;/PRE&gt;&lt;br&gt;Because the handler is empty, this proxy behaves just like the original target:&lt;br&gt;&lt;br&gt;&lt;pre class='tooltip'&gt;console.log(proxy1.message1); &lt;em&gt;/ hello&lt;br&gt;console.log(proxy1.message2); &lt;/em&gt;/ everyone&lt;br&gt;&lt;/PRE&gt;&lt;br&gt;To customize the proxy, we define functions on the handler object:&lt;br&gt;&lt;br&gt;&lt;pre class='tooltip'&gt;const target = {&lt;br&gt; message1: ''hello'',&lt;br&gt; message2: ''everyone''&lt;br&gt;};&lt;br&gt;&lt;br&gt;const handler2 = {&lt;br&gt; get: function(target, prop, receiver) {&lt;br&gt;  return ''world'';&lt;br&gt; }&lt;br&gt;};&lt;br&gt;&lt;br&gt;const proxy2 = new Proxy(target, handler2);&lt;br&gt;&lt;/PRE&gt;&lt;br&gt;Here we've provided an implementation of the get() handler, which intercepts&lt;br&gt;attempts to access properties in the target.&lt;br&gt;&lt;br&gt;Handler functions are sometimes called traps, presumably because they trap calls&lt;br&gt;to the target object. The very simple trap in handler2 above redefines all&lt;br&gt;property accessors:&lt;br&gt;&lt;br&gt;&lt;pre class='tooltip'&gt;console.log(proxy2.message1); &lt;em&gt;/ world&lt;br&gt;console.log(proxy2.message2); &lt;/em&gt;/ world&lt;br&gt;&lt;/PRE&gt;&lt;br&gt;With the help of the Reflect class we can give some accessors the original&lt;br&gt;behavior and redefine others:&lt;br&gt;&lt;br&gt;&lt;pre class='tooltip'&gt;const target = {&lt;br&gt; message1: ''hello'',&lt;br&gt; message2: ''everyone''&lt;br&gt;};&lt;br&gt;&lt;br&gt;const handler3 = {&lt;br&gt; get: function (target, prop, receiver) {&lt;br&gt;  if (prop === ''message2'') {&lt;br&gt;   return ''world'';&lt;br&gt;  }&lt;br&gt;  return Reflect.get(...arguments);&lt;br&gt; },&lt;br&gt;};&lt;br&gt;&lt;br&gt;const proxy3 = new Proxy(target, handler3);&lt;br&gt;&lt;br&gt;console.log(proxy3.message1); &lt;em&gt;/ hello&lt;br&gt;console.log(proxy3.message2); &lt;/em&gt;/ world&lt;br&gt;&lt;/PRE&gt;&lt;br&gt;&lt;strong&gt;Constructor&lt;/strong&gt; &lt;hr&gt;&lt;br&gt;&lt;pre class='tooltip'&gt;Proxy()&lt;br&gt;&lt;/PRE&gt;&lt;br&gt;Creates a new Proxy object.&lt;br&gt;&lt;br&gt;&lt;strong&gt;Static methods&lt;/strong&gt; &lt;hr&gt;&lt;br&gt;&lt;pre class='tooltip'&gt;Proxy.revocable()&lt;br&gt;&lt;/PRE&gt;&lt;br&gt;Creates a revocable Proxy object.&lt;br&gt;&lt;br&gt;&lt;strong&gt;Examples&lt;/strong&gt;&lt;br&gt;&lt;br&gt;&lt;strong&gt;Basic example&lt;/strong&gt; &lt;hr&gt;&lt;br&gt;In this simple example, the number 37 gets returned as the default value when&lt;br&gt;the property name is not in the object. It is using the get() handler.&lt;br&gt;&lt;br&gt;&lt;pre class='tooltip'&gt;const handler = {&lt;br&gt; get: function(obj, prop) {&lt;br&gt;  return prop in obj ?&lt;br&gt;   obj[prop] :&lt;br&gt;   37;&lt;br&gt; }&lt;br&gt;};&lt;br&gt;&lt;br&gt;const p = new Proxy({}, handler);&lt;br&gt;p.a = 1;&lt;br&gt;p.b = undefined;&lt;br&gt;&lt;br&gt;console.log(p.a, p.b);&lt;br&gt;&lt;em&gt;/ 1, undefined&lt;br&gt;&lt;br&gt;console.log('c' in p, p.c);&lt;br&gt;&lt;/em&gt;/ false, 37&lt;br&gt;&lt;/PRE&gt;&lt;br&gt;&lt;a target='_blank' href='https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Proxy'&gt;More&lt;/a&gt;&lt;br&gt;&lt;br&gt;&lt;br&gt;&lt;br&gt;&lt;br&gt;&lt;br&gt;">
+        Proxy</abbr></p>
+        <div style=
+        "padding: 1em; background-color: #CCFFFF;border-radius: 15px; font-size: 0.9em; box-shadow: 0.05em 0.1em 5px 0.01em #00000057;">
+          <h3>Proxy</h3>
+          <p><b>Proxy</b> –— The Proxy object enables you to create
+          a proxy for another object, which can intercept and
+          redefine fundamental operations for that object.</p>
+          <p><b>Description</b> –— A Proxy is created with two
+          parameters:</p>
+          <ul class="org-ul">
+            <li>target: the original object which you want to
+            proxy</li>
+            <li>handler: an object that defines which operations
+            will be intercepted and how</li>
+          </ul>
+          <p>to redefine intercepted operations. For example, this
+          code defines a simple target with just two properties,
+          and an even simpler handler with no properties:</p>
+          <div class="org-src-container">
+            <pre class="src src-js"><span class=
+            "org-keyword">const</span> <span class=
+            "org-variable-name">target</span> = {
+  message1: <span class="org-string">"hello"</span>,
+  message2: <span class="org-string">"everyone"</span>
+};
+
+<span class="org-keyword">const</span> <span class=
+"org-variable-name">handler1</span> = {};
+
+<span class="org-keyword">const</span> <span class=
+"org-variable-name">proxy1</span> = <span class=
+"org-keyword">new</span> <span class=
+"org-type">Proxy</span>(target, handler1);
+</pre>
+          </div>
+          <p>Because the handler is empty, this proxy behaves just
+          like the original target:</p>
+          <div class="org-src-container">
+            <pre class=
+            "src src-js">console.log(proxy1.message1); <span class=
+            "org-comment-delimiter">// </span><span class=
+            "org-comment">hello</span>
+console.log(proxy1.message2); <span class=
+"org-comment-delimiter">// </span><span class=
+"org-comment">everyone</span>
+</pre>
+          </div>
+          <p>To customize the proxy, we define functions on the
+          handler object:</p>
+          <div class="org-src-container">
+            <pre class="src src-js"><span class=
+            "org-keyword">const</span> <span class=
+            "org-variable-name">target</span> = {
+  message1: <span class="org-string">"hello"</span>,
+  message2: <span class="org-string">"everyone"</span>
+};
+
+<span class="org-keyword">const</span> <span class=
+"org-variable-name">handler2</span> = {
+  <span class="org-function-name">get</span>: <span class=
+"org-keyword">function</span>(<span class=
+"org-variable-name">target</span>, <span class=
+"org-variable-name">prop</span>, <span class=
+"org-variable-name">receiver</span>) {
+    <span class="org-keyword">return</span> <span class=
+"org-string">"world"</span>;
+  }
+};
+
+<span class="org-keyword">const</span> <span class=
+"org-variable-name">proxy2</span> = <span class=
+"org-keyword">new</span> <span class=
+"org-type">Proxy</span>(target, handler2);
+</pre>
+          </div>
+          <p>Here we’ve provided an implementation of the get()
+          handler, which intercepts attempts to access properties
+          in the target.</p>
+          <p>Handler functions are sometimes called traps,
+          presumably because they trap calls to the target object.
+          The very simple trap in handler2 above redefines all
+          property accessors:</p>
+          <div class="org-src-container">
+            <pre class=
+            "src src-js">console.log(proxy2.message1); <span class=
+            "org-comment-delimiter">// </span><span class=
+            "org-comment">world</span>
+console.log(proxy2.message2); <span class=
+"org-comment-delimiter">// </span><span class=
+"org-comment">world</span>
+</pre>
+          </div>
+          <p>With the help of the Reflect class we can give some
+          accessors the original behavior and redefine others:</p>
+          <div class="org-src-container">
+            <pre class="src src-js"><span class=
+            "org-keyword">const</span> <span class=
+            "org-variable-name">target</span> = {
+  message1: <span class="org-string">"hello"</span>,
+  message2: <span class="org-string">"everyone"</span>
+};
+
+<span class="org-keyword">const</span> <span class=
+"org-variable-name">handler3</span> = {
+  <span class="org-function-name">get</span>: <span class=
+"org-keyword">function</span> (<span class=
+"org-variable-name">target</span>, <span class=
+"org-variable-name">prop</span>, <span class=
+"org-variable-name">receiver</span>) {
+    <span class="org-keyword">if</span> (prop === <span class=
+"org-string">"message2"</span>) {
+      <span class="org-keyword">return</span> <span class=
+"org-string">"world"</span>;
+    }
+    <span class=
+"org-keyword">return</span> Reflect.get(...<span class=
+"org-constant">arguments</span>);
+  },
+};
+
+<span class="org-keyword">const</span> <span class=
+"org-variable-name">proxy3</span> = <span class=
+"org-keyword">new</span> <span class=
+"org-type">Proxy</span>(target, handler3);
+
+console.log(proxy3.message1); <span class=
+"org-comment-delimiter">// </span><span class=
+"org-comment">hello</span>
+console.log(proxy3.message2); <span class=
+"org-comment-delimiter">// </span><span class=
+"org-comment">world</span>
+</pre>
+          </div>
+          <p><b>Constructor</b> –—</p>
+          <div class="org-src-container">
+            <pre class="src src-js">Proxy()
+</pre>
+          </div>
+          <p>Creates a new Proxy object.</p>
+          <p><b>Static methods</b> –—</p>
+          <div class="org-src-container">
+            <pre class="src src-js">Proxy.revocable()
+</pre>
+          </div>
+          <p>Creates a revocable Proxy object.</p>
+          <p><b>Examples</b></p>
+          <p><b>Basic example</b> –— In this simple example, the
+          number 37 gets returned as the default value when the
+          property name is not in the object. It is using the get()
+          handler.</p>
+          <div class="org-src-container">
+            <pre class="src src-js"><span class=
+            "org-keyword">const</span> <span class=
+            "org-variable-name">handler</span> = {
+  <span class="org-function-name">get</span>: <span class=
+"org-keyword">function</span>(<span class=
+"org-variable-name">obj</span>, <span class=
+"org-variable-name">prop</span>) {
+    <span class="org-keyword">return</span> prop <span class=
+"org-keyword">in</span> obj ?
+      obj[prop] :
+      <span class="org-highlight-numbers-number">37</span>;
+  }
+};
+
+<span class="org-keyword">const</span> <span class=
+"org-variable-name">p</span> = <span class=
+"org-keyword">new</span> <span class=
+"org-type">Proxy</span>({}, handler);
+p.a = <span class="org-highlight-numbers-number">1</span>;
+p.b = <span class="org-constant">undefined</span>;
+
+console.log(p.a, p.b);
+<span class="org-comment-delimiter">//  </span><span class=
+"org-comment">1, undefined</span>
+
+console.log(<span class="org-string">'c'</span> <span class=
+"org-keyword">in</span> p, p.c);
+<span class="org-comment-delimiter">//  </span><span class=
+"org-comment">false, 37</span>
+</pre>
+          </div>
+          <p>&lt;a target=’<sub>blank</sub>’
+          href=’https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global<sub>Objects</sub>/Proxy’&gt;More&lt;/a&gt;
+          &lt;br&gt; &lt;br&gt; &lt;br&gt;</p>
+        </div>
+        <p><abbr class="tooltip" title=
+        "&lt;h2&gt;Description&lt;/h2&gt;&lt;br&gt;&lt;br&gt;Unlike most global objects, Reflect is not a constructor.&lt;br&gt;You cannot use it with a new operator or invoke the Reflect object as a&lt;br&gt;function. All properties and methods of Reflect are static (just like the Math&lt;br&gt;object).&lt;br&gt;&lt;br&gt;The Reflect object provides the following static functions which have the same&lt;br&gt;names as the proxy handler methods.&lt;br&gt;&lt;br&gt;Some of these methods are also the same as corresponding methods on Object,&lt;br&gt;although they do have some subtle differences between them.&lt;br&gt;&lt;br&gt;&lt;h2&gt;Static methods&lt;/h2&gt;&lt;br&gt;&lt;br&gt;&lt;h3&gt;Reflect.apply(target, thisArgument, argumentsList)&lt;/h3&gt;&lt;br&gt;&lt;br&gt;Calls a target function with arguments as specified by the argumentsList&lt;br&gt;parameter. See also Function.prototype.apply().&lt;br&gt;&lt;br&gt;&lt;h3&gt;Reflect.construct(target, argumentsList[, newTarget])&lt;/h3&gt;&lt;br&gt;&lt;br&gt;The new operator as a function. Equivalent to calling new&lt;br&gt;target(...argumentsList). Also provides the option to specify a different&lt;br&gt;prototype.&lt;br&gt;&lt;br&gt;&lt;h3&gt;Reflect.defineProperty(target, propertyKey, attributes)&lt;/h3&gt;&lt;br&gt;&lt;br&gt;Similar to Object.defineProperty(). Returns a boolean that is true if the&lt;br&gt;property was successfully defined.&lt;br&gt;&lt;br&gt;&lt;h3&gt;Reflect.deleteProperty(target, propertyKey)&lt;/h3&gt;&lt;br&gt;&lt;br&gt;The delete operator as a function. Equivalent to calling delete&lt;br&gt;target[propertyKey].&lt;br&gt;&lt;br&gt;&lt;h3&gt;Reflect.get(target, propertyKey[, receiver])&lt;/h3&gt;&lt;br&gt;&lt;br&gt;Returns the value of the property. Works like getting a property from an object&lt;br&gt;(target[propertyKey]) as a function.&lt;br&gt;&lt;br&gt;&lt;h3&gt;Reflect.getOwnPropertyDescriptor(target, propertyKey)&lt;/h3&gt;&lt;br&gt;&lt;br&gt;Similar to Object.getOwnPropertyDescriptor(). Returns a property descriptor of&lt;br&gt;the given property if it exists on the object, undefined otherwise.&lt;br&gt;&lt;br&gt;&lt;h3&gt;Reflect.getPrototypeOf(target)&lt;/h3&gt;&lt;br&gt;&lt;br&gt;Same as Object.getPrototypeOf().&lt;br&gt;&lt;br&gt;&lt;h3&gt;Reflect.has(target, propertyKey)&lt;/h3&gt;&lt;br&gt;&lt;br&gt;Returns a boolean indicating whether the target has the property. Either as own&lt;br&gt;or inherited. Works like the in operator as a function.&lt;br&gt;&lt;br&gt;&lt;h3&gt;Reflect.isExtensible(target)&lt;/h3&gt;&lt;br&gt;&lt;br&gt;Same as Object.isExtensible(). Returns a boolean that is true if the target is&lt;br&gt;extensible.&lt;br&gt;&lt;br&gt;&lt;h3&gt;Reflect.ownKeys(target)&lt;/h3&gt;&lt;br&gt;&lt;br&gt;Returns an array of the target object's own (not inherited) property keys.&lt;br&gt;&lt;br&gt;&lt;h3&gt;Reflect.preventExtensions(target)&lt;/h3&gt;&lt;br&gt;&lt;br&gt;Similar to Object.preventExtensions(). Returns a boolean that is true if the&lt;br&gt;update was successful.&lt;br&gt;&lt;br&gt;&lt;h3&gt;Reflect.set(target, propertyKey, value[, receiver])&lt;/h3&gt;&lt;br&gt;&lt;br&gt;A function that assigns values to properties. Returns a boolean that is true if&lt;br&gt;the update was successful.&lt;br&gt;&lt;br&gt;&lt;h3&gt;Reflect.setPrototypeOf(target, prototype)&lt;/h3&gt;&lt;br&gt;&lt;br&gt;A function that sets the prototype of an object. Returns a boolean that is true&lt;br&gt;if the update was successful.">
+        Reflect</abbr></p>
+        <div style=
+        "padding: 1em; background-color: #CCFFFF;border-radius: 15px; font-size: 0.9em; box-shadow: 0.05em 0.1em 5px 0.01em #00000057;">
+          <h3>Reflect</h3>
+          <p>&lt;h2&gt;Description&lt;/h2&gt;</p>
+          <p>Unlike most global objects, Reflect is not a
+          constructor. You cannot use it with a new operator or
+          invoke the Reflect object as a function. All properties
+          and methods of Reflect are static (just like the Math
+          object).</p>
+          <p>The Reflect object provides the following static
+          functions which have the same names as the proxy handler
+          methods.</p>
+          <p>Some of these methods are also the same as
+          corresponding methods on Object, although they do have
+          some subtle differences between them.</p>
+          <p>&lt;h2&gt;Static methods&lt;/h2&gt;</p>
+          <p>&lt;h3&gt;Reflect.apply(target, thisArgument,
+          argumentsList)&lt;/h3&gt;</p>
+          <p>Calls a target function with arguments as specified by
+          the argumentsList parameter. See also
+          Function.prototype.apply().</p>
+          <p>&lt;h3&gt;Reflect.construct(target, argumentsList[,
+          newTarget])&lt;/h3&gt;</p>
+          <p>The new operator as a function. Equivalent to calling
+          new target(…argumentsList). Also provides the option to
+          specify a different prototype.</p>
+          <p>&lt;h3&gt;Reflect.defineProperty(target, propertyKey,
+          attributes)&lt;/h3&gt;</p>
+          <p>Similar to Object.defineProperty(). Returns a boolean
+          that is true if the property was successfully
+          defined.</p>
+          <p>&lt;h3&gt;Reflect.deleteProperty(target,
+          propertyKey)&lt;/h3&gt;</p>
+          <p>The delete operator as a function. Equivalent to
+          calling delete target[propertyKey].</p>
+          <p>&lt;h3&gt;Reflect.get(target, propertyKey[,
+          receiver])&lt;/h3&gt;</p>
+          <p>Returns the value of the property. Works like getting
+          a property from an object (target[propertyKey]) as a
+          function.</p>
+          <p>&lt;h3&gt;Reflect.getOwnPropertyDescriptor(target,
+          propertyKey)&lt;/h3&gt;</p>
+          <p>Similar to Object.getOwnPropertyDescriptor(). Returns
+          a property descriptor of the given property if it exists
+          on the object, undefined otherwise.</p>
+          <p>
+          &lt;h3&gt;Reflect.getPrototypeOf(target)&lt;/h3&gt;</p>
+          <p>Same as Object.getPrototypeOf().</p>
+          <p>&lt;h3&gt;Reflect.has(target,
+          propertyKey)&lt;/h3&gt;</p>
+          <p>Returns a boolean indicating whether the target has
+          the property. Either as own or inherited. Works like the
+          in operator as a function.</p>
+          <p>&lt;h3&gt;Reflect.isExtensible(target)&lt;/h3&gt;</p>
+          <p>Same as Object.isExtensible(). Returns a boolean that
+          is true if the target is extensible.</p>
+          <p>&lt;h3&gt;Reflect.ownKeys(target)&lt;/h3&gt;</p>
+          <p>Returns an array of the target object’s own (not
+          inherited) property keys.</p>
+          <p>
+          &lt;h3&gt;Reflect.preventExtensions(target)&lt;/h3&gt;</p>
+          <p>Similar to Object.preventExtensions(). Returns a
+          boolean that is true if the update was successful.</p>
+          <p>&lt;h3&gt;Reflect.set(target, propertyKey, value[,
+          receiver])&lt;/h3&gt;</p>
+          <p>A function that assigns values to properties. Returns
+          a boolean that is true if the update was successful.</p>
+          <p>&lt;h3&gt;Reflect.setPrototypeOf(target,
+          prototype)&lt;/h3&gt;</p>
+          <p>A function that sets the prototype of an object.
+          Returns a boolean that is true if the update was
+          successful.</p>
+        </div>
       </div>
     </div>
   </div>
   <div id="postamble" class="status">
     <p class="author">Author: Zhicheng Lee</p>
-    <p class="date">Created: 2022-03-12 Sat 20:18</p>
+    <p class="date">Created: 2022-03-20 Sun 09:53</p>
   </div>
 </body>
 </html>
