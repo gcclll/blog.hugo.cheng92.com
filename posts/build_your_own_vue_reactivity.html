@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <!-- 2022-03-31 Thu 14:38 -->
+  <!-- 2022-03-31 Thu 16:47 -->
   <meta charset="utf-8">
   <meta name="viewport" content=
   "width=device-width, initial-scale=1">
@@ -283,19 +283,19 @@
       <div id="text-table-of-contents" role="doc-toc">
         <ul>
           <li>
-            <a href="#orgbecb708">1. 前置代码(handlers)</a>
+            <a href="#org8cccf4a">1. 前置代码(handlers)</a>
           </li>
           <li>
-            <a href="#org1b1b584">2. used global variables</a>
+            <a href="#org44b5743">2. used global variables</a>
           </li>
           <li>
-            <a href="#org6da08bf">3. reactive(target: object)</a>
+            <a href="#orgca55170">3. reactive(target: object)</a>
           </li>
           <li>
-            <a href="#orge23694a">4. createReactiveObject</a>
+            <a href="#orgfbe9d96">4. createReactiveObject</a>
           </li>
           <li>
-            <a href="#org5efb1bd">5. mutableHandlers</a>
+            <a href="#org206b14c">5. mutableHandlers</a>
             <ul>
               <li>
                 <a href="#base-handler-createGetter">5.1.
@@ -306,21 +306,21 @@
                 createSetter</a>
               </li>
               <li>
-                <a href="#org9ff7a8c">5.3. deleteProperty</a>
+                <a href="#org5e040b8">5.3. deleteProperty</a>
               </li>
               <li>
                 <a href="#base-handler-has">5.4. has</a>
               </li>
               <li>
-                <a href="#org36fe538">5.5. ownKeys</a>
+                <a href="#org33cdce6">5.5. ownKeys</a>
               </li>
               <li>
-                <a href="#orgbd49d5e">5.6. Testing</a>
+                <a href="#org7c4cb1d">5.6. Testing</a>
               </li>
             </ul>
           </li>
           <li>
-            <a href="#orgdff3c02">6. mutableCollectionHandlers</a>
+            <a href="#orgeabf098">6. mutableCollectionHandlers</a>
             <ul>
               <li>
                 <a href=
@@ -335,10 +335,10 @@
                 <a href="#ref-collection-get">6.3. get</a>
               </li>
               <li>
-                <a href="#ref-collection-size">6.4. size</a>
+                <a href="#ref-collection-has">6.4. has</a>
               </li>
               <li>
-                <a href="#ref-collection-has">6.5. has</a>
+                <a href="#ref-collection-size">6.5. size</a>
               </li>
               <li>
                 <a href="#ref-collection-add">6.6. add</a>
@@ -356,12 +356,20 @@
                 <a href="#ref-collection-forEach">6.10. forEach</a>
               </li>
               <li>
-                <a href="#orgcef6827">6.11. Testing</a>
+                <a href="#org0e90b3f">6.11. keys, values,
+                entries</a>
+              </li>
+              <li>
+                <a href="#org232879e">6.12. Testing</a>
               </li>
             </ul>
           </li>
           <li>
-            <a href="#org0dc620e">7. FootNotes</a>
+            <a href="#org523fac8">7. phase one(no track &
+            trigger)</a>
+          </li>
+          <li>
+            <a href="#org9286b74">8. FootNotes</a>
           </li>
         </ul>
       </div>
@@ -379,8 +387,8 @@
       <p><i><span style=
       "color:blue;">注意：这里会省略部分不影响理解的代码，和一些非法参数等等的检查，目的是为了减少代码量，但不影响学习和理解源代码</span></i></p>
     </div><br>
-    <div id="outline-container-orgbecb708" class="outline-2">
-      <h2 id="orgbecb708"><span class="section-number-2">1.</span>
+    <div id="outline-container-org8cccf4a" class="outline-2">
+      <h2 id="org8cccf4a"><span class="section-number-2">1.</span>
       前置代码(handlers)</h2>
       <div class="outline-text-2" id="text-1">
         <p>由于 <abbr class="tooltip" title=
@@ -415,90 +423,105 @@
         JavaScript Proxy And Reflect</a>。</p>
       </div>
     </div>
-    <div id="outline-container-org1b1b584" class="outline-2">
-      <h2 id="org1b1b584"><span class="section-number-2">2.</span>
+    <div id="outline-container-org44b5743" class="outline-2">
+      <h2 id="org44b5743"><span class="section-number-2">2.</span>
       used global variables</h2>
       <div class="outline-text-2" id="text-2">
         <p>这里把用到的所有全局变量集中到下面。</p>
         <div class="org-src-container">
-          <pre class="src src-js" id="orgfd54e77"><span class=
+          <pre class="src src-js" id="orge14bde6"><span class=
           "linenr"> 1: </span><span class=
-          "org-comment-delimiter">// </span><span class=
-          "org-comment">用来缓存 target =&gt; Proxy&lt;target&gt; 之间的关系</span>
+          "org-keyword">const</span> <span class=
+          "org-variable-name">__DEV__</span> = <span class=
+          "org-constant">true</span>
+<span class="linenr"> 2: </span><span class=
+"org-comment-delimiter">// </span><span class=
+"org-comment">用来缓存 target =&gt; Proxy&lt;target&gt; 之间的关系</span>
 <span id="coderef-reactiveMap" class="coderef-off"><span class=
-"linenr"> 2: </span><span class=
+"linenr"> 3: </span><span class=
 "org-keyword">const</span> <span class=
 "org-variable-name">reactiveMap</span> = <span class=
 "org-keyword">new</span> <span class=
 "org-type">WeakMap</span>()</span>
-<span class="linenr"> 3: </span>
-<span class="linenr"> 4: </span><span class=
+<span class="linenr"> 4: </span>
+<span class="linenr"> 5: </span><span class=
+"org-keyword">const</span> <span class=
+"org-variable-name">objectToString</span> = Object.<span class=
+"org-constant">prototype</span>.toString
+<span class="linenr"> 6: </span><span class=
+"org-keyword">const</span> <span class=
+"org-variable-name">toTypeString</span> = value =&gt; objectToString.call(value)
+<span class="linenr"> 7: </span>
+<span class="linenr"> 8: </span><span class=
 "org-keyword">const</span> <span class=
 "org-variable-name">getRawType</span> = val =&gt; Object.<span class="org-constant">prototype</span>.toString.call(val).slice(<span class="org-highlight-numbers-number">8</span>, -<span class="org-highlight-numbers-number">1</span>)
-<span class="linenr"> 5: </span><span class=
+<span class="linenr"> 9: </span><span class=
 "org-keyword">const</span> <span class=
 "org-variable-name">isCollection</span> = val =&gt; [<span class=
 "org-string">'Map'</span>, <span class=
 "org-string">'Set'</span>, <span class=
 "org-string">'WeakMap'</span>, <span class=
 "org-string">'WeakSet'</span>].includes(getRawType(val))
-<span class="linenr"> 6: </span><span class=
+<span class="linenr">10: </span><span class=
 "org-keyword">const</span> <span class=
 "org-variable-name">isObject</span> = val =&gt; [<span class=
 "org-string">'Object'</span>, <span class=
 "org-string">'Array'</span>].includes(getRawType(val))
-<span class="linenr"> 7: </span><span class=
+<span class="linenr">11: </span><span class=
 "org-keyword">const</span> <span class=
 "org-variable-name">isString</span> = val =&gt; <span class=
 "org-keyword">typeof</span> val === <span class=
 "org-string">'string'</span>
-<span class="linenr"> 8: </span><span class=
+<span class="linenr">12: </span><span class=
 "org-keyword">const</span> <span class=
 "org-variable-name">isIntegerKey</span> = (key) =&gt; isString(key) &amp;& key !== <span class="org-string">'NaN'</span> &amp;& key[<span class="org-highlight-numbers-number">0</span>] !== <span class="org-string">'-'</span> &amp;& <span class="org-string">''</span> + parseInt(key, <span class="org-highlight-numbers-number">10</span>) === key
-<span class="linenr"> 9: </span><span class=
+<span class="linenr">13: </span><span class=
+"org-keyword">const</span> <span class=
+"org-variable-name">isMap</span> = val =&gt; toTypeString(val) === <span class="org-string">'[object Map]'</span>
+<span class="linenr">14: </span><span class=
 "org-keyword">const</span> <span class=
 "org-variable-name">hasOwnProperty</span> = Object.<span class=
 "org-constant">prototype</span>.hasOwnProperty
-<span class="linenr">10: </span><span class=
+<span class="linenr">15: </span><span class=
 "org-keyword">const</span> <span class=
 "org-variable-name">hasOwn</span> = (val, key) =&gt; hasOwnProperty.call(val, key)
-<span class="linenr">11: </span>
-<span class="linenr">12: </span><span class=
+<span class="linenr">16: </span>
+<span class="linenr">17: </span><span class=
 "org-keyword">const</span> <span class=
 "org-variable-name">toRaw</span> = observed =&gt; {
-<span class="linenr">13: </span>  <span class=
+<span class="linenr">18: </span>  <span class=
 "org-keyword">const</span> <span class=
 "org-variable-name">raw</span> = observed &amp;& observed.__v_raw
-<span class="linenr">14: </span>  <span class=
+<span class="linenr">19: </span>  <span class=
 "org-keyword">return</span> raw ? toRaw(raw) : observed
-<span class="linenr">15: </span>}
-<span class="linenr">16: </span><span class=
+<span class="linenr">20: </span>}
+<span class="linenr">21: </span><span class=
 "org-keyword">const</span> <span class=
 "org-variable-name">getProto</span> = v =&gt; Reflect.getPrototypeOf(v)
-<span class="linenr">17: </span><span class=
+<span class="linenr">22: </span><span class=
 "org-keyword">const</span> <span class=
 "org-variable-name">toReactive</span> = value =&gt; <span class=
 "org-keyword">typeof</span> value === <span class=
 "org-string">'object'</span> ? reactive(value) : value
-<span class="linenr">18: </span>
-<span class="linenr">19: </span><span class=
+<span class="linenr">23: </span>
+<span class="linenr">24: </span><span class=
 "org-keyword">const</span> <span class=
 "org-variable-name">log</span> = (fn, message) =&gt; console.log(<span class="org-string">`[${fn}] ${message}`</span>)
-<span class="linenr">20: </span><span class=
+<span class="linenr">25: </span><span class=
 "org-keyword">const</span> <span class=
 "org-variable-name">logEnd</span> = () =&gt; console.log(<span class="org-string">"--------- END ---------"</span>)
 </pre>
         </div>
       </div>
     </div>
-    <div id="outline-container-org6da08bf" class="outline-2">
-      <h2 id="org6da08bf"><span class="section-number-2">3.</span>
+    <div id="outline-container-orgca55170" class="outline-2">
+      <h2 id="orgca55170"><span class="section-number-2">3.</span>
       reactive(target: object)</h2>
       <div class="outline-text-2" id="text-3">
-        <p>相关代码：<a href="#orgfd54e77">globalVars</a>, <a href=
-        "#org88c7459">createReactiveObject</a></p>
+        <p>相关代码：<a href="#orge14bde6">globalVars</a>, <a href=
+        "#orge5718c5">createReactiveObject</a></p>
         <div class="org-src-container">
-          <pre class="src src-js" id="orga55d63f"><span class=
+          <pre class="src src-js" id="org9c9d6a6"><span class=
           "linenr"> 1: </span>&lt;&lt;globalVars&gt;&gt;
 <span class="linenr"> 2: </span>
 <span class="linenr"> 3: </span><span class=
@@ -562,8 +585,8 @@
         </ol>
       </div>
     </div>
-    <div id="outline-container-orge23694a" class="outline-2">
-      <h2 id="orge23694a"><span class="section-number-2">4.</span>
+    <div id="outline-container-orgfbe9d96" class="outline-2">
+      <h2 id="orgfbe9d96"><span class="section-number-2">4.</span>
       createReactiveObject</h2>
       <div class="outline-text-2" id="text-4">
         <p>这个才是真正创建代理的地方，也是 <span style=
@@ -592,7 +615,7 @@
 </pre>
         </div>
         <p>参数说明：</p>
-        <table id="org330cf2f">
+        <table id="orgfa2ef1d">
           <colgroup>
             <col class="org-left">
             <col class="org-left">
@@ -637,7 +660,7 @@
           </tbody>
         </table>
         <div class="org-src-container">
-          <pre class="src src-js" id="org88c7459"><span class=
+          <pre class="src src-js" id="orge5718c5"><span class=
           "org-keyword">function</span> <span class=
           "org-function-name">createReactiveObject</span>(
   <span class="org-variable-name">target</span>,
@@ -663,29 +686,22 @@
         </div>
       </div>
     </div>
-    <div id="outline-container-org5efb1bd" class="outline-2">
-      <h2 id="org5efb1bd"><span class="section-number-2">5.</span>
+    <div id="outline-container-org206b14c" class="outline-2">
+      <h2 id="org206b14c"><span class="section-number-2">5.</span>
       mutableHandlers</h2>
       <div class="outline-text-2" id="text-5">
         <p>针对普通类型(<abbr class="tooltip" title=
         "zsh:1: command not found: wn&lt;br&gt;">Object</abbr>,
         <abbr class="tooltip" title=
         "zsh:1: command not found: wn&lt;br&gt;">Array</abbr>)的对象的
-        Proxy 参数。</p><br>
-        <details class="code-details" style=
-        "padding: 1em; background-color: #e5f5e5; /* background-color: pink; */ border-radius: 15px; color: hsl(157 75%); font-size: 0.9em; box-shadow: 0.05em 0.1em 5px 0.01em #00000057;">
-          <summary>
-            <strong><font face="Courier" size="3" color=
-            "blue">mutableHandlers</font></strong>
-          </summary><br>
-          <div class="org-src-container">
-            <pre class="src src-js" id="orga44e855"><span id=
-            "coderef-mutableHandlers" class=
-            "coderef-off"><span class=
-            "linenr"> 1: </span><span class=
-            "org-keyword">const</span> <span class=
-            "org-variable-name">mutableHandlers</span> = (<span class=
-            "org-keyword">function</span> () {</span>
+        Proxy 参数。</p>
+        <div class="org-src-container">
+          <pre class="src src-js" id="org3d6465c"><span id=
+          "coderef-mutableHandlers" class="coderef-off"><span class=
+          "linenr"> 1: </span><span class=
+          "org-keyword">const</span> <span class=
+          "org-variable-name">mutableHandlers</span> = (<span class=
+          "org-keyword">function</span> () {</span>
 <span class="linenr"> 2: </span>  <span class=
 "org-keyword">const</span> <span class=
 "org-variable-name">get</span> = createGetter();
@@ -720,8 +736,7 @@
 <span class="linenr">22: </span>  };
 <span class="linenr">23: </span>})();
 </pre>
-          </div>
-        </details>
+        </div>
       </div>
       <div id="outline-container-base-handler-createGetter" class=
       "outline-3">
@@ -730,7 +745,7 @@
         <div class="outline-text-3" id=
         "text-base-handler-createGetter">
           <div class="org-src-container">
-            <pre class="src src-js" id="org200ce96"><span class=
+            <pre class="src src-js" id="org9d45676"><span class=
             "org-keyword">function</span> <span class=
             "org-function-name">createGetter</span>(<span class=
             "org-variable-name">isReadonly</span> = <span class=
@@ -765,7 +780,7 @@
         <div class="outline-text-3" id=
         "text-base-handler-createSetter">
           <div class="org-src-container">
-            <pre class="src src-js" id="org06a1e4c"><span class=
+            <pre class="src src-js" id="org0531e75"><span class=
             "org-keyword">function</span> <span class=
             "org-function-name">createSetter</span>(<span class=
             "org-variable-name">shallow</span> = <span class=
@@ -803,12 +818,12 @@
           </div>
         </div>
       </div>
-      <div id="outline-container-org9ff7a8c" class="outline-3">
-        <h3 id="org9ff7a8c"><span class=
+      <div id="outline-container-org5e040b8" class="outline-3">
+        <h3 id="org5e040b8"><span class=
         "section-number-3">5.3.</span> deleteProperty</h3>
         <div class="outline-text-3" id="text-5-3">
           <div class="org-src-container">
-            <pre class="src src-js" id="orga12fc9f"><span class=
+            <pre class="src src-js" id="orgd22f797"><span class=
             "org-keyword">function</span> <span class=
             "org-function-name">deleteProperty</span>(<span class=
             "org-variable-name">target</span>, <span class=
@@ -833,7 +848,7 @@
         "section-number-3">5.4.</span> has</h3>
         <div class="outline-text-3" id="text-base-handler-has">
           <div class="org-src-container">
-            <pre class="src src-js" id="org8a0b021"><span class=
+            <pre class="src src-js" id="org2b40b19"><span class=
             "org-keyword">function</span> <span class=
             "org-function-name">has</span>(<span class=
             "org-variable-name">target</span>, <span class=
@@ -848,12 +863,12 @@
           </div>
         </div>
       </div>
-      <div id="outline-container-org36fe538" class="outline-3">
-        <h3 id="org36fe538"><span class=
+      <div id="outline-container-org33cdce6" class="outline-3">
+        <h3 id="org33cdce6"><span class=
         "section-number-3">5.5.</span> ownKeys</h3>
         <div class="outline-text-3" id="text-5-5">
           <div class="org-src-container">
-            <pre class="src src-js" id="org6dca0cb"><span class=
+            <pre class="src src-js" id="orge17a98e"><span class=
             "org-keyword">function</span> <span class=
             "org-function-name">ownKeys</span>(<span class=
             "org-variable-name">target</span>) {
@@ -865,8 +880,8 @@
           </div>
         </div>
       </div>
-      <div id="outline-container-orgbd49d5e" class="outline-3">
-        <h3 id="orgbd49d5e"><span class=
+      <div id="outline-container-org7c4cb1d" class="outline-3">
+        <h3 id="org7c4cb1d"><span class=
         "section-number-3">5.6.</span> Testing</h3>
         <div class="outline-text-3" id="text-5-6">
           <p>先将 <a href="#coderef-mutableCollectionHandlers" class=
@@ -887,8 +902,8 @@
               <strong><font face="Courier" size="3" color=
               "red">测试非集合类型 get 操作</font></strong>
             </summary>
-            <p><a href="#org200ce96">createGetter</a>, <a href=
-            "#orga55d63f">reactive</a></p>
+            <p><a href="#org9d45676">createGetter</a>, <a href=
+            "#org9c9d6a6">reactive</a></p>
             <div class="org-src-container">
               <pre class="src src-js"><span class=
               "linenr"> 1: </span><span class=
@@ -929,8 +944,8 @@ undefined
               <strong><font face="Courier" size="3" color=
               "red">测试非集合类型 set 操作</font></strong>
             </summary>
-            <p><a href="#org06a1e4c">createSetter</a>, <a href=
-            "#orga55d63f">reactive</a></p>
+            <p><a href="#org0531e75">createSetter</a>, <a href=
+            "#org9c9d6a6">reactive</a></p>
             <div class="org-src-container">
               <pre class="src src-js"><span class=
               "linenr"> 1: </span><span class=
@@ -974,8 +989,8 @@ undefined
               <strong><font face="Courier" size="3" color=
               "red">测试非集合类型 delete 操作</font></strong>
             </summary>
-            <p><a href="#orga12fc9f">deleteProperty</a>, <a href=
-            "#orga55d63f">reactive</a></p>
+            <p><a href="#orgd22f797">deleteProperty</a>, <a href=
+            "#org9c9d6a6">reactive</a></p>
             <div class="org-src-container">
               <pre class="src src-js"><span class=
               "linenr"> 1: </span><span class=
@@ -1017,8 +1032,8 @@ undefined
               <strong><font face="Courier" size="3" color=
               "red">测试非集合类型 has 操作</font></strong>
             </summary>
-            <p><a href="#org8a0b021">not-collection-has</a>,
-            <a href="#orga55d63f">reactive</a></p>
+            <p><a href="#org2b40b19">not-collection-has</a>,
+            <a href="#org9c9d6a6">reactive</a></p>
             <div class="org-src-container">
               <pre class="src src-js"><span class=
               "linenr"> 1: </span><span class=
@@ -1061,8 +1076,8 @@ undefined
               <strong><font face="Courier" size="3" color=
               "red">测试非集合类型 ownKeys 操作</font></strong>
             </summary>
-            <p><a href="#org6dca0cb">ownKeys</a>, <a href=
-            "#orga55d63f">reactive</a></p>
+            <p><a href="#orge17a98e">ownKeys</a>, <a href=
+            "#org9c9d6a6">reactive</a></p>
             <p>各种迭达操作时会调用的原子操作。</p>
             <div class="org-src-container">
               <pre class="src src-js"><span class=
@@ -1108,8 +1123,8 @@ undefined
         </div>
       </div>
     </div>
-    <div id="outline-container-orgdff3c02" class="outline-2">
-      <h2 id="orgdff3c02"><span class="section-number-2">6.</span>
+    <div id="outline-container-orgeabf098" class="outline-2">
+      <h2 id="orgeabf098"><span class="section-number-2">6.</span>
       mutableCollectionHandlers</h2>
       <div class="outline-text-2" id="text-6">
         <p>针对集合类型的对象，因为 <abbr class="tooltip" title=
@@ -1124,23 +1139,26 @@ undefined
         方式其实就是一个 proxy get - Reflect.get 方法，所以
         mutableCollectionHandlers 就很简单只有一个 <code>get</code> 方法。</p>
         <div class="org-src-container">
-          <pre class="src src-js" id="orgddc5070"><span class=
-          "linenr">1: </span>&lt;&lt;createInstrumentationGetter&gt;&gt;
+          <pre class="src src-js" id="orga08d9c5"><span class=
+          "linenr">1: </span>&lt;&lt;mutableInstrumentations&gt;&gt;
+<span class="linenr">2: </span>&lt;&lt;collection-iterator&gt;&gt;
+<span class=
+"linenr">3: </span>&lt;&lt;createInstrumentationGetter&gt;&gt;
 <span id="coderef-mutableCollectionHandlers" class=
-"coderef-off"><span class="linenr">2: </span><span class=
+"coderef-off"><span class="linenr">4: </span><span class=
 "org-keyword">const</span> <span class=
 "org-variable-name">mutableCollectionHandlers</span> = {</span>
 <span class=
-"linenr">3: </span>  get: createInstrumentationGetter(<span class=
+"linenr">5: </span>  get: createInstrumentationGetter(<span class=
 "org-constant">false</span>, <span class=
 "org-constant">false</span>)
-<span class="linenr">4: </span>}
+<span class="linenr">6: </span>}
 </pre>
         </div>
         <p>所有的代码都封装在以 <a href=
-        "#org56d413c">createInstrumentationGetter</a> 为入口的代码中了。</p>
+        "#org690c3e6">createInstrumentationGetter</a> 为入口的代码中了。</p>
         <p>接下来重点看下它是如何实现 Map/Set 类型的代理的？？？</p>
-        <div class="tip" id="orgc2e26c8">
+        <div class="tip" id="org4dff4b6">
           <p>vue 源码是基于 typescript 实现的，所以下面集合相关的函数的第一个参数是
           <code>function (this: Xxxx)</code> 方法，在 javascript
           中其实就是函数内部的 <code>this</code> 。</p>
@@ -1155,7 +1173,7 @@ undefined
         <div class="outline-text-3" id=
         "text-ref-collection-createInstrumentationGetter">
           <div class="org-src-container">
-            <pre class="src src-js" id="org56d413c"><span class=
+            <pre class="src src-js" id="org690c3e6"><span class=
             "org-keyword">function</span> <span class=
             "org-function-name">createInstrumentationGetter</span>(<span class=
             "org-variable-name">isReadonly</span>, <span class=
@@ -1211,7 +1229,7 @@ undefined
         <div class="outline-text-3" id=
         "text-collection-mutableInstrumentations">
           <div class="org-src-container">
-            <pre class="src src-js" id="org7750de4"><span class=
+            <pre class="src src-js" id="orgd4965a5"><span class=
             "linenr"> 1: </span>&lt;&lt;collection-get&gt;&gt;
 <span class="linenr"> 2: </span>&lt;&lt;collection-size&gt;&gt;
 <span class="linenr"> 3: </span>&lt;&lt;collection-has&gt;&gt;
@@ -1220,7 +1238,7 @@ undefined
 <span class="linenr"> 6: </span>&lt;&lt;collection-<span class=
 "org-keyword">delete</span>&gt;&gt;
 <span class="linenr"> 7: </span>&lt;&lt;collection-clear&gt;&gt;
-<span class="linenr"> 8: </span>&lt;&lt;collectioin-forEach&gt;&gt;
+<span class="linenr"> 8: </span>&lt;&lt;collection-forEach&gt;&gt;
 <span class="linenr"> 9: </span><span class=
 "org-keyword">const</span> <span class=
 "org-variable-name">mutableInstrumentations</span> = {
@@ -1241,7 +1259,7 @@ undefined
 "org-keyword">delete</span>: deleteEntry,
 <span class="linenr">20: </span>  clear,
 <span class=
-"linenr">21: </span>  forEach, createForEach(<span class=
+"linenr">21: </span>  forEach: createForEach(<span class=
 "org-constant">false</span>, <span class=
 "org-constant">false</span>)
 <span class="linenr">22: </span>}
@@ -1255,7 +1273,7 @@ undefined
         "section-number-3">6.3.</span> get</h3>
         <div class="outline-text-3" id="text-ref-collection-get">
           <div class="org-src-container">
-            <pre class="src src-js" id="orga1ba3e9"><span class=
+            <pre class="src src-js" id="org4488cde"><span class=
             "linenr"> 1: </span><span class=
             "org-keyword">function</span> <span class=
             "org-function-name">get</span>(<span class=
@@ -1303,8 +1321,52 @@ undefined
 <span class="linenr">15: </span>    <span class=
 "org-comment-delimiter">// </span><span class=
 "org-comment">嵌套使用时的情况 readonly(reactive(Map))，这里暂时不讨论</span>
-<span class="linenr">16: </span>  }
-<span class="linenr">17: </span>}
+<span class="linenr">16: </span>    target.get(key)
+<span class="linenr">17: </span>  }
+<span class="linenr">18: </span>}
+</pre>
+          </div>
+          <p>这个 get 函数是集合类型对象实现代理的最关键的函数，因为所有的集合类型代理都通过代 理它们的
+          <code>get</code> 方法来实现的，比如： <code>map.get('count')</code>
+          实现是对 map get 进行了代理， 当调用它时首先是发生了 map -&gt; get 这个名为
+          <code>get</code> 的函数的取值操作，最后这个操作都 被代理到了 <a href=
+          "#orga08d9c5">mutableCollectionHandlers</a> 中去了，因为当调用
+          <code>map.get()</code> 的时候实际是在 调用
+          <code>mutableCollectionHandlers.get()</code> 最后调用的就是这里的
+          <code>get</code> 函数。</p>
+          <p>其实一顿操作过后，在这个函数里最后调用的还是 <code>map.get</code>
+          这个原生函数，得到值返回， 在返回之前会对这个结果进行 reactive 化。</p>
+        </div>
+      </div>
+      <div id="outline-container-ref-collection-has" class=
+      "outline-3">
+        <h3 id="ref-collection-has"><span class=
+        "section-number-3">6.4.</span> has</h3>
+        <div class="outline-text-3" id="text-ref-collection-has">
+          <div class="org-src-container">
+            <pre class="src src-js" id="org9c14cf1"><span class=
+            "linenr">1: </span><span class=
+            "org-keyword">function</span> <span class=
+            "org-function-name">has</span>(<span class=
+            "org-variable-name">key</span>, <span class=
+            "org-variable-name">isReadonly</span>) {
+<span class="linenr">2: </span>  target = <span class=
+"org-constant">this</span>.__v_raw
+<span class="linenr">3: </span>  <span class=
+"org-keyword">const</span> <span class=
+"org-variable-name">rawTarget</span> = toRaw(target)
+<span class="linenr">4: </span>  <span class=
+"org-keyword">const</span> <span class=
+"org-variable-name">rawKey</span> = toRaw(key)
+<span class="linenr">5: </span>
+<span class="linenr">6: </span>  console.log(<span class=
+"org-string">`has| key=${key}, rawKey=${rawKey}, target=${target}`</span>)
+<span class="linenr">7: </span>  <span class=
+"org-comment-delimiter">// </span><span class=
+"org-comment">key 本身也可能是一个 reactive 对象</span>
+<span class="linenr">8: </span>  <span class=
+"org-keyword">return</span> key === rawKey ? target.has(key) : target.has(key) || target.has(rawKey)
+<span class="linenr">9: </span>}
 </pre>
           </div>
         </div>
@@ -1312,27 +1374,23 @@ undefined
       <div id="outline-container-ref-collection-size" class=
       "outline-3">
         <h3 id="ref-collection-size"><span class=
-        "section-number-3">6.4.</span> size</h3>
+        "section-number-3">6.5.</span> size</h3>
         <div class="outline-text-3" id="text-ref-collection-size">
           <div class="org-src-container">
-            <pre class="src src-js" id="org557fac8"><span class=
+            <pre class="src src-js" id="orgaf1e044"><span class=
             "linenr">1: </span><span class=
             "org-keyword">function</span> <span class=
-            "org-function-name">size</span>() {}
-</pre>
-          </div>
-        </div>
-      </div>
-      <div id="outline-container-ref-collection-has" class=
-      "outline-3">
-        <h3 id="ref-collection-has"><span class=
-        "section-number-3">6.5.</span> has</h3>
-        <div class="outline-text-3" id="text-ref-collection-has">
-          <div class="org-src-container">
-            <pre class="src src-js" id="org856beef"><span class=
-            "linenr">1: </span><span class=
-            "org-keyword">function</span> <span class=
-            "org-function-name">has</span>() {}
+            "org-function-name">size</span>(<span class=
+            "org-variable-name">target</span>, <span class=
+            "org-variable-name">isReadonly</span>) {
+<span class="linenr">2: </span>  target = target.__v_raw
+<span class="linenr">3: </span>
+<span class="linenr">4: </span>  console.log(<span class=
+"org-string">`size| target=${target}`</span>)
+<span class="linenr">5: </span>  <span class=
+"org-keyword">return</span> Reflect.get(target, <span class=
+"org-string">'size'</span>, target)
+<span class="linenr">6: </span>}
 </pre>
           </div>
         </div>
@@ -1342,11 +1400,34 @@ undefined
         <h3 id="ref-collection-add"><span class=
         "section-number-3">6.6.</span> add</h3>
         <div class="outline-text-3" id="text-ref-collection-add">
+          <p><code>Set.prototype.add</code> 添加元素。</p>
           <div class="org-src-container">
-            <pre class="src src-js" id="orgcadc7b0"><span class=
-            "linenr">1: </span><span class=
+            <pre class="src src-js" id="org5aafe0e"><span class=
+            "linenr"> 1: </span><span class=
             "org-keyword">function</span> <span class=
-            "org-function-name">add</span>() {}
+            "org-function-name">add</span>(<span class=
+            "org-variable-name">value</span>) {
+<span class="linenr"> 2: </span>  value = toRaw(value)
+<span class="linenr"> 3: </span>  <span class=
+"org-keyword">const</span> <span class=
+"org-variable-name">target</span> = toRaw(<span class=
+"org-constant">this</span>)
+<span class="linenr"> 4: </span>  <span class=
+"org-keyword">const</span> <span class=
+"org-variable-name">proto</span> = getProto(target)
+<span class="linenr"> 5: </span>  <span class=
+"org-keyword">const</span> <span class=
+"org-variable-name">hadKey</span> = proto.has.call(target, value)
+<span class="linenr"> 6: </span>
+<span class="linenr"> 7: </span>  <span class=
+"org-keyword">if</span> (!hadKey) {
+<span class="linenr"> 8: </span>    target.add(value)
+<span class="linenr"> 9: </span>  }
+<span class="linenr">10: </span>  console.log(<span class=
+"org-string">`add| value=${value}, hadKey=${hadKey}, target=${target}`</span>)
+<span class="linenr">11: </span>  <span class=
+"org-keyword">return</span> <span class="org-constant">this</span>
+<span class="linenr">12: </span>}
 </pre>
           </div>
         </div>
@@ -1357,10 +1438,38 @@ undefined
         "section-number-3">6.7.</span> set</h3>
         <div class="outline-text-3" id="text-ref-collection-set">
           <div class="org-src-container">
-            <pre class="src src-js" id="org781858d"><span class=
-            "linenr">1: </span><span class=
+            <pre class="src src-js" id="org9d4e73c"><span class=
+            "linenr"> 1: </span><span class=
             "org-keyword">function</span> <span class=
-            "org-function-name">set</span>() {}
+            "org-function-name">set</span>(<span class=
+            "org-variable-name">key</span>, <span class=
+            "org-variable-name">value</span>) {
+<span class="linenr"> 2: </span>  value = toRaw(value)
+<span class="linenr"> 3: </span>  <span class=
+"org-keyword">const</span> <span class=
+"org-variable-name">target</span> = toRaw(<span class=
+"org-constant">this</span>)
+<span class="linenr"> 4: </span>  <span class=
+"org-keyword">const</span> { has, get } = getProto(target)
+<span class="linenr"> 5: </span>
+<span class="linenr"> 6: </span>  <span class=
+"org-keyword">let</span> <span class=
+"org-variable-name">hadKey</span> = has.call(target, key)
+<span class="linenr"> 7: </span>  <span class=
+"org-keyword">if</span> (!hadKey) {
+<span class="linenr"> 8: </span>    key = toRaw(key)
+<span class="linenr"> 9: </span>    hadKey = has.call(target, key)
+<span class="linenr">10: </span>  }
+<span class="linenr">11: </span>
+<span class="linenr">12: </span>  <span class=
+"org-keyword">const</span> <span class=
+"org-variable-name">oldValue</span> = get.call(target, key)
+<span class="linenr">13: </span>  target.set(key, value)
+<span class="linenr">14: </span>  console.log(<span class=
+"org-string">`set| key=${key}, value=${value}, oldValue=${oldValue}, target=${target}`</span>)
+<span class="linenr">15: </span>  <span class=
+"org-keyword">return</span> <span class="org-constant">this</span>
+<span class="linenr">16: </span>}
 </pre>
           </div>
         </div>
@@ -1372,10 +1481,38 @@ undefined
         <div class="outline-text-3" id=
         "text-ref-collection-delete">
           <div class="org-src-container">
-            <pre class="src src-js" id="org4032fb0"><span class=
-            "linenr">1: </span><span class=
+            <pre class="src src-js" id="orgc0dba45"><span class=
+            "linenr"> 1: </span><span class=
             "org-keyword">function</span> <span class=
-            "org-function-name">deleteEntry</span>() {}
+            "org-function-name">deleteEntry</span>(<span class=
+            "org-variable-name">key</span>) {
+<span class="linenr"> 2: </span>  <span class=
+"org-keyword">const</span> <span class=
+"org-variable-name">target</span> = toRaw(<span class=
+"org-constant">this</span>)
+<span class="linenr"> 3: </span>  <span class=
+"org-keyword">const</span> { has, get } = getProto(target)
+<span class="linenr"> 4: </span>  <span class=
+"org-keyword">let</span> <span class=
+"org-variable-name">hadKey</span> = has.call(target, key)
+<span class="linenr"> 5: </span>  <span class=
+"org-keyword">if</span> (!hadKey) {
+<span class="linenr"> 6: </span>    key = toRaw(key)
+<span class="linenr"> 7: </span>    hadKey = has.call(target, key)
+<span class="linenr"> 8: </span>  }
+<span class="linenr"> 9: </span>
+<span class="linenr">10: </span>  <span class=
+"org-keyword">const</span> <span class=
+"org-variable-name">oldValue</span> = get ? get.call(target, key) : <span class="org-constant">undefined</span>
+<span class="linenr">11: </span>  <span class=
+"org-keyword">const</span> <span class=
+"org-variable-name">result</span> = target.<span class=
+"org-keyword">delete</span>(key)
+<span class="linenr">12: </span>  console.log(<span class=
+"org-string">`delete| key=${key}, oldValue=${oldValue}, result=${result}, target=${target}`</span>)
+<span class="linenr">13: </span>  <span class=
+"org-keyword">return</span> result
+<span class="linenr">14: </span>}
 </pre>
           </div>
         </div>
@@ -1386,10 +1523,43 @@ undefined
         "section-number-3">6.9.</span> clear</h3>
         <div class="outline-text-3" id="text-ref-collection-clear">
           <div class="org-src-container">
-            <pre class="src src-js" id="orgc9dd91b"><span class=
-            "linenr">1: </span><span class=
+            <pre class="src src-js" id="orgc462b13"><span class=
+            "linenr"> 1: </span><span class=
             "org-keyword">function</span> <span class=
-            "org-function-name">clear</span>() {}
+            "org-function-name">clear</span>() {
+<span class="linenr"> 2: </span>  <span class=
+"org-keyword">const</span> <span class=
+"org-variable-name">target</span> = toRaw(<span class=
+"org-constant">this</span>)
+<span class="linenr"> 3: </span>  <span class=
+"org-keyword">const</span> <span class=
+"org-variable-name">hadItems</span> = target.size !== <span class=
+"org-highlight-numbers-number">0</span>
+<span class="linenr"> 4: </span>  <span class=
+"org-keyword">const</span> <span class=
+"org-variable-name">oldTarget</span> = __DEV__
+<span class=
+"linenr"> 5: </span>        ? isMap(target) ? <span class=
+"org-keyword">new</span> <span class=
+"org-type">Map</span>(target) : <span class=
+"org-keyword">new</span> <span class="org-type">Set</span>(target)
+<span class="linenr"> 6: </span>        : <span class=
+"org-constant">undefined</span>
+<span class="linenr"> 7: </span>
+<span class="linenr"> 8: </span>  <span class=
+"org-keyword">const</span> <span class=
+"org-variable-name">result</span> = target.clear()
+<span class="linenr"> 9: </span>  <span class=
+"org-keyword">if</span> (hadItems) {
+<span class="linenr">10: </span>    <span class=
+"org-comment-delimiter">// </span><span class=
+"org-comment">...trigger</span>
+<span class="linenr">11: </span>  }
+<span class="linenr">12: </span>  console.log(<span class=
+"org-string">`clear| result=${result}, target=${target}`</span>)
+<span class="linenr">13: </span>  <span class=
+"org-keyword">return</span> result
+<span class="linenr">14: </span>}
 </pre>
           </div>
         </div>
@@ -1401,18 +1571,150 @@ undefined
         <div class="outline-text-3" id=
         "text-ref-collection-forEach">
           <div class="org-src-container">
-            <pre class="src src-js" id="orgbd34e1e"><span class=
-            "linenr">1: </span><span class=
+            <pre class="src src-js" id="org49afb54"><span class=
+            "linenr"> 1: </span><span class=
             "org-keyword">function</span> <span class=
-            "org-function-name">createForEach</span>() {}
+            "org-function-name">createForEach</span>(<span class=
+            "org-variable-name">isReadonly</span>, <span class=
+            "org-variable-name">isShallow</span>) {
+<span class="linenr"> 2: </span>  <span class=
+"org-keyword">return</span> <span class=
+"org-keyword">function</span> forEach(<span class=
+"org-variable-name">callback</span>, <span class=
+"org-variable-name">thisArg</span>) {
+<span class="linenr"> 3: </span>    <span class=
+"org-keyword">const</span> <span class=
+"org-variable-name">observed</span> = <span class=
+"org-constant">this</span>
+<span class="linenr"> 4: </span>    <span class=
+"org-keyword">const</span> <span class=
+"org-variable-name">target</span> = observed.__v_raw
+<span class="linenr"> 5: </span>    <span class=
+"org-keyword">const</span> <span class=
+"org-variable-name">rawTarget</span> = toRaw(target)
+<span class="linenr"> 6: </span>    <span class=
+"org-keyword">const</span> <span class=
+"org-variable-name">wrap</span> = toReactive <span class=
+"org-comment-delimiter">// </span><span class=
+"org-comment">shallow ? readonly ?</span>
+<span class="linenr"> 7: </span>
+<span class="linenr"> 8: </span>    console.log(<span class=
+"org-string">`forEach| target=${target}, rawTarget=${rawTarget}`</span>)
+<span class="linenr"> 9: </span>    <span class=
+"org-keyword">return</span> target.forEach((value, key) =&gt; {
+<span class="linenr">10: </span>      console.log(<span class=
+"org-string">`forEach - forEach| value=${value}, key=${key}`</span>)
+<span class="linenr">11: </span>      <span class=
+"org-keyword">return</span> callback.call(thisArg, wrap(value), wrap(key), observed)
+<span class="linenr">12: </span>    })
+<span class="linenr">13: </span>  }
+<span class="linenr">14: </span>}
 </pre>
           </div>
         </div>
       </div>
-      <div id="outline-container-orgcef6827" class="outline-3">
-        <h3 id="orgcef6827"><span class=
-        "section-number-3">6.11.</span> Testing</h3>
+      <div id="outline-container-org0e90b3f" class="outline-3">
+        <h3 id="org0e90b3f"><span class=
+        "section-number-3">6.11.</span> keys, values, entries</h3>
         <div class="outline-text-3" id="text-6-11">
+          <div class="org-src-container">
+            <pre class="src src-js" id="org3b0fd67"><span class=
+            "linenr"> 1: </span><span class=
+            "org-keyword">function</span> <span class=
+            "org-function-name">createIterableMethod</span>(<span class=
+            "org-variable-name">method</span>, <span class=
+            "org-variable-name">isReadonly</span>, <span class=
+            "org-variable-name">isShallow</span>) {
+<span class="linenr"> 2: </span>  <span class=
+"org-keyword">return</span> <span class=
+"org-keyword">function</span>(...args) {
+<span class="linenr"> 3: </span>    <span class=
+"org-keyword">const</span> <span class=
+"org-variable-name">target</span> = <span class=
+"org-constant">this</span>.__v_raw
+<span class="linenr"> 4: </span>    <span class=
+"org-keyword">const</span> <span class=
+"org-variable-name">rawTarget</span> = toRaw(target)
+<span class="linenr"> 5: </span>    <span class=
+"org-keyword">const</span> <span class=
+"org-variable-name">targetIsMap</span> = isMap(rawTarget)
+<span class="linenr"> 6: </span>    <span class=
+"org-comment-delimiter">// </span><span class=
+"org-comment">map 键值对类型</span>
+<span class="linenr"> 7: </span>    <span class=
+"org-keyword">const</span> <span class=
+"org-variable-name">isPair</span> = method === <span class=
+"org-string">'entries'</span> || (method === Symbol.iterator &amp;& targetIsMap)
+<span class="linenr"> 8: </span>    <span class=
+"org-comment-delimiter">// </span><span class=
+"org-comment">set 值-值类型</span>
+<span class="linenr"> 9: </span>    <span class=
+"org-keyword">const</span> <span class=
+"org-variable-name">isKeyOnly</span> = method === <span class=
+"org-string">'keys'</span> &amp;& targetIsMap
+<span class="linenr">10: </span>    <span class=
+"org-keyword">const</span> <span class=
+"org-variable-name">innerIterator</span> = target[method](...args)
+<span class="linenr">11: </span>    <span class=
+"org-keyword">const</span> <span class=
+"org-variable-name">wrap</span> = toReactive
+<span class="linenr">12: </span>
+<span class="linenr">13: </span>    <span class=
+"org-comment-delimiter">// </span><span class=
+"org-comment">伪造迭代器</span>
+<span class="linenr">14: </span>    <span class=
+"org-keyword">return</span> {
+<span class="linenr">15: </span>      next() {
+<span class="linenr">16: </span>        <span class=
+"org-keyword">const</span> { value, done } = innerIterator.next()
+<span class="linenr">17: </span>        console.log(<span class=
+"org-string">`iterator| value=${value}, done=${done}, isPair=${isPair}, isKeyOnly=${isKeyOnly}, target=${target}`</span>)
+<span class="linenr">18: </span>        <span class=
+"org-keyword">return</span> done ? { value, done } : {
+<span class=
+"linenr">19: </span>          value: isPair ? [wrap(value[<span class="org-highlight-numbers-number">0</span>]), wrap(value[<span class="org-highlight-numbers-number">1</span>])] : wrap(value),
+<span class="linenr">20: </span>          done
+<span class="linenr">21: </span>        }
+<span class="linenr">22: </span>      },
+<span class="linenr">23: </span>      [Symbol.iterator]() {
+<span class="linenr">24: </span>        <span class=
+"org-keyword">return</span> <span class="org-constant">this</span>
+<span class="linenr">25: </span>      }
+<span class="linenr">26: </span>    }
+<span class="linenr">27: </span>  }
+<span class="linenr">28: </span>}
+</pre>
+          </div>
+          <p>代理 Map, Set 的迭达器操作:</p>
+          <div class="org-src-container">
+            <pre class="src src-js" id="org469193a"><span class=
+            "linenr"> 1: </span>&lt;&lt;createIterableMethod&gt;&gt;
+<span class="linenr"> 2: </span>
+<span class="linenr"> 3: </span><span class=
+"org-keyword">const</span> <span class=
+"org-variable-name">iteratorMethods</span> = [<span class=
+"org-string">'keys'</span>, <span class=
+"org-string">'values'</span>, <span class=
+"org-string">'entries'</span>, Symbol.iterator]
+<span class=
+"linenr"> 4: </span>iteratorMethods.forEach(method =&gt; {
+<span class=
+"linenr"> 5: </span>  mutableInstrumentations[method] = createIterableMethod(
+<span class="linenr"> 6: </span>    method,
+<span class="linenr"> 7: </span>    <span class=
+"org-constant">false</span>,
+<span class="linenr"> 8: </span>    <span class=
+"org-constant">false</span>
+<span class="linenr"> 9: </span>  )
+<span class="linenr">10: </span>})
+</pre>
+          </div>
+        </div>
+      </div>
+      <div id="outline-container-org232879e" class="outline-3">
+        <h3 id="org232879e"><span class=
+        "section-number-3">6.12.</span> Testing</h3>
+        <div class="outline-text-3" id="text-6-12">
           <br>
           <details class="code-details" style=
           "padding: 1em; background-color: #e5f5e5; /* background-color: pink; */ border-radius: 15px; color: hsl(157 75%); font-size: 0.9em; box-shadow: 0.05em 0.1em 5px 0.01em #00000057;">
@@ -1420,7 +1722,8 @@ undefined
               <strong><font face="Courier" size="3" color=
               "red">集合类型的 get 操作</font></strong>
             </summary>
-            <p><a href="#orga55d63f">reactive</a></p>
+            <p><a href="#org9c9d6a6">reactive</a>, <a href=
+            "#org4488cde">collection-get</a></p>
             <div class="org-src-container">
               <pre class="src src-js"><span class=
               "linenr"> 1: </span><span class=
@@ -1482,7 +1785,7 @@ undefined
             <ol class="org-ol">
               <li>第一行输出是 <code>observed.get</code> 方法的访问，被
               <code>proxy get</code> 代理到了 <a href=
-              "#orgddc5070">mutableCollectionHandlers</a> 中的 <code>
+              "#orga08d9c5">mutableCollectionHandlers</a> 中的 <code>
                 get</code> 结果，即此时的 <code>get</code> 调用已经被代理到了
                 <code>mutableCollectionHandlers.get</code> 。
               </li>
@@ -1497,14 +1800,1564 @@ undefined
             原生方法/属性名 -&gt; 代理到对应的
             <code>mutableCollectionHandlers.[method]</code> -&gt;
             取出 <code>map</code> 原生的 <code>get</code> 取出结果返回。</p>
+          </details><br>
+          <details class="code-details" style=
+          "padding: 1em; background-color: #e5f5e5; /* background-color: pink; */ border-radius: 15px; color: hsl(157 75%); font-size: 0.9em; box-shadow: 0.05em 0.1em 5px 0.01em #00000057;">
+            <summary>
+              <strong><font face="Courier" size="3" color=
+              "red">集合类型的 has 操作</font></strong>
+            </summary>
+            <p><a href="#org9c9d6a6">reactive</a>, <a href=
+            "#org9c14cf1">collection-has</a></p>
+            <div class="org-src-container">
+              <pre class="src src-js"><span class=
+              "linenr"> 1: </span><span class=
+              "org-keyword">const</span> <span class=
+              "org-variable-name">mutableHandlers</span> = {}
+<span class="linenr"> 2: </span><span class=
+"org-keyword">const</span> <span class=
+"org-variable-name">mutableInstrumentations</span> = (<span class=
+"org-keyword">function</span>() {
+<span class="linenr"> 3: </span>
+<span class="linenr"> 4: </span>  &lt;&lt;collection-has&gt;&gt;
+<span class="linenr"> 5: </span>  &lt;&lt;collection-get&gt;&gt;
+<span class="linenr"> 6: </span>
+<span class="linenr"> 7: </span>  <span class=
+"org-keyword">return</span> {
+<span class="linenr"> 8: </span>    has,
+<span class="linenr"> 9: </span>    get(key) {
+<span class="linenr">10: </span>      <span class=
+"org-keyword">return</span> get(<span class=
+"org-constant">this</span>, key)
+<span class="linenr">11: </span>    }
+<span class="linenr">12: </span>  }
+<span class="linenr">13: </span>}())
+<span class="linenr">14: </span>
+<span class=
+"linenr">15: </span>&lt;&lt;createInstrumentationGetter&gt;&gt;
+<span class="linenr">16: </span>
+<span class="linenr">17: </span><span class=
+"org-keyword">const</span> <span class=
+"org-variable-name">mutableCollectionHandlers</span> = {
+<span class=
+"linenr">18: </span>  get: createInstrumentationGetter(<span class=
+"org-constant">false</span>, <span class=
+"org-constant">false</span>)
+<span class="linenr">19: </span>}
+<span class="linenr">20: </span>
+<span class="linenr">21: </span>&lt;&lt;reactive&gt;&gt;
+<span class="linenr">22: </span>
+<span class="linenr">23: </span><span class=
+"org-keyword">const</span> <span class=
+"org-variable-name">observed</span> = reactive(<span class=
+"org-keyword">new</span> <span class=
+"org-type">Map</span>([[<span class=
+"org-string">'count'</span>, <span class=
+"org-highlight-numbers-number">0</span>]]))
+<span class="linenr">24: </span><span class=
+"org-keyword">const</span> <span class=
+"org-variable-name">result</span> = observed.has(<span class=
+"org-string">'count'</span>)
+<span class="linenr">25: </span>console.log(<span class=
+"org-string">'has count prop ? '</span>, result)
+<span class="linenr">26: </span>logEnd()
+</pre>
+            </div>
+            <pre class="example">
+createInstrumentationGetter| key=has
+createInstrumentationGetter| key=__v_raw
+has| key=count, rawKey=count, target=[object Map]
+has count prop ?  true
+--------- END ---------
+undefined
+</pre>
+          </details><br>
+          <details class="code-details" style=
+          "padding: 1em; background-color: #e5f5e5; /* background-color: pink; */ border-radius: 15px; color: hsl(157 75%); font-size: 0.9em; box-shadow: 0.05em 0.1em 5px 0.01em #00000057;">
+            <summary>
+              <strong><font face="Courier" size="3" color=
+              "red">集合类型的 size 操作</font></strong>
+            </summary>
+            <p><a href="#org9c9d6a6">reactive</a>, <a href=
+            "#orgaf1e044">collection-size</a></p>
+            <div class="org-src-container">
+              <pre class="src src-js"><span class=
+              "linenr"> 1: </span><span class=
+              "org-keyword">const</span> <span class=
+              "org-variable-name">mutableHandlers</span> = {}
+<span class="linenr"> 2: </span><span class=
+"org-keyword">const</span> <span class=
+"org-variable-name">mutableInstrumentations</span> = (<span class=
+"org-keyword">function</span>() {
+<span class="linenr"> 3: </span>
+<span class="linenr"> 4: </span>  &lt;&lt;collection-size&gt;&gt;
+<span class="linenr"> 5: </span>  &lt;&lt;collection-get&gt;&gt;
+<span class="linenr"> 6: </span>
+<span class="linenr"> 7: </span>  <span class=
+"org-keyword">return</span> {
+<span class="linenr"> 8: </span>    get(key) {
+<span class="linenr"> 9: </span>      <span class=
+"org-keyword">return</span> get(<span class=
+"org-constant">this</span>, key)
+<span class="linenr">10: </span>    },
+<span class="linenr">11: </span>
+<span class="linenr">12: </span>    get size() {
+<span class="linenr">13: </span>      <span class=
+"org-keyword">return</span> size(<span class=
+"org-constant">this</span>)
+<span class="linenr">14: </span>    }
+<span class="linenr">15: </span>  }
+<span class="linenr">16: </span>}())
+<span class="linenr">17: </span>
+<span class=
+"linenr">18: </span>&lt;&lt;createInstrumentationGetter&gt;&gt;
+<span class="linenr">19: </span>
+<span class="linenr">20: </span><span class=
+"org-keyword">const</span> <span class=
+"org-variable-name">mutableCollectionHandlers</span> = {
+<span class=
+"linenr">21: </span>  get: createInstrumentationGetter(<span class=
+"org-constant">false</span>, <span class=
+"org-constant">false</span>)
+<span class="linenr">22: </span>}
+<span class="linenr">23: </span>
+<span class="linenr">24: </span>&lt;&lt;reactive&gt;&gt;
+<span class="linenr">25: </span>
+<span class="linenr">26: </span><span class=
+"org-keyword">const</span> <span class=
+"org-variable-name">observed</span> = reactive(<span class=
+"org-keyword">new</span> <span class=
+"org-type">Map</span>([[<span class=
+"org-string">'count'</span>, <span class=
+"org-highlight-numbers-number">0</span>]]))
+<span class="linenr">27: </span>console.log(<span class=
+"org-string">`size = ${observed.size}`</span>)
+<span class="linenr">28: </span>logEnd()
+</pre>
+            </div>
+            <pre class="example">
+createInstrumentationGetter| key=size
+createInstrumentationGetter| key=__v_raw
+size| target=[object Map]
+size = 1
+--------- END ---------
+undefined
+</pre>
+          </details><br>
+          <details class="code-details" style=
+          "padding: 1em; background-color: #e5f5e5; /* background-color: pink; */ border-radius: 15px; color: hsl(157 75%); font-size: 0.9em; box-shadow: 0.05em 0.1em 5px 0.01em #00000057;">
+            <summary>
+              <strong><font face="Courier" size="3" color=
+              "red">集合类型的 add 操作</font></strong>
+            </summary>
+            <p><a href="#org9c9d6a6">reactive</a>, <a href=
+            "#org5aafe0e">collection-add</a></p>
+            <div class="org-src-container">
+              <pre class="src src-js"><span class=
+              "linenr"> 1: </span><span class=
+              "org-keyword">const</span> <span class=
+              "org-variable-name">mutableHandlers</span> = {}
+<span class="linenr"> 2: </span><span class=
+"org-keyword">const</span> <span class=
+"org-variable-name">mutableInstrumentations</span> = (<span class=
+"org-keyword">function</span>() {
+<span class="linenr"> 3: </span>
+<span class="linenr"> 4: </span>  &lt;&lt;collection-add&gt;&gt;
+<span class="linenr"> 5: </span>
+<span class="linenr"> 6: </span>  <span class=
+"org-keyword">return</span> {
+<span class="linenr"> 7: </span>    add
+<span class="linenr"> 8: </span>  }
+<span class="linenr"> 9: </span>}())
+<span class="linenr">10: </span>
+<span class=
+"linenr">11: </span>&lt;&lt;createInstrumentationGetter&gt;&gt;
+<span class="linenr">12: </span>
+<span class="linenr">13: </span><span class=
+"org-keyword">const</span> <span class=
+"org-variable-name">mutableCollectionHandlers</span> = {
+<span class=
+"linenr">14: </span>  get: createInstrumentationGetter(<span class=
+"org-constant">false</span>, <span class=
+"org-constant">false</span>)
+<span class="linenr">15: </span>}
+<span class="linenr">16: </span>
+<span class="linenr">17: </span>&lt;&lt;reactive&gt;&gt;
+<span class="linenr">18: </span>
+<span class="linenr">19: </span><span class=
+"org-keyword">const</span> <span class=
+"org-variable-name">observed</span> = reactive(<span class=
+"org-keyword">new</span> <span class="org-type">Set</span>())
+<span class="linenr">20: </span>observed.add(<span class=
+"org-highlight-numbers-number">1</span>)
+<span class="linenr">21: </span>observed.add(<span class=
+"org-highlight-numbers-number">2</span>)
+<span class="linenr">22: </span>observed.add(<span class=
+"org-highlight-numbers-number">2</span>)
+<span class="linenr">23: </span>logEnd()
+</pre>
+            </div>
+            <pre class="example" id="orgef3092f">
+createInstrumentationGetter| key=add
+createInstrumentationGetter| key=__v_raw
+add| value=1, hadKey=false, target=[object Set]
+createInstrumentationGetter| key=add
+createInstrumentationGetter| key=__v_raw
+add| value=2, hadKey=false, target=[object Set]
+createInstrumentationGetter| key=add
+createInstrumentationGetter| key=__v_raw
+add| value=2, hadKey=true, target=[object Set]
+--------- END ---------
+undefined
+</pre>
+          </details><br>
+          <details class="code-details" style=
+          "padding: 1em; background-color: #e5f5e5; /* background-color: pink; */ border-radius: 15px; color: hsl(157 75%); font-size: 0.9em; box-shadow: 0.05em 0.1em 5px 0.01em #00000057;">
+            <summary>
+              <strong><font face="Courier" size="3" color=
+              "red">集合类型的 set 操作</font></strong>
+            </summary>
+            <p><a href="#org9c9d6a6">reactive</a>, <a href=
+            "#org9d4e73c">collection-set</a></p>
+            <div class="org-src-container">
+              <pre class="src src-js"><span class=
+              "linenr"> 1: </span><span class=
+              "org-keyword">const</span> <span class=
+              "org-variable-name">mutableHandlers</span> = {}
+<span class="linenr"> 2: </span><span class=
+"org-keyword">const</span> <span class=
+"org-variable-name">mutableInstrumentations</span> = (<span class=
+"org-keyword">function</span>() {
+<span class="linenr"> 3: </span>
+<span class="linenr"> 4: </span>  &lt;&lt;collection-set&gt;&gt;
+<span class="linenr"> 5: </span>
+<span class="linenr"> 6: </span>  <span class=
+"org-keyword">return</span> {
+<span class="linenr"> 7: </span>    set
+<span class="linenr"> 8: </span>  }
+<span class="linenr"> 9: </span>}())
+<span class="linenr">10: </span>
+<span class=
+"linenr">11: </span>&lt;&lt;createInstrumentationGetter&gt;&gt;
+<span class="linenr">12: </span>
+<span class="linenr">13: </span><span class=
+"org-keyword">const</span> <span class=
+"org-variable-name">mutableCollectionHandlers</span> = {
+<span class=
+"linenr">14: </span>  get: createInstrumentationGetter(<span class=
+"org-constant">false</span>, <span class=
+"org-constant">false</span>)
+<span class="linenr">15: </span>}
+<span class="linenr">16: </span>
+<span class="linenr">17: </span>&lt;&lt;reactive&gt;&gt;
+<span class="linenr">18: </span>
+<span class="linenr">19: </span><span class=
+"org-keyword">const</span> <span class=
+"org-variable-name">observed</span> = reactive(<span class=
+"org-keyword">new</span> <span class="org-type">Map</span>())
+<span class="linenr">20: </span>observed.set(<span class=
+"org-string">'count'</span>, <span class=
+"org-highlight-numbers-number">1</span>)
+<span class="linenr">21: </span>observed.set(<span class=
+"org-string">'count'</span>, <span class=
+"org-highlight-numbers-number">2</span>)
+<span class="linenr">22: </span>logEnd()
+</pre>
+            </div>
+            <pre class="example">
+createInstrumentationGetter| key=set
+createInstrumentationGetter| key=__v_raw
+set| key=count, value=1, oldValue=undefined, target=[object Map]
+createInstrumentationGetter| key=set
+createInstrumentationGetter| key=__v_raw
+set| key=count, value=2, oldValue=1, target=[object Map]
+--------- END ---------
+undefined
+</pre>
+          </details><br>
+          <details class="code-details" style=
+          "padding: 1em; background-color: #e5f5e5; /* background-color: pink; */ border-radius: 15px; color: hsl(157 75%); font-size: 0.9em; box-shadow: 0.05em 0.1em 5px 0.01em #00000057;">
+            <summary>
+              <strong><font face="Courier" size="3" color=
+              "red">集合类型的 delete 操作</font></strong>
+            </summary>
+            <p><a href="#org9c9d6a6">reactive</a>, <a href=
+            "#orgc0dba45">collection-delete</a></p>
+            <div class="org-src-container">
+              <pre class="src src-js"><span class=
+              "linenr"> 1: </span><span class=
+              "org-keyword">const</span> <span class=
+              "org-variable-name">mutableHandlers</span> = {}
+<span class="linenr"> 2: </span><span class=
+"org-keyword">const</span> <span class=
+"org-variable-name">mutableInstrumentations</span> = (<span class=
+"org-keyword">function</span>() {
+<span class="linenr"> 3: </span>
+<span class="linenr"> 4: </span>  &lt;&lt;collection-<span class=
+"org-keyword">delete</span>&gt;&gt;
+<span class="linenr"> 5: </span>  &lt;&lt;collection-set&gt;&gt;
+<span class="linenr"> 6: </span>  &lt;&lt;collection-get&gt;&gt;
+<span class="linenr"> 7: </span>  &lt;&lt;collection-add&gt;&gt;
+<span class="linenr"> 8: </span>
+<span class="linenr"> 9: </span>  <span class=
+"org-keyword">return</span> {
+<span class="linenr">10: </span>    <span class=
+"org-keyword">delete</span>: deleteEntry,
+<span class="linenr">11: </span>    set,
+<span class="linenr">12: </span>    add,
+<span class="linenr">13: </span>    get(key) {
+<span class="linenr">14: </span>      <span class=
+"org-keyword">return</span> get(<span class=
+"org-constant">this</span>, key)
+<span class="linenr">15: </span>    }
+<span class="linenr">16: </span>  }
+<span class="linenr">17: </span>}())
+<span class="linenr">18: </span>
+<span class=
+"linenr">19: </span>&lt;&lt;createInstrumentationGetter&gt;&gt;
+<span class="linenr">20: </span>
+<span class="linenr">21: </span><span class=
+"org-keyword">const</span> <span class=
+"org-variable-name">mutableCollectionHandlers</span> = {
+<span class=
+"linenr">22: </span>  get: createInstrumentationGetter(<span class=
+"org-constant">false</span>, <span class=
+"org-constant">false</span>)
+<span class="linenr">23: </span>}
+<span class="linenr">24: </span>
+<span class="linenr">25: </span>&lt;&lt;reactive&gt;&gt;
+<span class="linenr">26: </span>
+<span class="linenr">27: </span><span class=
+"org-keyword">const</span> <span class=
+"org-variable-name">observed</span> = reactive(<span class=
+"org-keyword">new</span> <span class="org-type">Map</span>())
+<span class="linenr">28: </span>observed.set(<span class=
+"org-string">'count'</span>, <span class=
+"org-highlight-numbers-number">1</span>)
+<span class="linenr">29: </span>observed.set(<span class=
+"org-string">'foo'</span>, <span class=
+"org-highlight-numbers-number">2</span>)
+<span class="linenr">30: </span>observed.<span class=
+"org-keyword">delete</span>(<span class="org-string">'foo'</span>)
+<span class="linenr">31: </span>console.log(observed)
+<span class="linenr">32: </span>logEnd()
+<span class="linenr">33: </span><span class=
+"org-keyword">const</span> <span class=
+"org-variable-name">observed1</span> = reactive(<span class=
+"org-keyword">new</span> <span class="org-type">Set</span>())
+<span class="linenr">34: </span>observed1.add(<span class=
+"org-highlight-numbers-number">1</span>)
+<span class="linenr">35: </span>observed1.add(<span class=
+"org-highlight-numbers-number">2</span>)
+<span class="linenr">36: </span>observed1.<span class=
+"org-keyword">delete</span>(<span class=
+"org-highlight-numbers-number">1</span>)
+<span class="linenr">37: </span>console.log(observed1)
+<span class="linenr">38: </span>logEnd()
+</pre>
+            </div>
+            <pre class="example" id="orga31bb38">
+createInstrumentationGetter| key=set
+createInstrumentationGetter| key=__v_raw
+set| key=count, value=1, oldValue=undefined, target=[object Map]
+createInstrumentationGetter| key=set
+createInstrumentationGetter| key=__v_raw
+set| key=foo, value=2, oldValue=undefined, target=[object Map]
+createInstrumentationGetter| key=delete
+createInstrumentationGetter| key=__v_raw
+delete| key=foo, oldValue=2, result=true, target=[object Map]
+Map(1) { 'count' =&gt; 1 }
+--------- END ---------
+createInstrumentationGetter| key=add
+createInstrumentationGetter| key=__v_raw
+add| value=1, hadKey=false, target=[object Set]
+createInstrumentationGetter| key=add
+createInstrumentationGetter| key=__v_raw
+add| value=2, hadKey=false, target=[object Set]
+createInstrumentationGetter| key=delete
+createInstrumentationGetter| key=__v_raw
+delete| key=1, oldValue=undefined, result=true, target=[object Set]
+Set(1) { 2 }
+--------- END ---------
+undefined
+</pre>
+          </details><br>
+          <details class="code-details" style=
+          "padding: 1em; background-color: #e5f5e5; /* background-color: pink; */ border-radius: 15px; color: hsl(157 75%); font-size: 0.9em; box-shadow: 0.05em 0.1em 5px 0.01em #00000057;">
+            <summary>
+              <strong><font face="Courier" size="3" color=
+              "red">集合类型的 clear 操作</font></strong>
+            </summary>
+            <p><a href="#org9c9d6a6">reactive</a>, <a href=
+            "#orgc462b13">collection-clear</a></p>
+            <div class="org-src-container">
+              <pre class="src src-js"><span class=
+              "linenr"> 1: </span><span class=
+              "org-keyword">const</span> <span class=
+              "org-variable-name">mutableHandlers</span> = {}
+<span class="linenr"> 2: </span><span class=
+"org-keyword">const</span> <span class=
+"org-variable-name">mutableInstrumentations</span> = (<span class=
+"org-keyword">function</span>() {
+<span class="linenr"> 3: </span>
+<span class="linenr"> 4: </span>  &lt;&lt;collection-<span class=
+"org-keyword">delete</span>&gt;&gt;
+<span class="linenr"> 5: </span>  &lt;&lt;collection-set&gt;&gt;
+<span class="linenr"> 6: </span>  &lt;&lt;collection-get&gt;&gt;
+<span class="linenr"> 7: </span>  &lt;&lt;collection-add&gt;&gt;
+<span class="linenr"> 8: </span>  &lt;&lt;collection-clear&gt;&gt;
+<span class="linenr"> 9: </span>
+<span class="linenr">10: </span>  <span class=
+"org-keyword">return</span> {
+<span class="linenr">11: </span>    <span class=
+"org-keyword">delete</span>: deleteEntry,
+<span class="linenr">12: </span>    set,
+<span class="linenr">13: </span>    add,
+<span class="linenr">14: </span>    get(key) {
+<span class="linenr">15: </span>      <span class=
+"org-keyword">return</span> get(<span class=
+"org-constant">this</span>, key)
+<span class="linenr">16: </span>    },
+<span class="linenr">17: </span>    clear
+<span class="linenr">18: </span>  }
+<span class="linenr">19: </span>}())
+<span class="linenr">20: </span>
+<span class=
+"linenr">21: </span>&lt;&lt;createInstrumentationGetter&gt;&gt;
+<span class="linenr">22: </span>
+<span class="linenr">23: </span><span class=
+"org-keyword">const</span> <span class=
+"org-variable-name">mutableCollectionHandlers</span> = {
+<span class=
+"linenr">24: </span>  get: createInstrumentationGetter(<span class=
+"org-constant">false</span>, <span class=
+"org-constant">false</span>)
+<span class="linenr">25: </span>}
+<span class="linenr">26: </span>
+<span class="linenr">27: </span>&lt;&lt;reactive&gt;&gt;
+<span class="linenr">28: </span>
+<span class="linenr">29: </span><span class=
+"org-keyword">const</span> <span class=
+"org-variable-name">observed1</span> = reactive(<span class=
+"org-keyword">new</span> <span class="org-type">Set</span>())
+<span class="linenr">30: </span>observed1.add(<span class=
+"org-highlight-numbers-number">1</span>)
+<span class="linenr">31: </span>observed1.add(<span class=
+"org-highlight-numbers-number">2</span>)
+<span class="linenr">32: </span>console.log(<span class=
+"org-string">'before clear'</span>, observed1)
+<span class="linenr">33: </span>observed1.clear()
+<span class="linenr">34: </span>console.log(<span class=
+"org-string">'after clear'</span>, observed1)
+<span class="linenr">35: </span>logEnd()
+</pre>
+            </div>
+            <pre class="example" id="org1efa058">
+createInstrumentationGetter| key=add
+createInstrumentationGetter| key=__v_raw
+add| value=1, hadKey=false, target=[object Set]
+createInstrumentationGetter| key=add
+createInstrumentationGetter| key=__v_raw
+add| value=2, hadKey=false, target=[object Set]
+before clear Set(2) { 1, 2 }
+createInstrumentationGetter| key=clear
+createInstrumentationGetter| key=__v_raw
+clear| result=undefined, target=[object Set]
+after clear Set(0) {}
+--------- END ---------
+undefined
+</pre>
+          </details><br>
+          <details class="code-details" style=
+          "padding: 1em; background-color: #e5f5e5; /* background-color: pink; */ border-radius: 15px; color: hsl(157 75%); font-size: 0.9em; box-shadow: 0.05em 0.1em 5px 0.01em #00000057;">
+            <summary>
+              <strong><font face="Courier" size="3" color=
+              "red">集合类型的 forEach 操作</font></strong>
+            </summary>
+            <p><a href="#org9c9d6a6">reactive</a>, <a href=
+            "#org49afb54">collection-forEach</a></p>
+            <div class="org-src-container">
+              <pre class="src src-js"><span class=
+              "linenr"> 1: </span><span class=
+              "org-keyword">const</span> <span class=
+              "org-variable-name">mutableHandlers</span> = {}
+<span class="linenr"> 2: </span><span class=
+"org-keyword">const</span> <span class=
+"org-variable-name">mutableInstrumentations</span> = (<span class=
+"org-keyword">function</span>() {
+<span class="linenr"> 3: </span>
+<span class="linenr"> 4: </span>  &lt;&lt;collection-<span class=
+"org-keyword">delete</span>&gt;&gt;
+<span class="linenr"> 5: </span>  &lt;&lt;collection-set&gt;&gt;
+<span class="linenr"> 6: </span>  &lt;&lt;collection-get&gt;&gt;
+<span class="linenr"> 7: </span>  &lt;&lt;collection-add&gt;&gt;
+<span class="linenr"> 8: </span>  &lt;&lt;collection-clear&gt;&gt;
+<span class=
+"linenr"> 9: </span>  &lt;&lt;collection-forEach&gt;&gt;
+<span class="linenr">10: </span>
+<span class="linenr">11: </span>  <span class=
+"org-keyword">return</span> {
+<span class="linenr">12: </span>    <span class=
+"org-keyword">delete</span>: deleteEntry,
+<span class="linenr">13: </span>    set,
+<span class="linenr">14: </span>    add,
+<span class="linenr">15: </span>    get(key) {
+<span class="linenr">16: </span>      <span class=
+"org-keyword">return</span> get(<span class=
+"org-constant">this</span>, key)
+<span class="linenr">17: </span>    },
+<span class="linenr">18: </span>    clear,
+<span class=
+"linenr">19: </span>    forEach: createForEach(<span class=
+"org-constant">false</span>, <span class=
+"org-constant">false</span>)
+<span class="linenr">20: </span>  }
+<span class="linenr">21: </span>}())
+<span class="linenr">22: </span>
+<span class=
+"linenr">23: </span>&lt;&lt;createInstrumentationGetter&gt;&gt;
+<span class="linenr">24: </span>
+<span class="linenr">25: </span><span class=
+"org-keyword">const</span> <span class=
+"org-variable-name">mutableCollectionHandlers</span> = {
+<span class=
+"linenr">26: </span>  get: createInstrumentationGetter(<span class=
+"org-constant">false</span>, <span class=
+"org-constant">false</span>)
+<span class="linenr">27: </span>}
+<span class="linenr">28: </span>
+<span class="linenr">29: </span>&lt;&lt;reactive&gt;&gt;
+<span class="linenr">30: </span>
+<span class="linenr">31: </span><span class=
+"org-keyword">const</span> <span class=
+"org-variable-name">observed</span> = reactive(<span class=
+"org-keyword">new</span> <span class=
+"org-type">Map</span>([[<span class=
+"org-string">"foo"</span>, <span class=
+"org-highlight-numbers-number">1</span>], [<span class=
+"org-string">'bar'</span>, <span class=
+"org-highlight-numbers-number">2</span>]]))
+<span class="linenr">32: </span>observed.forEach((val, key) =&gt; {
+<span class="linenr">33: </span>  console.log(<span class=
+"org-string">`[Map] === ${key}=${val} ===`</span>)
+<span class="linenr">34: </span>})
+<span class="linenr">35: </span><span class=
+"org-keyword">const</span> <span class=
+"org-variable-name">observed1</span> = reactive(<span class=
+"org-keyword">new</span> <span class=
+"org-type">Set</span>([<span class=
+"org-highlight-numbers-number">1</span>,<span class=
+"org-highlight-numbers-number">2</span>,<span class=
+"org-highlight-numbers-number">1</span>,<span class=
+"org-highlight-numbers-number">3</span>,<span class=
+"org-highlight-numbers-number">4</span>,<span class=
+"org-highlight-numbers-number">2</span>,<span class=
+"org-highlight-numbers-number">5</span>]))
+<span class=
+"linenr">36: </span>observed1.forEach((val, key) =&gt; {
+<span class="linenr">37: </span>  console.log(<span class=
+"org-string">`[Set] === ${key}=${val} ===`</span>)
+<span class="linenr">38: </span>})
+<span class="linenr">39: </span>logEnd()
+</pre>
+            </div>
+            <pre class="example" id="org78f79e3">
+createInstrumentationGetter| key=forEach
+createInstrumentationGetter| key=__v_raw
+forEach| target=[object Map], rawTarget=[object Map]
+forEach - forEach| value=1, key=foo
+[Map] === foo=1 ===
+forEach - forEach| value=2, key=bar
+[Map] === bar=2 ===
+createInstrumentationGetter| key=forEach
+createInstrumentationGetter| key=__v_raw
+forEach| target=[object Set], rawTarget=[object Set]
+forEach - forEach| value=1, key=1
+[Set] === 1=1 ===
+forEach - forEach| value=2, key=2
+[Set] === 2=2 ===
+forEach - forEach| value=3, key=3
+[Set] === 3=3 ===
+forEach - forEach| value=4, key=4
+[Set] === 4=4 ===
+forEach - forEach| value=5, key=5
+[Set] === 5=5 ===
+--------- END ---------
+undefined
+</pre>
+          </details><br>
+          <details class="code-details" style=
+          "padding: 1em; background-color: #e5f5e5; /* background-color: pink; */ border-radius: 15px; color: hsl(157 75%); font-size: 0.9em; box-shadow: 0.05em 0.1em 5px 0.01em #00000057;">
+            <summary>
+              <strong><font face="Courier" size="3" color=
+              "red">集合类型的 keys values entries Symbol.iterator
+              操作</font></strong>
+            </summary>
+            <p><a href="#org9c9d6a6">reactive</a>, <a href=
+            "#org469193a">collection-iterator</a></p>
+            <div class="org-src-container">
+              <pre class="src src-js"><span class=
+              "linenr"> 1: </span><span class=
+              "org-keyword">const</span> <span class=
+              "org-variable-name">mutableHandlers</span> = {}
+<span class="linenr"> 2: </span><span class=
+"org-keyword">const</span> <span class=
+"org-variable-name">mutableInstrumentations</span> = (<span class=
+"org-keyword">function</span>() {
+<span class="linenr"> 3: </span>
+<span class="linenr"> 4: </span>  &lt;&lt;collection-<span class=
+"org-keyword">delete</span>&gt;&gt;
+<span class="linenr"> 5: </span>  &lt;&lt;collection-set&gt;&gt;
+<span class="linenr"> 6: </span>  &lt;&lt;collection-get&gt;&gt;
+<span class="linenr"> 7: </span>  &lt;&lt;collection-add&gt;&gt;
+<span class="linenr"> 8: </span>  &lt;&lt;collection-clear&gt;&gt;
+<span class=
+"linenr"> 9: </span>  &lt;&lt;collection-forEach&gt;&gt;
+<span class="linenr">10: </span>  &lt;&lt;collection-has&gt;&gt;
+<span class="linenr">11: </span>  &lt;&lt;collection-size&gt;&gt;
+<span class="linenr">12: </span>
+<span class="linenr">13: </span>  <span class=
+"org-keyword">return</span> {
+<span class="linenr">14: </span>    <span class=
+"org-keyword">delete</span>: deleteEntry,
+<span class="linenr">15: </span>    set,
+<span class="linenr">16: </span>    has,
+<span class="linenr">17: </span>    add,
+<span class="linenr">18: </span>    get(key) {
+<span class="linenr">19: </span>      <span class=
+"org-keyword">return</span> get(<span class=
+"org-constant">this</span>, key)
+<span class="linenr">20: </span>    },
+<span class="linenr">21: </span>    get size() {
+<span class="linenr">22: </span>      <span class=
+"org-keyword">return</span> size(<span class=
+"org-constant">this</span>)
+<span class="linenr">23: </span>    },
+<span class="linenr">24: </span>    clear,
+<span class=
+"linenr">25: </span>    forEach: createForEach(<span class=
+"org-constant">false</span>, <span class=
+"org-constant">false</span>)
+<span class="linenr">26: </span>  }
+<span class="linenr">27: </span>}())
+<span class="linenr">28: </span>
+<span class="linenr">29: </span><span class=
+"org-comment-delimiter">// </span><span class=
+"org-comment">封装迭达器操作</span>
+<span class="linenr">30: </span>&lt;&lt;collection-iterator&gt;&gt;
+<span class=
+"linenr">31: </span>&lt;&lt;createInstrumentationGetter&gt;&gt;
+<span class="linenr">32: </span>
+<span class="linenr">33: </span><span class=
+"org-keyword">const</span> <span class=
+"org-variable-name">mutableCollectionHandlers</span> = {
+<span class=
+"linenr">34: </span>  get: createInstrumentationGetter(<span class=
+"org-constant">false</span>, <span class=
+"org-constant">false</span>)
+<span class="linenr">35: </span>}
+<span class="linenr">36: </span>
+<span class="linenr">37: </span>&lt;&lt;reactive&gt;&gt;
+<span class="linenr">38: </span>
+<span class="linenr">39: </span><span class=
+"org-keyword">function</span> <span class=
+"org-function-name">logIterator</span>(<span class=
+"org-variable-name">iterator</span>, <span class=
+"org-variable-name">hint</span>, <span class=
+"org-variable-name">type</span>) {
+<span class="linenr">40: </span>  <span class=
+"org-keyword">let</span> <span class=
+"org-variable-name">done</span> = <span class=
+"org-constant">false</span>, <span class=
+"org-variable-name">value</span>
+<span class="linenr">41: </span>  <span class=
+"org-keyword">while</span> (!done) {
+<span class="linenr">42: </span>    <span class=
+"org-keyword">const</span> <span class=
+"org-variable-name">it</span> = iterator.next()
+<span class="linenr">43: </span>    value = it.value
+<span class="linenr">44: </span>    done = it.done
+<span class="linenr">45: </span>    console.log(<span class=
+"org-string">`[${type}] - ${hint} - value=${value}, done=${done}`</span>)
+<span class="linenr">46: </span>
+<span class="linenr">47: </span>  }
+<span class="linenr">48: </span>  console.log(<span class=
+"org-string">`[${type}] - ${hint} - value=${value}, done=${done}`</span>)
+<span class="linenr">49: </span>}
+<span class="linenr">50: </span><span class=
+"org-keyword">const</span> <span class=
+"org-variable-name">observed</span> = reactive(<span class=
+"org-keyword">new</span> <span class=
+"org-type">Map</span>([[<span class=
+"org-string">"foo"</span>, <span class=
+"org-highlight-numbers-number">1</span>], [<span class=
+"org-string">'bar'</span>, <span class=
+"org-highlight-numbers-number">2</span>]]))
+<span class=
+"linenr">51: </span>logIterator(observed.keys(), <span class=
+"org-string">'Map'</span>, <span class="org-string">'keys'</span>)
+<span class=
+"linenr">52: </span>logIterator(observed.values(), <span class=
+"org-string">'Map'</span>, <span class=
+"org-string">'values'</span>)
+<span class=
+"linenr">53: </span>logIterator(observed.entries(), <span class=
+"org-string">'Map'</span>, <span class=
+"org-string">'entries'</span>)
+<span class="linenr">54: </span>
+<span class="linenr">55: </span>logEnd()
+<span class="linenr">56: </span><span class=
+"org-keyword">const</span> <span class=
+"org-variable-name">observed1</span> = reactive(<span class=
+"org-keyword">new</span> <span class=
+"org-type">Set</span>([<span class=
+"org-highlight-numbers-number">1</span>,<span class=
+"org-highlight-numbers-number">2</span>,<span class=
+"org-highlight-numbers-number">1</span>]))
+<span class=
+"linenr">57: </span>logIterator(observed1.keys(), <span class=
+"org-string">'Set'</span>, <span class="org-string">'keys'</span>)
+<span class=
+"linenr">58: </span>logIterator(observed1.values(), <span class=
+"org-string">'Set'</span>, <span class=
+"org-string">'values'</span>)
+<span class=
+"linenr">59: </span>logIterator(observed1.entries(), <span class=
+"org-string">'Set'</span>, <span class=
+"org-string">'entries'</span>)
+<span class="linenr">60: </span>logEnd()
+</pre>
+            </div>
+            <pre class="example" id="org573a4bb">
+createInstrumentationGetter| key=keys
+createInstrumentationGetter| key=__v_raw
+iterator| value=foo, done=false, isPair=false, isKeyOnly=true, target=[object Map]
+[keys] - Map - value=foo, done=false
+iterator| value=bar, done=false, isPair=false, isKeyOnly=true, target=[object Map]
+[keys] - Map - value=bar, done=false
+iterator| value=undefined, done=true, isPair=false, isKeyOnly=true, target=[object Map]
+[keys] - Map - value=undefined, done=true
+[keys] - Map - value=undefined, done=true
+createInstrumentationGetter| key=values
+createInstrumentationGetter| key=__v_raw
+iterator| value=1, done=false, isPair=false, isKeyOnly=false, target=[object Map]
+[values] - Map - value=1, done=false
+iterator| value=2, done=false, isPair=false, isKeyOnly=false, target=[object Map]
+[values] - Map - value=2, done=false
+iterator| value=undefined, done=true, isPair=false, isKeyOnly=false, target=[object Map]
+[values] - Map - value=undefined, done=true
+[values] - Map - value=undefined, done=true
+createInstrumentationGetter| key=entries
+createInstrumentationGetter| key=__v_raw
+iterator| value=foo,1, done=false, isPair=true, isKeyOnly=false, target=[object Map]
+[entries] - Map - value=foo,1, done=false
+iterator| value=bar,2, done=false, isPair=true, isKeyOnly=false, target=[object Map]
+[entries] - Map - value=bar,2, done=false
+iterator| value=undefined, done=true, isPair=true, isKeyOnly=false, target=[object Map]
+[entries] - Map - value=undefined, done=true
+[entries] - Map - value=undefined, done=true
+--------- END ---------
+createInstrumentationGetter| key=keys
+createInstrumentationGetter| key=__v_raw
+iterator| value=1, done=false, isPair=false, isKeyOnly=false, target=[object Set]
+[keys] - Set - value=1, done=false
+iterator| value=2, done=false, isPair=false, isKeyOnly=false, target=[object Set]
+[keys] - Set - value=2, done=false
+iterator| value=undefined, done=true, isPair=false, isKeyOnly=false, target=[object Set]
+[keys] - Set - value=undefined, done=true
+[keys] - Set - value=undefined, done=true
+createInstrumentationGetter| key=values
+createInstrumentationGetter| key=__v_raw
+iterator| value=1, done=false, isPair=false, isKeyOnly=false, target=[object Set]
+[values] - Set - value=1, done=false
+iterator| value=2, done=false, isPair=false, isKeyOnly=false, target=[object Set]
+[values] - Set - value=2, done=false
+iterator| value=undefined, done=true, isPair=false, isKeyOnly=false, target=[object Set]
+[values] - Set - value=undefined, done=true
+[values] - Set - value=undefined, done=true
+createInstrumentationGetter| key=entries
+createInstrumentationGetter| key=__v_raw
+iterator| value=1,1, done=false, isPair=true, isKeyOnly=false, target=[object Set]
+[entries] - Set - value=1,1, done=false
+iterator| value=2,2, done=false, isPair=true, isKeyOnly=false, target=[object Set]
+[entries] - Set - value=2,2, done=false
+iterator| value=undefined, done=true, isPair=true, isKeyOnly=false, target=[object Set]
+[entries] - Set - value=undefined, done=true
+[entries] - Set - value=undefined, done=true
+--------- END ---------
+undefined
+</pre>
           </details>
         </div>
       </div>
     </div>
-    <div id="outline-container-org0dc620e" class="outline-2">
-      <h2 id="org0dc620e"><span class="section-number-2">7.</span>
+    <div id="outline-container-org523fac8" class="outline-2">
+      <h2 id="org523fac8"><span class="section-number-2">7.</span>
+      phase one(no track & trigger)</h2>
+      <div class="outline-text-2" id="text-7">
+        <p>完整不含 track 和 trigger 代码的 reactive 实现代码。</p>
+        <div class="org-src-container">
+          <pre class="src src-js"><span id=
+          "coderef-mutableHandlers" class="coderef-off"><span class=
+          "linenr">  1: </span><span class=
+          "org-keyword">const</span> <span class=
+          "org-variable-name">mutableHandlers</span> = (<span class=
+          "org-keyword">function</span> () {</span>
+<span class="linenr">  2: </span>  <span class=
+"org-keyword">const</span> <span class=
+"org-variable-name">get</span> = createGetter();
+<span class="linenr">  3: </span>
+<span class="linenr">  4: </span>  <span class=
+"org-keyword">function</span> <span class=
+"org-function-name">createGetter</span>(<span class=
+"org-variable-name">isReadonly</span> = <span class=
+"org-constant">false</span>, <span class=
+"org-variable-name">shallow</span> = <span class=
+"org-constant">false</span>) {
+<span class="linenr">  5: </span>  
+<span class="linenr">  6: </span>    <span class=
+"org-keyword">return</span> <span class=
+"org-keyword">function</span> get(<span class=
+"org-variable-name">target</span>, <span class=
+"org-variable-name">key</span>, <span class=
+"org-variable-name">receiver</span>) {
+<span class="linenr">  7: </span>  
+<span class="linenr">  8: </span>      <span class=
+"org-comment-delimiter">// </span><span class=
+"org-comment">通过原子操作得到真实的值</span>
+<span class="linenr">  9: </span>      <span class=
+"org-keyword">const</span> <span class=
+"org-variable-name">res</span> = Reflect.get(target, key, receiver)
+<span class="linenr"> 10: </span>      console.log(<span class=
+"org-string">`createGetter| ${res}, get proxy - reflect`</span>)
+<span class="linenr"> 11: </span>  
+<span class="linenr"> 12: </span>      <span class=
+"org-keyword">return</span> res
+<span class="linenr"> 13: </span>    }
+<span id="coderef-createGetter" class="coderef-off"><span class=
+"linenr"> 14: </span>  }</span>
+<span class="linenr"> 15: </span>
+<span class="linenr"> 16: </span>  <span class=
+"org-keyword">const</span> <span class=
+"org-variable-name">set</span> = createSetter();
+<span class="linenr"> 17: </span>
+<span class="linenr"> 18: </span>  <span class=
+"org-keyword">function</span> <span class=
+"org-function-name">createSetter</span>(<span class=
+"org-variable-name">shallow</span> = <span class=
+"org-constant">false</span>) {
+<span class="linenr"> 19: </span>    <span class=
+"org-keyword">return</span> <span class=
+"org-keyword">function</span> set(<span class=
+"org-variable-name">target</span>, <span class=
+"org-variable-name">key</span>, <span class=
+"org-variable-name">value</span>, <span class=
+"org-variable-name">receiver</span>) {
+<span class="linenr"> 20: </span>      <span class=
+"org-keyword">let</span> <span class=
+"org-variable-name">oldValue</span> = target[key]
+<span class="linenr"> 21: </span>  
+<span class="linenr"> 22: </span>      <span class=
+"org-comment-delimiter">// </span><span class=
+"org-comment">检测是新增成员还是更新成员值，并且排除了 NaN 一些非法的下标值</span>
+<span class="linenr"> 23: </span>      <span class=
+"org-keyword">const</span> <span class=
+"org-variable-name">hadKey</span> =
+<span class=
+"linenr"> 24: </span>        Array.isArray(target) &amp;& isIntegerKey(key)
+<span class=
+"linenr"> 25: </span>          ? Number(key) &lt; target.length
+<span class="linenr"> 26: </span>          : hasOwn(target, key)
+<span class="linenr"> 27: </span>  
+<span class="linenr"> 28: </span>      <span class=
+"org-comment-delimiter">// </span><span class=
+"org-comment">赋值的原子操作</span>
+<span class="linenr"> 29: </span>      <span class=
+"org-keyword">const</span> <span class=
+"org-variable-name">result</span> = Reflect.set(target, key, value, receiver)
+<span class="linenr"> 30: </span>      console.log(<span class=
+"org-string">`createSetter| set value=${value}, key=${key}, result=${result}`</span>)
+<span class="linenr"> 31: </span>  
+<span class="linenr"> 32: </span>      <span class=
+"org-keyword">return</span> result <span class=
+"org-comment-delimiter">// </span><span class=
+"org-comment">返回赋值结果</span>
+<span class="linenr"> 33: </span>    }
+<span id="coderef-createSetter" class="coderef-off"><span class=
+"linenr"> 34: </span>  }</span>
+<span class="linenr"> 35: </span>
+<span class="linenr"> 36: </span>  <span class=
+"org-keyword">function</span> <span class=
+"org-function-name">deleteProperty</span>(<span class=
+"org-variable-name">target</span>, <span class=
+"org-variable-name">key</span>) {
+<span class="linenr"> 37: </span>    <span class=
+"org-keyword">const</span> <span class=
+"org-variable-name">hasKey</span> = hasOwn(target, key)
+<span class="linenr"> 38: </span>    <span class=
+"org-keyword">const</span> <span class=
+"org-variable-name">oldValue</span> = target[key]
+<span class="linenr"> 39: </span>    <span class=
+"org-keyword">const</span> <span class=
+"org-variable-name">result</span> = Reflect.deleteProperty(target, key)
+<span class="linenr"> 40: </span>    console.log(<span class=
+"org-string">`deleteProperty| key=${key} deleted, result=${result}`</span>)
+<span class="linenr"> 41: </span>    <span class=
+"org-keyword">return</span> result
+<span id="coderef-deleteProperty" class="coderef-off"><span class=
+"linenr"> 42: </span>  }</span>
+<span class="linenr"> 43: </span>
+<span class="linenr"> 44: </span>  <span class=
+"org-keyword">function</span> <span class=
+"org-function-name">has</span>(<span class=
+"org-variable-name">target</span>, <span class=
+"org-variable-name">key</span>) {
+<span class="linenr"> 45: </span>    <span class=
+"org-keyword">const</span> <span class=
+"org-variable-name">result</span> = Reflect.has(target, key)
+<span class="linenr"> 46: </span>    console.log(<span class=
+"org-string">`has| key=${key}, result=${result}`</span>);
+<span class="linenr"> 47: </span>    <span class=
+"org-keyword">return</span> result
+<span id="coderef-not-collection-has" class=
+"coderef-off"><span class="linenr"> 48: </span>  }</span>
+<span class="linenr"> 49: </span>
+<span class="linenr"> 50: </span>  <span class=
+"org-keyword">function</span> <span class=
+"org-function-name">ownKeys</span>(<span class=
+"org-variable-name">target</span>) {
+<span class="linenr"> 51: </span>    console.log(<span class=
+"org-string">`ownKeys| - ${JSON.stringify(target)}`</span>);
+<span class="linenr"> 52: </span>    <span class=
+"org-keyword">return</span> Reflect.ownKeys(target)
+<span id="coderef-ownKeys" class="coderef-off"><span class=
+"linenr"> 53: </span>  }</span>
+<span class="linenr"> 54: </span>
+<span class="linenr"> 55: </span>  <span class=
+"org-keyword">return</span> {
+<span class="linenr"> 56: </span>    get,
+<span class="linenr"> 57: </span>    set,
+<span class="linenr"> 58: </span>    deleteProperty,
+<span class="linenr"> 59: </span>    has,
+<span class="linenr"> 60: </span>    ownKeys,
+<span class="linenr"> 61: </span>  };
+<span class="linenr"> 62: </span>})();
+<span class="linenr"> 63: </span><span class=
+"org-keyword">function</span> <span class=
+"org-function-name">get</span>(<span class=
+"org-variable-name">target</span>, <span class=
+"org-variable-name">key</span>, <span class=
+"org-variable-name">isReadonly</span>, <span class=
+"org-variable-name">isShallow</span>) {
+<span class=
+"linenr"> 64: </span>  target = target.__v_raw <span class=
+"org-comment-delimiter">// </span><span class=
+"org-comment">取出代理之前的原始对象</span>
+<span class="linenr"> 65: </span>  <span class=
+"org-keyword">const</span> <span class=
+"org-variable-name">rawTarget</span> = toRaw(target)
+<span class="linenr"> 66: </span>  <span class=
+"org-keyword">const</span> <span class=
+"org-variable-name">rawKey</span> = toRaw(key)
+<span class="linenr"> 67: </span>
+<span class="linenr"> 68: </span>  <span class=
+"org-comment-delimiter">// </span><span class=
+"org-comment">取出原始对象的原生的 has 方法，即： Map.prototype.has</span>
+<span class="linenr"> 69: </span>  <span class=
+"org-keyword">const</span> { has } = getProto(rawTarget)
+<span class="linenr"> 70: </span>  console.log(<span class=
+"org-string">`collection get| key=${rawKey}, target=${rawTarget}`</span>)
+<span class="linenr"> 71: </span>  <span class=
+"org-keyword">const</span> <span class=
+"org-variable-name">wrap</span> = toReactive <span class=
+"org-comment-delimiter">// </span><span class=
+"org-comment">readonly ? shallow ?</span>
+<span class="linenr"> 72: </span>  <span class=
+"org-keyword">if</span> (has.call(rawTarget, key)) { <span class=
+"org-comment-delimiter">// </span><span class=
+"org-comment">先检测正常的 key</span>
+<span class="linenr"> 73: </span>    <span class=
+"org-keyword">return</span> wrap(target.get(key))
+<span class="linenr"> 74: </span>  } <span class=
+"org-keyword">else</span> <span class=
+"org-keyword">if</span> (has.call(rawTarget, rawKey)) { <span class="org-comment-delimiter">// </span><span class="org-comment">key 本身可能是个 proxy 对象</span>
+<span class="linenr"> 75: </span>    <span class=
+"org-keyword">return</span> wrap(target.get(rawKey))
+<span class="linenr"> 76: </span>  } <span class=
+"org-keyword">else</span> <span class=
+"org-keyword">if</span> (target !== rawTarget) {
+<span class="linenr"> 77: </span>    <span class=
+"org-comment-delimiter">// </span><span class=
+"org-comment">嵌套使用时的情况 readonly(reactive(Map))，这里暂时不讨论</span>
+<span class="linenr"> 78: </span>    target.get(key)
+<span class="linenr"> 79: </span>  }
+<span class="linenr"> 80: </span>}
+<span class="linenr"> 81: </span><span class=
+"org-keyword">function</span> <span class=
+"org-function-name">size</span>(<span class=
+"org-variable-name">target</span>, <span class=
+"org-variable-name">isReadonly</span>) {
+<span class="linenr"> 82: </span>  target = target.__v_raw
+<span class="linenr"> 83: </span>
+<span class="linenr"> 84: </span>  console.log(<span class=
+"org-string">`size| target=${target}`</span>)
+<span class="linenr"> 85: </span>  <span class=
+"org-keyword">return</span> Reflect.get(target, <span class=
+"org-string">'size'</span>, target)
+<span class="linenr"> 86: </span>}
+<span class="linenr"> 87: </span><span class=
+"org-keyword">function</span> <span class=
+"org-function-name">has</span>(<span class=
+"org-variable-name">key</span>, <span class=
+"org-variable-name">isReadonly</span>) {
+<span class="linenr"> 88: </span>  target = <span class=
+"org-constant">this</span>.__v_raw
+<span class="linenr"> 89: </span>  <span class=
+"org-keyword">const</span> <span class=
+"org-variable-name">rawTarget</span> = toRaw(target)
+<span class="linenr"> 90: </span>  <span class=
+"org-keyword">const</span> <span class=
+"org-variable-name">rawKey</span> = toRaw(key)
+<span class="linenr"> 91: </span>
+<span class="linenr"> 92: </span>  console.log(<span class=
+"org-string">`has| key=${key}, rawKey=${rawKey}, target=${target}`</span>)
+<span class="linenr"> 93: </span>  <span class=
+"org-comment-delimiter">// </span><span class=
+"org-comment">key 本身也可能是一个 reactive 对象</span>
+<span class="linenr"> 94: </span>  <span class=
+"org-keyword">return</span> key === rawKey ? target.has(key) : target.has(key) || target.has(rawKey)
+<span class="linenr"> 95: </span>}
+<span class="linenr"> 96: </span><span class=
+"org-keyword">function</span> <span class=
+"org-function-name">add</span>(<span class=
+"org-variable-name">value</span>) {
+<span class="linenr"> 97: </span>  value = toRaw(value)
+<span class="linenr"> 98: </span>  <span class=
+"org-keyword">const</span> <span class=
+"org-variable-name">target</span> = toRaw(<span class=
+"org-constant">this</span>)
+<span class="linenr"> 99: </span>  <span class=
+"org-keyword">const</span> <span class=
+"org-variable-name">proto</span> = getProto(target)
+<span class="linenr">100: </span>  <span class=
+"org-keyword">const</span> <span class=
+"org-variable-name">hadKey</span> = proto.has.call(target, value)
+<span class="linenr">101: </span>
+<span class="linenr">102: </span>  <span class=
+"org-keyword">if</span> (!hadKey) {
+<span class="linenr">103: </span>    target.add(value)
+<span class="linenr">104: </span>  }
+<span class="linenr">105: </span>  console.log(<span class=
+"org-string">`add| value=${value}, hadKey=${hadKey}, target=${target}`</span>)
+<span class="linenr">106: </span>  <span class=
+"org-keyword">return</span> <span class="org-constant">this</span>
+<span class="linenr">107: </span>}
+<span class="linenr">108: </span><span class=
+"org-keyword">function</span> <span class=
+"org-function-name">set</span>(<span class=
+"org-variable-name">key</span>, <span class=
+"org-variable-name">value</span>) {
+<span class="linenr">109: </span>  value = toRaw(value)
+<span class="linenr">110: </span>  <span class=
+"org-keyword">const</span> <span class=
+"org-variable-name">target</span> = toRaw(<span class=
+"org-constant">this</span>)
+<span class="linenr">111: </span>  <span class=
+"org-keyword">const</span> { has, get } = getProto(target)
+<span class="linenr">112: </span>
+<span class="linenr">113: </span>  <span class=
+"org-keyword">let</span> <span class=
+"org-variable-name">hadKey</span> = has.call(target, key)
+<span class="linenr">114: </span>  <span class=
+"org-keyword">if</span> (!hadKey) {
+<span class="linenr">115: </span>    key = toRaw(key)
+<span class="linenr">116: </span>    hadKey = has.call(target, key)
+<span class="linenr">117: </span>  }
+<span class="linenr">118: </span>
+<span class="linenr">119: </span>  <span class=
+"org-keyword">const</span> <span class=
+"org-variable-name">oldValue</span> = get.call(target, key)
+<span class="linenr">120: </span>  target.set(key, value)
+<span class="linenr">121: </span>  console.log(<span class=
+"org-string">`set| key=${key}, value=${value}, oldValue=${oldValue}, target=${target}`</span>)
+<span class="linenr">122: </span>  <span class=
+"org-keyword">return</span> <span class="org-constant">this</span>
+<span class="linenr">123: </span>}
+<span class="linenr">124: </span><span class=
+"org-keyword">function</span> <span class=
+"org-function-name">deleteEntry</span>(<span class=
+"org-variable-name">key</span>) {
+<span class="linenr">125: </span>  <span class=
+"org-keyword">const</span> <span class=
+"org-variable-name">target</span> = toRaw(<span class=
+"org-constant">this</span>)
+<span class="linenr">126: </span>  <span class=
+"org-keyword">const</span> { has, get } = getProto(target)
+<span class="linenr">127: </span>  <span class=
+"org-keyword">let</span> <span class=
+"org-variable-name">hadKey</span> = has.call(target, key)
+<span class="linenr">128: </span>  <span class=
+"org-keyword">if</span> (!hadKey) {
+<span class="linenr">129: </span>    key = toRaw(key)
+<span class="linenr">130: </span>    hadKey = has.call(target, key)
+<span class="linenr">131: </span>  }
+<span class="linenr">132: </span>
+<span class="linenr">133: </span>  <span class=
+"org-keyword">const</span> <span class=
+"org-variable-name">oldValue</span> = get ? get.call(target, key) : <span class="org-constant">undefined</span>
+<span class="linenr">134: </span>  <span class=
+"org-keyword">const</span> <span class=
+"org-variable-name">result</span> = target.<span class=
+"org-keyword">delete</span>(key)
+<span class="linenr">135: </span>  console.log(<span class=
+"org-string">`delete| key=${key}, oldValue=${oldValue}, result=${result}, target=${target}`</span>)
+<span class="linenr">136: </span>  <span class=
+"org-keyword">return</span> result
+<span class="linenr">137: </span>}
+<span class="linenr">138: </span><span class=
+"org-keyword">function</span> <span class=
+"org-function-name">clear</span>() {
+<span class="linenr">139: </span>  <span class=
+"org-keyword">const</span> <span class=
+"org-variable-name">target</span> = toRaw(<span class=
+"org-constant">this</span>)
+<span class="linenr">140: </span>  <span class=
+"org-keyword">const</span> <span class=
+"org-variable-name">hadItems</span> = target.size !== <span class=
+"org-highlight-numbers-number">0</span>
+<span class="linenr">141: </span>  <span class=
+"org-keyword">const</span> <span class=
+"org-variable-name">oldTarget</span> = __DEV__
+<span class=
+"linenr">142: </span>        ? isMap(target) ? <span class=
+"org-keyword">new</span> <span class=
+"org-type">Map</span>(target) : <span class=
+"org-keyword">new</span> <span class="org-type">Set</span>(target)
+<span class="linenr">143: </span>        : <span class=
+"org-constant">undefined</span>
+<span class="linenr">144: </span>
+<span class="linenr">145: </span>  <span class=
+"org-keyword">const</span> <span class=
+"org-variable-name">result</span> = target.clear()
+<span class="linenr">146: </span>  <span class=
+"org-keyword">if</span> (hadItems) {
+<span class="linenr">147: </span>    <span class=
+"org-comment-delimiter">// </span><span class=
+"org-comment">...trigger</span>
+<span class="linenr">148: </span>  }
+<span class="linenr">149: </span>  console.log(<span class=
+"org-string">`clear| result=${result}, target=${target}`</span>)
+<span class="linenr">150: </span>  <span class=
+"org-keyword">return</span> result
+<span class="linenr">151: </span>}
+<span class="linenr">152: </span><span class=
+"org-keyword">function</span> <span class=
+"org-function-name">createForEach</span>(<span class=
+"org-variable-name">isReadonly</span>, <span class=
+"org-variable-name">isShallow</span>) {
+<span class="linenr">153: </span>  <span class=
+"org-keyword">return</span> <span class=
+"org-keyword">function</span> forEach(<span class=
+"org-variable-name">callback</span>, <span class=
+"org-variable-name">thisArg</span>) {
+<span class="linenr">154: </span>    <span class=
+"org-keyword">const</span> <span class=
+"org-variable-name">observed</span> = <span class=
+"org-constant">this</span>
+<span class="linenr">155: </span>    <span class=
+"org-keyword">const</span> <span class=
+"org-variable-name">target</span> = observed.__v_raw
+<span class="linenr">156: </span>    <span class=
+"org-keyword">const</span> <span class=
+"org-variable-name">rawTarget</span> = toRaw(target)
+<span class="linenr">157: </span>    <span class=
+"org-keyword">const</span> <span class=
+"org-variable-name">wrap</span> = toReactive <span class=
+"org-comment-delimiter">// </span><span class=
+"org-comment">shallow ? readonly ?</span>
+<span class="linenr">158: </span>
+<span class="linenr">159: </span>    console.log(<span class=
+"org-string">`forEach| target=${target}, rawTarget=${rawTarget}`</span>)
+<span class="linenr">160: </span>    <span class=
+"org-keyword">return</span> target.forEach((value, key) =&gt; {
+<span class="linenr">161: </span>      console.log(<span class=
+"org-string">`forEach - forEach| value=${value}, key=${key}`</span>)
+<span class="linenr">162: </span>      <span class=
+"org-keyword">return</span> callback.call(thisArg, wrap(value), wrap(key), observed)
+<span class="linenr">163: </span>    })
+<span class="linenr">164: </span>  }
+<span class="linenr">165: </span>}
+<span class="linenr">166: </span><span class=
+"org-keyword">const</span> <span class=
+"org-variable-name">mutableInstrumentations</span> = {
+<span class="linenr">167: </span>  get(key) {
+<span class="linenr">168: </span>    <span class=
+"org-keyword">return</span> get(<span class=
+"org-constant">this</span>, key)
+<span class="linenr">169: </span>  },
+<span class="linenr">170: </span>  get size() {
+<span class="linenr">171: </span>    <span class=
+"org-keyword">return</span> size(<span class=
+"org-constant">this</span>)
+<span class="linenr">172: </span>  },
+<span class="linenr">173: </span>  has,
+<span class="linenr">174: </span>  add,
+<span class="linenr">175: </span>  set,
+<span class="linenr">176: </span>  <span class=
+"org-keyword">delete</span>: deleteEntry,
+<span class="linenr">177: </span>  clear,
+<span class=
+"linenr">178: </span>  forEach: createForEach(<span class=
+"org-constant">false</span>, <span class=
+"org-constant">false</span>)
+<span class="linenr">179: </span>}
+<span class="linenr">180: </span><span class=
+"org-keyword">function</span> <span class=
+"org-function-name">createIterableMethod</span>(<span class=
+"org-variable-name">method</span>, <span class=
+"org-variable-name">isReadonly</span>, <span class=
+"org-variable-name">isShallow</span>) {
+<span class="linenr">181: </span>  <span class=
+"org-keyword">return</span> <span class=
+"org-keyword">function</span>(...args) {
+<span class="linenr">182: </span>    <span class=
+"org-keyword">const</span> <span class=
+"org-variable-name">target</span> = <span class=
+"org-constant">this</span>.__v_raw
+<span class="linenr">183: </span>    <span class=
+"org-keyword">const</span> <span class=
+"org-variable-name">rawTarget</span> = toRaw(target)
+<span class="linenr">184: </span>    <span class=
+"org-keyword">const</span> <span class=
+"org-variable-name">targetIsMap</span> = isMap(rawTarget)
+<span class="linenr">185: </span>    <span class=
+"org-comment-delimiter">// </span><span class=
+"org-comment">map 键值对类型</span>
+<span class="linenr">186: </span>    <span class=
+"org-keyword">const</span> <span class=
+"org-variable-name">isPair</span> = method === <span class=
+"org-string">'entries'</span> || (method === Symbol.iterator &amp;& targetIsMap)
+<span class="linenr">187: </span>    <span class=
+"org-comment-delimiter">// </span><span class=
+"org-comment">set 值-值类型</span>
+<span class="linenr">188: </span>    <span class=
+"org-keyword">const</span> <span class=
+"org-variable-name">isKeyOnly</span> = method === <span class=
+"org-string">'keys'</span> &amp;& targetIsMap
+<span class="linenr">189: </span>    <span class=
+"org-keyword">const</span> <span class=
+"org-variable-name">innerIterator</span> = target[method](...args)
+<span class="linenr">190: </span>    <span class=
+"org-keyword">const</span> <span class=
+"org-variable-name">wrap</span> = toReactive
+<span class="linenr">191: </span>
+<span class="linenr">192: </span>    <span class=
+"org-comment-delimiter">// </span><span class=
+"org-comment">伪造迭代器</span>
+<span class="linenr">193: </span>    <span class=
+"org-keyword">return</span> {
+<span class="linenr">194: </span>      next() {
+<span class="linenr">195: </span>        <span class=
+"org-keyword">const</span> { value, done } = innerIterator.next()
+<span class="linenr">196: </span>        console.log(<span class=
+"org-string">`iterator| value=${value}, done=${done}, isPair=${isPair}, isKeyOnly=${isKeyOnly}, target=${target}`</span>)
+<span class="linenr">197: </span>        <span class=
+"org-keyword">return</span> done ? { value, done } : {
+<span class=
+"linenr">198: </span>          value: isPair ? [wrap(value[<span class="org-highlight-numbers-number">0</span>]), wrap(value[<span class="org-highlight-numbers-number">1</span>])] : wrap(value),
+<span class="linenr">199: </span>          done
+<span class="linenr">200: </span>        }
+<span class="linenr">201: </span>      },
+<span class="linenr">202: </span>      [Symbol.iterator]() {
+<span class="linenr">203: </span>        <span class=
+"org-keyword">return</span> <span class="org-constant">this</span>
+<span class="linenr">204: </span>      }
+<span class="linenr">205: </span>    }
+<span class="linenr">206: </span>  }
+<span class="linenr">207: </span>}
+<span class="linenr">208: </span>
+<span class="linenr">209: </span><span class=
+"org-keyword">const</span> <span class=
+"org-variable-name">iteratorMethods</span> = [<span class=
+"org-string">'keys'</span>, <span class=
+"org-string">'values'</span>, <span class=
+"org-string">'entries'</span>, Symbol.iterator]
+<span class=
+"linenr">210: </span>iteratorMethods.forEach(method =&gt; {
+<span class=
+"linenr">211: </span>  mutableInstrumentations[method] = createIterableMethod(
+<span class="linenr">212: </span>    method,
+<span class="linenr">213: </span>    <span class=
+"org-constant">false</span>,
+<span class="linenr">214: </span>    <span class=
+"org-constant">false</span>
+<span class="linenr">215: </span>  )
+<span class="linenr">216: </span>})
+<span class="linenr">217: </span><span class=
+"org-keyword">function</span> <span class=
+"org-function-name">createInstrumentationGetter</span>(<span class=
+"org-variable-name">isReadonly</span>, <span class=
+"org-variable-name">shallow</span>) {
+<span class="linenr">218: </span>  <span class=
+"org-comment-delimiter">// </span><span class=
+"org-comment">这里会去检测 isReadonly, shallow 参数决定使用哪个 instrumentations</span>
+<span class="linenr">219: </span>  <span class=
+"org-comment-delimiter">// </span><span class=
+"org-comment">这里为了简便直接使用最基本的 instrumentations</span>
+<span class="linenr">220: </span>  <span class=
+"org-keyword">const</span> <span class=
+"org-variable-name">instrumentations</span> = mutableInstrumentations
+<span class="linenr">221: </span>
+<span class="linenr">222: </span>  <span class=
+"org-comment-delimiter">// </span><span class=
+"org-comment">返回一个 get proxy handler, 针对 map.has() 方法和属性的调用</span>
+<span class="linenr">223: </span>  <span class=
+"org-comment-delimiter">// </span><span class=
+"org-comment">此时的访问的 key 其实是 `has` 这个方法名</span>
+<span class="linenr">224: </span>  <span class=
+"org-keyword">return</span> (target, key, receiver) =&gt; {
+<span class="linenr">225: </span>
+<span class="linenr">226: </span>    console.log(<span class=
+"org-string">`createInstrumentationGetter| key=${key}`</span>) <span class="org-comment-delimiter">// </span><span class="org-comment">这里应该输出集合方法名，如：has,set,get</span>
+<span class="linenr">227: </span>
+<span class="linenr">228: </span>    <span class=
+"org-comment-delimiter">// </span><span class=
+"org-comment">取被代理之前的原始对象</span>
+<span class="linenr">229: </span>    <span class=
+"org-keyword">if</span> (key === <span class=
+"org-string">'__v_raw'</span>) {
+<span class="linenr">230: </span>      <span class=
+"org-keyword">return</span> target
+<span class="linenr">231: </span>    }
+<span class="linenr">232: </span>    <span class=
+"org-comment-delimiter">// </span><span class=
+"org-comment">这里将集合类实例方法或属性的读取映射到 instrumentations 中去</span>
+<span class="linenr">233: </span>    <span class=
+"org-comment-delimiter">// </span><span class=
+"org-comment">等于是 map.has -&gt; get 'has' prop -&gt; instrumetations get ...</span>
+<span class="linenr">234: </span>    <span class=
+"org-comment-delimiter">// </span><span class=
+"org-comment">也就是说当你调用 map.has 的时候实际是调用的这里的 instrumentations.has 方法</span>
+<span class="linenr">235: </span>    <span class=
+"org-keyword">return</span> Reflect.get(
+<span class=
+"linenr">236: </span>      hasOwn(instrumentations, key) &amp;& key <span class="org-keyword">in</span> target
+<span class="linenr">237: </span>        ? instrumentations
+<span class="linenr">238: </span>        : target,
+<span class="linenr">239: </span>      key,
+<span class="linenr">240: </span>      receiver
+<span class="linenr">241: </span>    )
+<span class="linenr">242: </span>  }
+<span class="linenr">243: </span>}
+<span id="coderef-mutableCollectionHandlers" class=
+"coderef-off"><span class="linenr">244: </span><span class=
+"org-keyword">const</span> <span class=
+"org-variable-name">mutableCollectionHandlers</span> = {</span>
+<span class=
+"linenr">245: </span>  get: createInstrumentationGetter(<span class="org-constant">false</span>, <span class="org-constant">false</span>)
+<span class="linenr">246: </span>}
+<span class="linenr">247: </span><span class=
+"org-keyword">const</span> <span class=
+"org-variable-name">__DEV__</span> = <span class=
+"org-constant">true</span>
+<span class="linenr">248: </span><span class=
+"org-comment-delimiter">// </span><span class=
+"org-comment">用来缓存 target =&gt; Proxy&lt;target&gt; 之间的关系</span>
+<span id="coderef-reactiveMap" class="coderef-off"><span class=
+"linenr">249: </span><span class=
+"org-keyword">const</span> <span class=
+"org-variable-name">reactiveMap</span> = <span class=
+"org-keyword">new</span> <span class=
+"org-type">WeakMap</span>()</span>
+<span class="linenr">250: </span>
+<span class="linenr">251: </span><span class=
+"org-keyword">const</span> <span class=
+"org-variable-name">objectToString</span> = Object.<span class=
+"org-constant">prototype</span>.toString
+<span class="linenr">252: </span><span class=
+"org-keyword">const</span> <span class=
+"org-variable-name">toTypeString</span> = value =&gt; objectToString.call(value)
+<span class="linenr">253: </span>
+<span class="linenr">254: </span><span class=
+"org-keyword">const</span> <span class=
+"org-variable-name">getRawType</span> = val =&gt; Object.<span class="org-constant">prototype</span>.toString.call(val).slice(<span class="org-highlight-numbers-number">8</span>, -<span class="org-highlight-numbers-number">1</span>)
+<span class="linenr">255: </span><span class=
+"org-keyword">const</span> <span class=
+"org-variable-name">isCollection</span> = val =&gt; [<span class=
+"org-string">'Map'</span>, <span class=
+"org-string">'Set'</span>, <span class=
+"org-string">'WeakMap'</span>, <span class=
+"org-string">'WeakSet'</span>].includes(getRawType(val))
+<span class="linenr">256: </span><span class=
+"org-keyword">const</span> <span class=
+"org-variable-name">isObject</span> = val =&gt; [<span class=
+"org-string">'Object'</span>, <span class=
+"org-string">'Array'</span>].includes(getRawType(val))
+<span class="linenr">257: </span><span class=
+"org-keyword">const</span> <span class=
+"org-variable-name">isString</span> = val =&gt; <span class=
+"org-keyword">typeof</span> val === <span class=
+"org-string">'string'</span>
+<span class="linenr">258: </span><span class=
+"org-keyword">const</span> <span class=
+"org-variable-name">isIntegerKey</span> = (key) =&gt; isString(key) &amp;& key !== <span class="org-string">'NaN'</span> &amp;& key[<span class="org-highlight-numbers-number">0</span>] !== <span class="org-string">'-'</span> &amp;& <span class="org-string">''</span> + parseInt(key, <span class="org-highlight-numbers-number">10</span>) === key
+<span class="linenr">259: </span><span class=
+"org-keyword">const</span> <span class=
+"org-variable-name">isMap</span> = val =&gt; toTypeString(val) === <span class="org-string">'[object Map]'</span>
+<span class="linenr">260: </span><span class=
+"org-keyword">const</span> <span class=
+"org-variable-name">hasOwnProperty</span> = Object.<span class=
+"org-constant">prototype</span>.hasOwnProperty
+<span class="linenr">261: </span><span class=
+"org-keyword">const</span> <span class=
+"org-variable-name">hasOwn</span> = (val, key) =&gt; hasOwnProperty.call(val, key)
+<span class="linenr">262: </span>
+<span class="linenr">263: </span><span class=
+"org-keyword">const</span> <span class=
+"org-variable-name">toRaw</span> = observed =&gt; {
+<span class="linenr">264: </span>  <span class=
+"org-keyword">const</span> <span class=
+"org-variable-name">raw</span> = observed &amp;& observed.__v_raw
+<span class="linenr">265: </span>  <span class=
+"org-keyword">return</span> raw ? toRaw(raw) : observed
+<span class="linenr">266: </span>}
+<span class="linenr">267: </span><span class=
+"org-keyword">const</span> <span class=
+"org-variable-name">getProto</span> = v =&gt; Reflect.getPrototypeOf(v)
+<span class="linenr">268: </span><span class=
+"org-keyword">const</span> <span class=
+"org-variable-name">toReactive</span> = value =&gt; <span class=
+"org-keyword">typeof</span> value === <span class=
+"org-string">'object'</span> ? reactive(value) : value
+<span class="linenr">269: </span>
+<span class="linenr">270: </span><span class=
+"org-keyword">const</span> <span class=
+"org-variable-name">log</span> = (fn, message) =&gt; console.log(<span class="org-string">`[${fn}] ${message}`</span>)
+<span class="linenr">271: </span><span class=
+"org-keyword">const</span> <span class=
+"org-variable-name">logEnd</span> = () =&gt; console.log(<span class="org-string">"--------- END ---------"</span>)
+<span class="linenr">272: </span>
+<span class="linenr">273: </span><span class=
+"org-keyword">function</span> <span class=
+"org-function-name">reactive</span>(<span class=
+"org-variable-name">target</span>) {
+<span class="linenr">274: </span>  <span class=
+"org-comment-delimiter">// </span><span class=
+"org-comment">只读对象不可 reactive</span>
+<span class="linenr">275: </span>  <span class=
+"org-keyword">if</span> (target?.__v_isReadonly) {
+<span class="linenr">276: </span>    <span class=
+"org-keyword">return</span> target
+<span class="linenr">277: </span>  }
+<span class="linenr">278: </span>
+<span class="linenr">279: </span>  <span class=
+"org-keyword">return</span> createReactiveObject(
+<span class="linenr">280: </span>    target,
+<span class="linenr">281: </span>    <span class=
+"org-constant">false</span>,
+<span class="linenr">282: </span>    mutableHandlers,
+<span class="linenr">283: </span>    mutableCollectionHandlers,
+<span class="linenr">284: </span>    reactiveMap
+<span class="linenr">285: </span>  )
+<span class="linenr">286: </span>}
+<span class="linenr">287: </span><span class=
+"org-keyword">function</span> <span class=
+"org-function-name">createReactiveObject</span>(
+<span class="linenr">288: </span>  <span class=
+"org-variable-name">target</span>,
+<span class="linenr">289: </span>  <span class=
+"org-variable-name">isReadOnly</span>,
+<span class="linenr">290: </span>  <span class=
+"org-variable-name">baseHandlers</span>,
+<span class="linenr">291: </span>  <span class=
+"org-variable-name">collectionHandlers</span>,
+<span class="linenr">292: </span>  proxyMap
+<span class="linenr">293: </span>) {
+<span class="linenr">294: </span>  <span class=
+"org-comment-delimiter">// </span><span class=
+"org-comment">targetType 是 target 原始类型 Object.prototype.toString.call(target) =&gt; [object Object]</span>
+<span class="linenr">295: </span>  <span class=
+"org-comment-delimiter">// </span><span class=
+"org-comment">中的 "Object", 这里如果是 Map/Set/WeakMap/WeakSet 则使用 collectionHandlers 如果是 Object/Array</span>
+<span class="linenr">296: </span>  <span class=
+"org-comment-delimiter">// </span><span class=
+"org-comment">就使用 baseHandlers(TIP:这里路过非法检测)</span>
+<span class="linenr">297: </span>  <span class=
+"org-keyword">const</span> <span class=
+"org-variable-name">proxy</span> = <span class=
+"org-keyword">new</span> <span class=
+"org-type">Proxy</span>(target, isCollection(target) ? collectionHandlers : baseHandlers)
+<span class="linenr">298: </span>  proxyMap.set(target, proxy)
+<span class="linenr">299: </span>  <span class=
+"org-keyword">return</span> proxy
+<span class="linenr">300: </span>}
+<span class="linenr">301: </span>
+<span class="linenr">302: </span><span class=
+"org-keyword">let</span> <span class=
+"org-variable-name">val</span>, <span class=
+"org-variable-name">iterator</span>
+<span class="linenr">303: </span><span class=
+"org-keyword">const</span> <span class=
+"org-variable-name">observed</span> = reactive({ a: <span class=
+"org-highlight-numbers-number">1</span> })
+<span class="linenr">304: </span>observed.a <span class=
+"org-comment-delimiter">// </span><span class=
+"org-comment">get</span>
+<span class="linenr">305: </span>observed.a = <span class=
+"org-highlight-numbers-number">2</span>
+<span class="linenr">306: </span>logEnd()
+<span class="linenr">307: </span><span class=
+"org-keyword">const</span> <span class=
+"org-variable-name">observed1</span> = reactive(<span class=
+"org-keyword">new</span> <span class="org-type">Map</span>())
+<span class="linenr">308: </span>observed1.set(<span class=
+"org-string">'foo'</span>, <span class=
+"org-highlight-numbers-number">1</span>)
+<span class="linenr">309: </span>observed1.set(<span class=
+"org-string">'bar'</span>, <span class=
+"org-highlight-numbers-number">2</span>)
+<span class="linenr">310: </span>val = observed1.get(<span class=
+"org-string">'bar'</span>)
+<span class="linenr">311: </span>console.log(<span class=
+"org-string">`[Map] bar=${val}, size=${observed1.size}`</span>)
+<span class="linenr">312: </span>observed1.<span class=
+"org-keyword">delete</span>(<span class="org-string">'foo'</span>)
+<span class="linenr">313: </span>console.log(<span class=
+"org-string">`[Map] foo=${observed1.get('foo')}, has foo?${observed1.has('foo')}, size=${observed1.size}`</span>)
+<span class="linenr">314: </span>iterator = observed1.keys()
+<span class="linenr">315: </span><span class=
+"org-keyword">let</span> <span class=
+"org-variable-name">item</span> = iterator.next()
+<span class="linenr">316: </span>console.log(<span class=
+"org-string">`[iterator 1] val=${item.value}, done=${item.done}`</span>, )
+<span class="linenr">317: </span>item = iterator.next()
+<span class="linenr">318: </span>console.log(<span class=
+"org-string">`[iterator 2] val=${item.value}, done=${item.done}`</span>, )
+<span class="linenr">319: </span>item = iterator.next()
+<span class="linenr">320: </span>console.log(<span class=
+"org-string">`[iterator 3] val=${item.value}, done=${item.done}`</span>, )
+<span class="linenr">321: </span>logEnd()
+<span class="linenr">322: </span><span class=
+"org-keyword">const</span> <span class=
+"org-variable-name">observed2</span> = reactive(<span class=
+"org-keyword">new</span> <span class="org-type">Set</span>())
+<span class="linenr">323: </span>observed2.add(<span class=
+"org-highlight-numbers-number">1</span>)
+<span class="linenr">324: </span>observed2.add(<span class=
+"org-highlight-numbers-number">2</span>)
+<span class="linenr">325: </span>observed2.<span class=
+"org-keyword">delete</span>(<span class=
+"org-highlight-numbers-number">1</span>)
+<span class="linenr">326: </span>console.log(<span class=
+"org-string">`size=${observed2.size}`</span>)
+</pre>
+        </div>
+      </div>
+    </div>
+    <div id="outline-container-org9286b74" class="outline-2">
+      <h2 id="org9286b74"><span class="section-number-2">8.</span>
       FootNotes</h2>
-      <div class="outline-text-2" id="text-7"></div>
+      <div class="outline-text-2" id="text-8"></div>
     </div>
     <div id="footnotes">
       <h2 class="footnotes">Footnotes:</h2>
@@ -1522,7 +3375,7 @@ undefined
   </div>
   <div id="postamble" class="status">
     <p class="author">Author: Zhicheng Lee</p>
-    <p class="date">Created: 2022-03-31 Thu 14:38</p>
+    <p class="date">Created: 2022-03-31 Thu 16:47</p>
   </div>
 </body>
 </html>
