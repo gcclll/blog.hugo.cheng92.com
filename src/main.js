@@ -5,6 +5,7 @@ import { cached } from './cache'
 import config from './config'
 import loadSearchApp from './apps/search'
 import { switchTheme } from './switch'
+import { handleEvents } from './event'
 import './css/theme.my.scss'
 import './css/link.scss'
 import './css/global.scss'
@@ -68,6 +69,8 @@ $(function () {
   )
 
   switchTheme()
+
+  handleEvents()
 })
 
 function loadScript(file) {

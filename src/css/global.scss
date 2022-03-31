@@ -324,6 +324,17 @@ blockquote {
   }
 }
 
+#gl-copy-button {
+  position: absolute;
+  right: 96px;
+  top: 8px;
+  font-size: 10px;
+  border-radius: 5px;
+  border: none;
+  background: #0366d6;
+  color: #fff;
+}
+
 @media screen and (max-width: 768px) {
   #table-of-contents {
     width: 100% !important;
