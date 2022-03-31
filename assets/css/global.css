@@ -391,6 +391,7 @@ blockquote {
   border: none;
   background: #0366d6;
   color: #fff;
+  padding: 3px 8px;
 }
 
 @media screen and (max-width: 768px) {
