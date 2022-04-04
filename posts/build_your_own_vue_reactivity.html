@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <!-- 2022-03-31 Thu 16:47 -->
+  <!-- 2022-04-04 Mon 12:49 -->
   <meta charset="utf-8">
   <meta name="viewport" content=
   "width=device-width, initial-scale=1">
@@ -283,19 +283,19 @@
       <div id="text-table-of-contents" role="doc-toc">
         <ul>
           <li>
-            <a href="#org8cccf4a">1. 前置代码(handlers)</a>
+            <a href="#org6611107">1. READY(handlers)</a>
           </li>
           <li>
-            <a href="#org44b5743">2. used global variables</a>
+            <a href="#org91a1c84">2. used global variables</a>
           </li>
           <li>
-            <a href="#orgca55170">3. reactive(target: object)</a>
+            <a href="#org0b724f5">3. reactive(target: object)</a>
           </li>
           <li>
-            <a href="#orgfbe9d96">4. createReactiveObject</a>
+            <a href="#org9411ccb">4. createReactiveObject</a>
           </li>
           <li>
-            <a href="#org206b14c">5. mutableHandlers</a>
+            <a href="#org75aeff0">5. mutableHandlers</a>
             <ul>
               <li>
                 <a href="#base-handler-createGetter">5.1.
@@ -306,21 +306,21 @@
                 createSetter</a>
               </li>
               <li>
-                <a href="#org5e040b8">5.3. deleteProperty</a>
+                <a href="#org9bac53a">5.3. deleteProperty</a>
               </li>
               <li>
                 <a href="#base-handler-has">5.4. has</a>
               </li>
               <li>
-                <a href="#org33cdce6">5.5. ownKeys</a>
+                <a href="#org4d24755">5.5. ownKeys</a>
               </li>
               <li>
-                <a href="#org7c4cb1d">5.6. Testing</a>
+                <a href="#org555412b">5.6. Testing</a>
               </li>
             </ul>
           </li>
           <li>
-            <a href="#orgeabf098">6. mutableCollectionHandlers</a>
+            <a href="#org5e7ddfc">6. mutableCollectionHandlers</a>
             <ul>
               <li>
                 <a href=
@@ -356,20 +356,20 @@
                 <a href="#ref-collection-forEach">6.10. forEach</a>
               </li>
               <li>
-                <a href="#org0e90b3f">6.11. keys, values,
+                <a href="#org7166564">6.11. keys, values,
                 entries</a>
               </li>
               <li>
-                <a href="#org232879e">6.12. Testing</a>
+                <a href="#org63a639d">6.12. Testing</a>
               </li>
             </ul>
           </li>
           <li>
-            <a href="#org523fac8">7. phase one(no track &
+            <a href="#org0925fe4">7. phase one(no track &
             trigger)</a>
           </li>
           <li>
-            <a href="#org9286b74">8. FootNotes</a>
+            <a href="#org77cae13">8. FootNotes</a>
           </li>
         </ul>
       </div>
@@ -387,9 +387,9 @@
       <p><i><span style=
       "color:blue;">注意：这里会省略部分不影响理解的代码，和一些非法参数等等的检查，目的是为了减少代码量，但不影响学习和理解源代码</span></i></p>
     </div><br>
-    <div id="outline-container-org8cccf4a" class="outline-2">
-      <h2 id="org8cccf4a"><span class="section-number-2">1.</span>
-      前置代码(handlers)</h2>
+    <div id="outline-container-org6611107" class="outline-2">
+      <h2 id="org6611107"><span class="section-number-2">1.</span>
+      READY(handlers)</h2>
       <div class="outline-text-2" id="text-1">
         <p>由于 <abbr class="tooltip" title=
         "zsh:1: command not found: wn&lt;br&gt;">Proxy</abbr> +
@@ -423,13 +423,13 @@
         JavaScript Proxy And Reflect</a>。</p>
       </div>
     </div>
-    <div id="outline-container-org44b5743" class="outline-2">
-      <h2 id="org44b5743"><span class="section-number-2">2.</span>
+    <div id="outline-container-org91a1c84" class="outline-2">
+      <h2 id="org91a1c84"><span class="section-number-2">2.</span>
       used global variables</h2>
       <div class="outline-text-2" id="text-2">
         <p>这里把用到的所有全局变量集中到下面。</p>
         <div class="org-src-container">
-          <pre class="src src-js" id="orge14bde6"><span class=
+          <pre class="src src-js" id="orga085f85"><span class=
           "linenr"> 1: </span><span class=
           "org-keyword">const</span> <span class=
           "org-variable-name">__DEV__</span> = <span class=
@@ -514,14 +514,14 @@
         </div>
       </div>
     </div>
-    <div id="outline-container-orgca55170" class="outline-2">
-      <h2 id="orgca55170"><span class="section-number-2">3.</span>
+    <div id="outline-container-org0b724f5" class="outline-2">
+      <h2 id="org0b724f5"><span class="section-number-2">3.</span>
       reactive(target: object)</h2>
       <div class="outline-text-2" id="text-3">
-        <p>相关代码：<a href="#orge14bde6">globalVars</a>, <a href=
-        "#orge5718c5">createReactiveObject</a></p>
+        <p>相关代码：<a href="#orga085f85">globalVars</a>, <a href=
+        "#org3846a04">createReactiveObject</a></p>
         <div class="org-src-container">
-          <pre class="src src-js" id="org9c9d6a6"><span class=
+          <pre class="src src-js" id="org73d792b"><span class=
           "linenr"> 1: </span>&lt;&lt;globalVars&gt;&gt;
 <span class="linenr"> 2: </span>
 <span class="linenr"> 3: </span><span class=
@@ -585,8 +585,8 @@
         </ol>
       </div>
     </div>
-    <div id="outline-container-orgfbe9d96" class="outline-2">
-      <h2 id="orgfbe9d96"><span class="section-number-2">4.</span>
+    <div id="outline-container-org9411ccb" class="outline-2">
+      <h2 id="org9411ccb"><span class="section-number-2">4.</span>
       createReactiveObject</h2>
       <div class="outline-text-2" id="text-4">
         <p>这个才是真正创建代理的地方，也是 <span style=
@@ -615,7 +615,7 @@
 </pre>
         </div>
         <p>参数说明：</p>
-        <table id="orgfa2ef1d">
+        <table id="orgb310758">
           <colgroup>
             <col class="org-left">
             <col class="org-left">
@@ -660,7 +660,7 @@
           </tbody>
         </table>
         <div class="org-src-container">
-          <pre class="src src-js" id="orge5718c5"><span class=
+          <pre class="src src-js" id="org3846a04"><span class=
           "org-keyword">function</span> <span class=
           "org-function-name">createReactiveObject</span>(
   <span class="org-variable-name">target</span>,
@@ -686,8 +686,8 @@
         </div>
       </div>
     </div>
-    <div id="outline-container-org206b14c" class="outline-2">
-      <h2 id="org206b14c"><span class="section-number-2">5.</span>
+    <div id="outline-container-org75aeff0" class="outline-2">
+      <h2 id="org75aeff0"><span class="section-number-2">5.</span>
       mutableHandlers</h2>
       <div class="outline-text-2" id="text-5">
         <p>针对普通类型(<abbr class="tooltip" title=
@@ -696,7 +696,7 @@
         "zsh:1: command not found: wn&lt;br&gt;">Array</abbr>)的对象的
         Proxy 参数。</p>
         <div class="org-src-container">
-          <pre class="src src-js" id="org3d6465c"><span id=
+          <pre class="src src-js" id="org1bac902"><span id=
           "coderef-mutableHandlers" class="coderef-off"><span class=
           "linenr"> 1: </span><span class=
           "org-keyword">const</span> <span class=
@@ -745,7 +745,7 @@
         <div class="outline-text-3" id=
         "text-base-handler-createGetter">
           <div class="org-src-container">
-            <pre class="src src-js" id="org9d45676"><span class=
+            <pre class="src src-js" id="orgc8d11d3"><span class=
             "org-keyword">function</span> <span class=
             "org-function-name">createGetter</span>(<span class=
             "org-variable-name">isReadonly</span> = <span class=
@@ -780,7 +780,7 @@
         <div class="outline-text-3" id=
         "text-base-handler-createSetter">
           <div class="org-src-container">
-            <pre class="src src-js" id="org0531e75"><span class=
+            <pre class="src src-js" id="org691b65d"><span class=
             "org-keyword">function</span> <span class=
             "org-function-name">createSetter</span>(<span class=
             "org-variable-name">shallow</span> = <span class=
@@ -818,12 +818,12 @@
           </div>
         </div>
       </div>
-      <div id="outline-container-org5e040b8" class="outline-3">
-        <h3 id="org5e040b8"><span class=
+      <div id="outline-container-org9bac53a" class="outline-3">
+        <h3 id="org9bac53a"><span class=
         "section-number-3">5.3.</span> deleteProperty</h3>
         <div class="outline-text-3" id="text-5-3">
           <div class="org-src-container">
-            <pre class="src src-js" id="orgd22f797"><span class=
+            <pre class="src src-js" id="org3d8efe9"><span class=
             "org-keyword">function</span> <span class=
             "org-function-name">deleteProperty</span>(<span class=
             "org-variable-name">target</span>, <span class=
@@ -848,7 +848,7 @@
         "section-number-3">5.4.</span> has</h3>
         <div class="outline-text-3" id="text-base-handler-has">
           <div class="org-src-container">
-            <pre class="src src-js" id="org2b40b19"><span class=
+            <pre class="src src-js" id="org121c9c8"><span class=
             "org-keyword">function</span> <span class=
             "org-function-name">has</span>(<span class=
             "org-variable-name">target</span>, <span class=
@@ -863,12 +863,12 @@
           </div>
         </div>
       </div>
-      <div id="outline-container-org33cdce6" class="outline-3">
-        <h3 id="org33cdce6"><span class=
+      <div id="outline-container-org4d24755" class="outline-3">
+        <h3 id="org4d24755"><span class=
         "section-number-3">5.5.</span> ownKeys</h3>
         <div class="outline-text-3" id="text-5-5">
           <div class="org-src-container">
-            <pre class="src src-js" id="orge17a98e"><span class=
+            <pre class="src src-js" id="org164cfec"><span class=
             "org-keyword">function</span> <span class=
             "org-function-name">ownKeys</span>(<span class=
             "org-variable-name">target</span>) {
@@ -880,8 +880,8 @@
           </div>
         </div>
       </div>
-      <div id="outline-container-org7c4cb1d" class="outline-3">
-        <h3 id="org7c4cb1d"><span class=
+      <div id="outline-container-org555412b" class="outline-3">
+        <h3 id="org555412b"><span class=
         "section-number-3">5.6.</span> Testing</h3>
         <div class="outline-text-3" id="text-5-6">
           <p>先将 <a href="#coderef-mutableCollectionHandlers" class=
@@ -902,8 +902,8 @@
               <strong><font face="Courier" size="3" color=
               "red">测试非集合类型 get 操作</font></strong>
             </summary>
-            <p><a href="#org9d45676">createGetter</a>, <a href=
-            "#org9c9d6a6">reactive</a></p>
+            <p><a href="#orgc8d11d3">createGetter</a>, <a href=
+            "#org73d792b">reactive</a></p>
             <div class="org-src-container">
               <pre class="src src-js"><span class=
               "linenr"> 1: </span><span class=
@@ -944,8 +944,8 @@ undefined
               <strong><font face="Courier" size="3" color=
               "red">测试非集合类型 set 操作</font></strong>
             </summary>
-            <p><a href="#org0531e75">createSetter</a>, <a href=
-            "#org9c9d6a6">reactive</a></p>
+            <p><a href="#org691b65d">createSetter</a>, <a href=
+            "#org73d792b">reactive</a></p>
             <div class="org-src-container">
               <pre class="src src-js"><span class=
               "linenr"> 1: </span><span class=
@@ -989,8 +989,8 @@ undefined
               <strong><font face="Courier" size="3" color=
               "red">测试非集合类型 delete 操作</font></strong>
             </summary>
-            <p><a href="#orgd22f797">deleteProperty</a>, <a href=
-            "#org9c9d6a6">reactive</a></p>
+            <p><a href="#org3d8efe9">deleteProperty</a>, <a href=
+            "#org73d792b">reactive</a></p>
             <div class="org-src-container">
               <pre class="src src-js"><span class=
               "linenr"> 1: </span><span class=
@@ -1032,8 +1032,8 @@ undefined
               <strong><font face="Courier" size="3" color=
               "red">测试非集合类型 has 操作</font></strong>
             </summary>
-            <p><a href="#org2b40b19">not-collection-has</a>,
-            <a href="#org9c9d6a6">reactive</a></p>
+            <p><a href="#org121c9c8">not-collection-has</a>,
+            <a href="#org73d792b">reactive</a></p>
             <div class="org-src-container">
               <pre class="src src-js"><span class=
               "linenr"> 1: </span><span class=
@@ -1076,8 +1076,8 @@ undefined
               <strong><font face="Courier" size="3" color=
               "red">测试非集合类型 ownKeys 操作</font></strong>
             </summary>
-            <p><a href="#orge17a98e">ownKeys</a>, <a href=
-            "#org9c9d6a6">reactive</a></p>
+            <p><a href="#org164cfec">ownKeys</a>, <a href=
+            "#org73d792b">reactive</a></p>
             <p>各种迭达操作时会调用的原子操作。</p>
             <div class="org-src-container">
               <pre class="src src-js"><span class=
@@ -1123,8 +1123,8 @@ undefined
         </div>
       </div>
     </div>
-    <div id="outline-container-orgeabf098" class="outline-2">
-      <h2 id="orgeabf098"><span class="section-number-2">6.</span>
+    <div id="outline-container-org5e7ddfc" class="outline-2">
+      <h2 id="org5e7ddfc"><span class="section-number-2">6.</span>
       mutableCollectionHandlers</h2>
       <div class="outline-text-2" id="text-6">
         <p>针对集合类型的对象，因为 <abbr class="tooltip" title=
@@ -1139,7 +1139,7 @@ undefined
         方式其实就是一个 proxy get - Reflect.get 方法，所以
         mutableCollectionHandlers 就很简单只有一个 <code>get</code> 方法。</p>
         <div class="org-src-container">
-          <pre class="src src-js" id="orga08d9c5"><span class=
+          <pre class="src src-js" id="orge4ee056"><span class=
           "linenr">1: </span>&lt;&lt;mutableInstrumentations&gt;&gt;
 <span class="linenr">2: </span>&lt;&lt;collection-iterator&gt;&gt;
 <span class=
@@ -1156,9 +1156,9 @@ undefined
 </pre>
         </div>
         <p>所有的代码都封装在以 <a href=
-        "#org690c3e6">createInstrumentationGetter</a> 为入口的代码中了。</p>
+        "#orgfe7ac51">createInstrumentationGetter</a> 为入口的代码中了。</p>
         <p>接下来重点看下它是如何实现 Map/Set 类型的代理的？？？</p>
-        <div class="tip" id="org4dff4b6">
+        <div class="tip" id="orgce5fc1c">
           <p>vue 源码是基于 typescript 实现的，所以下面集合相关的函数的第一个参数是
           <code>function (this: Xxxx)</code> 方法，在 javascript
           中其实就是函数内部的 <code>this</code> 。</p>
@@ -1173,7 +1173,7 @@ undefined
         <div class="outline-text-3" id=
         "text-ref-collection-createInstrumentationGetter">
           <div class="org-src-container">
-            <pre class="src src-js" id="org690c3e6"><span class=
+            <pre class="src src-js" id="orgfe7ac51"><span class=
             "org-keyword">function</span> <span class=
             "org-function-name">createInstrumentationGetter</span>(<span class=
             "org-variable-name">isReadonly</span>, <span class=
@@ -1229,7 +1229,7 @@ undefined
         <div class="outline-text-3" id=
         "text-collection-mutableInstrumentations">
           <div class="org-src-container">
-            <pre class="src src-js" id="orgd4965a5"><span class=
+            <pre class="src src-js" id="org1035705"><span class=
             "linenr"> 1: </span>&lt;&lt;collection-get&gt;&gt;
 <span class="linenr"> 2: </span>&lt;&lt;collection-size&gt;&gt;
 <span class="linenr"> 3: </span>&lt;&lt;collection-has&gt;&gt;
@@ -1273,7 +1273,7 @@ undefined
         "section-number-3">6.3.</span> get</h3>
         <div class="outline-text-3" id="text-ref-collection-get">
           <div class="org-src-container">
-            <pre class="src src-js" id="org4488cde"><span class=
+            <pre class="src src-js" id="org190b4a5"><span class=
             "linenr"> 1: </span><span class=
             "org-keyword">function</span> <span class=
             "org-function-name">get</span>(<span class=
@@ -1330,7 +1330,7 @@ undefined
           <code>get</code> 方法来实现的，比如： <code>map.get('count')</code>
           实现是对 map get 进行了代理， 当调用它时首先是发生了 map -&gt; get 这个名为
           <code>get</code> 的函数的取值操作，最后这个操作都 被代理到了 <a href=
-          "#orga08d9c5">mutableCollectionHandlers</a> 中去了，因为当调用
+          "#orge4ee056">mutableCollectionHandlers</a> 中去了，因为当调用
           <code>map.get()</code> 的时候实际是在 调用
           <code>mutableCollectionHandlers.get()</code> 最后调用的就是这里的
           <code>get</code> 函数。</p>
@@ -1344,7 +1344,7 @@ undefined
         "section-number-3">6.4.</span> has</h3>
         <div class="outline-text-3" id="text-ref-collection-has">
           <div class="org-src-container">
-            <pre class="src src-js" id="org9c14cf1"><span class=
+            <pre class="src src-js" id="orgbc7ec4f"><span class=
             "linenr">1: </span><span class=
             "org-keyword">function</span> <span class=
             "org-function-name">has</span>(<span class=
@@ -1377,7 +1377,7 @@ undefined
         "section-number-3">6.5.</span> size</h3>
         <div class="outline-text-3" id="text-ref-collection-size">
           <div class="org-src-container">
-            <pre class="src src-js" id="orgaf1e044"><span class=
+            <pre class="src src-js" id="org09aabad"><span class=
             "linenr">1: </span><span class=
             "org-keyword">function</span> <span class=
             "org-function-name">size</span>(<span class=
@@ -1402,7 +1402,7 @@ undefined
         <div class="outline-text-3" id="text-ref-collection-add">
           <p><code>Set.prototype.add</code> 添加元素。</p>
           <div class="org-src-container">
-            <pre class="src src-js" id="org5aafe0e"><span class=
+            <pre class="src src-js" id="org29013d0"><span class=
             "linenr"> 1: </span><span class=
             "org-keyword">function</span> <span class=
             "org-function-name">add</span>(<span class=
@@ -1438,7 +1438,7 @@ undefined
         "section-number-3">6.7.</span> set</h3>
         <div class="outline-text-3" id="text-ref-collection-set">
           <div class="org-src-container">
-            <pre class="src src-js" id="org9d4e73c"><span class=
+            <pre class="src src-js" id="org445459e"><span class=
             "linenr"> 1: </span><span class=
             "org-keyword">function</span> <span class=
             "org-function-name">set</span>(<span class=
@@ -1481,7 +1481,7 @@ undefined
         <div class="outline-text-3" id=
         "text-ref-collection-delete">
           <div class="org-src-container">
-            <pre class="src src-js" id="orgc0dba45"><span class=
+            <pre class="src src-js" id="org7245f0f"><span class=
             "linenr"> 1: </span><span class=
             "org-keyword">function</span> <span class=
             "org-function-name">deleteEntry</span>(<span class=
@@ -1523,7 +1523,7 @@ undefined
         "section-number-3">6.9.</span> clear</h3>
         <div class="outline-text-3" id="text-ref-collection-clear">
           <div class="org-src-container">
-            <pre class="src src-js" id="orgc462b13"><span class=
+            <pre class="src src-js" id="org9da7391"><span class=
             "linenr"> 1: </span><span class=
             "org-keyword">function</span> <span class=
             "org-function-name">clear</span>() {
@@ -1571,7 +1571,7 @@ undefined
         <div class="outline-text-3" id=
         "text-ref-collection-forEach">
           <div class="org-src-container">
-            <pre class="src src-js" id="org49afb54"><span class=
+            <pre class="src src-js" id="orgf71f608"><span class=
             "linenr"> 1: </span><span class=
             "org-keyword">function</span> <span class=
             "org-function-name">createForEach</span>(<span class=
@@ -1613,12 +1613,12 @@ undefined
           </div>
         </div>
       </div>
-      <div id="outline-container-org0e90b3f" class="outline-3">
-        <h3 id="org0e90b3f"><span class=
+      <div id="outline-container-org7166564" class="outline-3">
+        <h3 id="org7166564"><span class=
         "section-number-3">6.11.</span> keys, values, entries</h3>
         <div class="outline-text-3" id="text-6-11">
           <div class="org-src-container">
-            <pre class="src src-js" id="org3b0fd67"><span class=
+            <pre class="src src-js" id="orgec622ca"><span class=
             "linenr"> 1: </span><span class=
             "org-keyword">function</span> <span class=
             "org-function-name">createIterableMethod</span>(<span class=
@@ -1687,7 +1687,7 @@ undefined
           </div>
           <p>代理 Map, Set 的迭达器操作:</p>
           <div class="org-src-container">
-            <pre class="src src-js" id="org469193a"><span class=
+            <pre class="src src-js" id="org7520ff4"><span class=
             "linenr"> 1: </span>&lt;&lt;createIterableMethod&gt;&gt;
 <span class="linenr"> 2: </span>
 <span class="linenr"> 3: </span><span class=
@@ -1711,8 +1711,8 @@ undefined
           </div>
         </div>
       </div>
-      <div id="outline-container-org232879e" class="outline-3">
-        <h3 id="org232879e"><span class=
+      <div id="outline-container-org63a639d" class="outline-3">
+        <h3 id="org63a639d"><span class=
         "section-number-3">6.12.</span> Testing</h3>
         <div class="outline-text-3" id="text-6-12">
           <br>
@@ -1722,8 +1722,8 @@ undefined
               <strong><font face="Courier" size="3" color=
               "red">集合类型的 get 操作</font></strong>
             </summary>
-            <p><a href="#org9c9d6a6">reactive</a>, <a href=
-            "#org4488cde">collection-get</a></p>
+            <p><a href="#org73d792b">reactive</a>, <a href=
+            "#org190b4a5">collection-get</a></p>
             <div class="org-src-container">
               <pre class="src src-js"><span class=
               "linenr"> 1: </span><span class=
@@ -1785,7 +1785,7 @@ undefined
             <ol class="org-ol">
               <li>第一行输出是 <code>observed.get</code> 方法的访问，被
               <code>proxy get</code> 代理到了 <a href=
-              "#orga08d9c5">mutableCollectionHandlers</a> 中的 <code>
+              "#orge4ee056">mutableCollectionHandlers</a> 中的 <code>
                 get</code> 结果，即此时的 <code>get</code> 调用已经被代理到了
                 <code>mutableCollectionHandlers.get</code> 。
               </li>
@@ -1807,8 +1807,8 @@ undefined
               <strong><font face="Courier" size="3" color=
               "red">集合类型的 has 操作</font></strong>
             </summary>
-            <p><a href="#org9c9d6a6">reactive</a>, <a href=
-            "#org9c14cf1">collection-has</a></p>
+            <p><a href="#org73d792b">reactive</a>, <a href=
+            "#orgbc7ec4f">collection-has</a></p>
             <div class="org-src-container">
               <pre class="src src-js"><span class=
               "linenr"> 1: </span><span class=
@@ -1878,8 +1878,8 @@ undefined
               <strong><font face="Courier" size="3" color=
               "red">集合类型的 size 操作</font></strong>
             </summary>
-            <p><a href="#org9c9d6a6">reactive</a>, <a href=
-            "#orgaf1e044">collection-size</a></p>
+            <p><a href="#org73d792b">reactive</a>, <a href=
+            "#org09aabad">collection-size</a></p>
             <div class="org-src-container">
               <pre class="src src-js"><span class=
               "linenr"> 1: </span><span class=
@@ -1950,8 +1950,8 @@ undefined
               <strong><font face="Courier" size="3" color=
               "red">集合类型的 add 操作</font></strong>
             </summary>
-            <p><a href="#org9c9d6a6">reactive</a>, <a href=
-            "#org5aafe0e">collection-add</a></p>
+            <p><a href="#org73d792b">reactive</a>, <a href=
+            "#org29013d0">collection-add</a></p>
             <div class="org-src-container">
               <pre class="src src-js"><span class=
               "linenr"> 1: </span><span class=
@@ -1997,7 +1997,7 @@ undefined
 <span class="linenr">23: </span>logEnd()
 </pre>
             </div>
-            <pre class="example" id="orgef3092f">
+            <pre class="example" id="orge1f281f">
 createInstrumentationGetter| key=add
 createInstrumentationGetter| key=__v_raw
 add| value=1, hadKey=false, target=[object Set]
@@ -2017,8 +2017,8 @@ undefined
               <strong><font face="Courier" size="3" color=
               "red">集合类型的 set 操作</font></strong>
             </summary>
-            <p><a href="#org9c9d6a6">reactive</a>, <a href=
-            "#org9d4e73c">collection-set</a></p>
+            <p><a href="#org73d792b">reactive</a>, <a href=
+            "#org445459e">collection-set</a></p>
             <div class="org-src-container">
               <pre class="src src-js"><span class=
               "linenr"> 1: </span><span class=
@@ -2081,8 +2081,8 @@ undefined
               <strong><font face="Courier" size="3" color=
               "red">集合类型的 delete 操作</font></strong>
             </summary>
-            <p><a href="#org9c9d6a6">reactive</a>, <a href=
-            "#orgc0dba45">collection-delete</a></p>
+            <p><a href="#org73d792b">reactive</a>, <a href=
+            "#org7245f0f">collection-delete</a></p>
             <div class="org-src-container">
               <pre class="src src-js"><span class=
               "linenr"> 1: </span><span class=
@@ -2156,7 +2156,7 @@ undefined
 <span class="linenr">38: </span>logEnd()
 </pre>
             </div>
-            <pre class="example" id="orga31bb38">
+            <pre class="example" id="orge4230e7">
 createInstrumentationGetter| key=set
 createInstrumentationGetter| key=__v_raw
 set| key=count, value=1, oldValue=undefined, target=[object Map]
@@ -2188,8 +2188,8 @@ undefined
               <strong><font face="Courier" size="3" color=
               "red">集合类型的 clear 操作</font></strong>
             </summary>
-            <p><a href="#org9c9d6a6">reactive</a>, <a href=
-            "#orgc462b13">collection-clear</a></p>
+            <p><a href="#org73d792b">reactive</a>, <a href=
+            "#org9da7391">collection-clear</a></p>
             <div class="org-src-container">
               <pre class="src src-js"><span class=
               "linenr"> 1: </span><span class=
@@ -2252,7 +2252,7 @@ undefined
 <span class="linenr">35: </span>logEnd()
 </pre>
             </div>
-            <pre class="example" id="org1efa058">
+            <pre class="example" id="orga96598b">
 createInstrumentationGetter| key=add
 createInstrumentationGetter| key=__v_raw
 add| value=1, hadKey=false, target=[object Set]
@@ -2274,8 +2274,8 @@ undefined
               <strong><font face="Courier" size="3" color=
               "red">集合类型的 forEach 操作</font></strong>
             </summary>
-            <p><a href="#org9c9d6a6">reactive</a>, <a href=
-            "#org49afb54">collection-forEach</a></p>
+            <p><a href="#org73d792b">reactive</a>, <a href=
+            "#orgf71f608">collection-forEach</a></p>
             <div class="org-src-container">
               <pre class="src src-js"><span class=
               "linenr"> 1: </span><span class=
@@ -2361,7 +2361,7 @@ undefined
 <span class="linenr">39: </span>logEnd()
 </pre>
             </div>
-            <pre class="example" id="org78f79e3">
+            <pre class="example" id="orgd8771a2">
 createInstrumentationGetter| key=forEach
 createInstrumentationGetter| key=__v_raw
 forEach| target=[object Map], rawTarget=[object Map]
@@ -2393,8 +2393,8 @@ undefined
               "red">集合类型的 keys values entries Symbol.iterator
               操作</font></strong>
             </summary>
-            <p><a href="#org9c9d6a6">reactive</a>, <a href=
-            "#org469193a">collection-iterator</a></p>
+            <p><a href="#org73d792b">reactive</a>, <a href=
+            "#org7520ff4">collection-iterator</a></p>
             <div class="org-src-container">
               <pre class="src src-js"><span class=
               "linenr"> 1: </span><span class=
@@ -2528,7 +2528,7 @@ undefined
 <span class="linenr">60: </span>logEnd()
 </pre>
             </div>
-            <pre class="example" id="org573a4bb">
+            <pre class="example" id="orge0880bc">
 createInstrumentationGetter| key=keys
 createInstrumentationGetter| key=__v_raw
 iterator| value=foo, done=false, isPair=false, isKeyOnly=true, target=[object Map]
@@ -2591,18 +2591,25 @@ undefined
         </div>
       </div>
     </div>
-    <div id="outline-container-org523fac8" class="outline-2">
-      <h2 id="org523fac8"><span class="section-number-2">7.</span>
+    <div id="outline-container-org0925fe4" class="outline-2">
+      <h2 id="org0925fe4"><span class="section-number-2">7.</span>
       phase one(no track & trigger)</h2>
       <div class="outline-text-2" id="text-7">
-        <p>完整不含 track 和 trigger 代码的 reactive 实现代码。</p>
-        <div class="org-src-container">
-          <pre class="src src-js"><span id=
-          "coderef-mutableHandlers" class="coderef-off"><span class=
-          "linenr">  1: </span><span class=
-          "org-keyword">const</span> <span class=
-          "org-variable-name">mutableHandlers</span> = (<span class=
-          "org-keyword">function</span> () {</span>
+        <p>完整不含 track 和 trigger 代码的 reactive 实现代码。</p><br>
+        <details class="code-details" style=
+        "padding: 1em; background-color: #e5f5e5; /* background-color: pink; */ border-radius: 15px; color: hsl(157 75%); font-size: 0.9em; box-shadow: 0.05em 0.1em 5px 0.01em #00000057;">
+          <summary>
+            <strong><font face="Courier" size="3" color=
+            "green">CODE</font></strong>
+          </summary>
+          <div class="org-src-container">
+            <pre class="src src-js"><span id=
+            "coderef-mutableHandlers" class=
+            "coderef-off"><span class=
+            "linenr">  1: </span><span class=
+            "org-keyword">const</span> <span class=
+            "org-variable-name">mutableHandlers</span> = (<span class=
+            "org-keyword">function</span> () {</span>
 <span class="linenr">  2: </span>  <span class=
 "org-keyword">const</span> <span class=
 "org-variable-name">get</span> = createGetter();
@@ -3351,11 +3358,12 @@ undefined
 <span class="linenr">326: </span>console.log(<span class=
 "org-string">`size=${observed2.size}`</span>)
 </pre>
-        </div>
+          </div>
+        </details>
       </div>
     </div>
-    <div id="outline-container-org9286b74" class="outline-2">
-      <h2 id="org9286b74"><span class="section-number-2">8.</span>
+    <div id="outline-container-org77cae13" class="outline-2">
+      <h2 id="org77cae13"><span class="section-number-2">8.</span>
       FootNotes</h2>
       <div class="outline-text-2" id="text-8"></div>
     </div>
@@ -3375,7 +3383,7 @@ undefined
   </div>
   <div id="postamble" class="status">
     <p class="author">Author: Zhicheng Lee</p>
-    <p class="date">Created: 2022-03-31 Thu 16:47</p>
+    <p class="date">Created: 2022-04-04 Mon 12:49</p>
   </div>
 </body>
 </html>
