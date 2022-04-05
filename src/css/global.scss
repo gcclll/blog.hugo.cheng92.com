@@ -1,6 +1,3 @@
-@import './block.scss';
-@import './tooltip.scss';
-
 #table-of-contents {
   // display: none;
   width: 316px !important;
@@ -161,22 +158,6 @@ h3 {
 
 h4 {
   text-indent: 2rem;
-}
-
-code {
-  white-space: normal !important;
-  background-color: #f1f1f1;
-  color: #476582;
-}
-
-code,
-pre {
-  padding: 2px 4px;
-  border-radius: 5px;
-
-  &.src {
-    background: #eeffcc;
-  }
 }
 
 details {

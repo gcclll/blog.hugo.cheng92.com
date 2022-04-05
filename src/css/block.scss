@@ -36,3 +36,30 @@
 
   @include colorful-text(red);
 }
+
+code {
+  white-space: normal !important;
+  background-color: #f1f1f1;
+  color: #476582;
+}
+
+code,
+pre {
+  padding: 2px 4px;
+  border-radius: 5px;
+
+  &.src {
+    background: #eeffcc;
+  }
+
+  &.src-diff {
+    .org-diff-added,
+    .org-diff-indicator-added {
+      background-color: #8ef990;
+    }
+
+    .org-diff-indicator-removed {
+      background-color: #ffebe9;
+    }
+  }
+}

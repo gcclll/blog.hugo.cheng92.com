@@ -8,6 +8,8 @@ import { switchTheme } from './switch'
 import { handleEvents } from './event'
 import './css/theme.my.scss'
 import './css/link.scss'
+import './css/block.scss';
+import './css/tooltip.scss';
 import './css/global.scss'
 
 $(function () {
