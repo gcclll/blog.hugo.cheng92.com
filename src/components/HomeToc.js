@@ -17,7 +17,7 @@ const GlMenuItem = Vue.defineComponent({
       </div>
       <div class="tags">
         <el-tag  size="small" v-for="cat in page.category" :key="cat" type="success" @click="$emit('addTab', cat)">{{cat}}</el-tag>
-        <el-tag size="small" v-for="tag in page.tags" :key="tag" @click="$emit('addTab', 'TAG:'+tag, true)">{{tag}}</el-tag>
+        <el-tag size="small" v-for="tag in page.tags" :key="tag" @click="$emit('addTab', tag, true)">{{tag}}</el-tag>
       </div>
     </el-menu-item>`,
   emits: ['addTab'],
@@ -64,7 +64,7 @@ export default Vue.defineComponent({
       <el-badge :value="n">
         <el-tag
           size="small"
-          @click="addTab('TAG:'+name, true)"
+          @click="addTab(name, true)"
         >{{name}}</el-tag>
       </el-badge>
     </template>
