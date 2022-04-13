@@ -1,0 +1,1 @@
+window.$stats=window.$stats||{};window.$stats['build_you_own_vue_scheduler.html']={"IDLinks":[{"text":"TODO Scheduler","tagName":"H2","id":"org73548cd","filename":"build_you_own_vue_scheduler.html"}],"aLinks":[{"text":"TODO Scheduler","url":"#org73548cd","tag":"A","filename":"build_you_own_vue_scheduler.html"}],"toc":null}
