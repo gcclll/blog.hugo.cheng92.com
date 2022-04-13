@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <!-- 2022-04-13 Wed 15:32 -->
+    <!-- 2022-04-13 Wed 15:42 -->
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>build your own vue reactivity</title>
@@ -555,30 +555,30 @@
         <div id="text-table-of-contents" role="doc-toc">
           <ul>
             <li>
-              <a href="#orgdced224">1. READY(handlers)</a>
+              <a href="#org5d4989f">1. READY(handlers)</a>
             </li>
             <li>
-              <a href="#orgf41c298">2. Global variables</a>
+              <a href="#org096a43b">2. Global variables</a>
             </li>
             <li>
-              <a href="#orgd8fa75d">3. reactive(target: object)</a>
+              <a href="#org6a2aaed">3. reactive(target: object)</a>
               <ul>
                 <li>
-                  <a href="#org4dbde4a">3.1. reactive with track&amp;trigger</a>
+                  <a href="#org0a9fc5b">3.1. reactive with track&amp;trigger</a>
                 </li>
               </ul>
             </li>
             <li>
-              <a href="#org4fbb8f6">4. createReactiveObject</a>
+              <a href="#org78c2e69">4. createReactiveObject</a>
             </li>
             <li>
-              <a href="#org87e0632">5. mutableHandlers</a>
+              <a href="#orge256ed5">5. mutableHandlers</a>
               <ul>
                 <li>
                   <a href="#base-handler-createGetter">5.1. createGetter</a>
                   <ul>
                     <li>
-                      <a href="#orgf38b190">5.1.1. createGetter with track</a>
+                      <a href="#org6e1842e">5.1.1. createGetter with track</a>
                     </li>
                   </ul>
                 </li>
@@ -586,15 +586,15 @@
                   <a href="#base-handler-createSetter">5.2. createSetter</a>
                   <ul>
                     <li>
-                      <a href="#orge35f622">5.2.1. set with trigger</a>
+                      <a href="#org0506ab5">5.2.1. set with trigger</a>
                     </li>
                   </ul>
                 </li>
                 <li>
-                  <a href="#org3a309d9">5.3. deleteProperty</a>
+                  <a href="#org5cc82d7">5.3. deleteProperty</a>
                   <ul>
                     <li>
-                      <a href="#org2b7b4d0">5.3.1. delete with trigger</a>
+                      <a href="#orgb974f77">5.3.1. delete with trigger</a>
                     </li>
                   </ul>
                 </li>
@@ -602,25 +602,25 @@
                   <a href="#base-handler-has">5.4. has</a>
                   <ul>
                     <li>
-                      <a href="#org9e54087">5.4.1. has with track</a>
+                      <a href="#orga70ff41">5.4.1. has with track</a>
                     </li>
                   </ul>
                 </li>
                 <li>
-                  <a href="#org9cb3bc0">5.5. ownKeys</a>
+                  <a href="#orgabafd87">5.5. ownKeys</a>
                   <ul>
                     <li>
-                      <a href="#org997b6a8">5.5.1. ownKeys with track</a>
+                      <a href="#org43031e6">5.5.1. ownKeys with track</a>
                     </li>
                   </ul>
                 </li>
                 <li>
-                  <a href="#org9d8aa43">5.6. Testing</a>
+                  <a href="#orgac58982">5.6. Testing</a>
                 </li>
               </ul>
             </li>
             <li>
-              <a href="#org07923dd">6. mutableCollectionHandlers</a>
+              <a href="#org2c32517">6. mutableCollectionHandlers</a>
               <ul>
                 <li>
                   <a href="#ref-collection-createInstrumentationGetter"
@@ -633,7 +633,7 @@
                   >
                   <ul>
                     <li>
-                      <a href="#org96ba866">6.2.1. witch track & trigger</a>
+                      <a href="#orgf77ea7d">6.2.1. witch track & trigger</a>
                     </li>
                   </ul>
                 </li>
@@ -641,7 +641,7 @@
                   <a href="#ref-collection-get">6.3. get</a>
                   <ul>
                     <li>
-                      <a href="#org62f21f6">6.3.1. get with track</a>
+                      <a href="#orgab34be7">6.3.1. get with track</a>
                     </li>
                   </ul>
                 </li>
@@ -649,7 +649,7 @@
                   <a href="#ref-collection-has">6.4. has</a>
                   <ul>
                     <li>
-                      <a href="#org81b2133">6.4.1. has with track</a>
+                      <a href="#org1630f21">6.4.1. has with track</a>
                     </li>
                   </ul>
                 </li>
@@ -657,7 +657,7 @@
                   <a href="#ref-collection-size">6.5. size</a>
                   <ul>
                     <li>
-                      <a href="#org15ca51b">6.5.1. size with track</a>
+                      <a href="#org4386de6">6.5.1. size with track</a>
                     </li>
                   </ul>
                 </li>
@@ -665,7 +665,7 @@
                   <a href="#ref-collection-add">6.6. add</a>
                   <ul>
                     <li>
-                      <a href="#orgc6f9ba6">6.6.1. add with trigger</a>
+                      <a href="#org59bd539">6.6.1. add with trigger</a>
                     </li>
                   </ul>
                 </li>
@@ -673,7 +673,7 @@
                   <a href="#ref-collection-set">6.7. set</a>
                   <ul>
                     <li>
-                      <a href="#orgc385049">6.7.1. set with trigger</a>
+                      <a href="#orgdd6759a">6.7.1. set with trigger</a>
                     </li>
                   </ul>
                 </li>
@@ -681,7 +681,7 @@
                   <a href="#ref-collection-delete">6.8. delete</a>
                   <ul>
                     <li>
-                      <a href="#org02b7191">6.8.1. delete with trigger</a>
+                      <a href="#org6c8cf4b">6.8.1. delete with trigger</a>
                     </li>
                   </ul>
                 </li>
@@ -689,7 +689,7 @@
                   <a href="#ref-collection-clear">6.9. clear</a>
                   <ul>
                     <li>
-                      <a href="#org3cf46c7">6.9.1. clear with trigger</a>
+                      <a href="#org7fb8710">6.9.1. clear with trigger</a>
                     </li>
                   </ul>
                 </li>
@@ -697,168 +697,168 @@
                   <a href="#ref-collection-forEach">6.10. forEach</a>
                   <ul>
                     <li>
-                      <a href="#org66f070e">6.10.1. forEach with track</a>
+                      <a href="#org2308863">6.10.1. forEach with track</a>
                     </li>
                   </ul>
                 </li>
                 <li>
-                  <a href="#orga9e8354">6.11. keys&amp;values&amp;entries</a>
+                  <a href="#org1d53105">6.11. keys&amp;values&amp;entries</a>
                   <ul>
                     <li>
-                      <a href="#org1d1ded2">6.11.1. iterator with track</a>
+                      <a href="#org85b4ae9">6.11.1. iterator with track</a>
                     </li>
                   </ul>
                 </li>
                 <li>
-                  <a href="#org3ed55bf">6.12. Testing</a>
+                  <a href="#org2df62f7">6.12. Testing</a>
                 </li>
               </ul>
             </li>
             <li>
-              <a href="#org915da60">7. phase one(no track & trigger)</a>
+              <a href="#org09a7293">7. phase one(no track & trigger)</a>
             </li>
             <li>
-              <a href="#orgf68fa35">8. track&amp;trigger&amp;effect</a>
+              <a href="#orgaf1027b">8. track&amp;trigger&amp;effect</a>
               <ul>
                 <li>
-                  <a href="#orgb2c0c52">8.1. track()</a>
+                  <a href="#org8a8eacd">8.1. track()</a>
                   <ul>
                     <li>
-                      <a href="#org98eb104">8.1.1. createDep()</a>
+                      <a href="#org79ec379">8.1.1. createDep()</a>
                     </li>
                     <li>
-                      <a href="#org6fcb42b">8.1.2. wasTracked(dep)</a>
+                      <a href="#org240a5ee">8.1.2. wasTracked(dep)</a>
                     </li>
                     <li>
-                      <a href="#orgb354fd7">8.1.3. newTracked(dep)</a>
+                      <a href="#org96a2e37">8.1.3. newTracked(dep)</a>
                     </li>
                     <li>
-                      <a href="#orgab53f4e">8.1.4. initDepMarkers()</a>
+                      <a href="#org0fbcbad">8.1.4. initDepMarkers()</a>
                     </li>
                     <li>
-                      <a href="#orgbe8b366">8.1.5. finalizeDepMarkers()</a>
+                      <a href="#org562ebd2">8.1.5. finalizeDepMarkers()</a>
                     </li>
                     <li>
-                      <a href="#orge525367"
+                      <a href="#org7d3a24b"
                         >8.1.6. trackEffects(dep, debuggerEventExtraInfo)</a
                       >
                     </li>
                   </ul>
                 </li>
                 <li>
-                  <a href="#org76b6ae4">8.2. trigger()</a>
+                  <a href="#orgb20dc14">8.2. trigger()</a>
                   <ul>
                     <li>
-                      <a href="#org5b4d32a">8.2.1. triggerEffects()</a>
+                      <a href="#org220f3a3">8.2.1. triggerEffects()</a>
                     </li>
                   </ul>
                 </li>
                 <li>
-                  <a href="#orge4c0768">8.3. effect()</a>
+                  <a href="#org9dd20d0">8.3. effect()</a>
                 </li>
                 <li>
-                  <a href="#org5c8d1c0">8.4. normal objects</a>
+                  <a href="#org4a66a48">8.4. normal objects</a>
                 </li>
                 <li>
-                  <a href="#org8f38a80">8.5. colletion objects(Map,Set)</a>
+                  <a href="#org8b17bfc">8.5. colletion objects(Map,Set)</a>
                 </li>
                 <li>
-                  <a href="#orgac4a804">8.6. phase 2 updating</a>
+                  <a href="#org7779a6c">8.6. phase 2 updating</a>
                   <ul>
                     <li>
-                      <a href="#org448f8fa">8.6.1. normal objects</a>
+                      <a href="#org1544eb3">8.6.1. normal objects</a>
                     </li>
                     <li>
-                      <a href="#org4fce431"
+                      <a href="#orgd03cdfe"
                         >8.6.2. collection objects(Map,Set)</a
                       >
                     </li>
                     <li>
-                      <a href="#org4112ae8">8.6.3. whole phase code</a>
+                      <a href="#orgc5eb5cc">8.6.3. whole phase code</a>
                     </li>
                   </ul>
                 </li>
                 <li>
-                  <a href="#orge3a3d73">8.7. Testing</a>
+                  <a href="#orge534836">8.7. Testing</a>
                 </li>
               </ul>
             </li>
             <li>
-              <a href="#orgf673df3">9. effect scope</a>
+              <a href="#org41b52c0">9. effect scope</a>
               <ul>
                 <li>
-                  <a href="#orgd0f0982">9.1. EffectScope</a>
+                  <a href="#org80d6b7e">9.1. EffectScope</a>
                 </li>
                 <li>
-                  <a href="#org554802f"
+                  <a href="#org34e5d18"
                     >9.2. recordEffectScope(effect, scope)</a
                   >
                 </li>
                 <li>
-                  <a href="#org4b66f6d">9.3. onScopeDispose(fn)</a>
+                  <a href="#org159436e">9.3. onScopeDispose(fn)</a>
                 </li>
                 <li>
-                  <a href="#org1128b32">9.4. track dep</a>
+                  <a href="#org47f7f13">9.4. track dep</a>
                 </li>
               </ul>
             </li>
             <li>
-              <a href="#org8993f06">10. computed</a>
+              <a href="#org3134e71">10. computed</a>
             </li>
             <li>
-              <a href="#orgc13111b">11. defferedComputed</a>
+              <a href="#org5163558">11. defferedComputed</a>
               <ul>
                 <li>
-                  <a href="#orgc40e4e1">11.1. DeferredComputedRefImpl</a>
+                  <a href="#orge9cace5">11.1. DeferredComputedRefImpl</a>
                 </li>
                 <li>
-                  <a href="#orgdfad3b4">11.2. scheduler(fn)</a>
+                  <a href="#org2e839f2">11.2. scheduler(fn)</a>
                 </li>
                 <li>
-                  <a href="#orgb1e976c">11.3. flush()</a>
+                  <a href="#org675d1f7">11.3. flush()</a>
                 </li>
               </ul>
             </li>
             <li>
-              <a href="#org5fee95f">12. ref</a>
+              <a href="#org89442bd">12. ref</a>
               <ul>
                 <li>
-                  <a href="#org2a4c39a">12.1. createRef()</a>
+                  <a href="#orgf46714d">12.1. createRef()</a>
                 </li>
                 <li>
-                  <a href="#org13d219d">12.2. RefImpl</a>
+                  <a href="#org944d8a2">12.2. RefImpl</a>
                 </li>
                 <li>
-                  <a href="#org14d1d3b">12.3. ObjectRefImpl</a>
+                  <a href="#org5c18854">12.3. ObjectRefImpl</a>
                 </li>
                 <li>
-                  <a href="#orgc7833b8">12.4. triggerRef(ref)</a>
+                  <a href="#org8f7cb2c">12.4. triggerRef(ref)</a>
                 </li>
                 <li>
-                  <a href="#orgd2f4767">12.5. unref(ref)</a>
+                  <a href="#orgafd4bb9">12.5. unref(ref)</a>
                 </li>
                 <li>
-                  <a href="#orgeb0d984">12.6. proxyRefs()</a>
+                  <a href="#orgfd91cfc">12.6. proxyRefs()</a>
                 </li>
                 <li>
-                  <a href="#orgbea3692">12.7. toRefs()</a>
+                  <a href="#org87d3ca0">12.7. toRefs()</a>
                 </li>
                 <li>
-                  <a href="#org19659a4">12.8. toRef()</a>
+                  <a href="#orgdbcd302">12.8. toRef()</a>
                 </li>
                 <li>
-                  <a href="#orgb31c412">12.9. trackRefValue(ref)</a>
+                  <a href="#orgd094721">12.9. trackRefValue(ref)</a>
                 </li>
                 <li>
-                  <a href="#org054bb6d">12.10. triggerRefValue(ref,newVal)</a>
+                  <a href="#orgb1a9a86">12.10. triggerRefValue(ref,newVal)</a>
                 </li>
               </ul>
             </li>
             <li>
-              <a href="#orgbe70539">13. reactivity</a>
+              <a href="#orgd6a32ea">13. reactivity</a>
             </li>
             <li>
-              <a href="#orge1683bf">14. FootNotes</a>
+              <a href="#org9fc4758">14. FootNotes</a>
             </li>
           </ul>
         </div>
@@ -902,8 +902,8 @@
         </p>
       </div>
       <br />
-      <div id="outline-container-orgdced224" class="outline-2">
-        <h2 id="orgdced224">
+      <div id="outline-container-org5d4989f" class="outline-2">
+        <h2 id="org5d4989f">
           <span class="section-number-2">1.</span> READY(handlers)
         </h2>
         <div class="outline-text-2" id="text-1">
@@ -971,7 +971,7 @@
               JavaScript Proxy And Reflect</a
             >。
           </p>
-          <div id="org32d04a1" class="figure">
+          <div id="org27dc06a" class="figure">
             <p>
               <img
                 src="../assets/img/vue3plus/reactive.svg"
@@ -982,8 +982,8 @@
           </div>
         </div>
       </div>
-      <div id="outline-container-orgf41c298" class="outline-2">
-        <h2 id="orgf41c298">
+      <div id="outline-container-org096a43b" class="outline-2">
+        <h2 id="org096a43b">
           <span class="section-number-2">2.</span> Global variables
         </h2>
         <div class="outline-text-2" id="text-2">
@@ -1007,7 +1007,7 @@
               >
             </summary>
             <div class="org-src-container">
-              <pre class="src src-js" id="org3a9fecd"><span class=
+              <pre class="src src-js" id="org7db5ddc"><span class=
             "linenr">  1: </span><span class=
             "org-keyword">const</span> <span class=
             "org-variable-name">NOOP</span> = () =&gt; {}
@@ -1528,7 +1528,7 @@
           </details>
           <p>effect.s 中相关的函数：</p>
           <div class="org-src-container">
-            <pre class="src src-js" id="orged322ab"><span class=
+            <pre class="src src-js" id="org6886f37"><span class=
           "linenr">1: </span><span class=
           "org-keyword">function</span> <span class=
           "org-function-name">cleanupEffect</span>(<span class=
@@ -1555,7 +1555,7 @@
             每个订阅函数最终都会被封装成一个
             <code>ReactiveEffect</code> 被收集到
             <code>targetMap -&gt; depsMap -&gt;</code>
-            <a href="#orgffb769c">Dep</a> 中
+            <a href="#orgc97add5">Dep</a> 中
           </p>
           <br />
           <details
@@ -1577,7 +1577,7 @@
               >
             </summary>
             <div class="org-src-container">
-              <pre class="src src-js" id="org55c5b34"><span class=
+              <pre class="src src-js" id="orgb61a122"><span class=
             "linenr"> 1: </span><span class=
             "org-keyword">class</span> ReactiveEffect {
 <span class="linenr"> 2: </span>  active = <span class=
@@ -1737,7 +1737,7 @@
               >
             </summary>
             <div class="org-src-container">
-              <pre class="src src-diff" id="org7f325f1"><span class=
+              <pre class="src src-diff" id="org391b50c"><span class=
             "org-diff-context">class ReactiveEffect {</span>
 <span class="org-diff-context">  active = true</span>
 <span class="org-diff-context">  // 依赖列表</span>
@@ -1832,17 +1832,17 @@
           </details>
         </div>
       </div>
-      <div id="outline-container-orgd8fa75d" class="outline-2">
-        <h2 id="orgd8fa75d">
+      <div id="outline-container-org6a2aaed" class="outline-2">
+        <h2 id="org6a2aaed">
           <span class="section-number-2">3.</span> reactive(target: object)
         </h2>
         <div class="outline-text-2" id="text-3">
           <p>
-            相关代码：<a href="#org3a9fecd">globalVars</a>,
-            <a href="#org753f8c8">createReactiveObject</a>
+            相关代码：<a href="#org7db5ddc">globalVars</a>,
+            <a href="#orgb12dcec">createReactiveObject</a>
           </p>
           <div class="org-src-container">
-            <pre class="src src-js" id="orgf43b15e"><span class=
+            <pre class="src src-js" id="org8f75314"><span class=
           "linenr"> 1: </span>&lt;&lt;globalVars&gt;&gt;
 <span class="linenr"> 2: </span>
 <span class="linenr"> 3: </span><span class=
@@ -1916,14 +1916,14 @@
             </li>
           </ol>
         </div>
-        <div id="outline-container-org4dbde4a" class="outline-3">
-          <h3 id="org4dbde4a">
+        <div id="outline-container-org0a9fc5b" class="outline-3">
+          <h3 id="org0a9fc5b">
             <span class="section-number-3">3.1.</span> reactive with
             track&amp;trigger
           </h3>
           <div class="outline-text-3" id="text-3-1">
             <div class="org-src-container">
-              <pre class="src src-js" id="org7241d5b"><span class=
+              <pre class="src src-js" id="orgb6feb2f"><span class=
             "linenr"> 1: </span>&lt;&lt;globalVars&gt;&gt;
 <span class="linenr"> 2: </span>
 <span class="linenr"> 3: </span>&lt;&lt;track&gt;&gt;
@@ -1965,8 +1965,8 @@
           </div>
         </div>
       </div>
-      <div id="outline-container-org4fbb8f6" class="outline-2">
-        <h2 id="org4fbb8f6">
+      <div id="outline-container-org78c2e69" class="outline-2">
+        <h2 id="org78c2e69">
           <span class="section-number-2">4.</span> createReactiveObject
         </h2>
         <div class="outline-text-2" id="text-4">
@@ -1998,7 +1998,7 @@
 </pre>
           </div>
           <p>参数说明：</p>
-          <table id="org4e2a1a7">
+          <table id="orgdbc8a74">
             <colgroup>
               <col class="org-left" />
               <col class="org-left" />
@@ -2059,7 +2059,7 @@
             </tbody>
           </table>
           <div class="org-src-container">
-            <pre class="src src-js" id="org753f8c8"><span class=
+            <pre class="src src-js" id="orgb12dcec"><span class=
           "org-keyword">function</span> <span class=
           "org-function-name">createReactiveObject</span>(
   <span class="org-variable-name">target</span>,
@@ -2094,8 +2094,8 @@
           </div>
         </div>
       </div>
-      <div id="outline-container-org87e0632" class="outline-2">
-        <h2 id="org87e0632">
+      <div id="outline-container-orge256ed5" class="outline-2">
+        <h2 id="orge256ed5">
           <span class="section-number-2">5.</span> mutableHandlers
         </h2>
         <div class="outline-text-2" id="text-5">
@@ -2110,7 +2110,7 @@
             >)的对象的 Proxy 参数。
           </p>
           <div class="org-src-container">
-            <pre class="src src-js" id="orgcd82684"><span id=
+            <pre class="src src-js" id="orgeaa011c"><span id=
           "coderef-mutableHandlers" class="coderef-off"><span class=
           "linenr"> 1: </span><span class=
           "org-keyword">const</span> <span class=
@@ -2152,7 +2152,7 @@
           </div>
           <p>add track & trigger</p>
           <div class="org-src-container">
-            <pre class="src src-js" id="orgd4fe398"><span id=
+            <pre class="src src-js" id="orgef63394"><span id=
           "coderef-mutableHandlersP2" class=
           "coderef-off"><span class="linenr"> 1: </span><span class=
           "org-keyword">const</span> <span class=
@@ -2199,7 +2199,7 @@
           </h3>
           <div class="outline-text-3" id="text-base-handler-createGetter">
             <div class="org-src-container">
-              <pre class="src src-js" id="org635eba6"><span class=
+              <pre class="src src-js" id="org0eaa628"><span class=
             "org-keyword">function</span> <span class=
             "org-function-name">createGetter</span>(<span class=
             "org-variable-name">isReadonly</span> = <span class=
@@ -2226,14 +2226,14 @@
 </pre>
             </div>
           </div>
-          <div id="outline-container-orgf38b190" class="outline-4">
-            <h4 id="orgf38b190">
+          <div id="outline-container-org6e1842e" class="outline-4">
+            <h4 id="org6e1842e">
               <span class="section-number-4">5.1.1.</span> createGetter with
               track
             </h4>
             <div class="outline-text-4" id="text-5-1-1">
               <div class="org-src-container">
-                <pre class="src src-js" id="orgf3b0e44"><span class=
+                <pre class="src src-js" id="orgf578e1d"><span class=
               "linenr"> 1: </span><span class=
               "org-keyword">function</span> <span class=
               "org-function-name">createGetter</span>(<span class=
@@ -2365,7 +2365,7 @@
                   >
                 </summary>
                 <div class="org-src-container">
-                  <pre class="src src-diff" id="orgfe8edd9"><span class=
+                  <pre class="src src-diff" id="orgc18b3f1"><span class=
                 "org-diff-context">function createGetter(isReadonly = false, shallow = false) {</span>
 
 <span class=
@@ -2413,7 +2413,7 @@
                   >
                 </summary>
                 <div class="org-src-container">
-                  <pre class="src src-diff" id="org9f8c610"><span class=
+                  <pre class="src src-diff" id="org54f27ba"><span class=
                 "org-diff-context">function createGetter(isReadonly = false, shallow = false) {</span>
 
 <span class=
@@ -2496,7 +2496,7 @@
           </h3>
           <div class="outline-text-3" id="text-base-handler-createSetter">
             <div class="org-src-container">
-              <pre class="src src-js" id="orgcd71ea9"><span class=
+              <pre class="src src-js" id="orgaec7b5f"><span class=
             "linenr"> 1: </span><span class=
             "org-keyword">function</span> <span class=
             "org-function-name">createSetter</span>(<span class=
@@ -2543,13 +2543,13 @@
 </pre>
             </div>
           </div>
-          <div id="outline-container-orge35f622" class="outline-4">
-            <h4 id="orge35f622">
+          <div id="outline-container-org0506ab5" class="outline-4">
+            <h4 id="org0506ab5">
               <span class="section-number-4">5.2.1.</span> set with trigger
             </h4>
             <div class="outline-text-4" id="text-5-2-1">
               <div class="org-src-container">
-                <pre class="src src-js" id="org92e2c85"><span class=
+                <pre class="src src-js" id="org2adba9e"><span class=
               "linenr"> 1: </span><span class=
               "org-keyword">function</span> <span class=
               "org-function-name">createSetter</span>(<span class=
@@ -2631,7 +2631,7 @@
                   >
                 </summary>
                 <div class="org-src-container">
-                  <pre class="src src-diff" id="orgc19afb2"><span class=
+                  <pre class="src src-diff" id="orgb3e21c5"><span class=
                 "org-diff-context">function createSetter(shallow = false) {</span>
 <span class=
 "org-diff-context">  return function set(target, key, value, receiver) {</span>
@@ -2677,13 +2677,13 @@
             </div>
           </div>
         </div>
-        <div id="outline-container-org3a309d9" class="outline-3">
-          <h3 id="org3a309d9">
+        <div id="outline-container-org5cc82d7" class="outline-3">
+          <h3 id="org5cc82d7">
             <span class="section-number-3">5.3.</span> deleteProperty
           </h3>
           <div class="outline-text-3" id="text-5-3">
             <div class="org-src-container">
-              <pre class="src src-js" id="org5381c3d"><span class=
+              <pre class="src src-js" id="org480c888"><span class=
             "org-keyword">function</span> <span class=
             "org-function-name">deleteProperty</span>(<span class=
             "org-variable-name">target</span>, <span class=
@@ -2701,13 +2701,13 @@
 </pre>
             </div>
           </div>
-          <div id="outline-container-org2b7b4d0" class="outline-4">
-            <h4 id="org2b7b4d0">
+          <div id="outline-container-orgb974f77" class="outline-4">
+            <h4 id="orgb974f77">
               <span class="section-number-4">5.3.1.</span> delete with trigger
             </h4>
             <div class="outline-text-4" id="text-5-3-1">
               <div class="org-src-container">
-                <pre class="src src-js" id="org4e38759"><span class=
+                <pre class="src src-js" id="org746127d"><span class=
               "linenr"> 1: </span><span class=
               "org-keyword">function</span> <span class=
               "org-function-name">deleteProperty</span>(<span class=
@@ -2755,7 +2755,7 @@
                   >
                 </summary>
                 <div class="org-src-container">
-                  <pre class="src src-diff" id="org97feb28"><span class=
+                  <pre class="src src-diff" id="orgc85d633"><span class=
                 "org-diff-context">function deleteProperty(target, key) {</span>
 <span class=
 "org-diff-context">  const hadKey = hasOwn(target, key)</span>
@@ -2785,7 +2785,7 @@
           </h3>
           <div class="outline-text-3" id="text-base-handler-has">
             <div class="org-src-container">
-              <pre class="src src-js" id="orgd89bde0"><span class=
+              <pre class="src src-js" id="org6a46572"><span class=
             "org-keyword">function</span> <span class=
             "org-function-name">has</span>(<span class=
             "org-variable-name">target</span>, <span class=
@@ -2799,13 +2799,13 @@
 </pre>
             </div>
           </div>
-          <div id="outline-container-org9e54087" class="outline-4">
-            <h4 id="org9e54087">
+          <div id="outline-container-orga70ff41" class="outline-4">
+            <h4 id="orga70ff41">
               <span class="section-number-4">5.4.1.</span> has with track
             </h4>
             <div class="outline-text-4" id="text-5-4-1">
               <div class="org-src-container">
-                <pre class="src src-js" id="orge215f85"><span class=
+                <pre class="src src-js" id="org757187e"><span class=
               "linenr">1: </span><span class=
               "org-keyword">function</span> <span class=
               "org-function-name">has</span>(<span class=
@@ -2844,7 +2844,7 @@
                   >
                 </summary>
                 <div class="org-src-container">
-                  <pre class="src src-diff" id="org4dbbd5e"><span class=
+                  <pre class="src src-diff" id="orgc5e3636"><span class=
                 "org-diff-context">function has(target, key) {</span>
 <span class="org-diff-indicator-added">+</span><span class=
 "org-diff-added"> track(target, 'iterate', isArray(target) ? 'length' : ITERATE_KEY)</span>
@@ -2860,13 +2860,13 @@
             </div>
           </div>
         </div>
-        <div id="outline-container-org9cb3bc0" class="outline-3">
-          <h3 id="org9cb3bc0">
+        <div id="outline-container-orgabafd87" class="outline-3">
+          <h3 id="orgabafd87">
             <span class="section-number-3">5.5.</span> ownKeys
           </h3>
           <div class="outline-text-3" id="text-5-5">
             <div class="org-src-container">
-              <pre class="src src-js" id="orge07b590"><span class=
+              <pre class="src src-js" id="orgd21ba5d"><span class=
             "org-keyword">function</span> <span class=
             "org-function-name">ownKeys</span>(<span class=
             "org-variable-name">target</span>) {
@@ -2877,13 +2877,13 @@
 </pre>
             </div>
           </div>
-          <div id="outline-container-org997b6a8" class="outline-4">
-            <h4 id="org997b6a8">
+          <div id="outline-container-org43031e6" class="outline-4">
+            <h4 id="org43031e6">
               <span class="section-number-4">5.5.1.</span> ownKeys with track
             </h4>
             <div class="outline-text-4" id="text-5-5-1">
               <div class="org-src-container">
-                <pre class="src src-js" id="org8927270"><span class=
+                <pre class="src src-js" id="orge8c111a"><span class=
               "linenr">1: </span><span class=
               "org-keyword">function</span> <span class=
               "org-function-name">ownKeys</span>(<span class=
@@ -2918,7 +2918,7 @@
                   >
                 </summary>
                 <div class="org-src-container">
-                  <pre class="src src-diff" id="orga772945"><span class=
+                  <pre class="src src-diff" id="orge51c9cd"><span class=
                 "org-diff-context">function ownKeys(target) {</span>
 <span class="org-diff-indicator-added">+</span><span class=
 "org-diff-added">  track(target, 'iterate', isArray(target) ? 'length' : ITERATE_KEY)</span>
@@ -2933,8 +2933,8 @@
             </div>
           </div>
         </div>
-        <div id="outline-container-org9d8aa43" class="outline-3">
-          <h3 id="org9d8aa43">
+        <div id="outline-container-orgac58982" class="outline-3">
+          <h3 id="orgac58982">
             <span class="section-number-3">5.6.</span> Testing
           </h3>
           <div class="outline-text-3" id="text-5-6">
@@ -2978,8 +2978,8 @@
                 >
               </summary>
               <p>
-                <a href="#org635eba6">createGetter</a>,
-                <a href="#orgf43b15e">reactive</a>
+                <a href="#org0eaa628">createGetter</a>,
+                <a href="#org8f75314">reactive</a>
               </p>
               <div class="org-src-container">
                 <pre class="src src-js"><span class=
@@ -3036,8 +3036,8 @@ undefined
                 >
               </summary>
               <p>
-                <a href="#orgcd71ea9">createSetter</a>,
-                <a href="#orgf43b15e">reactive</a>
+                <a href="#orgaec7b5f">createSetter</a>,
+                <a href="#org8f75314">reactive</a>
               </p>
               <div class="org-src-container">
                 <pre class="src src-js"><span class=
@@ -3097,8 +3097,8 @@ undefined
                 >
               </summary>
               <p>
-                <a href="#org5381c3d">deleteProperty</a>,
-                <a href="#orgf43b15e">reactive</a>
+                <a href="#org480c888">deleteProperty</a>,
+                <a href="#org8f75314">reactive</a>
               </p>
               <div class="org-src-container">
                 <pre class="src src-js"><span class=
@@ -3156,8 +3156,8 @@ undefined
                 >
               </summary>
               <p>
-                <a href="#orgd89bde0">object-has</a>,
-                <a href="#orgf43b15e">reactive</a>
+                <a href="#org6a46572">object-has</a>,
+                <a href="#org8f75314">reactive</a>
               </p>
               <div class="org-src-container">
                 <pre class="src src-js"><span class=
@@ -3215,8 +3215,8 @@ undefined
                 >
               </summary>
               <p>
-                <a href="#orge07b590">ownKeys</a>,
-                <a href="#orgf43b15e">reactive</a>
+                <a href="#orgd21ba5d">ownKeys</a>,
+                <a href="#org8f75314">reactive</a>
               </p>
               <p>各种迭达操作时会调用的原子操作。</p>
               <div class="org-src-container">
@@ -3264,8 +3264,8 @@ undefined
           </div>
         </div>
       </div>
-      <div id="outline-container-org07923dd" class="outline-2">
-        <h2 id="org07923dd">
+      <div id="outline-container-org2c32517" class="outline-2">
+        <h2 id="org2c32517">
           <span class="section-number-2">6.</span> mutableCollectionHandlers
         </h2>
         <div class="outline-text-2" id="text-6">
@@ -3297,7 +3297,7 @@ undefined
             mutableCollectionHandlers 就很简单只有一个 <code>get</code> 方法。
           </p>
           <div class="org-src-container">
-            <pre class="src src-js" id="org70199ac"><span class=
+            <pre class="src src-js" id="org84d8fa5"><span class=
           "linenr">1: </span>&lt;&lt;mutableInstrumentations&gt;&gt;
 <span class="linenr">2: </span>&lt;&lt;collection-iterator&gt;&gt;
 <span class=
@@ -3315,11 +3315,11 @@ undefined
           </div>
           <p>
             所有的代码都封装在以
-            <a href="#org0ef6cbd">createInstrumentationGetter</a>
+            <a href="#org26a628b">createInstrumentationGetter</a>
             为入口的代码中了。
           </p>
           <p>接下来重点看下它是如何实现 Map/Set 类型的代理的？？？</p>
-          <div class="tip" id="org1ab207d">
+          <div class="tip" id="orgfbfd91a">
             <p>
               vue 源码是基于 typescript
               实现的，所以下面集合相关的函数的第一个参数是
@@ -3329,7 +3329,7 @@ undefined
           </div>
           <p>add track & trigger</p>
           <div class="org-src-container">
-            <pre class="src src-js" id="org9f85eb4"><span class=
+            <pre class="src src-js" id="org9812b99"><span class=
           "linenr">1: </span>&lt;&lt;mutableInstrumentationsP2&gt;&gt;
 <span class=
 "linenr">2: </span>&lt;&lt;collection-iteratorP2&gt;&gt;
@@ -3360,7 +3360,7 @@ undefined
             id="text-ref-collection-createInstrumentationGetter"
           >
             <div class="org-src-container">
-              <pre class="src src-js" id="org0ef6cbd"><span class=
+              <pre class="src src-js" id="org26a628b"><span class=
             "org-keyword">function</span> <span class=
             "org-function-name">createInstrumentationGetter</span>(<span class=
             "org-variable-name">isReadonly</span>, <span class=
@@ -3420,7 +3420,7 @@ undefined
             id="text-collection-mutableInstrumentations"
           >
             <div class="org-src-container">
-              <pre class="src src-js" id="org2c876c4"><span class=
+              <pre class="src src-js" id="orgcd65481"><span class=
             "linenr"> 1: </span>&lt;&lt;collection-get&gt;&gt;
 <span class="linenr"> 2: </span>&lt;&lt;collection-size&gt;&gt;
 <span class="linenr"> 3: </span>&lt;&lt;collection-has&gt;&gt;
@@ -3457,13 +3457,13 @@ undefined
 </pre>
             </div>
           </div>
-          <div id="outline-container-org96ba866" class="outline-4">
-            <h4 id="org96ba866">
+          <div id="outline-container-orgf77ea7d" class="outline-4">
+            <h4 id="orgf77ea7d">
               <span class="section-number-4">6.2.1.</span> witch track & trigger
             </h4>
             <div class="outline-text-4" id="text-6-2-1">
               <div class="org-src-container">
-                <pre class="src src-js" id="org1a11093"><span class=
+                <pre class="src src-js" id="org51c32aa"><span class=
               "linenr"> 1: </span>&lt;&lt;collection-getP2&gt;&gt;
 <span class="linenr"> 2: </span>&lt;&lt;collection-sizeP2&gt;&gt;
 <span class="linenr"> 3: </span>&lt;&lt;collection-hasP2&gt;&gt;
@@ -3508,7 +3508,7 @@ undefined
           </h3>
           <div class="outline-text-3" id="text-ref-collection-get">
             <div class="org-src-container">
-              <pre class="src src-js" id="org6713c0b"><span class=
+              <pre class="src src-js" id="orgd56a0c6"><span class=
             "linenr"> 1: </span><span class=
             "org-keyword">function</span> <span class=
             "org-function-name">get</span>(<span class=
@@ -3569,7 +3569,7 @@ undefined
               实现是对 map get 进行了代理， 当调用它时首先是发生了 map -&gt; get
               这个名为
               <code>get</code> 的函数的取值操作，最后这个操作都 被代理到了
-              <a href="#org70199ac">mutableCollectionHandlers</a>
+              <a href="#org84d8fa5">mutableCollectionHandlers</a>
               中去了，因为当调用 <code>map.get()</code> 的时候实际是在 调用
               <code>mutableCollectionHandlers.get()</code> 最后调用的就是这里的
               <code>get</code> 函数。
@@ -3580,13 +3580,13 @@ undefined
               在返回之前会对这个结果进行 reactive 化。
             </p>
           </div>
-          <div id="outline-container-org62f21f6" class="outline-4">
-            <h4 id="org62f21f6">
+          <div id="outline-container-orgab34be7" class="outline-4">
+            <h4 id="orgab34be7">
               <span class="section-number-4">6.3.1.</span> get with track
             </h4>
             <div class="outline-text-4" id="text-6-3-1">
               <div class="org-src-container">
-                <pre class="src src-js" id="org7c441cf"><span class=
+                <pre class="src src-js" id="org91a06f1"><span class=
               "linenr"> 1: </span><span class=
               "org-keyword">function</span> <span class=
               "org-function-name">get</span>(<span class=
@@ -3664,7 +3664,7 @@ undefined
                   >
                 </summary>
                 <div class="org-src-container">
-                  <pre class="src src-diff" id="orge25f2ab"><span class=
+                  <pre class="src src-diff" id="org98dfe31"><span class=
                 "org-diff-context">function get(target, key, isReadonly, isShallow) {</span>
 <span class=
 "org-diff-context">  target = target.__v_raw // 取出代理之前的原始对象</span>
@@ -3711,7 +3711,7 @@ undefined
           </h3>
           <div class="outline-text-3" id="text-ref-collection-has">
             <div class="org-src-container">
-              <pre class="src src-js" id="org80da5b2"><span class=
+              <pre class="src src-js" id="orgb82b7cc"><span class=
             "linenr">1: </span><span class=
             "org-keyword">function</span> <span class=
             "org-function-name">has</span>(<span class=
@@ -3737,13 +3737,13 @@ undefined
 </pre>
             </div>
           </div>
-          <div id="outline-container-org81b2133" class="outline-4">
-            <h4 id="org81b2133">
+          <div id="outline-container-org1630f21" class="outline-4">
+            <h4 id="org1630f21">
               <span class="section-number-4">6.4.1.</span> has with track
             </h4>
             <div class="outline-text-4" id="text-6-4-1">
               <div class="org-src-container">
-                <pre class="src src-js" id="orgbdc5258"><span class=
+                <pre class="src src-js" id="org94fbe58"><span class=
               "linenr"> 1: </span><span class=
               "org-keyword">function</span> <span class=
               "org-function-name">has</span>(<span class=
@@ -3803,7 +3803,7 @@ undefined
                   >
                 </summary>
                 <div class="org-src-container">
-                  <pre class="src src-diff" id="org819c03b"><span class=
+                  <pre class="src src-diff" id="org984d18e"><span class=
                 "org-diff-context">function has(key, isReadonly) {</span>
 <span class="org-diff-context">  target = this.__v_raw</span>
 <span class=
@@ -3839,7 +3839,7 @@ undefined
           </h3>
           <div class="outline-text-3" id="text-ref-collection-size">
             <div class="org-src-container">
-              <pre class="src src-js" id="org10bb666"><span class=
+              <pre class="src src-js" id="org1581182"><span class=
             "linenr">1: </span><span class=
             "org-keyword">function</span> <span class=
             "org-function-name">size</span>(<span class=
@@ -3856,13 +3856,13 @@ undefined
 </pre>
             </div>
           </div>
-          <div id="outline-container-org15ca51b" class="outline-4">
-            <h4 id="org15ca51b">
+          <div id="outline-container-org4386de6" class="outline-4">
+            <h4 id="org4386de6">
               <span class="section-number-4">6.5.1.</span> size with track
             </h4>
             <div class="outline-text-4" id="text-6-5-1">
               <div class="org-src-container">
-                <pre class="src src-js" id="orgd59fe77"><span class=
+                <pre class="src src-js" id="org1c9748d"><span class=
               "linenr">1: </span><span class=
               "org-keyword">function</span> <span class=
               "org-function-name">size</span>(<span class=
@@ -3899,7 +3899,7 @@ undefined
                   >
                 </summary>
                 <div class="org-src-container">
-                  <pre class="src src-diff" id="orgd76d10f"><span class=
+                  <pre class="src src-diff" id="org62b621d"><span class=
                 "org-diff-context">function size(target, isReadonly) {</span>
 <span class="org-diff-context">  target = target.__v_raw</span>
 <span class="org-diff-indicator-added">+</span><span class=
@@ -3922,7 +3922,7 @@ undefined
           <div class="outline-text-3" id="text-ref-collection-add">
             <p><code>Set.prototype.add</code> 添加元素。</p>
             <div class="org-src-container">
-              <pre class="src src-js" id="org7057584"><span class=
+              <pre class="src src-js" id="org684b654"><span class=
             "linenr"> 1: </span><span class=
             "org-keyword">function</span> <span class=
             "org-function-name">add</span>(<span class=
@@ -3951,13 +3951,13 @@ undefined
 </pre>
             </div>
           </div>
-          <div id="outline-container-orgc6f9ba6" class="outline-4">
-            <h4 id="orgc6f9ba6">
+          <div id="outline-container-org59bd539" class="outline-4">
+            <h4 id="org59bd539">
               <span class="section-number-4">6.6.1.</span> add with trigger
             </h4>
             <div class="outline-text-4" id="text-6-6-1">
               <div class="org-src-container">
-                <pre class="src src-js" id="orgdaf62c6"><span class=
+                <pre class="src src-js" id="org98c2595"><span class=
               "linenr"> 1: </span><span class=
               "org-keyword">function</span> <span class=
               "org-function-name">add</span>(<span class=
@@ -4007,7 +4007,7 @@ undefined
                   >
                 </summary>
                 <div class="org-src-container">
-                  <pre class="src src-diff" id="orgcc5cc23"><span class=
+                  <pre class="src src-diff" id="org7795b67"><span class=
                 "org-diff-context">function add(value) {</span>
 <span class="org-diff-context">  value = toRaw(value)</span>
 <span class="org-diff-context">  const target = toRaw(this)</span>
@@ -4037,7 +4037,7 @@ undefined
           </h3>
           <div class="outline-text-3" id="text-ref-collection-set">
             <div class="org-src-container">
-              <pre class="src src-js" id="org016ab6d"><span class=
+              <pre class="src src-js" id="org120fa8c"><span class=
             "linenr"> 1: </span><span class=
             "org-keyword">function</span> <span class=
             "org-function-name">set</span>(<span class=
@@ -4072,13 +4072,13 @@ undefined
 </pre>
             </div>
           </div>
-          <div id="outline-container-orgc385049" class="outline-4">
-            <h4 id="orgc385049">
+          <div id="outline-container-orgdd6759a" class="outline-4">
+            <h4 id="orgdd6759a">
               <span class="section-number-4">6.7.1.</span> set with trigger
             </h4>
             <div class="outline-text-4" id="text-6-7-1">
               <div class="org-src-container">
-                <pre class="src src-js" id="org1a7652b"><span class=
+                <pre class="src src-js" id="org6be56f9"><span class=
               "linenr"> 1: </span><span class=
               "org-keyword">function</span> <span class=
               "org-function-name">set</span>(<span class=
@@ -4142,7 +4142,7 @@ undefined
                   >
                 </summary>
                 <div class="org-src-container">
-                  <pre class="src src-diff" id="org3026845"><span class=
+                  <pre class="src src-diff" id="orgb96c0e2"><span class=
                 "org-diff-context">function set(key, value) {</span>
 <span class="org-diff-context">  value = toRaw(value)</span>
 <span class="org-diff-context">  const target = toRaw(this)</span>
@@ -4186,7 +4186,7 @@ undefined
           </h3>
           <div class="outline-text-3" id="text-ref-collection-delete">
             <div class="org-src-container">
-              <pre class="src src-js" id="org50df70b"><span class=
+              <pre class="src src-js" id="orgb8690e2"><span class=
             "linenr"> 1: </span><span class=
             "org-keyword">function</span> <span class=
             "org-function-name">deleteEntry</span>(<span class=
@@ -4221,13 +4221,13 @@ undefined
 </pre>
             </div>
           </div>
-          <div id="outline-container-org02b7191" class="outline-4">
-            <h4 id="org02b7191">
+          <div id="outline-container-org6c8cf4b" class="outline-4">
+            <h4 id="org6c8cf4b">
               <span class="section-number-4">6.8.1.</span> delete with trigger
             </h4>
             <div class="outline-text-4" id="text-6-8-1">
               <div class="org-src-container">
-                <pre class="src src-js" id="org443d0fb"><span class=
+                <pre class="src src-js" id="org7a9f5d0"><span class=
               "linenr"> 1: </span><span class=
               "org-keyword">function</span> <span class=
               "org-function-name">deleteEntry</span>(<span class=
@@ -4287,7 +4287,7 @@ undefined
                   >
                 </summary>
                 <div class="org-src-container">
-                  <pre class="src src-diff" id="org1f24f84"><span class=
+                  <pre class="src src-diff" id="org4c0d252"><span class=
                 "org-diff-context">function deleteEntry(key) {</span>
 <span class="org-diff-context">  const target = toRaw(this)</span>
 <span class=
@@ -4326,7 +4326,7 @@ undefined
           </h3>
           <div class="outline-text-3" id="text-ref-collection-clear">
             <div class="org-src-container">
-              <pre class="src src-js" id="orgd924e97"><span class=
+              <pre class="src src-js" id="org6d7b834"><span class=
             "linenr"> 1: </span><span class=
             "org-keyword">function</span> <span class=
             "org-function-name">clear</span>() {
@@ -4360,13 +4360,13 @@ undefined
 </pre>
             </div>
           </div>
-          <div id="outline-container-org3cf46c7" class="outline-4">
-            <h4 id="org3cf46c7">
+          <div id="outline-container-org7fb8710" class="outline-4">
+            <h4 id="org7fb8710">
               <span class="section-number-4">6.9.1.</span> clear with trigger
             </h4>
             <div class="outline-text-4" id="text-6-9-1">
               <div class="org-src-container">
-                <pre class="src src-js" id="orgb94716e"><span class=
+                <pre class="src src-js" id="org7acbb2a"><span class=
               "linenr"> 1: </span><span class=
               "org-keyword">function</span> <span class=
               "org-function-name">clear</span>() {
@@ -4420,7 +4420,7 @@ undefined
                   >
                 </summary>
                 <div class="org-src-container">
-                  <pre class="src src-diff" id="org1935132"><span class=
+                  <pre class="src src-diff" id="orgd34e612"><span class=
                 "org-diff-context">function clear() {</span>
 <span class="org-diff-context">  const target = toRaw(this)</span>
 <span class=
@@ -4451,7 +4451,7 @@ undefined
           </h3>
           <div class="outline-text-3" id="text-ref-collection-forEach">
             <div class="org-src-container">
-              <pre class="src src-js" id="org430c92e"><span class=
+              <pre class="src src-js" id="org6551d23"><span class=
             "linenr"> 1: </span><span class=
             "org-keyword">function</span> <span class=
             "org-function-name">createForEach</span>(<span class=
@@ -4491,13 +4491,13 @@ undefined
 </pre>
             </div>
           </div>
-          <div id="outline-container-org66f070e" class="outline-4">
-            <h4 id="org66f070e">
+          <div id="outline-container-org2308863" class="outline-4">
+            <h4 id="org2308863">
               <span class="section-number-4">6.10.1.</span> forEach with track
             </h4>
             <div class="outline-text-4" id="text-6-10-1">
               <div class="org-src-container">
-                <pre class="src src-js" id="org3fab30e"><span class=
+                <pre class="src src-js" id="org5b7f3e5"><span class=
               "linenr"> 1: </span><span class=
               "org-keyword">function</span> <span class=
               "org-function-name">createForEach</span>(<span class=
@@ -4588,14 +4588,14 @@ undefined
             </div>
           </div>
         </div>
-        <div id="outline-container-orga9e8354" class="outline-3">
-          <h3 id="orga9e8354">
+        <div id="outline-container-org1d53105" class="outline-3">
+          <h3 id="org1d53105">
             <span class="section-number-3">6.11.</span>
             keys&amp;values&amp;entries
           </h3>
           <div class="outline-text-3" id="text-6-11">
             <div class="org-src-container">
-              <pre class="src src-js" id="org561b408"><span class=
+              <pre class="src src-js" id="org094deed"><span class=
             "linenr"> 1: </span><span class=
             "org-keyword">function</span> <span class=
             "org-function-name">createIterableMethod</span>(<span class=
@@ -4664,7 +4664,7 @@ undefined
             </div>
             <p>代理 Map, Set 的迭达器操作:</p>
             <div class="org-src-container">
-              <pre class="src src-js" id="org3a1c5e5"><span class=
+              <pre class="src src-js" id="org975d079"><span class=
             "linenr"> 1: </span>&lt;&lt;createIterableMethod&gt;&gt;
 <span class="linenr"> 2: </span>
 <span class="linenr"> 3: </span><span class=
@@ -4687,13 +4687,13 @@ undefined
 </pre>
             </div>
           </div>
-          <div id="outline-container-org1d1ded2" class="outline-4">
-            <h4 id="org1d1ded2">
+          <div id="outline-container-org85b4ae9" class="outline-4">
+            <h4 id="org85b4ae9">
               <span class="section-number-4">6.11.1.</span> iterator with track
             </h4>
             <div class="outline-text-4" id="text-6-11-1">
               <div class="org-src-container">
-                <pre class="src src-js" id="org64e5a16"><span class=
+                <pre class="src src-js" id="org90ec020"><span class=
               "linenr"> 1: </span><span class=
               "org-keyword">function</span> <span class=
               "org-function-name">createIterableMethod</span>(<span class=
@@ -4763,7 +4763,7 @@ undefined
 </pre>
               </div>
               <div class="org-src-container">
-                <pre class="src src-js" id="orgab43027"><span class=
+                <pre class="src src-js" id="org25f6d16"><span class=
               "linenr"> 1: </span>&lt;&lt;createIterableMethodP2&gt;&gt;
 <span class="linenr"> 2: </span>
 <span class="linenr"> 3: </span><span class=
@@ -4805,7 +4805,7 @@ undefined
                   >
                 </summary>
                 <div class="org-src-container">
-                  <pre class="src src-diff" id="orgdc58869"><span class=
+                  <pre class="src src-diff" id="org08bf6d3"><span class=
                 "org-diff-context">function createIterableMethod(method, isReadonly, isShallow) {</span>
 <span class="org-diff-context">  return function(...args) {</span>
 <span class=
@@ -4852,8 +4852,8 @@ undefined
             </div>
           </div>
         </div>
-        <div id="outline-container-org3ed55bf" class="outline-3">
-          <h3 id="org3ed55bf">
+        <div id="outline-container-org2df62f7" class="outline-3">
+          <h3 id="org2df62f7">
             <span class="section-number-3">6.12.</span> Testing
           </h3>
           <div class="outline-text-3" id="text-6-12">
@@ -4877,8 +4877,8 @@ undefined
                 >
               </summary>
               <p>
-                <a href="#orgf43b15e">reactive</a>,
-                <a href="#org6713c0b">collection-get</a>
+                <a href="#org8f75314">reactive</a>,
+                <a href="#orgd56a0c6">collection-get</a>
               </p>
               <div class="org-src-container">
                 <pre class="src src-js"><span class=
@@ -4939,7 +4939,7 @@ undefined
                 <li>
                   第一行输出是 <code>observed.get</code> 方法的访问，被
                   <code>proxy get</code> 代理到了
-                  <a href="#org70199ac">mutableCollectionHandlers</a> 中的
+                  <a href="#org84d8fa5">mutableCollectionHandlers</a> 中的
                   <code> get</code> 结果，即此时的
                   <code>get</code> 调用已经被代理到了
                   <code>mutableCollectionHandlers.get</code> 。
@@ -4982,8 +4982,8 @@ undefined
                 >
               </summary>
               <p>
-                <a href="#orgf43b15e">reactive</a>,
-                <a href="#org80da5b2">collection-has</a>
+                <a href="#org8f75314">reactive</a>,
+                <a href="#orgb82b7cc">collection-has</a>
               </p>
               <div class="org-src-container">
                 <pre class="src src-js"><span class=
@@ -5064,8 +5064,8 @@ undefined
                 >
               </summary>
               <p>
-                <a href="#orgf43b15e">reactive</a>,
-                <a href="#org10bb666">collection-size</a>
+                <a href="#org8f75314">reactive</a>,
+                <a href="#org1581182">collection-size</a>
               </p>
               <div class="org-src-container">
                 <pre class="src src-js"><span class=
@@ -5147,8 +5147,8 @@ undefined
                 >
               </summary>
               <p>
-                <a href="#orgf43b15e">reactive</a>,
-                <a href="#org7057584">collection-add</a>
+                <a href="#org8f75314">reactive</a>,
+                <a href="#org684b654">collection-add</a>
               </p>
               <div class="org-src-container">
                 <pre class="src src-js"><span class=
@@ -5220,8 +5220,8 @@ undefined
                 >
               </summary>
               <p>
-                <a href="#orgf43b15e">reactive</a>,
-                <a href="#org016ab6d">collection-set</a>
+                <a href="#org8f75314">reactive</a>,
+                <a href="#org120fa8c">collection-set</a>
               </p>
               <div class="org-src-container">
                 <pre class="src src-js"><span class=
@@ -5293,10 +5293,10 @@ undefined
                 >
               </summary>
               <p>
-                <a href="#orgf43b15e">reactive</a>,
-                <a href="#org50df70b">collection-delete</a>,
-                <a href="#org016ab6d">collection-set</a>,
-                <a href="#org7057584">collection-add</a>
+                <a href="#org8f75314">reactive</a>,
+                <a href="#orgb8690e2">collection-delete</a>,
+                <a href="#org120fa8c">collection-set</a>,
+                <a href="#org684b654">collection-add</a>
               </p>
               <div class="org-src-container">
                 <pre class="src src-js"><span class=
@@ -5396,11 +5396,11 @@ undefined
                 >
               </summary>
               <p>
-                <a href="#orgf43b15e">reactive</a>,
-                <a href="#orgd924e97">collection-clear</a>,
-                <a href="#org50df70b">collection-delete</a>,
-                <a href="#org016ab6d">collection-set</a>,
-                <a href="#org7057584">collection-add</a>
+                <a href="#org8f75314">reactive</a>,
+                <a href="#org6d7b834">collection-clear</a>,
+                <a href="#orgb8690e2">collection-delete</a>,
+                <a href="#org120fa8c">collection-set</a>,
+                <a href="#org684b654">collection-add</a>
               </p>
               <div class="org-src-container">
                 <pre class="src src-js"><span class=
@@ -5485,12 +5485,12 @@ undefined
                 >
               </summary>
               <p>
-                <a href="#orgf43b15e">reactive</a>,
-                <a href="#org430c92e">collection-forEach</a>,
-                <a href="#orgd924e97">collection-clear</a>,
-                <a href="#org50df70b">collection-delete</a>,
-                <a href="#org016ab6d">collection-set</a>,
-                <a href="#org7057584">collection-add</a>
+                <a href="#org8f75314">reactive</a>,
+                <a href="#org6551d23">collection-forEach</a>,
+                <a href="#org6d7b834">collection-clear</a>,
+                <a href="#orgb8690e2">collection-delete</a>,
+                <a href="#org120fa8c">collection-set</a>,
+                <a href="#org684b654">collection-add</a>
               </p>
               <div class="org-src-container">
                 <pre class="src src-js"><span class=
@@ -5602,13 +5602,13 @@ undefined
                 >
               </summary>
               <p>
-                <a href="#orgf43b15e">reactive</a>,
-                <a href="#org3a1c5e5">collection-iterator</a>,
-                <a href="#org430c92e">collection-forEach</a>,
-                <a href="#orgd924e97">collection-clear</a>,
-                <a href="#org50df70b">collection-delete</a>,
-                <a href="#org016ab6d">collection-set</a>,
-                <a href="#org7057584">collection-add</a>
+                <a href="#org8f75314">reactive</a>,
+                <a href="#org975d079">collection-iterator</a>,
+                <a href="#org6551d23">collection-forEach</a>,
+                <a href="#org6d7b834">collection-clear</a>,
+                <a href="#orgb8690e2">collection-delete</a>,
+                <a href="#org120fa8c">collection-set</a>,
+                <a href="#org684b654">collection-add</a>
               </p>
               <div class="org-src-container">
                 <pre class="src src-js"><span class=
@@ -5751,8 +5751,8 @@ undefined
           </div>
         </div>
       </div>
-      <div id="outline-container-org915da60" class="outline-2">
-        <h2 id="org915da60">
+      <div id="outline-container-org09a7293" class="outline-2">
+        <h2 id="org09a7293">
           <span class="section-number-2">7.</span> phase one(no track & trigger)
         </h2>
         <div class="outline-text-2" id="text-7">
@@ -6978,8 +6978,8 @@ undefined
           </p>
         </div>
       </div>
-      <div id="outline-container-orgf68fa35" class="outline-2">
-        <h2 id="orgf68fa35">
+      <div id="outline-container-orgaf1027b" class="outline-2">
+        <h2 id="orgaf1027b">
           <span class="section-number-2">8.</span> track&amp;trigger&amp;effect
         </h2>
         <div class="outline-text-2" id="text-8">
@@ -6992,12 +6992,12 @@ undefined
           </p>
           <p>reactive 中订阅发布逻辑相关的三大函数：</p>
           <p>
-            <a href="#org7bc92e4">track</a>: get
+            <a href="#org7668c3e">track</a>: get
             取值操作时去收集当前的函数(也就是这个变量的监听者其实就是一个函数，只
             不过被封装成了一个 ReactiveEffect 类。)
           </p>
           <p>
-            <a href="#org20630c5">trigger</a>: set 设值操作时会去触发 track
+            <a href="#org4f3eec3">trigger</a>: set 设值操作时会去触发 track
             收集到的依赖并执行它们，这个执行的动作实际 是由
             <a
               href="build_you_own_vue_scheduler.html#ID-4a858df2-f6f8-4d2f-9cda-78c12cbf42b3"
@@ -7021,8 +7021,8 @@ undefined
             >。
           </p>
           <p>
-            <a href="#org8981e84">effect</a>: 将一个函数封装成
-            <a href="#org55c5b34">ReactiveEffect</a>
+            <a href="#orgb9b01da">effect</a>: 将一个函数封装成
+            <a href="#orgb61a122">ReactiveEffect</a>
             类，调用的时候会立即执行一个 fn 收集依赖。
           </p>
           <p>
@@ -7103,17 +7103,17 @@ undefined
             相关代码。
           </p>
           <p>
-            按照如下步骤添加相关代码(先实现 <a href="#org7bc92e4">track</a> 和
-            <a href="#org20630c5">trigger</a>)，请看
+            按照如下步骤添加相关代码(先实现 <a href="#org7668c3e">track</a> 和
+            <a href="#org4f3eec3">trigger</a>)，请看
           </p>
         </div>
-        <div id="outline-container-orgb2c0c52" class="outline-3">
-          <h3 id="orgb2c0c52">
+        <div id="outline-container-org8a8eacd" class="outline-3">
+          <h3 id="org8a8eacd">
             <span class="section-number-3">8.1.</span> track()
           </h3>
           <div class="outline-text-3" id="text-8-1">
             <div class="org-src-container">
-              <pre class="src src-js" id="org7bc92e4"><span class=
+              <pre class="src src-js" id="org7668c3e"><span class=
             "linenr"> 1: </span>&lt;&lt;createDep&gt;&gt;
 <span class="linenr"> 2: </span>&lt;&lt;trackEffects&gt;&gt;
 <span class="linenr"> 3: </span>
@@ -7162,8 +7162,8 @@ undefined
 </pre>
             </div>
           </div>
-          <div id="outline-container-org98eb104" class="outline-4">
-            <h4 id="org98eb104">
+          <div id="outline-container-org79ec379" class="outline-4">
+            <h4 id="org79ec379">
               <span class="section-number-4">8.1.1.</span> createDep()
             </h4>
             <div class="outline-text-4" id="text-8-1-1">
@@ -7192,7 +7192,7 @@ undefined
 </pre>
               </div>
               <div class="org-src-container">
-                <pre class="src src-js" id="orgffb769c"><span class=
+                <pre class="src src-js" id="orgc97add5"><span class=
               "linenr">1: </span><span class=
               "org-keyword">const</span> <span class=
               "org-variable-name">createDep</span> = (effects) =&gt; {
@@ -7231,7 +7231,7 @@ undefined
                   >
                 </summary>
                 <div class="org-src-container">
-                  <pre class="src src-diff" id="orgda9492d"><span class=
+                  <pre class="src src-diff" id="orgfc5fdb1"><span class=
                 "org-diff-context">const createDep = (effects) =&gt; {</span>
 <span class="org-diff-indicator-removed">-</span><span class=
 "org-diff-removed">  const dep = new Set()</span>
@@ -7246,13 +7246,13 @@ undefined
               </details>
             </div>
           </div>
-          <div id="outline-container-org6fcb42b" class="outline-4">
-            <h4 id="org6fcb42b">
+          <div id="outline-container-org240a5ee" class="outline-4">
+            <h4 id="org240a5ee">
               <span class="section-number-4">8.1.2.</span> wasTracked(dep)
             </h4>
             <div class="outline-text-4" id="text-8-1-2">
               <div class="org-src-container">
-                <pre class="src src-js" id="org2ac3b04"><span class=
+                <pre class="src src-js" id="org051d684"><span class=
               "linenr">1: </span><span class=
               "org-keyword">const</span> <span class=
               "org-variable-name">wasTracked</span> = dep =&gt; (dep.w & trackOpBit) &gt; <span class="org-highlight-numbers-number">0</span>
@@ -7260,13 +7260,13 @@ undefined
               </div>
             </div>
           </div>
-          <div id="outline-container-orgb354fd7" class="outline-4">
-            <h4 id="orgb354fd7">
+          <div id="outline-container-org96a2e37" class="outline-4">
+            <h4 id="org96a2e37">
               <span class="section-number-4">8.1.3.</span> newTracked(dep)
             </h4>
             <div class="outline-text-4" id="text-8-1-3">
               <div class="org-src-container">
-                <pre class="src src-js" id="orgadb6b94"><span class=
+                <pre class="src src-js" id="org3d98f14"><span class=
               "linenr">1: </span><span class=
               "org-keyword">const</span> <span class=
               "org-variable-name">newTracked</span> = dep =&gt; (dep.n & trackOpBit) &gt; <span class="org-highlight-numbers-number">0</span>
@@ -7274,13 +7274,13 @@ undefined
               </div>
             </div>
           </div>
-          <div id="outline-container-orgab53f4e" class="outline-4">
-            <h4 id="orgab53f4e">
+          <div id="outline-container-org0fbcbad" class="outline-4">
+            <h4 id="org0fbcbad">
               <span class="section-number-4">8.1.4.</span> initDepMarkers()
             </h4>
             <div class="outline-text-4" id="text-8-1-4">
               <div class="org-src-container">
-                <pre class="src src-js" id="org590ba58"><span class=
+                <pre class="src src-js" id="org3d71544"><span class=
               "linenr">1: </span><span class=
               "org-keyword">const</span> <span class=
               "org-variable-name">initDepMarkers</span> = ({ deps }) =&gt; {
@@ -7303,13 +7303,13 @@ undefined
               </div>
             </div>
           </div>
-          <div id="outline-container-orgbe8b366" class="outline-4">
-            <h4 id="orgbe8b366">
+          <div id="outline-container-org562ebd2" class="outline-4">
+            <h4 id="org562ebd2">
               <span class="section-number-4">8.1.5.</span> finalizeDepMarkers()
             </h4>
             <div class="outline-text-4" id="text-8-1-5">
               <div class="org-src-container">
-                <pre class="src src-js" id="org90f1533"><span class=
+                <pre class="src src-js" id="org8f6ab47"><span class=
               "linenr"> 1: </span><span class=
               "org-keyword">const</span> <span class=
               "org-variable-name">finalizeDepMarkers</span> = (effect) =&gt; {
@@ -7351,8 +7351,8 @@ undefined
               </div>
             </div>
           </div>
-          <div id="outline-container-orge525367" class="outline-4">
-            <h4 id="orge525367">
+          <div id="outline-container-org7d3a24b" class="outline-4">
+            <h4 id="org7d3a24b">
               <span class="section-number-4">8.1.6.</span> trackEffects(dep,
               debuggerEventExtraInfo)
             </h4>
@@ -7365,7 +7365,7 @@ undefined
                 >
               </p>
               <div class="org-src-container">
-                <pre class="src src-js" id="org216f3f4"><span class=
+                <pre class="src src-js" id="org21d053d"><span class=
               "linenr"> 1: </span><span class=
               "org-keyword">function</span> <span class=
               "org-function-name">trackEffects</span>(<span class=
@@ -7429,7 +7429,7 @@ undefined
                   >
                 </summary>
                 <div class="org-src-container">
-                  <pre class="src src-diff" id="orgd39cf62"><span class=
+                  <pre class="src src-diff" id="org1ac1e9e"><span class=
                 "org-diff-context">function trackEffects(dep, debuggerEventExtraInfo) {</span>
 <span class=
 "org-diff-context">  // TODO maxMarkerBits 检查，这里省略直接检查是不是已经存在了</span>
@@ -7468,18 +7468,18 @@ undefined
             </div>
           </div>
         </div>
-        <div id="outline-container-org76b6ae4" class="outline-3">
-          <h3 id="org76b6ae4">
+        <div id="outline-container-orgb20dc14" class="outline-3">
+          <h3 id="orgb20dc14">
             <span class="section-number-3">8.2.</span> trigger()
           </h3>
           <div class="outline-text-3" id="text-8-2">
             <p>
               trigger 就是当值发生变更时将
-              <a href="#org7bc92e4">track</a> 中收集到的
+              <a href="#org7668c3e">track</a> 中收集到的
               <code>targetMap -&gt; depsMap</code> 中的 effects 拿出来执行。
             </p>
             <div class="org-src-container">
-              <pre class="src src-js" id="org20630c5"><span class=
+              <pre class="src src-js" id="org4f3eec3"><span class=
             "linenr"> 1: </span>&lt;&lt;triggerEffects&gt;&gt;
 <span class="linenr"> 2: </span>
 <span class="linenr"> 3: </span><span class=
@@ -7644,13 +7644,13 @@ undefined
 </pre>
             </div>
           </div>
-          <div id="outline-container-org5b4d32a" class="outline-4">
-            <h4 id="org5b4d32a">
+          <div id="outline-container-org220f3a3" class="outline-4">
+            <h4 id="org220f3a3">
               <span class="section-number-4">8.2.1.</span> triggerEffects()
             </h4>
             <div class="outline-text-4" id="text-8-2-1">
               <div class="org-src-container">
-                <pre class="src src-js" id="orgdc3e237"><span id=
+                <pre class="src src-js" id="org22c65ae"><span id=
               "coderef-triggerEffects" class=
               "coderef-off"><span class=
               "linenr"> 1: </span><span class=
@@ -7687,7 +7687,7 @@ undefined
               <p>
                 这里会去执行
                 <code>effect.run()</code> 也就是具体的订阅者函数被封装后的
-                <a href="#org55c5b34">ReactiveEffect</a> 中的 run
+                <a href="#orgb61a122">ReactiveEffect</a> 中的 run
                 方法，在这个方法里面会去真正的执行订阅者函数，且执行的时候会使用
                 try…finally 去保证这个函数的清理工作正常运行，具体请看
                 <a
@@ -7702,8 +7702,8 @@ undefined
             </div>
           </div>
         </div>
-        <div id="outline-container-orge4c0768" class="outline-3">
-          <h3 id="orge4c0768">
+        <div id="outline-container-org9dd20d0" class="outline-3">
+          <h3 id="org9dd20d0">
             <span class="section-number-3">8.3.</span> effect()
           </h3>
           <div class="outline-text-3" id="text-8-3">
@@ -7721,7 +7721,7 @@ undefined
 </pre>
             </div>
             <div class="org-src-container">
-              <pre class="src src-js" id="org8981e84"><span class=
+              <pre class="src src-js" id="orgb9b01da"><span class=
             "linenr"> 1: </span><span class=
             "org-keyword">function</span> <span class=
             "org-function-name">effect</span>(<span class=
@@ -7752,9 +7752,8 @@ undefined
 <span class="linenr">12: </span>    extend(_effect, options)
 <span class="linenr">13: </span>    <span class=
 "org-keyword">if</span> (options.scope) {
-<span class="linenr">14: </span>      <span class=
-"org-comment-delimiter">// </span><span class=
-"org-comment">record effect scope</span>
+<span class=
+"linenr">14: </span>      recordEffectScope(_effect, options.scope)
 <span class="linenr">15: </span>    }
 <span class="linenr">16: </span>  }
 <span class="linenr">17: </span>
@@ -7779,7 +7778,7 @@ undefined
             <ol class="org-ol">
               <li>
                 将一个函数 <code>fn</code> 封装成
-                <a href="#org55c5b34">ReactiveEffect</a> 类实例
+                <a href="#orgb61a122">ReactiveEffect</a> 类实例
               </li>
               <li>立即执行它收集依赖</li>
               <li>
@@ -7815,8 +7814,8 @@ undefined
             </div>
           </div>
         </div>
-        <div id="outline-container-org5c8d1c0" class="outline-3">
-          <h3 id="org5c8d1c0">
+        <div id="outline-container-org4a66a48" class="outline-3">
+          <h3 id="org4a66a48">
             <span class="section-number-3">8.4.</span> normal objects
           </h3>
           <div class="outline-text-3" id="text-8-4">
@@ -7834,50 +7833,50 @@ undefined
               <tbody>
                 <tr>
                   <td class="org-left">
-                    <a href="#orgf3b0e44">object get</a>
+                    <a href="#orgf578e1d">object get</a>
                   </td>
                   <td class="org-left">
-                    <a href="#org9f16a73">go test 🛬</a>
-                  </td>
-                </tr>
-                <tr>
-                  <td class="org-left">
-                    <a href="#orge215f85">object has</a>
-                  </td>
-                  <td class="org-left">
-                    <a href="#org53b2507">go test 🛬</a>
+                    <a href="#org3f27e85">go test 🛬</a>
                   </td>
                 </tr>
                 <tr>
                   <td class="org-left">
-                    <a href="#org8927270">object ownKeys</a>
+                    <a href="#org757187e">object has</a>
                   </td>
                   <td class="org-left">
-                    <a href="#orgc2c5033">go test 🛬</a>
-                  </td>
-                </tr>
-                <tr>
-                  <td class="org-left">
-                    <a href="#org92e2c85">object set</a>
-                  </td>
-                  <td class="org-left">
-                    <a href="#org50b9af5">go test 🛬</a>
+                    <a href="#orgb197e4a">go test 🛬</a>
                   </td>
                 </tr>
                 <tr>
                   <td class="org-left">
-                    <a href="#org4e38759">object delete</a>
+                    <a href="#orge8c111a">object ownKeys</a>
                   </td>
                   <td class="org-left">
-                    <a href="#org1bd8c9d">go test 🛬</a>
+                    <a href="#org2c88501">go test 🛬</a>
+                  </td>
+                </tr>
+                <tr>
+                  <td class="org-left">
+                    <a href="#org2adba9e">object set</a>
+                  </td>
+                  <td class="org-left">
+                    <a href="#orgbcd5cc6">go test 🛬</a>
+                  </td>
+                </tr>
+                <tr>
+                  <td class="org-left">
+                    <a href="#org746127d">object delete</a>
+                  </td>
+                  <td class="org-left">
+                    <a href="#orgbc709ea">go test 🛬</a>
                   </td>
                 </tr>
               </tbody>
             </table>
           </div>
         </div>
-        <div id="outline-container-org8f38a80" class="outline-3">
-          <h3 id="org8f38a80">
+        <div id="outline-container-org8b17bfc" class="outline-3">
+          <h3 id="org8b17bfc">
             <span class="section-number-3">8.5.</span> colletion
             objects(Map,Set)
           </h3>
@@ -7896,89 +7895,89 @@ undefined
               <tbody>
                 <tr>
                   <td class="org-left">
-                    <a href="#org7c441cf">collection get</a>
+                    <a href="#org91a06f1">collection get</a>
                   </td>
                   <td class="org-left">
-                    <a href="#org2f84c51">go test 🛬</a>
-                  </td>
-                </tr>
-                <tr>
-                  <td class="org-left">
-                    <a href="#orgbdc5258">collection has</a>
-                  </td>
-                  <td class="org-left">
-                    <a href="#org2f84c51">go test 🛬</a>
+                    <a href="#org4325aee">go test 🛬</a>
                   </td>
                 </tr>
                 <tr>
                   <td class="org-left">
-                    <a href="#orgd59fe77">collection size</a>
+                    <a href="#org94fbe58">collection has</a>
                   </td>
                   <td class="org-left">
-                    <a href="#org2f84c51">go test 🛬</a>
-                  </td>
-                </tr>
-                <tr>
-                  <td class="org-left">
-                    <a href="#orgdaf62c6">collection add</a>
-                  </td>
-                  <td class="org-left">
-                    <a href="#org2f84c51">go test 🛬</a>
+                    <a href="#org4325aee">go test 🛬</a>
                   </td>
                 </tr>
                 <tr>
                   <td class="org-left">
-                    <a href="#org1a7652b">collection set</a>
+                    <a href="#org1c9748d">collection size</a>
                   </td>
                   <td class="org-left">
-                    <a href="#org2f84c51">go test 🛬</a>
-                  </td>
-                </tr>
-                <tr>
-                  <td class="org-left">
-                    <a href="#org443d0fb">collection delete</a>
-                  </td>
-                  <td class="org-left">
-                    <a href="#org2f84c51">go test 🛬</a>
+                    <a href="#org4325aee">go test 🛬</a>
                   </td>
                 </tr>
                 <tr>
                   <td class="org-left">
-                    <a href="#orgb94716e">collection clear</a>
+                    <a href="#org98c2595">collection add</a>
                   </td>
                   <td class="org-left">
-                    <a href="#org2f84c51">go test 🛬</a>
-                  </td>
-                </tr>
-                <tr>
-                  <td class="org-left">
-                    <a href="#org3fab30e">collection forEach</a>
-                  </td>
-                  <td class="org-left">
-                    <a href="#org2f84c51">go test 🛬</a>
+                    <a href="#org4325aee">go test 🛬</a>
                   </td>
                 </tr>
                 <tr>
                   <td class="org-left">
-                    <a href="#orgab43027">collection iterator</a>
+                    <a href="#org6be56f9">collection set</a>
                   </td>
                   <td class="org-left">
-                    <a href="#org2f84c51">go test 🛬</a>
+                    <a href="#org4325aee">go test 🛬</a>
+                  </td>
+                </tr>
+                <tr>
+                  <td class="org-left">
+                    <a href="#org7a9f5d0">collection delete</a>
+                  </td>
+                  <td class="org-left">
+                    <a href="#org4325aee">go test 🛬</a>
+                  </td>
+                </tr>
+                <tr>
+                  <td class="org-left">
+                    <a href="#org7acbb2a">collection clear</a>
+                  </td>
+                  <td class="org-left">
+                    <a href="#org4325aee">go test 🛬</a>
+                  </td>
+                </tr>
+                <tr>
+                  <td class="org-left">
+                    <a href="#org5b7f3e5">collection forEach</a>
+                  </td>
+                  <td class="org-left">
+                    <a href="#org4325aee">go test 🛬</a>
+                  </td>
+                </tr>
+                <tr>
+                  <td class="org-left">
+                    <a href="#org25f6d16">collection iterator</a>
+                  </td>
+                  <td class="org-left">
+                    <a href="#org4325aee">go test 🛬</a>
                   </td>
                 </tr>
               </tbody>
             </table>
           </div>
         </div>
-        <div id="outline-container-orgac4a804" class="outline-3">
-          <h3 id="orgac4a804">
+        <div id="outline-container-org7779a6c" class="outline-3">
+          <h3 id="org7779a6c">
             <span class="section-number-3">8.6.</span> phase 2 updating
           </h3>
           <div class="outline-text-3" id="text-8-6">
             <p>加上 track, trigger 之后实际添加的代码：</p>
           </div>
-          <div id="outline-container-org448f8fa" class="outline-4">
-            <h4 id="org448f8fa">
+          <div id="outline-container-org1544eb3" class="outline-4">
+            <h4 id="org1544eb3">
               <span class="section-number-4">8.6.1.</span> normal objects
             </h4>
             <div class="outline-text-4" id="text-8-6-1">
@@ -8110,8 +8109,8 @@ undefined
               </details>
             </div>
           </div>
-          <div id="outline-container-org4fce431" class="outline-4">
-            <h4 id="org4fce431">
+          <div id="outline-container-orgd03cdfe" class="outline-4">
+            <h4 id="orgd03cdfe">
               <span class="section-number-4">8.6.2.</span> collection
               objects(Map,Set)
             </h4>
@@ -8351,8 +8350,8 @@ undefined
               </details>
             </div>
           </div>
-          <div id="outline-container-org4112ae8" class="outline-4">
-            <h4 id="org4112ae8">
+          <div id="outline-container-orgc5eb5cc" class="outline-4">
+            <h4 id="orgc5eb5cc">
               <span class="section-number-4">8.6.3.</span> whole phase code
             </h4>
             <div class="outline-text-4" id="text-8-6-3">
@@ -8375,7 +8374,7 @@ undefined
                   >
                 </summary>
                 <div class="org-src-container">
-                  <pre class="src src-js" id="org5487983"><span class=
+                  <pre class="src src-js" id="orgf31fe35"><span class=
                 "linenr">1: </span>&lt;&lt;reactiveP2&gt;&gt;
 <span class="linenr">2: </span>&lt;&lt;effect&gt;&gt;
 </pre>
@@ -8384,8 +8383,8 @@ undefined
             </div>
           </div>
         </div>
-        <div id="outline-container-orge3a3d73" class="outline-3">
-          <h3 id="orge3a3d73">
+        <div id="outline-container-orge534836" class="outline-3">
+          <h3 id="orge534836">
             <span class="section-number-3">8.7.</span> Testing
           </h3>
           <div class="outline-text-3" id="text-8-7">
@@ -8410,12 +8409,12 @@ undefined
                 >
               </summary>
               <p>
-                <a href="#orgf3b0e44">get with track</a>,
-                <a href="#org7241d5b">reactive</a>,
-                <a href="#org8981e84">effect</a>
+                <a href="#orgf578e1d">get with track</a>,
+                <a href="#orgb6feb2f">reactive</a>,
+                <a href="#orgb9b01da">effect</a>
               </p>
               <div class="org-src-container">
-                <pre class="src src-js" id="org9f16a73"><span class=
+                <pre class="src src-js" id="org3f27e85"><span class=
               "linenr"> 1: </span>&lt;&lt;reactiveP2&gt;&gt;
 <span class="linenr"> 2: </span>&lt;&lt;effect&gt;&gt;
 <span class="linenr"> 3: </span>
@@ -8439,7 +8438,7 @@ undefined
 <span class="linenr">12: </span>logEnd()
 </pre>
               </div>
-              <pre class="example" id="org7179c1b">
+              <pre class="example" id="org6bb0bb0">
 effect|run| active=true, shouldTrack=true
 run times 1 ...
 track| type=get, key=count, targetMap=[object WeakMap], dep=[object Set]
@@ -8556,7 +8555,7 @@ undefined
 <span class="linenr">20: </span>    logEnd()
 </pre>
                   </div>
-                  <pre class="example" id="orgfcdb654">
+                  <pre class="example" id="orge847d11">
    effect|run| active=true, shouldTrack=true
    track| type=get, key=count, targetMap=[object WeakMap], dep=[object Set]
    trackEffects| shouldTrack=true, activeEffect=[object Object], dep=1, activeEffect.deps=1
@@ -8642,17 +8641,17 @@ undefined
                 >
               </summary>
               <p>
-                <a href="#orge215f85">has</a>,
-                <a href="#org7241d5b">reactive</a>,
-                <a href="#org8981e84">effect</a>
+                <a href="#org757187e">has</a>,
+                <a href="#orgb6feb2f">reactive</a>,
+                <a href="#orgb9b01da">effect</a>
               </p>
               <p>
                 <code>key in object</code> 属性检测会触发
-                <a href="#orge215f85">has proxy</a> -&gt;
+                <a href="#org757187e">has proxy</a> -&gt;
                 <code>Reflect.has()</code>
               </p>
               <div class="org-src-container">
-                <pre class="src src-js" id="org53b2507"><span class=
+                <pre class="src src-js" id="orgb197e4a"><span class=
               "linenr"> 1: </span>&lt;&lt;reactiveP2&gt;&gt;
 <span class="linenr"> 2: </span>&lt;&lt;effect&gt;&gt;
 <span class="linenr"> 3: </span>
@@ -8709,17 +8708,17 @@ undefined
                 >
               </summary>
               <p>
-                <a href="#org8927270">ownKeys</a>,
-                <a href="#org7241d5b">reactive</a>,
-                <a href="#org8981e84">effect</a>
+                <a href="#orge8c111a">ownKeys</a>,
+                <a href="#orgb6feb2f">reactive</a>,
+                <a href="#orgb9b01da">effect</a>
               </p>
               <p>
                 当对一个对象使用 <code>for...in</code> 进行遍历的时候会触发
-                <a href="#org8927270">ownKeys proxy</a> -&gt;
+                <a href="#orge8c111a">ownKeys proxy</a> -&gt;
                 <code>Reflect.ownKeys()</code>
               </p>
               <div class="org-src-container">
-                <pre class="src src-js" id="orgc2c5033"><span class=
+                <pre class="src src-js" id="org2c88501"><span class=
               "linenr"> 1: </span>&lt;&lt;reactiveP2&gt;&gt;
 <span class="linenr"> 2: </span>&lt;&lt;effect&gt;&gt;
 <span class="linenr"> 3: </span>
@@ -8782,12 +8781,12 @@ undefined
                 >
               </summary>
               <p>
-                <a href="#org92e2c85">set</a>,
-                <a href="#org7241d5b">reactive</a>,
-                <a href="#org8981e84">effect</a>
+                <a href="#org2adba9e">set</a>,
+                <a href="#orgb6feb2f">reactive</a>,
+                <a href="#orgb9b01da">effect</a>
               </p>
               <div class="org-src-container">
-                <pre class="src src-js" id="org50b9af5"><span class=
+                <pre class="src src-js" id="orgbcd5cc6"><span class=
               "linenr"> 1: </span>&lt;&lt;reactiveP2&gt;&gt;
 <span class="linenr"> 2: </span>&lt;&lt;effect&gt;&gt;
 <span class="linenr"> 3: </span>
@@ -8811,7 +8810,7 @@ undefined
 <span class="linenr">12: </span>logEnd()
 </pre>
               </div>
-              <pre class="example" id="org20b5110">
+              <pre class="example" id="orgd555746">
 effect|run| active=true, shouldTrack=true
 track| type=get, key=count, targetMap=[object WeakMap], dep=[object Set]
 trackEffects| shouldTrack=true, activeEffect=[object Object], dep=1, activeEffect.deps=1
@@ -8852,12 +8851,12 @@ undefined
                 >
               </summary>
               <p>
-                <a href="#org4e38759">delete</a>,
-                <a href="#org7241d5b">reactive</a>,
-                <a href="#org8981e84">effect</a>
+                <a href="#org746127d">delete</a>,
+                <a href="#orgb6feb2f">reactive</a>,
+                <a href="#orgb9b01da">effect</a>
               </p>
               <div class="org-src-container">
-                <pre class="src src-js" id="org1bd8c9d"><span class=
+                <pre class="src src-js" id="orgbc709ea"><span class=
               "linenr"> 1: </span>&lt;&lt;reactiveP2&gt;&gt;
 <span class="linenr"> 2: </span>&lt;&lt;effect&gt;&gt;
 <span class="linenr"> 3: </span>
@@ -8888,7 +8887,7 @@ undefined
 "org-string">'delete count'</span>)
 </pre>
               </div>
-              <pre class="example" id="org217e994">
+              <pre class="example" id="orgf088c12">
 effect|run| active=true, shouldTrack=true
 track| type=get, key=count, targetMap=[object WeakMap], dep=[object Set]
 trackEffects| shouldTrack=true, activeEffect=[object Object], dep=1, activeEffect.deps=1
@@ -8943,16 +8942,16 @@ undefined
                 >
               </summary>
               <p>
-                <a href="#org7c441cf">get</a>, <a href="#org1a7652b">set</a>,
-                <a href="#orgbdc5258">has</a>, <a href="#orgd59fe77">size</a>,
-                <a href="#org7c441cf">get</a>, <a href="#orgdaf62c6">add</a>,
-                <a href="#org3fab30e">forEach</a>,
-                <a href="#orgab43027">iterator</a>,
-                <a href="#org7241d5b">reactive</a>,
-                <a href="#org8981e84">effect</a>
+                <a href="#org91a06f1">get</a>, <a href="#org6be56f9">set</a>,
+                <a href="#org94fbe58">has</a>, <a href="#org1c9748d">size</a>,
+                <a href="#org91a06f1">get</a>, <a href="#org98c2595">add</a>,
+                <a href="#org5b7f3e5">forEach</a>,
+                <a href="#org25f6d16">iterator</a>,
+                <a href="#orgb6feb2f">reactive</a>,
+                <a href="#orgb9b01da">effect</a>
               </p>
               <div class="org-src-container">
-                <pre class="src src-js" id="org2f84c51"><span class=
+                <pre class="src src-js" id="org4325aee"><span class=
               "linenr"> 1: </span>&lt;&lt;reactiveP2&gt;&gt;
 <span class="linenr"> 2: </span>&lt;&lt;effect&gt;&gt;
 <span class="linenr"> 3: </span>
@@ -9070,8 +9069,8 @@ undefined
           </div>
         </div>
       </div>
-      <div id="outline-container-orgf673df3" class="outline-2">
-        <h2 id="orgf673df3">
+      <div id="outline-container-org41b52c0" class="outline-2">
+        <h2 id="org41b52c0">
           <span class="section-number-2">9.</span> effect scope
         </h2>
         <div class="outline-text-2" id="text-9">
@@ -9298,7 +9297,7 @@ undefined
             这里调用了外层 effect scope 的
             <code>stop()</code> 函数，此时它这个链条上 的所以 effect scope
             都被强制停止(其实就是调用了
-            <a href="#org55c5b34">ReactiveEffect</a> 与 effect
+            <a href="#orgb61a122">ReactiveEffect</a> 与 effect
             相关的一系列清理函数，比如： cleanup, stop)，等于是所以
             的信赖被清理了，因此当后面执行
             <a
@@ -9313,20 +9312,20 @@ undefined
           </p>
           <p>
             实现：
-            <a href="#org55c5b34">ReactiveEffect</a> 构造函数中，当每次调用
-            <a href="#org8981e84">effect</a> 函数时都会新建一个
-            <a href="#org55c5b34">ReactiveEffect</a> 实例，此时会去调用
-            <a href="#orga9d3c33">recordEffectScope</a> 记录一次 effect
+            <a href="#orgb61a122">ReactiveEffect</a> 构造函数中，当每次调用
+            <a href="#orgb9b01da">effect</a> 函数时都会新建一个
+            <a href="#orgb61a122">ReactiveEffect</a> 实例，此时会去调用
+            <a href="#org7df7eb7">recordEffectScope</a> 记录一次 effect
             scope(前提是 此时的 是有值的)
           </p>
         </div>
-        <div id="outline-container-orgd0f0982" class="outline-3">
-          <h3 id="orgd0f0982">
+        <div id="outline-container-org80d6b7e" class="outline-3">
+          <h3 id="org80d6b7e">
             <span class="section-number-3">9.1.</span> EffectScope
           </h3>
           <div class="outline-text-3" id="text-9-1">
             <div class="org-src-container">
-              <pre class="src src-js" id="org51be3ba"><span class=
+              <pre class="src src-js" id="org76eda97"><span class=
             "linenr"> 1: </span><span class=
             "org-keyword">class</span> EffectScope {
 <span class="linenr"> 2: </span>  active = <span class=
@@ -9453,14 +9452,14 @@ undefined
             </div>
           </div>
         </div>
-        <div id="outline-container-org554802f" class="outline-3">
-          <h3 id="org554802f">
+        <div id="outline-container-org34e5d18" class="outline-3">
+          <h3 id="org34e5d18">
             <span class="section-number-3">9.2.</span> recordEffectScope(effect,
             scope)
           </h3>
           <div class="outline-text-3" id="text-9-2">
             <div class="org-src-container">
-              <pre class="src src-js" id="orga9d3c33"><span class=
+              <pre class="src src-js" id="org7df7eb7"><span class=
             "linenr">1: </span><span class=
             "org-keyword">function</span> <span class=
             "org-function-name">recordEffectScope</span>(<span class=
@@ -9476,8 +9475,8 @@ undefined
             </div>
           </div>
         </div>
-        <div id="outline-container-org4b66f6d" class="outline-3">
-          <h3 id="org4b66f6d">
+        <div id="outline-container-org159436e" class="outline-3">
+          <h3 id="org159436e">
             <span class="section-number-3">9.3.</span> onScopeDispose(fn)
           </h3>
           <div class="outline-text-3" id="text-9-3">
@@ -9487,7 +9486,7 @@ undefined
               生清理时执行 <code>fn</code> 回调做些什么事。
             </p>
             <div class="org-src-container">
-              <pre class="src src-js" id="org30ef691"><span class=
+              <pre class="src src-js" id="org84510f8"><span class=
             "linenr">1: </span><span class=
             "org-keyword">function</span> <span class=
             "org-function-name">onScopeDispose</span>(<span class=
@@ -9502,13 +9501,13 @@ undefined
             </div>
           </div>
         </div>
-        <div id="outline-container-org1128b32" class="outline-3">
-          <h3 id="org1128b32">
+        <div id="outline-container-org47f7f13" class="outline-3">
+          <h3 id="org47f7f13">
             <span class="section-number-3">9.4.</span> track dep
           </h3>
           <div class="outline-text-3" id="text-9-4">
             <p>
-              effect scope <a href="#org7f325f1">递归层级控制</a>,
+              effect scope <a href="#org391b50c">递归层级控制</a>,
               嵌套深度最大是 30<a
                 href="#coderef-maxMarkerBits"
                 class="coderef"
@@ -9520,15 +9519,15 @@ undefined
           </div>
         </div>
       </div>
-      <div id="outline-container-org8993f06" class="outline-2">
-        <h2 id="org8993f06">
+      <div id="outline-container-org3134e71" class="outline-2">
+        <h2 id="org3134e71">
           <span class="section-number-2">10.</span> computed
         </h2>
         <div class="outline-text-2" id="text-10">
           <p>
-            在此之前实现了 <a href="#orgf43b15e">reactive</a>,
-            <a href="#org8981e84">effect</a>, <a href="#org7bc92e4">track</a>,
-            <a href="#org20630c5">trigger</a>， 这一节将来讲讲计算属性如何实现
+            在此之前实现了 <a href="#org8f75314">reactive</a>,
+            <a href="#orgb9b01da">effect</a>, <a href="#org7668c3e">track</a>,
+            <a href="#org4f3eec3">trigger</a>， 这一节将来讲讲计算属性如何实现
             的？
           </p>
           <p>
@@ -9539,11 +9538,11 @@ undefined
           <p>
             计算属性模板，当你使用
             <code>computed(() =&gt; {...})</code> 的时候实际它返回的是一个
-            <a href="#orge430793">ComputedRefImpl</a>
+            <a href="#orgfd5964b">ComputedRefImpl</a>
             实例，读取操作都被进一步封装了。
           </p>
           <div class="org-src-container">
-            <pre class="src src-js" id="orge430793"><span class=
+            <pre class="src src-js" id="orgfd5964b"><span class=
           "linenr"> 1: </span><span class=
           "org-keyword">class</span> ComputedRefImpl {
 <span class="linenr"> 2: </span>  dep = <span class=
@@ -9640,7 +9639,7 @@ undefined
               >17</a
             >
             行有个需要注意的点就是计算属性创建一个
-            <a href="#org55c5b34">ReactiveEffect</a> 的时候有传入第二个参数<a
+            <a href="#orgb61a122">ReactiveEffect</a> 的时候有传入第二个参数<a
               href="#coderef-ReactiveEffect-constructor"
               class="coderef"
               onmouseover="CodeHighlightOn(this, 'coderef-ReactiveEffect-constructor');"
@@ -9650,8 +9649,8 @@ undefined
           </p>
           <p>
             而 <code>scheduler</code> 这个函数是在
-            <a href="#org20630c5">trigger</a> -&gt;
-            <a href="#orgdc3e237">triggerEffects</a>
+            <a href="#org4f3eec3">trigger</a> -&gt;
+            <a href="#org22c65ae">triggerEffects</a>
             中被调用，且注意看它是替代了
             <code>effect.run</code> 的，换句话说这里<a
               href="#coderef-computed-new-effect"
@@ -9700,17 +9699,17 @@ undefined
             取值时候会触发脏位检测才去调用
             <code>self.effect.run()</code> 计算出真正的结果值。
           </p>
-          <div class="warning" id="orgf94da32">
+          <div class="warning" id="org96f9bd0">
             <p>
               <span style="color: red">BUG1</span>:
-              <a href="#org635eba6">createGetter</a> 中需要增加 ref
+              <a href="#org0eaa628">createGetter</a> 中需要增加 ref
               类型检测，不然取不到实际的值，因为 ref 类型的值 是在
-              <code>value</code> 上，修复新增代码(<a href="#org9f8c610">FIX</a>)
+              <code>value</code> 上，修复新增代码(<a href="#org54f27ba">FIX</a>)
               。
             </p>
             <p>
               <span style="color: red">BUG2</span>:
-              <a href="#org20630c5">trigger</a> -&gt;
+              <a href="#org4f3eec3">trigger</a> -&gt;
               <code>length &gt; 1</code> 时 -&gt;
               <a
                 href="#coderef-trigger-deps-length-gt-1"
@@ -9720,16 +9719,16 @@ undefined
               >
                 triggerEffects(createDep(effects))</a
               >
-              -&gt; <a href="#orgffb769c">createDep()</a> 中没有使用 effects
+              -&gt; <a href="#orgc97add5">createDep()</a> 中没有使用 effects
               问题，导致无法新增属性时无法触发 effects 执行(<a
-                href="#orgda9492d"
+                href="#orgfc5fdb1"
                 >FIX</a
               >)。
             </p>
           </div>
           <p><code>computed()</code></p>
           <div class="org-src-container">
-            <pre class="src src-js" id="org315b777"><span class=
+            <pre class="src src-js" id="org9c2fd68"><span class=
           "linenr"> 1: </span>&lt;&lt;ComputedRefImpl&gt;&gt;
 <span class="linenr"> 2: </span><span class=
 "org-keyword">function</span> <span class=
@@ -9819,7 +9818,7 @@ undefined
 "org-string">`second get cValue, cValue=${cValue.value}`</span>)
 </pre>
             </div>
-            <pre class="example" id="org9f339d9">
+            <pre class="example" id="org22e3431">
 ComputedRefImpl|constructor| _dirty=true, _value=undefined, isRef=true
 computed| onlyGetter=true, isRef=true, _value=undefined, _dirty=true
 ComputedRefImpl|get|before, _dirty=true, _cacheable=true, _value=undefined
@@ -9855,16 +9854,16 @@ undefined
           </details>
         </div>
       </div>
-      <div id="outline-container-orgc13111b" class="outline-2">
-        <h2 id="orgc13111b">
+      <div id="outline-container-org5163558" class="outline-2">
+        <h2 id="org5163558">
           <span class="section-number-2">11.</span> defferedComputed
         </h2>
         <div class="outline-text-2" id="text-11">
           <p>
             延迟计算属性(<code>defferedComputed</code>)和
-            <a href="#org315b777">computed</a>
+            <a href="#org9c2fd68">computed</a>
             的唯一区别在于，当依赖的变量发生变化的 时候不会立即触发视图更新(即
-            <a href="#orga73c9b1">triggerRefValue(this)</a>) 而是将这人更新动作
+            <a href="#orgf521dcc">triggerRefValue(this)</a>) 而是将这人更新动作
             push 到一 个队列中去，在
             <code>tick=Promise.resolve()</code>
             之后去启动执行，这么做的好处是，当有多次会
@@ -9872,7 +9871,7 @@ undefined
             行，保证只有最后一次更新才生效。
           </p>
           <div class="org-src-container">
-            <pre class="src src-js" id="org3bb9f3f"><span class=
+            <pre class="src src-js" id="org38cde9b"><span class=
           "linenr"> 1: </span><span class=
           "org-keyword">const</span> <span class=
           "org-variable-name">tick</span> = Promise.resolve()
@@ -9961,7 +9960,7 @@ undefined
 <span class="linenr">21: </span>}())
 </pre>
             </div>
-            <pre class="example" id="orgd12802e">
+            <pre class="example" id="org3fc0d5e">
 effect|run| active=true, shouldTrack=true
 trackRefValue| shouldTrack=true, activeEffect=[object Object]
 trackEffects| shouldTrack=true, activeEffect=[object Object], dep=1, activeEffect.deps=1
@@ -10000,13 +9999,13 @@ after, c.value=3, times=2
             >
           </details>
         </div>
-        <div id="outline-container-orgc40e4e1" class="outline-3">
-          <h3 id="orgc40e4e1">
+        <div id="outline-container-orge9cace5" class="outline-3">
+          <h3 id="orge9cace5">
             <span class="section-number-3">11.1.</span> DeferredComputedRefImpl
           </h3>
           <div class="outline-text-3" id="text-11-1">
             <div class="org-src-container">
-              <pre class="src src-js" id="orgfb85a0d"><span class=
+              <pre class="src src-js" id="org08e6fdc"><span class=
             "linenr"> 1: </span><span class=
             "org-keyword">class</span> DeferredComputedRefImpl {
 <span class="linenr"> 2: </span>  dep = <span class=
@@ -10134,13 +10133,13 @@ after, c.value=3, times=2
             </div>
           </div>
         </div>
-        <div id="outline-container-orgdfad3b4" class="outline-3">
-          <h3 id="orgdfad3b4">
+        <div id="outline-container-org2e839f2" class="outline-3">
+          <h3 id="org2e839f2">
             <span class="section-number-3">11.2.</span> scheduler(fn)
           </h3>
           <div class="outline-text-3" id="text-11-2">
             <div class="org-src-container">
-              <pre class="src src-js" id="org7fa78cd"><span class=
+              <pre class="src src-js" id="org4090678"><span class=
             "linenr">1: </span><span class=
             "org-keyword">const</span> <span class=
             "org-variable-name">scheduler</span> = (fn) =&gt; {
@@ -10158,13 +10157,13 @@ after, c.value=3, times=2
             </div>
           </div>
         </div>
-        <div id="outline-container-orgb1e976c" class="outline-3">
-          <h3 id="orgb1e976c">
+        <div id="outline-container-org675d1f7" class="outline-3">
+          <h3 id="org675d1f7">
             <span class="section-number-3">11.3.</span> flush()
           </h3>
           <div class="outline-text-3" id="text-11-3">
             <div class="org-src-container">
-              <pre class="src src-js" id="orgcc557bb"><span class=
+              <pre class="src src-js" id="org7fa4403"><span class=
             "linenr">1: </span><span class=
             "org-keyword">const</span> <span class=
             "org-variable-name">flush</span> = () =&gt; {
@@ -10187,17 +10186,17 @@ after, c.value=3, times=2
           </div>
         </div>
       </div>
-      <div id="outline-container-org5fee95f" class="outline-2">
-        <h2 id="org5fee95f"><span class="section-number-2">12.</span> ref</h2>
+      <div id="outline-container-org89442bd" class="outline-2">
+        <h2 id="org89442bd"><span class="section-number-2">12.</span> ref</h2>
         <div class="outline-text-2" id="text-12">
           <p>
             ref 是在
-            <a href="#org315b777">computed</a>
+            <a href="#org9c2fd68">computed</a>
             基础之上衍生而来的一种新的类型，初忠是为了让普通类型的值也能具
             备响应式特性。
           </p>
           <div class="org-src-container">
-            <pre class="src src-js" id="org1c96a07"><span class=
+            <pre class="src src-js" id="orgb8d7f5a"><span class=
           "linenr"> 1: </span>&lt;&lt;createRef&gt;&gt;
 <span class="linenr"> 2: </span>&lt;&lt;RefImpl&gt;&gt;
 <span class="linenr"> 3: </span>&lt;&lt;ObjectRefImpl&gt;&gt;
@@ -10264,13 +10263,13 @@ undefined
             >
           </details>
         </div>
-        <div id="outline-container-org2a4c39a" class="outline-3">
-          <h3 id="org2a4c39a">
+        <div id="outline-container-orgf46714d" class="outline-3">
+          <h3 id="orgf46714d">
             <span class="section-number-3">12.1.</span> createRef()
           </h3>
           <div class="outline-text-3" id="text-12-1">
             <div class="org-src-container">
-              <pre class="src src-js" id="orgd26c76a"><span class=
+              <pre class="src src-js" id="org08b3ea1"><span class=
             "linenr">1: </span><span class=
             "org-keyword">function</span> <span class=
             "org-function-name">createRef</span>(<span class=
@@ -10291,13 +10290,13 @@ undefined
             </div>
           </div>
         </div>
-        <div id="outline-container-org13d219d" class="outline-3">
-          <h3 id="org13d219d">
+        <div id="outline-container-org944d8a2" class="outline-3">
+          <h3 id="org944d8a2">
             <span class="section-number-3">12.2.</span> RefImpl
           </h3>
           <div class="outline-text-3" id="text-12-2">
             <div class="org-src-container">
-              <pre class="src src-js" id="org6bb8290"><span class=
+              <pre class="src src-js" id="org4f83d7c"><span class=
             "linenr"> 1: </span><span class=
             "org-keyword">class</span> RefImpl {
 <span class="linenr"> 2: </span>  _value
@@ -10346,14 +10345,14 @@ undefined
             </div>
           </div>
         </div>
-        <div id="outline-container-org14d1d3b" class="outline-3">
-          <h3 id="org14d1d3b">
+        <div id="outline-container-org5c18854" class="outline-3">
+          <h3 id="org5c18854">
             <span class="section-number-3">12.3.</span> ObjectRefImpl
           </h3>
           <div class="outline-text-3" id="text-12-3">
             <p>将整对象某个属性进行 ref 化。</p>
             <div class="org-src-container">
-              <pre class="src src-js" id="org0e118cb"><span class=
+              <pre class="src src-js" id="org40106c3"><span class=
             "linenr"> 1: </span><span class=
             "org-keyword">class</span> ObjectRefImpl {
 <span class="linenr"> 2: </span>  __v_isRef = <span class=
@@ -10404,19 +10403,19 @@ undefined
 </pre>
             </div>
             <p>
-              <a href="#orgf332b52">toRefs(object)</a> =&gt;
-              <a href="#orge192d12">toRef(o, key, dv)</a> =&gt;
+              <a href="#org4222fd6">toRefs(object)</a> =&gt;
+              <a href="#org89eed9e">toRef(o, key, dv)</a> =&gt;
               <code>new ObjectRefImpl(o, key, dv)</code>
             </p>
           </div>
         </div>
-        <div id="outline-container-orgc7833b8" class="outline-3">
-          <h3 id="orgc7833b8">
+        <div id="outline-container-org8f7cb2c" class="outline-3">
+          <h3 id="org8f7cb2c">
             <span class="section-number-3">12.4.</span> triggerRef(ref)
           </h3>
           <div class="outline-text-3" id="text-12-4">
             <div class="org-src-container">
-              <pre class="src src-js" id="orgcb9d21e"><span class=
+              <pre class="src src-js" id="org36a887f"><span class=
             "linenr">1: </span><span class=
             "org-keyword">function</span> <span class=
             "org-function-name">triggerRef</span>(<span class=
@@ -10429,13 +10428,13 @@ undefined
             </div>
           </div>
         </div>
-        <div id="outline-container-orgd2f4767" class="outline-3">
-          <h3 id="orgd2f4767">
+        <div id="outline-container-orgafd4bb9" class="outline-3">
+          <h3 id="orgafd4bb9">
             <span class="section-number-3">12.5.</span> unref(ref)
           </h3>
           <div class="outline-text-3" id="text-12-5">
             <div class="org-src-container">
-              <pre class="src src-js" id="org102917d"><span class=
+              <pre class="src src-js" id="org1d83c16"><span class=
             "linenr">1: </span><span class=
             "org-keyword">function</span> <span class=
             "org-function-name">unref</span>(<span class=
@@ -10447,13 +10446,13 @@ undefined
             </div>
           </div>
         </div>
-        <div id="outline-container-orgeb0d984" class="outline-3">
-          <h3 id="orgeb0d984">
+        <div id="outline-container-orgfd91cfc" class="outline-3">
+          <h3 id="orgfd91cfc">
             <span class="section-number-3">12.6.</span> proxyRefs()
           </h3>
           <div class="outline-text-3" id="text-12-6">
             <div class="org-src-container">
-              <pre class="src src-js" id="org6bce06f"><span class=
+              <pre class="src src-js" id="org628fe58"><span class=
             "linenr">1: </span><span class=
             "org-keyword">function</span> <span class=
             "org-function-name">proxyRefs</span>(<span class=
@@ -10469,13 +10468,13 @@ undefined
             </div>
           </div>
         </div>
-        <div id="outline-container-orgbea3692" class="outline-3">
-          <h3 id="orgbea3692">
+        <div id="outline-container-org87d3ca0" class="outline-3">
+          <h3 id="org87d3ca0">
             <span class="section-number-3">12.7.</span> toRefs()
           </h3>
           <div class="outline-text-3" id="text-12-7">
             <div class="org-src-container">
-              <pre class="src src-js" id="orgf332b52"><span class=
+              <pre class="src src-js" id="org4222fd6"><span class=
             "linenr">1: </span><span class=
             "org-keyword">function</span> <span class=
             "org-function-name">toRefs</span>(<span class=
@@ -10499,13 +10498,13 @@ undefined
             </div>
           </div>
         </div>
-        <div id="outline-container-org19659a4" class="outline-3">
-          <h3 id="org19659a4">
+        <div id="outline-container-orgdbcd302" class="outline-3">
+          <h3 id="orgdbcd302">
             <span class="section-number-3">12.8.</span> toRef()
           </h3>
           <div class="outline-text-3" id="text-12-8">
             <div class="org-src-container">
-              <pre class="src src-js" id="orge192d12"><span class=
+              <pre class="src src-js" id="org89eed9e"><span class=
             "linenr">1: </span><span class=
             "org-keyword">function</span> <span class=
             "org-function-name">toRef</span>(<span class=
@@ -10526,13 +10525,13 @@ undefined
             </div>
           </div>
         </div>
-        <div id="outline-container-orgb31c412" class="outline-3">
-          <h3 id="orgb31c412">
+        <div id="outline-container-orgd094721" class="outline-3">
+          <h3 id="orgd094721">
             <span class="section-number-3">12.9.</span> trackRefValue(ref)
           </h3>
           <div class="outline-text-3" id="text-12-9">
             <div class="org-src-container">
-              <pre class="src src-js" id="org9136849"><span class=
+              <pre class="src src-js" id="orgd8c5389"><span class=
             "linenr">1: </span><span class=
             "org-keyword">function</span> <span class=
             "org-function-name">trackRefValue</span>(<span class=
@@ -10550,14 +10549,14 @@ undefined
             </div>
           </div>
         </div>
-        <div id="outline-container-org054bb6d" class="outline-3">
-          <h3 id="org054bb6d">
+        <div id="outline-container-orgb1a9a86" class="outline-3">
+          <h3 id="orgb1a9a86">
             <span class="section-number-3">12.10.</span>
             triggerRefValue(ref,newVal)
           </h3>
           <div class="outline-text-3" id="text-12-10">
             <div class="org-src-container">
-              <pre class="src src-js" id="orga73c9b1"><span class=
+              <pre class="src src-js" id="orgf521dcc"><span class=
             "linenr">1: </span><span class=
             "org-keyword">function</span> <span class=
             "org-function-name">triggerRefValue</span>(<span class=
@@ -10579,8 +10578,8 @@ undefined
           </div>
         </div>
       </div>
-      <div id="outline-container-orgbe70539" class="outline-2">
-        <h2 id="orgbe70539">
+      <div id="outline-container-orgd6a32ea" class="outline-2">
+        <h2 id="orgd6a32ea">
           <span class="section-number-2">13.</span> reactivity
         </h2>
         <div class="outline-text-2" id="text-13">
@@ -10604,7 +10603,7 @@ undefined
               >
             </summary>
             <div class="org-src-container">
-              <pre class="src src-js" id="org0b2460c"><span class=
+              <pre class="src src-js" id="org5f0d621"><span class=
             "linenr">  1: </span><span class=
             "org-keyword">const</span> <span class=
             "org-variable-name">NOOP</span> = () =&gt; {}
@@ -12219,9 +12218,8 @@ undefined
 <span class="linenr">720: </span>    extend(_effect, options)
 <span class="linenr">721: </span>    <span class=
 "org-keyword">if</span> (options.scope) {
-<span class="linenr">722: </span>      <span class=
-"org-comment-delimiter">// </span><span class=
-"org-comment">record effect scope</span>
+<span class=
+"linenr">722: </span>      recordEffectScope(_effect, options.scope)
 <span class="linenr">723: </span>    }
 <span class="linenr">724: </span>  }
 <span class="linenr">725: </span>
@@ -12740,8 +12738,8 @@ undefined
           >
         </div>
       </div>
-      <div id="outline-container-orge1683bf" class="outline-2">
-        <h2 id="orge1683bf">
+      <div id="outline-container-org9fc4758" class="outline-2">
+        <h2 id="org9fc4758">
           <span class="section-number-2">14.</span> FootNotes
         </h2>
         <div class="outline-text-2" id="text-14"></div>
@@ -12782,7 +12780,7 @@ undefined
     </div>
     <div id="postamble" class="status">
       <p class="author">Author: Zhicheng Lee</p>
-      <p class="date">Created: 2022-04-13 Wed 15:32</p>
+      <p class="date">Created: 2022-04-13 Wed 15:42</p>
     </div>
   </body>
 </html>

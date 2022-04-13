@@ -124,114 +124,6 @@ strong {
   color: #a020f0;
 }
 
-.post-content .warn-block {
-  padding: 0.1rem 1.5rem;
-  border-left-width: 0.5rem;
-  border-left-style: solid;
-  margin: 1rem 0;
-  background-color: rgba(255, 229, 100, 0.3);
-  border-color: #e7c000;
-  color: #6b5900;
-}
-.post-content .warn-block strong {
-  color: #6b5900;
-}
-.post-content .danger-block {
-  padding: 0.1rem 1.5rem;
-  border-left-width: 0.5rem;
-  border-left-style: solid;
-  margin: 1rem 0;
-  background-color: #ffe6e6;
-  border-color: #c00;
-  color: #4d0000;
-}
-.post-content .danger-block strong {
-  color: #4d0000;
-}
-.post-content .tip-block {
-  padding: 0.1rem 1.5rem;
-  border-left-width: 0.5rem;
-  border-left-style: solid;
-  margin: 1rem 0;
-  background-color: #f3f5f7;
-  border-color: #42b983;
-  color: #000000;
-}
-.post-content .tip-block strong {
-  color: #000000;
-}
-.post-content .info-block {
-  padding: 0.1rem 1.5rem;
-  border-left-width: 0.5rem;
-  border-left-style: solid;
-  margin: 1rem 0;
-  background-color: #f3f5f7;
-  border-color: #42b983;
-  color: #000000;
-}
-.post-content .info-block strong {
-  color: #000000;
-}
-.post-content .success-block {
-  padding: 0.1rem 1.5rem;
-  border-left-width: 0.5rem;
-  border-left-style: solid;
-  margin: 1rem 0;
-  background-color: #f3f5f7;
-  border-color: #42b983;
-  color: #42b983;
-}
-.post-content .success-block strong {
-  color: #42b983;
-}
-.post-content .comment-block {
-  padding: 0.1rem 1.5rem;
-  border-left-width: 0.5rem;
-  border-left-style: solid;
-  margin: 1rem 0;
-  background-color: #f3f5f7;
-  border-color: #e0e3e6;
-  color: #6a737d;
-}
-.post-content .comment-block strong {
-  color: #6a737d;
-}
-.post-content .comment-block {
-  padding: 0.5rem;
-}
-.post-content .comment-block p {
-  margin-bottom: 0;
-}
-.post-content .red-block {
-  color: red;
-}
-
-code {
-  white-space: normal !important;
-  background-color: #f1f1f1;
-  color: #476582;
-}
-
-code,
-pre {
-  padding: 2px 4px;
-  border-radius: 5px;
-}
-code.src,
-pre.src {
-  background: #eeffcc;
-}
-code.src-diff .org-diff-added,
-code.src-diff .org-diff-indicator-added,
-pre.src-diff .org-diff-added,
-pre.src-diff .org-diff-indicator-added {
-  background-color: #8ef990;
-}
-code.src-diff .org-diff-indicator-removed,
-pre.src-diff .org-diff-indicator-removed {
-  background-color: #ffebe9;
-}
-
 #table-of-contents {
   width: 316px !important;
 }
@@ -522,6 +414,114 @@ blockquote {
     width: 100% !important;
   }
 }
+.post-content .warn-block {
+  padding: 0.1rem 1.5rem;
+  border-left-width: 0.5rem;
+  border-left-style: solid;
+  margin: 1rem 0;
+  background-color: rgba(255, 229, 100, 0.3);
+  border-color: #e7c000;
+  color: #6b5900;
+}
+.post-content .warn-block strong {
+  color: #6b5900;
+}
+.post-content .danger-block {
+  padding: 0.1rem 1.5rem;
+  border-left-width: 0.5rem;
+  border-left-style: solid;
+  margin: 1rem 0;
+  background-color: #ffe6e6;
+  border-color: #c00;
+  color: #4d0000;
+}
+.post-content .danger-block strong {
+  color: #4d0000;
+}
+.post-content .tip-block {
+  padding: 0.1rem 1.5rem;
+  border-left-width: 0.5rem;
+  border-left-style: solid;
+  margin: 1rem 0;
+  background-color: #f3f5f7;
+  border-color: #42b983;
+  color: #000000;
+}
+.post-content .tip-block strong {
+  color: #000000;
+}
+.post-content .info-block {
+  padding: 0.1rem 1.5rem;
+  border-left-width: 0.5rem;
+  border-left-style: solid;
+  margin: 1rem 0;
+  background-color: #f3f5f7;
+  border-color: #42b983;
+  color: #000000;
+}
+.post-content .info-block strong {
+  color: #000000;
+}
+.post-content .success-block {
+  padding: 0.1rem 1.5rem;
+  border-left-width: 0.5rem;
+  border-left-style: solid;
+  margin: 1rem 0;
+  background-color: #f3f5f7;
+  border-color: #42b983;
+  color: #42b983;
+}
+.post-content .success-block strong {
+  color: #42b983;
+}
+.post-content .comment-block {
+  padding: 0.1rem 1.5rem;
+  border-left-width: 0.5rem;
+  border-left-style: solid;
+  margin: 1rem 0;
+  background-color: #f3f5f7;
+  border-color: #e0e3e6;
+  color: #6a737d;
+}
+.post-content .comment-block strong {
+  color: #6a737d;
+}
+.post-content .comment-block {
+  padding: 0.5rem;
+}
+.post-content .comment-block p {
+  margin-bottom: 0;
+}
+.post-content .red-block {
+  color: red;
+}
+
+code {
+  white-space: normal !important;
+  background-color: #f1f1f1;
+  color: #476582;
+}
+
+code,
+pre {
+  padding: 2px 4px;
+  border-radius: 5px;
+}
+code.src,
+pre.src {
+  background: #eeffcc;
+}
+code.src-diff .org-diff-added,
+code.src-diff .org-diff-indicator-added,
+pre.src-diff .org-diff-added,
+pre.src-diff .org-diff-indicator-added {
+  background-color: #8ef990;
+}
+code.src-diff .org-diff-indicator-removed,
+pre.src-diff .org-diff-indicator-removed {
+  background-color: #ffebe9;
+}
+
 div[id^=outline-container-] a {
   font-family: "EB Garamond";
   text-decoration: none;
