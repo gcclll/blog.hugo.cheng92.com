@@ -29,6 +29,8 @@ export function trimText(ele, h) {
   return $(ele).children(h).text().replace(/\n/g, '').replace(/\s+/g, ' ')
 }
 
+export const sortFn = (a, b) => new Date(b.birthtime) - new Date(a.birthtime)
+
 export function findOutlines(parents, hn = 2) {
   const children = []
   if (parents == null) {
@@ -50,8 +52,30 @@ export function findOutlines(parents, hn = 2) {
   return children
 }
 
+export function formatByDate(pages) {
+  const result = {}
+  if (pages && pages.length) {
+    pages.forEach((page) => {
+      const { month, year } = page
+      const key = `${year}-${String(month).length === 1 ? '0' + month : month}`
+
+      if (result[key] == null) {
+        result[key] = []
+      }
+
+      result[key].push({ ...page })
+    })
+
+    // sort
+    Object.keys(result).forEach((key) => {
+      result[key].sort(sortFn)
+    })
+  }
+  return result
+}
+
 export function formatPages() {
-  const ts = window.$pages
+  const ts = pages || window.$pages
 
   const pages = {}
   for (let page in ts) {
@@ -73,9 +97,7 @@ export function formatPages() {
   for (let prop in pages) {
     const arr = pages[prop]
     if (arr && arr.length) {
-      pages[prop] = arr.sort(
-        (a, b) => new Date(b.birthtime) - new Date(a.birthtime)
-      )
+      pages[prop] = arr.sort(sortFn)
     }
   }
   return pages

@@ -146,7 +146,9 @@ function parseRoots(roots) {
         let month = d.getMonth() + 1,
           year = d.getFullYear(),
           day = d.getDate()
+
         month = String(month).length < 2 ? `0${month}` : month
+        day = String(day).length < 2 ? `0${day}` : day
 
         let category = [],
           tags = []

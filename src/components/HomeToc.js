@@ -2,9 +2,10 @@
 
 import { cached } from '../cache'
 import config from '../config'
-import { filterByTitle } from '../utils'
+import { filterByTitle, formatByDate, sortFn } from '../utils'
 
 const pages = _.cloneDeep(cached.pages)
+const sortByDate = (a, b, prop = 'key') => new Date(b[prop]) - new Date(a[prop])
 
 const GlMenuItem = Vue.defineComponent({
   template: `
@@ -40,12 +41,9 @@ export default Vue.defineComponent({
         </div>
       </template>
       <el-menu class="el-toc-menu">
-        <template v-for="({ key, value }) in pages" :key="key">
-          <gl-menu-item v-if="tab.isSub" :list="value" @add-tab="addTab"/>
-          <el-menu-item-group v-else :title="key">
-            <gl-menu-item :list="value" @add-tab="addTab"/>
-          </el-menu-item-group>
-        </template>
+        <el-menu-item-group v-for="({ key, value }) in pages" :title="key">
+          <gl-menu-item :list="value" @add-tab="addTab"/>
+        </el-menu-item-group>
       </el-menu>
     </el-tab-pane>
   </el-tabs>
@@ -96,12 +94,13 @@ export default Vue.defineComponent({
       const tab = _.find(this.tabs, (tab) => tab.value === this.activeName)
       if (!tab || !tab.list) return []
       const result = filterByTitle(this.searchText, tab.list)
+      console.log(result, 2000)
       const sorted = Object.keys(result)
         .map((key) => ({
           key,
           value: result[key]
         }))
-        .sort((a, b) => new Date(b.key) - new Date(a.key))
+        .sort(sortByDate)
       return sorted
     }
   },
@@ -145,7 +144,7 @@ export default Vue.defineComponent({
             Close: config.Icons.Close,
             isTag,
             isSub: true, // 标识分子分类
-            list: { [name]: target.list[name] || [] }
+            list: formatByDate(target.list[name])
           })
         }
       }
@@ -199,7 +198,7 @@ export default Vue.defineComponent({
 })
 
 function filterOutPages(list = [], type = 'category') {
-  return list.reduce((result, curr) => {
+  const _result = list.reduce((result, curr) => {
     if (curr) {
       const { category = [], tags = [] } = curr
       const target = type === 'category' ? category : tags
@@ -213,4 +212,11 @@ function filterOutPages(list = [], type = 'category') {
 
     return result
   }, {})
+
+  Object.keys(_result).forEach((key) => {
+    _result[key].sort(sortFn)
+  })
+
+  console.log(_result, 6000)
+  return _result
 }
