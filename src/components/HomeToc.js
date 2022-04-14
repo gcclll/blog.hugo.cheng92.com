@@ -94,7 +94,6 @@ export default Vue.defineComponent({
       const tab = _.find(this.tabs, (tab) => tab.value === this.activeName)
       if (!tab || !tab.list) return []
       const result = filterByTitle(this.searchText, tab.list)
-      console.log(result, 2000)
       const sorted = Object.keys(result)
         .map((key) => ({
           key,
@@ -217,6 +216,5 @@ function filterOutPages(list = [], type = 'category') {
     _result[key].sort(sortFn)
   })
 
-  console.log(_result, 6000)
   return _result
 }
