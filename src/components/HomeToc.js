@@ -40,10 +40,10 @@ export default Vue.defineComponent({
         </div>
       </template>
       <el-menu class="el-toc-menu">
-        <template v-for="(list, key) in pages" :key="key">
-          <gl-menu-item v-if="tab.isSub" :list="list" @add-tab="addTab"/>
+        <template v-for="({ key, value }) in pages" :key="key">
+          <gl-menu-item v-if="tab.isSub" :list="value" @add-tab="addTab"/>
           <el-menu-item-group v-else :title="key">
-            <gl-menu-item :list="list" @add-tab="addTab"/>
+            <gl-menu-item :list="value" @add-tab="addTab"/>
           </el-menu-item-group>
         </template>
       </el-menu>
@@ -95,7 +95,14 @@ export default Vue.defineComponent({
     pages() {
       const tab = _.find(this.tabs, (tab) => tab.value === this.activeName)
       if (!tab || !tab.list) return []
-      return filterByTitle(this.searchText, tab.list)
+      const result = filterByTitle(this.searchText, tab.list)
+      const sorted = Object.keys(result)
+        .map((key) => ({
+          key,
+          value: result[key]
+        }))
+        .sort((a, b) => new Date(b.key) - new Date(b.key))
+      return sorted
     }
   },
   methods: {
@@ -174,7 +181,7 @@ export default Vue.defineComponent({
         }
       })
     })
-    console.log(this.tags, 1000)
+
     this.tabs.forEach((tab) => {
       switch (tab.value) {
         case 'archives':
