@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <!-- 2022-04-13 Wed 15:49 -->
+    <!-- 2022-04-14 Thu 13:55 -->
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>build you own vue scheduler</title>
@@ -555,9 +555,62 @@
         <div id="text-table-of-contents" role="doc-toc">
           <ul>
             <li>
-              <a href="#orge9cf654"
-                >1. <span class="todo TODO">TODO</span> Scheduler</a
-              >
+              <a href="#orgcba7acf">1. 简介</a>
+            </li>
+            <li>
+              <a href="#org956a795">2. Global Variables</a>
+            </li>
+            <li>
+              <a href="#orgb94dbf1">3. APIs</a>
+            </li>
+            <li>
+              <a href="#org8de5926">4. nextTick(fn)</a>
+            </li>
+            <li>
+              <a href="#org11eaa10">5. queueJob()</a>
+            </li>
+            <li>
+              <a href="#orgd503779">6. queueFlush()</a>
+            </li>
+            <li>
+              <a href="#orgc1d9083">7. flushJobs()</a>
+            </li>
+            <li>
+              <a href="#orgcb07538">8. queueCb()</a>
+            </li>
+            <li>
+              <a href="#orgd6efab9">9. queuePreFlushCb()</a>
+            </li>
+            <li>
+              <a href="#org91e48f4">10. flushPreFlushCbs()</a>
+            </li>
+            <li>
+              <a href="#org6791539">11. queuePostFlushCb()</a>
+            </li>
+            <li>
+              <a href="#orgee4e8b9">12. flushPostFlushCbs()</a>
+            </li>
+            <li>
+              <a href="#orgd309d52">13. invalidateJob()</a>
+            </li>
+            <li>
+              <a href="#org235177f">14. allowRecurse</a>
+            </li>
+            <li>
+              <a href="#orga408569">15. Testing</a>
+            </li>
+            <li>
+              <a href="#scheduler-mindmap">16. scheduler flow mindmap</a>
+            </li>
+            <li>
+              <a href="#orgab15e00">17. Q&amp;A</a>
+              <ul>
+                <li>
+                  <a href="#org8029783"
+                    >17.1. pre,job,post 三种任务都分别代表什么？</a
+                  >
+                </li>
+              </ul>
             </li>
           </ul>
         </div>
@@ -568,16 +621,3011 @@
             src="https://img.shields.io/badge/GCCLL-Homepage-green?logo=gnu-emacs"
         /></a>
       </p>
-      <div id="outline-container-orge9cf654" class="outline-2">
-        <h2 id="orge9cf654">
-          <span class="section-number-2">1.</span>
-          <span class="todo TODO">TODO</span> Scheduler
+      <div
+        style="
+          padding: 1em;
+          background-color: #ccffcc;
+          border-radius: 15px;
+          font-size: 0.9em;
+          box-shadow: 0.05em 0.1em 5px 0.01em #00000057;
+        "
+      >
+        <h3>Vue3 Scheduler</h3>
+        <p>
+          vue3 中任务调度机制源码分析实现 -&gt;
+          <a
+            href="https://github.com/vuejs/core/blob/main/packages/runtime-core/src/scheduler.ts"
+          >
+            core/scheduler.ts at main · vuejs/core</a
+          >
+        </p>
+        <p>旧博客中的相关两篇文章：</p>
+        <p>
+          <a
+            href="https://www.cheng92.com/vue/vue-mind-map-runtime-core-1/#scheduler"
+          >
+            Vue3 源码头脑风暴之 7 ☞ runtime-core(1) - 若叶知秋</a
+          >
+        </p>
+        <p>
+          <a href="https://www.cheng92.com/vue/vue-teardown-2-sheduler/"
+            >Vue3 功能拆解② Scheduler 渲染机制 - 若叶知秋</a
+          >
+        </p>
+        <p>这里会用 js 重新实现一遍。</p>
+      </div>
+      <div id="outline-container-orgcba7acf" class="outline-2">
+        <h2 id="orgcba7acf"><span class="section-number-2">1.</span> 简介</h2>
+        <div class="outline-text-2" id="text-1">
+          <p>
+            该功能是用来管理 vue-next 中渲染相关的异步任务的(包括节点更新，
+            props 更新等等都 是由这个 scheduler 来管理的。)
+          </p>
+          <p>
+            这块包含的 api 不多，但却是 vue-next 中 DOM 渲染任务的关键功能。
+          </p>
+          <p>scheduler 所管理的任务主要分为三种：</p>
+          <ol class="org-ol">
+            <li>job 普通类型</li>
+            <li>post 类型</li>
+            <li>pre 类型</li>
+          </ol>
+        </div>
+      </div>
+      <div id="outline-container-org956a795" class="outline-2">
+        <h2 id="org956a795">
+          <span class="section-number-2">2.</span> Global Variables
         </h2>
+        <div class="outline-text-2" id="text-2">
+          <p>global variables used.</p>
+          <div class="org-src-container">
+            <pre class="src src-js" id="orge1e7eaa"><span id=
+          "coderef-isFlushing" class="coderef-off"><span class=
+          "linenr"> 1: </span><span class=
+          "org-keyword">let</span> <span class=
+          "org-variable-name">isFlushing</span> = <span class=
+          "org-constant">false</span></span>
+<span id="coderef-isFlushPending" class="coderef-off"><span class=
+"linenr"> 2: </span><span class=
+"org-keyword">let</span> <span class=
+"org-variable-name">isFlushPending</span> = <span class=
+"org-constant">false</span></span>
+<span class="linenr"> 3: </span>
+<span id="coderef-queue" class="coderef-off"><span class=
+"linenr"> 4: </span><span class=
+"org-keyword">const</span> <span class=
+"org-variable-name">queue</span> = []</span>
+<span id="coderef-flushIndex" class="coderef-off"><span class=
+"linenr"> 5: </span><span class=
+"org-keyword">let</span> <span class=
+"org-variable-name">flushIndex</span> = <span class=
+"org-highlight-numbers-number">0</span></span>
+<span class="linenr"> 6: </span>
+<span id="coderef-pendingPreFlushCbs" class=
+"coderef-off"><span class="linenr"> 7: </span><span class=
+"org-keyword">const</span> <span class=
+"org-variable-name">pendingPreFlushCbs</span> = []</span>
+<span id="coderef-activePreFlushCbs" class=
+"coderef-off"><span class="linenr"> 8: </span><span class=
+"org-keyword">let</span> <span class=
+"org-variable-name">activePreFlushCbs</span> = <span class=
+"org-constant">null</span></span>
+<span id="coderef-preFlushIndex" class="coderef-off"><span class=
+"linenr"> 9: </span><span class=
+"org-keyword">let</span> <span class=
+"org-variable-name">preFlushIndex</span> = <span class=
+"org-highlight-numbers-number">0</span></span>
+<span class="linenr">10: </span>
+<span id="coderef-pendingPostFlushCbs" class=
+"coderef-off"><span class="linenr">11: </span><span class=
+"org-keyword">const</span> <span class=
+"org-variable-name">pendingPostFlushCbs</span> = []</span>
+<span id="coderef-activePostFlushCbs" class=
+"coderef-off"><span class="linenr">12: </span><span class=
+"org-keyword">let</span> <span class=
+"org-variable-name">activePostFlushCbs</span> = <span class=
+"org-constant">null</span></span>
+<span id="coderef-postFlushIndex" class="coderef-off"><span class=
+"linenr">13: </span><span class=
+"org-keyword">let</span> <span class=
+"org-variable-name">postFlushIndex</span> = <span class=
+"org-highlight-numbers-number">0</span></span>
+<span class="linenr">14: </span>
+<span id="coderef-resolvedPromise" class="coderef-off"><span class=
+"linenr">15: </span><span class=
+"org-keyword">const</span> <span class=
+"org-variable-name">resolvedPromise</span> = Promise.resolve()</span>
+<span id="coderef-currentFlushPromise" class=
+"coderef-off"><span class="linenr">16: </span><span class=
+"org-keyword">let</span> <span class=
+"org-variable-name">currentFlushPromise</span> = <span class=
+"org-constant">null</span></span>
+<span class="linenr">17: </span>
+<span id="coderef-currentPreFlushParentJob" class=
+"coderef-off"><span class="linenr">18: </span><span class=
+"org-keyword">let</span> <span class=
+"org-variable-name">currentPreFlushParentJob</span> = <span class=
+"org-constant">null</span></span>
+<span class="linenr">19: </span>
+<span class="linenr">20: </span><span class=
+"org-comment-delimiter">// </span><span class=
+"org-comment">limit of update recursively</span>
+<span class="linenr">21: </span><span class=
+"org-keyword">const</span> <span class=
+"org-variable-name">RECURSION_LIMIT</span> = <span class=
+"org-highlight-numbers-number">100</span>
+<span class="linenr">22: </span>
+<span class="linenr">23: </span><span class=
+"org-keyword">const</span> <span class=
+"org-variable-name">getId</span> = job =&gt; job.id == <span class=
+"org-constant">null</span> ? <span class=
+"org-constant">Infinity</span> : job.id
+<span class="linenr">24: </span>
+<span id="coderef-findInsertionIndex" class=
+"coderef-off"><span class="linenr">25: </span><span class=
+"org-keyword">function</span> <span class=
+"org-function-name">findInsertionIndex</span>(<span class=
+"org-variable-name">id</span>) {</span>
+<span class="linenr">26: </span>  <span class=
+"org-keyword">let</span> <span class=
+"org-variable-name">start</span> = flushIndex + <span class=
+"org-highlight-numbers-number">1</span>
+<span class="linenr">27: </span>  <span class=
+"org-keyword">let</span> <span class=
+"org-variable-name">end</span> = queue.length
+<span class="linenr">28: </span>
+<span class="linenr">29: </span>  <span class=
+"org-comment-delimiter">// </span><span class=
+"org-comment">二分法找到插入位置</span>
+<span class="linenr">30: </span>  <span class=
+"org-keyword">while</span> (start &lt; end) {
+<span class="linenr">31: </span>    <span class=
+"org-keyword">const</span> <span class=
+"org-variable-name">middle</span> = (start + end) &gt;&gt;&gt; <span class="org-highlight-numbers-number">1</span>
+<span class="linenr">32: </span>    <span class=
+"org-keyword">const</span> <span class=
+"org-variable-name">middleJobId</span> = getId(queue[middle])
+<span class=
+"linenr">33: </span>    middleJobId &lt; id ? (start = middle + <span class="org-highlight-numbers-number">1</span>) : (end = middle)
+<span class="linenr">34: </span>  }
+<span class="linenr">35: </span>
+<span class="linenr">36: </span>  <span class=
+"org-keyword">return</span> start
+<span class="linenr">37: </span>}
+<span class="linenr">38: </span>
+<span class="linenr">39: </span><span class=
+"org-keyword">const</span> <span class=
+"org-variable-name">isArray</span> = Array.isArray
+<span class="linenr">40: </span><span class=
+"org-keyword">const</span> <span class=
+"org-variable-name">isObject</span> = val =&gt; val !== <span class="org-constant">null</span> &amp;& <span class="org-keyword">typeof</span> val === <span class="org-string">'object'</span>
+<span class="linenr">41: </span><span class=
+"org-keyword">const</span> <span class=
+"org-variable-name">isFunction</span> = val =&gt; <span class=
+"org-keyword">typeof</span> val === <span class=
+"org-string">'function'</span>
+<span class="linenr">42: </span><span class=
+"org-keyword">const</span> <span class=
+"org-variable-name">isPromise</span> = val =&gt; {
+<span class="linenr">43: </span>  <span class=
+"org-keyword">return</span> isObject(val) &amp;& isFunction(val.then) &amp;& isFunction(val.<span class="org-keyword">catch</span>)
+<span class="linenr">44: </span>}
+<span class="linenr">45: </span><span class=
+"org-keyword">function</span> <span class=
+"org-function-name">callWithErrorHandling</span>(<span class=
+"org-variable-name">fn</span>, <span class=
+"org-variable-name">instance</span>, <span class=
+"org-variable-name">type</span>, <span class=
+"org-variable-name">args</span>) {
+<span class="linenr">46: </span>  <span class=
+"org-keyword">let</span> <span class="org-variable-name">res</span>
+<span class="linenr">47: </span>  <span class=
+"org-keyword">try</span> {
+<span class="linenr">48: </span>    res = args ? fn(...args) : fn()
+<span class="linenr">49: </span>  } <span class=
+"org-keyword">catch</span> (err) {
+<span class=
+"linenr">50: </span>    handleError(err, instance, type)
+<span class="linenr">51: </span>  }
+<span class="linenr">52: </span>}
+<span class="linenr">53: </span>
+<span class="linenr">54: </span><span class=
+"org-keyword">function</span> <span class=
+"org-function-name">callWithAsyncErrorHandling</span>(<span class=
+"org-variable-name">fn</span>, <span class=
+"org-variable-name">instance</span>, <span class=
+"org-variable-name">type</span>, <span class=
+"org-variable-name">args</span>) {
+<span class="linenr">55: </span>  <span class=
+"org-keyword">if</span> (<span class=
+"org-keyword">typeof</span> fn === <span class=
+"org-string">'function'</span>) {
+<span class="linenr">56: </span>    <span class=
+"org-keyword">const</span> <span class=
+"org-variable-name">res</span> = callWithErrorHandling(fn, instance, type, args)
+<span class="linenr">57: </span>    <span class=
+"org-keyword">if</span> (res &amp;& isPromise(res)) {
+<span class="linenr">58: </span>      res.<span class=
+"org-keyword">catch</span>(err =&gt; {
+<span class=
+"linenr">59: </span>        handleError(err, instance, type)
+<span class="linenr">60: </span>      })
+<span class="linenr">61: </span>    }
+<span class="linenr">62: </span>    <span class=
+"org-keyword">return</span> res
+<span class="linenr">63: </span>  }
+<span class="linenr">64: </span>
+<span class="linenr">65: </span>  <span class=
+"org-keyword">const</span> <span class=
+"org-variable-name">values</span> = []
+<span class="linenr">66: </span>  <span class=
+"org-keyword">for</span> (<span class=
+"org-keyword">let</span> <span class=
+"org-variable-name">i</span> = <span class=
+"org-highlight-numbers-number">0</span>; i &lt; fn.length; i++) {
+<span class=
+"linenr">67: </span>    values.push(callWithAsyncErrorHandling(fn[i], instance, type, args))
+<span class="linenr">68: </span>  }
+<span class="linenr">69: </span>  <span class=
+"org-keyword">return</span> values
+<span class="linenr">70: </span>}
+<span class="linenr">71: </span>
+<span class="linenr">72: </span><span class=
+"org-keyword">function</span> <span class=
+"org-function-name">handleError</span>(<span class=
+"org-variable-name">err</span>) {
+<span class="linenr">73: </span>  console.log(err)
+<span class="linenr">74: </span>}
+<span class="linenr">75: </span>
+<span class="linenr">76: </span><span class=
+"org-keyword">let</span> <span class=
+"org-variable-name">debugOn</span> = <span class=
+"org-constant">true</span>
+<span class="linenr">77: </span><span class=
+"org-keyword">const</span> <span class=
+"org-variable-name">log</span> = (fn, message) =&gt; {
+<span class="linenr">78: </span>  <span class=
+"org-keyword">if</span> (debugOn) {
+<span class="linenr">79: </span>    <span class=
+"org-keyword">if</span> (message === <span class=
+"org-constant">undefined</span>) {
+<span class="linenr">80: </span>      console.log(fn)
+<span class="linenr">81: </span>    } <span class=
+"org-keyword">else</span> {
+<span class="linenr">82: </span>      console.log(<span class=
+"org-string">`[${fn}] ${message}`</span>)
+<span class="linenr">83: </span>    }
+<span class="linenr">84: </span>  }
+<span class="linenr">85: </span>}
+<span class="linenr">86: </span><span class=
+"org-keyword">const</span> <span class=
+"org-variable-name">logEnd</span> = (hint = <span class=
+"org-string">"END"</span>) =&gt; console.log(<span class=
+"org-string">`--------- ${hint} ---------`</span>)
+</pre>
+          </div>
+        </div>
+      </div>
+      <div id="outline-container-orgb94dbf1" class="outline-2">
+        <h2 id="orgb94dbf1"><span class="section-number-2">3.</span> APIs</h2>
+        <div class="outline-text-2" id="text-3">
+          <table>
+            <colgroup>
+              <col class="org-left" />
+              <col class="org-left" />
+            </colgroup>
+            <thead>
+              <tr>
+                <th scope="col" class="org-left">api</th>
+                <th scope="col" class="org-left">description</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="org-left">
+                  <a href="#org4ccf1da">nextTick()</a>
+                </td>
+                <td class="org-left">trigger render next tick</td>
+              </tr>
+              <tr>
+                <td class="org-left">
+                  <a href="#org0ef9623">queueJob()</a>
+                </td>
+                <td class="org-left">-</td>
+              </tr>
+              <tr>
+                <td class="org-left">
+                  <a href="#orgfd69722">queueFlush()</a>
+                </td>
+                <td class="org-left">flush all tasks in job queue</td>
+              </tr>
+              <tr>
+                <td class="org-left">
+                  <a href="#org66c98bd">queueCb()</a>
+                </td>
+                <td class="org-left">task enqueue</td>
+              </tr>
+              <tr>
+                <td class="org-left">
+                  <a href="#org43e1d3b">queuePreFlushCb()</a>
+                </td>
+                <td class="org-left">enqueue pre tasks in pre queue</td>
+              </tr>
+              <tr>
+                <td class="org-left">
+                  <a href="#org2a4d590">queuePostFlushCb()</a>
+                </td>
+                <td class="org-left">enqueue post tasks in post queue</td>
+              </tr>
+              <tr>
+                <td class="org-left">
+                  <a href="#org66391f0">flushPreFlushCbs()</a>
+                </td>
+                <td class="org-left">flush pre task queue</td>
+              </tr>
+              <tr>
+                <td class="org-left">
+                  <a href="#org25e74f5">flushPostFlushCbs()</a>
+                </td>
+                <td class="org-left">flush post task queue</td>
+              </tr>
+              <tr>
+                <td class="org-left">
+                  <a href="#org8aecb9f">flushJobs()</a>
+                </td>
+                <td class="org-left">flush all tasks in queue</td>
+              </tr>
+              <tr>
+                <td class="org-left">&nbsp;</td>
+                <td class="org-left">check updates recursively or not</td>
+              </tr>
+            </tbody>
+          </table>
+          <p>
+            表中 api
+            也可看出，主要是围绕一种类型的任务(job,pre,post)相关的任务入列和
+            flush 操作的函数，下面会循序渐进地去实现它们。
+          </p>
+          <p>三种类型 api 关系：</p>
+          <ol class="org-ol">
+            <li>
+              <span style="color: red">job</span> -&gt;
+              <a
+                href="#coderef-flushIndex"
+                class="coderef"
+                onmouseover="CodeHighlightOn(this, 'coderef-flushIndex');"
+                onmouseout="CodeHighlightOff(this, 'coderef-flushIndex');"
+                >flushIndex</a
+              >
+              -&gt;
+              <a
+                href="#coderef-queue"
+                class="coderef"
+                onmouseover="CodeHighlightOn(this, 'coderef-queue');"
+                onmouseout="CodeHighlightOff(this, 'coderef-queue');"
+                >queue</a
+              >
+              -&gt; <a href="#org0ef9623">queueJob()</a> -&gt;
+              <a href="#orgfd69722">queueFlush()</a> -&gt;
+              <a href="#org8aecb9f">flushJobs()</a>
+            </li>
+            <li>
+              <span style="color: red">pre</span> -&gt;
+              <a
+                href="#coderef-preFlushIndex"
+                class="coderef"
+                onmouseover="CodeHighlightOn(this, 'coderef-preFlushIndex');"
+                onmouseout="CodeHighlightOff(this, 'coderef-preFlushIndex');"
+                >preFlushIndex</a
+              >
+              -&gt;
+              <a
+                href="#coderef-pendingPreFlushCbs"
+                class="coderef"
+                onmouseover="CodeHighlightOn(this, 'coderef-pendingPreFlushCbs');"
+                onmouseout="CodeHighlightOff(this, 'coderef-pendingPreFlushCbs');"
+              >
+                pendingPreFlushCbs</a
+              >
+              -&gt;
+              <a
+                href="#coderef-activePreFlushCbs"
+                class="coderef"
+                onmouseover="CodeHighlightOn(this, 'coderef-activePreFlushCbs');"
+                onmouseout="CodeHighlightOff(this, 'coderef-activePreFlushCbs');"
+                >activePreFlushCbs</a
+              >
+              -&gt; <a href="#org43e1d3b">queuePreFlushCb()</a> -&gt;
+              <a href="#org66391f0">flushPreFlushCbs()</a> -&gt;
+              <a href="#org8aecb9f">flushJobs()</a>
+            </li>
+            <li>
+              <span style="color: red">post</span> -&gt;
+              <a
+                href="#coderef-postFlushIndex"
+                class="coderef"
+                onmouseover="CodeHighlightOn(this, 'coderef-postFlushIndex');"
+                onmouseout="CodeHighlightOff(this, 'coderef-postFlushIndex');"
+                >postFlushIndex</a
+              >
+              -&gt;
+              <a
+                href="#coderef-pendingPostFlushCbs"
+                class="coderef"
+                onmouseover="CodeHighlightOn(this, 'coderef-pendingPostFlushCbs');"
+                onmouseout="CodeHighlightOff(this, 'coderef-pendingPostFlushCbs');"
+              >
+                pendingPostFlushCbs</a
+              >
+              -&gt;
+              <a
+                href="#coderef-activePostFlushCbs"
+                class="coderef"
+                onmouseover="CodeHighlightOn(this, 'coderef-activePostFlushCbs');"
+                onmouseout="CodeHighlightOff(this, 'coderef-activePostFlushCbs');"
+              >
+                activePostFlushCbs</a
+              >
+              -&gt; -&gt; <a href="#org25e74f5">flushPostFlushCbs()</a> -&gt;
+              <a href="#org8aecb9f">flushJobs()</a>
+            </li>
+          </ol>
+          <br />
+          <details
+            class="code-details"
+            style="
+              padding: 1em;
+              background-color: #e5f5e5; /* background-color: pink; */
+              border-radius: 15px;
+              color: hsl(157 75%);
+              font-size: 0.9em;
+              box-shadow: 0.05em 0.1em 5px 0.01em #00000057;
+            "
+          >
+            <summary>
+              <strong
+                ><font face="Courier" size="3" color="green"
+                  >queueJob</font
+                ></strong
+              >
+            </summary>
+            <div class="org-src-container">
+              <pre class="src src-js" id="org9fc8f04"><span class=
+            "linenr">1: </span>&lt;&lt;GlobalVars&gt;&gt;
+<span class="linenr">2: </span>
+<span class="linenr">3: </span>&lt;&lt;nextTick&gt;&gt;
+<span class="linenr">4: </span>
+<span class="linenr">5: </span>&lt;&lt;queueJob&gt;&gt;
+<span class="linenr">6: </span>
+<span class="linenr">7: </span>&lt;&lt;queueFlush&gt;&gt;
+<span class="linenr">8: </span>
+<span class="linenr">9: </span>&lt;&lt;flushJobs&gt;&gt;
+</pre>
+            </div>
+          </details>
+          <br />
+          <details
+            class="code-details"
+            style="
+              padding: 1em;
+              background-color: #e5f5e5; /* background-color: pink; */
+              border-radius: 15px;
+              color: hsl(157 75%);
+              font-size: 0.9em;
+              box-shadow: 0.05em 0.1em 5px 0.01em #00000057;
+            "
+          >
+            <summary>
+              <strong
+                ><font face="Courier" size="3" color="green">pre</font></strong
+              >
+            </summary>
+            <div class="org-src-container">
+              <pre class="src src-js" id="org64e520a"><span class=
+            "linenr"> 1: </span>&lt;&lt;GlobalVars&gt;&gt;
+<span class="linenr"> 2: </span>
+<span class="linenr"> 3: </span>&lt;&lt;nextTick&gt;&gt;
+<span class="linenr"> 4: </span>
+<span class="linenr"> 5: </span>&lt;&lt;queueJob&gt;&gt;
+<span class="linenr"> 6: </span>
+<span class="linenr"> 7: </span>&lt;&lt;queueFlush&gt;&gt;
+<span class="linenr"> 8: </span>
+<span class="linenr"> 9: </span>&lt;&lt;flushJobs&gt;&gt;
+<span class="linenr">10: </span>
+<span class="linenr">11: </span>&lt;&lt;queueCb&gt;&gt;
+<span class="linenr">12: </span>
+<span class="linenr">13: </span>&lt;&lt;queuePreFlushCb&gt;&gt;
+<span class="linenr">14: </span>
+<span class="linenr">15: </span>&lt;&lt;flushPreFlushCbs&gt;&gt;
+</pre>
+            </div>
+          </details>
+          <br />
+          <details
+            class="code-details"
+            style="
+              padding: 1em;
+              background-color: #e5f5e5; /* background-color: pink; */
+              border-radius: 15px;
+              color: hsl(157 75%);
+              font-size: 0.9em;
+              box-shadow: 0.05em 0.1em 5px 0.01em #00000057;
+            "
+          >
+            <summary>
+              <strong
+                ><font face="Courier" size="3" color="green">post</font></strong
+              >
+            </summary>
+            <div class="org-src-container">
+              <pre class="src src-js" id="orga7be1e2"><span class=
+            "linenr"> 1: </span>&lt;&lt;GlobalVars&gt;&gt;
+<span class="linenr"> 2: </span>
+<span class="linenr"> 3: </span>&lt;&lt;nextTick&gt;&gt;
+<span class="linenr"> 4: </span>
+<span class="linenr"> 5: </span>&lt;&lt;queueJob&gt;&gt;
+<span class="linenr"> 6: </span>
+<span class="linenr"> 7: </span>&lt;&lt;queueFlush&gt;&gt;
+<span class="linenr"> 8: </span>
+<span class="linenr"> 9: </span>&lt;&lt;flushJobs&gt;&gt;
+<span class="linenr">10: </span>
+<span class="linenr">11: </span>&lt;&lt;queueCb&gt;&gt;
+<span class="linenr">12: </span>
+<span class="linenr">13: </span>&lt;&lt;queuePreFlushCb&gt;&gt;
+<span class="linenr">14: </span>
+<span class="linenr">15: </span>&lt;&lt;flushPreFlushCbs&gt;&gt;
+<span class="linenr">16: </span>
+<span class="linenr">17: </span>&lt;&lt;queuePostFlushCb&gt;&gt;
+<span class="linenr">18: </span>
+<span class="linenr">19: </span>&lt;&lt;flushPostFlushCbs&gt;&gt;
+</pre>
+            </div>
+          </details>
+          <br />
+          <details
+            class="code-details"
+            style="
+              padding: 1em;
+              background-color: #e5f5e5; /* background-color: pink; */
+              border-radius: 15px;
+              color: hsl(157 75%);
+              font-size: 0.9em;
+              box-shadow: 0.05em 0.1em 5px 0.01em #00000057;
+            "
+          >
+            <summary>
+              <strong
+                ><font face="Courier" size="3" color="green"
+                  >scheduler</font
+                ></strong
+              >
+            </summary>
+            <div class="org-src-container">
+              <pre class="src src-js" id="org7c01d4c"><span id=
+            "coderef-isFlushing" class="coderef-off"><span class=
+            "linenr">  1: </span><span class=
+            "org-keyword">let</span> <span class=
+            "org-variable-name">isFlushing</span> = <span class=
+            "org-constant">false</span></span>
+<span id="coderef-isFlushPending" class="coderef-off"><span class=
+"linenr">  2: </span><span class=
+"org-keyword">let</span> <span class=
+"org-variable-name">isFlushPending</span> = <span class=
+"org-constant">false</span></span>
+<span class="linenr">  3: </span>
+<span id="coderef-queue" class="coderef-off"><span class=
+"linenr">  4: </span><span class=
+"org-keyword">const</span> <span class=
+"org-variable-name">queue</span> = []</span>
+<span id="coderef-flushIndex" class="coderef-off"><span class=
+"linenr">  5: </span><span class=
+"org-keyword">let</span> <span class=
+"org-variable-name">flushIndex</span> = <span class=
+"org-highlight-numbers-number">0</span></span>
+<span class="linenr">  6: </span>
+<span id="coderef-pendingPreFlushCbs" class=
+"coderef-off"><span class="linenr">  7: </span><span class=
+"org-keyword">const</span> <span class=
+"org-variable-name">pendingPreFlushCbs</span> = []</span>
+<span id="coderef-activePreFlushCbs" class=
+"coderef-off"><span class="linenr">  8: </span><span class=
+"org-keyword">let</span> <span class=
+"org-variable-name">activePreFlushCbs</span> = <span class=
+"org-constant">null</span></span>
+<span id="coderef-preFlushIndex" class="coderef-off"><span class=
+"linenr">  9: </span><span class=
+"org-keyword">let</span> <span class=
+"org-variable-name">preFlushIndex</span> = <span class=
+"org-highlight-numbers-number">0</span></span>
+<span class="linenr"> 10: </span>
+<span id="coderef-pendingPostFlushCbs" class=
+"coderef-off"><span class="linenr"> 11: </span><span class=
+"org-keyword">const</span> <span class=
+"org-variable-name">pendingPostFlushCbs</span> = []</span>
+<span id="coderef-activePostFlushCbs" class=
+"coderef-off"><span class="linenr"> 12: </span><span class=
+"org-keyword">let</span> <span class=
+"org-variable-name">activePostFlushCbs</span> = <span class=
+"org-constant">null</span></span>
+<span id="coderef-postFlushIndex" class="coderef-off"><span class=
+"linenr"> 13: </span><span class=
+"org-keyword">let</span> <span class=
+"org-variable-name">postFlushIndex</span> = <span class=
+"org-highlight-numbers-number">0</span></span>
+<span class="linenr"> 14: </span>
+<span id="coderef-resolvedPromise" class="coderef-off"><span class=
+"linenr"> 15: </span><span class=
+"org-keyword">const</span> <span class=
+"org-variable-name">resolvedPromise</span> = Promise.resolve()</span>
+<span id="coderef-currentFlushPromise" class=
+"coderef-off"><span class="linenr"> 16: </span><span class=
+"org-keyword">let</span> <span class=
+"org-variable-name">currentFlushPromise</span> = <span class=
+"org-constant">null</span></span>
+<span class="linenr"> 17: </span>
+<span id="coderef-currentPreFlushParentJob" class=
+"coderef-off"><span class="linenr"> 18: </span><span class=
+"org-keyword">let</span> <span class=
+"org-variable-name">currentPreFlushParentJob</span> = <span class=
+"org-constant">null</span></span>
+<span class="linenr"> 19: </span>
+<span class="linenr"> 20: </span><span class=
+"org-comment-delimiter">// </span><span class=
+"org-comment">limit of update recursively</span>
+<span class="linenr"> 21: </span><span class=
+"org-keyword">const</span> <span class=
+"org-variable-name">RECURSION_LIMIT</span> = <span class=
+"org-highlight-numbers-number">100</span>
+<span class="linenr"> 22: </span>
+<span class="linenr"> 23: </span><span class=
+"org-keyword">const</span> <span class=
+"org-variable-name">getId</span> = job =&gt; job.id == <span class=
+"org-constant">null</span> ? <span class=
+"org-constant">Infinity</span> : job.id
+<span class="linenr"> 24: </span>
+<span id="coderef-findInsertionIndex" class=
+"coderef-off"><span class="linenr"> 25: </span><span class=
+"org-keyword">function</span> <span class=
+"org-function-name">findInsertionIndex</span>(<span class=
+"org-variable-name">id</span>) {</span>
+<span class="linenr"> 26: </span>  <span class=
+"org-keyword">let</span> <span class=
+"org-variable-name">start</span> = flushIndex + <span class=
+"org-highlight-numbers-number">1</span>
+<span class="linenr"> 27: </span>  <span class=
+"org-keyword">let</span> <span class=
+"org-variable-name">end</span> = queue.length
+<span class="linenr"> 28: </span>
+<span class="linenr"> 29: </span>  <span class=
+"org-comment-delimiter">// </span><span class=
+"org-comment">二分法找到插入位置</span>
+<span class="linenr"> 30: </span>  <span class=
+"org-keyword">while</span> (start &lt; end) {
+<span class="linenr"> 31: </span>    <span class=
+"org-keyword">const</span> <span class=
+"org-variable-name">middle</span> = (start + end) &gt;&gt;&gt; <span class="org-highlight-numbers-number">1</span>
+<span class="linenr"> 32: </span>    <span class=
+"org-keyword">const</span> <span class=
+"org-variable-name">middleJobId</span> = getId(queue[middle])
+<span class=
+"linenr"> 33: </span>    middleJobId &lt; id ? (start = middle + <span class="org-highlight-numbers-number">1</span>) : (end = middle)
+<span class="linenr"> 34: </span>  }
+<span class="linenr"> 35: </span>
+<span class="linenr"> 36: </span>  <span class=
+"org-keyword">return</span> start
+<span class="linenr"> 37: </span>}
+<span class="linenr"> 38: </span>
+<span class="linenr"> 39: </span><span class=
+"org-keyword">const</span> <span class=
+"org-variable-name">isArray</span> = Array.isArray
+<span class="linenr"> 40: </span><span class=
+"org-keyword">const</span> <span class=
+"org-variable-name">isObject</span> = val =&gt; val !== <span class="org-constant">null</span> &amp;& <span class="org-keyword">typeof</span> val === <span class="org-string">'object'</span>
+<span class="linenr"> 41: </span><span class=
+"org-keyword">const</span> <span class=
+"org-variable-name">isFunction</span> = val =&gt; <span class=
+"org-keyword">typeof</span> val === <span class=
+"org-string">'function'</span>
+<span class="linenr"> 42: </span><span class=
+"org-keyword">const</span> <span class=
+"org-variable-name">isPromise</span> = val =&gt; {
+<span class="linenr"> 43: </span>  <span class=
+"org-keyword">return</span> isObject(val) &amp;& isFunction(val.then) &amp;& isFunction(val.<span class="org-keyword">catch</span>)
+<span class="linenr"> 44: </span>}
+<span class="linenr"> 45: </span><span class=
+"org-keyword">function</span> <span class=
+"org-function-name">callWithErrorHandling</span>(<span class=
+"org-variable-name">fn</span>, <span class=
+"org-variable-name">instance</span>, <span class=
+"org-variable-name">type</span>, <span class=
+"org-variable-name">args</span>) {
+<span class="linenr"> 46: </span>  <span class=
+"org-keyword">let</span> <span class="org-variable-name">res</span>
+<span class="linenr"> 47: </span>  <span class=
+"org-keyword">try</span> {
+<span class=
+"linenr"> 48: </span>    res = args ? fn(...args) : fn()
+<span class="linenr"> 49: </span>  } <span class=
+"org-keyword">catch</span> (err) {
+<span class=
+"linenr"> 50: </span>    handleError(err, instance, type)
+<span class="linenr"> 51: </span>  }
+<span class="linenr"> 52: </span>}
+<span class="linenr"> 53: </span>
+<span class="linenr"> 54: </span><span class=
+"org-keyword">function</span> <span class=
+"org-function-name">callWithAsyncErrorHandling</span>(<span class=
+"org-variable-name">fn</span>, <span class=
+"org-variable-name">instance</span>, <span class=
+"org-variable-name">type</span>, <span class=
+"org-variable-name">args</span>) {
+<span class="linenr"> 55: </span>  <span class=
+"org-keyword">if</span> (<span class=
+"org-keyword">typeof</span> fn === <span class=
+"org-string">'function'</span>) {
+<span class="linenr"> 56: </span>    <span class=
+"org-keyword">const</span> <span class=
+"org-variable-name">res</span> = callWithErrorHandling(fn, instance, type, args)
+<span class="linenr"> 57: </span>    <span class=
+"org-keyword">if</span> (res &amp;& isPromise(res)) {
+<span class="linenr"> 58: </span>      res.<span class=
+"org-keyword">catch</span>(err =&gt; {
+<span class=
+"linenr"> 59: </span>        handleError(err, instance, type)
+<span class="linenr"> 60: </span>      })
+<span class="linenr"> 61: </span>    }
+<span class="linenr"> 62: </span>    <span class=
+"org-keyword">return</span> res
+<span class="linenr"> 63: </span>  }
+<span class="linenr"> 64: </span>
+<span class="linenr"> 65: </span>  <span class=
+"org-keyword">const</span> <span class=
+"org-variable-name">values</span> = []
+<span class="linenr"> 66: </span>  <span class=
+"org-keyword">for</span> (<span class=
+"org-keyword">let</span> <span class=
+"org-variable-name">i</span> = <span class=
+"org-highlight-numbers-number">0</span>; i &lt; fn.length; i++) {
+<span class=
+"linenr"> 67: </span>    values.push(callWithAsyncErrorHandling(fn[i], instance, type, args))
+<span class="linenr"> 68: </span>  }
+<span class="linenr"> 69: </span>  <span class=
+"org-keyword">return</span> values
+<span class="linenr"> 70: </span>}
+<span class="linenr"> 71: </span>
+<span class="linenr"> 72: </span><span class=
+"org-keyword">function</span> <span class=
+"org-function-name">handleError</span>(<span class=
+"org-variable-name">err</span>) {
+<span class="linenr"> 73: </span>  console.log(err)
+<span class="linenr"> 74: </span>}
+<span class="linenr"> 75: </span>
+<span class="linenr"> 76: </span><span class=
+"org-keyword">let</span> <span class=
+"org-variable-name">debugOn</span> = <span class=
+"org-constant">true</span>
+<span class="linenr"> 77: </span><span class=
+"org-keyword">const</span> <span class=
+"org-variable-name">log</span> = (fn, message) =&gt; {
+<span class="linenr"> 78: </span>  <span class=
+"org-keyword">if</span> (debugOn) {
+<span class="linenr"> 79: </span>    <span class=
+"org-keyword">if</span> (message === <span class=
+"org-constant">undefined</span>) {
+<span class="linenr"> 80: </span>      console.log(fn)
+<span class="linenr"> 81: </span>    } <span class=
+"org-keyword">else</span> {
+<span class="linenr"> 82: </span>      console.log(<span class=
+"org-string">`[${fn}] ${message}`</span>)
+<span class="linenr"> 83: </span>    }
+<span class="linenr"> 84: </span>  }
+<span class="linenr"> 85: </span>}
+<span class="linenr"> 86: </span><span class=
+"org-keyword">const</span> <span class=
+"org-variable-name">logEnd</span> = (hint = <span class=
+"org-string">"END"</span>) =&gt; console.log(<span class=
+"org-string">`--------- ${hint} ---------`</span>)
+<span class="linenr"> 87: </span>
+<span class="linenr"> 88: </span><span class=
+"org-keyword">function</span> <span class=
+"org-function-name">nextTick</span>(<span class=
+"org-variable-name">fn</span>) {
+<span class="linenr"> 89: </span>  <span class=
+"org-keyword">const</span> <span class=
+"org-variable-name">p</span> = currentFlushPromise || resolvedPromise
+<span class="linenr"> 90: </span>  log(<span class=
+"org-string">`nextTick| queue=${queue.length},resolvedPromise=${resolvedPromise},currentFlushPromise=${currentFlushPromise}`</span>)
+<span class="linenr"> 91: </span>  <span class=
+"org-keyword">return</span> fn ? p.then(<span class=
+"org-constant">this</span> ? fn.bind(<span class=
+"org-constant">this</span>) : fn) : p
+<span class="linenr"> 92: </span>}
+<span class="linenr"> 93: </span>
+<span class="linenr"> 94: </span><span class=
+"org-keyword">function</span> <span class=
+"org-function-name">queueJob</span>(<span class=
+"org-variable-name">job</span>) {
+<span class="linenr"> 95: </span>  log(<span class=
+"org-string">`queueJob| queue=${queue.length},job existed=${queue.includes(job, flushIndex)}`</span>)
+<span class="linenr"> 96: </span>  <span class=
+"org-keyword">if</span> ((
+<span class="linenr"> 97: </span>    !queue.length ||
+<span class=
+"linenr"> 98: </span>      !queue.includes(job, isFlushing &amp;& job.allowRecurse ? flushIndex + <span class="org-highlight-numbers-number">1</span> : flushIndex)
+<span class=
+"linenr"> 99: </span>  ) &amp;& job !== currentPreFlushParentJob) {
+<span class="linenr">100: </span>    <span class=
+"org-comment-delimiter">// </span><span class=
+"org-comment">没有 id 直接追加到后面</span>
+<span class="linenr">101: </span>    <span class=
+"org-keyword">if</span> (job.id == <span class=
+"org-constant">null</span>) {
+<span class="linenr">102: </span>      queue.push(job)
+<span class="linenr">103: </span>    } <span class=
+"org-keyword">else</span> {
+<span class="linenr">104: </span>      <span class=
+"org-comment-delimiter">// </span><span class=
+"org-comment">有 id 要按照顺序插入</span>
+<span class=
+"linenr">105: </span>      queue.splice(findInsertionIndex(job.id), <span class="org-highlight-numbers-number">0</span>, job)
+<span class="linenr">106: </span>    }
+<span class="linenr">107: </span>
+<span class="linenr">108: </span>    <span class=
+"org-comment-delimiter">// </span><span class=
+"org-comment">入列现时启动任务 flush 动作</span>
+<span class="linenr">109: </span>    queueFlush()
+<span class="linenr">110: </span>  }
+<span class="linenr">111: </span>}
+<span class="linenr">112: </span>
+<span class="linenr">113: </span><span class=
+"org-keyword">function</span> <span class=
+"org-function-name">queueFlush</span>() {
+<span class="linenr">114: </span>  log(<span class=
+"org-string">`queueFlush| isFlushing=${isFlushing},isFlushPending=${isFlushPending}`</span>)
+<span class="linenr">115: </span>  <span class=
+"org-keyword">if</span> (!isFlushing &amp;& !isFlushPending) {
+<span class="linenr">116: </span>    isFlushPending = <span class=
+"org-constant">true</span>
+<span class=
+"linenr">117: </span>    currentFlushPromise = resolvedPromise.then(flushJobs)
+<span class="linenr">118: </span>  }
+<span class="linenr">119: </span>}
+<span class="linenr">120: </span>
+<span class="linenr">121: </span><span class=
+"org-keyword">function</span> <span class=
+"org-function-name">flushJobs</span>(<span class=
+"org-variable-name">seen</span>) {
+<span class="linenr">122: </span>  <span class=
+"org-comment-delimiter">// </span><span class=
+"org-comment">这个函数里面都是同步操作</span>
+<span class="linenr">123: </span>  isFlushPending = <span class=
+"org-constant">false</span>
+<span class="linenr">124: </span>  isFlushing = <span class=
+"org-constant">true</span>
+<span class="linenr">125: </span>
+<span class="linenr">126: </span>  log(<span class=
+"org-string">`flushJobs| seen=${seen}, queue=${queue.length},flushIndex=${flushIndex},isFlushing=${isFlushing}`</span>)
+<span class="linenr">127: </span>
+<span class="linenr">128: </span>  flushPreFlushCbs(seen)
+<span class="linenr">129: </span>
+<span class="linenr">130: </span>  <span class=
+"org-comment-delimiter">// </span><span class=
+"org-comment">pre jobs</span>
+<span class="linenr">131: </span>
+<span class="linenr">132: </span>  <span class=
+"org-comment-delimiter">// </span><span class=
+"org-comment">在 flush 之前对任务排序，确保：</span>
+<span class="linenr">133: </span>  <span class=
+"org-comment-delimiter">// </span><span class=
+"org-comment">1. 组件总从 parent -&gt; child 更新，因为父组件总是会在子组件之前被渲染，因此它的渲染函数应该具备更小优先级</span>
+<span class="linenr">134: </span>  <span class=
+"org-comment-delimiter">// </span><span class=
+"org-comment">2. 如果一个组件在父组件更新阶段被卸载了那么它的更新可以直接忽略</span>
+<span class=
+"linenr">135: </span>  queue.sort((a, b) =&gt; getId(a) - getId(b))
+<span class="linenr">136: </span>
+<span class="linenr">137: </span>  <span class=
+"org-keyword">try</span> {
+<span class="linenr">138: </span>    <span class=
+"org-keyword">for</span> (flushIndex = <span class=
+"org-highlight-numbers-number">0</span>; flushIndex &lt; queue.length; flushIndex++) {
+<span class="linenr">139: </span>      <span class=
+"org-keyword">const</span> <span class=
+"org-variable-name">job</span> = queue[flushIndex]
+<span class="linenr">140: </span>      <span class=
+"org-keyword">if</span> (job &amp;& job.active !== <span class=
+"org-constant">false</span>) {
+<span class=
+"linenr">141: </span>        callWithErrorHandling(job, <span class="org-constant">null</span>, Error)
+<span class="linenr">142: </span>      }
+<span class="linenr">143: </span>    }
+<span class="linenr">144: </span>  } <span class=
+"org-keyword">finally</span> {
+<span class="linenr">145: </span>    <span class=
+"org-comment-delimiter">// </span><span class=
+"org-comment">当前任务队列已经清空了</span>
+<span class="linenr">146: </span>    flushIndex = <span class=
+"org-highlight-numbers-number">0</span>
+<span class="linenr">147: </span>    queue.length = <span class=
+"org-highlight-numbers-number">0</span>
+<span class="linenr">148: </span>
+<span class="linenr">149: </span>    <span class=
+"org-comment-delimiter">// </span><span class=
+"org-comment">flush post</span>
+<span class="linenr">150: </span>    flushPostFlushCbs(seen)
+<span class="linenr">151: </span>
+<span class="linenr">152: </span>    isFlushing = <span class=
+"org-constant">false</span>
+<span class="linenr">153: </span>    <span class=
+"org-comment-delimiter">// </span><span class=
+"org-comment">一次队列对应一个 flush promise</span>
+<span class=
+"linenr">154: </span>    currentFlushPromise = <span class=
+"org-constant">null</span>
+<span class="linenr">155: </span>    log(<span class=
+"org-string">`flushJobs| queue=${queue.length},pendingPreFlushCbs=${pendingPreFlushCbs.length},pendingPostFlushCbs=${pendingPostFlushCbs.length}`</span>)
+<span class="linenr">156: </span>    <span class=
+"org-comment-delimiter">// </span><span class=
+"org-comment">在 flush 过程中加入的任务</span>
+<span class="linenr">157: </span>    <span class=
+"org-keyword">if</span> (queue.length || pendingPreFlushCbs.length || pendingPostFlushCbs.length) {
+<span class="linenr">158: </span>      flushJobs(seen)
+<span class="linenr">159: </span>    }
+<span class="linenr">160: </span>  }
+<span class="linenr">161: </span>}
+<span class="linenr">162: </span>
+<span class="linenr">163: </span><span class=
+"org-keyword">function</span> <span class=
+"org-function-name">queueCb</span>(<span class=
+"org-variable-name">cb</span>, <span class=
+"org-variable-name">activeQueue</span>, <span class=
+"org-variable-name">pendingQueue</span>, <span class=
+"org-variable-name">index</span>) {
+<span class="linenr">164: </span>  <span class=
+"org-keyword">if</span> (!isArray(cb)) {
+<span class="linenr">165: </span>    <span class=
+"org-keyword">if</span> (!activeQueue || !activeQueue.includes(cb, cb.allowRecurse ? index + <span class="org-highlight-numbers-number">1</span> : index)) {
+<span class="linenr">166: </span>      pendingQueue.push(cb)
+<span class="linenr">167: </span>    }
+<span class="linenr">168: </span>  } <span class=
+"org-keyword">else</span> {
+<span class="linenr">169: </span>    pendingQueue.push(...cb)
+<span class="linenr">170: </span>  }
+<span class="linenr">171: </span>  queueFlush()
+<span class="linenr">172: </span>}
+<span class="linenr">173: </span>
+<span class="linenr">174: </span><span class=
+"org-keyword">function</span> <span class=
+"org-function-name">queuePreFlushCb</span>(<span class=
+"org-variable-name">cb</span>) {
+<span class=
+"linenr">175: </span>  queueCb(cb, activePreFlushCbs, pendingPreFlushCbs, preFlushIndex)
+<span class="linenr">176: </span>}
+<span class="linenr">177: </span>
+<span class="linenr">178: </span><span class=
+"org-keyword">function</span> <span class=
+"org-function-name">flushPreFlushCbs</span>(<span class=
+"org-variable-name">seen</span>, <span class=
+"org-variable-name">parentJob</span>) {
+<span class="linenr">179: </span>  <span class=
+"org-keyword">if</span> (pendingPreFlushCbs.length) {
+<span class=
+"linenr">180: </span>    currentPreFlushParentJob = parentJob
+<span class=
+"linenr">181: </span>    activePreFlushCbs = [...<span class=
+"org-keyword">new</span> <span class=
+"org-type">Set</span>(pendingPreFlushCbs)]
+<span class="linenr">182: </span>    <span class=
+"org-comment-delimiter">// </span><span class=
+"org-comment">重置以接纳新的任务</span>
+<span class=
+"linenr">183: </span>    pendingPreFlushCbs.length = <span class=
+"org-highlight-numbers-number">0</span>
+<span class="linenr">184: </span>    <span class=
+"org-keyword">for</span> (preFlushIndex = <span class=
+"org-highlight-numbers-number">0</span>; preFlushIndex &lt; activePreFlushCbs.length; preFlushIndex++) {
+<span class=
+"linenr">185: </span>      activePreFlushCbs[preFlushIndex]()
+<span class="linenr">186: </span>    }
+<span class="linenr">187: </span>
+<span class=
+"linenr">188: </span>    activePreFlushCbs = <span class=
+"org-constant">null</span>
+<span class="linenr">189: </span>    preFlushIndex = <span class=
+"org-highlight-numbers-number">0</span>
+<span class=
+"linenr">190: </span>    currentPreFlushParentJob = <span class=
+"org-constant">null</span>
+<span class="linenr">191: </span>
+<span class="linenr">192: </span>    <span class=
+"org-comment-delimiter">// </span><span class=
+"org-comment">递归直到清空所以 pre 任务</span>
+<span class=
+"linenr">193: </span>    flushPreFlushCbs(seen, parentJob)
+<span class="linenr">194: </span>  }
+<span class="linenr">195: </span>}
+<span class="linenr">196: </span>
+<span class="linenr">197: </span><span class=
+"org-keyword">function</span> <span class=
+"org-function-name">queuePostFlushCb</span>(<span class=
+"org-variable-name">cb</span>) {
+<span class=
+"linenr">198: </span>  queueCb(cb, activePostFlushCbs, pendingPostFlushCbs, postFlushIndex)
+<span class="linenr">199: </span>}
+<span class="linenr">200: </span>
+<span class="linenr">201: </span><span class=
+"org-keyword">function</span> <span class=
+"org-function-name">flushPostFlushCbs</span>(<span class=
+"org-variable-name">seen</span>) {
+<span class="linenr">202: </span>  <span class=
+"org-keyword">if</span> (pendingPostFlushCbs.length) {
+<span class="linenr">203: </span>    <span class=
+"org-keyword">const</span> <span class=
+"org-variable-name">deduped</span> = [...<span class=
+"org-keyword">new</span> <span class=
+"org-type">Set</span>(pendingPostFlushCbs)]
+<span class=
+"linenr">204: </span>    pendingPostFlushCbs.length = <span class=
+"org-highlight-numbers-number">0</span>
+<span class="linenr">205: </span>
+<span class="linenr">206: </span>    <span class=
+"org-comment-delimiter">// </span><span class=
+"org-comment">已经有了 active queue, flushPostFlushCbs 嵌套使用时</span>
+<span class="linenr">207: </span>    <span class=
+"org-keyword">if</span> (activePostFlushCbs) {
+<span class=
+"linenr">208: </span>      activePostFlushCbs.push(...deduped)
+<span class="linenr">209: </span>      <span class=
+"org-keyword">return</span>
+<span class="linenr">210: </span>    }
+<span class="linenr">211: </span>
+<span class="linenr">212: </span>    activePostFlushCbs = deduped
+<span class="linenr">213: </span>
+<span class=
+"linenr">214: </span>    activePostFlushCbs.sort((a, b) =&gt; getId(a) - getId(b))
+<span class="linenr">215: </span>
+<span class="linenr">216: </span>    <span class=
+"org-keyword">for</span> (postFlushIndex = <span class=
+"org-highlight-numbers-number">0</span>; postFlushIndex &lt; activePostFlushCbs.length; postFlushIndex++) {
+<span class=
+"linenr">217: </span>      activePostFlushCbs[postFlushIndex]()
+<span class="linenr">218: </span>    }
+<span class="linenr">219: </span>
+<span class=
+"linenr">220: </span>    activePostFlushCbs = <span class=
+"org-constant">null</span>
+<span class="linenr">221: </span>    postFlushIndex = <span class=
+"org-highlight-numbers-number">0</span>
+<span class="linenr">222: </span>  }
+<span class="linenr">223: </span>}
+<span class="linenr">224: </span>
+<span class="linenr">225: </span><span class=
+"org-keyword">function</span> <span class=
+"org-function-name">invalidateJob</span>(<span class=
+"org-variable-name">job</span>) {
+<span class="linenr">226: </span>  <span class=
+"org-keyword">const</span> <span class=
+"org-variable-name">i</span> = queue.indexOf(job)
+<span class="linenr">227: </span>  <span class=
+"org-keyword">if</span> (i &gt; flushIndex) {
+<span class="linenr">228: </span>    queue.splice(i, <span class=
+"org-highlight-numbers-number">1</span>)
+<span class="linenr">229: </span>  }
+<span class="linenr">230: </span>}
+</pre>
+            </div>
+          </details>
+        </div>
+      </div>
+      <div id="outline-container-org8de5926" class="outline-2">
+        <h2 id="org8de5926">
+          <span class="section-number-2">4.</span> nextTick(fn)
+        </h2>
+        <div class="outline-text-2" id="text-4">
+          <p>
+            当前事件队列循环中同步代码执行完之后再去执行 fn 或后面的代码(使用
+            <code>await nextTick()</code> 时)
+          </p>
+          <p>
+            在这里是当 queue
+            所有队列清空之后执行的一个异步操作，与之有重要关联的两个变量：
+          </p>
+          <ol class="org-ol">
+            <li>
+              <a
+                href="#coderef-resolvedPromise"
+                class="coderef"
+                onmouseover="CodeHighlightOn(this, 'coderef-resolvedPromise');"
+                onmouseout="CodeHighlightOff(this, 'coderef-resolvedPromise');"
+                >resolvedPromise</a
+              >，一个空的 promise then
+            </li>
+            <li>
+              <a
+                href="#coderef-currentFlushPromise"
+                class="coderef"
+                onmouseover="CodeHighlightOn(this, 'coderef-currentFlushPromise');"
+                onmouseout="CodeHighlightOff(this, 'coderef-currentFlushPromise');"
+              >
+                currentFlushPromise</a
+              >，当 queue 队列中的所有任务执行完成之后返回的一个 promise
+              实例，因为 <a href="#org8aecb9f">flushJobs()</a> 中 flush
+              任务时都是同步操作
+            </li>
+          </ol>
+          <div class="org-src-container">
+            <pre class="src src-js" id="org4ccf1da"><span class=
+          "linenr">1: </span><span class=
+          "org-keyword">function</span> <span class=
+          "org-function-name">nextTick</span>(<span class=
+          "org-variable-name">fn</span>) {
+<span class="linenr">2: </span>  <span class=
+"org-keyword">const</span> <span class=
+"org-variable-name">p</span> = currentFlushPromise || resolvedPromise
+<span class="linenr">3: </span>  log(<span class=
+"org-string">`nextTick| queue=${queue.length},resolvedPromise=${resolvedPromise},currentFlushPromise=${currentFlushPromise}`</span>)
+<span class="linenr">4: </span>  <span class=
+"org-keyword">return</span> fn ? p.then(<span class=
+"org-constant">this</span> ? fn.bind(<span class=
+"org-constant">this</span>) : fn) : p
+<span class="linenr">5: </span>}
+</pre>
+          </div>
+          <p>
+            所以 <code>nextTick(fn)</code> 的 fn 函数或
+            <code>await nextTick()</code> 后面的代码都会在当前
+            <a
+              href="#coderef-queue"
+              class="coderef"
+              onmouseover="CodeHighlightOn(this, 'coderef-queue');"
+              onmouseout="CodeHighlightOff(this, 'coderef-queue');"
+              >queue</a
+            >
+            队列中任务完成之后才会被执行。
+          </p>
+          <p><span style="color: red">Testing...</span></p>
+          <div class="org-src-container">
+            <pre class="src src-js"><span class=
+          "linenr"> 1: </span>&lt;&lt;GlobalVars&gt;&gt;
+<span class="linenr"> 2: </span>&lt;&lt;nextTick&gt;&gt;
+<span class="linenr"> 3: </span>
+<span class="linenr"> 4: </span>(<span class=
+"org-keyword">async</span> <span class=
+"org-keyword">function</span>() {
+<span class="linenr"> 5: </span>  log(<span class=
+"org-string">'run first...'</span>)
+<span class="linenr"> 6: </span>  nextTick(() =&gt; {
+<span class="linenr"> 7: </span>    log(<span class=
+"org-string">'\nrun second...'</span>)
+<span class="linenr"> 8: </span>  })
+<span class="linenr"> 9: </span>  <span class=
+"org-keyword">await</span> nextTick()
+<span class="linenr">10: </span>  log(<span class=
+"org-string">'\nrun third...'</span>)
+<span class="linenr">11: </span>}())
+</pre>
+          </div>
+          <pre class="example">
+run first...
+nextTick| queue=0,resolvedPromise=[object Promise],currentFlushPromise=null
+nextTick| queue=0,resolvedPromise=[object Promise],currentFlushPromise=null
+undefined
+run second...
+
+run third...
+</pre
+          >
+        </div>
+      </div>
+      <div id="outline-container-org11eaa10" class="outline-2">
+        <h2 id="org11eaa10">
+          <span class="section-number-2">5.</span> queueJob()
+        </h2>
+        <div class="outline-text-2" id="text-5">
+          <p>
+            任务入列, <code>queueJob()</code> -&gt;
+            <a href="#orgfd69722">queueFlush()</a> -&gt;
+            <a href="#org8aecb9f">flushJobs()</a> 。
+          </p>
+          <div class="org-src-container">
+            <pre class="src src-js" id="org0ef9623"><span class=
+          "linenr"> 1: </span><span class=
+          "org-keyword">function</span> <span class=
+          "org-function-name">queueJob</span>(<span class=
+          "org-variable-name">job</span>) {
+<span class="linenr"> 2: </span>  log(<span class=
+"org-string">`queueJob| queue=${queue.length},job existed=${queue.includes(job, flushIndex)}`</span>)
+<span class="linenr"> 3: </span>  <span class=
+"org-keyword">if</span> ((
+<span class="linenr"> 4: </span>    !queue.length ||
+<span class=
+"linenr"> 5: </span>      !queue.includes(job, isFlushing &amp;& job.allowRecurse ? flushIndex + <span class="org-highlight-numbers-number">1</span> : flushIndex)
+<span class=
+"linenr"> 6: </span>  ) &amp;& job !== currentPreFlushParentJob) {
+<span class="linenr"> 7: </span>    <span class=
+"org-comment-delimiter">// </span><span class=
+"org-comment">没有 id 直接追加到后面</span>
+<span class="linenr"> 8: </span>    <span class=
+"org-keyword">if</span> (job.id == <span class=
+"org-constant">null</span>) {
+<span class="linenr"> 9: </span>      queue.push(job)
+<span class="linenr">10: </span>    } <span class=
+"org-keyword">else</span> {
+<span class="linenr">11: </span>      <span class=
+"org-comment-delimiter">// </span><span class=
+"org-comment">有 id 要按照顺序插入</span>
+<span class=
+"linenr">12: </span>      queue.splice(findInsertionIndex(job.id), <span class="org-highlight-numbers-number">0</span>, job)
+<span class="linenr">13: </span>    }
+<span class="linenr">14: </span>
+<span class="linenr">15: </span>    <span class=
+"org-comment-delimiter">// </span><span class=
+"org-comment">入列现时启动任务 flush 动作</span>
+<span class="linenr">16: </span>    queueFlush()
+<span class="linenr">17: </span>  }
+<span class="linenr">18: </span>}
+</pre>
+          </div>
+          <p><span style="color: red">Testing...</span></p>
+          <p>
+            <a href="#orge1e7eaa">GlobalVars</a>,
+            <a href="#org4ccf1da">nextTick</a>,
+            <a href="#org0ef9623">queueJob</a>,
+            <a href="#orgfd69722">queueFlush</a>,
+            <a href="#org8aecb9f">flushJobs</a>
+          </p>
+          <div class="org-src-container">
+            <pre class="src src-js"><span class=
+          "linenr"> 1: </span>&lt;&lt;GlobalVars&gt;&gt;
+<span class="linenr"> 2: </span>&lt;&lt;nextTick&gt;&gt;
+<span class="linenr"> 3: </span>&lt;&lt;queueJob&gt;&gt;
+<span class="linenr"> 4: </span>&lt;&lt;queueFlush&gt;&gt;
+<span class="linenr"> 5: </span>&lt;&lt;flushJobs&gt;&gt;
+<span class="linenr"> 6: </span>
+<span class="linenr"> 7: </span>(<span class=
+"org-keyword">async</span> <span class=
+"org-keyword">function</span>() {
+<span class="linenr"> 8: </span>  queueJob(() =&gt; {
+<span id="coderef-test-job-1" class="coderef-off"><span class=
+"linenr"> 9: </span>    console.log(<span class=
+"org-string">'job 1'</span>)</span>
+<span class="linenr">10: </span>  })
+<span class="linenr">11: </span>  queueJob(() =&gt; {
+<span id="coderef-test-job-2" class="coderef-off"><span class=
+"linenr">12: </span>    console.log(<span class=
+"org-string">'job 2'</span>)</span>
+<span class="linenr">13: </span>  })
+<span class="linenr">14: </span>
+<span id="coderef-test-job-before" class="coderef-off"><span class=
+"linenr">15: </span>  console.log(<span class=
+"org-string">`should before flush, queue.length=${queue.length}`</span>)</span>
+<span class="linenr">16: </span>  <span class=
+"org-keyword">await</span> nextTick()
+<span id="coderef-test-job-after" class="coderef-off"><span class=
+"linenr">17: </span>  console.log(<span class=
+"org-string">`should after flush, queue.length=${queue.length}`</span>)</span>
+<span class="linenr">18: </span>}())
+<span class="linenr">19: </span><span class=
+"org-keyword">return</span> <span class=
+"org-highlight-numbers-number">1</span>
+</pre>
+          </div>
+          <p>
+            注意看上面<a
+              href="#coderef-test-job-before"
+              class="coderef"
+              onmouseover="CodeHighlightOn(this, 'coderef-test-job-before');"
+              onmouseout="CodeHighlightOff(this, 'coderef-test-job-before');"
+              >15</a
+            >
+            和
+            <a
+              href="#coderef-test-job-after"
+              class="coderef"
+              onmouseover="CodeHighlightOn(this, 'coderef-test-job-after');"
+              onmouseout="CodeHighlightOff(this, 'coderef-test-job-after');"
+              >17</a
+            >
+            两行打印的输出，前者在 flush 之
+            前就会打印出来因为它同步代码，而后者会在所有 jobs 的 fn
+            函数执行之后也就是
+            <a
+              href="#coderef-test-job-1"
+              class="coderef"
+              onmouseover="CodeHighlightOn(this, 'coderef-test-job-1');"
+              onmouseout="CodeHighlightOff(this, 'coderef-test-job-1');"
+              >9</a
+            >
+            和
+            <a
+              href="#coderef-test-job-2"
+              class="coderef"
+              onmouseover="CodeHighlightOn(this, 'coderef-test-job-2');"
+              onmouseout="CodeHighlightOff(this, 'coderef-test-job-2');"
+              >12</a
+            >
+            打印之后打印出来。
+          </p>
+          <p>
+            这是因为 <a href="#orgfd69722">queueFlush()</a> 中调用
+            <a href="#org8aecb9f">flushJobs()</a> 时候是以
+            <code>resolvedPromise.then(flushJobs)</code>
+            方式调用的，也就是说要等 <code>resolvedPromise</code> 状态完
+            成之后才会触发，而这个 promise 其实是一个
+            <code>fullfilled</code> 状态的全局 promise 所以它总 会在前一个 queue
+            flush 动作之后触发(因为
+            <a href="#org8aecb9f">flushJobs()</a> 函数中代码都是同步代码)。
+          </p>
+          <div class="tip" id="orgfd0091f">
+            <p>
+              而
+              <code>currentFlushPromise</code>
+              这个全局变量是用来记录当前正在执行中的 promise 也就是上面 说的
+              <code>resolvedPromise.then(flushJobs)</code> 返回的一个
+              promise，这也是为什么
+              <code>nextTick()</code>
+              的代码总是会在当前队列刷新完之后被调用的最终原因，也是为什么在
+              <code>nextTick()</code> 代码中可以访问真实 DOM
+              元素的原因，因为当前要执行的 DOM 渲染函数都已经执 行这完成了。
+            </p>
+          </div>
+          <p>
+            另外， <code>queueJob</code> 支持嵌套调用，即在
+            <code>queueJob(fn)</code> 的 fn 函数中还可以调用
+            <code>queueJob</code> 来入列新的任务。
+          </p>
+          <p>看示例：</p>
+          <div class="org-src-container">
+            <pre class="src src-js"><span class=
+          "linenr"> 1: </span>&lt;&lt;scheduler&gt;&gt;
+<span class="linenr"> 2: </span>
+<span class="linenr"> 3: </span>;(<span class=
+"org-keyword">async</span> <span class=
+"org-keyword">function</span>() {
+<span class="linenr"> 4: </span>  <span class=
+"org-keyword">const</span> <span class=
+"org-variable-name">calls</span> = []
+<span class="linenr"> 5: </span>  <span class=
+"org-keyword">const</span> <span class=
+"org-variable-name">job1</span> = () =&gt; {
+<span class="linenr"> 6: </span>    calls.push(<span class=
+"org-string">'job1'</span>)
+<span class="linenr"> 7: </span>
+<span class="linenr"> 8: </span>    <span class=
+"org-comment-delimiter">// </span><span class=
+"org-comment">job2 任务会在 job1 执行到这里的时候加入到了 queue</span>
+<span class="linenr"> 9: </span>    <span class=
+"org-comment-delimiter">// </span><span class=
+"org-comment">但是它的执行需等到 queue 中的任务执行完成之后再执行</span>
+<span class="linenr">10: </span>    <span class=
+"org-comment-delimiter">// </span><span class=
+"org-comment">因为任务收集是同步的，任务执行是异步的，而 queue flush 操作又是同步的</span>
+<span class="linenr">11: </span>    queueJob(job2)
+<span class="linenr">12: </span>  }
+<span class="linenr">13: </span>  <span class=
+"org-keyword">const</span> <span class=
+"org-variable-name">job2</span> = () =&gt; calls.push(<span class=
+"org-string">'job2'</span>)
+<span class="linenr">14: </span>  queueJob(job1)
+<span class="linenr">15: </span>  <span class=
+"org-keyword">await</span> nextTick()
+<span class="linenr">16: </span>
+<span class="linenr">17: </span>  log(calls)
+<span class="linenr">18: </span>  logEnd()
+<span class="linenr">19: </span>}())
+<span class="linenr">20: </span><span class=
+"org-keyword">return</span> <span class=
+"org-highlight-numbers-number">0</span>
+</pre>
+          </div>
+          <pre class="example">
+queueJob| queue=0,job existed=false
+queueFlush| isFlushing=false,isFlushPending=false
+nextTick| queue=1,resolvedPromise=[object Promise],currentFlushPromise=[object Promise]
+0flushJobs| seen=undefined, queue=1,flushIndex=0,isFlushing=true
+queueJob| queue=1,job existed=false
+queueFlush| isFlushing=true,isFlushPending=false
+flushJobs| queue=0,pendingPreFlushCbs=0,pendingPostFlushCbs=0
+[ 'job1', 'job2' ]
+--------- END ---------
+</pre
+          >
+          <p>来看一段代码：</p>
+          <div class="org-src-container">
+            <pre class="src src-js"><span class=
+          "linenr">1: </span><span class=
+          "org-keyword">const</span> <span class=
+          "org-variable-name">nums</span> = [<span class=
+          "org-highlight-numbers-number">1</span>, <span class=
+          "org-highlight-numbers-number">2</span>, <span class=
+          "org-highlight-numbers-number">3</span>];
+<span class="linenr">2: </span><span class=
+"org-keyword">const</span> <span class=
+"org-variable-name">add</span> = (i) =&gt; nums.push(++i);
+<span class="linenr">3: </span><span class=
+"org-keyword">for</span> (<span class=
+"org-keyword">let</span> <span class=
+"org-variable-name">i</span> = <span class=
+"org-highlight-numbers-number">0</span>; i &lt; nums.length; i++) {
+<span class="linenr">4: </span>  <span class=
+"org-keyword">if</span> (i === <span class=
+"org-highlight-numbers-number">1</span>) add(i);
+<span class=
+"linenr">5: </span>  console.log({ i, v: nums[i], l: nums.length });
+<span class="linenr">6: </span>}
+</pre>
+          </div>
+          <div class="tip" id="orgddb8388">
+            <p>
+              也就是说当在 for
+              循环中更新被遍历的数组时，是可以被感知到了，因为当在
+              <a href="#org8aecb9f">flushJobs()</a> 中 flush
+              <a
+                href="#coderef-queue"
+                class="coderef"
+                onmouseover="CodeHighlightOn(this, 'coderef-queue');"
+                onmouseout="CodeHighlightOff(this, 'coderef-queue');"
+                >queue</a
+              >
+              中的 jobs 时，如果有嵌套使用的情况是可以被感知并且会 在当次的 for
+              循环体系中被执行到。
+            </p>
+          </div>
+        </div>
+      </div>
+      <div id="outline-container-orgd503779" class="outline-2">
+        <h2 id="orgd503779">
+          <span class="section-number-2">6.</span> queueFlush()
+        </h2>
+        <div class="outline-text-2" id="text-6">
+          <p>
+            这个函数的作用是：当用任务入列就启动 flush 动作去刷新队列中的任务。
+          </p>
+          <div class="org-src-container">
+            <pre class="src src-js" id="orgfd69722"><span class=
+          "linenr">1: </span><span class=
+          "org-keyword">function</span> <span class=
+          "org-function-name">queueFlush</span>() {
+<span class="linenr">2: </span>  log(<span class=
+"org-string">`queueFlush| isFlushing=${isFlushing},isFlushPending=${isFlushPending}`</span>)
+<span class="linenr">3: </span>  <span class=
+"org-keyword">if</span> (!isFlushing &amp;& !isFlushPending) {
+<span class="linenr">4: </span>    isFlushPending = <span class=
+"org-constant">true</span>
+<span class=
+"linenr">5: </span>    currentFlushPromise = resolvedPromise.then(flushJobs)
+<span class="linenr">6: </span>  }
+<span class="linenr">7: </span>}
+</pre>
+          </div>
+        </div>
+      </div>
+      <div id="outline-container-orgc1d9083" class="outline-2">
+        <h2 id="orgc1d9083">
+          <span class="section-number-2">7.</span> flushJobs()
+        </h2>
+        <div class="outline-text-2" id="text-7">
+          <p>三种任务执行的顺序： pre cbs -&gt; jobs -&gt; post cbs 。</p>
+          <div class="org-src-container">
+            <pre class="src src-js" id="org8aecb9f"><span class=
+          "linenr"> 1: </span><span class=
+          "org-keyword">function</span> <span class=
+          "org-function-name">flushJobs</span>(<span class=
+          "org-variable-name">seen</span>) {
+<span class="linenr"> 2: </span>  <span class=
+"org-comment-delimiter">// </span><span class=
+"org-comment">这个函数里面都是同步操作</span>
+<span class="linenr"> 3: </span>  isFlushPending = <span class=
+"org-constant">false</span>
+<span class="linenr"> 4: </span>  isFlushing = <span class=
+"org-constant">true</span>
+<span class="linenr"> 5: </span>
+<span class="linenr"> 6: </span>  log(<span class=
+"org-string">`flushJobs| seen=${seen}, queue=${queue.length},flushIndex=${flushIndex},isFlushing=${isFlushing}`</span>)
+<span class="linenr"> 7: </span>
+<span class="linenr"> 8: </span>  flushPreFlushCbs(seen)
+<span class="linenr"> 9: </span>
+<span class="linenr">10: </span>  <span class=
+"org-comment-delimiter">// </span><span class=
+"org-comment">pre jobs</span>
+<span class="linenr">11: </span>
+<span class="linenr">12: </span>  <span class=
+"org-comment-delimiter">// </span><span class=
+"org-comment">在 flush 之前对任务排序，确保：</span>
+<span class="linenr">13: </span>  <span class=
+"org-comment-delimiter">// </span><span class=
+"org-comment">1. 组件总从 parent -&gt; child 更新，因为父组件总是会在子组件之前被渲染，因此它的渲染函数应该具备更小优先级</span>
+<span class="linenr">14: </span>  <span class=
+"org-comment-delimiter">// </span><span class=
+"org-comment">2. 如果一个组件在父组件更新阶段被卸载了那么它的更新可以直接忽略</span>
+<span class=
+"linenr">15: </span>  queue.sort((a, b) =&gt; getId(a) - getId(b))
+<span class="linenr">16: </span>
+<span class="linenr">17: </span>  <span class=
+"org-keyword">try</span> {
+<span class="linenr">18: </span>    <span class=
+"org-keyword">for</span> (flushIndex = <span class=
+"org-highlight-numbers-number">0</span>; flushIndex &lt; queue.length; flushIndex++) {
+<span class="linenr">19: </span>      <span class=
+"org-keyword">const</span> <span class=
+"org-variable-name">job</span> = queue[flushIndex]
+<span class="linenr">20: </span>      <span class=
+"org-keyword">if</span> (job &amp;& job.active !== <span class=
+"org-constant">false</span>) {
+<span class=
+"linenr">21: </span>        callWithErrorHandling(job, <span class=
+"org-constant">null</span>, Error)
+<span class="linenr">22: </span>      }
+<span class="linenr">23: </span>    }
+<span class="linenr">24: </span>  } <span class=
+"org-keyword">finally</span> {
+<span class="linenr">25: </span>    <span class=
+"org-comment-delimiter">// </span><span class=
+"org-comment">当前任务队列已经清空了</span>
+<span class="linenr">26: </span>    flushIndex = <span class=
+"org-highlight-numbers-number">0</span>
+<span class="linenr">27: </span>    queue.length = <span class=
+"org-highlight-numbers-number">0</span>
+<span class="linenr">28: </span>
+<span class="linenr">29: </span>    <span class=
+"org-comment-delimiter">// </span><span class=
+"org-comment">flush post</span>
+<span class="linenr">30: </span>    flushPostFlushCbs(seen)
+<span class="linenr">31: </span>
+<span class="linenr">32: </span>    isFlushing = <span class=
+"org-constant">false</span>
+<span class="linenr">33: </span>    <span class=
+"org-comment-delimiter">// </span><span class=
+"org-comment">一次队列对应一个 flush promise</span>
+<span class=
+"linenr">34: </span>    currentFlushPromise = <span class=
+"org-constant">null</span>
+<span class="linenr">35: </span>    log(<span class=
+"org-string">`flushJobs| queue=${queue.length},pendingPreFlushCbs=${pendingPreFlushCbs.length},pendingPostFlushCbs=${pendingPostFlushCbs.length}`</span>)
+<span class="linenr">36: </span>    <span class=
+"org-comment-delimiter">// </span><span class=
+"org-comment">在 flush 过程中加入的任务</span>
+<span class="linenr">37: </span>    <span class=
+"org-keyword">if</span> (queue.length || pendingPreFlushCbs.length || pendingPostFlushCbs.length) {
+<span class="linenr">38: </span>      flushJobs(seen)
+<span class="linenr">39: </span>    }
+<span class="linenr">40: </span>  }
+<span class="linenr">41: </span>}
+</pre>
+          </div>
+          <p>增加 pre cbs flush 代码。</p>
+          <div class="org-src-container">
+            <pre class="src src-diff" id="org65df487"><span class=
+          "org-diff-context">function flushJobs(seen) {</span>
+<span class="org-diff-context">  // 这个函数里面都是同步操作</span>
+<span class="org-diff-context">  isFlushPending = false</span>
+<span class="org-diff-context">  isFlushing = true</span>
+
+<span class=
+"org-diff-context">  log(`flushJobs| seen=${seen}, queue=${queue.length},flushIndex=${flushIndex},isFlushing=${isFlushing}`)</span>
+
+<span class="org-diff-indicator-added">+</span><span class=
+"org-diff-added">  flushPreFlushCbs(seen)</span>
+
+<span class="org-diff-context">  // 在 flush 之前对任务排序，确保：</span>
+<span class=
+"org-diff-context">  // 1. 组件总从 parent -&gt; child 更新，因为父组件总是会在子组件之前被渲染，因此它的渲染函数应该具备更小优先级</span>
+<span class=
+"org-diff-context">  // 2. 如果一个组件在父组件更新阶段被卸载了那么它的更新可以直接忽略</span>
+<span class=
+"org-diff-context">  queue.sort((a, b) =&gt; getId(a) - getId(b))</span>
+
+<span class="org-diff-context">  try {</span>
+<span class=
+"org-diff-context">    for (flushIndex = 0; flushIndex &lt; queue.length; flushIndex++) {</span>
+<span class=
+"org-diff-context">      const job = queue[flushIndex]</span>
+<span class=
+"org-diff-context">      if (job &amp;& job.active !== false) {</span>
+<span class=
+"org-diff-context">        callWithErrorHandling(job, null, Error)</span>
+<span class="org-diff-context">      }</span>
+<span class="org-diff-context">    }</span>
+<span class="org-diff-context">  } finally {</span>
+<span class="org-diff-context">    // 当前任务队列已经清空了</span>
+<span class="org-diff-context">    flushIndex = 0</span>
+<span class="org-diff-context">    queue.length = 0</span>
+
+<span class="org-diff-context">    // flush post</span>
+
+<span class="org-diff-context">    isFlushing = false</span>
+<span class="org-diff-context">    // 一次队列对应一个 flush promise</span>
+<span class=
+"org-diff-context">    currentFlushPromise = null</span>
+<span class=
+"org-diff-context">    log(`flushJobs| queue=${queue.length},pendingPreFlushCbs=${pendingPreFlushCbs.length},pendingPostFlushCbs=${pendingPostFlushCbs.length}`)</span>
+<span class="org-diff-context">    // 在 flush 过程中加入的任务</span>
+<span class=
+"org-diff-context">    if (queue.length || pendingPreFlushCbs.length || pendingPostFlushCbs.length) {</span>
+<span class="org-diff-context">      flushJobs(seen)</span>
+<span class="org-diff-context">    }</span>
+<span class="org-diff-context">  }</span>
+}
+</pre>
+          </div>
+          <p>增加 post cbs flush 代码。</p>
+          <div class="org-src-container">
+            <pre class="src src-diff" id="orgfd4f093"><span class=
+          "org-diff-context">function flushJobs(seen) {</span>
+<span class="org-diff-context">  // 这个函数里面都是同步操作</span>
+<span class="org-diff-context">  isFlushPending = false</span>
+<span class="org-diff-context">  isFlushing = true</span>
+
+<span class=
+"org-diff-context">  log(`flushJobs| seen=${seen}, queue=${queue.length},flushIndex=${flushIndex},isFlushing=${isFlushing}`)</span>
+
+<span class="org-diff-context">  flushPreFlushCbs(seen)</span>
+
+<span class="org-diff-context">  // pre jobs</span>
+
+<span class="org-diff-context">  // 在 flush 之前对任务排序，确保：</span>
+<span class=
+"org-diff-context">  // 1. 组件总从 parent -&gt; child 更新，因为父组件总是会在子组件之前被渲染，因此它的渲染函数应该具备更小优先级</span>
+<span class=
+"org-diff-context">  // 2. 如果一个组件在父组件更新阶段被卸载了那么它的更新可以直接忽略</span>
+<span class=
+"org-diff-context">  queue.sort((a, b) =&gt; getId(a) - getId(b))</span>
+
+<span class="org-diff-context">  try {</span>
+<span class=
+"org-diff-context">    for (flushIndex = 0; flushIndex &lt; queue.length; flushIndex++) {</span>
+<span class=
+"org-diff-context">      const job = queue[flushIndex]</span>
+<span class=
+"org-diff-context">      if (job &amp;& job.active !== false) {</span>
+<span class=
+"org-diff-context">        callWithErrorHandling(job, null, Error)</span>
+<span class="org-diff-context">      }</span>
+<span class="org-diff-context">    }</span>
+<span class="org-diff-context">  } finally {</span>
+<span class="org-diff-context">    // 当前任务队列已经清空了</span>
+<span class="org-diff-context">    flushIndex = 0</span>
+<span class="org-diff-context">    queue.length = 0</span>
+
+<span class="org-diff-context">    // flush post</span>
+<span class="org-diff-indicator-added">+</span><span class=
+"org-diff-added">   flushPostFlushCbs(seen)</span>
+
+<span class="org-diff-context">    isFlushing = false</span>
+<span class="org-diff-context">    // 一次队列对应一个 flush promise</span>
+<span class=
+"org-diff-context">    currentFlushPromise = null</span>
+<span class=
+"org-diff-context">    log(`flushJobs| queue=${queue.length},pendingPreFlushCbs=${pendingPreFlushCbs.length},pendingPostFlushCbs=${pendingPostFlushCbs.length}`)</span>
+<span class="org-diff-context">    // 在 flush 过程中加入的任务</span>
+<span class=
+"org-diff-context">    if (queue.length || pendingPreFlushCbs.length || pendingPostFlushCbs.length) {</span>
+<span class="org-diff-context">      flushJobs(seen)</span>
+<span class="org-diff-context">    }</span>
+<span class="org-diff-context">  }</span>
+}
+</pre>
+          </div>
+        </div>
+      </div>
+      <div id="outline-container-orgcb07538" class="outline-2">
+        <h2 id="orgcb07538">
+          <span class="section-number-2">8.</span> queueCb()
+        </h2>
+        <div class="outline-text-2" id="text-8">
+          <p>这个函数主要是用来对 pre 和 post 类型的 cb 入列函数。</p>
+          <p>
+            对比 <code>queueCb</code> 和
+            <a href="#org0ef9623">queueJob</a>
+            会发现两者没多大的差别，先同步收集再异步 flush(<a href="#orgfd69722"
+              >queueFlush()</a
+            >
+            -&gt;
+            <a href="#org8aecb9f">flushJobs</a>)，两者判断条件有细微差别，另外
+            <a href="#org0ef9623">queueJob</a> 支持数组 形式的 cb：
+          </p>
+          <div class="org-src-container">
+            <pre class="src src-js" id="org66c98bd"><span class=
+          "linenr"> 1: </span><span class=
+          "org-keyword">function</span> <span class=
+          "org-function-name">queueCb</span>(<span class=
+          "org-variable-name">cb</span>, <span class=
+          "org-variable-name">activeQueue</span>, <span class=
+          "org-variable-name">pendingQueue</span>, <span class=
+          "org-variable-name">index</span>) {
+<span class="linenr"> 2: </span>  <span class=
+"org-keyword">if</span> (!isArray(cb)) {
+<span class="linenr"> 3: </span>    <span class=
+"org-keyword">if</span> (!activeQueue || !activeQueue.includes(cb, cb.allowRecurse ? index + <span class="org-highlight-numbers-number">1</span> : index)) {
+<span class="linenr"> 4: </span>      pendingQueue.push(cb)
+<span class="linenr"> 5: </span>    }
+<span class="linenr"> 6: </span>  } <span class=
+"org-keyword">else</span> {
+<span class="linenr"> 7: </span>    pendingQueue.push(...cb)
+<span class="linenr"> 8: </span>  }
+<span class="linenr"> 9: </span>  queueFlush()
+<span class="linenr">10: </span>}
+</pre>
+          </div>
+        </div>
+      </div>
+      <div id="outline-container-orgd6efab9" class="outline-2">
+        <h2 id="orgd6efab9">
+          <span class="section-number-2">9.</span> queuePreFlushCb()
+        </h2>
+        <div class="outline-text-2" id="text-9">
+          <div class="org-src-container">
+            <pre class="src src-js" id="org43e1d3b"><span class=
+          "linenr">1: </span><span class=
+          "org-keyword">function</span> <span class=
+          "org-function-name">queuePreFlushCb</span>(<span class=
+          "org-variable-name">cb</span>) {
+<span class=
+"linenr">2: </span>  queueCb(cb, activePreFlushCbs, pendingPreFlushCbs, preFlushIndex)
+<span class="linenr">3: </span>}
+</pre>
+          </div>
+        </div>
+      </div>
+      <div id="outline-container-org91e48f4" class="outline-2">
+        <h2 id="org91e48f4">
+          <span class="section-number-2">10.</span> flushPreFlushCbs()
+        </h2>
+        <div class="outline-text-2" id="text-10">
+          <div class="org-src-container">
+            <pre class="src src-js" id="org66391f0"><span class=
+          "linenr"> 1: </span><span class=
+          "org-keyword">function</span> <span class=
+          "org-function-name">flushPreFlushCbs</span>(<span class=
+          "org-variable-name">seen</span>, <span class=
+          "org-variable-name">parentJob</span>) {
+<span class="linenr"> 2: </span>  <span class=
+"org-keyword">if</span> (pendingPreFlushCbs.length) {
+<span class=
+"linenr"> 3: </span>    currentPreFlushParentJob = parentJob
+<span class=
+"linenr"> 4: </span>    activePreFlushCbs = [...<span class=
+"org-keyword">new</span> <span class=
+"org-type">Set</span>(pendingPreFlushCbs)]
+<span class="linenr"> 5: </span>    <span class=
+"org-comment-delimiter">// </span><span class=
+"org-comment">重置以接纳新的任务</span>
+<span class=
+"linenr"> 6: </span>    pendingPreFlushCbs.length = <span class=
+"org-highlight-numbers-number">0</span>
+<span class="linenr"> 7: </span>    <span class=
+"org-keyword">for</span> (preFlushIndex = <span class=
+"org-highlight-numbers-number">0</span>; preFlushIndex &lt; activePreFlushCbs.length; preFlushIndex++) {
+<span class=
+"linenr"> 8: </span>      activePreFlushCbs[preFlushIndex]()
+<span class="linenr"> 9: </span>    }
+<span class="linenr">10: </span>
+<span class=
+"linenr">11: </span>    activePreFlushCbs = <span class="org-constant">null</span>
+<span class="linenr">12: </span>    preFlushIndex = <span class=
+"org-highlight-numbers-number">0</span>
+<span class=
+"linenr">13: </span>    currentPreFlushParentJob = <span class=
+"org-constant">null</span>
+<span class="linenr">14: </span>
+<span class="linenr">15: </span>    <span class=
+"org-comment-delimiter">// </span><span class=
+"org-comment">递归直到清空所以 pre 任务</span>
+<span class=
+"linenr">16: </span>    flushPreFlushCbs(seen, parentJob)
+<span class="linenr">17: </span>  }
+<span class="linenr">18: </span>}
+</pre>
+          </div>
+          <p>与 pre cbs 有关的:</p>
+          <p>
+            <a
+              href="#coderef-preFlushIndex"
+              class="coderef"
+              onmouseover="CodeHighlightOn(this, 'coderef-preFlushIndex');"
+              onmouseout="CodeHighlightOff(this, 'coderef-preFlushIndex');"
+              >preFlushIndex</a
+            >
+            -&gt;
+            <a
+              href="#coderef-pendingPreFlushCbs"
+              class="coderef"
+              onmouseover="CodeHighlightOn(this, 'coderef-pendingPreFlushCbs');"
+              onmouseout="CodeHighlightOff(this, 'coderef-pendingPreFlushCbs');"
+              >pendingPreFlushCbs</a
+            >
+            -&gt;
+            <a
+              href="#coderef-activePreFlushCbs"
+              class="coderef"
+              onmouseover="CodeHighlightOn(this, 'coderef-activePreFlushCbs');"
+              onmouseout="CodeHighlightOff(this, 'coderef-activePreFlushCbs');"
+              >activePreFlushCbs</a
+            >
+            -&gt; <a href="#org43e1d3b">queuePreFlushCb()</a> -&gt;
+            <a href="#org66391f0">flushPreFlushCbs()</a> -&gt;
+            <a href="#org8aecb9f">flushJobs()</a>
+          </p>
+          <p>
+            <a
+              href="#coderef-activePreFlushCbs"
+              class="coderef"
+              onmouseover="CodeHighlightOn(this, 'coderef-activePreFlushCbs');"
+              onmouseout="CodeHighlightOff(this, 'coderef-activePreFlushCbs');"
+              >activePreFlushCbs</a
+            >
+            和
+            <a
+              href="#coderef-pendingPreFlushCbs"
+              class="coderef"
+              onmouseover="CodeHighlightOn(this, 'coderef-pendingPreFlushCbs');"
+              onmouseout="CodeHighlightOff(this, 'coderef-pendingPreFlushCbs');"
+              >pendingPreFlushCbs</a
+            >
+            的关系： 前者是后者的一个拷贝， 拷贝完会 立即清空 pending,
+            目的是为了让 pending 在 active flushing 期间能继续收集新的任务，
+            这样如果在执行期间有新的任务入列，那么在函数最后的递归操作会对这些新入列的任务继
+            续 flush 掉，直到再也没有新的任务入列为止。
+          </p>
+          <div class="tip" id="orgf2058fe">
+            <p>
+              当 <a href="#org43e1d3b">queuePreFlushCb</a> 在
+              <a href="#org0ef9623">queueJob</a> 中使用时不会主动触发 cbs
+              执行，如果 需要立即执行 这些 cbs 需要手动调用
+              <a href="#org66391f0">flushPreFlushCbs(seen, parentJob)</a> 去刷掉
+              pre cbs 任务，或 者等到当前 job 执行完了下一个
+              <a href="#org8aecb9f">flushJobs()</a> 调用中执行，因为
+              <a href="#org0ef9623">queueJob()</a> 执行期间
+              <code>isFlushing = true</code> ，而在
+              <a href="#orgfd69722">queueFlush()</a> 中有检测这个值，
+              如果正在执行 flushing 是 不会继续执行的。
+            </p>
+          </div>
+          <p>
+            用途： 通过全局搜索 <a href="#org43e1d3b">queuePreFlushCb</a> 只有在
+            <a
+              href="https://github.com/vuejs/core/blob/main/packages/runtime-core/src/apiWatch.ts"
+            >
+              core/apiWatch.ts at main · vuejs/core</a
+            >
+            <span style="color: green">watch</span> 中被调用，且默认就是 pre
+            类型。
+          </p>
+          <div id="org92ba677" class="figure">
+            <p>
+              <img
+                src="../assets/img/vue3plus/s/queuePreFlushCb.png"
+                alt="queuePreFlushCb.png"
+              />
+            </p>
+          </div>
+          <div class="org-src-container">
+            <pre class="src src-typescript"><span class=
+          "linenr"> 1: </span><span class=
+          "org-comment-delimiter">// </span><span class=
+          "org-comment">default: 'pre'</span>
+<span class="linenr"> 2: </span><span class=
+"org-keyword">function</span> <span class=
+"org-function-name">doWatch</span><span class=
+"org-rainbow-delimiters-depth-1">(</span>
+<span class="linenr"> 3: </span>  source: <span class=
+"org-type">WatchSource</span> | WatchSource<span class=
+"org-rainbow-delimiters-depth-2">[]</span> | WatchEffect | <span class="org-keyword">object</span>,
+<span class="linenr"> 4: </span>  cb: <span class=
+"org-type">WatchCallback</span> | <span class=
+"org-constant">null</span>,
+<span class="linenr"> 5: </span>  <span class=
+"org-rainbow-delimiters-depth-2">{</span> immediate, deep, flush, onTrack, onTrigger <span class="org-rainbow-delimiters-depth-2">}</span>: <span class="org-type">WatchOptions</span> = EMPTY_OBJ,
+<span class="linenr"> 6: </span>  instance = currentInstance
+<span class="linenr"> 7: </span><span class=
+"org-rainbow-delimiters-depth-1">)</span>: <span class=
+"org-type">WatchStopHandle</span> <span class=
+"org-rainbow-delimiters-depth-1">{</span>
+<span class="linenr"> 8: </span>  <span class=
+"org-comment-delimiter">// </span><span class=
+"org-comment">...</span>
+<span class="linenr"> 9: </span>  <span class=
+"org-keyword">let</span> <span class=
+"org-variable-name">scheduler</span>: <span class=
+"org-type">ReactiveEffectOptions</span><span class=
+"org-rainbow-delimiters-depth-2">[</span><span class=
+"org-string">"scheduler"</span><span class=
+"org-rainbow-delimiters-depth-2">]</span>;
+<span class="linenr">10: </span>  <span class=
+"org-keyword">if</span> <span class=
+"org-rainbow-delimiters-depth-2">(</span>flush === <span class=
+"org-string">"sync"</span><span class=
+"org-rainbow-delimiters-depth-2">)</span> <span class=
+"org-rainbow-delimiters-depth-2">{</span>
+<span class="linenr">11: </span>    <span class=
+"org-comment-delimiter">// </span><span class=
+"org-comment">...</span>
+<span class="linenr">12: </span>  <span class=
+"org-rainbow-delimiters-depth-2">}</span> <span class=
+"org-keyword">else</span> <span class=
+"org-keyword">if</span> <span class=
+"org-rainbow-delimiters-depth-2">(</span>flush === <span class=
+"org-string">"post"</span><span class=
+"org-rainbow-delimiters-depth-2">)</span> <span class=
+"org-rainbow-delimiters-depth-2">{</span>
+<span class="linenr">13: </span>    <span class=
+"org-comment-delimiter">// </span><span class=
+"org-comment">...</span>
+<span class="linenr">14: </span>  <span class=
+"org-rainbow-delimiters-depth-2">}</span> <span class=
+"org-keyword">else</span> <span class=
+"org-rainbow-delimiters-depth-2">{</span>
+<span class="linenr">15: </span>    <span class=
+"org-comment-delimiter">// </span><span class=
+"org-comment">default: 'pre'</span>
+<span class="linenr">16: </span>    scheduler = <span class=
+"org-rainbow-delimiters-depth-3">()</span> <span class=
+"org-keyword">=&gt;</span> <span class=
+"org-rainbow-delimiters-depth-3">{</span>
+<span class="linenr">17: </span>      <span class=
+"org-keyword">if</span> <span class=
+"org-rainbow-delimiters-depth-4">(</span>!instance || instance.isMounted<span class="org-rainbow-delimiters-depth-4">)</span> <span class="org-rainbow-delimiters-depth-4">{</span>
+<span class="linenr">18: </span>        <span class=
+"org-function-name">queuePreFlushCb</span><span class=
+"org-rainbow-delimiters-depth-1">(</span>job<span class=
+"org-rainbow-delimiters-depth-1">)</span>;
+<span class="linenr">19: </span>      <span class=
+"org-rainbow-delimiters-depth-4">}</span> <span class=
+"org-keyword">else</span> <span class=
+"org-rainbow-delimiters-depth-4">{</span>
+<span class="linenr">20: </span>        <span class=
+"org-comment-delimiter">// </span><span class=
+"org-comment">with 'pre' option, the first call must happen before</span>
+<span class="linenr">21: </span>        <span class=
+"org-comment-delimiter">// </span><span class=
+"org-comment">the component is mounted so it is called synchronously.</span>
+<span class="linenr">22: </span>        <span class=
+"org-function-name">job</span><span class=
+"org-rainbow-delimiters-depth-1">()</span>;
+<span class="linenr">23: </span>      <span class=
+"org-rainbow-delimiters-depth-4">}</span>
+<span class="linenr">24: </span>    <span class=
+"org-rainbow-delimiters-depth-3">}</span>;
+<span class="linenr">25: </span>  <span class=
+"org-rainbow-delimiters-depth-2">}</span>
+<span class="linenr">26: </span>  <span class=
+"org-comment-delimiter">// </span><span class=
+"org-comment">...</span>
+<span class="linenr">27: </span><span class=
+"org-rainbow-delimiters-depth-1">}</span>
+</pre>
+          </div>
+          <p><span style="color: red">Testing</span></p>
+          <div class="org-src-container">
+            <pre class="src src-js"><span class=
+          "linenr"> 1: </span><span class=
+          "org-comment-delimiter">// </span><span class=
+          "org-comment">源文件：/js/vue/lib.js</span>
+<span class="linenr"> 2: </span>&lt;&lt;scheduler&gt;&gt;
+<span class="linenr"> 3: </span>
+<span class="linenr"> 4: </span>;(<span class=
+"org-keyword">async</span> <span class=
+"org-keyword">function</span>() {
+<span class="linenr"> 5: </span>  <span class=
+"org-keyword">const</span> <span class=
+"org-variable-name">calls</span> = [];
+<span id="coderef-test-pre-job-1" class="coderef-off"><span class=
+"linenr"> 6: </span>  <span class=
+"org-keyword">const</span> <span class=
+"org-variable-name">job1</span> = () =&gt; {</span>
+<span id="coderef-test-pre-queue-1" class=
+"coderef-off"><span class="linenr"> 7: </span>    queuePreFlushCb(cb1);</span>
+<span id="coderef-test-pre-queue-2" class=
+"coderef-off"><span class="linenr"> 8: </span>    queuePreFlushCb(cb2);</span>
+<span class="linenr"> 9: </span>    <span class=
+"org-comment-delimiter">// </span><span class=
+"org-comment">手动触发 cb1, cb2</span>
+<span id="coderef-test-pre-flush-1" class=
+"coderef-off"><span class="linenr">10: </span>    flushPreFlushCbs(<span class="org-constant">undefined</span>, job1);</span>
+<span id="coderef-test-pre-push-1" class="coderef-off"><span class=
+"linenr">11: </span>    calls.push(<span class=
+"org-string">"job1"</span>);</span>
+<span class="linenr">12: </span>  };
+<span id="coderef-test-pre-push-cb-1" class=
+"coderef-off"><span class="linenr">13: </span>  <span class=
+"org-keyword">const</span> <span class=
+"org-variable-name">cb1</span> = () =&gt; calls.push(<span class=
+"org-string">"cb1"</span>);</span>
+<span id="coderef-test-pre-push-cb-2" class=
+"coderef-off"><span class="linenr">14: </span>  <span class=
+"org-keyword">const</span> <span class=
+"org-variable-name">cb2</span> = () =&gt; calls.push(<span class=
+"org-string">"cb2"</span>);</span>
+<span class="linenr">15: </span>
+<span id="coderef-test-pre-queue-job1" class=
+"coderef-off"><span class=
+"linenr">16: </span>  queueJob(job1);</span>
+<span id="coderef-test-pre-next-tick" class=
+"coderef-off"><span class="linenr">17: </span>  <span class=
+"org-keyword">await</span> nextTick();</span>
+<span id="coderef-test-pre-log-calls" class=
+"coderef-off"><span class="linenr">18: </span>  log(calls);</span>
+<span class="linenr">19: </span>}());
+</pre>
+          </div>
+          <pre class="example">
+queueJob| queue=0,job existed=false
+queueFlush| isFlushing=false,isFlushPending=false
+nextTick| queue=1,resolvedPromise=[object Promise],currentFlushPromise=[object Promise]
+undefinedflushJobs| seen=undefined, queue=1,flushIndex=0,isFlushing=true
+queueFlush| isFlushing=true,isFlushPending=false
+queueFlush| isFlushing=true,isFlushPending=false
+flushJobs| queue=0,pendingPreFlushCbs=0,pendingPostFlushCbs=0
+[ 'cb1', 'cb2', 'job1' ]
+</pre
+          >
+          <div id="org340f25d" class="figure">
+            <p>
+              <img
+                src="../assets/img/vue3/runtime-core/vue-runtime-core-test-preflush-inside-queuejob.jpg"
+                alt="vue-runtime-core-test-preflush-inside-queuejob.jpg"
+              />
+            </p>
+          </div>
+          <p>文字分析：</p>
+          <p>
+            <a
+              href="#coderef-test-pre-queue-job1"
+              class="coderef"
+              onmouseover="CodeHighlightOn(this, 'coderef-test-pre-queue-job1');"
+              onmouseout="CodeHighlightOff(this, 'coderef-test-pre-queue-job1');"
+              >16</a
+            >
+            先执行， <a href="#org0ef9623">queueJob</a> -&gt; push job1 -&gt;
+            queue:[job1] -&gt; <a href="#orgfd69722">queueFlush()</a> 在
+            <a href="#orgfd69722">queueFlush()</a> 中调用
+            <code>resolvedPromise.then(flushJobs)</code> 异步执行
+            <a href="#org8aecb9f">flushJobs()</a> 函数刷掉所有任务(pre/job/post)
+          </p>
+          <p>
+            并且记录当前 tick 下的 <code>promise: currentFlushPromise</code>
+          </p>
+          <p>
+            此时的
+            <code>pendingPreFlushCbs[]</code> 中是没有任何任务的，所以继续执行
+            try{…} 开始 flush queue[] jobs，这个时候 flushIndex = 0 得到
+            job1，开始按顺序执行 job1
+          </p>
+          <p>
+            <a
+              href="#coderef-test-pre-job-1"
+              class="coderef"
+              onmouseover="CodeHighlightOn(this, 'coderef-test-pre-job-1');"
+              onmouseout="CodeHighlightOff(this, 'coderef-test-pre-job-1');"
+              >6</a
+            >
+            开始执行
+          </p>
+          <p>
+            <a
+              href="#coderef-test-pre-queue-1"
+              class="coderef"
+              onmouseover="CodeHighlightOn(this, 'coderef-test-pre-queue-1');"
+              onmouseout="CodeHighlightOff(this, 'coderef-test-pre-queue-1');"
+              >7</a
+            >
+            将 cb1 push -&gt; <code>pendingPreFlushCbs=[cb1]</code>
+          </p>
+          <p>
+            <a
+              href="#coderef-test-pre-queue-2"
+              class="coderef"
+              onmouseover="CodeHighlightOn(this, 'coderef-test-pre-queue-2');"
+              onmouseout="CodeHighlightOff(this, 'coderef-test-pre-queue-2');"
+              >8</a
+            >
+            将 cb2 push -&gt; <code>pendingPreFlushCbs=[cb1, cb2]</code>
+          </p>
+          <p>
+            <a
+              href="#coderef-test-pre-flush-1"
+              class="coderef"
+              onmouseover="CodeHighlightOn(this, 'coderef-test-pre-flush-1');"
+              onmouseout="CodeHighlightOff(this, 'coderef-test-pre-flush-1');"
+              >10</a
+            >
+            手动 flush pre cbs
+          </p>
+          <p>
+            在 <code>flushPreFlushCbs(undefined, job1)</code> 中会记录
+            <code>currentPreFlushParentJob = job1</code> 这 个变量将会在
+            <code>queueJob(job)</code> 中用来检测 job 是不是当前的 job1
+            如果是就不允许 push， 因为 job1
+            下有子任务正在执行，必须等这些子任务(cb1, cb2) 执行完。
+          </p>
+          <p>
+            <a
+              href="#coderef-test-pre-push-cb-1"
+              class="coderef"
+              onmouseover="CodeHighlightOn(this, 'coderef-test-pre-push-cb-1');"
+              onmouseout="CodeHighlightOff(this, 'coderef-test-pre-push-cb-1');"
+              >13</a
+            >
+            开始执行， push ’cb1’ -&gt; calls: [’cb1’]
+          </p>
+          <p>
+            <a
+              href="#coderef-test-pre-push-cb-2"
+              class="coderef"
+              onmouseover="CodeHighlightOn(this, 'coderef-test-pre-push-cb-2');"
+              onmouseout="CodeHighlightOff(this, 'coderef-test-pre-push-cb-2');"
+              >14</a
+            >
+            开始执行， push ’cb2’ -&gt; calls: [’cb1’, ’cb2’]
+          </p>
+          <p>
+            <a
+              href="#coderef-test-pre-flush-1"
+              class="coderef"
+              onmouseover="CodeHighlightOn(this, 'coderef-test-pre-flush-1');"
+              onmouseout="CodeHighlightOff(this, 'coderef-test-pre-flush-1');"
+              >10</a
+            >
+            开始执行， push ’job1’ -&gt; alls: [’cb1’, ’cb2’, ’job1’]
+          </p>
+          <p>
+            <a
+              href="#coderef-test-pre-next-tick"
+              class="coderef"
+              onmouseover="CodeHighlightOn(this, 'coderef-test-pre-next-tick');"
+              onmouseout="CodeHighlightOff(this, 'coderef-test-pre-next-tick');"
+              >17</a
+            >
+            开始执行，因为 <code>nextTick()</code>
+          </p>
+          <div class="org-src-container">
+            <pre class="src src-typescript"><span class=
+          "linenr">1: </span><span class=
+          "org-keyword">export</span> <span class=
+          "org-keyword">function</span> <span class=
+          "org-function-name">nextTick</span><span class=
+          "org-rainbow-delimiters-depth-1">(</span>
+<span class="linenr">2: </span>  <span class=
+"org-constant">this</span>: <span class=
+"org-type">ComponentPublicInstance</span> | <span class=
+"org-typescript-primitive">void</span>,
+<span class="linenr">3: </span>  fn?: <span class=
+"org-rainbow-delimiters-depth-2">()</span> <span class=
+"org-keyword">=&gt;</span> <span class=
+"org-typescript-primitive">void</span>
+<span class="linenr">4: </span><span class=
+"org-rainbow-delimiters-depth-1">)</span>: <span class=
+"org-type">Promise</span>&lt;<span class=
+"org-typescript-primitive">void</span>&gt; <span class=
+"org-rainbow-delimiters-depth-1">{</span>
+<span class="linenr">5: </span>  <span class=
+"org-keyword">const</span> <span class=
+"org-variable-name">p</span> = currentFlushPromise || resolvedPromise;
+<span class="linenr">6: </span>  <span class=
+"org-keyword">return</span> fn ? p.<span class=
+"org-function-name">then</span><span class=
+"org-rainbow-delimiters-depth-2">(</span><span class=
+"org-constant">this</span> ? fn.<span class=
+"org-function-name">bind</span><span class=
+"org-rainbow-delimiters-depth-3">(</span><span class=
+"org-constant">this</span><span class=
+"org-rainbow-delimiters-depth-3">)</span> : fn<span class=
+"org-rainbow-delimiters-depth-2">)</span> : p;
+<span class="linenr">7: </span><span class=
+"org-rainbow-delimiters-depth-1">}</span>
+</pre>
+          </div>
+          <p>
+            这里的 await 会等 job1 <code>queueFlush()</code> 触发的
+            <code>promise.then(flushJobs)</code> 返回的 promise
+            完成之后再执行后面的代码。
+          </p>
+          <p>
+            <a
+              href="#coderef-test-pre-log-calls"
+              class="coderef"
+              onmouseover="CodeHighlightOn(this, 'coderef-test-pre-log-calls');"
+              onmouseout="CodeHighlightOff(this, 'coderef-test-pre-log-calls');"
+              >18</a
+            >
+            log 输出 ’cb1,cb2,job1’
+          </p>
+        </div>
+      </div>
+      <div id="outline-container-org6791539" class="outline-2">
+        <h2 id="org6791539">
+          <span class="section-number-2">11.</span> queuePostFlushCb()
+        </h2>
+        <div class="outline-text-2" id="text-11">
+          <div class="org-src-container">
+            <pre class="src src-js" id="org2a4d590"><span class=
+          "linenr">1: </span><span class=
+          "org-keyword">function</span> <span class=
+          "org-function-name">queuePostFlushCb</span>(<span class=
+          "org-variable-name">cb</span>) {
+<span class=
+"linenr">2: </span>  queueCb(cb, activePostFlushCbs, pendingPostFlushCbs, postFlushIndex)
+<span class="linenr">3: </span>}
+</pre>
+          </div>
+        </div>
+      </div>
+      <div id="outline-container-orgee4e8b9" class="outline-2">
+        <h2 id="orgee4e8b9">
+          <span class="section-number-2">12.</span> flushPostFlushCbs()
+        </h2>
+        <div class="outline-text-2" id="text-12">
+          <div class="org-src-container">
+            <pre class="src src-js" id="org25e74f5"><span class=
+          "linenr"> 1: </span><span class=
+          "org-keyword">function</span> <span class=
+          "org-function-name">flushPostFlushCbs</span>(<span class=
+          "org-variable-name">seen</span>) {
+<span class="linenr"> 2: </span>  <span class=
+"org-keyword">if</span> (pendingPostFlushCbs.length) {
+<span class="linenr"> 3: </span>    <span class=
+"org-keyword">const</span> <span class=
+"org-variable-name">deduped</span> = [...<span class=
+"org-keyword">new</span> <span class=
+"org-type">Set</span>(pendingPostFlushCbs)]
+<span class=
+"linenr"> 4: </span>    pendingPostFlushCbs.length = <span class=
+"org-highlight-numbers-number">0</span>
+<span class="linenr"> 5: </span>
+<span class="linenr"> 6: </span>    <span class=
+"org-comment-delimiter">// </span><span class=
+"org-comment">已经有了 active queue, flushPostFlushCbs 嵌套使用时</span>
+<span class="linenr"> 7: </span>    <span class=
+"org-keyword">if</span> (activePostFlushCbs) {
+<span class=
+"linenr"> 8: </span>      activePostFlushCbs.push(...deduped)
+<span class="linenr"> 9: </span>      <span class=
+"org-keyword">return</span>
+<span class="linenr">10: </span>    }
+<span class="linenr">11: </span>
+<span class="linenr">12: </span>    activePostFlushCbs = deduped
+<span class="linenr">13: </span>
+<span class=
+"linenr">14: </span>    activePostFlushCbs.sort((a, b) =&gt; getId(a) - getId(b))
+<span class="linenr">15: </span>
+<span class="linenr">16: </span>    <span class=
+"org-keyword">for</span> (postFlushIndex = <span class=
+"org-highlight-numbers-number">0</span>; postFlushIndex &lt; activePostFlushCbs.length; postFlushIndex++) {
+<span class=
+"linenr">17: </span>      activePostFlushCbs[postFlushIndex]()
+<span class="linenr">18: </span>    }
+<span class="linenr">19: </span>
+<span class=
+"linenr">20: </span>    activePostFlushCbs = <span class=
+"org-constant">null</span>
+<span class="linenr">21: </span>    postFlushIndex = <span class=
+"org-highlight-numbers-number">0</span>
+<span class="linenr">22: </span>  }
+<span class="linenr">23: </span>}
+</pre>
+          </div>
+          <p>和 pre cb 的处理有两个不同点：</p>
+          <ol class="org-ol">
+            <li>
+              非回调形式处理 flushing 期间接受到的新任务，而是通过改变执行器
+              <code>activePostFlushCbs</code> 来实现(和 queue job 类似)
+            </li>
+            <li>
+              没有递归回调形式处理后续的新任务，参考
+              <span style="color: red">1</span>
+            </li>
+          </ol>
+          <div class="org-src-container">
+            <pre class="src src-js"><span class=
+          "linenr"> 1: </span><span class=
+          "org-comment-delimiter">// </span><span class=
+          "org-comment">源文件：/js/vue/lib.js</span>
+<span class="linenr"> 2: </span>&lt;&lt;scheduler&gt;&gt;
+<span class="linenr"> 3: </span>
+<span class="linenr"> 4: </span><span class=
+"org-comment-delimiter">// </span><span class=
+"org-comment">len = activePostFlushCbs.length</span>
+<span class="linenr"> 5: </span><span class=
+"org-keyword">const</span> <span class=
+"org-variable-name">run</span> = <span class=
+"org-keyword">async</span> () =&gt; {
+<span class="linenr"> 6: </span>  <span class=
+"org-keyword">const</span> <span class=
+"org-variable-name">calls</span> = [];
+<span class="linenr"> 7: </span>  <span class=
+"org-keyword">const</span> <span class=
+"org-variable-name">cb1</span> = () =&gt; {
+<span class="linenr"> 8: </span>    calls.push(<span class=
+"org-string">"cb1"</span>);
+<span class="linenr"> 9: </span>    <span class=
+"org-comment-delimiter">// </span><span class=
+"org-comment">会在同一个 tick 期间执行，因为它在for flushing 期间改变了</span>
+<span class="linenr">10: </span>    <span class=
+"org-comment-delimiter">// </span><span class=
+"org-comment">activePostFlushCbs，并且紧随 cb1,cb2,cb3 之后执行</span>
+<span class="linenr">11: </span>    queuePostFlushCb(cb4);
+<span class="linenr">12: </span>  };
+<span class="linenr">13: </span>  <span class=
+"org-keyword">const</span> <span class=
+"org-variable-name">cb2</span> = () =&gt; calls.push(<span class=
+"org-string">"cb2"</span>);
+<span class="linenr">14: </span>  <span class=
+"org-keyword">const</span> <span class=
+"org-variable-name">cb3</span> = () =&gt; calls.push(<span class=
+"org-string">"cb3"</span>);
+<span class="linenr">15: </span>  <span class=
+"org-comment-delimiter">// </span><span class=
+"org-comment">job1 会在 cb4 之后执行，因为 flushJobs 在按顺序执行完</span>
+<span class="linenr">16: </span>  <span class=
+"org-comment-delimiter">// </span><span class=
+"org-comment">pre -&gt; job -&gt; post 最后的 finally 里面对 queue 进行了检测</span>
+<span class="linenr">17: </span>  <span class=
+"org-comment-delimiter">// </span><span class=
+"org-comment">此时 queue = [job1] 随意会递归调用 flushJobs() 继续刷</span>
+<span class="linenr">18: </span>  <span class=
+"org-comment-delimiter">// </span><span class=
+"org-comment">但是为什么 cb5 会在 job1 之后呢？？？</span>
+<span class="linenr">19: </span>  <span class=
+"org-comment-delimiter">// </span><span class=
+"org-comment">因为 queuePostFlushCb push 的是 pendingPostFlushCbs 而不是</span>
+<span class="linenr">20: </span>  <span class=
+"org-comment-delimiter">// </span><span class=
+"org-comment">activePostFlushCbs，所以在 queuePostFlushCb 中调用自身增加的新</span>
+<span class="linenr">21: </span>  <span class=
+"org-comment-delimiter">// </span><span class=
+"org-comment">cbs 会在 finally 后面的检测递归 flushJobs() 调用中执行</span>
+<span class="linenr">22: </span>  <span class=
+"org-comment-delimiter">// </span><span class=
+"org-comment">而 post 的优先级又低于 job 所以 job1 会优先输出</span>
+<span class="linenr">23: </span>  <span class=
+"org-keyword">const</span> <span class=
+"org-variable-name">cb4</span> = () =&gt; (queuePostFlushCb(cb5), queueJob(job1), calls.push(<span class="org-string">"cb4"</span>));
+<span class="linenr">24: </span>  <span class=
+"org-comment-delimiter">// </span><span class=
+"org-comment">会在 job1,cb5 之后执行</span>
+<span class="linenr">25: </span>  <span class=
+"org-keyword">const</span> <span class=
+"org-variable-name">job1</span> = () =&gt; (queuePostFlushCb(cb6), calls.push(<span class="org-string">"job1"</span>));
+<span class="linenr">26: </span>  <span class=
+"org-keyword">const</span> <span class=
+"org-variable-name">cb5</span> = () =&gt; calls.push(<span class=
+"org-string">"cb5"</span>);
+<span class="linenr">27: </span>  <span class=
+"org-keyword">const</span> <span class=
+"org-variable-name">cb6</span> = () =&gt; calls.push(<span class=
+"org-string">"cb6"</span>);
+<span class="linenr">28: </span>
+<span class="linenr">29: </span>  queuePostFlushCb([cb1, cb2]);
+<span class="linenr">30: </span>  queuePostFlushCb(cb3);
+<span class="linenr">31: </span>
+<span class="linenr">32: </span>  <span class=
+"org-comment-delimiter">// </span><span class=
+"org-comment">应该去重</span>
+<span class="linenr">33: </span>  queuePostFlushCb([cb1, cb3]);
+<span class="linenr">34: </span>  queuePostFlushCb(cb2);
+<span class="linenr">35: </span>  <span class=
+"org-keyword">await</span> nextTick();
+<span class="linenr">36: </span>  log(calls);
+<span class="linenr">37: </span>};
+<span class="linenr">38: </span>run();
+</pre>
+          </div>
+          <pre class="example" id="orgda83cf3">
+queueFlush| isFlushing=false,isFlushPending=false
+queueFlush| isFlushing=false,isFlushPending=true
+queueFlush| isFlushing=false,isFlushPending=true
+queueFlush| isFlushing=false,isFlushPending=true
+nextTick| queue=0,resolvedPromise=[object Promise],currentFlushPromise=[object Promise]
+undefinedflushJobs| seen=undefined, queue=0,flushIndex=0,isFlushing=true
+queueFlush| isFlushing=true,isFlushPending=false
+flushJobs| queue=0,pendingPreFlushCbs=0,pendingPostFlushCbs=1
+flushJobs| seen=undefined, queue=0,flushIndex=0,isFlushing=true
+queueFlush| isFlushing=true,isFlushPending=false
+queueJob| queue=0,job existed=false
+queueFlush| isFlushing=true,isFlushPending=false
+flushJobs| queue=1,pendingPreFlushCbs=0,pendingPostFlushCbs=1
+flushJobs| seen=undefined, queue=1,flushIndex=0,isFlushing=true
+queueFlush| isFlushing=true,isFlushPending=false
+flushJobs| queue=0,pendingPreFlushCbs=0,pendingPostFlushCbs=0
+[
+  'cb1',  'cb2',
+  'cb3',  'cb4',
+  'job1', 'cb5',
+  'cb6'
+]
+</pre
+          >
+          <div class="tip" id="orge51835e">
+            <p>
+              对于 <a href="#org2a4d590">queuePostFlushCb()</a> 和
+              <a href="#org0ef9623">queueJob()</a> 的混用只要记住一点，
+              <a href="#org2a4d590">queuePostFlushCb()</a> 不会触 发
+              <code>activePostFlushCbs</code> 改变，因为 isFlushing =
+              true，所以只会在当前
+              <a href="#org8aecb9f">flushJobs()</a>
+              执行到最后递归检测的时候才会进入下一次的 post+job 调用。
+            </p>
+          </div>
+        </div>
+      </div>
+      <div id="outline-container-orgd309d52" class="outline-2">
+        <h2 id="orgd309d52">
+          <span class="section-number-2">13.</span> invalidateJob()
+        </h2>
+        <div class="outline-text-2" id="text-13">
+          <div class="org-src-container">
+            <pre class="src src-js" id="orgba1c19c"><span class=
+          "linenr">1: </span><span class=
+          "org-keyword">function</span> <span class=
+          "org-function-name">invalidateJob</span>(<span class=
+          "org-variable-name">job</span>) {
+<span class="linenr">2: </span>  <span class=
+"org-keyword">const</span> <span class=
+"org-variable-name">i</span> = queue.indexOf(job)
+<span class="linenr">3: </span>  <span class=
+"org-keyword">if</span> (i &gt; flushIndex) {
+<span class="linenr">4: </span>    queue.splice(i, <span class=
+"org-highlight-numbers-number">1</span>)
+<span class="linenr">5: </span>  }
+<span class="linenr">6: </span>}
+</pre>
+          </div>
+          <p><span style="color: red">Testing</span></p>
+          <div class="org-src-container">
+            <pre class="src src-js"><span class=
+          "linenr"> 1: </span>&lt;&lt;scheduler&gt;&gt;
+<span class="linenr"> 2: </span>
+<span class="linenr"> 3: </span><span class=
+"org-keyword">const</span> <span class=
+"org-variable-name">run</span> = <span class=
+"org-keyword">async</span> () =&gt; {
+<span class="linenr"> 4: </span>  <span class=
+"org-keyword">const</span> <span class=
+"org-variable-name">calls</span> = [];
+<span class="linenr"> 5: </span>  <span class=
+"org-keyword">const</span> <span class=
+"org-variable-name">job1</span> = () =&gt; {
+<span class="linenr"> 6: </span>    calls.push(<span class=
+"org-string">"job1"</span>);
+<span class=
+"linenr"> 7: </span>    invalidateJob(job2); <span class=
+"org-comment-delimiter">// </span><span class=
+"org-comment">这里将 job2 从 queue[] 中删除了</span>
+<span class="linenr"> 8: </span>  };
+<span class="linenr"> 9: </span>  <span class=
+"org-keyword">const</span> <span class=
+"org-variable-name">job2</span> = () =&gt; {
+<span class="linenr">10: </span>    calls.push(<span class=
+"org-string">"job2"</span>);
+<span class="linenr">11: </span>  };
+<span class="linenr">12: </span>  <span class=
+"org-keyword">const</span> <span class=
+"org-variable-name">job3</span> = () =&gt; {
+<span class="linenr">13: </span>    calls.push(<span class=
+"org-string">"job3"</span>);
+<span class="linenr">14: </span>  };
+<span class="linenr">15: </span>  <span class=
+"org-keyword">const</span> <span class=
+"org-variable-name">job4</span> = () =&gt; {
+<span class="linenr">16: </span>    calls.push(<span class=
+"org-string">"job4"</span>);
+<span class="linenr">17: </span>  };
+<span class="linenr">18: </span>
+<span class="linenr">19: </span>  queueJob(job1);
+<span class="linenr">20: </span>  queueJob(job2);
+<span class="linenr">21: </span>  queueJob(job3);
+<span class="linenr">22: </span>  queuePostFlushCb(job4);
+<span class="linenr">23: </span>  <span class=
+"org-keyword">await</span> nextTick();
+<span class="linenr">24: </span>  log(calls);
+<span class="linenr">25: </span>};
+<span class="linenr">26: </span>run();
+</pre>
+          </div>
+          <pre class="example" id="org5661de2">
+queueJob| queue=0,job existed=false
+queueFlush| isFlushing=false,isFlushPending=false
+queueJob| queue=1,job existed=false
+queueFlush| isFlushing=false,isFlushPending=true
+queueJob| queue=2,job existed=false
+queueFlush| isFlushing=false,isFlushPending=true
+queueFlush| isFlushing=false,isFlushPending=true
+nextTick| queue=3,resolvedPromise=[object Promise],currentFlushPromise=[object Promise]
+undefinedflushJobs| seen=undefined, queue=3,flushIndex=0,isFlushing=true
+flushJobs| queue=0,pendingPreFlushCbs=0,pendingPostFlushCbs=0
+[ 'job1', 'job3', 'job4' ]
+</pre
+          >
+        </div>
+      </div>
+      <div id="outline-container-org235177f" class="outline-2">
+        <h2 id="org235177f">
+          <span class="section-number-2">14.</span> allowRecurse
+        </h2>
+        <div class="outline-text-2" id="text-14">
+          <p>
+            这个选项是用来控制是不是可以在 job fn 里面递归调用
+            <code>queueJob(job)</code> 。
+          </p>
+          <p>
+            在源码里这个选项出现在两个地方，一个是
+            <a href="#org66c98bd">queueCb()</a> 中，另一个是
+            <a href="#org0ef9623">queueJob()</a> 作用都是在检查当前入列的 job
+            是不是已经在队列里了，控制查找的起始索引 位置。
+          </p>
+          <p>
+            <span style="color: red">queueJob</span>:
+            <code
+              >!queue.includes(job, isFlushing &amp;& job.allowRecurse ?
+              flushIndex + 1 : flushIndex)</code
+            >
+          </p>
+          <p>
+            <span style="color: red">queueCb</span>:
+            <code
+              >!activeQueue.includes(cb, cb.allowRecurse ? index + 1 :
+              index)</code
+            >
+          </p>
+          <div id="orgb7062c5" class="figure">
+            <p>
+              <img
+                src="../assets/img/vue3/runtime-core/vue-runtime-core-job-allowRecurse.jpg"
+                alt="vue-runtime-core-job-allowRecurse.jpg"
+              />
+            </p>
+          </div>
+          <p>
+            在递归调用时， index 索引上的任务是当前正在被遍历到的 job
+            ，也是递归源，如果从这 里开始找被嵌套的 job 永远进不了队列中。
+          </p>
+          <p><span style="color: red">Testing</span></p>
+          <div class="org-src-container">
+            <pre class="src src-js"><span class=
+          "linenr"> 1: </span>&lt;&lt;scheduler&gt;&gt;
+<span class="linenr"> 2: </span><span class=
+"org-keyword">const</span> <span class=
+"org-variable-name">run</span> = <span class=
+"org-keyword">async</span> () =&gt; {
+<span class="linenr"> 3: </span>  <span class=
+"org-keyword">let</span> <span class=
+"org-variable-name">count</span> = <span class=
+"org-highlight-numbers-number">0</span>;
+<span class="linenr"> 4: </span>  <span class=
+"org-keyword">const</span> <span class=
+"org-variable-name">job</span> = () =&gt; {
+<span class="linenr"> 5: </span>    <span class=
+"org-keyword">if</span> (count &lt; <span class=
+"org-highlight-numbers-number">3</span>) {
+<span class="linenr"> 6: </span>      count++;
+<span class="linenr"> 7: </span>      queueJob(job);
+<span class="linenr"> 8: </span>    }
+<span class="linenr"> 9: </span>  };
+<span class="linenr">10: </span>  queueJob(job);
+<span class="linenr">11: </span>  queueJob(job);
+<span class="linenr">12: </span>  <span class=
+"org-keyword">await</span> nextTick();
+<span class="linenr">13: </span>  log(<span class=
+"org-string">"before count: "</span> + count);
+<span class="linenr">14: </span>  <span class=
+"org-comment-delimiter">// </span><span class=
+"org-comment">设置 allowRecurse = true 允许自我调度</span>
+<span class="linenr">15: </span>  count = <span class=
+"org-highlight-numbers-number">0</span>;
+<span class="linenr">16: </span>  job.allowRecurse = <span class=
+"org-constant">true</span>;
+<span class="linenr">17: </span>  <span class=
+"org-comment-delimiter">// </span><span class=
+"org-comment">重复入列同一个任务会在 push 阶段就检测和自身递归调用不同</span>
+<span class="linenr">18: </span>  queueJob(job);
+<span class="linenr">19: </span>  queueJob(job);
+<span class="linenr">20: </span>  <span class=
+"org-keyword">await</span> nextTick();
+<span class="linenr">21: </span>  log(<span class=
+"org-string">"after count: "</span> + count);
+<span class="linenr">22: </span>};
+<span class="linenr">23: </span>run();
+<span class="linenr">24: </span><span class=
+"org-keyword">return</span> <span class=
+"org-highlight-numbers-number">0</span>
+</pre>
+          </div>
+          <pre class="example" id="org1e057cb">
+queueJob| queue=0,job existed=false
+queueFlush| isFlushing=false,isFlushPending=false
+queueJob| queue=1,job existed=true
+nextTick| queue=1,resolvedPromise=[object Promise],currentFlushPromise=[object Promise]
+0flushJobs| seen=undefined, queue=1,flushIndex=0,isFlushing=true
+queueJob| queue=1,job existed=true
+flushJobs| queue=0,pendingPreFlushCbs=0,pendingPostFlushCbs=0
+before count: 1
+queueJob| queue=0,job existed=false
+queueFlush| isFlushing=false,isFlushPending=false
+queueJob| queue=1,job existed=true
+nextTick| queue=1,resolvedPromise=[object Promise],currentFlushPromise=[object Promise]
+flushJobs| seen=undefined, queue=1,flushIndex=0,isFlushing=true
+queueJob| queue=1,job existed=true
+queueFlush| isFlushing=true,isFlushPending=false
+queueJob| queue=2,job existed=true
+queueFlush| isFlushing=true,isFlushPending=false
+queueJob| queue=3,job existed=true
+queueFlush| isFlushing=true,isFlushPending=false
+flushJobs| queue=0,pendingPreFlushCbs=0,pendingPostFlushCbs=0
+after count: 3
+</pre
+          >
+        </div>
+      </div>
+      <div id="outline-container-orga408569" class="outline-2">
+        <h2 id="orga408569">
+          <span class="section-number-2">15.</span> Testing
+        </h2>
+        <div class="outline-text-2" id="text-15">
+          <br />
+          <details
+            class="code-details"
+            style="
+              padding: 1em;
+              background-color: #e5f5e5; /* background-color: pink; */
+              border-radius: 15px;
+              color: hsl(157 75%);
+              font-size: 0.9em;
+              box-shadow: 0.05em 0.1em 5px 0.01em #00000057;
+            "
+          >
+            <summary>
+              <strong
+                ><font face="Courier" size="3" color="green"
+                  >nested</font
+                ></strong
+              >
+            </summary>
+            <div class="org-src-container">
+              <pre class="src src-js"><span class=
+            "linenr"> 1: </span><span class=
+            "org-comment-delimiter">// </span><span class=
+            "org-comment">源文件：/js/vue/lib.js</span>
+<span class="linenr"> 2: </span>&lt;&lt;scheduler&gt;&gt;
+<span class="linenr"> 3: </span>
+<span class="linenr"> 4: </span><span class=
+"org-keyword">const</span> <span class=
+"org-variable-name">run</span> = <span class=
+"org-keyword">async</span> () =&gt; {
+<span class="linenr"> 5: </span>  <span class=
+"org-keyword">const</span> <span class=
+"org-variable-name">calls</span> = [];
+<span class="linenr"> 6: </span>  <span class=
+"org-keyword">const</span> <span class=
+"org-variable-name">cb1</span> = () =&gt; {
+<span class="linenr"> 7: </span>    calls.push(<span class=
+"org-string">"cb1"</span>);
+<span class="linenr"> 8: </span>  };
+<span class="linenr"> 9: </span>  <span class=
+"org-keyword">const</span> <span class=
+"org-variable-name">cb2</span> = () =&gt; {
+<span class="linenr">10: </span>    calls.push(<span class=
+"org-string">"cb2"</span>);
+<span class="linenr">11: </span>    <span class=
+"org-comment-delimiter">// </span><span class=
+"org-comment">queueJob 和 queuePreFlushCb 结合使用</span>
+<span class="linenr">12: </span>    queueJob(job1);
+<span class="linenr">13: </span>  };
+<span class="linenr">14: </span>  <span class=
+"org-keyword">const</span> <span class=
+"org-variable-name">cb3</span> = () =&gt; {
+<span class="linenr">15: </span>    calls.push(<span class=
+"org-string">"cb3"</span>);
+<span class="linenr">16: </span>    <span class=
+"org-comment-delimiter">// </span><span class=
+"org-comment">链式使用，cb4 会在 cb1,2,3 执行完成之后才会执行</span>
+<span class="linenr">17: </span>    queuePreFlushCb(cb4);
+<span class="linenr">18: </span>  };
+<span class="linenr">19: </span>  <span class=
+"org-keyword">const</span> <span class=
+"org-variable-name">cb4</span> = () =&gt; {
+<span class="linenr">20: </span>    calls.push(<span class=
+"org-string">"cb4"</span>);
+<span class="linenr">21: </span>  };
+<span class="linenr">22: </span>  <span class=
+"org-keyword">const</span> <span class=
+"org-variable-name">cb5</span> = () =&gt; {
+<span class="linenr">23: </span>    calls.push(<span class=
+"org-string">"cb5"</span>);
+<span class="linenr">24: </span>  };
+<span class="linenr">25: </span>  <span class=
+"org-keyword">const</span> <span class=
+"org-variable-name">job1</span> = () =&gt; {
+<span class="linenr">26: </span>    calls.push(<span class=
+"org-string">"job1"</span>);
+<span class="linenr">27: </span>    <span class=
+"org-comment-delimiter">// </span><span class=
+"org-comment">queuePreFlushCb 在 queueJob 中调用</span>
+<span class="linenr">28: </span>    <span class=
+"org-comment-delimiter">// </span><span class=
+"org-comment">pre cbs 在 job 中调用的时候不会被执行，除非在这后面手动 flush</span>
+<span class="linenr">29: </span>    <span class=
+"org-comment-delimiter">// </span><span class=
+"org-comment">或者有新的任务进来，发起 flushJobs 调用才会执行</span>
+<span class="linenr">30: </span>    queuePreFlushCb(cb5);
+<span class="linenr">31: </span>    <span class=
+"org-comment-delimiter">// </span><span class=
+"org-comment">必须手动触发, 这样 cb5 才会输出</span>
+<span class="linenr">32: </span>    flushPreFlushCbs(<span class=
+"org-constant">undefined</span>, job1 <span class=
+"org-comment-delimiter">/* </span><span class=
+"org-comment">currentPreFlushParentJob</span><span class=
+"org-comment-delimiter"> */</span>);
+<span class="linenr">33: </span>  };
+<span class="linenr">34: </span>  <span class=
+"org-keyword">const</span> <span class=
+"org-variable-name">cb6</span> = () =&gt; {
+<span class="linenr">35: </span>    calls.push(<span class=
+"org-string">"cb6"</span>);
+<span class="linenr">36: </span>  };
+<span class="linenr">37: </span>
+<span class="linenr">38: </span>  queuePreFlushCb(cb1);
+<span class="linenr">39: </span>  queuePreFlushCb(cb2);
+<span class="linenr">40: </span>  queuePreFlushCb(cb1);
+<span class="linenr">41: </span>  queuePreFlushCb(cb2);
+<span class="linenr">42: </span>  queuePreFlushCb(cb3);
+<span class="linenr">43: </span>
+<span class="linenr">44: </span>  <span class=
+"org-keyword">await</span> nextTick();
+<span class="linenr">45: </span>  log(<span class=
+"org-string">"\n"</span> + calls);
+<span class="linenr">46: </span>};
+<span class="linenr">47: </span>run();
+</pre>
+            </div>
+            <pre class="example" id="org673b3eb">
+queueFlush| isFlushing=false,isFlushPending=false
+queueFlush| isFlushing=false,isFlushPending=true
+queueFlush| isFlushing=false,isFlushPending=true
+queueFlush| isFlushing=false,isFlushPending=true
+queueFlush| isFlushing=false,isFlushPending=true
+nextTick| queue=0,resolvedPromise=[object Promise],currentFlushPromise=[object Promise]
+undefinedflushJobs| seen=undefined, queue=0,flushIndex=0,isFlushing=true
+queueJob| queue=0,job existed=false
+queueFlush| isFlushing=true,isFlushPending=false
+queueFlush| isFlushing=true,isFlushPending=false
+queueFlush| isFlushing=true,isFlushPending=false
+flushJobs| queue=0,pendingPreFlushCbs=0,pendingPostFlushCbs=0
+
+cb1,cb2,cb3,cb4,job1,cb5
+</pre
+            >
+            <p>结果分析：</p>
+            <ol class="org-ol">
+              <li>
+                <code>pendingPreFlushCbs</code> 虽然是个数组，但是 flush
+                期间通过
+                <code>[...new Set(pendingPreFlushCbs)]</code> 进行了去重操作。
+              </li>
+              <li>
+                链式操作，因为在执行期间使用的是
+                <code>activePreFlushCbs</code> 且此时的
+                <code>pendingPreFlushCbs</code> 清空了，等待新任务入列
+              </li>
+              <li>
+                <p>
+                  在执行 cb3 期间，调用
+                  <a href="#org43e1d3b">queuePreFlushCb(cb4)</a> 此时 push cb4
+                  -&gt; <code>pendingPreFlushCbs</code> ，但实际不会影响本次的
+                  for 循环执行，这点和 <a href="#org0ef9623">queueJob</a> 有点
+                  不同，它直接使用的是 queue -&gt; for
+                  所以有新的任务入列会立即改变 for 的执行长度
+                  (<code>queue.length</code>)
+                </p>
+                <p>
+                  pre 处理会等到 <code>activePreFlushCbs</code> for
+                  执行循环结束后，在函数的最后递归调用
+                  <a href="#org66391f0">flushPreFlushCbs()</a>
+                  来刷掉新入列的任务(如： cb4)
+                </p>
+              </li>
+              <li>
+                <p>
+                  <a href="#org0ef9623">queueJob()</a> 在
+                  <a href="#org43e1d3b">queuePreFlushCb()</a> 中调用的时候，
+                  queue job 总是在 pre cb 之后被执行， 这也 是
+                  <a href="#org8aecb9f">flushJobs()</a>
+                  中处理代码应体现出的结果。
+                </p>
+                <div class="org-src-container">
+                  <pre class="src src-js"><span class=
+                "linenr">1: </span>   <span class=
+                "org-keyword">function</span> <span class=
+                "org-function-name">flushJobs</span>() {
+<span class="linenr">2: </span>     <span class=
+"org-comment-delimiter">/// </span><span class=
+"org-comment">1. flush pre -&gt; flushPreFlushCbs()</span>
+<span class="linenr">3: </span>     <span class=
+"org-comment-delimiter">/// </span><span class=
+"org-comment">2. for -&gt; queue job -&gt; callWithErrorHandling(job, ...)</span>
+<span class="linenr">4: </span>     <span class=
+"org-comment-delimiter">// </span><span class=
+"org-comment">3. flush post -&gt; flushPostFlushCbs()</span>
+<span class="linenr">5: </span>   }
+</pre>
+                </div>
+                <p>
+                  并且如上面实例结果 cb4 嵌套在 cb3 ，job1 嵌套在了 cb2
+                  中，但是最后还是 cb4 先 得到执行了，job1 再执行。
+                </p>
+                <div class="tip" id="org6bc281d">
+                  <p>
+                    因此，对于 pre cbs 和 queue jobs
+                    两个类型的任务，不管什么时机入列的，都会 是 先执行 pre cbs
+                    再执行 queue jobs。
+                  </p>
+                </div>
+              </li>
+              <li>
+                <p>
+                  <a href="#org43e1d3b">queuePreFlushCb()</a> 在
+                  <a href="#org0ef9623">queueJob()</a> 中调用的时候，新的 pre
+                  job 会在 queue job 后 执行
+                </p>
+                <p>
+                  原因： <code>flushPreFlushCbs()</code> 先于 queue jobs
+                  执行，因此 queue jobs(<span style="color: red">job1</span>) 执
+                  行的时候 <code>queuePreFlushCb()</code> 加入的任务(<span
+                    style="color: red"
+                    >cb5</span
+                  >)此时不会执行，而是等 queue jobs 都 执行完之后在 finally
+                  里面会做一次检测
+                </p>
+                <div class="org-src-container">
+                  <pre class="src src-js"><span class=
+                "linenr">1: </span>   <span class=
+                "org-keyword">if</span> (queue.length || pendingPreFlushCbs.length) {
+<span class="linenr">2: </span>    flushJobs(seen)
+<span class="linenr">3: </span>   }
+</pre>
+                </div>
+                <p>
+                  这个时候会去递归 <code>flushJobs()</code> 此时才发现有新的
+                  <code>pendingPreFlushCbs</code> (如：
+                  <span style="color: red">cb5</span>)，
+                  则将执行他们，所以结果是 job1,cb5 。
+                </p>
+              </li>
+            </ol>
+          </details>
+          <br />
+          <details
+            class="code-details"
+            style="
+              padding: 1em;
+              background-color: #e5f5e5; /* background-color: pink; */
+              border-radius: 15px;
+              color: hsl(157 75%);
+              font-size: 0.9em;
+              box-shadow: 0.05em 0.1em 5px 0.01em #00000057;
+            "
+          >
+            <summary>
+              <strong
+                ><font face="Courier" size="3" color="green"
+                  >sort-by-id</font
+                ></strong
+              >
+            </summary>
+            <div class="org-src-container">
+              <pre class="src src-js"><span class=
+            "linenr"> 1: </span>&lt;&lt;scheduler&gt;&gt;
+<span class="linenr"> 2: </span>
+<span class="linenr"> 3: </span><span class=
+"org-keyword">const</span> <span class=
+"org-variable-name">run</span> = <span class=
+"org-keyword">async</span> () =&gt; {
+<span class="linenr"> 4: </span>  <span class=
+"org-keyword">const</span> <span class=
+"org-variable-name">calls</span> = [];
+<span class="linenr"> 5: </span>  <span class=
+"org-keyword">const</span> <span class=
+"org-variable-name">job1</span> = () =&gt; calls.push(<span class=
+"org-string">"job1"</span>);
+<span class="linenr"> 6: </span>  <span class=
+"org-keyword">const</span> <span class=
+"org-variable-name">job2</span> = () =&gt; calls.push(<span class=
+"org-string">"job2"</span>);
+<span class="linenr"> 7: </span>  <span class=
+"org-keyword">const</span> <span class=
+"org-variable-name">job3</span> = () =&gt; calls.push(<span class=
+"org-string">"job3"</span>);
+<span class="linenr"> 8: </span>  <span class=
+"org-comment-delimiter">// </span><span class=
+"org-comment">job1 no id</span>
+<span class="linenr"> 9: </span>  job2.id = <span class=
+"org-highlight-numbers-number">2</span>;
+<span class="linenr">10: </span>  job3.id = <span class=
+"org-highlight-numbers-number">1</span>;
+<span class="linenr">11: </span>
+<span class="linenr">12: </span>  <span class=
+"org-keyword">const</span> <span class=
+"org-variable-name">cb1</span> = () =&gt; calls.push(<span class=
+"org-string">"cb1"</span>);
+<span class="linenr">13: </span>  <span class=
+"org-keyword">const</span> <span class=
+"org-variable-name">cb2</span> = () =&gt; calls.push(<span class=
+"org-string">"cb2"</span>);
+<span class="linenr">14: </span>  <span class=
+"org-keyword">const</span> <span class=
+"org-variable-name">cb3</span> = () =&gt; calls.push(<span class=
+"org-string">"cb3"</span>);
+<span class="linenr">15: </span>  cb1.id = <span class=
+"org-highlight-numbers-number">2</span>;
+<span class="linenr">16: </span>  <span class=
+"org-comment-delimiter">// </span><span class=
+"org-comment">cb2 no id</span>
+<span class="linenr">17: </span>  cb3.id = <span class=
+"org-highlight-numbers-number">1</span>;
+<span class="linenr">18: </span>
+<span class="linenr">19: </span>  queueJob(job1);
+<span class="linenr">20: </span>  queueJob(job2);
+<span class="linenr">21: </span>  queueJob(job3);
+<span class="linenr">22: </span>  queuePostFlushCb(cb1);
+<span class="linenr">23: </span>  queuePostFlushCb(cb2);
+<span class="linenr">24: </span>  queuePostFlushCb(cb3);
+<span class="linenr">25: </span>  <span class=
+"org-keyword">await</span> nextTick();
+<span class="linenr">26: </span>  log(calls);
+<span class="linenr">27: </span>};
+<span class="linenr">28: </span>run();
+</pre>
+            </div>
+            <pre class="example" id="orga72f847">
+queueJob| queue=0,job existed=false
+queueFlush| isFlushing=false,isFlushPending=false
+queueJob| queue=1,job existed=false
+queueFlush| isFlushing=false,isFlushPending=true
+queueJob| queue=2,job existed=false
+queueFlush| isFlushing=false,isFlushPending=true
+queueFlush| isFlushing=false,isFlushPending=true
+queueFlush| isFlushing=false,isFlushPending=true
+queueFlush| isFlushing=false,isFlushPending=true
+nextTick| queue=3,resolvedPromise=[object Promise],currentFlushPromise=[object Promise]
+undefinedflushJobs| seen=undefined, queue=3,flushIndex=0,isFlushing=true
+flushJobs| queue=0,pendingPreFlushCbs=0,pendingPostFlushCbs=0
+[ 'job3', 'job2', 'job1', 'cb3', 'cb1', 'cb2' ]
+</pre
+            >
+          </details>
+        </div>
+      </div>
+      <div id="outline-container-scheduler-mindmap" class="outline-2">
+        <h2 id="scheduler-mindmap">
+          <span class="section-number-2">16.</span> scheduler flow mindmap
+        </h2>
+        <div class="outline-text-2" id="text-scheduler-mindmap">
+          <div id="org65d957c" class="figure">
+            <p>
+              <img
+                src="../assets/img/vue3/runtime-core/vue-runtime-core-scheduler.svg"
+                alt="vue-runtime-core-scheduler.svg"
+                class="org-svg"
+              />
+            </p>
+          </div>
+        </div>
+      </div>
+      <div id="outline-container-orgab15e00" class="outline-2">
+        <h2 id="orgab15e00">
+          <span class="section-number-2">17.</span> Q&amp;A
+        </h2>
+        <div class="outline-text-2" id="text-17"></div>
+        <div id="outline-container-org8029783" class="outline-3">
+          <h3 id="org8029783">
+            <span class="section-number-3">17.1.</span> pre,job,post
+            三种任务都分别代表什么？
+          </h3>
+        </div>
       </div>
     </div>
     <div id="postamble" class="status">
       <p class="author">Author: Zhicheng Lee</p>
-      <p class="date">Created: 2022-04-13 Wed 15:49</p>
+      <p class="date">Created: 2022-04-14 Thu 13:55</p>
     </div>
   </body>
 </html>
