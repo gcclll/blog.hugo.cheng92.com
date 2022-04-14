@@ -101,7 +101,7 @@ export default Vue.defineComponent({
           key,
           value: result[key]
         }))
-        .sort((a, b) => new Date(b.key) - new Date(b.key))
+        .sort((a, b) => new Date(b.key) - new Date(a.key))
       return sorted
     }
   },
