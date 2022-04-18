@@ -16,7 +16,7 @@ function formatTime(str, format = 'YYYY-MM-DD hh:mm:ss') {
   return format
     .replace(/yyyy/i, year)
     .replace('MM', m)
-    .replace(/dd/i, d)
+    .replace(/dd/i, day)
     .replace('hh', h)
     .replace('mm', ms)
     .replace('ss', ss)
