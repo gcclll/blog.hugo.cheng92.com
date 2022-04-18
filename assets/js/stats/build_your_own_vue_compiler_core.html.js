@@ -1,0 +1,1 @@
+window.$stats=window.$stats||{};window.$stats['build_your_own_vue_compiler_core.html']={"IDLinks":[],"aLinks":[],"toc":null}
