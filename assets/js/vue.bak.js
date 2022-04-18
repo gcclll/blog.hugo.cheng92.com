@@ -1,4 +1,3 @@
-window.jobs = (window.jobs || []);
 var Vue = (function (exports) {
   'use strict'
 
@@ -1878,7 +1877,7 @@ var Vue = (function (exports) {
   let currentPreFlushParentJob = null
   const RECURSION_LIMIT = 100
 
-  function getSchedulerInfo() {
+  exports.getSchedulerInfo = function () {
     return {
       isFlushing: isFlushing,
       isFlushPending: isFlushPending,
@@ -1895,7 +1894,7 @@ var Vue = (function (exports) {
       currentPreFlushParentJob: currentPreFlushParentJob
     }
   }
-	exports.getSchedulerInfo = getSchedulerInfo
+
   function nextTick(fn) {
     const p = currentFlushPromise || resolvedPromise
     return fn ? p.then(this ? fn.bind(this) : fn) : p
@@ -1915,9 +1914,7 @@ var Vue = (function (exports) {
     }
     return start
   }
-  function queueJob(job, hint) {
-	window.jobs.push({ hint: hint, type: 'queueJob', job: job, data: JSON.stringify(getSchedulerInfo())})
-
+  function queueJob(job) {
     // the dedupe search uses the startIndex argument of Array.includes()
     // by default the search index includes the current job that is being run
     // so it cannot recursively trigger itself again.
@@ -1937,13 +1934,13 @@ var Vue = (function (exports) {
       } else {
         queue.splice(findInsertionIndex(job.id), 0, job)
       }
-      queueFlush(hint)
+      queueFlush()
     }
   }
-  function queueFlush(hint) {
+  function queueFlush() {
     if (!isFlushing && !isFlushPending) {
       isFlushPending = true
-      currentFlushPromise = resolvedPromise.then(() => flushJobs(null, hint))
+      currentFlushPromise = resolvedPromise.then(flushJobs)
     }
   }
   function invalidateJob(job) {
@@ -1952,7 +1949,7 @@ var Vue = (function (exports) {
       queue.splice(i, 1)
     }
   }
-  function queueCb(cb, activeQueue, pendingQueue, index, hint) {
+  function queueCb(cb, activeQueue, pendingQueue, index) {
     if (!isArray(cb)) {
       if (
         !activeQueue ||
@@ -1966,20 +1963,15 @@ var Vue = (function (exports) {
       // we can skip duplicate check here to improve perf
       pendingQueue.push(...cb)
     }
-    queueFlush(hint)
+    queueFlush()
   }
-  function queuePreFlushCb(cb, hint) {
-	window.jobs.push({ hint: hint, type: 'queuePreFlushCb', cb: cb, data: JSON.stringify(getSchedulerInfo())})
-    queueCb(cb, activePreFlushCbs, pendingPreFlushCbs, preFlushIndex, hint)
+  function queuePreFlushCb(cb) {
+    queueCb(cb, activePreFlushCbs, pendingPreFlushCbs, preFlushIndex)
   }
-  function queuePostFlushCb(cb, hint) {
-	window.jobs.push({ hint: hint, type: 'queuePostFlushCb', cb: cb, data: JSON.stringify(getSchedulerInfo())})
-	
-    queueCb(cb, activePostFlushCbs, pendingPostFlushCbs, postFlushIndex, hint)
+  function queuePostFlushCb(cb) {
+    queueCb(cb, activePostFlushCbs, pendingPostFlushCbs, postFlushIndex)
   }
-  function flushPreFlushCbs(seen, parentJob = null, hint) {
-	window.jobs.push({ type: 'flushPreFlushCbs', hint: hint, parentJob: parentJob, seen: seen, data: JSON.stringify(getSchedulerInfo())})
-
+  function flushPreFlushCbs(seen, parentJob = null) {
     if (pendingPreFlushCbs.length) {
       currentPreFlushParentJob = parentJob
       activePreFlushCbs = [...new Set(pendingPreFlushCbs)]
@@ -2001,12 +1993,10 @@ var Vue = (function (exports) {
       preFlushIndex = 0
       currentPreFlushParentJob = null
       // recursively flush until it drains
-      flushPreFlushCbs(seen, parentJob, hint)
+      flushPreFlushCbs(seen, parentJob)
     }
   }
-  function flushPostFlushCbs(seen, hint) {
-	window.jobs.push({ type: 'flushPostFlushCbs', hint: hint, seen: seen, data: JSON.stringify(getSchedulerInfo())})
-
+  function flushPostFlushCbs(seen) {
     if (pendingPostFlushCbs.length) {
       const deduped = [...new Set(pendingPostFlushCbs)]
       pendingPostFlushCbs.length = 0
@@ -2035,16 +2025,13 @@ var Vue = (function (exports) {
     }
   }
   const getId = (job) => (job.id == null ? Infinity : job.id)
-  function flushJobs(seen, hint) {
+  function flushJobs(seen) {
     isFlushPending = false
     isFlushing = true
     {
       seen = seen || new Map()
     }
-
-	window.jobs.push({ type: 'flushJobs', hint:hint, seen: seen, data: JSON.stringify(getSchedulerInfo())})
-
-    flushPreFlushCbs(seen, null, hint)
+    flushPreFlushCbs(seen)
     // Sort queue before flush.
     // This ensures that:
     // 1. Components are updated from parent to child. (because parent is always
@@ -2073,7 +2060,7 @@ var Vue = (function (exports) {
     } finally {
       flushIndex = 0
       queue.length = 0
-      flushPostFlushCbs(seen, hint)
+      flushPostFlushCbs(seen)
       isFlushing = false
       currentFlushPromise = null
       // some postFlushCb queued jobs!
@@ -2083,7 +2070,7 @@ var Vue = (function (exports) {
         pendingPreFlushCbs.length ||
         pendingPostFlushCbs.length
       ) {
-        flushJobs(seen, hint)
+        flushJobs(seen)
       }
     }
   }
@@ -2202,7 +2189,7 @@ var Vue = (function (exports) {
         // 4. Force the parent instance to re-render. This will cause all updated
         // components to be unmounted and re-mounted. Queue the update so that we
         // don't end up forcing the same parent to re-render multiple times.
-        queueJob(instance.parent.update, 'instance.parent.update')
+        queueJob(instance.parent.update)
         // instance is the inner component of an async custom element
         // invoke to reset styles
         if (instance.parent.type.__asyncLoader && instance.parent.ceReload) {
@@ -2225,7 +2212,7 @@ var Vue = (function (exports) {
       for (const instance of instances) {
         hmrDirtyComponents.delete(normalizeClassComponent(instance.type))
       }
-    }, 'reload')
+    })
   }
   function updateComponentDef(oldComp, newComp) {
     extend(oldComp, newComp)
@@ -3350,7 +3337,7 @@ var Vue = (function (exports) {
         }
         // no pending parent suspense, flush all jobs
         if (!hasUnresolvedAncestor) {
-          queuePostFlushCb(effects, 'hasUnresolvedAncestor')
+          queuePostFlushCb(effects)
         }
         suspense.effects = []
         // invoke @resolve event
@@ -3576,7 +3563,7 @@ var Vue = (function (exports) {
     }
     return s
   }
-  function queueEffectWithSuspense(fn, suspense, hint) {
+  function queueEffectWithSuspense(fn, suspense) {
     if (suspense && suspense.pendingBranch) {
       if (isArray(fn)) {
         suspense.effects.push(...fn)
@@ -3584,7 +3571,7 @@ var Vue = (function (exports) {
         suspense.effects.push(fn)
       }
     } else {
-      queuePostFlushCb(fn, hint)
+      queuePostFlushCb(fn)
     }
   }
   function setActiveBranch(suspense, branch) {
@@ -3809,12 +3796,12 @@ var Vue = (function (exports) {
       scheduler = job // the scheduler function gets called directly
     } else if (flush === 'post') {
       scheduler = () =>
-        queuePostRenderEffect(job, instance && instance.suspense, 'watch-scheduler-post')
+        queuePostRenderEffect(job, instance && instance.suspense)
     } else {
       // default: 'pre'
       scheduler = () => {
         if (!instance || instance.isMounted) {
-          queuePreFlushCb(job, 'watch scheduler')
+          queuePreFlushCb(job)
         } else {
           // with 'pre' option, the first call must happen before
           // the component is mounted so it is called synchronously.
@@ -3837,7 +3824,7 @@ var Vue = (function (exports) {
     } else if (flush === 'post') {
       queuePostRenderEffect(
         effect.run.bind(effect),
-        instance && instance.suspense, 'watch-initial-run-post'
+        instance && instance.suspense
       )
     } else {
       effect.run()
@@ -4390,7 +4377,7 @@ var Vue = (function (exports) {
             if (instance.parent && isKeepAlive(instance.parent.vnode)) {
               // parent is keep-alive, force update so the loaded component's
               // name is taken into account
-              queueJob(instance.parent.update, 'async component instance.parent.update')
+              queueJob(instance.parent.update)
             }
           })
           .catch((err) => {
@@ -4483,7 +4470,7 @@ var Vue = (function (exports) {
           if (vnodeHook) {
             invokeVNodeHook(vnodeHook, instance.parent, vnode)
           }
-        }, parentSuspense, 'resolve-activate')
+        }, parentSuspense)
         {
           // Update components tree
           devtoolsComponentAdded(instance)
@@ -4501,7 +4488,7 @@ var Vue = (function (exports) {
             invokeVNodeHook(vnodeHook, instance.parent, vnode)
           }
           instance.isDeactivated = true
-        }, parentSuspense, 'resolve-deactivate')
+        }, parentSuspense)
         {
           // Update components tree
           devtoolsComponentAdded(instance)
@@ -4561,7 +4548,7 @@ var Vue = (function (exports) {
             resetShapeFlag(vnode)
             // but invoke its deactivated hook here
             const da = vnode.component.da
-            da && queuePostRenderEffect(da, suspense, 'suspense-deactivated')
+            da && queuePostRenderEffect(da, suspense)
             return
           }
           unmount(cached)
@@ -6146,7 +6133,7 @@ var Vue = (function (exports) {
         }
         if (value) {
           doSet.id = -1
-          queuePostRenderEffect(doSet, parentSuspense, 'setRef-doSet-'+isUnmount)
+          queuePostRenderEffect(doSet, parentSuspense)
         } else {
           doSet()
         }
@@ -6178,12 +6165,12 @@ var Vue = (function (exports) {
             `Performing full mount instead.`
         )
         patch(null, vnode, container)
-        flushPostFlushCbs(null, 'hydrate')
+        flushPostFlushCbs()
         return
       }
       hasMismatch = false
       hydrateNode(container.firstChild, vnode, null, null, null)
-      flushPostFlushCbs(null, 'hydrate')
+      flushPostFlushCbs()
       if (hasMismatch && !false) {
         // this error should show up in production
         console.error(`Hydration completed but contains mismatches.`)
@@ -6428,7 +6415,7 @@ var Vue = (function (exports) {
           queueEffectWithSuspense(() => {
             vnodeHooks && invokeVNodeHook(vnodeHooks, parentComponent, vnode)
             dirs && invokeDirectiveHook(vnode, null, parentComponent, 'mounted')
-          }, parentSuspense, 'onVnodeMounted')
+          }, parentSuspense)
         }
         // children
         if (
@@ -7044,7 +7031,7 @@ var Vue = (function (exports) {
           vnodeHook && invokeVNodeHook(vnodeHook, parentComponent, vnode)
           needCallTransitionHooks && transition.enter(el)
           dirs && invokeDirectiveHook(vnode, null, parentComponent, 'mounted')
-        }, parentSuspense, 'onVnodeMounted-transition.enter-dir-mounted')
+        }, parentSuspense)
       }
     }
     const setScopeId = (el, vnode, scopeId, slotScopeIds, parentComponent) => {
@@ -7246,7 +7233,7 @@ var Vue = (function (exports) {
         queuePostRenderEffect(() => {
           vnodeHook && invokeVNodeHook(vnodeHook, parentComponent, n2, n1)
           dirs && invokeDirectiveHook(n2, n1, parentComponent, 'updated')
-        }, parentSuspense, 'onVnodeUpdated')
+        }, parentSuspense)
       }
     }
     // The fast path for blocks.
@@ -7649,7 +7636,7 @@ var Vue = (function (exports) {
           }
           // mounted hook
           if (m) {
-            queuePostRenderEffect(m, parentSuspense, 'mounted')
+            queuePostRenderEffect(m, parentSuspense)
           }
           // onVnodeMounted
           if (
@@ -7659,14 +7646,14 @@ var Vue = (function (exports) {
             const scopedInitialVNode = initialVNode
             queuePostRenderEffect(
               () => invokeVNodeHook(vnodeHook, parent, scopedInitialVNode),
-              parentSuspense, 'onVnodeMounted'
+              parentSuspense
             )
           }
           // activated hook for keep-alive roots.
           // #1742 activated hook must be accessed after first render
           // since the hook may be injected by a child keep-alive
           if (initialVNode.shapeFlag & 256 /* COMPONENT_SHOULD_KEEP_ALIVE */) {
-            instance.a && queuePostRenderEffect(instance.a, parentSuspense, 'activated')
+            instance.a && queuePostRenderEffect(instance.a, parentSuspense)
           }
           instance.isMounted = true
           {
@@ -7737,13 +7724,13 @@ var Vue = (function (exports) {
           }
           // updated hook
           if (u) {
-            queuePostRenderEffect(u, parentSuspense, 'updated')
+            queuePostRenderEffect(u, parentSuspense)
           }
           // onVnodeUpdated
           if ((vnodeHook = next.props && next.props.onVnodeUpdated)) {
             queuePostRenderEffect(
               () => invokeVNodeHook(vnodeHook, parent, next, vnode),
-              parentSuspense, 'onVnodeUpdated'
+              parentSuspense
             )
           }
           {
@@ -7757,7 +7744,7 @@ var Vue = (function (exports) {
       // create reactive effect for rendering
       const effect = (instance.effect = new ReactiveEffect(
         componentUpdateFn,
-        () => queueJob(instance.update, 'instance.efffect'),
+        () => queueJob(instance.update),
         instance.scope // track it in component's effect scope
       ))
       const update = (instance.update = effect.run.bind(effect))
@@ -7787,7 +7774,7 @@ var Vue = (function (exports) {
       pauseTracking()
       // props update may have triggered pre-flush watchers.
       // flush them before the render update.
-      flushPreFlushCbs(undefined, instance.update, 'updateComponentPreRender')
+      flushPreFlushCbs(undefined, instance.update)
       resetTracking()
     }
     const patchChildren = (
@@ -8219,7 +8206,7 @@ var Vue = (function (exports) {
         if (moveType === 0 /* ENTER */) {
           transition.beforeEnter(el)
           hostInsert(el, container, anchor)
-          queuePostRenderEffect(() => transition.enter(el), parentSuspense, 'transition.enter')
+          queuePostRenderEffect(() => transition.enter(el), parentSuspense)
         } else {
           const { leave, delayLeave, afterLeave } = transition
           const remove = () => hostInsert(el, container, anchor)
@@ -8327,7 +8314,7 @@ var Vue = (function (exports) {
           vnodeHook && invokeVNodeHook(vnodeHook, parentComponent, vnode)
           shouldInvokeDirs &&
             invokeDirectiveHook(vnode, null, parentComponent, 'unmounted')
-        }, parentSuspense, 'onVnodeUnmounted')
+        }, parentSuspense)
       }
     }
     const remove = (vnode) => {
@@ -8393,11 +8380,11 @@ var Vue = (function (exports) {
       }
       // unmounted hook
       if (um) {
-        queuePostRenderEffect(um, parentSuspense, 'unmounted')
+        queuePostRenderEffect(um, parentSuspense)
       }
       queuePostRenderEffect(() => {
         instance.isUnmounted = true
-      }, parentSuspense, 'isUnmounted=true')
+      }, parentSuspense)
       // A component with async dep inside a pending suspense is unmounted before
       // its async dep resolves. This should remove the dep from the suspense, and
       // cause the suspense to resolve immediately if that was the last dep.
@@ -8461,7 +8448,7 @@ var Vue = (function (exports) {
           isSVG
         )
       }
-      flushPostFlushCbs(null, 'render')
+      flushPostFlushCbs()
       container._vnode = vnode
     }
     const internals = {
@@ -9622,7 +9609,7 @@ var Vue = (function (exports) {
     $root: (i) => getPublicInstance(i.root),
     $emit: (i) => i.emit,
     $options: (i) => resolveMergedOptions(i),
-    $forceUpdate: (i) => () => queueJob(i.update, 'forceUpdate'),
+    $forceUpdate: (i) => () => queueJob(i.update),
     $nextTick: (i) => nextTick.bind(i.proxy),
     $watch: (i) => instanceWatch.bind(i)
   })
