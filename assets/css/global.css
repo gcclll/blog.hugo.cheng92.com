@@ -106,21 +106,6 @@ pre.src-diff .org-diff-indicator-removed {
   background-color: #ffebe9;
 }
 
-.tooltipster-base {
-  max-width: 100vw;
-}
-
-.tooltipster-box .tooltipster-content strong {
-  color: green;
-}
-.tooltipster-box .tooltipster-content h2 {
-  color: aqua;
-}
-.tooltipster-box .tooltipster-content h3 {
-  text-indent: 0;
-  color: cyan;
-}
-
 /* Set the colors in <pre> blocks from the Leuven theme */
 body {
   font-family: "EB Garamond", "Lato", "proxima-nova", "Helvetica Neue", Arial, sans-serif;
@@ -549,6 +534,21 @@ blockquote {
     width: 100% !important;
   }
 }
+.tooltipster-base {
+  max-width: 100vw;
+}
+
+.tooltipster-box .tooltipster-content strong {
+  color: green;
+}
+.tooltipster-box .tooltipster-content h2 {
+  color: aqua;
+}
+.tooltipster-box .tooltipster-content h3 {
+  text-indent: 0;
+  color: cyan;
+}
+
 div[id^=outline-container-] a {
   font-family: "EB Garamond";
   text-decoration: none;
