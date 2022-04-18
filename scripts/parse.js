@@ -31,6 +31,7 @@ function parseHTMLFiles() {
                 fs.stat(path, (err, stats) => {
                   if (!err) {
                     const { ctime, birthtime } = stats
+                    console.log(stats)
                     resolve({ file, root, stats: { ctime, birthtime } })
                   }
                 })
