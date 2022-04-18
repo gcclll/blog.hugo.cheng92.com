@@ -3,23 +3,23 @@
 const fs = require('fs')
 const HTMLParser = require('node-html-parser')
 
+const add0 = (s) => (String(s).length === 1 ? '0' + s : s)
 function formatTime(str, format = 'YYYY-MM-DD hh:mm:ss') {
   const d = new Date(str)
   const year = d.getFullYear()
   const m = d.getMonth() + 1
-  let day = d.getDate()
-  day = String(day).length === 1 ? '0' + day : day
+  const day = d.getDate()
   const h = d.getHours()
   const ms = d.getMinutes()
   const ss = d.getSeconds()
 
   return format
     .replace(/yyyy/i, year)
-    .replace('MM', m)
-    .replace(/dd/i, day)
-    .replace('hh', h)
-    .replace('mm', ms)
-    .replace('ss', ss)
+    .replace('MM', add0(m))
+    .replace(/dd/i, add0(day))
+    .replace('hh', add0(h))
+    .replace('mm', add0(ms))
+    .replace('ss', add0(ss))
 }
 
 function parseHTMLFiles() {
@@ -175,8 +175,8 @@ function parseRoots(roots) {
           year = d.getFullYear(),
           day = d.getDate()
 
-        month = String(month).length < 2 ? `0${month}` : month
-        day = String(day).length < 2 ? `0${day}` : day
+        month = add0(month)
+        day = add0(day)
 
         let category = [],
           tags = []
