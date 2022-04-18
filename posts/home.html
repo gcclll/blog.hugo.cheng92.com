@@ -1,902 +1,536 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <!-- 2022-04-14 Thu 14:29 -->
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Homepage</title>
-    <meta name="author" content="Zhicheng Lee" />
-    <meta name="generator" content="Org Mode" />
-    <style>
-      #content {
-        max-width: 60em;
-        margin: auto;
-      }
-      .title {
-        text-align: center;
-        margin-bottom: 0.2em;
-      }
-      .subtitle {
-        text-align: center;
-        font-size: medium;
-        font-weight: bold;
-        margin-top: 0;
-      }
-      .todo {
-        font-family: monospace;
-        color: red;
-      }
-      .done {
-        font-family: monospace;
-        color: green;
-      }
-      .priority {
-        font-family: monospace;
-        color: orange;
-      }
-      .tag {
-        background-color: #eee;
-        font-family: monospace;
-        padding: 2px;
-        font-size: 80%;
-        font-weight: normal;
-      }
-      .timestamp {
-        color: #bebebe;
-      }
-      .timestamp-kwd {
-        color: #5f9ea0;
-      }
-      .org-right {
-        margin-left: auto;
-        margin-right: 0px;
-        text-align: right;
-      }
-      .org-left {
-        margin-left: 0px;
-        margin-right: auto;
-        text-align: left;
-      }
-      .org-center {
-        margin-left: auto;
-        margin-right: auto;
-        text-align: center;
-      }
-      .underline {
-        text-decoration: underline;
-      }
-      #postamble p,
-      #preamble p {
-        font-size: 90%;
-        margin: 0.2em;
-      }
-      p.verse {
-        margin-left: 3%;
-      }
-      pre {
-        border: 1px solid #e6e6e6;
-        border-radius: 3px;
-        background-color: #f2f2f2;
-        padding: 8pt;
-        font-family: monospace;
-        overflow: auto;
-        margin: 1.2em;
-      }
-      pre.src {
-        position: relative;
-        overflow: auto;
-      }
-      pre.src:before {
-        display: none;
-        position: absolute;
-        top: -8px;
-        right: 12px;
-        padding: 3px;
-        color: #555;
-        background-color: #f2f2f299;
-      }
-      pre.src:hover:before {
-        display: inline;
-        margin-top: 14px;
-      }
-      /* Languages per Org manual */
-      pre.src-asymptote:before {
-        content: 'Asymptote';
-      }
-      pre.src-awk:before {
-        content: 'Awk';
-      }
-      pre.src-authinfo::before {
-        content: 'Authinfo';
-      }
-      pre.src-C:before {
-        content: 'C';
-      }
-      /* pre.src-C++ doesn't work in CSS */
-      pre.src-clojure:before {
-        content: 'Clojure';
-      }
-      pre.src-css:before {
-        content: 'CSS';
-      }
-      pre.src-D:before {
-        content: 'D';
-      }
-      pre.src-ditaa:before {
-        content: 'ditaa';
-      }
-      pre.src-dot:before {
-        content: 'Graphviz';
-      }
-      pre.src-calc:before {
-        content: 'Emacs Calc';
-      }
-      pre.src-emacs-lisp:before {
-        content: 'Emacs Lisp';
-      }
-      pre.src-fortran:before {
-        content: 'Fortran';
-      }
-      pre.src-gnuplot:before {
-        content: 'gnuplot';
-      }
-      pre.src-haskell:before {
-        content: 'Haskell';
-      }
-      pre.src-hledger:before {
-        content: 'hledger';
-      }
-      pre.src-java:before {
-        content: 'Java';
-      }
-      pre.src-js:before {
-        content: 'Javascript';
-      }
-      pre.src-latex:before {
-        content: 'LaTeX';
-      }
-      pre.src-ledger:before {
-        content: 'Ledger';
-      }
-      pre.src-lisp:before {
-        content: 'Lisp';
-      }
-      pre.src-lilypond:before {
-        content: 'Lilypond';
-      }
-      pre.src-lua:before {
-        content: 'Lua';
-      }
-      pre.src-matlab:before {
-        content: 'MATLAB';
-      }
-      pre.src-mscgen:before {
-        content: 'Mscgen';
-      }
-      pre.src-ocaml:before {
-        content: 'Objective Caml';
-      }
-      pre.src-octave:before {
-        content: 'Octave';
-      }
-      pre.src-org:before {
-        content: 'Org mode';
-      }
-      pre.src-oz:before {
-        content: 'OZ';
-      }
-      pre.src-plantuml:before {
-        content: 'Plantuml';
-      }
-      pre.src-processing:before {
-        content: 'Processing.js';
-      }
-      pre.src-python:before {
-        content: 'Python';
-      }
-      pre.src-R:before {
-        content: 'R';
-      }
-      pre.src-ruby:before {
-        content: 'Ruby';
-      }
-      pre.src-sass:before {
-        content: 'Sass';
-      }
-      pre.src-scheme:before {
-        content: 'Scheme';
-      }
-      pre.src-screen:before {
-        content: 'Gnu Screen';
-      }
-      pre.src-sed:before {
-        content: 'Sed';
-      }
-      pre.src-sh:before {
-        content: 'shell';
-      }
-      pre.src-sql:before {
-        content: 'SQL';
-      }
-      pre.src-sqlite:before {
-        content: 'SQLite';
-      }
-      /* additional languages in org.el's org-babel-load-languages alist */
-      pre.src-forth:before {
-        content: 'Forth';
-      }
-      pre.src-io:before {
-        content: 'IO';
-      }
-      pre.src-J:before {
-        content: 'J';
-      }
-      pre.src-makefile:before {
-        content: 'Makefile';
-      }
-      pre.src-maxima:before {
-        content: 'Maxima';
-      }
-      pre.src-perl:before {
-        content: 'Perl';
-      }
-      pre.src-picolisp:before {
-        content: 'Pico Lisp';
-      }
-      pre.src-scala:before {
-        content: 'Scala';
-      }
-      pre.src-shell:before {
-        content: 'Shell Script';
-      }
-      pre.src-ebnf2ps:before {
-        content: 'ebfn2ps';
-      }
-      /* additional language identifiers per "defun org-babel-execute"
+<head>
+  <!-- 2022-04-18 Mon 14:52 -->
+  <meta charset="utf-8">
+  <meta name="viewport" content=
+  "width=device-width, initial-scale=1">
+  <title>Homepage</title>
+  <meta name="author" content="Zhicheng Lee">
+  <meta name="generator" content="Org Mode">
+  <style>
+  #content { max-width: 60em; margin: auto; }
+  .title  { text-align: center;
+             margin-bottom: .2em; }
+  .subtitle { text-align: center;
+              font-size: medium;
+              font-weight: bold;
+              margin-top:0; }
+  .todo   { font-family: monospace; color: red; }
+  .done   { font-family: monospace; color: green; }
+  .priority { font-family: monospace; color: orange; }
+  .tag    { background-color: #eee; font-family: monospace;
+            padding: 2px; font-size: 80%; font-weight: normal; }
+  .timestamp { color: #bebebe; }
+  .timestamp-kwd { color: #5f9ea0; }
+  .org-right  { margin-left: auto; margin-right: 0px;  text-align: right; }
+  .org-left   { margin-left: 0px;  margin-right: auto; text-align: left; }
+  .org-center { margin-left: auto; margin-right: auto; text-align: center; }
+  .underline { text-decoration: underline; }
+  #postamble p, #preamble p { font-size: 90%; margin: .2em; }
+  p.verse { margin-left: 3%; }
+  pre {
+    border: 1px solid #e6e6e6;
+    border-radius: 3px;
+    background-color: #f2f2f2;
+    padding: 8pt;
+    font-family: monospace;
+    overflow: auto;
+    margin: 1.2em;
+  }
+  pre.src {
+    position: relative;
+    overflow: auto;
+  }
+  pre.src:before {
+    display: none;
+    position: absolute;
+    top: -8px;
+    right: 12px;
+    padding: 3px;
+    color: #555;
+    background-color: #f2f2f299;
+  }
+  pre.src:hover:before { display: inline; margin-top: 14px;}
+  /* Languages per Org manual */
+  pre.src-asymptote:before { content: 'Asymptote'; }
+  pre.src-awk:before { content: 'Awk'; }
+  pre.src-authinfo::before { content: 'Authinfo'; }
+  pre.src-C:before { content: 'C'; }
+  /* pre.src-C++ doesn't work in CSS */
+  pre.src-clojure:before { content: 'Clojure'; }
+  pre.src-css:before { content: 'CSS'; }
+  pre.src-D:before { content: 'D'; }
+  pre.src-ditaa:before { content: 'ditaa'; }
+  pre.src-dot:before { content: 'Graphviz'; }
+  pre.src-calc:before { content: 'Emacs Calc'; }
+  pre.src-emacs-lisp:before { content: 'Emacs Lisp'; }
+  pre.src-fortran:before { content: 'Fortran'; }
+  pre.src-gnuplot:before { content: 'gnuplot'; }
+  pre.src-haskell:before { content: 'Haskell'; }
+  pre.src-hledger:before { content: 'hledger'; }
+  pre.src-java:before { content: 'Java'; }
+  pre.src-js:before { content: 'Javascript'; }
+  pre.src-latex:before { content: 'LaTeX'; }
+  pre.src-ledger:before { content: 'Ledger'; }
+  pre.src-lisp:before { content: 'Lisp'; }
+  pre.src-lilypond:before { content: 'Lilypond'; }
+  pre.src-lua:before { content: 'Lua'; }
+  pre.src-matlab:before { content: 'MATLAB'; }
+  pre.src-mscgen:before { content: 'Mscgen'; }
+  pre.src-ocaml:before { content: 'Objective Caml'; }
+  pre.src-octave:before { content: 'Octave'; }
+  pre.src-org:before { content: 'Org mode'; }
+  pre.src-oz:before { content: 'OZ'; }
+  pre.src-plantuml:before { content: 'Plantuml'; }
+  pre.src-processing:before { content: 'Processing.js'; }
+  pre.src-python:before { content: 'Python'; }
+  pre.src-R:before { content: 'R'; }
+  pre.src-ruby:before { content: 'Ruby'; }
+  pre.src-sass:before { content: 'Sass'; }
+  pre.src-scheme:before { content: 'Scheme'; }
+  pre.src-screen:before { content: 'Gnu Screen'; }
+  pre.src-sed:before { content: 'Sed'; }
+  pre.src-sh:before { content: 'shell'; }
+  pre.src-sql:before { content: 'SQL'; }
+  pre.src-sqlite:before { content: 'SQLite'; }
+  /* additional languages in org.el's org-babel-load-languages alist */
+  pre.src-forth:before { content: 'Forth'; }
+  pre.src-io:before { content: 'IO'; }
+  pre.src-J:before { content: 'J'; }
+  pre.src-makefile:before { content: 'Makefile'; }
+  pre.src-maxima:before { content: 'Maxima'; }
+  pre.src-perl:before { content: 'Perl'; }
+  pre.src-picolisp:before { content: 'Pico Lisp'; }
+  pre.src-scala:before { content: 'Scala'; }
+  pre.src-shell:before { content: 'Shell Script'; }
+  pre.src-ebnf2ps:before { content: 'ebfn2ps'; }
+  /* additional language identifiers per "defun org-babel-execute"
        in ob-*.el */
-      pre.src-cpp:before {
-        content: 'C++';
-      }
-      pre.src-abc:before {
-        content: 'ABC';
-      }
-      pre.src-coq:before {
-        content: 'Coq';
-      }
-      pre.src-groovy:before {
-        content: 'Groovy';
-      }
-      /* additional language identifiers from org-babel-shell-names in
+  pre.src-cpp:before  { content: 'C++'; }
+  pre.src-abc:before  { content: 'ABC'; }
+  pre.src-coq:before  { content: 'Coq'; }
+  pre.src-groovy:before  { content: 'Groovy'; }
+  /* additional language identifiers from org-babel-shell-names in
      ob-shell.el: ob-shell is the only babel language using a lambda to put
      the execution function name together. */
-      pre.src-bash:before {
-        content: 'bash';
-      }
-      pre.src-csh:before {
-        content: 'csh';
-      }
-      pre.src-ash:before {
-        content: 'ash';
-      }
-      pre.src-dash:before {
-        content: 'dash';
-      }
-      pre.src-ksh:before {
-        content: 'ksh';
-      }
-      pre.src-mksh:before {
-        content: 'mksh';
-      }
-      pre.src-posh:before {
-        content: 'posh';
-      }
-      /* Additional Emacs modes also supported by the LaTeX listings package */
-      pre.src-ada:before {
-        content: 'Ada';
-      }
-      pre.src-asm:before {
-        content: 'Assembler';
-      }
-      pre.src-caml:before {
-        content: 'Caml';
-      }
-      pre.src-delphi:before {
-        content: 'Delphi';
-      }
-      pre.src-html:before {
-        content: 'HTML';
-      }
-      pre.src-idl:before {
-        content: 'IDL';
-      }
-      pre.src-mercury:before {
-        content: 'Mercury';
-      }
-      pre.src-metapost:before {
-        content: 'MetaPost';
-      }
-      pre.src-modula-2:before {
-        content: 'Modula-2';
-      }
-      pre.src-pascal:before {
-        content: 'Pascal';
-      }
-      pre.src-ps:before {
-        content: 'PostScript';
-      }
-      pre.src-prolog:before {
-        content: 'Prolog';
-      }
-      pre.src-simula:before {
-        content: 'Simula';
-      }
-      pre.src-tcl:before {
-        content: 'tcl';
-      }
-      pre.src-tex:before {
-        content: 'TeX';
-      }
-      pre.src-plain-tex:before {
-        content: 'Plain TeX';
-      }
-      pre.src-verilog:before {
-        content: 'Verilog';
-      }
-      pre.src-vhdl:before {
-        content: 'VHDL';
-      }
-      pre.src-xml:before {
-        content: 'XML';
-      }
-      pre.src-nxml:before {
-        content: 'XML';
-      }
-      /* add a generic configuration mode; LaTeX export needs an additional
+  pre.src-bash:before  { content: 'bash'; }
+  pre.src-csh:before  { content: 'csh'; }
+  pre.src-ash:before  { content: 'ash'; }
+  pre.src-dash:before  { content: 'dash'; }
+  pre.src-ksh:before  { content: 'ksh'; }
+  pre.src-mksh:before  { content: 'mksh'; }
+  pre.src-posh:before  { content: 'posh'; }
+  /* Additional Emacs modes also supported by the LaTeX listings package */
+  pre.src-ada:before { content: 'Ada'; }
+  pre.src-asm:before { content: 'Assembler'; }
+  pre.src-caml:before { content: 'Caml'; }
+  pre.src-delphi:before { content: 'Delphi'; }
+  pre.src-html:before { content: 'HTML'; }
+  pre.src-idl:before { content: 'IDL'; }
+  pre.src-mercury:before { content: 'Mercury'; }
+  pre.src-metapost:before { content: 'MetaPost'; }
+  pre.src-modula-2:before { content: 'Modula-2'; }
+  pre.src-pascal:before { content: 'Pascal'; }
+  pre.src-ps:before { content: 'PostScript'; }
+  pre.src-prolog:before { content: 'Prolog'; }
+  pre.src-simula:before { content: 'Simula'; }
+  pre.src-tcl:before { content: 'tcl'; }
+  pre.src-tex:before { content: 'TeX'; }
+  pre.src-plain-tex:before { content: 'Plain TeX'; }
+  pre.src-verilog:before { content: 'Verilog'; }
+  pre.src-vhdl:before { content: 'VHDL'; }
+  pre.src-xml:before { content: 'XML'; }
+  pre.src-nxml:before { content: 'XML'; }
+  /* add a generic configuration mode; LaTeX export needs an additional
      (add-to-list 'org-latex-listings-langs '(conf " ")) in .emacs */
-      pre.src-conf:before {
-        content: 'Configuration File';
-      }
+  pre.src-conf:before { content: 'Configuration File'; }
 
-      table {
-        border-collapse: collapse;
-      }
-      caption.t-above {
-        caption-side: top;
-      }
-      caption.t-bottom {
-        caption-side: bottom;
-      }
-      td,
-      th {
-        vertical-align: top;
-      }
-      th.org-right {
-        text-align: center;
-      }
-      th.org-left {
-        text-align: center;
-      }
-      th.org-center {
-        text-align: center;
-      }
-      td.org-right {
-        text-align: right;
-      }
-      td.org-left {
-        text-align: left;
-      }
-      td.org-center {
-        text-align: center;
-      }
-      dt {
-        font-weight: bold;
-      }
-      .footpara {
-        display: inline;
-      }
-      .footdef {
-        margin-bottom: 1em;
-      }
-      .figure {
-        padding: 1em;
-      }
-      .figure p {
-        text-align: center;
-      }
-      .equation-container {
-        display: table;
-        text-align: center;
-        width: 100%;
-      }
-      .equation {
-        vertical-align: middle;
-      }
-      .equation-label {
-        display: table-cell;
-        text-align: right;
-        vertical-align: middle;
-      }
-      .inlinetask {
-        padding: 10px;
-        border: 2px solid gray;
-        margin: 10px;
-        background: #ffffcc;
-      }
-      #org-div-home-and-up {
-        text-align: right;
-        font-size: 70%;
-        white-space: nowrap;
-      }
-      textarea {
-        overflow-x: auto;
-      }
-      .linenr {
-        font-size: smaller;
-      }
-      .code-highlighted {
-        background-color: #ffff00;
-      }
-      .org-info-js_info-navigation {
-        border-style: none;
-      }
-      #org-info-js_console-label {
-        font-size: 10px;
-        font-weight: bold;
-        white-space: nowrap;
-      }
-      .org-info-js_search-highlight {
-        background-color: #ffff00;
-        color: #000000;
-        font-weight: bold;
-      }
-      .org-svg {
-        width: 90%;
-      }
-    </style>
-    <link rel="stylesheet" type="text/css" href="/assets/css/htmlize.css" />
-    <link rel="stylesheet" type="text/css" href="/assets/css/readtheorg.css" />
-    <link rel="stylesheet" type="text/css" href="/assets/css/global.css" />
-    <link
-      rel="stylesheet"
-      type="text/css"
-      href="/assets/css/element-plus.css"
-    />
-    <script type="text/javascript" src="/assets/js/jquery.min.js"></script>
-    <script
-      type="text/javascript"
-      src="/assets/js/jquery.stickytableheaders.min.js"
-    ></script>
-    <script type="text/javascript" src="/assets/js/bootstrap.min.js"></script>
-    <script type="text/javascript" src="/assets/js/lodash.min.js"></script>
-    <script type="text/javascript" src="/assets/js/readtheorg.js"></script>
-    <script
-      type="text/javascript"
-      src="/assets/js/mobile-detect.min.js"
-    ></script>
-    <script type="text/javascript" src="/assets/js/Valine.min.js"></script>
-    <script type="text/javascript" src="/assets/js/vue.js"></script>
-    <script type="text/javascript" src="/assets/js/element-plus.js"></script>
-    <script type="text/javascript" src="/assets/js/dist/stats.js"></script>
-    <script type="text/javascript" src="/assets/js/dist/apps.js"></script>
-    <script type="text/javascript" src="/assets/js/dist/global.js"></script>
-    <link rel="stylesheet" href="/assets/css/home.css" />
-    <style>
-      /* From: https://endlessparentheses.com/public/css/endless.css */
-      /* See also: https://meta.superuser.com/questions/4788/css-for-the-new-kbd-style */
-      kbd {
-        -moz-border-radius: 6px;
-        -moz-box-shadow: 0 1px 0 rgba(0, 0, 0, 0.2), 0 0 0 2px #fff inset;
-        -webkit-border-radius: 6px;
-        -webkit-box-shadow: 0 1px 0 rgba(0, 0, 0, 0.2), 0 0 0 2px #fff inset;
-        background-color: #f7f7f7;
-        border: 1px solid #ccc;
-        border-radius: 6px;
-        box-shadow: 0 1px 0 rgba(0, 0, 0, 0.2), 0 0 0 2px #fff inset;
-        color: #333;
-        display: inline-block;
-        font-family: 'Droid Sans Mono', monospace;
-        font-size: 80%;
-        font-weight: normal;
-        line-height: inherit;
-        margin: 0 0.1em;
-        padding: 0.08em 0.4em;
-        text-shadow: 0 1px 0 #fff;
-        word-spacing: -4px;
-
-        box-shadow: 2px 2px 2px #222; /* MA: An extra I've added. */
-      }
-    </style>
-    <link
-      rel="stylesheet"
-      type="text/css"
-      href="/assets/css/tooltipster.bundle.min.css"
-    />
-    <link
-      rel="stylesheet"
-      type="text/css"
-      href="/assets/css/tooltipster-sideTip-punk.min.css"
-    />
-    <script type="text/javascript">
-      if (typeof jQuery == 'undefined') {
-        document.write(
-          unescape(
-            '%3Cscript src="https://code.jquery.com/jquery-1.10.0.min.js"%3E%3C/script%3E'
-          )
-        )
-      }
-    </script>
-    <script
-      type="text/javascript"
-      src="/assets/js/tooltipster.bundle.min.js"
-    ></script>
-    <script
-      type="text/javascript"
-      src="/assets/js/tooltipster-scrollableTip.min.js"
-    ></script>
-    <script type="text/javascript" src="/assets/js/dist/tooltips.js"></script>
-    <style>
-      abbr {
-        color: red;
-      }
-
-      .tooltip {
-        border-bottom: 1px dotted #000;
-        color: red;
-        text-decoration: none;
-      }
-    </style>
-  </head>
-  <body>
-    <div id="content" class="content">
-      <h1 class="title">Homepage</h1>
-      <div id="table-of-contents" role="doc-toc">
-        <h2>Table of Contents</h2>
-        <div id="text-table-of-contents" role="doc-toc">
-          <ul>
-            <li>
-              <a href="#org1e2c51f">1. Documentations</a>
-            </li>
-            <li>
-              <a href="#orge960c86">2. Emacs</a>
-              <ul>
-                <li>
-                  <a href="#org57a2d97"
-                    >2.1.
-                    <span class="todo TODO">TODO</span>
-                    org-special-block-extras</a
-                  >
-                </li>
-                <li>
-                  <a href="#orgf42e671"
-                    >2.2. readthedocs&nbsp;&nbsp;&nbsp;<span class="tag"
-                      ><span class="org">org</span>&nbsp;<span class="emacs"
-                        >emacs</span
-                      ></span
-                    ></a
-                  >
-                </li>
-                <li>
-                  <a href="#org6b967d3">2.3. org-roam</a>
-                </li>
-                <li>
-                  <a href="#orge02cf7d">2.4. org-mode</a>
-                </li>
-              </ul>
-            </li>
-            <li>
-              <a href="#org9d50ee5">3. Vue</a>
-              <ul>
-                <li>
-                  <a href="#org30f94b3"
-                    >3.1. <span class="todo SOMEDAY">SOMEDAY</span> Vue
-                    ChangeLog</a
-                  >
-                </li>
-                <li>
-                  <a href="#org399f143"
-                    >3.2. <span class="todo TODO">TODO</span> vue script
-                    setup</a
-                  >
-                </li>
-                <li>
-                  <a href="#org66682dc"
-                    >3.3. <span class="done DONE">DONE</span> build your own vue
-                    reactivity</a
-                  >
-                </li>
-                <li>
-                  <a href="#org7b13487"
-                    >3.4. <span class="todo TODO">TODO</span> build your own vue
-                    scheduler</a
-                  >
-                </li>
-                <li>
-                  <a href="#orgdeb11a8"
-                    >3.5. <span class="todo TODO">TODO</span> build your own
-                    runtime-core</a
-                  >
-                </li>
-              </ul>
-            </li>
-            <li>
-              <a href="#orge42fd99">4. React</a>
-              <ul>
-                <li>
-                  <a href="#org487bb18"
-                    >4.1. <span class="todo TODO">TODO</span> Build your own
-                    react</a
-                  >
-                </li>
-              </ul>
-            </li>
-            <li>
-              <a href="#org98e799d">5. JavaScript</a>
-              <ul>
-                <li>
-                  <a href="#orgf19395c"
-                    >5.1. <span class="todo TODO">TODO</span> JavaScript Proxy
-                    And Reflect</a
-                  >
-                </li>
-              </ul>
-            </li>
-            <li>
-              <a href="#orge5d4c8e">6. Shell Programming</a>
-              <ul>
-                <li>
-                  <a href="#orgcc5c5b4"
-                    >6.1. <span class="todo TODO">TODO</span> sed command</a
-                  >
-                </li>
-                <li>
-                  <a href="#orgf5250b1"
-                    >6.2. <span class="todo TODO">TODO</span> shell basis</a
-                  >
-                </li>
-              </ul>
-            </li>
-            <li>
-              <a href="#orge5e4659">7. 怪谈杂物间</a>
-              <ul>
-                <li>
-                  <a href="#org67c7aba">7.1. collections</a>
-                </li>
-              </ul>
-            </li>
-          </ul>
-        </div>
-      </div>
-      <div
-        style="
-          padding: 1em;
-          background-color: #ffffcc;
-          border-radius: 15px;
-          font-size: 0.9em;
-          box-shadow: 0.05em 0.1em 5px 0.01em #00000057;
-        "
-      >
-        <h3>主页说明</h3>
-        <p>
-          博客基本： ElementPlus +
-          <abbr class="tooltip" title="zsh:1: command not found: wn&lt;br&gt;"
-            >Vue3</abbr
-          >
-          + Emacs +
-          <abbr
-            class="tooltip"
-            title="Outline-based notes management and organizer, alias&lt;br&gt;''Carsten’s outline-mode for keeping track of everything.''&lt;br&gt;&lt;br&gt;Org mode develops organizational tasks around a NOTES file which&lt;br&gt;contains information about projects as plain text. Org mode is&lt;br&gt;implemented on top of Outline mode, which is ideal to keep the content&lt;br&gt;of large files well structured. It supports ToDo items, deadlines and&lt;br&gt;time stamps, which magically appear in the diary listing of the Emacs&lt;br&gt;calendar. Tables are easily created with a built-in table editor.&lt;br&gt;Plain text URL-like links connect to websites, emails (VM), Usenet&lt;br&gt;messages (Gnus), BBDB entries, and any files related to the project.&lt;br&gt;For printing and sharing of notes, an Org file (or a part of it)&lt;br&gt;can be exported as a structured ASCII or HTML file.&lt;br&gt;&lt;br&gt;The following commands are available:&lt;br&gt;&lt;br&gt;&lt;br&gt;Key       Binding&lt;br&gt;&lt;br&gt;TAB org-cycle&lt;br&gt;C-j org-return-and-maybe-indent&lt;br&gt;RET org-return&lt;br&gt; (this binding is currently shadowed)&lt;br&gt;| org-force-self-insert&lt;br&gt; (this binding is currently shadowed)&lt;br&gt;S-TAB org-shifttab&lt;br&gt;S-RET +org/shift-return&lt;br&gt;C-RET +org/insert-item-below&lt;br&gt;C-# org-table-rotate-recalc-marks&lt;br&gt;C-' org-cycle-agenda-files&lt;br&gt;C-, org-cycle-agenda-files&lt;br&gt;C-S-RET +org/insert-item-above&lt;br&gt;C-M-S-&lt;left&gt; org-decrease-number-at-point&lt;br&gt;C-M-S-&lt;right&gt; org-increase-number-at-point&lt;br&gt;C-M-&lt;return&gt; org-insert-subheading&lt;br&gt;C-S-&lt;down&gt; org-shiftcontroldown&lt;br&gt;C-S-&lt;left&gt; org-shiftcontrolleft&lt;br&gt;C-S-&lt;return&gt; +org/insert-item-above&lt;br&gt; (this binding is currently shadowed)&lt;br&gt;C-S-&lt;right&gt; org-shiftcontrolright&lt;br&gt;C-S-&lt;up&gt; org-shiftcontrolup&lt;br&gt;C-&lt;return&gt; +org/insert-item-below&lt;br&gt; (this binding is currently shadowed)&lt;br&gt;M-S-&lt;down&gt; org-shiftmetadown&lt;br&gt;M-S-&lt;left&gt; org-shiftmetaleft&lt;br&gt;M-S-&lt;return&gt; org-insert-todo-heading&lt;br&gt;M-S-&lt;right&gt; org-shiftmetaright&lt;br&gt;M-S-&lt;up&gt; org-shiftmetaup&lt;br&gt;M-&lt;down&gt; org-metadown&lt;br&gt;M-&lt;left&gt; org-metaleft&lt;br&gt;M-&lt;right&gt; org-metaright&lt;br&gt;M-s-&lt;return&gt; org-insert-subheading&lt;br&gt;M-&lt;up&gt; org-metaup&lt;br&gt;S-&lt;down&gt; org-shiftdown&lt;br&gt;S-&lt;left&gt; org-shiftleft&lt;br&gt;S-&lt;return&gt; org-table-copy-down&lt;br&gt;S-&lt;right&gt; org-shiftright&lt;br&gt;S-s-&lt;return&gt; +org/insert-item-above&lt;br&gt; (this binding is currently shadowed)&lt;br&gt;S-&lt;up&gt; org-shiftup&lt;br&gt;&lt;backtab&gt; org-shifttab&lt;br&gt;s-&lt;return&gt; +org/insert-item-below&lt;br&gt; (this binding is currently shadowed)&lt;br&gt;&lt;br&gt;&lt;motion-state&gt; ( org-backward-sentence&lt;br&gt;&lt;motion-state&gt; ) org-forward-sentence&lt;br&gt;&lt;motion-state&gt; { org-backward-paragraph&lt;br&gt;&lt;motion-state&gt; } org-forward-paragraph&lt;br&gt;&lt;br&gt;&lt;normal-state&gt; S-&lt;tab&gt; org-shifttab&lt;br&gt;&lt;normal-state&gt; &lt;tab&gt; org-cycle&lt;br&gt;&lt;br&gt;M-RET org-meta-return&lt;br&gt;C-M-t org-transpose-element&lt;br&gt;M-h org-mark-element&lt;br&gt;M-{ org-backward-element&lt;br&gt;M-} org-forward-element&lt;br&gt;M-S-RET org-insert-todo-heading&lt;br&gt;C-M-RET org-insert-subheading&lt;br&gt;ESC S-&lt;down&gt; org-shiftmetadown&lt;br&gt;ESC S-&lt;left&gt; org-shiftmetaleft&lt;br&gt;ESC S-&lt;right&gt; org-shiftmetaright&lt;br&gt;ESC S-&lt;up&gt; org-shiftmetaup&lt;br&gt;ESC &lt;down&gt; org-metadown&lt;br&gt;ESC &lt;right&gt; org-metaright&lt;br&gt;ESC &lt;up&gt; org-metaup&lt;br&gt;&lt;br&gt;C-c C-a org-attach&lt;br&gt;C-c C-b org-backward-heading-same-level&lt;br&gt;C-c C-c org-ctrl-c-ctrl-c&lt;br&gt;C-c C-d org-deadline&lt;br&gt;C-c C-e org-export-dispatch&lt;br&gt;C-c C-f org-forward-heading-same-level&lt;br&gt;C-c TAB org-toggle-inline-images&lt;br&gt;C-c C-j org-goto&lt;br&gt;C-c C-k org-kill-note-or-show-branches&lt;br&gt;C-c C-l org-insert-link&lt;br&gt;C-c RET org-ctrl-c-ret&lt;br&gt;C-c C-o org-open-at-point&lt;br&gt;C-c C-q org-set-tags-command&lt;br&gt;C-c C-r org-reveal&lt;br&gt;C-c C-s org-schedule&lt;br&gt;C-c C-t org-todo&lt;br&gt;C-c C-w org-refile&lt;br&gt;C-c C-y org-evaluate-time-range&lt;br&gt;C-c C-z org-add-note&lt;br&gt;C-c C-^ org-up-element&lt;br&gt;C-c C-_ org-down-element&lt;br&gt;C-c ! org-time-stamp-inactive&lt;br&gt; (this binding is currently shadowed)&lt;br&gt;C-c # org-update-statistics-cookies&lt;br&gt;C-c $ org-archive-subtree&lt;br&gt;C-c % org-mark-ring-push&lt;br&gt;C-c &amp; org-mark-ring-goto&lt;br&gt; (this binding is currently shadowed)&lt;br&gt;C-c ' org-edit-special&lt;br&gt;C-c &lt;strong&gt; org-ctrl-c-star&lt;br&gt;C-c + org-table-sum&lt;br&gt;C-c , org-priority&lt;br&gt;C-c - org-ctrl-c-minus&lt;br&gt;C-c . org-time-stamp&lt;br&gt;C-c &lt;em&gt; org-sparse-tree&lt;br&gt;C-c : org-toggle-fixed-width&lt;br&gt;C-c ; org-toggle-comment&lt;br&gt;C-c &lt; org-date-from-calendar&lt;br&gt;C-c = org-table-eval-formula&lt;br&gt;C-c &gt; org-goto-calendar&lt;br&gt;C-c ? org-table-field-info&lt;br&gt;C-c @ org-mark-subtree&lt;br&gt;C-c [ org-agenda-file-to-front&lt;br&gt;C-c \ org-match-sparse-tree&lt;br&gt;C-c ] org-remove-file&lt;br&gt;C-c ^ org-sort&lt;br&gt;C-c ` org-table-edit-field&lt;br&gt;C-c { org-table-toggle-formula-debugger&lt;br&gt; (this binding is currently shadowed)&lt;br&gt;C-c | org-table-create-or-convert-from-region&lt;br&gt;C-c } org-table-toggle-coordinate-overlays&lt;br&gt;C-c ~ org-table-create-with-table.el&lt;br&gt;C-c C-S-l +org&lt;/em&gt;remove-link&lt;br&gt;C-c C-&lt;/strong&gt; org-list-make-subtree&lt;br&gt;C-c C-, org-insert-structure-template&lt;br&gt;C-c C-&lt;tab&gt; org-force-cycle-archived&lt;br&gt;&lt;br&gt;&lt;remap&gt; &lt;backward-paragraph&gt;  org-backward-paragraph&lt;br&gt;&lt;remap&gt; &lt;backward-sentence&gt;  org-backward-sentence&lt;br&gt;&lt;remap&gt; &lt;comment-dwim&gt;  org-comment-dwim&lt;br&gt;&lt;remap&gt; &lt;delete-backward-char&gt;  org-delete-backward-char&lt;br&gt;&lt;remap&gt; &lt;delete-char&gt;  org-delete-char&lt;br&gt;&lt;remap&gt; &lt;delete-indentation&gt;  org-delete-indentation&lt;br&gt;&lt;remap&gt; &lt;doom/backward-to-bol-or-indent&gt;  org-beginning-of-line&lt;br&gt;&lt;remap&gt; &lt;doom/forward-to-last-non-comment-or-eol&gt; org-end-of-line&lt;br&gt;&lt;remap&gt; &lt;fill-paragraph&gt;  org-fill-paragraph&lt;br&gt;&lt;remap&gt; &lt;forward-paragraph&gt;  org-forward-paragraph&lt;br&gt;&lt;remap&gt; &lt;forward-sentence&gt;  org-forward-sentence&lt;br&gt;&lt;remap&gt; &lt;kill-line&gt;  org-kill-line&lt;br&gt;&lt;remap&gt; &lt;move-beginning-of-line&gt;  org-beginning-of-line&lt;br&gt;&lt;remap&gt; &lt;move-end-of-line&gt;  org-end-of-line&lt;br&gt;&lt;remap&gt; &lt;open-line&gt;  org-open-line&lt;br&gt;&lt;remap&gt; &lt;outline-backward-same-level&gt;  org-backward-heading-same-level&lt;br&gt;&lt;remap&gt; &lt;outline-demote&gt;  org-demote-subtree&lt;br&gt;&lt;remap&gt; &lt;outline-forward-same-level&gt;  org-forward-heading-same-level&lt;br&gt;&lt;remap&gt; &lt;outline-insert-heading&gt;  org-ctrl-c-ret&lt;br&gt;&lt;remap&gt; &lt;outline-mark-subtree&gt;  org-mark-subtree&lt;br&gt;&lt;remap&gt; &lt;outline-next-visible-heading&gt;  org-next-visible-heading&lt;br&gt;&lt;remap&gt; &lt;outline-previous-visible-heading&gt;  org-previous-visible-heading&lt;br&gt;&lt;remap&gt; &lt;outline-promote&gt;  org-promote-subtree&lt;br&gt;&lt;remap&gt; &lt;outline-show-branches&gt;  org-kill-note-or-show-branches&lt;br&gt;&lt;remap&gt; &lt;outline-show-subtree&gt;  org-show-subtree&lt;br&gt;&lt;remap&gt; &lt;self-insert-command&gt;  org-self-insert-command&lt;br&gt; (this binding is currently shadowed)&lt;br&gt;&lt;remap&gt; &lt;show-children&gt;  org-show-children&lt;br&gt;&lt;remap&gt; &lt;transpose-words&gt;  org-transpose-words&lt;br&gt;&lt;remap&gt; &lt;yank&gt;  org-yank&lt;br&gt;&lt;br&gt;C-c C-a outline-show-all&lt;br&gt; (this binding is currently shadowed)&lt;br&gt;C-c C-b outline-backward-same-level&lt;br&gt; (this binding is currently shadowed)&lt;br&gt;C-c C-c outline-hide-entry&lt;br&gt; (this binding is currently shadowed)&lt;br&gt;C-c C-d outline-hide-subtree&lt;br&gt; (this binding is currently shadowed)&lt;br&gt;C-c C-e outline-show-entry&lt;br&gt; (this binding is currently shadowed)&lt;br&gt;C-c C-f outline-forward-same-level&lt;br&gt; (this binding is currently shadowed)&lt;br&gt;C-c TAB outline-show-children&lt;br&gt; (this binding is currently shadowed)&lt;br&gt;C-c C-k outline-show-branches&lt;br&gt; (this binding is currently shadowed)&lt;br&gt;C-c C-l outline-hide-leaves&lt;br&gt; (this binding is currently shadowed)&lt;br&gt;C-c RET outline-insert-heading&lt;br&gt; (this binding is currently shadowed)&lt;br&gt;C-c C-n outline-next-visible-heading&lt;br&gt;C-c C-o outline-hide-other&lt;br&gt; (this binding is currently shadowed)&lt;br&gt;C-c C-p outline-previous-visible-heading&lt;br&gt;C-c C-q outline-hide-sublevels&lt;br&gt; (this binding is currently shadowed)&lt;br&gt;C-c C-s outline-show-subtree&lt;br&gt; (this binding is currently shadowed)&lt;br&gt;C-c C-t outline-hide-body&lt;br&gt; (this binding is currently shadowed)&lt;br&gt;C-c C-u outline-up-heading&lt;br&gt;C-c C-v outline-move-subtree-down&lt;br&gt; (this binding is currently shadowed)&lt;br&gt;C-c C-^ outline-move-subtree-up&lt;br&gt; (this binding is currently shadowed)&lt;br&gt;C-c @ outline-mark-subtree&lt;br&gt; (this binding is currently shadowed)&lt;br&gt;C-c C-&lt; outline-promote&lt;br&gt;C-c C-&gt; outline-demote&lt;br&gt;&lt;br&gt;C-M-i ispell-complete-word&lt;br&gt;&lt;br&gt;&lt;normal-state&gt; , # org-update-statistics-cookies&lt;br&gt;&lt;normal-state&gt; , ' org-edit-special&lt;br&gt;&lt;normal-state&gt; , &lt;strong&gt; org-ctrl-c-star&lt;br&gt;&lt;normal-state&gt; , + org-ctrl-c-minus&lt;br&gt;&lt;normal-state&gt; , , org-switchb&lt;br&gt;&lt;normal-state&gt; , . consult-org-heading&lt;br&gt;&lt;normal-state&gt; , &lt;em&gt; consult-org-agenda&lt;br&gt;&lt;normal-state&gt; , @ org-cite-insert&lt;br&gt;&lt;normal-state&gt; , A org-archive-subtree&lt;br&gt;&lt;normal-state&gt; , I org-id-get-create&lt;br&gt;&lt;normal-state&gt; , O org-ol-tree&lt;br&gt;&lt;normal-state&gt; , T org-todo-list&lt;br&gt;&lt;normal-state&gt; , e org-export-dispatch&lt;br&gt;&lt;normal-state&gt; , f org-footnote-action&lt;br&gt;&lt;normal-state&gt; , h org-toggle-heading&lt;br&gt;&lt;normal-state&gt; , i org-toggle-item&lt;br&gt;&lt;normal-state&gt; , n org-store-link&lt;br&gt;&lt;normal-state&gt; , o org-set-property&lt;br&gt;&lt;normal-state&gt; , q org-set-tags-command&lt;br&gt;&lt;normal-state&gt; , t org-todo&lt;br&gt;&lt;normal-state&gt; , x org-toggle-checkbox&lt;br&gt;&lt;br&gt;&lt;normal-state&gt; t T counsel-org-tag&lt;br&gt;&lt;normal-state&gt; t t org-todo&lt;br&gt;&lt;br&gt;&lt;visual-state&gt; , # org-update-statistics-cookies&lt;br&gt;&lt;visual-state&gt; , ' org-edit-special&lt;br&gt;&lt;visual-state&gt; , &lt;/strong&gt; org-ctrl-c-star&lt;br&gt;&lt;visual-state&gt; , + org-ctrl-c-minus&lt;br&gt;&lt;visual-state&gt; , , org-switchb&lt;br&gt;&lt;visual-state&gt; , . consult-org-heading&lt;br&gt;&lt;visual-state&gt; , &lt;/em&gt; consult-org-agenda&lt;br&gt;&lt;visual-state&gt; , @ org-cite-insert&lt;br&gt;&lt;visual-state&gt; , A org-archive-subtree&lt;br&gt;&lt;visual-state&gt; , I org-id-get-create&lt;br&gt;&lt;visual-state&gt; , O org-ol-tree&lt;br&gt;&lt;visual-state&gt; , T org-todo-list&lt;br&gt;&lt;visual-state&gt; , e org-export-dispatch&lt;br&gt;&lt;visual-state&gt; , f org-footnote-action&lt;br&gt;&lt;visual-state&gt; , h org-toggle-heading&lt;br&gt;&lt;visual-state&gt; , i org-toggle-item&lt;br&gt;&lt;visual-state&gt; , n org-store-link&lt;br&gt;&lt;visual-state&gt; , o org-set-property&lt;br&gt;&lt;visual-state&gt; , q org-set-tags-command&lt;br&gt;&lt;visual-state&gt; , t org-todo&lt;br&gt;&lt;visual-state&gt; , x org-toggle-checkbox&lt;br&gt;&lt;br&gt;&lt;visual-state&gt; t T counsel-org-tag&lt;br&gt;&lt;visual-state&gt; t t org-todo&lt;br&gt;&lt;br&gt;C-x n b org-narrow-to-block&lt;br&gt;C-x n e org-narrow-to-element&lt;br&gt;C-x n s org-narrow-to-subtree&lt;br&gt;&lt;br&gt;C-c w M org-mind-map-write-current-tree&lt;br&gt;C-c w m org-mind-map-write&lt;br&gt;&lt;br&gt;C-c r F org-refile&lt;br&gt;C-c r f org-refile-copy&lt;br&gt;&lt;br&gt;C-c q b org-ql-sidebar&lt;br&gt;C-c q r org-ql-view-recent-items&lt;br&gt;C-c q s org-ql-search&lt;br&gt;C-c q t org-ql-sparse-tree&lt;br&gt;C-c q v org-ql-view&lt;br&gt;&lt;br&gt;C-c l D org-super-links-delete-link&lt;br&gt;C-c l L org-super-links-insert-link&lt;br&gt;C-c l b org-mark-ring-goto&lt;br&gt;C-c l d org-super-links-quick-insert-drawer-link&lt;br&gt;C-c l i org-super-links-quick-insert-inline-link&lt;br&gt;C-c l l org-super-links-link&lt;br&gt;C-c l s org-super-links-store-link&lt;br&gt;&lt;br&gt;C-c i D o-docs-insert&lt;br&gt;C-c i c copyright&lt;br&gt;C-c i u org-mac-chrome-insert-frontmost-url&lt;br&gt;&lt;br&gt;C-c g l org-mac-grab-link&lt;br&gt;&lt;br&gt;C-c e a all-the-icons-insert-faicon&lt;br&gt;C-c e e all-the-icons-insert&lt;br&gt;C-c e f all-the-icons-insert-fileicon&lt;br&gt;C-c e i all-the-icons-insert-alltheicon&lt;br&gt;C-c e m all-the-icons-insert-material&lt;br&gt;C-c e o all-the-icons-insert-octicon&lt;br&gt;C-c e w all-the-icons-insert-wicon&lt;br&gt;&lt;br&gt;C-c f r gcl/indent-org-block-automatically&lt;br&gt;&lt;br&gt;C-c c c counsel-org-clock-context&lt;br&gt;C-c c g counsel-org-clock-goto&lt;br&gt;C-c c h counsel-org-clock-history&lt;br&gt;C-c c i org-clock-in&lt;br&gt;C-c c o org-clock-out&lt;br&gt;C-c c p org-preview-html-mode&lt;br&gt;C-c c r counsel-org-clock-rebuild-history&lt;br&gt;&lt;br&gt;C-c a t org-transclusion-add&lt;br&gt;&lt;br&gt;C-c C-v C-a org-babel-sha1-hash&lt;br&gt;C-c C-v C-b org-babel-execute-buffer&lt;br&gt;C-c C-v C-c org-babel-check-src-block&lt;br&gt;C-c C-v C-d org-babel-demarcate-block&lt;br&gt;C-c C-v C-e org-babel-execute-maybe&lt;br&gt;C-c C-v C-f org-babel-tangle-file&lt;br&gt;C-c C-v TAB org-babel-view-src-block-info&lt;br&gt;C-c C-v C-j org-babel-insert-header-arg&lt;br&gt;C-c C-v C-l org-babel-load-in-session&lt;br&gt;C-c C-v C-n org-babel-next-src-block&lt;br&gt;C-c C-v C-o org-babel-open-src-block-result&lt;br&gt;C-c C-v C-p org-babel-previous-src-block&lt;br&gt;C-c C-v C-r org-babel-goto-named-result&lt;br&gt;C-c C-v C-s org-babel-execute-subtree&lt;br&gt;C-c C-v C-t org-babel-tangle&lt;br&gt;C-c C-v C-u org-babel-goto-src-block-head&lt;br&gt;C-c C-v C-v org-babel-expand-src-block&lt;br&gt;C-c C-v C-x org-babel-do-key-sequence-in-edit-buffer&lt;br&gt;C-c C-v C-z org-babel-switch-to-session&lt;br&gt;C-c C-v I org-babel-view-src-block-info&lt;br&gt;C-c C-v a org-babel-sha1-hash&lt;br&gt;C-c C-v b org-babel-execute-buffer&lt;br&gt;C-c C-v c org-babel-check-src-block&lt;br&gt;C-c C-v d org-babel-demarcate-block&lt;br&gt;C-c C-v e org-babel-execute-maybe&lt;br&gt;C-c C-v f org-babel-tangle-file&lt;br&gt;C-c C-v g org-babel-goto-named-src-block&lt;br&gt;C-c C-v h org-babel-describe-bindings&lt;br&gt;C-c C-v i org-babel-lob-ingest&lt;br&gt;C-c C-v j org-babel-insert-header-arg&lt;br&gt;C-c C-v k org-babel-remove-result-one-or-many&lt;br&gt;C-c C-v l org-babel-load-in-session&lt;br&gt;C-c C-v n org-babel-next-src-block&lt;br&gt;C-c C-v o org-babel-open-src-block-result&lt;br&gt;C-c C-v p org-babel-previous-src-block&lt;br&gt;C-c C-v r org-babel-goto-named-result&lt;br&gt;C-c C-v s org-babel-execute-subtree&lt;br&gt;C-c C-v t org-babel-tangle&lt;br&gt;C-c C-v u org-babel-goto-src-block-head&lt;br&gt;C-c C-v v org-babel-expand-src-block&lt;br&gt;C-c C-v x org-babel-do-key-sequence-in-edit-buffer&lt;br&gt;C-c C-v z org-babel-switch-to-session-with-code&lt;br&gt;&lt;br&gt;C-c '' a orgtbl-ascii-plot&lt;br&gt;C-c '' g org-plot/gnuplot&lt;br&gt;&lt;br&gt;C-c C-M-l org-insert-all-links&lt;br&gt;C-c C-M-w org-refile-reverse&lt;br&gt;C-c M-b org-previous-block&lt;br&gt;C-c M-f org-next-block&lt;br&gt;C-c M-l org-insert-last-stored-link&lt;br&gt;C-c M-w org-refile-copy&lt;br&gt;&lt;br&gt;C-c C-x C-a org-archive-subtree-default&lt;br&gt;C-c C-x C-b org-toggle-checkbox&lt;br&gt;C-c C-x C-c org-columns&lt;br&gt;C-c C-x C-d org-clock-display&lt;br&gt;C-c C-x C-f org-emphasize&lt;br&gt;C-c C-x TAB org-clock-in&lt;br&gt;C-c C-x C-j org-clock-goto&lt;br&gt;C-c C-x C-l org-latex-preview&lt;br&gt;C-c C-x C-n org-next-link&lt;br&gt;C-c C-x C-o org-clock-out&lt;br&gt;C-c C-x C-p org-previous-link&lt;br&gt;C-c C-x C-q org-clock-cancel&lt;br&gt;C-c C-x C-r org-toggle-radio-button&lt;br&gt;C-c C-x C-s org-archive-subtree&lt;br&gt;C-c C-x C-t org-toggle-time-stamp-overlays&lt;br&gt;C-c C-x C-u org-dblock-update&lt;br&gt;C-c C-x C-v org-toggle-inline-images&lt;br&gt;C-c C-x C-w org-cut-special&lt;br&gt;C-c C-x C-x org-clock-in-last&lt;br&gt;C-c C-x C-y org-paste-special&lt;br&gt;C-c C-x C-z org-resolve-clocks&lt;br&gt;C-c C-x ! org-reload&lt;br&gt;C-c C-x , org-timer-pause-or-continue&lt;br&gt;C-c C-x - org-timer-item&lt;br&gt;C-c C-x . org-timer&lt;br&gt;C-c C-x 0 org-timer-start&lt;br&gt;C-c C-x ; org-timer-set-timer&lt;br&gt;C-c C-x &lt; org-agenda-set-restriction-lock&lt;br&gt;C-c C-x &gt; org-agenda-remove-restriction-lock&lt;br&gt;C-c C-x @ org-cite-insert&lt;br&gt;C-c C-x A org-archive-to-archive-sibling&lt;br&gt;C-c C-x E org-inc-effort&lt;br&gt;C-c C-x G org-feed-goto-inbox&lt;br&gt;C-c C-x I org-info-find-node&lt;br&gt;C-c C-x P org-set-property-and-value&lt;br&gt;C-c C-x [ org-reftex-citation&lt;br&gt;C-c C-x \ org-toggle-pretty-entities&lt;br&gt;C-c C-x _ org-timer-stop&lt;br&gt;C-c C-x a org-toggle-archive-tag&lt;br&gt;C-c C-x b org-tree-to-indirect-buffer&lt;br&gt;C-c C-x c org-clone-subtree-with-time-shift&lt;br&gt;C-c C-x d org-insert-drawer&lt;br&gt;C-c C-x e org-set-effort&lt;br&gt;C-c C-x f org-footnote-action&lt;br&gt;C-c C-x g org-feed-update-all&lt;br&gt;C-c C-x o org-toggle-ordered-property&lt;br&gt;C-c C-x p org-set-property&lt;br&gt;C-c C-x q org-toggle-tags-groups&lt;br&gt;C-c C-x v org-copy-visible&lt;br&gt;C-c C-x x org-dynamic-block-insert-dblock&lt;br&gt;&lt;br&gt;&lt;insert-state&gt; M-SPC m # org-update-statistics-cookies&lt;br&gt;&lt;insert-state&gt; M-SPC m ' org-edit-special&lt;br&gt;&lt;insert-state&gt; M-SPC m &lt;strong&gt; org-ctrl-c-star&lt;br&gt;&lt;insert-state&gt; M-SPC m + org-ctrl-c-minus&lt;br&gt;&lt;insert-state&gt; M-SPC m , org-switchb&lt;br&gt;&lt;insert-state&gt; M-SPC m . consult-org-heading&lt;br&gt;&lt;insert-state&gt; M-SPC m &lt;em&gt; consult-org-agenda&lt;br&gt;&lt;insert-state&gt; M-SPC m @ org-cite-insert&lt;br&gt;&lt;insert-state&gt; M-SPC m A org-archive-subtree&lt;br&gt;&lt;insert-state&gt; M-SPC m I org-id-get-create&lt;br&gt;&lt;insert-state&gt; M-SPC m O org-ol-tree&lt;br&gt;&lt;insert-state&gt; M-SPC m T org-todo-list&lt;br&gt;&lt;insert-state&gt; M-SPC m e org-export-dispatch&lt;br&gt;&lt;insert-state&gt; M-SPC m f org-footnote-action&lt;br&gt;&lt;insert-state&gt; M-SPC m h org-toggle-heading&lt;br&gt;&lt;insert-state&gt; M-SPC m i org-toggle-item&lt;br&gt;&lt;insert-state&gt; M-SPC m n org-store-link&lt;br&gt;&lt;insert-state&gt; M-SPC m o org-set-property&lt;br&gt;&lt;insert-state&gt; M-SPC m q org-set-tags-command&lt;br&gt;&lt;insert-state&gt; M-SPC m t org-todo&lt;br&gt;&lt;insert-state&gt; M-SPC m x org-toggle-checkbox&lt;br&gt;&lt;br&gt;&lt;emacs-state&gt; M-SPC m # org-update-statistics-cookies&lt;br&gt;&lt;emacs-state&gt; M-SPC m ' org-edit-special&lt;br&gt;&lt;emacs-state&gt; M-SPC m &lt;/strong&gt; org-ctrl-c-star&lt;br&gt;&lt;emacs-state&gt; M-SPC m + org-ctrl-c-minus&lt;br&gt;&lt;emacs-state&gt; M-SPC m , org-switchb&lt;br&gt;&lt;emacs-state&gt; M-SPC m . consult-org-heading&lt;br&gt;&lt;emacs-state&gt; M-SPC m &lt;/em&gt; consult-org-agenda&lt;br&gt;&lt;emacs-state&gt; M-SPC m @ org-cite-insert&lt;br&gt;&lt;emacs-state&gt; M-SPC m A org-archive-subtree&lt;br&gt;&lt;emacs-state&gt; M-SPC m I org-id-get-create&lt;br&gt;&lt;emacs-state&gt; M-SPC m O org-ol-tree&lt;br&gt;&lt;emacs-state&gt; M-SPC m T org-todo-list&lt;br&gt;&lt;emacs-state&gt; M-SPC m e org-export-dispatch&lt;br&gt;&lt;emacs-state&gt; M-SPC m f org-footnote-action&lt;br&gt;&lt;emacs-state&gt; M-SPC m h org-toggle-heading&lt;br&gt;&lt;emacs-state&gt; M-SPC m i org-toggle-item&lt;br&gt;&lt;emacs-state&gt; M-SPC m n org-store-link&lt;br&gt;&lt;emacs-state&gt; M-SPC m o org-set-property&lt;br&gt;&lt;emacs-state&gt; M-SPC m q org-set-tags-command&lt;br&gt;&lt;emacs-state&gt; M-SPC m t org-todo&lt;br&gt;&lt;emacs-state&gt; M-SPC m x org-toggle-checkbox&lt;br&gt;&lt;br&gt;&lt;motion-state&gt; , m D org-roam-demote-entire-buffer&lt;br&gt;&lt;motion-state&gt; , m F org-roam-ref-find&lt;br&gt;&lt;motion-state&gt; , m I org-id-get-create&lt;br&gt;&lt;motion-state&gt; , m M org-roam-buffer-display-dedicated&lt;br&gt;&lt;motion-state&gt; , m R org-roam-link-replace-all&lt;br&gt;&lt;motion-state&gt; , m f org-roam-node-find&lt;br&gt;&lt;motion-state&gt; , m g org-roam-graph&lt;br&gt;&lt;motion-state&gt; , m i org-roam-node-insert&lt;br&gt;&lt;motion-state&gt; , m m org-roam-buffer-toggle&lt;br&gt;&lt;motion-state&gt; , m n org-roam-capture&lt;br&gt;&lt;motion-state&gt; , m r org-roam-refile&lt;br&gt;&lt;br&gt;&lt;motion-state&gt; , p d org-priority-down&lt;br&gt;&lt;motion-state&gt; , p p org-priority&lt;br&gt;&lt;motion-state&gt; , p u org-priority-up&lt;br&gt;&lt;br&gt;&lt;motion-state&gt; , s A org-archive-subtree&lt;br&gt;&lt;motion-state&gt; , s N widen&lt;br&gt;&lt;motion-state&gt; , s S org-sort&lt;br&gt;&lt;motion-state&gt; , s a org-toggle-archive-tag&lt;br&gt;&lt;motion-state&gt; , s b org-tree-to-indirect-buffer&lt;br&gt;&lt;motion-state&gt; , s c org-clone-subtree-with-time-shift&lt;br&gt;&lt;motion-state&gt; , s d org-cut-subtree&lt;br&gt;&lt;motion-state&gt; , s h org-promote-subtree&lt;br&gt;&lt;motion-state&gt; , s j org-move-subtree-down&lt;br&gt;&lt;motion-state&gt; , s k org-move-subtree-up&lt;br&gt;&lt;motion-state&gt; , s l org-demote-subtree&lt;br&gt;&lt;motion-state&gt; , s n org-narrow-to-subtree&lt;br&gt;&lt;motion-state&gt; , s r org-refile&lt;br&gt;&lt;motion-state&gt; , s s org-sparse-tree&lt;br&gt;&lt;br&gt;&lt;motion-state&gt; , r . +org/refile-to-current-file&lt;br&gt;&lt;motion-state&gt; , r O +org/refile-to-other-buffer&lt;br&gt;&lt;motion-state&gt; , r c +org/refile-to-running-clock&lt;br&gt;&lt;motion-state&gt; , r f +org/refile-to-file&lt;br&gt;&lt;motion-state&gt; , r l +org/refile-to-last-location&lt;br&gt;&lt;motion-state&gt; , r o +org/refile-to-other-window&lt;br&gt;&lt;motion-state&gt; , r r org-refile&lt;br&gt;&lt;motion-state&gt; , r v +org/refile-to-visible&lt;br&gt;&lt;br&gt;&lt;motion-state&gt; , P P org-publish-current-project&lt;br&gt;&lt;motion-state&gt; , P a org-publish-all&lt;br&gt;&lt;motion-state&gt; , P f org-publish-current-file&lt;br&gt;&lt;motion-state&gt; , P p org-publish&lt;br&gt;&lt;motion-state&gt; , P s org-publish-sitemap&lt;br&gt;&lt;br&gt;&lt;motion-state&gt; , l L org-insert-all-links&lt;br&gt;&lt;motion-state&gt; , l S org-insert-last-stored-link&lt;br&gt;&lt;motion-state&gt; , l c org-cliplink&lt;br&gt;&lt;motion-state&gt; , l d +org/remove-link&lt;br&gt;&lt;motion-state&gt; , l i org-id-store-link&lt;br&gt;&lt;motion-state&gt; , l l org-insert-link&lt;br&gt;&lt;motion-state&gt; , l s org-store-link&lt;br&gt;&lt;motion-state&gt; , l t org-toggle-link-display&lt;br&gt;&lt;br&gt;&lt;motion-state&gt; , g C [closure]&lt;br&gt;&lt;motion-state&gt; , g G consult-org-agenda&lt;br&gt;&lt;motion-state&gt; , g c org-clock-goto&lt;br&gt;&lt;motion-state&gt; , g g consult-org-heading&lt;br&gt;&lt;motion-state&gt; , g i org-id-goto&lt;br&gt;&lt;motion-state&gt; , g r org-refile-goto-last-stored&lt;br&gt;&lt;motion-state&gt; , g v +org/goto-visible&lt;br&gt;&lt;motion-state&gt; , g x org-capture-goto-last-stored&lt;br&gt;&lt;br&gt;&lt;motion-state&gt; , d T org-time-stamp-inactive&lt;br&gt;&lt;motion-state&gt; , d d org-deadline&lt;br&gt;&lt;motion-state&gt; , d s org-schedule&lt;br&gt;&lt;motion-state&gt; , d t org-time-stamp&lt;br&gt;&lt;br&gt;&lt;motion-state&gt; , c - org-clock-timestamps-down&lt;br&gt;&lt;motion-state&gt; , c = org-clock-timestamps-up&lt;br&gt;&lt;motion-state&gt; , c E org-set-effort&lt;br&gt;&lt;motion-state&gt; , c G [closure]&lt;br&gt;&lt;motion-state&gt; , c I org-clock-in-last&lt;br&gt;&lt;motion-state&gt; , c R org-clock-report&lt;br&gt;&lt;motion-state&gt; , c c org-clock-cancel&lt;br&gt;&lt;motion-state&gt; , c d org-clock-mark-default-task&lt;br&gt;&lt;motion-state&gt; , c e org-clock-modify-effort-estimate&lt;br&gt;&lt;motion-state&gt; , c g org-clock-goto&lt;br&gt;&lt;motion-state&gt; , c i org-clock-in&lt;br&gt;&lt;motion-state&gt; , c l +org/toggle-last-clock&lt;br&gt;&lt;motion-state&gt; , c o org-clock-out&lt;br&gt;&lt;motion-state&gt; , c r org-resolve-clocks&lt;br&gt;&lt;motion-state&gt; , c t org-evaluate-time-range&lt;br&gt;&lt;br&gt;&lt;motion-state&gt; , b - org-table-insert-hline&lt;br&gt;&lt;motion-state&gt; , b R org-table-recalculate-buffer-tables&lt;br&gt;&lt;motion-state&gt; , b a org-table-align&lt;br&gt;&lt;motion-state&gt; , b b org-table-blank-field&lt;br&gt;&lt;motion-state&gt; , b c org-table-create-or-convert-from-region&lt;br&gt;&lt;motion-state&gt; , b e org-table-edit-field&lt;br&gt;&lt;motion-state&gt; , b f org-table-edit-formulas&lt;br&gt;&lt;motion-state&gt; , b h org-table-field-info&lt;br&gt;&lt;motion-state&gt; , b p org-plot/gnuplot&lt;br&gt;&lt;motion-state&gt; , b r org-table-recalculate&lt;br&gt;&lt;motion-state&gt; , b s org-table-sort-lines&lt;br&gt;&lt;br&gt;&lt;motion-state&gt; , a D org-attach-delete-all&lt;br&gt;&lt;motion-state&gt; , a O org-attach-open-in-emacs&lt;br&gt;&lt;motion-state&gt; , a P org-download-yank&lt;br&gt;&lt;motion-state&gt; , a R org-attach-reveal-in-emacs&lt;br&gt;&lt;motion-state&gt; , a S org-attach-sync&lt;br&gt;&lt;motion-state&gt; , a a org-attach&lt;br&gt;&lt;motion-state&gt; , a c org-download-screenshot&lt;br&gt;&lt;motion-state&gt; , a d org-attach-delete-one&lt;br&gt;&lt;motion-state&gt; , a f +org/find-file-in-attachments&lt;br&gt;&lt;motion-state&gt; , a l +org/attach-file-and-insert-link&lt;br&gt;&lt;motion-state&gt; , a n org-attach-new&lt;br&gt;&lt;motion-state&gt; , a o org-attach-open&lt;br&gt;&lt;motion-state&gt; , a p org-download-clipboard&lt;br&gt;&lt;motion-state&gt; , a r org-attach-reveal&lt;br&gt;&lt;motion-state&gt; , a s org-attach-set-directory&lt;br&gt;&lt;motion-state&gt; , a u org-attach-url&lt;br&gt;&lt;br&gt;&lt;normal-state&gt; , m D org-roam-demote-entire-buffer&lt;br&gt;&lt;normal-state&gt; , m F org-roam-ref-find&lt;br&gt;&lt;normal-state&gt; , m I org-id-get-create&lt;br&gt;&lt;normal-state&gt; , m M org-roam-buffer-display-dedicated&lt;br&gt;&lt;normal-state&gt; , m R org-roam-link-replace-all&lt;br&gt;&lt;normal-state&gt; , m f org-roam-node-find&lt;br&gt;&lt;normal-state&gt; , m g org-roam-graph&lt;br&gt;&lt;normal-state&gt; , m i org-roam-node-insert&lt;br&gt;&lt;normal-state&gt; , m m org-roam-buffer-toggle&lt;br&gt;&lt;normal-state&gt; , m n org-roam-capture&lt;br&gt;&lt;normal-state&gt; , m r org-roam-refile&lt;br&gt;&lt;br&gt;&lt;normal-state&gt; , p d org-priority-down&lt;br&gt;&lt;normal-state&gt; , p p org-priority&lt;br&gt;&lt;normal-state&gt; , p u org-priority-up&lt;br&gt;&lt;br&gt;&lt;normal-state&gt; , s A org-archive-subtree&lt;br&gt;&lt;normal-state&gt; , s N widen&lt;br&gt;&lt;normal-state&gt; , s S org-sort&lt;br&gt;&lt;normal-state&gt; , s a org-toggle-archive-tag&lt;br&gt;&lt;normal-state&gt; , s b org-tree-to-indirect-buffer&lt;br&gt;&lt;normal-state&gt; , s c org-clone-subtree-with-time-shift&lt;br&gt;&lt;normal-state&gt; , s d org-cut-subtree&lt;br&gt;&lt;normal-state&gt; , s h org-promote-subtree&lt;br&gt;&lt;normal-state&gt; , s j org-move-subtree-down&lt;br&gt;&lt;normal-state&gt; , s k org-move-subtree-up&lt;br&gt;&lt;normal-state&gt; , s l org-demote-subtree&lt;br&gt;&lt;normal-state&gt; , s n org-narrow-to-subtree&lt;br&gt;&lt;normal-state&gt; , s r org-refile&lt;br&gt;&lt;normal-state&gt; , s s org-sparse-tree&lt;br&gt;&lt;br&gt;&lt;normal-state&gt; , r . +org/refile-to-current-file&lt;br&gt;&lt;normal-state&gt; , r O +org/refile-to-other-buffer&lt;br&gt;&lt;normal-state&gt; , r c +org/refile-to-running-clock&lt;br&gt;&lt;normal-state&gt; , r f +org/refile-to-file&lt;br&gt;&lt;normal-state&gt; , r l +org/refile-to-last-location&lt;br&gt;&lt;normal-state&gt; , r o +org/refile-to-other-window&lt;br&gt;&lt;normal-state&gt; , r r org-refile&lt;br&gt;&lt;normal-state&gt; , r v +org/refile-to-visible&lt;br&gt;&lt;br&gt;&lt;normal-state&gt; , P P org-publish-current-project&lt;br&gt;&lt;normal-state&gt; , P a org-publish-all&lt;br&gt;&lt;normal-state&gt; , P f org-publish-current-file&lt;br&gt;&lt;normal-state&gt; , P p org-publish&lt;br&gt;&lt;normal-state&gt; , P s org-publish-sitemap&lt;br&gt;&lt;br&gt;&lt;normal-state&gt; , l L org-insert-all-links&lt;br&gt;&lt;normal-state&gt; , l S org-insert-last-stored-link&lt;br&gt;&lt;normal-state&gt; , l c org-cliplink&lt;br&gt;&lt;normal-state&gt; , l d +org/remove-link&lt;br&gt;&lt;normal-state&gt; , l i org-id-store-link&lt;br&gt;&lt;normal-state&gt; , l l org-insert-link&lt;br&gt;&lt;normal-state&gt; , l s org-store-link&lt;br&gt;&lt;normal-state&gt; , l t org-toggle-link-display&lt;br&gt;&lt;br&gt;&lt;normal-state&gt; , g C [closure]&lt;br&gt;&lt;normal-state&gt; , g G consult-org-agenda&lt;br&gt;&lt;normal-state&gt; , g c org-clock-goto&lt;br&gt;&lt;normal-state&gt; , g g consult-org-heading&lt;br&gt;&lt;normal-state&gt; , g i org-id-goto&lt;br&gt;&lt;normal-state&gt; , g r org-refile-goto-last-stored&lt;br&gt;&lt;normal-state&gt; , g v +org/goto-visible&lt;br&gt;&lt;normal-state&gt; , g x org-capture-goto-last-stored&lt;br&gt;&lt;br&gt;&lt;normal-state&gt; , d T org-time-stamp-inactive&lt;br&gt;&lt;normal-state&gt; , d d org-deadline&lt;br&gt;&lt;normal-state&gt; , d s org-schedule&lt;br&gt;&lt;normal-state&gt; , d t org-time-stamp&lt;br&gt;&lt;br&gt;&lt;normal-state&gt; , c - org-clock-timestamps-down&lt;br&gt;&lt;normal-state&gt; , c = org-clock-timestamps-up&lt;br&gt;&lt;normal-state&gt; , c E org-set-effort&lt;br&gt;&lt;normal-state&gt; , c G [closure]&lt;br&gt;&lt;normal-state&gt; , c I org-clock-in-last&lt;br&gt;&lt;normal-state&gt; , c R org-clock-report&lt;br&gt;&lt;normal-state&gt; , c c org-clock-cancel&lt;br&gt;&lt;normal-state&gt; , c d org-clock-mark-default-task&lt;br&gt;&lt;normal-state&gt; , c e org-clock-modify-effort-estimate&lt;br&gt;&lt;normal-state&gt; , c g org-clock-goto&lt;br&gt;&lt;normal-state&gt; , c i org-clock-in&lt;br&gt;&lt;normal-state&gt; , c l +org/toggle-last-clock&lt;br&gt;&lt;normal-state&gt; , c o org-clock-out&lt;br&gt;&lt;normal-state&gt; , c r org-resolve-clocks&lt;br&gt;&lt;normal-state&gt; , c t org-evaluate-time-range&lt;br&gt;&lt;br&gt;&lt;normal-state&gt; , b - org-table-insert-hline&lt;br&gt;&lt;normal-state&gt; , b R org-table-recalculate-buffer-tables&lt;br&gt;&lt;normal-state&gt; , b a org-table-align&lt;br&gt;&lt;normal-state&gt; , b b org-table-blank-field&lt;br&gt;&lt;normal-state&gt; , b c org-table-create-or-convert-from-region&lt;br&gt;&lt;normal-state&gt; , b e org-table-edit-field&lt;br&gt;&lt;normal-state&gt; , b f org-table-edit-formulas&lt;br&gt;&lt;normal-state&gt; , b h org-table-field-info&lt;br&gt;&lt;normal-state&gt; , b p org-plot/gnuplot&lt;br&gt;&lt;normal-state&gt; , b r org-table-recalculate&lt;br&gt;&lt;normal-state&gt; , b s org-table-sort-lines&lt;br&gt;&lt;br&gt;&lt;normal-state&gt; , a D org-attach-delete-all&lt;br&gt;&lt;normal-state&gt; , a O org-attach-open-in-emacs&lt;br&gt;&lt;normal-state&gt; , a P org-download-yank&lt;br&gt;&lt;normal-state&gt; , a R org-attach-reveal-in-emacs&lt;br&gt;&lt;normal-state&gt; , a S org-attach-sync&lt;br&gt;&lt;normal-state&gt; , a a org-attach&lt;br&gt;&lt;normal-state&gt; , a c org-download-screenshot&lt;br&gt;&lt;normal-state&gt; , a d org-attach-delete-one&lt;br&gt;&lt;normal-state&gt; , a f +org/find-file-in-attachments&lt;br&gt;&lt;normal-state&gt; , a l +org/attach-file-and-insert-link&lt;br&gt;&lt;normal-state&gt; , a n org-attach-new&lt;br&gt;&lt;normal-state&gt; , a o org-attach-open&lt;br&gt;&lt;normal-state&gt; , a p org-download-clipboard&lt;br&gt;&lt;normal-state&gt; , a r org-attach-reveal&lt;br&gt;&lt;normal-state&gt; , a s org-attach-set-directory&lt;br&gt;&lt;normal-state&gt; , a u org-attach-url&lt;br&gt;&lt;br&gt;&lt;normal-state&gt; t p d org-priority-down&lt;br&gt;&lt;normal-state&gt; t p p org-priority&lt;br&gt;&lt;normal-state&gt; t p u org-priority-up&lt;br&gt;&lt;br&gt;&lt;normal-state&gt; t c c org-toggle-checkbox&lt;br&gt;&lt;normal-state&gt; t c u org-update-checkbox-count&lt;br&gt;&lt;br&gt;&lt;visual-state&gt; , m D org-roam-demote-entire-buffer&lt;br&gt;&lt;visual-state&gt; , m F org-roam-ref-find&lt;br&gt;&lt;visual-state&gt; , m I org-id-get-create&lt;br&gt;&lt;visual-state&gt; , m M org-roam-buffer-display-dedicated&lt;br&gt;&lt;visual-state&gt; , m R org-roam-link-replace-all&lt;br&gt;&lt;visual-state&gt; , m f org-roam-node-find&lt;br&gt;&lt;visual-state&gt; , m g org-roam-graph&lt;br&gt;&lt;visual-state&gt; , m i org-roam-node-insert&lt;br&gt;&lt;visual-state&gt; , m m org-roam-buffer-toggle&lt;br&gt;&lt;visual-state&gt; , m n org-roam-capture&lt;br&gt;&lt;visual-state&gt; , m r org-roam-refile&lt;br&gt;&lt;br&gt;&lt;visual-state&gt; , p d org-priority-down&lt;br&gt;&lt;visual-state&gt; , p p org-priority&lt;br&gt;&lt;visual-state&gt; , p u org-priority-up&lt;br&gt;&lt;br&gt;&lt;visual-state&gt; , s A org-archive-subtree&lt;br&gt;&lt;visual-state&gt; , s N widen&lt;br&gt;&lt;visual-state&gt; , s S org-sort&lt;br&gt;&lt;visual-state&gt; , s a org-toggle-archive-tag&lt;br&gt;&lt;visual-state&gt; , s b org-tree-to-indirect-buffer&lt;br&gt;&lt;visual-state&gt; , s c org-clone-subtree-with-time-shift&lt;br&gt;&lt;visual-state&gt; , s d org-cut-subtree&lt;br&gt;&lt;visual-state&gt; , s h org-promote-subtree&lt;br&gt;&lt;visual-state&gt; , s j org-move-subtree-down&lt;br&gt;&lt;visual-state&gt; , s k org-move-subtree-up&lt;br&gt;&lt;visual-state&gt; , s l org-demote-subtree&lt;br&gt;&lt;visual-state&gt; , s n org-narrow-to-subtree&lt;br&gt;&lt;visual-state&gt; , s r org-refile&lt;br&gt;&lt;visual-state&gt; , s s org-sparse-tree&lt;br&gt;&lt;br&gt;&lt;visual-state&gt; , r . +org/refile-to-current-file&lt;br&gt;&lt;visual-state&gt; , r O +org/refile-to-other-buffer&lt;br&gt;&lt;visual-state&gt; , r c +org/refile-to-running-clock&lt;br&gt;&lt;visual-state&gt; , r f +org/refile-to-file&lt;br&gt;&lt;visual-state&gt; , r l +org/refile-to-last-location&lt;br&gt;&lt;visual-state&gt; , r o +org/refile-to-other-window&lt;br&gt;&lt;visual-state&gt; , r r org-refile&lt;br&gt;&lt;visual-state&gt; , r v +org/refile-to-visible&lt;br&gt;&lt;br&gt;&lt;visual-state&gt; , P P org-publish-current-project&lt;br&gt;&lt;visual-state&gt; , P a org-publish-all&lt;br&gt;&lt;visual-state&gt; , P f org-publish-current-file&lt;br&gt;&lt;visual-state&gt; , P p org-publish&lt;br&gt;&lt;visual-state&gt; , P s org-publish-sitemap&lt;br&gt;&lt;br&gt;&lt;visual-state&gt; , l L org-insert-all-links&lt;br&gt;&lt;visual-state&gt; , l S org-insert-last-stored-link&lt;br&gt;&lt;visual-state&gt; , l c org-cliplink&lt;br&gt;&lt;visual-state&gt; , l d +org/remove-link&lt;br&gt;&lt;visual-state&gt; , l i org-id-store-link&lt;br&gt;&lt;visual-state&gt; , l l org-insert-link&lt;br&gt;&lt;visual-state&gt; , l s org-store-link&lt;br&gt;&lt;visual-state&gt; , l t org-toggle-link-display&lt;br&gt;&lt;br&gt;&lt;visual-state&gt; , g C [closure]&lt;br&gt;&lt;visual-state&gt; , g G consult-org-agenda&lt;br&gt;&lt;visual-state&gt; , g c org-clock-goto&lt;br&gt;&lt;visual-state&gt; , g g consult-org-heading&lt;br&gt;&lt;visual-state&gt; , g i org-id-goto&lt;br&gt;&lt;visual-state&gt; , g r org-refile-goto-last-stored&lt;br&gt;&lt;visual-state&gt; , g v +org/goto-visible&lt;br&gt;&lt;visual-state&gt; , g x org-capture-goto-last-stored&lt;br&gt;&lt;br&gt;&lt;visual-state&gt; , d T org-time-stamp-inactive&lt;br&gt;&lt;visual-state&gt; , d d org-deadline&lt;br&gt;&lt;visual-state&gt; , d s org-schedule&lt;br&gt;&lt;visual-state&gt; , d t org-time-stamp&lt;br&gt;&lt;br&gt;&lt;visual-state&gt; , c - org-clock-timestamps-down&lt;br&gt;&lt;visual-state&gt; , c = org-clock-timestamps-up&lt;br&gt;&lt;visual-state&gt; , c E org-set-effort&lt;br&gt;&lt;visual-state&gt; , c G [closure]&lt;br&gt;&lt;visual-state&gt; , c I org-clock-in-last&lt;br&gt;&lt;visual-state&gt; , c R org-clock-report&lt;br&gt;&lt;visual-state&gt; , c c org-clock-cancel&lt;br&gt;&lt;visual-state&gt; , c d org-clock-mark-default-task&lt;br&gt;&lt;visual-state&gt; , c e org-clock-modify-effort-estimate&lt;br&gt;&lt;visual-state&gt; , c g org-clock-goto&lt;br&gt;&lt;visual-state&gt; , c i org-clock-in&lt;br&gt;&lt;visual-state&gt; , c l +org/toggle-last-clock&lt;br&gt;&lt;visual-state&gt; , c o org-clock-out&lt;br&gt;&lt;visual-state&gt; , c r org-resolve-clocks&lt;br&gt;&lt;visual-state&gt; , c t org-evaluate-time-range&lt;br&gt;&lt;br&gt;&lt;visual-state&gt; , b - org-table-insert-hline&lt;br&gt;&lt;visual-state&gt; , b R org-table-recalculate-buffer-tables&lt;br&gt;&lt;visual-state&gt; , b a org-table-align&lt;br&gt;&lt;visual-state&gt; , b b org-table-blank-field&lt;br&gt;&lt;visual-state&gt; , b c org-table-create-or-convert-from-region&lt;br&gt;&lt;visual-state&gt; , b e org-table-edit-field&lt;br&gt;&lt;visual-state&gt; , b f org-table-edit-formulas&lt;br&gt;&lt;visual-state&gt; , b h org-table-field-info&lt;br&gt;&lt;visual-state&gt; , b p org-plot/gnuplot&lt;br&gt;&lt;visual-state&gt; , b r org-table-recalculate&lt;br&gt;&lt;visual-state&gt; , b s org-table-sort-lines&lt;br&gt;&lt;br&gt;&lt;visual-state&gt; , a D org-attach-delete-all&lt;br&gt;&lt;visual-state&gt; , a O org-attach-open-in-emacs&lt;br&gt;&lt;visual-state&gt; , a P org-download-yank&lt;br&gt;&lt;visual-state&gt; , a R org-attach-reveal-in-emacs&lt;br&gt;&lt;visual-state&gt; , a S org-attach-sync&lt;br&gt;&lt;visual-state&gt; , a a org-attach&lt;br&gt;&lt;visual-state&gt; , a c org-download-screenshot&lt;br&gt;&lt;visual-state&gt; , a d org-attach-delete-one&lt;br&gt;&lt;visual-state&gt; , a f +org/find-file-in-attachments&lt;br&gt;&lt;visual-state&gt; , a l +org/attach-file-and-insert-link&lt;br&gt;&lt;visual-state&gt; , a n org-attach-new&lt;br&gt;&lt;visual-state&gt; , a o org-attach-open&lt;br&gt;&lt;visual-state&gt; , a p org-download-clipboard&lt;br&gt;&lt;visual-state&gt; , a r org-attach-reveal&lt;br&gt;&lt;visual-state&gt; , a s org-attach-set-directory&lt;br&gt;&lt;visual-state&gt; , a u org-attach-url&lt;br&gt;&lt;br&gt;&lt;visual-state&gt; t p d org-priority-down&lt;br&gt;&lt;visual-state&gt; t p p org-priority&lt;br&gt;&lt;visual-state&gt; t p u org-priority-up&lt;br&gt;&lt;br&gt;&lt;visual-state&gt; t c c org-toggle-checkbox&lt;br&gt;&lt;visual-state&gt; t c u org-update-checkbox-count&lt;br&gt;&lt;br&gt;C-c n b a org-bibtex-create&lt;br&gt;C-c n b c org-bibtex-check-all&lt;br&gt;&lt;br&gt;C-c n r a org-roam-ref-add&lt;br&gt;C-c n r c org-ref-insert-cite-link&lt;br&gt;C-c n r d org-roam-ref-remove&lt;br&gt;C-c n r f org-roam-ref-find&lt;br&gt;C-c n r i org-ref-insert-link&lt;br&gt;C-c n r l org-ref-insert-label-link&lt;br&gt;&lt;br&gt;C-c C-v C-M-h org-babel-mark-block&lt;br&gt;&lt;br&gt;C-c C-x C-M-v org-redisplay-inline-images&lt;br&gt;C-c C-x M-w org-copy-special&lt;br&gt;&lt;br&gt;&lt;insert-state&gt; M-SPC m m D org-roam-demote-entire-buffer&lt;br&gt;&lt;insert-state&gt; M-SPC m m F org-roam-ref-find&lt;br&gt;&lt;insert-state&gt; M-SPC m m I org-id-get-create&lt;br&gt;&lt;insert-state&gt; M-SPC m m M org-roam-buffer-display-dedicated&lt;br&gt;&lt;insert-state&gt; M-SPC m m R org-roam-link-replace-all&lt;br&gt;&lt;insert-state&gt; M-SPC m m f org-roam-node-find&lt;br&gt;&lt;insert-state&gt; M-SPC m m g org-roam-graph&lt;br&gt;&lt;insert-state&gt; M-SPC m m i org-roam-node-insert&lt;br&gt;&lt;insert-state&gt; M-SPC m m m org-roam-buffer-toggle&lt;br&gt;&lt;insert-state&gt; M-SPC m m n org-roam-capture&lt;br&gt;&lt;insert-state&gt; M-SPC m m r org-roam-refile&lt;br&gt;&lt;br&gt;&lt;insert-state&gt; M-SPC m p d org-priority-down&lt;br&gt;&lt;insert-state&gt; M-SPC m p p org-priority&lt;br&gt;&lt;insert-state&gt; M-SPC m p u org-priority-up&lt;br&gt;&lt;br&gt;&lt;insert-state&gt; M-SPC m s A org-archive-subtree&lt;br&gt;&lt;insert-state&gt; M-SPC m s N widen&lt;br&gt;&lt;insert-state&gt; M-SPC m s S org-sort&lt;br&gt;&lt;insert-state&gt; M-SPC m s a org-toggle-archive-tag&lt;br&gt;&lt;insert-state&gt; M-SPC m s b org-tree-to-indirect-buffer&lt;br&gt;&lt;insert-state&gt; M-SPC m s c org-clone-subtree-with-time-shift&lt;br&gt;&lt;insert-state&gt; M-SPC m s d org-cut-subtree&lt;br&gt;&lt;insert-state&gt; M-SPC m s h org-promote-subtree&lt;br&gt;&lt;insert-state&gt; M-SPC m s j org-move-subtree-down&lt;br&gt;&lt;insert-state&gt; M-SPC m s k org-move-subtree-up&lt;br&gt;&lt;insert-state&gt; M-SPC m s l org-demote-subtree&lt;br&gt;&lt;insert-state&gt; M-SPC m s n org-narrow-to-subtree&lt;br&gt;&lt;insert-state&gt; M-SPC m s r org-refile&lt;br&gt;&lt;insert-state&gt; M-SPC m s s org-sparse-tree&lt;br&gt;&lt;br&gt;&lt;insert-state&gt; M-SPC m r . +org/refile-to-current-file&lt;br&gt;&lt;insert-state&gt; M-SPC m r O +org/refile-to-other-buffer&lt;br&gt;&lt;insert-state&gt; M-SPC m r c +org/refile-to-running-clock&lt;br&gt;&lt;insert-state&gt; M-SPC m r f +org/refile-to-file&lt;br&gt;&lt;insert-state&gt; M-SPC m r l +org/refile-to-last-location&lt;br&gt;&lt;insert-state&gt; M-SPC m r o +org/refile-to-other-window&lt;br&gt;&lt;insert-state&gt; M-SPC m r r org-refile&lt;br&gt;&lt;insert-state&gt; M-SPC m r v +org/refile-to-visible&lt;br&gt;&lt;br&gt;&lt;insert-state&gt; M-SPC m P P org-publish-current-project&lt;br&gt;&lt;insert-state&gt; M-SPC m P a org-publish-all&lt;br&gt;&lt;insert-state&gt; M-SPC m P f org-publish-current-file&lt;br&gt;&lt;insert-state&gt; M-SPC m P p org-publish&lt;br&gt;&lt;insert-state&gt; M-SPC m P s org-publish-sitemap&lt;br&gt;&lt;br&gt;&lt;insert-state&gt; M-SPC m l L org-insert-all-links&lt;br&gt;&lt;insert-state&gt; M-SPC m l S org-insert-last-stored-link&lt;br&gt;&lt;insert-state&gt; M-SPC m l c org-cliplink&lt;br&gt;&lt;insert-state&gt; M-SPC m l d +org/remove-link&lt;br&gt;&lt;insert-state&gt; M-SPC m l i org-id-store-link&lt;br&gt;&lt;insert-state&gt; M-SPC m l l org-insert-link&lt;br&gt;&lt;insert-state&gt; M-SPC m l s org-store-link&lt;br&gt;&lt;insert-state&gt; M-SPC m l t org-toggle-link-display&lt;br&gt;&lt;br&gt;&lt;insert-state&gt; M-SPC m g C [closure]&lt;br&gt;&lt;insert-state&gt; M-SPC m g G consult-org-agenda&lt;br&gt;&lt;insert-state&gt; M-SPC m g c org-clock-goto&lt;br&gt;&lt;insert-state&gt; M-SPC m g g consult-org-heading&lt;br&gt;&lt;insert-state&gt; M-SPC m g i org-id-goto&lt;br&gt;&lt;insert-state&gt; M-SPC m g r org-refile-goto-last-stored&lt;br&gt;&lt;insert-state&gt; M-SPC m g v +org/goto-visible&lt;br&gt;&lt;insert-state&gt; M-SPC m g x org-capture-goto-last-stored&lt;br&gt;&lt;br&gt;&lt;insert-state&gt; M-SPC m d T org-time-stamp-inactive&lt;br&gt;&lt;insert-state&gt; M-SPC m d d org-deadline&lt;br&gt;&lt;insert-state&gt; M-SPC m d s org-schedule&lt;br&gt;&lt;insert-state&gt; M-SPC m d t org-time-stamp&lt;br&gt;&lt;br&gt;&lt;insert-state&gt; M-SPC m c - org-clock-timestamps-down&lt;br&gt;&lt;insert-state&gt; M-SPC m c = org-clock-timestamps-up&lt;br&gt;&lt;insert-state&gt; M-SPC m c E org-set-effort&lt;br&gt;&lt;insert-state&gt; M-SPC m c G [closure]&lt;br&gt;&lt;insert-state&gt; M-SPC m c I org-clock-in-last&lt;br&gt;&lt;insert-state&gt; M-SPC m c R org-clock-report&lt;br&gt;&lt;insert-state&gt; M-SPC m c c org-clock-cancel&lt;br&gt;&lt;insert-state&gt; M-SPC m c d org-clock-mark-default-task&lt;br&gt;&lt;insert-state&gt; M-SPC m c e org-clock-modify-effort-estimate&lt;br&gt;&lt;insert-state&gt; M-SPC m c g org-clock-goto&lt;br&gt;&lt;insert-state&gt; M-SPC m c i org-clock-in&lt;br&gt;&lt;insert-state&gt; M-SPC m c l +org/toggle-last-clock&lt;br&gt;&lt;insert-state&gt; M-SPC m c o org-clock-out&lt;br&gt;&lt;insert-state&gt; M-SPC m c r org-resolve-clocks&lt;br&gt;&lt;insert-state&gt; M-SPC m c t org-evaluate-time-range&lt;br&gt;&lt;br&gt;&lt;insert-state&gt; M-SPC m b - org-table-insert-hline&lt;br&gt;&lt;insert-state&gt; M-SPC m b R org-table-recalculate-buffer-tables&lt;br&gt;&lt;insert-state&gt; M-SPC m b a org-table-align&lt;br&gt;&lt;insert-state&gt; M-SPC m b b org-table-blank-field&lt;br&gt;&lt;insert-state&gt; M-SPC m b c org-table-create-or-convert-from-region&lt;br&gt;&lt;insert-state&gt; M-SPC m b e org-table-edit-field&lt;br&gt;&lt;insert-state&gt; M-SPC m b f org-table-edit-formulas&lt;br&gt;&lt;insert-state&gt; M-SPC m b h org-table-field-info&lt;br&gt;&lt;insert-state&gt; M-SPC m b p org-plot/gnuplot&lt;br&gt;&lt;insert-state&gt; M-SPC m b r org-table-recalculate&lt;br&gt;&lt;insert-state&gt; M-SPC m b s org-table-sort-lines&lt;br&gt;&lt;br&gt;&lt;insert-state&gt; M-SPC m a D org-attach-delete-all&lt;br&gt;&lt;insert-state&gt; M-SPC m a O org-attach-open-in-emacs&lt;br&gt;&lt;insert-state&gt; M-SPC m a P org-download-yank&lt;br&gt;&lt;insert-state&gt; M-SPC m a R org-attach-reveal-in-emacs&lt;br&gt;&lt;insert-state&gt; M-SPC m a S org-attach-sync&lt;br&gt;&lt;insert-state&gt; M-SPC m a a org-attach&lt;br&gt;&lt;insert-state&gt; M-SPC m a c org-download-screenshot&lt;br&gt;&lt;insert-state&gt; M-SPC m a d org-attach-delete-one&lt;br&gt;&lt;insert-state&gt; M-SPC m a f +org/find-file-in-attachments&lt;br&gt;&lt;insert-state&gt; M-SPC m a l +org/attach-file-and-insert-link&lt;br&gt;&lt;insert-state&gt; M-SPC m a n org-attach-new&lt;br&gt;&lt;insert-state&gt; M-SPC m a o org-attach-open&lt;br&gt;&lt;insert-state&gt; M-SPC m a p org-download-clipboard&lt;br&gt;&lt;insert-state&gt; M-SPC m a r org-attach-reveal&lt;br&gt;&lt;insert-state&gt; M-SPC m a s org-attach-set-directory&lt;br&gt;&lt;insert-state&gt; M-SPC m a u org-attach-url&lt;br&gt;&lt;br&gt;&lt;emacs-state&gt; M-SPC m m D org-roam-demote-entire-buffer&lt;br&gt;&lt;emacs-state&gt; M-SPC m m F org-roam-ref-find&lt;br&gt;&lt;emacs-state&gt; M-SPC m m I org-id-get-create&lt;br&gt;&lt;emacs-state&gt; M-SPC m m M org-roam-buffer-display-dedicated&lt;br&gt;&lt;emacs-state&gt; M-SPC m m R org-roam-link-replace-all&lt;br&gt;&lt;emacs-state&gt; M-SPC m m f org-roam-node-find&lt;br&gt;&lt;emacs-state&gt; M-SPC m m g org-roam-graph&lt;br&gt;&lt;emacs-state&gt; M-SPC m m i org-roam-node-insert&lt;br&gt;&lt;emacs-state&gt; M-SPC m m m org-roam-buffer-toggle&lt;br&gt;&lt;emacs-state&gt; M-SPC m m n org-roam-capture&lt;br&gt;&lt;emacs-state&gt; M-SPC m m r org-roam-refile&lt;br&gt;&lt;br&gt;&lt;emacs-state&gt; M-SPC m p d org-priority-down&lt;br&gt;&lt;emacs-state&gt; M-SPC m p p org-priority&lt;br&gt;&lt;emacs-state&gt; M-SPC m p u org-priority-up&lt;br&gt;&lt;br&gt;&lt;emacs-state&gt; M-SPC m s A org-archive-subtree&lt;br&gt;&lt;emacs-state&gt; M-SPC m s N widen&lt;br&gt;&lt;emacs-state&gt; M-SPC m s S org-sort&lt;br&gt;&lt;emacs-state&gt; M-SPC m s a org-toggle-archive-tag&lt;br&gt;&lt;emacs-state&gt; M-SPC m s b org-tree-to-indirect-buffer&lt;br&gt;&lt;emacs-state&gt; M-SPC m s c org-clone-subtree-with-time-shift&lt;br&gt;&lt;emacs-state&gt; M-SPC m s d org-cut-subtree&lt;br&gt;&lt;emacs-state&gt; M-SPC m s h org-promote-subtree&lt;br&gt;&lt;emacs-state&gt; M-SPC m s j org-move-subtree-down&lt;br&gt;&lt;emacs-state&gt; M-SPC m s k org-move-subtree-up&lt;br&gt;&lt;emacs-state&gt; M-SPC m s l org-demote-subtree&lt;br&gt;&lt;emacs-state&gt; M-SPC m s n org-narrow-to-subtree&lt;br&gt;&lt;emacs-state&gt; M-SPC m s r org-refile&lt;br&gt;&lt;emacs-state&gt; M-SPC m s s org-sparse-tree&lt;br&gt;&lt;br&gt;&lt;emacs-state&gt; M-SPC m r . +org/refile-to-current-file&lt;br&gt;&lt;emacs-state&gt; M-SPC m r O +org/refile-to-other-buffer&lt;br&gt;&lt;emacs-state&gt; M-SPC m r c +org/refile-to-running-clock&lt;br&gt;&lt;emacs-state&gt; M-SPC m r f +org/refile-to-file&lt;br&gt;&lt;emacs-state&gt; M-SPC m r l +org/refile-to-last-location&lt;br&gt;&lt;emacs-state&gt; M-SPC m r o +org/refile-to-other-window&lt;br&gt;&lt;emacs-state&gt; M-SPC m r r org-refile&lt;br&gt;&lt;emacs-state&gt; M-SPC m r v +org/refile-to-visible&lt;br&gt;&lt;br&gt;&lt;emacs-state&gt; M-SPC m P P org-publish-current-project&lt;br&gt;&lt;emacs-state&gt; M-SPC m P a org-publish-all&lt;br&gt;&lt;emacs-state&gt; M-SPC m P f org-publish-current-file&lt;br&gt;&lt;emacs-state&gt; M-SPC m P p org-publish&lt;br&gt;&lt;emacs-state&gt; M-SPC m P s org-publish-sitemap&lt;br&gt;&lt;br&gt;&lt;emacs-state&gt; M-SPC m l L org-insert-all-links&lt;br&gt;&lt;emacs-state&gt; M-SPC m l S org-insert-last-stored-link&lt;br&gt;&lt;emacs-state&gt; M-SPC m l c org-cliplink&lt;br&gt;&lt;emacs-state&gt; M-SPC m l d +org/remove-link&lt;br&gt;&lt;emacs-state&gt; M-SPC m l i org-id-store-link&lt;br&gt;&lt;emacs-state&gt; M-SPC m l l org-insert-link&lt;br&gt;&lt;emacs-state&gt; M-SPC m l s org-store-link&lt;br&gt;&lt;emacs-state&gt; M-SPC m l t org-toggle-link-display&lt;br&gt;&lt;br&gt;&lt;emacs-state&gt; M-SPC m g C [closure]&lt;br&gt;&lt;emacs-state&gt; M-SPC m g G consult-org-agenda&lt;br&gt;&lt;emacs-state&gt; M-SPC m g c org-clock-goto&lt;br&gt;&lt;emacs-state&gt; M-SPC m g g consult-org-heading&lt;br&gt;&lt;emacs-state&gt; M-SPC m g i org-id-goto&lt;br&gt;&lt;emacs-state&gt; M-SPC m g r org-refile-goto-last-stored&lt;br&gt;&lt;emacs-state&gt; M-SPC m g v +org/goto-visible&lt;br&gt;&lt;emacs-state&gt; M-SPC m g x org-capture-goto-last-stored&lt;br&gt;&lt;br&gt;&lt;emacs-state&gt; M-SPC m d T org-time-stamp-inactive&lt;br&gt;&lt;emacs-state&gt; M-SPC m d d org-deadline&lt;br&gt;&lt;emacs-state&gt; M-SPC m d s org-schedule&lt;br&gt;&lt;emacs-state&gt; M-SPC m d t org-time-stamp&lt;br&gt;&lt;br&gt;&lt;emacs-state&gt; M-SPC m c - org-clock-timestamps-down&lt;br&gt;&lt;emacs-state&gt; M-SPC m c = org-clock-timestamps-up&lt;br&gt;&lt;emacs-state&gt; M-SPC m c E org-set-effort&lt;br&gt;&lt;emacs-state&gt; M-SPC m c G [closure]&lt;br&gt;&lt;emacs-state&gt; M-SPC m c I org-clock-in-last&lt;br&gt;&lt;emacs-state&gt; M-SPC m c R org-clock-report&lt;br&gt;&lt;emacs-state&gt; M-SPC m c c org-clock-cancel&lt;br&gt;&lt;emacs-state&gt; M-SPC m c d org-clock-mark-default-task&lt;br&gt;&lt;emacs-state&gt; M-SPC m c e org-clock-modify-effort-estimate&lt;br&gt;&lt;emacs-state&gt; M-SPC m c g org-clock-goto&lt;br&gt;&lt;emacs-state&gt; M-SPC m c i org-clock-in&lt;br&gt;&lt;emacs-state&gt; M-SPC m c l +org/toggle-last-clock&lt;br&gt;&lt;emacs-state&gt; M-SPC m c o org-clock-out&lt;br&gt;&lt;emacs-state&gt; M-SPC m c r org-resolve-clocks&lt;br&gt;&lt;emacs-state&gt; M-SPC m c t org-evaluate-time-range&lt;br&gt;&lt;br&gt;&lt;emacs-state&gt; M-SPC m b - org-table-insert-hline&lt;br&gt;&lt;emacs-state&gt; M-SPC m b R org-table-recalculate-buffer-tables&lt;br&gt;&lt;emacs-state&gt; M-SPC m b a org-table-align&lt;br&gt;&lt;emacs-state&gt; M-SPC m b b org-table-blank-field&lt;br&gt;&lt;emacs-state&gt; M-SPC m b c org-table-create-or-convert-from-region&lt;br&gt;&lt;emacs-state&gt; M-SPC m b e org-table-edit-field&lt;br&gt;&lt;emacs-state&gt; M-SPC m b f org-table-edit-formulas&lt;br&gt;&lt;emacs-state&gt; M-SPC m b h org-table-field-info&lt;br&gt;&lt;emacs-state&gt; M-SPC m b p org-plot/gnuplot&lt;br&gt;&lt;emacs-state&gt; M-SPC m b r org-table-recalculate&lt;br&gt;&lt;emacs-state&gt; M-SPC m b s org-table-sort-lines&lt;br&gt;&lt;br&gt;&lt;emacs-state&gt; M-SPC m a D org-attach-delete-all&lt;br&gt;&lt;emacs-state&gt; M-SPC m a O org-attach-open-in-emacs&lt;br&gt;&lt;emacs-state&gt; M-SPC m a P org-download-yank&lt;br&gt;&lt;emacs-state&gt; M-SPC m a R org-attach-reveal-in-emacs&lt;br&gt;&lt;emacs-state&gt; M-SPC m a S org-attach-sync&lt;br&gt;&lt;emacs-state&gt; M-SPC m a a org-attach&lt;br&gt;&lt;emacs-state&gt; M-SPC m a c org-download-screenshot&lt;br&gt;&lt;emacs-state&gt; M-SPC m a d org-attach-delete-one&lt;br&gt;&lt;emacs-state&gt; M-SPC m a f +org/find-file-in-attachments&lt;br&gt;&lt;emacs-state&gt; M-SPC m a l +org/attach-file-and-insert-link&lt;br&gt;&lt;emacs-state&gt; M-SPC m a n org-attach-new&lt;br&gt;&lt;emacs-state&gt; M-SPC m a o org-attach-open&lt;br&gt;&lt;emacs-state&gt; M-SPC m a p org-download-clipboard&lt;br&gt;&lt;emacs-state&gt; M-SPC m a r org-attach-reveal&lt;br&gt;&lt;emacs-state&gt; M-SPC m a s org-attach-set-directory&lt;br&gt;&lt;emacs-state&gt; M-SPC m a u org-attach-url&lt;br&gt;&lt;br&gt;&lt;motion-state&gt; , m o A org-roam-alias-remove&lt;br&gt;&lt;motion-state&gt; , m o R org-roam-ref-remove&lt;br&gt;&lt;motion-state&gt; , m o T org-roam-tag-remove&lt;br&gt;&lt;motion-state&gt; , m o a org-roam-alias-add&lt;br&gt;&lt;motion-state&gt; , m o r org-roam-ref-add&lt;br&gt;&lt;motion-state&gt; , m o t org-roam-tag-add&lt;br&gt;&lt;br&gt;&lt;motion-state&gt; , m d - org-roam-dailies-find-directory&lt;br&gt;&lt;motion-state&gt; , m d D org-roam-dailies-capture-date&lt;br&gt;&lt;motion-state&gt; , m d M org-roam-dailies-capture-tomorrow&lt;br&gt;&lt;motion-state&gt; , m d T org-roam-dailies-capture-today&lt;br&gt;&lt;motion-state&gt; , m d Y org-roam-dailies-capture-yesterday&lt;br&gt;&lt;motion-state&gt; , m d b org-roam-dailies-goto-previous-note&lt;br&gt;&lt;motion-state&gt; , m d d org-roam-dailies-goto-date&lt;br&gt;&lt;motion-state&gt; , m d f org-roam-dailies-goto-next-note&lt;br&gt;&lt;motion-state&gt; , m d m org-roam-dailies-goto-tomorrow&lt;br&gt;&lt;motion-state&gt; , m d n org-roam-dailies-capture-today&lt;br&gt;&lt;motion-state&gt; , m d t org-roam-dailies-goto-today&lt;br&gt;&lt;motion-state&gt; , m d y org-roam-dailies-goto-yesterday&lt;br&gt;&lt;br&gt;&lt;motion-state&gt; , b t f org-table-toggle-formula-debugger&lt;br&gt;&lt;motion-state&gt; , b t o org-table-toggle-coordinate-overlays&lt;br&gt;&lt;br&gt;&lt;motion-state&gt; , b i H org-table-hline-and-move&lt;br&gt;&lt;motion-state&gt; , b i c org-table-insert-column&lt;br&gt;&lt;motion-state&gt; , b i h org-table-insert-hline&lt;br&gt;&lt;motion-state&gt; , b i r org-table-insert-row&lt;br&gt;&lt;br&gt;&lt;motion-state&gt; , b d c org-table-delete-column&lt;br&gt;&lt;motion-state&gt; , b d r org-table-kill-row&lt;br&gt;&lt;br&gt;&lt;normal-state&gt; , m o A org-roam-alias-remove&lt;br&gt;&lt;normal-state&gt; , m o R org-roam-ref-remove&lt;br&gt;&lt;normal-state&gt; , m o T org-roam-tag-remove&lt;br&gt;&lt;normal-state&gt; , m o a org-roam-alias-add&lt;br&gt;&lt;normal-state&gt; , m o r org-roam-ref-add&lt;br&gt;&lt;normal-state&gt; , m o t org-roam-tag-add&lt;br&gt;&lt;br&gt;&lt;normal-state&gt; , m d - org-roam-dailies-find-directory&lt;br&gt;&lt;normal-state&gt; , m d D org-roam-dailies-capture-date&lt;br&gt;&lt;normal-state&gt; , m d M org-roam-dailies-capture-tomorrow&lt;br&gt;&lt;normal-state&gt; , m d T org-roam-dailies-capture-today&lt;br&gt;&lt;normal-state&gt; , m d Y org-roam-dailies-capture-yesterday&lt;br&gt;&lt;normal-state&gt; , m d b org-roam-dailies-goto-previous-note&lt;br&gt;&lt;normal-state&gt; , m d d org-roam-dailies-goto-date&lt;br&gt;&lt;normal-state&gt; , m d f org-roam-dailies-goto-next-note&lt;br&gt;&lt;normal-state&gt; , m d m org-roam-dailies-goto-tomorrow&lt;br&gt;&lt;normal-state&gt; , m d n org-roam-dailies-capture-today&lt;br&gt;&lt;normal-state&gt; , m d t org-roam-dailies-goto-today&lt;br&gt;&lt;normal-state&gt; , m d y org-roam-dailies-goto-yesterday&lt;br&gt;&lt;br&gt;&lt;normal-state&gt; , b t f org-table-toggle-formula-debugger&lt;br&gt;&lt;normal-state&gt; , b t o org-table-toggle-coordinate-overlays&lt;br&gt;&lt;br&gt;&lt;normal-state&gt; , b i H org-table-hline-and-move&lt;br&gt;&lt;normal-state&gt; , b i c org-table-insert-column&lt;br&gt;&lt;normal-state&gt; , b i h org-table-insert-hline&lt;br&gt;&lt;normal-state&gt; , b i r org-table-insert-row&lt;br&gt;&lt;br&gt;&lt;normal-state&gt; , b d c org-table-delete-column&lt;br&gt;&lt;normal-state&gt; , b d r org-table-kill-row&lt;br&gt;&lt;br&gt;&lt;visual-state&gt; , m o A org-roam-alias-remove&lt;br&gt;&lt;visual-state&gt; , m o R org-roam-ref-remove&lt;br&gt;&lt;visual-state&gt; , m o T org-roam-tag-remove&lt;br&gt;&lt;visual-state&gt; , m o a org-roam-alias-add&lt;br&gt;&lt;visual-state&gt; , m o r org-roam-ref-add&lt;br&gt;&lt;visual-state&gt; , m o t org-roam-tag-add&lt;br&gt;&lt;br&gt;&lt;visual-state&gt; , m d - org-roam-dailies-find-directory&lt;br&gt;&lt;visual-state&gt; , m d D org-roam-dailies-capture-date&lt;br&gt;&lt;visual-state&gt; , m d M org-roam-dailies-capture-tomorrow&lt;br&gt;&lt;visual-state&gt; , m d T org-roam-dailies-capture-today&lt;br&gt;&lt;visual-state&gt; , m d Y org-roam-dailies-capture-yesterday&lt;br&gt;&lt;visual-state&gt; , m d b org-roam-dailies-goto-previous-note&lt;br&gt;&lt;visual-state&gt; , m d d org-roam-dailies-goto-date&lt;br&gt;&lt;visual-state&gt; , m d f org-roam-dailies-goto-next-note&lt;br&gt;&lt;visual-state&gt; , m d m org-roam-dailies-goto-tomorrow&lt;br&gt;&lt;visual-state&gt; , m d n org-roam-dailies-capture-today&lt;br&gt;&lt;visual-state&gt; , m d t org-roam-dailies-goto-today&lt;br&gt;&lt;visual-state&gt; , m d y org-roam-dailies-goto-yesterday&lt;br&gt;&lt;br&gt;&lt;visual-state&gt; , b t f org-table-toggle-formula-debugger&lt;br&gt;&lt;visual-state&gt; , b t o org-table-toggle-coordinate-overlays&lt;br&gt;&lt;br&gt;&lt;visual-state&gt; , b i H org-table-hline-and-move&lt;br&gt;&lt;visual-state&gt; , b i c org-table-insert-column&lt;br&gt;&lt;visual-state&gt; , b i h org-table-insert-hline&lt;br&gt;&lt;visual-state&gt; , b i r org-table-insert-row&lt;br&gt;&lt;br&gt;&lt;visual-state&gt; , b d c org-table-delete-column&lt;br&gt;&lt;visual-state&gt; , b d r org-table-kill-row&lt;br&gt;&lt;br&gt;&lt;insert-state&gt; M-SPC m m o A org-roam-alias-remove&lt;br&gt;&lt;insert-state&gt; M-SPC m m o R org-roam-ref-remove&lt;br&gt;&lt;insert-state&gt; M-SPC m m o T org-roam-tag-remove&lt;br&gt;&lt;insert-state&gt; M-SPC m m o a org-roam-alias-add&lt;br&gt;&lt;insert-state&gt; M-SPC m m o r org-roam-ref-add&lt;br&gt;&lt;insert-state&gt; M-SPC m m o t org-roam-tag-add&lt;br&gt;&lt;br&gt;&lt;insert-state&gt; M-SPC m m d - org-roam-dailies-find-directory&lt;br&gt;&lt;insert-state&gt; M-SPC m m d D org-roam-dailies-capture-date&lt;br&gt;&lt;insert-state&gt; M-SPC m m d M org-roam-dailies-capture-tomorrow&lt;br&gt;&lt;insert-state&gt; M-SPC m m d T org-roam-dailies-capture-today&lt;br&gt;&lt;insert-state&gt; M-SPC m m d Y org-roam-dailies-capture-yesterday&lt;br&gt;&lt;insert-state&gt; M-SPC m m d b org-roam-dailies-goto-previous-note&lt;br&gt;&lt;insert-state&gt; M-SPC m m d d org-roam-dailies-goto-date&lt;br&gt;&lt;insert-state&gt; M-SPC m m d f org-roam-dailies-goto-next-note&lt;br&gt;&lt;insert-state&gt; M-SPC m m d m org-roam-dailies-goto-tomorrow&lt;br&gt;&lt;insert-state&gt; M-SPC m m d n org-roam-dailies-capture-today&lt;br&gt;&lt;insert-state&gt; M-SPC m m d t org-roam-dailies-goto-today&lt;br&gt;&lt;insert-state&gt; M-SPC m m d y org-roam-dailies-goto-yesterday&lt;br&gt;&lt;br&gt;&lt;insert-state&gt; M-SPC m b t f org-table-toggle-formula-debugger&lt;br&gt;&lt;insert-state&gt; M-SPC m b t o org-table-toggle-coordinate-overlays&lt;br&gt;&lt;br&gt;&lt;insert-state&gt; M-SPC m b i H org-table-hline-and-move&lt;br&gt;&lt;insert-state&gt; M-SPC m b i c org-table-insert-column&lt;br&gt;&lt;insert-state&gt; M-SPC m b i h org-table-insert-hline&lt;br&gt;&lt;insert-state&gt; M-SPC m b i r org-table-insert-row&lt;br&gt;&lt;br&gt;&lt;insert-state&gt; M-SPC m b d c org-table-delete-column&lt;br&gt;&lt;insert-state&gt; M-SPC m b d r org-table-kill-row&lt;br&gt;&lt;br&gt;&lt;emacs-state&gt; M-SPC m m o A org-roam-alias-remove&lt;br&gt;&lt;emacs-state&gt; M-SPC m m o R org-roam-ref-remove&lt;br&gt;&lt;emacs-state&gt; M-SPC m m o T org-roam-tag-remove&lt;br&gt;&lt;emacs-state&gt; M-SPC m m o a org-roam-alias-add&lt;br&gt;&lt;emacs-state&gt; M-SPC m m o r org-roam-ref-add&lt;br&gt;&lt;emacs-state&gt; M-SPC m m o t org-roam-tag-add&lt;br&gt;&lt;br&gt;&lt;emacs-state&gt; M-SPC m m d - org-roam-dailies-find-directory&lt;br&gt;&lt;emacs-state&gt; M-SPC m m d D org-roam-dailies-capture-date&lt;br&gt;&lt;emacs-state&gt; M-SPC m m d M org-roam-dailies-capture-tomorrow&lt;br&gt;&lt;emacs-state&gt; M-SPC m m d T org-roam-dailies-capture-today&lt;br&gt;&lt;emacs-state&gt; M-SPC m m d Y org-roam-dailies-capture-yesterday&lt;br&gt;&lt;emacs-state&gt; M-SPC m m d b org-roam-dailies-goto-previous-note&lt;br&gt;&lt;emacs-state&gt; M-SPC m m d d org-roam-dailies-goto-date&lt;br&gt;&lt;emacs-state&gt; M-SPC m m d f org-roam-dailies-goto-next-note&lt;br&gt;&lt;emacs-state&gt; M-SPC m m d m org-roam-dailies-goto-tomorrow&lt;br&gt;&lt;emacs-state&gt; M-SPC m m d n org-roam-dailies-capture-today&lt;br&gt;&lt;emacs-state&gt; M-SPC m m d t org-roam-dailies-goto-today&lt;br&gt;&lt;emacs-state&gt; M-SPC m m d y org-roam-dailies-goto-yesterday&lt;br&gt;&lt;br&gt;&lt;emacs-state&gt; M-SPC m b t f org-table-toggle-formula-debugger&lt;br&gt;&lt;emacs-state&gt; M-SPC m b t o org-table-toggle-coordinate-overlays&lt;br&gt;&lt;br&gt;&lt;emacs-state&gt; M-SPC m b i H org-table-hline-and-move&lt;br&gt;&lt;emacs-state&gt; M-SPC m b i c org-table-insert-column&lt;br&gt;&lt;emacs-state&gt; M-SPC m b i h org-table-insert-hline&lt;br&gt;&lt;emacs-state&gt; M-SPC m b i r org-table-insert-row&lt;br&gt;&lt;br&gt;&lt;emacs-state&gt; M-SPC m b d c org-table-delete-column&lt;br&gt;&lt;emacs-state&gt; M-SPC m b d r org-table-kill-row&lt;br&gt;&lt;br&gt;&lt;br&gt;In addition to any hooks its parent mode ‘outline-mode’ might have run, this&lt;br&gt;mode runs the hook ‘org-mode-hook’, as the final or penultimate step during&lt;br&gt;initialization."
-          >
-            org-mode</abbr
-          >
-          + Github + Netlify 实现。
-        </p>
-        <p>
-          <span style="color: #67c23a">绿色标签，如： vue</span>
-          表示分类，可点击该
-          <span style="color: blue">标签</span> 可快速新建一个该分类的
-          <abbr class="tooltip" title="zsh:1: command not found: wn&lt;br&gt;"
-            >Tab</abbr
-          >
-          页，包含该分类下的所有文章。
-        </p>
-        <p>
-          <span style="color: #409eff">蓝色标签，如： setup</span>
-          表示文章标签(<span style="color: blue">关键词</span
-          >)，可通过点击它新建一个包含该<span style="color: blue">关键词</span>
-          的所 有文章的
-          <abbr class="tooltip" title="zsh:1: command not found: wn&lt;br&gt;"
-            >tab</abbr
-          >
-          页。
-        </p>
-        <p>
-          原博客地址：
-          <a href="https://www.cheng92.com">https://www.cheng92.com</a>
-        </p>
-      </div>
-      <div id="start"></div>
-      <br />
-      <br />
-      <div id="outline-container-org1e2c51f" class="outline-2">
-        <h2 id="org1e2c51f">
-          <span class="section-number-2">1.</span>
-          <a href="documentations.html#ID-aa445529-4f0e-48d8-833f-12c149603ca6">
-            Documentations</a
-          >
-        </h2>
-      </div>
-      <div id="outline-container-orge960c86" class="outline-2">
-        <h2 id="orge960c86"><span class="section-number-2">2.</span> Emacs</h2>
-        <div class="outline-text-2" id="text-2"></div>
-        <div id="outline-container-org57a2d97" class="outline-3">
-          <h3 id="org57a2d97">
-            <span class="section-number-3">2.1.</span>
-            <span class="todo TODO">TODO</span>
-            <a
-              href="emacs_org_special_src_blocks.html#ID-82acaa2e-9913-4c5b-83d9-57ac24698449"
-            >
-              org-special-block-extras</a
-            >
-          </h3>
-        </div>
-        <div id="outline-container-orgf42e671" class="outline-3">
-          <h3 id="orgf42e671">
-            <span class="section-number-3">2.2.</span>
-            <a href="readthedocs.html#ID-58f6b283-015f-476f-a515-de5e6083dd1d"
-              >readthedocs</a
-            >&nbsp;&nbsp;&nbsp;<span class="tag"
-              ><span class="org">org</span>&nbsp;<span class="emacs"
-                >emacs</span
-              ></span
-            >
-          </h3>
-        </div>
-        <div id="outline-container-org6b967d3" class="outline-3">
-          <h3 id="org6b967d3">
-            <span class="section-number-3">2.3.</span>
-            <a href="org_roam.html#ID-193fb17e-b4ea-4b4b-bc78-056815359664"
-              >org-roam</a
-            >
-          </h3>
-        </div>
-        <div id="outline-container-orge02cf7d" class="outline-3">
-          <h3 id="orge02cf7d">
-            <span class="section-number-3">2.4.</span>
-            <a href="org_mode.html#ID-e2bc5e53-a5f7-4aed-b0b1-644183b2932e"
-              >org-mode</a
-            >
-          </h3>
-        </div>
-      </div>
-      <div id="outline-container-org9d50ee5" class="outline-2">
-        <h2 id="org9d50ee5"><span class="section-number-2">3.</span> Vue</h2>
-        <div class="outline-text-2" id="text-3"></div>
-        <div id="outline-container-org30f94b3" class="outline-3">
-          <h3 id="org30f94b3">
-            <span class="section-number-3">3.1.</span>
-            <span class="todo SOMEDAY">SOMEDAY</span>
-            <a
-              href="vue_changelog.html#ID-83dc97dc-8e1c-44b0-9254-dfecbb5a4629"
-            >
-              Vue ChangeLog</a
-            >
-          </h3>
-        </div>
-        <div id="outline-container-org399f143" class="outline-3">
-          <h3 id="org399f143">
-            <span class="section-number-3">3.2.</span>
-            <span class="todo TODO">TODO</span>
-            <a
-              href="vue_script_setup.html#ID-1037e29e-a2c1-4a29-a346-1575d2ea6369"
-            >
-              vue script setup</a
-            >
-          </h3>
-        </div>
-        <div id="outline-container-org66682dc" class="outline-3">
-          <h3 id="org66682dc">
-            <span class="section-number-3">3.3.</span>
-            <span class="done DONE">DONE</span>
-            <a
-              href="build_your_own_vue_reactivity.html#ID-f4fd05f7-cec7-46fd-8b58-c4c736b1a58c"
-            >
-              build your own vue reactivity</a
-            >
-          </h3>
-          <div class="outline-text-3" id="text-3-3"></div>
-        </div>
-        <div id="outline-container-org7b13487" class="outline-3">
-          <h3 id="org7b13487">
-            <span class="section-number-3">3.4.</span>
-            <span class="todo TODO">TODO</span>
-          </h3>
-        </div>
-        <div id="outline-container-orgdeb11a8" class="outline-3">
-          <h3 id="orgdeb11a8">
-            <span class="section-number-3">3.5.</span>
-            <span class="todo TODO">TODO</span>
-            <a
-              href="build_your_own_runtime_core.html#ID-d0fc0f76-8429-429c-99a0-206792da22ad"
-            >
-              build your own runtime-core</a
-            >
-          </h3>
-        </div>
-      </div>
-      <div id="outline-container-orge42fd99" class="outline-2">
-        <h2 id="orge42fd99"><span class="section-number-2">4.</span> React</h2>
-        <div class="outline-text-2" id="text-4"></div>
-        <div id="outline-container-org487bb18" class="outline-3">
-          <h3 id="org487bb18">
-            <span class="section-number-3">4.1.</span>
-            <span class="todo TODO">TODO</span>
-            <a
-              href="build_your_own_react.html#ID-293eb7ed-0b86-4a5c-acc2-ea5b26e92326"
-            >
-              Build your own react</a
-            >
-          </h3>
-        </div>
-      </div>
-      <div id="outline-container-org98e799d" class="outline-2">
-        <h2 id="org98e799d">
-          <span class="section-number-2">5.</span> JavaScript
-        </h2>
-        <div class="outline-text-2" id="text-5"></div>
-        <div id="outline-container-orgf19395c" class="outline-3">
-          <h3 id="orgf19395c">
-            <span class="section-number-3">5.1.</span>
-            <span class="todo TODO">TODO</span>
-            <a
-              href="javascript_proxy_and_reflect.html#ID-cc2b98c6-21d9-488c-9a05-8485a36c1e01"
-            >
-              JavaScript Proxy And Reflect</a
-            >
-          </h3>
-        </div>
-      </div>
-      <div id="outline-container-orge5d4c8e" class="outline-2">
-        <h2 id="orge5d4c8e">
-          <span class="section-number-2">6.</span> Shell Programming
-        </h2>
-        <div class="outline-text-2" id="text-6"></div>
-        <div id="outline-container-orgcc5c5b4" class="outline-3">
-          <h3 id="orgcc5c5b4">
-            <span class="section-number-3">6.1.</span>
-            <span class="todo TODO">TODO</span>
-            <a href="sed_command.html#ID-1a7e98ba-a7f1-4758-b3a0-6ee1e148a61d"
-              >sed command</a
-            >
-          </h3>
-        </div>
-        <div id="outline-container-orgf5250b1" class="outline-3">
-          <h3 id="orgf5250b1">
-            <span class="section-number-3">6.2.</span>
-            <span class="todo TODO">TODO</span>
-            <a href="shell_basis.html#ID-a10d6fd1-893b-4ed4-967d-d57388ba6525"
-              >shell basis</a
-            >
-          </h3>
-        </div>
-      </div>
-      <div id="outline-container-orge5e4659" class="outline-2">
-        <h2 id="orge5e4659">
-          <span class="section-number-2">7.</span> 怪谈杂物间
-        </h2>
-        <div class="outline-text-2" id="text-7"></div>
-        <div id="outline-container-org67c7aba" class="outline-3">
-          <h3 id="org67c7aba">
-            <span class="section-number-3">7.1.</span>
-            <a href="collections.html#ID-95666e03-38b5-4ad4-b50f-ef40f6cc36d8"
-              >collections</a
-            >
-          </h3>
-        </div>
+  table { border-collapse:collapse; }
+  caption.t-above { caption-side: top; }
+  caption.t-bottom { caption-side: bottom; }
+  td, th { vertical-align:top;  }
+  th.org-right  { text-align: center;  }
+  th.org-left   { text-align: center;   }
+  th.org-center { text-align: center; }
+  td.org-right  { text-align: right;  }
+  td.org-left   { text-align: left;   }
+  td.org-center { text-align: center; }
+  dt { font-weight: bold; }
+  .footpara { display: inline; }
+  .footdef  { margin-bottom: 1em; }
+  .figure { padding: 1em; }
+  .figure p { text-align: center; }
+  .equation-container {
+    display: table;
+    text-align: center;
+    width: 100%;
+  }
+  .equation {
+    vertical-align: middle;
+  }
+  .equation-label {
+    display: table-cell;
+    text-align: right;
+    vertical-align: middle;
+  }
+  .inlinetask {
+    padding: 10px;
+    border: 2px solid gray;
+    margin: 10px;
+    background: #ffffcc;
+  }
+  #org-div-home-and-up
+   { text-align: right; font-size: 70%; white-space: nowrap; }
+  textarea { overflow-x: auto; }
+  .linenr { font-size: smaller }
+  .code-highlighted { background-color: #ffff00; }
+  .org-info-js_info-navigation { border-style: none; }
+  #org-info-js_console-label
+    { font-size: 10px; font-weight: bold; white-space: nowrap; }
+  .org-info-js_search-highlight
+    { background-color: #ffff00; color: #000000; font-weight: bold; }
+  .org-svg { width: 90%; }
+  </style>
+  <link rel="stylesheet" type="text/css" href=
+  "/assets/css/htmlize.css">
+  <link rel="stylesheet" type="text/css" href=
+  "/assets/css/readtheorg.css">
+  <link rel="stylesheet" type="text/css" href=
+  "/assets/css/global.css">
+  <link rel="stylesheet" type="text/css" href=
+  "/assets/css/element-plus.css">
+  <script type="text/javascript" src=
+  "/assets/js/jquery.min.js"></script>
+  <script type="text/javascript" src=
+  "/assets/js/jquery.stickytableheaders.min.js"></script>
+  <script type="text/javascript" src=
+  "/assets/js/bootstrap.min.js"></script>
+  <script type="text/javascript" src=
+  "/assets/js/lodash.min.js"></script>
+  <script type="text/javascript" src=
+  "/assets/js/readtheorg.js"></script>
+  <script type="text/javascript" src=
+  "/assets/js/mobile-detect.min.js"></script>
+  <script type="text/javascript" src=
+  "/assets/js/Valine.min.js"></script>
+  <script type="text/javascript" src="/assets/js/vue.js"></script>
+  <script type="text/javascript" src=
+  "/assets/js/element-plus.js"></script>
+  <script type="text/javascript" src=
+  "/assets/js/dist/stats.js"></script>
+  <script type="text/javascript" src=
+  "/assets/js/dist/apps.js"></script>
+  <script type="text/javascript" src=
+  "/assets/js/dist/global.js"></script>
+  <link rel="stylesheet" href="/assets/css/home.css">
+  <style>
+        /* From: https://endlessparentheses.com/public/css/endless.css */
+        /* See also: https://meta.superuser.com/questions/4788/css-for-the-new-kbd-style */
+        kbd
+        {
+          -moz-border-radius: 6px;
+          -moz-box-shadow: 0 1px 0 rgba(0,0,0,0.2),0 0 0 2px #fff inset;
+          -webkit-border-radius: 6px;
+          -webkit-box-shadow: 0 1px 0 rgba(0,0,0,0.2),0 0 0 2px #fff inset;
+          background-color: #f7f7f7;
+          border: 1px solid #ccc;
+          border-radius: 6px;
+          box-shadow: 0 1px 0 rgba(0,0,0,0.2),0 0 0 2px #fff inset;
+          color: #333;
+          display: inline-block;
+          font-family: 'Droid Sans Mono', monospace;
+          font-size: 80%;
+          font-weight: normal;
+          line-height: inherit;
+          margin: 0 .1em;
+          padding: .08em .4em;
+          text-shadow: 0 1px 0 #fff;
+          word-spacing: -4px;
+        
+          box-shadow: 2px 2px 2px #222; /* MA: An extra I've added. */
+        }
+  </style>
+  <link rel="stylesheet" type="text/css" href=
+  "/assets/css/tooltipster.bundle.min.css">
+  <link rel="stylesheet" type="text/css" href=
+  "/assets/css/tooltipster-sideTip-punk.min.css">
+  <script type="text/javascript">
+            if (typeof jQuery == 'undefined') {
+                document.write(unescape('%3Cscript src="https://code.jquery.com/jquery-1.10.0.min.js"%3E%3C/script%3E'));
+            }
+  </script>
+  <script type="text/javascript" src=
+  "/assets/js/tooltipster.bundle.min.js"></script>
+  <script type="text/javascript" src=
+  "/assets/js/tooltipster-scrollableTip.min.js"></script>
+  <script type="text/javascript" src=
+  "/assets/js/dist/tooltips.js"></script>
+  <style>
+           abbr {color: red;}
+        
+           .tooltip { border-bottom: 1px dotted #000;
+                      color:red;
+                      text-decoration: none;}
+  </style>
+</head>
+<body>
+  <div id="content" class="content">
+    <h1 class="title">Homepage</h1>
+    <div id="table-of-contents" role="doc-toc">
+      <h2>Table of Contents</h2>
+      <div id="text-table-of-contents" role="doc-toc">
+        <ul>
+          <li>
+            <a href="#org309de49">1. Documentations</a>
+          </li>
+          <li>
+            <a href="#org9658dd0">2. Emacs</a>
+            <ul>
+              <li>
+                <a href="#orgcd81851">2.1. <span class=
+                "todo TODO">TODO</span>
+                org-special-block-extras</a>
+              </li>
+              <li>
+                <a href="#org6c60fb5">2.2.
+                readthedocs&nbsp;&nbsp;&nbsp;<span class=
+                "tag"><span class=
+                "org">org</span>&nbsp;<span class="emacs">emacs</span></span></a>
+              </li>
+              <li>
+                <a href="#orgc7eaff2">2.3. org-roam</a>
+              </li>
+              <li>
+                <a href="#org85ac4e7">2.4. org-mode</a>
+              </li>
+            </ul>
+          </li>
+          <li>
+            <a href="#org71013ce">3. Vue</a>
+            <ul>
+              <li>
+                <a href="#org788e769">3.1. <span class=
+                "todo SOMEDAY">SOMEDAY</span> Vue ChangeLog</a>
+              </li>
+              <li>
+                <a href="#org97530b9">3.2. <span class=
+                "todo TODO">TODO</span> vue script setup</a>
+              </li>
+              <li>
+                <a href="#org695a83e">3.3. <span class=
+                "done DONE">DONE</span> build your own vue
+                reactivity</a>
+              </li>
+              <li>
+                <a href="#orgbc96150">3.4. <span class=
+                "done DONE">DONE</span> build your own vue
+                scheduler</a>
+              </li>
+              <li>
+                <a href="#org5c6734b">3.5. <span class=
+                "todo TODO">TODO</span> build your own
+                runtime-core</a>
+              </li>
+            </ul>
+          </li>
+          <li>
+            <a href="#org6fe64d4">4. React</a>
+            <ul>
+              <li>
+                <a href="#org2b28afc">4.1. <span class=
+                "todo TODO">TODO</span> Build your own react</a>
+              </li>
+            </ul>
+          </li>
+          <li>
+            <a href="#org6ff8b9b">5. JavaScript</a>
+            <ul>
+              <li>
+                <a href="#org248896d">5.1. <span class=
+                "todo TODO">TODO</span> JavaScript Proxy And
+                Reflect</a>
+              </li>
+            </ul>
+          </li>
+          <li>
+            <a href="#orgb1e7e65">6. Shell Programming</a>
+            <ul>
+              <li>
+                <a href="#org3da4932">6.1. <span class=
+                "todo TODO">TODO</span> sed command</a>
+              </li>
+              <li>
+                <a href="#org3d3ae7e">6.2. <span class=
+                "todo TODO">TODO</span> shell basis</a>
+              </li>
+            </ul>
+          </li>
+          <li>
+            <a href="#orga9c4ede">7. 怪谈杂物间</a>
+            <ul>
+              <li>
+                <a href="#orgeb665e4">7.1. collections</a>
+              </li>
+            </ul>
+          </li>
+        </ul>
       </div>
     </div>
-    <div id="postamble" class="status">
-      <p class="author">Author: Zhicheng Lee</p>
-      <p class="date">Created: 2022-04-14 Thu 14:29</p>
+    <div style=
+    "padding: 1em; background-color: #FFFFCC;border-radius: 15px; font-size: 0.9em; box-shadow: 0.05em 0.1em 5px 0.01em #00000057;">
+      <h3>主页说明</h3>
+      <p>博客基本： ElementPlus + <abbr class="tooltip" title=
+      "zsh:1: command not found: wn&lt;br&gt;">Vue3</abbr> + Emacs
+      + <abbr class="tooltip" title=
+      "Outline-based notes management and organizer, alias&lt;br&gt;''Carsten’s outline-mode for keeping track of everything.''&lt;br&gt;&lt;br&gt;Org mode develops organizational tasks around a NOTES file which&lt;br&gt;contains information about projects as plain text. Org mode is&lt;br&gt;implemented on top of Outline mode, which is ideal to keep the content&lt;br&gt;of large files well structured. It supports ToDo items, deadlines and&lt;br&gt;time stamps, which magically appear in the diary listing of the Emacs&lt;br&gt;calendar. Tables are easily created with a built-in table editor.&lt;br&gt;Plain text URL-like links connect to websites, emails (VM), Usenet&lt;br&gt;messages (Gnus), BBDB entries, and any files related to the project.&lt;br&gt;For printing and sharing of notes, an Org file (or a part of it)&lt;br&gt;can be exported as a structured ASCII or HTML file.&lt;br&gt;&lt;br&gt;The following commands are available:&lt;br&gt;&lt;br&gt;&lt;br&gt;Key       Binding&lt;br&gt;&lt;br&gt;TAB org-cycle&lt;br&gt;C-j org-return-and-maybe-indent&lt;br&gt;RET org-return&lt;br&gt; (this binding is currently shadowed)&lt;br&gt;| org-force-self-insert&lt;br&gt; (this binding is currently shadowed)&lt;br&gt;S-TAB org-shifttab&lt;br&gt;S-RET +org/shift-return&lt;br&gt;C-RET +org/insert-item-below&lt;br&gt;C-# org-table-rotate-recalc-marks&lt;br&gt;C-' org-cycle-agenda-files&lt;br&gt;C-, org-cycle-agenda-files&lt;br&gt;C-S-RET +org/insert-item-above&lt;br&gt;C-M-S-&lt;left&gt; org-decrease-number-at-point&lt;br&gt;C-M-S-&lt;right&gt; org-increase-number-at-point&lt;br&gt;C-M-&lt;return&gt; org-insert-subheading&lt;br&gt;C-S-&lt;down&gt; org-shiftcontroldown&lt;br&gt;C-S-&lt;left&gt; org-shiftcontrolleft&lt;br&gt;C-S-&lt;return&gt; +org/insert-item-above&lt;br&gt; (this binding is currently shadowed)&lt;br&gt;C-S-&lt;right&gt; org-shiftcontrolright&lt;br&gt;C-S-&lt;up&gt; org-shiftcontrolup&lt;br&gt;C-&lt;return&gt; +org/insert-item-below&lt;br&gt; (this binding is currently shadowed)&lt;br&gt;M-S-&lt;down&gt; org-shiftmetadown&lt;br&gt;M-S-&lt;left&gt; org-shiftmetaleft&lt;br&gt;M-S-&lt;return&gt; org-insert-todo-heading&lt;br&gt;M-S-&lt;right&gt; org-shiftmetaright&lt;br&gt;M-S-&lt;up&gt; org-shiftmetaup&lt;br&gt;M-&lt;down&gt; org-metadown&lt;br&gt;M-&lt;left&gt; org-metaleft&lt;br&gt;M-&lt;right&gt; org-metaright&lt;br&gt;M-s-&lt;return&gt; org-insert-subheading&lt;br&gt;M-&lt;up&gt; org-metaup&lt;br&gt;S-&lt;down&gt; org-shiftdown&lt;br&gt;S-&lt;left&gt; org-shiftleft&lt;br&gt;S-&lt;return&gt; org-table-copy-down&lt;br&gt;S-&lt;right&gt; org-shiftright&lt;br&gt;S-s-&lt;return&gt; +org/insert-item-above&lt;br&gt; (this binding is currently shadowed)&lt;br&gt;S-&lt;up&gt; org-shiftup&lt;br&gt;&lt;backtab&gt; org-shifttab&lt;br&gt;s-&lt;return&gt; +org/insert-item-below&lt;br&gt; (this binding is currently shadowed)&lt;br&gt;&lt;br&gt;&lt;motion-state&gt; ( org-backward-sentence&lt;br&gt;&lt;motion-state&gt; ) org-forward-sentence&lt;br&gt;&lt;motion-state&gt; { org-backward-paragraph&lt;br&gt;&lt;motion-state&gt; } org-forward-paragraph&lt;br&gt;&lt;br&gt;&lt;normal-state&gt; S-&lt;tab&gt; org-shifttab&lt;br&gt;&lt;normal-state&gt; &lt;tab&gt; org-cycle&lt;br&gt;&lt;br&gt;M-RET org-meta-return&lt;br&gt;C-M-t org-transpose-element&lt;br&gt;M-h org-mark-element&lt;br&gt;M-{ org-backward-element&lt;br&gt;M-} org-forward-element&lt;br&gt;M-S-RET org-insert-todo-heading&lt;br&gt;C-M-RET org-insert-subheading&lt;br&gt;ESC S-&lt;down&gt; org-shiftmetadown&lt;br&gt;ESC S-&lt;left&gt; org-shiftmetaleft&lt;br&gt;ESC S-&lt;right&gt; org-shiftmetaright&lt;br&gt;ESC S-&lt;up&gt; org-shiftmetaup&lt;br&gt;ESC &lt;down&gt; org-metadown&lt;br&gt;ESC &lt;right&gt; org-metaright&lt;br&gt;ESC &lt;up&gt; org-metaup&lt;br&gt;&lt;br&gt;C-c C-a org-attach&lt;br&gt;C-c C-b org-backward-heading-same-level&lt;br&gt;C-c C-c org-ctrl-c-ctrl-c&lt;br&gt;C-c C-d org-deadline&lt;br&gt;C-c C-e org-export-dispatch&lt;br&gt;C-c C-f org-forward-heading-same-level&lt;br&gt;C-c TAB org-toggle-inline-images&lt;br&gt;C-c C-j org-goto&lt;br&gt;C-c C-k org-kill-note-or-show-branches&lt;br&gt;C-c C-l org-insert-link&lt;br&gt;C-c RET org-ctrl-c-ret&lt;br&gt;C-c C-o org-open-at-point&lt;br&gt;C-c C-q org-set-tags-command&lt;br&gt;C-c C-r org-reveal&lt;br&gt;C-c C-s org-schedule&lt;br&gt;C-c C-t org-todo&lt;br&gt;C-c C-w org-refile&lt;br&gt;C-c C-y org-evaluate-time-range&lt;br&gt;C-c C-z org-add-note&lt;br&gt;C-c C-^ org-up-element&lt;br&gt;C-c C-_ org-down-element&lt;br&gt;C-c ! org-time-stamp-inactive&lt;br&gt; (this binding is currently shadowed)&lt;br&gt;C-c # org-update-statistics-cookies&lt;br&gt;C-c $ org-archive-subtree&lt;br&gt;C-c % org-mark-ring-push&lt;br&gt;C-c &amp; org-mark-ring-goto&lt;br&gt; (this binding is currently shadowed)&lt;br&gt;C-c ' org-edit-special&lt;br&gt;C-c &lt;strong&gt; org-ctrl-c-star&lt;br&gt;C-c + org-table-sum&lt;br&gt;C-c , org-priority&lt;br&gt;C-c - org-ctrl-c-minus&lt;br&gt;C-c . org-time-stamp&lt;br&gt;C-c &lt;em&gt; org-sparse-tree&lt;br&gt;C-c : org-toggle-fixed-width&lt;br&gt;C-c ; org-toggle-comment&lt;br&gt;C-c &lt; org-date-from-calendar&lt;br&gt;C-c = org-table-eval-formula&lt;br&gt;C-c &gt; org-goto-calendar&lt;br&gt;C-c ? org-table-field-info&lt;br&gt;C-c @ org-mark-subtree&lt;br&gt;C-c [ org-agenda-file-to-front&lt;br&gt;C-c \ org-match-sparse-tree&lt;br&gt;C-c ] org-remove-file&lt;br&gt;C-c ^ org-sort&lt;br&gt;C-c ` org-table-edit-field&lt;br&gt;C-c { org-table-toggle-formula-debugger&lt;br&gt; (this binding is currently shadowed)&lt;br&gt;C-c | org-table-create-or-convert-from-region&lt;br&gt;C-c } org-table-toggle-coordinate-overlays&lt;br&gt;C-c ~ org-table-create-with-table.el&lt;br&gt;C-c C-S-l +org&lt;/em&gt;remove-link&lt;br&gt;C-c C-&lt;/strong&gt; org-list-make-subtree&lt;br&gt;C-c C-, org-insert-structure-template&lt;br&gt;C-c C-&lt;tab&gt; org-force-cycle-archived&lt;br&gt;&lt;br&gt;&lt;remap&gt; &lt;backward-paragraph&gt;  org-backward-paragraph&lt;br&gt;&lt;remap&gt; &lt;backward-sentence&gt;  org-backward-sentence&lt;br&gt;&lt;remap&gt; &lt;comment-dwim&gt;  org-comment-dwim&lt;br&gt;&lt;remap&gt; &lt;delete-backward-char&gt;  org-delete-backward-char&lt;br&gt;&lt;remap&gt; &lt;delete-char&gt;  org-delete-char&lt;br&gt;&lt;remap&gt; &lt;delete-indentation&gt;  org-delete-indentation&lt;br&gt;&lt;remap&gt; &lt;doom/backward-to-bol-or-indent&gt;  org-beginning-of-line&lt;br&gt;&lt;remap&gt; &lt;doom/forward-to-last-non-comment-or-eol&gt; org-end-of-line&lt;br&gt;&lt;remap&gt; &lt;fill-paragraph&gt;  org-fill-paragraph&lt;br&gt;&lt;remap&gt; &lt;forward-paragraph&gt;  org-forward-paragraph&lt;br&gt;&lt;remap&gt; &lt;forward-sentence&gt;  org-forward-sentence&lt;br&gt;&lt;remap&gt; &lt;kill-line&gt;  org-kill-line&lt;br&gt;&lt;remap&gt; &lt;move-beginning-of-line&gt;  org-beginning-of-line&lt;br&gt;&lt;remap&gt; &lt;move-end-of-line&gt;  org-end-of-line&lt;br&gt;&lt;remap&gt; &lt;open-line&gt;  org-open-line&lt;br&gt;&lt;remap&gt; &lt;outline-backward-same-level&gt;  org-backward-heading-same-level&lt;br&gt;&lt;remap&gt; &lt;outline-demote&gt;  org-demote-subtree&lt;br&gt;&lt;remap&gt; &lt;outline-forward-same-level&gt;  org-forward-heading-same-level&lt;br&gt;&lt;remap&gt; &lt;outline-insert-heading&gt;  org-ctrl-c-ret&lt;br&gt;&lt;remap&gt; &lt;outline-mark-subtree&gt;  org-mark-subtree&lt;br&gt;&lt;remap&gt; &lt;outline-next-visible-heading&gt;  org-next-visible-heading&lt;br&gt;&lt;remap&gt; &lt;outline-previous-visible-heading&gt;  org-previous-visible-heading&lt;br&gt;&lt;remap&gt; &lt;outline-promote&gt;  org-promote-subtree&lt;br&gt;&lt;remap&gt; &lt;outline-show-branches&gt;  org-kill-note-or-show-branches&lt;br&gt;&lt;remap&gt; &lt;outline-show-subtree&gt;  org-show-subtree&lt;br&gt;&lt;remap&gt; &lt;self-insert-command&gt;  org-self-insert-command&lt;br&gt; (this binding is currently shadowed)&lt;br&gt;&lt;remap&gt; &lt;show-children&gt;  org-show-children&lt;br&gt;&lt;remap&gt; &lt;transpose-words&gt;  org-transpose-words&lt;br&gt;&lt;remap&gt; &lt;yank&gt;  org-yank&lt;br&gt;&lt;br&gt;C-c C-a outline-show-all&lt;br&gt; (this binding is currently shadowed)&lt;br&gt;C-c C-b outline-backward-same-level&lt;br&gt; (this binding is currently shadowed)&lt;br&gt;C-c C-c outline-hide-entry&lt;br&gt; (this binding is currently shadowed)&lt;br&gt;C-c C-d outline-hide-subtree&lt;br&gt; (this binding is currently shadowed)&lt;br&gt;C-c C-e outline-show-entry&lt;br&gt; (this binding is currently shadowed)&lt;br&gt;C-c C-f outline-forward-same-level&lt;br&gt; (this binding is currently shadowed)&lt;br&gt;C-c TAB outline-show-children&lt;br&gt; (this binding is currently shadowed)&lt;br&gt;C-c C-k outline-show-branches&lt;br&gt; (this binding is currently shadowed)&lt;br&gt;C-c C-l outline-hide-leaves&lt;br&gt; (this binding is currently shadowed)&lt;br&gt;C-c RET outline-insert-heading&lt;br&gt; (this binding is currently shadowed)&lt;br&gt;C-c C-n outline-next-visible-heading&lt;br&gt;C-c C-o outline-hide-other&lt;br&gt; (this binding is currently shadowed)&lt;br&gt;C-c C-p outline-previous-visible-heading&lt;br&gt;C-c C-q outline-hide-sublevels&lt;br&gt; (this binding is currently shadowed)&lt;br&gt;C-c C-s outline-show-subtree&lt;br&gt; (this binding is currently shadowed)&lt;br&gt;C-c C-t outline-hide-body&lt;br&gt; (this binding is currently shadowed)&lt;br&gt;C-c C-u outline-up-heading&lt;br&gt;C-c C-v outline-move-subtree-down&lt;br&gt; (this binding is currently shadowed)&lt;br&gt;C-c C-^ outline-move-subtree-up&lt;br&gt; (this binding is currently shadowed)&lt;br&gt;C-c @ outline-mark-subtree&lt;br&gt; (this binding is currently shadowed)&lt;br&gt;C-c C-&lt; outline-promote&lt;br&gt;C-c C-&gt; outline-demote&lt;br&gt;&lt;br&gt;C-M-i ispell-complete-word&lt;br&gt;&lt;br&gt;&lt;normal-state&gt; , # org-update-statistics-cookies&lt;br&gt;&lt;normal-state&gt; , ' org-edit-special&lt;br&gt;&lt;normal-state&gt; , &lt;strong&gt; org-ctrl-c-star&lt;br&gt;&lt;normal-state&gt; , + org-ctrl-c-minus&lt;br&gt;&lt;normal-state&gt; , , org-switchb&lt;br&gt;&lt;normal-state&gt; , . consult-org-heading&lt;br&gt;&lt;normal-state&gt; , &lt;em&gt; consult-org-agenda&lt;br&gt;&lt;normal-state&gt; , @ org-cite-insert&lt;br&gt;&lt;normal-state&gt; , A org-archive-subtree&lt;br&gt;&lt;normal-state&gt; , I org-id-get-create&lt;br&gt;&lt;normal-state&gt; , O org-ol-tree&lt;br&gt;&lt;normal-state&gt; , T org-todo-list&lt;br&gt;&lt;normal-state&gt; , e org-export-dispatch&lt;br&gt;&lt;normal-state&gt; , f org-footnote-action&lt;br&gt;&lt;normal-state&gt; , h org-toggle-heading&lt;br&gt;&lt;normal-state&gt; , i org-toggle-item&lt;br&gt;&lt;normal-state&gt; , n org-store-link&lt;br&gt;&lt;normal-state&gt; , o org-set-property&lt;br&gt;&lt;normal-state&gt; , q org-set-tags-command&lt;br&gt;&lt;normal-state&gt; , t org-todo&lt;br&gt;&lt;normal-state&gt; , x org-toggle-checkbox&lt;br&gt;&lt;br&gt;&lt;normal-state&gt; t T counsel-org-tag&lt;br&gt;&lt;normal-state&gt; t t org-todo&lt;br&gt;&lt;br&gt;&lt;visual-state&gt; , # org-update-statistics-cookies&lt;br&gt;&lt;visual-state&gt; , ' org-edit-special&lt;br&gt;&lt;visual-state&gt; , &lt;/strong&gt; org-ctrl-c-star&lt;br&gt;&lt;visual-state&gt; , + org-ctrl-c-minus&lt;br&gt;&lt;visual-state&gt; , , org-switchb&lt;br&gt;&lt;visual-state&gt; , . consult-org-heading&lt;br&gt;&lt;visual-state&gt; , &lt;/em&gt; consult-org-agenda&lt;br&gt;&lt;visual-state&gt; , @ org-cite-insert&lt;br&gt;&lt;visual-state&gt; , A org-archive-subtree&lt;br&gt;&lt;visual-state&gt; , I org-id-get-create&lt;br&gt;&lt;visual-state&gt; , O org-ol-tree&lt;br&gt;&lt;visual-state&gt; , T org-todo-list&lt;br&gt;&lt;visual-state&gt; , e org-export-dispatch&lt;br&gt;&lt;visual-state&gt; , f org-footnote-action&lt;br&gt;&lt;visual-state&gt; , h org-toggle-heading&lt;br&gt;&lt;visual-state&gt; , i org-toggle-item&lt;br&gt;&lt;visual-state&gt; , n org-store-link&lt;br&gt;&lt;visual-state&gt; , o org-set-property&lt;br&gt;&lt;visual-state&gt; , q org-set-tags-command&lt;br&gt;&lt;visual-state&gt; , t org-todo&lt;br&gt;&lt;visual-state&gt; , x org-toggle-checkbox&lt;br&gt;&lt;br&gt;&lt;visual-state&gt; t T counsel-org-tag&lt;br&gt;&lt;visual-state&gt; t t org-todo&lt;br&gt;&lt;br&gt;C-x n b org-narrow-to-block&lt;br&gt;C-x n e org-narrow-to-element&lt;br&gt;C-x n s org-narrow-to-subtree&lt;br&gt;&lt;br&gt;C-c w M org-mind-map-write-current-tree&lt;br&gt;C-c w m org-mind-map-write&lt;br&gt;&lt;br&gt;C-c r F org-refile&lt;br&gt;C-c r f org-refile-copy&lt;br&gt;&lt;br&gt;C-c q b org-ql-sidebar&lt;br&gt;C-c q r org-ql-view-recent-items&lt;br&gt;C-c q s org-ql-search&lt;br&gt;C-c q t org-ql-sparse-tree&lt;br&gt;C-c q v org-ql-view&lt;br&gt;&lt;br&gt;C-c l D org-super-links-delete-link&lt;br&gt;C-c l L org-super-links-insert-link&lt;br&gt;C-c l b org-mark-ring-goto&lt;br&gt;C-c l d org-super-links-quick-insert-drawer-link&lt;br&gt;C-c l i org-super-links-quick-insert-inline-link&lt;br&gt;C-c l l org-super-links-link&lt;br&gt;C-c l s org-super-links-store-link&lt;br&gt;&lt;br&gt;C-c i D o-docs-insert&lt;br&gt;C-c i c copyright&lt;br&gt;C-c i u org-mac-chrome-insert-frontmost-url&lt;br&gt;&lt;br&gt;C-c g l org-mac-grab-link&lt;br&gt;&lt;br&gt;C-c e a all-the-icons-insert-faicon&lt;br&gt;C-c e e all-the-icons-insert&lt;br&gt;C-c e f all-the-icons-insert-fileicon&lt;br&gt;C-c e i all-the-icons-insert-alltheicon&lt;br&gt;C-c e m all-the-icons-insert-material&lt;br&gt;C-c e o all-the-icons-insert-octicon&lt;br&gt;C-c e w all-the-icons-insert-wicon&lt;br&gt;&lt;br&gt;C-c f r gcl/indent-org-block-automatically&lt;br&gt;&lt;br&gt;C-c c c counsel-org-clock-context&lt;br&gt;C-c c g counsel-org-clock-goto&lt;br&gt;C-c c h counsel-org-clock-history&lt;br&gt;C-c c i org-clock-in&lt;br&gt;C-c c o org-clock-out&lt;br&gt;C-c c p org-preview-html-mode&lt;br&gt;C-c c r counsel-org-clock-rebuild-history&lt;br&gt;&lt;br&gt;C-c a t org-transclusion-add&lt;br&gt;&lt;br&gt;C-c C-v C-a org-babel-sha1-hash&lt;br&gt;C-c C-v C-b org-babel-execute-buffer&lt;br&gt;C-c C-v C-c org-babel-check-src-block&lt;br&gt;C-c C-v C-d org-babel-demarcate-block&lt;br&gt;C-c C-v C-e org-babel-execute-maybe&lt;br&gt;C-c C-v C-f org-babel-tangle-file&lt;br&gt;C-c C-v TAB org-babel-view-src-block-info&lt;br&gt;C-c C-v C-j org-babel-insert-header-arg&lt;br&gt;C-c C-v C-l org-babel-load-in-session&lt;br&gt;C-c C-v C-n org-babel-next-src-block&lt;br&gt;C-c C-v C-o org-babel-open-src-block-result&lt;br&gt;C-c C-v C-p org-babel-previous-src-block&lt;br&gt;C-c C-v C-r org-babel-goto-named-result&lt;br&gt;C-c C-v C-s org-babel-execute-subtree&lt;br&gt;C-c C-v C-t org-babel-tangle&lt;br&gt;C-c C-v C-u org-babel-goto-src-block-head&lt;br&gt;C-c C-v C-v org-babel-expand-src-block&lt;br&gt;C-c C-v C-x org-babel-do-key-sequence-in-edit-buffer&lt;br&gt;C-c C-v C-z org-babel-switch-to-session&lt;br&gt;C-c C-v I org-babel-view-src-block-info&lt;br&gt;C-c C-v a org-babel-sha1-hash&lt;br&gt;C-c C-v b org-babel-execute-buffer&lt;br&gt;C-c C-v c org-babel-check-src-block&lt;br&gt;C-c C-v d org-babel-demarcate-block&lt;br&gt;C-c C-v e org-babel-execute-maybe&lt;br&gt;C-c C-v f org-babel-tangle-file&lt;br&gt;C-c C-v g org-babel-goto-named-src-block&lt;br&gt;C-c C-v h org-babel-describe-bindings&lt;br&gt;C-c C-v i org-babel-lob-ingest&lt;br&gt;C-c C-v j org-babel-insert-header-arg&lt;br&gt;C-c C-v k org-babel-remove-result-one-or-many&lt;br&gt;C-c C-v l org-babel-load-in-session&lt;br&gt;C-c C-v n org-babel-next-src-block&lt;br&gt;C-c C-v o org-babel-open-src-block-result&lt;br&gt;C-c C-v p org-babel-previous-src-block&lt;br&gt;C-c C-v r org-babel-goto-named-result&lt;br&gt;C-c C-v s org-babel-execute-subtree&lt;br&gt;C-c C-v t org-babel-tangle&lt;br&gt;C-c C-v u org-babel-goto-src-block-head&lt;br&gt;C-c C-v v org-babel-expand-src-block&lt;br&gt;C-c C-v x org-babel-do-key-sequence-in-edit-buffer&lt;br&gt;C-c C-v z org-babel-switch-to-session-with-code&lt;br&gt;&lt;br&gt;C-c '' a orgtbl-ascii-plot&lt;br&gt;C-c '' g org-plot/gnuplot&lt;br&gt;&lt;br&gt;C-c C-M-l org-insert-all-links&lt;br&gt;C-c C-M-w org-refile-reverse&lt;br&gt;C-c M-b org-previous-block&lt;br&gt;C-c M-f org-next-block&lt;br&gt;C-c M-l org-insert-last-stored-link&lt;br&gt;C-c M-w org-refile-copy&lt;br&gt;&lt;br&gt;C-c C-x C-a org-archive-subtree-default&lt;br&gt;C-c C-x C-b org-toggle-checkbox&lt;br&gt;C-c C-x C-c org-columns&lt;br&gt;C-c C-x C-d org-clock-display&lt;br&gt;C-c C-x C-f org-emphasize&lt;br&gt;C-c C-x TAB org-clock-in&lt;br&gt;C-c C-x C-j org-clock-goto&lt;br&gt;C-c C-x C-l org-latex-preview&lt;br&gt;C-c C-x C-n org-next-link&lt;br&gt;C-c C-x C-o org-clock-out&lt;br&gt;C-c C-x C-p org-previous-link&lt;br&gt;C-c C-x C-q org-clock-cancel&lt;br&gt;C-c C-x C-r org-toggle-radio-button&lt;br&gt;C-c C-x C-s org-archive-subtree&lt;br&gt;C-c C-x C-t org-toggle-time-stamp-overlays&lt;br&gt;C-c C-x C-u org-dblock-update&lt;br&gt;C-c C-x C-v org-toggle-inline-images&lt;br&gt;C-c C-x C-w org-cut-special&lt;br&gt;C-c C-x C-x org-clock-in-last&lt;br&gt;C-c C-x C-y org-paste-special&lt;br&gt;C-c C-x C-z org-resolve-clocks&lt;br&gt;C-c C-x ! org-reload&lt;br&gt;C-c C-x , org-timer-pause-or-continue&lt;br&gt;C-c C-x - org-timer-item&lt;br&gt;C-c C-x . org-timer&lt;br&gt;C-c C-x 0 org-timer-start&lt;br&gt;C-c C-x ; org-timer-set-timer&lt;br&gt;C-c C-x &lt; org-agenda-set-restriction-lock&lt;br&gt;C-c C-x &gt; org-agenda-remove-restriction-lock&lt;br&gt;C-c C-x @ org-cite-insert&lt;br&gt;C-c C-x A org-archive-to-archive-sibling&lt;br&gt;C-c C-x E org-inc-effort&lt;br&gt;C-c C-x G org-feed-goto-inbox&lt;br&gt;C-c C-x I org-info-find-node&lt;br&gt;C-c C-x P org-set-property-and-value&lt;br&gt;C-c C-x [ org-reftex-citation&lt;br&gt;C-c C-x \ org-toggle-pretty-entities&lt;br&gt;C-c C-x _ org-timer-stop&lt;br&gt;C-c C-x a org-toggle-archive-tag&lt;br&gt;C-c C-x b org-tree-to-indirect-buffer&lt;br&gt;C-c C-x c org-clone-subtree-with-time-shift&lt;br&gt;C-c C-x d org-insert-drawer&lt;br&gt;C-c C-x e org-set-effort&lt;br&gt;C-c C-x f org-footnote-action&lt;br&gt;C-c C-x g org-feed-update-all&lt;br&gt;C-c C-x o org-toggle-ordered-property&lt;br&gt;C-c C-x p org-set-property&lt;br&gt;C-c C-x q org-toggle-tags-groups&lt;br&gt;C-c C-x v org-copy-visible&lt;br&gt;C-c C-x x org-dynamic-block-insert-dblock&lt;br&gt;&lt;br&gt;&lt;insert-state&gt; M-SPC m # org-update-statistics-cookies&lt;br&gt;&lt;insert-state&gt; M-SPC m ' org-edit-special&lt;br&gt;&lt;insert-state&gt; M-SPC m &lt;strong&gt; org-ctrl-c-star&lt;br&gt;&lt;insert-state&gt; M-SPC m + org-ctrl-c-minus&lt;br&gt;&lt;insert-state&gt; M-SPC m , org-switchb&lt;br&gt;&lt;insert-state&gt; M-SPC m . consult-org-heading&lt;br&gt;&lt;insert-state&gt; M-SPC m &lt;em&gt; consult-org-agenda&lt;br&gt;&lt;insert-state&gt; M-SPC m @ org-cite-insert&lt;br&gt;&lt;insert-state&gt; M-SPC m A org-archive-subtree&lt;br&gt;&lt;insert-state&gt; M-SPC m I org-id-get-create&lt;br&gt;&lt;insert-state&gt; M-SPC m O org-ol-tree&lt;br&gt;&lt;insert-state&gt; M-SPC m T org-todo-list&lt;br&gt;&lt;insert-state&gt; M-SPC m e org-export-dispatch&lt;br&gt;&lt;insert-state&gt; M-SPC m f org-footnote-action&lt;br&gt;&lt;insert-state&gt; M-SPC m h org-toggle-heading&lt;br&gt;&lt;insert-state&gt; M-SPC m i org-toggle-item&lt;br&gt;&lt;insert-state&gt; M-SPC m n org-store-link&lt;br&gt;&lt;insert-state&gt; M-SPC m o org-set-property&lt;br&gt;&lt;insert-state&gt; M-SPC m q org-set-tags-command&lt;br&gt;&lt;insert-state&gt; M-SPC m t org-todo&lt;br&gt;&lt;insert-state&gt; M-SPC m x org-toggle-checkbox&lt;br&gt;&lt;br&gt;&lt;emacs-state&gt; M-SPC m # org-update-statistics-cookies&lt;br&gt;&lt;emacs-state&gt; M-SPC m ' org-edit-special&lt;br&gt;&lt;emacs-state&gt; M-SPC m &lt;/strong&gt; org-ctrl-c-star&lt;br&gt;&lt;emacs-state&gt; M-SPC m + org-ctrl-c-minus&lt;br&gt;&lt;emacs-state&gt; M-SPC m , org-switchb&lt;br&gt;&lt;emacs-state&gt; M-SPC m . consult-org-heading&lt;br&gt;&lt;emacs-state&gt; M-SPC m &lt;/em&gt; consult-org-agenda&lt;br&gt;&lt;emacs-state&gt; M-SPC m @ org-cite-insert&lt;br&gt;&lt;emacs-state&gt; M-SPC m A org-archive-subtree&lt;br&gt;&lt;emacs-state&gt; M-SPC m I org-id-get-create&lt;br&gt;&lt;emacs-state&gt; M-SPC m O org-ol-tree&lt;br&gt;&lt;emacs-state&gt; M-SPC m T org-todo-list&lt;br&gt;&lt;emacs-state&gt; M-SPC m e org-export-dispatch&lt;br&gt;&lt;emacs-state&gt; M-SPC m f org-footnote-action&lt;br&gt;&lt;emacs-state&gt; M-SPC m h org-toggle-heading&lt;br&gt;&lt;emacs-state&gt; M-SPC m i org-toggle-item&lt;br&gt;&lt;emacs-state&gt; M-SPC m n org-store-link&lt;br&gt;&lt;emacs-state&gt; M-SPC m o org-set-property&lt;br&gt;&lt;emacs-state&gt; M-SPC m q org-set-tags-command&lt;br&gt;&lt;emacs-state&gt; M-SPC m t org-todo&lt;br&gt;&lt;emacs-state&gt; M-SPC m x org-toggle-checkbox&lt;br&gt;&lt;br&gt;&lt;motion-state&gt; , m D org-roam-demote-entire-buffer&lt;br&gt;&lt;motion-state&gt; , m F org-roam-ref-find&lt;br&gt;&lt;motion-state&gt; , m I org-id-get-create&lt;br&gt;&lt;motion-state&gt; , m M org-roam-buffer-display-dedicated&lt;br&gt;&lt;motion-state&gt; , m R org-roam-link-replace-all&lt;br&gt;&lt;motion-state&gt; , m f org-roam-node-find&lt;br&gt;&lt;motion-state&gt; , m g org-roam-graph&lt;br&gt;&lt;motion-state&gt; , m i org-roam-node-insert&lt;br&gt;&lt;motion-state&gt; , m m org-roam-buffer-toggle&lt;br&gt;&lt;motion-state&gt; , m n org-roam-capture&lt;br&gt;&lt;motion-state&gt; , m r org-roam-refile&lt;br&gt;&lt;br&gt;&lt;motion-state&gt; , p d org-priority-down&lt;br&gt;&lt;motion-state&gt; , p p org-priority&lt;br&gt;&lt;motion-state&gt; , p u org-priority-up&lt;br&gt;&lt;br&gt;&lt;motion-state&gt; , s A org-archive-subtree&lt;br&gt;&lt;motion-state&gt; , s N widen&lt;br&gt;&lt;motion-state&gt; , s S org-sort&lt;br&gt;&lt;motion-state&gt; , s a org-toggle-archive-tag&lt;br&gt;&lt;motion-state&gt; , s b org-tree-to-indirect-buffer&lt;br&gt;&lt;motion-state&gt; , s c org-clone-subtree-with-time-shift&lt;br&gt;&lt;motion-state&gt; , s d org-cut-subtree&lt;br&gt;&lt;motion-state&gt; , s h org-promote-subtree&lt;br&gt;&lt;motion-state&gt; , s j org-move-subtree-down&lt;br&gt;&lt;motion-state&gt; , s k org-move-subtree-up&lt;br&gt;&lt;motion-state&gt; , s l org-demote-subtree&lt;br&gt;&lt;motion-state&gt; , s n org-narrow-to-subtree&lt;br&gt;&lt;motion-state&gt; , s r org-refile&lt;br&gt;&lt;motion-state&gt; , s s org-sparse-tree&lt;br&gt;&lt;br&gt;&lt;motion-state&gt; , r . +org/refile-to-current-file&lt;br&gt;&lt;motion-state&gt; , r O +org/refile-to-other-buffer&lt;br&gt;&lt;motion-state&gt; , r c +org/refile-to-running-clock&lt;br&gt;&lt;motion-state&gt; , r f +org/refile-to-file&lt;br&gt;&lt;motion-state&gt; , r l +org/refile-to-last-location&lt;br&gt;&lt;motion-state&gt; , r o +org/refile-to-other-window&lt;br&gt;&lt;motion-state&gt; , r r org-refile&lt;br&gt;&lt;motion-state&gt; , r v +org/refile-to-visible&lt;br&gt;&lt;br&gt;&lt;motion-state&gt; , P P org-publish-current-project&lt;br&gt;&lt;motion-state&gt; , P a org-publish-all&lt;br&gt;&lt;motion-state&gt; , P f org-publish-current-file&lt;br&gt;&lt;motion-state&gt; , P p org-publish&lt;br&gt;&lt;motion-state&gt; , P s org-publish-sitemap&lt;br&gt;&lt;br&gt;&lt;motion-state&gt; , l L org-insert-all-links&lt;br&gt;&lt;motion-state&gt; , l S org-insert-last-stored-link&lt;br&gt;&lt;motion-state&gt; , l c org-cliplink&lt;br&gt;&lt;motion-state&gt; , l d +org/remove-link&lt;br&gt;&lt;motion-state&gt; , l i org-id-store-link&lt;br&gt;&lt;motion-state&gt; , l l org-insert-link&lt;br&gt;&lt;motion-state&gt; , l s org-store-link&lt;br&gt;&lt;motion-state&gt; , l t org-toggle-link-display&lt;br&gt;&lt;br&gt;&lt;motion-state&gt; , g C [closure]&lt;br&gt;&lt;motion-state&gt; , g G consult-org-agenda&lt;br&gt;&lt;motion-state&gt; , g c org-clock-goto&lt;br&gt;&lt;motion-state&gt; , g g consult-org-heading&lt;br&gt;&lt;motion-state&gt; , g i org-id-goto&lt;br&gt;&lt;motion-state&gt; , g r org-refile-goto-last-stored&lt;br&gt;&lt;motion-state&gt; , g v +org/goto-visible&lt;br&gt;&lt;motion-state&gt; , g x org-capture-goto-last-stored&lt;br&gt;&lt;br&gt;&lt;motion-state&gt; , d T org-time-stamp-inactive&lt;br&gt;&lt;motion-state&gt; , d d org-deadline&lt;br&gt;&lt;motion-state&gt; , d s org-schedule&lt;br&gt;&lt;motion-state&gt; , d t org-time-stamp&lt;br&gt;&lt;br&gt;&lt;motion-state&gt; , c - org-clock-timestamps-down&lt;br&gt;&lt;motion-state&gt; , c = org-clock-timestamps-up&lt;br&gt;&lt;motion-state&gt; , c E org-set-effort&lt;br&gt;&lt;motion-state&gt; , c G [closure]&lt;br&gt;&lt;motion-state&gt; , c I org-clock-in-last&lt;br&gt;&lt;motion-state&gt; , c R org-clock-report&lt;br&gt;&lt;motion-state&gt; , c c org-clock-cancel&lt;br&gt;&lt;motion-state&gt; , c d org-clock-mark-default-task&lt;br&gt;&lt;motion-state&gt; , c e org-clock-modify-effort-estimate&lt;br&gt;&lt;motion-state&gt; , c g org-clock-goto&lt;br&gt;&lt;motion-state&gt; , c i org-clock-in&lt;br&gt;&lt;motion-state&gt; , c l +org/toggle-last-clock&lt;br&gt;&lt;motion-state&gt; , c o org-clock-out&lt;br&gt;&lt;motion-state&gt; , c r org-resolve-clocks&lt;br&gt;&lt;motion-state&gt; , c t org-evaluate-time-range&lt;br&gt;&lt;br&gt;&lt;motion-state&gt; , b - org-table-insert-hline&lt;br&gt;&lt;motion-state&gt; , b R org-table-recalculate-buffer-tables&lt;br&gt;&lt;motion-state&gt; , b a org-table-align&lt;br&gt;&lt;motion-state&gt; , b b org-table-blank-field&lt;br&gt;&lt;motion-state&gt; , b c org-table-create-or-convert-from-region&lt;br&gt;&lt;motion-state&gt; , b e org-table-edit-field&lt;br&gt;&lt;motion-state&gt; , b f org-table-edit-formulas&lt;br&gt;&lt;motion-state&gt; , b h org-table-field-info&lt;br&gt;&lt;motion-state&gt; , b p org-plot/gnuplot&lt;br&gt;&lt;motion-state&gt; , b r org-table-recalculate&lt;br&gt;&lt;motion-state&gt; , b s org-table-sort-lines&lt;br&gt;&lt;br&gt;&lt;motion-state&gt; , a D org-attach-delete-all&lt;br&gt;&lt;motion-state&gt; , a O org-attach-open-in-emacs&lt;br&gt;&lt;motion-state&gt; , a P org-download-yank&lt;br&gt;&lt;motion-state&gt; , a R org-attach-reveal-in-emacs&lt;br&gt;&lt;motion-state&gt; , a S org-attach-sync&lt;br&gt;&lt;motion-state&gt; , a a org-attach&lt;br&gt;&lt;motion-state&gt; , a c org-download-screenshot&lt;br&gt;&lt;motion-state&gt; , a d org-attach-delete-one&lt;br&gt;&lt;motion-state&gt; , a f +org/find-file-in-attachments&lt;br&gt;&lt;motion-state&gt; , a l +org/attach-file-and-insert-link&lt;br&gt;&lt;motion-state&gt; , a n org-attach-new&lt;br&gt;&lt;motion-state&gt; , a o org-attach-open&lt;br&gt;&lt;motion-state&gt; , a p org-download-clipboard&lt;br&gt;&lt;motion-state&gt; , a r org-attach-reveal&lt;br&gt;&lt;motion-state&gt; , a s org-attach-set-directory&lt;br&gt;&lt;motion-state&gt; , a u org-attach-url&lt;br&gt;&lt;br&gt;&lt;normal-state&gt; , m D org-roam-demote-entire-buffer&lt;br&gt;&lt;normal-state&gt; , m F org-roam-ref-find&lt;br&gt;&lt;normal-state&gt; , m I org-id-get-create&lt;br&gt;&lt;normal-state&gt; , m M org-roam-buffer-display-dedicated&lt;br&gt;&lt;normal-state&gt; , m R org-roam-link-replace-all&lt;br&gt;&lt;normal-state&gt; , m f org-roam-node-find&lt;br&gt;&lt;normal-state&gt; , m g org-roam-graph&lt;br&gt;&lt;normal-state&gt; , m i org-roam-node-insert&lt;br&gt;&lt;normal-state&gt; , m m org-roam-buffer-toggle&lt;br&gt;&lt;normal-state&gt; , m n org-roam-capture&lt;br&gt;&lt;normal-state&gt; , m r org-roam-refile&lt;br&gt;&lt;br&gt;&lt;normal-state&gt; , p d org-priority-down&lt;br&gt;&lt;normal-state&gt; , p p org-priority&lt;br&gt;&lt;normal-state&gt; , p u org-priority-up&lt;br&gt;&lt;br&gt;&lt;normal-state&gt; , s A org-archive-subtree&lt;br&gt;&lt;normal-state&gt; , s N widen&lt;br&gt;&lt;normal-state&gt; , s S org-sort&lt;br&gt;&lt;normal-state&gt; , s a org-toggle-archive-tag&lt;br&gt;&lt;normal-state&gt; , s b org-tree-to-indirect-buffer&lt;br&gt;&lt;normal-state&gt; , s c org-clone-subtree-with-time-shift&lt;br&gt;&lt;normal-state&gt; , s d org-cut-subtree&lt;br&gt;&lt;normal-state&gt; , s h org-promote-subtree&lt;br&gt;&lt;normal-state&gt; , s j org-move-subtree-down&lt;br&gt;&lt;normal-state&gt; , s k org-move-subtree-up&lt;br&gt;&lt;normal-state&gt; , s l org-demote-subtree&lt;br&gt;&lt;normal-state&gt; , s n org-narrow-to-subtree&lt;br&gt;&lt;normal-state&gt; , s r org-refile&lt;br&gt;&lt;normal-state&gt; , s s org-sparse-tree&lt;br&gt;&lt;br&gt;&lt;normal-state&gt; , r . +org/refile-to-current-file&lt;br&gt;&lt;normal-state&gt; , r O +org/refile-to-other-buffer&lt;br&gt;&lt;normal-state&gt; , r c +org/refile-to-running-clock&lt;br&gt;&lt;normal-state&gt; , r f +org/refile-to-file&lt;br&gt;&lt;normal-state&gt; , r l +org/refile-to-last-location&lt;br&gt;&lt;normal-state&gt; , r o +org/refile-to-other-window&lt;br&gt;&lt;normal-state&gt; , r r org-refile&lt;br&gt;&lt;normal-state&gt; , r v +org/refile-to-visible&lt;br&gt;&lt;br&gt;&lt;normal-state&gt; , P P org-publish-current-project&lt;br&gt;&lt;normal-state&gt; , P a org-publish-all&lt;br&gt;&lt;normal-state&gt; , P f org-publish-current-file&lt;br&gt;&lt;normal-state&gt; , P p org-publish&lt;br&gt;&lt;normal-state&gt; , P s org-publish-sitemap&lt;br&gt;&lt;br&gt;&lt;normal-state&gt; , l L org-insert-all-links&lt;br&gt;&lt;normal-state&gt; , l S org-insert-last-stored-link&lt;br&gt;&lt;normal-state&gt; , l c org-cliplink&lt;br&gt;&lt;normal-state&gt; , l d +org/remove-link&lt;br&gt;&lt;normal-state&gt; , l i org-id-store-link&lt;br&gt;&lt;normal-state&gt; , l l org-insert-link&lt;br&gt;&lt;normal-state&gt; , l s org-store-link&lt;br&gt;&lt;normal-state&gt; , l t org-toggle-link-display&lt;br&gt;&lt;br&gt;&lt;normal-state&gt; , g C [closure]&lt;br&gt;&lt;normal-state&gt; , g G consult-org-agenda&lt;br&gt;&lt;normal-state&gt; , g c org-clock-goto&lt;br&gt;&lt;normal-state&gt; , g g consult-org-heading&lt;br&gt;&lt;normal-state&gt; , g i org-id-goto&lt;br&gt;&lt;normal-state&gt; , g r org-refile-goto-last-stored&lt;br&gt;&lt;normal-state&gt; , g v +org/goto-visible&lt;br&gt;&lt;normal-state&gt; , g x org-capture-goto-last-stored&lt;br&gt;&lt;br&gt;&lt;normal-state&gt; , d T org-time-stamp-inactive&lt;br&gt;&lt;normal-state&gt; , d d org-deadline&lt;br&gt;&lt;normal-state&gt; , d s org-schedule&lt;br&gt;&lt;normal-state&gt; , d t org-time-stamp&lt;br&gt;&lt;br&gt;&lt;normal-state&gt; , c - org-clock-timestamps-down&lt;br&gt;&lt;normal-state&gt; , c = org-clock-timestamps-up&lt;br&gt;&lt;normal-state&gt; , c E org-set-effort&lt;br&gt;&lt;normal-state&gt; , c G [closure]&lt;br&gt;&lt;normal-state&gt; , c I org-clock-in-last&lt;br&gt;&lt;normal-state&gt; , c R org-clock-report&lt;br&gt;&lt;normal-state&gt; , c c org-clock-cancel&lt;br&gt;&lt;normal-state&gt; , c d org-clock-mark-default-task&lt;br&gt;&lt;normal-state&gt; , c e org-clock-modify-effort-estimate&lt;br&gt;&lt;normal-state&gt; , c g org-clock-goto&lt;br&gt;&lt;normal-state&gt; , c i org-clock-in&lt;br&gt;&lt;normal-state&gt; , c l +org/toggle-last-clock&lt;br&gt;&lt;normal-state&gt; , c o org-clock-out&lt;br&gt;&lt;normal-state&gt; , c r org-resolve-clocks&lt;br&gt;&lt;normal-state&gt; , c t org-evaluate-time-range&lt;br&gt;&lt;br&gt;&lt;normal-state&gt; , b - org-table-insert-hline&lt;br&gt;&lt;normal-state&gt; , b R org-table-recalculate-buffer-tables&lt;br&gt;&lt;normal-state&gt; , b a org-table-align&lt;br&gt;&lt;normal-state&gt; , b b org-table-blank-field&lt;br&gt;&lt;normal-state&gt; , b c org-table-create-or-convert-from-region&lt;br&gt;&lt;normal-state&gt; , b e org-table-edit-field&lt;br&gt;&lt;normal-state&gt; , b f org-table-edit-formulas&lt;br&gt;&lt;normal-state&gt; , b h org-table-field-info&lt;br&gt;&lt;normal-state&gt; , b p org-plot/gnuplot&lt;br&gt;&lt;normal-state&gt; , b r org-table-recalculate&lt;br&gt;&lt;normal-state&gt; , b s org-table-sort-lines&lt;br&gt;&lt;br&gt;&lt;normal-state&gt; , a D org-attach-delete-all&lt;br&gt;&lt;normal-state&gt; , a O org-attach-open-in-emacs&lt;br&gt;&lt;normal-state&gt; , a P org-download-yank&lt;br&gt;&lt;normal-state&gt; , a R org-attach-reveal-in-emacs&lt;br&gt;&lt;normal-state&gt; , a S org-attach-sync&lt;br&gt;&lt;normal-state&gt; , a a org-attach&lt;br&gt;&lt;normal-state&gt; , a c org-download-screenshot&lt;br&gt;&lt;normal-state&gt; , a d org-attach-delete-one&lt;br&gt;&lt;normal-state&gt; , a f +org/find-file-in-attachments&lt;br&gt;&lt;normal-state&gt; , a l +org/attach-file-and-insert-link&lt;br&gt;&lt;normal-state&gt; , a n org-attach-new&lt;br&gt;&lt;normal-state&gt; , a o org-attach-open&lt;br&gt;&lt;normal-state&gt; , a p org-download-clipboard&lt;br&gt;&lt;normal-state&gt; , a r org-attach-reveal&lt;br&gt;&lt;normal-state&gt; , a s org-attach-set-directory&lt;br&gt;&lt;normal-state&gt; , a u org-attach-url&lt;br&gt;&lt;br&gt;&lt;normal-state&gt; t p d org-priority-down&lt;br&gt;&lt;normal-state&gt; t p p org-priority&lt;br&gt;&lt;normal-state&gt; t p u org-priority-up&lt;br&gt;&lt;br&gt;&lt;normal-state&gt; t c c org-toggle-checkbox&lt;br&gt;&lt;normal-state&gt; t c u org-update-checkbox-count&lt;br&gt;&lt;br&gt;&lt;visual-state&gt; , m D org-roam-demote-entire-buffer&lt;br&gt;&lt;visual-state&gt; , m F org-roam-ref-find&lt;br&gt;&lt;visual-state&gt; , m I org-id-get-create&lt;br&gt;&lt;visual-state&gt; , m M org-roam-buffer-display-dedicated&lt;br&gt;&lt;visual-state&gt; , m R org-roam-link-replace-all&lt;br&gt;&lt;visual-state&gt; , m f org-roam-node-find&lt;br&gt;&lt;visual-state&gt; , m g org-roam-graph&lt;br&gt;&lt;visual-state&gt; , m i org-roam-node-insert&lt;br&gt;&lt;visual-state&gt; , m m org-roam-buffer-toggle&lt;br&gt;&lt;visual-state&gt; , m n org-roam-capture&lt;br&gt;&lt;visual-state&gt; , m r org-roam-refile&lt;br&gt;&lt;br&gt;&lt;visual-state&gt; , p d org-priority-down&lt;br&gt;&lt;visual-state&gt; , p p org-priority&lt;br&gt;&lt;visual-state&gt; , p u org-priority-up&lt;br&gt;&lt;br&gt;&lt;visual-state&gt; , s A org-archive-subtree&lt;br&gt;&lt;visual-state&gt; , s N widen&lt;br&gt;&lt;visual-state&gt; , s S org-sort&lt;br&gt;&lt;visual-state&gt; , s a org-toggle-archive-tag&lt;br&gt;&lt;visual-state&gt; , s b org-tree-to-indirect-buffer&lt;br&gt;&lt;visual-state&gt; , s c org-clone-subtree-with-time-shift&lt;br&gt;&lt;visual-state&gt; , s d org-cut-subtree&lt;br&gt;&lt;visual-state&gt; , s h org-promote-subtree&lt;br&gt;&lt;visual-state&gt; , s j org-move-subtree-down&lt;br&gt;&lt;visual-state&gt; , s k org-move-subtree-up&lt;br&gt;&lt;visual-state&gt; , s l org-demote-subtree&lt;br&gt;&lt;visual-state&gt; , s n org-narrow-to-subtree&lt;br&gt;&lt;visual-state&gt; , s r org-refile&lt;br&gt;&lt;visual-state&gt; , s s org-sparse-tree&lt;br&gt;&lt;br&gt;&lt;visual-state&gt; , r . +org/refile-to-current-file&lt;br&gt;&lt;visual-state&gt; , r O +org/refile-to-other-buffer&lt;br&gt;&lt;visual-state&gt; , r c +org/refile-to-running-clock&lt;br&gt;&lt;visual-state&gt; , r f +org/refile-to-file&lt;br&gt;&lt;visual-state&gt; , r l +org/refile-to-last-location&lt;br&gt;&lt;visual-state&gt; , r o +org/refile-to-other-window&lt;br&gt;&lt;visual-state&gt; , r r org-refile&lt;br&gt;&lt;visual-state&gt; , r v +org/refile-to-visible&lt;br&gt;&lt;br&gt;&lt;visual-state&gt; , P P org-publish-current-project&lt;br&gt;&lt;visual-state&gt; , P a org-publish-all&lt;br&gt;&lt;visual-state&gt; , P f org-publish-current-file&lt;br&gt;&lt;visual-state&gt; , P p org-publish&lt;br&gt;&lt;visual-state&gt; , P s org-publish-sitemap&lt;br&gt;&lt;br&gt;&lt;visual-state&gt; , l L org-insert-all-links&lt;br&gt;&lt;visual-state&gt; , l S org-insert-last-stored-link&lt;br&gt;&lt;visual-state&gt; , l c org-cliplink&lt;br&gt;&lt;visual-state&gt; , l d +org/remove-link&lt;br&gt;&lt;visual-state&gt; , l i org-id-store-link&lt;br&gt;&lt;visual-state&gt; , l l org-insert-link&lt;br&gt;&lt;visual-state&gt; , l s org-store-link&lt;br&gt;&lt;visual-state&gt; , l t org-toggle-link-display&lt;br&gt;&lt;br&gt;&lt;visual-state&gt; , g C [closure]&lt;br&gt;&lt;visual-state&gt; , g G consult-org-agenda&lt;br&gt;&lt;visual-state&gt; , g c org-clock-goto&lt;br&gt;&lt;visual-state&gt; , g g consult-org-heading&lt;br&gt;&lt;visual-state&gt; , g i org-id-goto&lt;br&gt;&lt;visual-state&gt; , g r org-refile-goto-last-stored&lt;br&gt;&lt;visual-state&gt; , g v +org/goto-visible&lt;br&gt;&lt;visual-state&gt; , g x org-capture-goto-last-stored&lt;br&gt;&lt;br&gt;&lt;visual-state&gt; , d T org-time-stamp-inactive&lt;br&gt;&lt;visual-state&gt; , d d org-deadline&lt;br&gt;&lt;visual-state&gt; , d s org-schedule&lt;br&gt;&lt;visual-state&gt; , d t org-time-stamp&lt;br&gt;&lt;br&gt;&lt;visual-state&gt; , c - org-clock-timestamps-down&lt;br&gt;&lt;visual-state&gt; , c = org-clock-timestamps-up&lt;br&gt;&lt;visual-state&gt; , c E org-set-effort&lt;br&gt;&lt;visual-state&gt; , c G [closure]&lt;br&gt;&lt;visual-state&gt; , c I org-clock-in-last&lt;br&gt;&lt;visual-state&gt; , c R org-clock-report&lt;br&gt;&lt;visual-state&gt; , c c org-clock-cancel&lt;br&gt;&lt;visual-state&gt; , c d org-clock-mark-default-task&lt;br&gt;&lt;visual-state&gt; , c e org-clock-modify-effort-estimate&lt;br&gt;&lt;visual-state&gt; , c g org-clock-goto&lt;br&gt;&lt;visual-state&gt; , c i org-clock-in&lt;br&gt;&lt;visual-state&gt; , c l +org/toggle-last-clock&lt;br&gt;&lt;visual-state&gt; , c o org-clock-out&lt;br&gt;&lt;visual-state&gt; , c r org-resolve-clocks&lt;br&gt;&lt;visual-state&gt; , c t org-evaluate-time-range&lt;br&gt;&lt;br&gt;&lt;visual-state&gt; , b - org-table-insert-hline&lt;br&gt;&lt;visual-state&gt; , b R org-table-recalculate-buffer-tables&lt;br&gt;&lt;visual-state&gt; , b a org-table-align&lt;br&gt;&lt;visual-state&gt; , b b org-table-blank-field&lt;br&gt;&lt;visual-state&gt; , b c org-table-create-or-convert-from-region&lt;br&gt;&lt;visual-state&gt; , b e org-table-edit-field&lt;br&gt;&lt;visual-state&gt; , b f org-table-edit-formulas&lt;br&gt;&lt;visual-state&gt; , b h org-table-field-info&lt;br&gt;&lt;visual-state&gt; , b p org-plot/gnuplot&lt;br&gt;&lt;visual-state&gt; , b r org-table-recalculate&lt;br&gt;&lt;visual-state&gt; , b s org-table-sort-lines&lt;br&gt;&lt;br&gt;&lt;visual-state&gt; , a D org-attach-delete-all&lt;br&gt;&lt;visual-state&gt; , a O org-attach-open-in-emacs&lt;br&gt;&lt;visual-state&gt; , a P org-download-yank&lt;br&gt;&lt;visual-state&gt; , a R org-attach-reveal-in-emacs&lt;br&gt;&lt;visual-state&gt; , a S org-attach-sync&lt;br&gt;&lt;visual-state&gt; , a a org-attach&lt;br&gt;&lt;visual-state&gt; , a c org-download-screenshot&lt;br&gt;&lt;visual-state&gt; , a d org-attach-delete-one&lt;br&gt;&lt;visual-state&gt; , a f +org/find-file-in-attachments&lt;br&gt;&lt;visual-state&gt; , a l +org/attach-file-and-insert-link&lt;br&gt;&lt;visual-state&gt; , a n org-attach-new&lt;br&gt;&lt;visual-state&gt; , a o org-attach-open&lt;br&gt;&lt;visual-state&gt; , a p org-download-clipboard&lt;br&gt;&lt;visual-state&gt; , a r org-attach-reveal&lt;br&gt;&lt;visual-state&gt; , a s org-attach-set-directory&lt;br&gt;&lt;visual-state&gt; , a u org-attach-url&lt;br&gt;&lt;br&gt;&lt;visual-state&gt; t p d org-priority-down&lt;br&gt;&lt;visual-state&gt; t p p org-priority&lt;br&gt;&lt;visual-state&gt; t p u org-priority-up&lt;br&gt;&lt;br&gt;&lt;visual-state&gt; t c c org-toggle-checkbox&lt;br&gt;&lt;visual-state&gt; t c u org-update-checkbox-count&lt;br&gt;&lt;br&gt;C-c n b a org-bibtex-create&lt;br&gt;C-c n b c org-bibtex-check-all&lt;br&gt;&lt;br&gt;C-c n r a org-roam-ref-add&lt;br&gt;C-c n r c org-ref-insert-cite-link&lt;br&gt;C-c n r d org-roam-ref-remove&lt;br&gt;C-c n r f org-roam-ref-find&lt;br&gt;C-c n r i org-ref-insert-link&lt;br&gt;C-c n r l org-ref-insert-label-link&lt;br&gt;&lt;br&gt;C-c C-v C-M-h org-babel-mark-block&lt;br&gt;&lt;br&gt;C-c C-x C-M-v org-redisplay-inline-images&lt;br&gt;C-c C-x M-w org-copy-special&lt;br&gt;&lt;br&gt;&lt;insert-state&gt; M-SPC m m D org-roam-demote-entire-buffer&lt;br&gt;&lt;insert-state&gt; M-SPC m m F org-roam-ref-find&lt;br&gt;&lt;insert-state&gt; M-SPC m m I org-id-get-create&lt;br&gt;&lt;insert-state&gt; M-SPC m m M org-roam-buffer-display-dedicated&lt;br&gt;&lt;insert-state&gt; M-SPC m m R org-roam-link-replace-all&lt;br&gt;&lt;insert-state&gt; M-SPC m m f org-roam-node-find&lt;br&gt;&lt;insert-state&gt; M-SPC m m g org-roam-graph&lt;br&gt;&lt;insert-state&gt; M-SPC m m i org-roam-node-insert&lt;br&gt;&lt;insert-state&gt; M-SPC m m m org-roam-buffer-toggle&lt;br&gt;&lt;insert-state&gt; M-SPC m m n org-roam-capture&lt;br&gt;&lt;insert-state&gt; M-SPC m m r org-roam-refile&lt;br&gt;&lt;br&gt;&lt;insert-state&gt; M-SPC m p d org-priority-down&lt;br&gt;&lt;insert-state&gt; M-SPC m p p org-priority&lt;br&gt;&lt;insert-state&gt; M-SPC m p u org-priority-up&lt;br&gt;&lt;br&gt;&lt;insert-state&gt; M-SPC m s A org-archive-subtree&lt;br&gt;&lt;insert-state&gt; M-SPC m s N widen&lt;br&gt;&lt;insert-state&gt; M-SPC m s S org-sort&lt;br&gt;&lt;insert-state&gt; M-SPC m s a org-toggle-archive-tag&lt;br&gt;&lt;insert-state&gt; M-SPC m s b org-tree-to-indirect-buffer&lt;br&gt;&lt;insert-state&gt; M-SPC m s c org-clone-subtree-with-time-shift&lt;br&gt;&lt;insert-state&gt; M-SPC m s d org-cut-subtree&lt;br&gt;&lt;insert-state&gt; M-SPC m s h org-promote-subtree&lt;br&gt;&lt;insert-state&gt; M-SPC m s j org-move-subtree-down&lt;br&gt;&lt;insert-state&gt; M-SPC m s k org-move-subtree-up&lt;br&gt;&lt;insert-state&gt; M-SPC m s l org-demote-subtree&lt;br&gt;&lt;insert-state&gt; M-SPC m s n org-narrow-to-subtree&lt;br&gt;&lt;insert-state&gt; M-SPC m s r org-refile&lt;br&gt;&lt;insert-state&gt; M-SPC m s s org-sparse-tree&lt;br&gt;&lt;br&gt;&lt;insert-state&gt; M-SPC m r . +org/refile-to-current-file&lt;br&gt;&lt;insert-state&gt; M-SPC m r O +org/refile-to-other-buffer&lt;br&gt;&lt;insert-state&gt; M-SPC m r c +org/refile-to-running-clock&lt;br&gt;&lt;insert-state&gt; M-SPC m r f +org/refile-to-file&lt;br&gt;&lt;insert-state&gt; M-SPC m r l +org/refile-to-last-location&lt;br&gt;&lt;insert-state&gt; M-SPC m r o +org/refile-to-other-window&lt;br&gt;&lt;insert-state&gt; M-SPC m r r org-refile&lt;br&gt;&lt;insert-state&gt; M-SPC m r v +org/refile-to-visible&lt;br&gt;&lt;br&gt;&lt;insert-state&gt; M-SPC m P P org-publish-current-project&lt;br&gt;&lt;insert-state&gt; M-SPC m P a org-publish-all&lt;br&gt;&lt;insert-state&gt; M-SPC m P f org-publish-current-file&lt;br&gt;&lt;insert-state&gt; M-SPC m P p org-publish&lt;br&gt;&lt;insert-state&gt; M-SPC m P s org-publish-sitemap&lt;br&gt;&lt;br&gt;&lt;insert-state&gt; M-SPC m l L org-insert-all-links&lt;br&gt;&lt;insert-state&gt; M-SPC m l S org-insert-last-stored-link&lt;br&gt;&lt;insert-state&gt; M-SPC m l c org-cliplink&lt;br&gt;&lt;insert-state&gt; M-SPC m l d +org/remove-link&lt;br&gt;&lt;insert-state&gt; M-SPC m l i org-id-store-link&lt;br&gt;&lt;insert-state&gt; M-SPC m l l org-insert-link&lt;br&gt;&lt;insert-state&gt; M-SPC m l s org-store-link&lt;br&gt;&lt;insert-state&gt; M-SPC m l t org-toggle-link-display&lt;br&gt;&lt;br&gt;&lt;insert-state&gt; M-SPC m g C [closure]&lt;br&gt;&lt;insert-state&gt; M-SPC m g G consult-org-agenda&lt;br&gt;&lt;insert-state&gt; M-SPC m g c org-clock-goto&lt;br&gt;&lt;insert-state&gt; M-SPC m g g consult-org-heading&lt;br&gt;&lt;insert-state&gt; M-SPC m g i org-id-goto&lt;br&gt;&lt;insert-state&gt; M-SPC m g r org-refile-goto-last-stored&lt;br&gt;&lt;insert-state&gt; M-SPC m g v +org/goto-visible&lt;br&gt;&lt;insert-state&gt; M-SPC m g x org-capture-goto-last-stored&lt;br&gt;&lt;br&gt;&lt;insert-state&gt; M-SPC m d T org-time-stamp-inactive&lt;br&gt;&lt;insert-state&gt; M-SPC m d d org-deadline&lt;br&gt;&lt;insert-state&gt; M-SPC m d s org-schedule&lt;br&gt;&lt;insert-state&gt; M-SPC m d t org-time-stamp&lt;br&gt;&lt;br&gt;&lt;insert-state&gt; M-SPC m c - org-clock-timestamps-down&lt;br&gt;&lt;insert-state&gt; M-SPC m c = org-clock-timestamps-up&lt;br&gt;&lt;insert-state&gt; M-SPC m c E org-set-effort&lt;br&gt;&lt;insert-state&gt; M-SPC m c G [closure]&lt;br&gt;&lt;insert-state&gt; M-SPC m c I org-clock-in-last&lt;br&gt;&lt;insert-state&gt; M-SPC m c R org-clock-report&lt;br&gt;&lt;insert-state&gt; M-SPC m c c org-clock-cancel&lt;br&gt;&lt;insert-state&gt; M-SPC m c d org-clock-mark-default-task&lt;br&gt;&lt;insert-state&gt; M-SPC m c e org-clock-modify-effort-estimate&lt;br&gt;&lt;insert-state&gt; M-SPC m c g org-clock-goto&lt;br&gt;&lt;insert-state&gt; M-SPC m c i org-clock-in&lt;br&gt;&lt;insert-state&gt; M-SPC m c l +org/toggle-last-clock&lt;br&gt;&lt;insert-state&gt; M-SPC m c o org-clock-out&lt;br&gt;&lt;insert-state&gt; M-SPC m c r org-resolve-clocks&lt;br&gt;&lt;insert-state&gt; M-SPC m c t org-evaluate-time-range&lt;br&gt;&lt;br&gt;&lt;insert-state&gt; M-SPC m b - org-table-insert-hline&lt;br&gt;&lt;insert-state&gt; M-SPC m b R org-table-recalculate-buffer-tables&lt;br&gt;&lt;insert-state&gt; M-SPC m b a org-table-align&lt;br&gt;&lt;insert-state&gt; M-SPC m b b org-table-blank-field&lt;br&gt;&lt;insert-state&gt; M-SPC m b c org-table-create-or-convert-from-region&lt;br&gt;&lt;insert-state&gt; M-SPC m b e org-table-edit-field&lt;br&gt;&lt;insert-state&gt; M-SPC m b f org-table-edit-formulas&lt;br&gt;&lt;insert-state&gt; M-SPC m b h org-table-field-info&lt;br&gt;&lt;insert-state&gt; M-SPC m b p org-plot/gnuplot&lt;br&gt;&lt;insert-state&gt; M-SPC m b r org-table-recalculate&lt;br&gt;&lt;insert-state&gt; M-SPC m b s org-table-sort-lines&lt;br&gt;&lt;br&gt;&lt;insert-state&gt; M-SPC m a D org-attach-delete-all&lt;br&gt;&lt;insert-state&gt; M-SPC m a O org-attach-open-in-emacs&lt;br&gt;&lt;insert-state&gt; M-SPC m a P org-download-yank&lt;br&gt;&lt;insert-state&gt; M-SPC m a R org-attach-reveal-in-emacs&lt;br&gt;&lt;insert-state&gt; M-SPC m a S org-attach-sync&lt;br&gt;&lt;insert-state&gt; M-SPC m a a org-attach&lt;br&gt;&lt;insert-state&gt; M-SPC m a c org-download-screenshot&lt;br&gt;&lt;insert-state&gt; M-SPC m a d org-attach-delete-one&lt;br&gt;&lt;insert-state&gt; M-SPC m a f +org/find-file-in-attachments&lt;br&gt;&lt;insert-state&gt; M-SPC m a l +org/attach-file-and-insert-link&lt;br&gt;&lt;insert-state&gt; M-SPC m a n org-attach-new&lt;br&gt;&lt;insert-state&gt; M-SPC m a o org-attach-open&lt;br&gt;&lt;insert-state&gt; M-SPC m a p org-download-clipboard&lt;br&gt;&lt;insert-state&gt; M-SPC m a r org-attach-reveal&lt;br&gt;&lt;insert-state&gt; M-SPC m a s org-attach-set-directory&lt;br&gt;&lt;insert-state&gt; M-SPC m a u org-attach-url&lt;br&gt;&lt;br&gt;&lt;emacs-state&gt; M-SPC m m D org-roam-demote-entire-buffer&lt;br&gt;&lt;emacs-state&gt; M-SPC m m F org-roam-ref-find&lt;br&gt;&lt;emacs-state&gt; M-SPC m m I org-id-get-create&lt;br&gt;&lt;emacs-state&gt; M-SPC m m M org-roam-buffer-display-dedicated&lt;br&gt;&lt;emacs-state&gt; M-SPC m m R org-roam-link-replace-all&lt;br&gt;&lt;emacs-state&gt; M-SPC m m f org-roam-node-find&lt;br&gt;&lt;emacs-state&gt; M-SPC m m g org-roam-graph&lt;br&gt;&lt;emacs-state&gt; M-SPC m m i org-roam-node-insert&lt;br&gt;&lt;emacs-state&gt; M-SPC m m m org-roam-buffer-toggle&lt;br&gt;&lt;emacs-state&gt; M-SPC m m n org-roam-capture&lt;br&gt;&lt;emacs-state&gt; M-SPC m m r org-roam-refile&lt;br&gt;&lt;br&gt;&lt;emacs-state&gt; M-SPC m p d org-priority-down&lt;br&gt;&lt;emacs-state&gt; M-SPC m p p org-priority&lt;br&gt;&lt;emacs-state&gt; M-SPC m p u org-priority-up&lt;br&gt;&lt;br&gt;&lt;emacs-state&gt; M-SPC m s A org-archive-subtree&lt;br&gt;&lt;emacs-state&gt; M-SPC m s N widen&lt;br&gt;&lt;emacs-state&gt; M-SPC m s S org-sort&lt;br&gt;&lt;emacs-state&gt; M-SPC m s a org-toggle-archive-tag&lt;br&gt;&lt;emacs-state&gt; M-SPC m s b org-tree-to-indirect-buffer&lt;br&gt;&lt;emacs-state&gt; M-SPC m s c org-clone-subtree-with-time-shift&lt;br&gt;&lt;emacs-state&gt; M-SPC m s d org-cut-subtree&lt;br&gt;&lt;emacs-state&gt; M-SPC m s h org-promote-subtree&lt;br&gt;&lt;emacs-state&gt; M-SPC m s j org-move-subtree-down&lt;br&gt;&lt;emacs-state&gt; M-SPC m s k org-move-subtree-up&lt;br&gt;&lt;emacs-state&gt; M-SPC m s l org-demote-subtree&lt;br&gt;&lt;emacs-state&gt; M-SPC m s n org-narrow-to-subtree&lt;br&gt;&lt;emacs-state&gt; M-SPC m s r org-refile&lt;br&gt;&lt;emacs-state&gt; M-SPC m s s org-sparse-tree&lt;br&gt;&lt;br&gt;&lt;emacs-state&gt; M-SPC m r . +org/refile-to-current-file&lt;br&gt;&lt;emacs-state&gt; M-SPC m r O +org/refile-to-other-buffer&lt;br&gt;&lt;emacs-state&gt; M-SPC m r c +org/refile-to-running-clock&lt;br&gt;&lt;emacs-state&gt; M-SPC m r f +org/refile-to-file&lt;br&gt;&lt;emacs-state&gt; M-SPC m r l +org/refile-to-last-location&lt;br&gt;&lt;emacs-state&gt; M-SPC m r o +org/refile-to-other-window&lt;br&gt;&lt;emacs-state&gt; M-SPC m r r org-refile&lt;br&gt;&lt;emacs-state&gt; M-SPC m r v +org/refile-to-visible&lt;br&gt;&lt;br&gt;&lt;emacs-state&gt; M-SPC m P P org-publish-current-project&lt;br&gt;&lt;emacs-state&gt; M-SPC m P a org-publish-all&lt;br&gt;&lt;emacs-state&gt; M-SPC m P f org-publish-current-file&lt;br&gt;&lt;emacs-state&gt; M-SPC m P p org-publish&lt;br&gt;&lt;emacs-state&gt; M-SPC m P s org-publish-sitemap&lt;br&gt;&lt;br&gt;&lt;emacs-state&gt; M-SPC m l L org-insert-all-links&lt;br&gt;&lt;emacs-state&gt; M-SPC m l S org-insert-last-stored-link&lt;br&gt;&lt;emacs-state&gt; M-SPC m l c org-cliplink&lt;br&gt;&lt;emacs-state&gt; M-SPC m l d +org/remove-link&lt;br&gt;&lt;emacs-state&gt; M-SPC m l i org-id-store-link&lt;br&gt;&lt;emacs-state&gt; M-SPC m l l org-insert-link&lt;br&gt;&lt;emacs-state&gt; M-SPC m l s org-store-link&lt;br&gt;&lt;emacs-state&gt; M-SPC m l t org-toggle-link-display&lt;br&gt;&lt;br&gt;&lt;emacs-state&gt; M-SPC m g C [closure]&lt;br&gt;&lt;emacs-state&gt; M-SPC m g G consult-org-agenda&lt;br&gt;&lt;emacs-state&gt; M-SPC m g c org-clock-goto&lt;br&gt;&lt;emacs-state&gt; M-SPC m g g consult-org-heading&lt;br&gt;&lt;emacs-state&gt; M-SPC m g i org-id-goto&lt;br&gt;&lt;emacs-state&gt; M-SPC m g r org-refile-goto-last-stored&lt;br&gt;&lt;emacs-state&gt; M-SPC m g v +org/goto-visible&lt;br&gt;&lt;emacs-state&gt; M-SPC m g x org-capture-goto-last-stored&lt;br&gt;&lt;br&gt;&lt;emacs-state&gt; M-SPC m d T org-time-stamp-inactive&lt;br&gt;&lt;emacs-state&gt; M-SPC m d d org-deadline&lt;br&gt;&lt;emacs-state&gt; M-SPC m d s org-schedule&lt;br&gt;&lt;emacs-state&gt; M-SPC m d t org-time-stamp&lt;br&gt;&lt;br&gt;&lt;emacs-state&gt; M-SPC m c - org-clock-timestamps-down&lt;br&gt;&lt;emacs-state&gt; M-SPC m c = org-clock-timestamps-up&lt;br&gt;&lt;emacs-state&gt; M-SPC m c E org-set-effort&lt;br&gt;&lt;emacs-state&gt; M-SPC m c G [closure]&lt;br&gt;&lt;emacs-state&gt; M-SPC m c I org-clock-in-last&lt;br&gt;&lt;emacs-state&gt; M-SPC m c R org-clock-report&lt;br&gt;&lt;emacs-state&gt; M-SPC m c c org-clock-cancel&lt;br&gt;&lt;emacs-state&gt; M-SPC m c d org-clock-mark-default-task&lt;br&gt;&lt;emacs-state&gt; M-SPC m c e org-clock-modify-effort-estimate&lt;br&gt;&lt;emacs-state&gt; M-SPC m c g org-clock-goto&lt;br&gt;&lt;emacs-state&gt; M-SPC m c i org-clock-in&lt;br&gt;&lt;emacs-state&gt; M-SPC m c l +org/toggle-last-clock&lt;br&gt;&lt;emacs-state&gt; M-SPC m c o org-clock-out&lt;br&gt;&lt;emacs-state&gt; M-SPC m c r org-resolve-clocks&lt;br&gt;&lt;emacs-state&gt; M-SPC m c t org-evaluate-time-range&lt;br&gt;&lt;br&gt;&lt;emacs-state&gt; M-SPC m b - org-table-insert-hline&lt;br&gt;&lt;emacs-state&gt; M-SPC m b R org-table-recalculate-buffer-tables&lt;br&gt;&lt;emacs-state&gt; M-SPC m b a org-table-align&lt;br&gt;&lt;emacs-state&gt; M-SPC m b b org-table-blank-field&lt;br&gt;&lt;emacs-state&gt; M-SPC m b c org-table-create-or-convert-from-region&lt;br&gt;&lt;emacs-state&gt; M-SPC m b e org-table-edit-field&lt;br&gt;&lt;emacs-state&gt; M-SPC m b f org-table-edit-formulas&lt;br&gt;&lt;emacs-state&gt; M-SPC m b h org-table-field-info&lt;br&gt;&lt;emacs-state&gt; M-SPC m b p org-plot/gnuplot&lt;br&gt;&lt;emacs-state&gt; M-SPC m b r org-table-recalculate&lt;br&gt;&lt;emacs-state&gt; M-SPC m b s org-table-sort-lines&lt;br&gt;&lt;br&gt;&lt;emacs-state&gt; M-SPC m a D org-attach-delete-all&lt;br&gt;&lt;emacs-state&gt; M-SPC m a O org-attach-open-in-emacs&lt;br&gt;&lt;emacs-state&gt; M-SPC m a P org-download-yank&lt;br&gt;&lt;emacs-state&gt; M-SPC m a R org-attach-reveal-in-emacs&lt;br&gt;&lt;emacs-state&gt; M-SPC m a S org-attach-sync&lt;br&gt;&lt;emacs-state&gt; M-SPC m a a org-attach&lt;br&gt;&lt;emacs-state&gt; M-SPC m a c org-download-screenshot&lt;br&gt;&lt;emacs-state&gt; M-SPC m a d org-attach-delete-one&lt;br&gt;&lt;emacs-state&gt; M-SPC m a f +org/find-file-in-attachments&lt;br&gt;&lt;emacs-state&gt; M-SPC m a l +org/attach-file-and-insert-link&lt;br&gt;&lt;emacs-state&gt; M-SPC m a n org-attach-new&lt;br&gt;&lt;emacs-state&gt; M-SPC m a o org-attach-open&lt;br&gt;&lt;emacs-state&gt; M-SPC m a p org-download-clipboard&lt;br&gt;&lt;emacs-state&gt; M-SPC m a r org-attach-reveal&lt;br&gt;&lt;emacs-state&gt; M-SPC m a s org-attach-set-directory&lt;br&gt;&lt;emacs-state&gt; M-SPC m a u org-attach-url&lt;br&gt;&lt;br&gt;&lt;motion-state&gt; , m o A org-roam-alias-remove&lt;br&gt;&lt;motion-state&gt; , m o R org-roam-ref-remove&lt;br&gt;&lt;motion-state&gt; , m o T org-roam-tag-remove&lt;br&gt;&lt;motion-state&gt; , m o a org-roam-alias-add&lt;br&gt;&lt;motion-state&gt; , m o r org-roam-ref-add&lt;br&gt;&lt;motion-state&gt; , m o t org-roam-tag-add&lt;br&gt;&lt;br&gt;&lt;motion-state&gt; , m d - org-roam-dailies-find-directory&lt;br&gt;&lt;motion-state&gt; , m d D org-roam-dailies-capture-date&lt;br&gt;&lt;motion-state&gt; , m d M org-roam-dailies-capture-tomorrow&lt;br&gt;&lt;motion-state&gt; , m d T org-roam-dailies-capture-today&lt;br&gt;&lt;motion-state&gt; , m d Y org-roam-dailies-capture-yesterday&lt;br&gt;&lt;motion-state&gt; , m d b org-roam-dailies-goto-previous-note&lt;br&gt;&lt;motion-state&gt; , m d d org-roam-dailies-goto-date&lt;br&gt;&lt;motion-state&gt; , m d f org-roam-dailies-goto-next-note&lt;br&gt;&lt;motion-state&gt; , m d m org-roam-dailies-goto-tomorrow&lt;br&gt;&lt;motion-state&gt; , m d n org-roam-dailies-capture-today&lt;br&gt;&lt;motion-state&gt; , m d t org-roam-dailies-goto-today&lt;br&gt;&lt;motion-state&gt; , m d y org-roam-dailies-goto-yesterday&lt;br&gt;&lt;br&gt;&lt;motion-state&gt; , b t f org-table-toggle-formula-debugger&lt;br&gt;&lt;motion-state&gt; , b t o org-table-toggle-coordinate-overlays&lt;br&gt;&lt;br&gt;&lt;motion-state&gt; , b i H org-table-hline-and-move&lt;br&gt;&lt;motion-state&gt; , b i c org-table-insert-column&lt;br&gt;&lt;motion-state&gt; , b i h org-table-insert-hline&lt;br&gt;&lt;motion-state&gt; , b i r org-table-insert-row&lt;br&gt;&lt;br&gt;&lt;motion-state&gt; , b d c org-table-delete-column&lt;br&gt;&lt;motion-state&gt; , b d r org-table-kill-row&lt;br&gt;&lt;br&gt;&lt;normal-state&gt; , m o A org-roam-alias-remove&lt;br&gt;&lt;normal-state&gt; , m o R org-roam-ref-remove&lt;br&gt;&lt;normal-state&gt; , m o T org-roam-tag-remove&lt;br&gt;&lt;normal-state&gt; , m o a org-roam-alias-add&lt;br&gt;&lt;normal-state&gt; , m o r org-roam-ref-add&lt;br&gt;&lt;normal-state&gt; , m o t org-roam-tag-add&lt;br&gt;&lt;br&gt;&lt;normal-state&gt; , m d - org-roam-dailies-find-directory&lt;br&gt;&lt;normal-state&gt; , m d D org-roam-dailies-capture-date&lt;br&gt;&lt;normal-state&gt; , m d M org-roam-dailies-capture-tomorrow&lt;br&gt;&lt;normal-state&gt; , m d T org-roam-dailies-capture-today&lt;br&gt;&lt;normal-state&gt; , m d Y org-roam-dailies-capture-yesterday&lt;br&gt;&lt;normal-state&gt; , m d b org-roam-dailies-goto-previous-note&lt;br&gt;&lt;normal-state&gt; , m d d org-roam-dailies-goto-date&lt;br&gt;&lt;normal-state&gt; , m d f org-roam-dailies-goto-next-note&lt;br&gt;&lt;normal-state&gt; , m d m org-roam-dailies-goto-tomorrow&lt;br&gt;&lt;normal-state&gt; , m d n org-roam-dailies-capture-today&lt;br&gt;&lt;normal-state&gt; , m d t org-roam-dailies-goto-today&lt;br&gt;&lt;normal-state&gt; , m d y org-roam-dailies-goto-yesterday&lt;br&gt;&lt;br&gt;&lt;normal-state&gt; , b t f org-table-toggle-formula-debugger&lt;br&gt;&lt;normal-state&gt; , b t o org-table-toggle-coordinate-overlays&lt;br&gt;&lt;br&gt;&lt;normal-state&gt; , b i H org-table-hline-and-move&lt;br&gt;&lt;normal-state&gt; , b i c org-table-insert-column&lt;br&gt;&lt;normal-state&gt; , b i h org-table-insert-hline&lt;br&gt;&lt;normal-state&gt; , b i r org-table-insert-row&lt;br&gt;&lt;br&gt;&lt;normal-state&gt; , b d c org-table-delete-column&lt;br&gt;&lt;normal-state&gt; , b d r org-table-kill-row&lt;br&gt;&lt;br&gt;&lt;visual-state&gt; , m o A org-roam-alias-remove&lt;br&gt;&lt;visual-state&gt; , m o R org-roam-ref-remove&lt;br&gt;&lt;visual-state&gt; , m o T org-roam-tag-remove&lt;br&gt;&lt;visual-state&gt; , m o a org-roam-alias-add&lt;br&gt;&lt;visual-state&gt; , m o r org-roam-ref-add&lt;br&gt;&lt;visual-state&gt; , m o t org-roam-tag-add&lt;br&gt;&lt;br&gt;&lt;visual-state&gt; , m d - org-roam-dailies-find-directory&lt;br&gt;&lt;visual-state&gt; , m d D org-roam-dailies-capture-date&lt;br&gt;&lt;visual-state&gt; , m d M org-roam-dailies-capture-tomorrow&lt;br&gt;&lt;visual-state&gt; , m d T org-roam-dailies-capture-today&lt;br&gt;&lt;visual-state&gt; , m d Y org-roam-dailies-capture-yesterday&lt;br&gt;&lt;visual-state&gt; , m d b org-roam-dailies-goto-previous-note&lt;br&gt;&lt;visual-state&gt; , m d d org-roam-dailies-goto-date&lt;br&gt;&lt;visual-state&gt; , m d f org-roam-dailies-goto-next-note&lt;br&gt;&lt;visual-state&gt; , m d m org-roam-dailies-goto-tomorrow&lt;br&gt;&lt;visual-state&gt; , m d n org-roam-dailies-capture-today&lt;br&gt;&lt;visual-state&gt; , m d t org-roam-dailies-goto-today&lt;br&gt;&lt;visual-state&gt; , m d y org-roam-dailies-goto-yesterday&lt;br&gt;&lt;br&gt;&lt;visual-state&gt; , b t f org-table-toggle-formula-debugger&lt;br&gt;&lt;visual-state&gt; , b t o org-table-toggle-coordinate-overlays&lt;br&gt;&lt;br&gt;&lt;visual-state&gt; , b i H org-table-hline-and-move&lt;br&gt;&lt;visual-state&gt; , b i c org-table-insert-column&lt;br&gt;&lt;visual-state&gt; , b i h org-table-insert-hline&lt;br&gt;&lt;visual-state&gt; , b i r org-table-insert-row&lt;br&gt;&lt;br&gt;&lt;visual-state&gt; , b d c org-table-delete-column&lt;br&gt;&lt;visual-state&gt; , b d r org-table-kill-row&lt;br&gt;&lt;br&gt;&lt;insert-state&gt; M-SPC m m o A org-roam-alias-remove&lt;br&gt;&lt;insert-state&gt; M-SPC m m o R org-roam-ref-remove&lt;br&gt;&lt;insert-state&gt; M-SPC m m o T org-roam-tag-remove&lt;br&gt;&lt;insert-state&gt; M-SPC m m o a org-roam-alias-add&lt;br&gt;&lt;insert-state&gt; M-SPC m m o r org-roam-ref-add&lt;br&gt;&lt;insert-state&gt; M-SPC m m o t org-roam-tag-add&lt;br&gt;&lt;br&gt;&lt;insert-state&gt; M-SPC m m d - org-roam-dailies-find-directory&lt;br&gt;&lt;insert-state&gt; M-SPC m m d D org-roam-dailies-capture-date&lt;br&gt;&lt;insert-state&gt; M-SPC m m d M org-roam-dailies-capture-tomorrow&lt;br&gt;&lt;insert-state&gt; M-SPC m m d T org-roam-dailies-capture-today&lt;br&gt;&lt;insert-state&gt; M-SPC m m d Y org-roam-dailies-capture-yesterday&lt;br&gt;&lt;insert-state&gt; M-SPC m m d b org-roam-dailies-goto-previous-note&lt;br&gt;&lt;insert-state&gt; M-SPC m m d d org-roam-dailies-goto-date&lt;br&gt;&lt;insert-state&gt; M-SPC m m d f org-roam-dailies-goto-next-note&lt;br&gt;&lt;insert-state&gt; M-SPC m m d m org-roam-dailies-goto-tomorrow&lt;br&gt;&lt;insert-state&gt; M-SPC m m d n org-roam-dailies-capture-today&lt;br&gt;&lt;insert-state&gt; M-SPC m m d t org-roam-dailies-goto-today&lt;br&gt;&lt;insert-state&gt; M-SPC m m d y org-roam-dailies-goto-yesterday&lt;br&gt;&lt;br&gt;&lt;insert-state&gt; M-SPC m b t f org-table-toggle-formula-debugger&lt;br&gt;&lt;insert-state&gt; M-SPC m b t o org-table-toggle-coordinate-overlays&lt;br&gt;&lt;br&gt;&lt;insert-state&gt; M-SPC m b i H org-table-hline-and-move&lt;br&gt;&lt;insert-state&gt; M-SPC m b i c org-table-insert-column&lt;br&gt;&lt;insert-state&gt; M-SPC m b i h org-table-insert-hline&lt;br&gt;&lt;insert-state&gt; M-SPC m b i r org-table-insert-row&lt;br&gt;&lt;br&gt;&lt;insert-state&gt; M-SPC m b d c org-table-delete-column&lt;br&gt;&lt;insert-state&gt; M-SPC m b d r org-table-kill-row&lt;br&gt;&lt;br&gt;&lt;emacs-state&gt; M-SPC m m o A org-roam-alias-remove&lt;br&gt;&lt;emacs-state&gt; M-SPC m m o R org-roam-ref-remove&lt;br&gt;&lt;emacs-state&gt; M-SPC m m o T org-roam-tag-remove&lt;br&gt;&lt;emacs-state&gt; M-SPC m m o a org-roam-alias-add&lt;br&gt;&lt;emacs-state&gt; M-SPC m m o r org-roam-ref-add&lt;br&gt;&lt;emacs-state&gt; M-SPC m m o t org-roam-tag-add&lt;br&gt;&lt;br&gt;&lt;emacs-state&gt; M-SPC m m d - org-roam-dailies-find-directory&lt;br&gt;&lt;emacs-state&gt; M-SPC m m d D org-roam-dailies-capture-date&lt;br&gt;&lt;emacs-state&gt; M-SPC m m d M org-roam-dailies-capture-tomorrow&lt;br&gt;&lt;emacs-state&gt; M-SPC m m d T org-roam-dailies-capture-today&lt;br&gt;&lt;emacs-state&gt; M-SPC m m d Y org-roam-dailies-capture-yesterday&lt;br&gt;&lt;emacs-state&gt; M-SPC m m d b org-roam-dailies-goto-previous-note&lt;br&gt;&lt;emacs-state&gt; M-SPC m m d d org-roam-dailies-goto-date&lt;br&gt;&lt;emacs-state&gt; M-SPC m m d f org-roam-dailies-goto-next-note&lt;br&gt;&lt;emacs-state&gt; M-SPC m m d m org-roam-dailies-goto-tomorrow&lt;br&gt;&lt;emacs-state&gt; M-SPC m m d n org-roam-dailies-capture-today&lt;br&gt;&lt;emacs-state&gt; M-SPC m m d t org-roam-dailies-goto-today&lt;br&gt;&lt;emacs-state&gt; M-SPC m m d y org-roam-dailies-goto-yesterday&lt;br&gt;&lt;br&gt;&lt;emacs-state&gt; M-SPC m b t f org-table-toggle-formula-debugger&lt;br&gt;&lt;emacs-state&gt; M-SPC m b t o org-table-toggle-coordinate-overlays&lt;br&gt;&lt;br&gt;&lt;emacs-state&gt; M-SPC m b i H org-table-hline-and-move&lt;br&gt;&lt;emacs-state&gt; M-SPC m b i c org-table-insert-column&lt;br&gt;&lt;emacs-state&gt; M-SPC m b i h org-table-insert-hline&lt;br&gt;&lt;emacs-state&gt; M-SPC m b i r org-table-insert-row&lt;br&gt;&lt;br&gt;&lt;emacs-state&gt; M-SPC m b d c org-table-delete-column&lt;br&gt;&lt;emacs-state&gt; M-SPC m b d r org-table-kill-row&lt;br&gt;&lt;br&gt;&lt;br&gt;In addition to any hooks its parent mode ‘outline-mode’ might have run, this&lt;br&gt;mode runs the hook ‘org-mode-hook’, as the final or penultimate step during&lt;br&gt;initialization.">
+      org-mode</abbr> + Github + Netlify 实现。</p>
+      <p><span style="color:#67c23a;">绿色标签，如： vue</span> 表示分类，可点击该
+      <span style="color:blue;">标签</span> 可快速新建一个该分类的 <abbr class=
+      "tooltip" title=
+      "zsh:1: command not found: wn&lt;br&gt;">Tab</abbr>
+      页，包含该分类下的所有文章。</p>
+      <p><span style="color:#409eff;">蓝色标签，如： setup</span>
+      表示文章标签(<span style=
+      "color:blue;">关键词</span>)，可通过点击它新建一个包含该<span style=
+      "color:blue;">关键词</span> 的所 有文章的 <abbr class="tooltip" title=
+      "zsh:1: command not found: wn&lt;br&gt;">tab</abbr> 页。</p>
+      <p>原博客地址： <a href=
+      "https://www.cheng92.com">https://www.cheng92.com</a>
+      (会逐步迁移到本站)</p>
     </div>
-  </body>
+    <div id="start"></div><br>
+    <br>
+    <div id="outline-container-org309de49" class="outline-2">
+      <h2 id="org309de49"><span class="section-number-2">1.</span>
+      <a href=
+      "documentations.html#ID-aa445529-4f0e-48d8-833f-12c149603ca6">
+      Documentations</a></h2>
+    </div>
+    <div id="outline-container-org9658dd0" class="outline-2">
+      <h2 id="org9658dd0"><span class="section-number-2">2.</span>
+      Emacs</h2>
+      <div class="outline-text-2" id="text-2"></div>
+      <div id="outline-container-orgcd81851" class="outline-3">
+        <h3 id="orgcd81851"><span class=
+        "section-number-3">2.1.</span> <span class=
+        "todo TODO">TODO</span> <a href=
+        "emacs_org_special_src_blocks.html#ID-82acaa2e-9913-4c5b-83d9-57ac24698449">
+        org-special-block-extras</a></h3>
+      </div>
+      <div id="outline-container-org6c60fb5" class="outline-3">
+        <h3 id="org6c60fb5"><span class=
+        "section-number-3">2.2.</span> <a href=
+        "readthedocs.html#ID-58f6b283-015f-476f-a515-de5e6083dd1d">readthedocs</a>&nbsp;&nbsp;&nbsp;<span class="tag"><span class="org">org</span>&nbsp;<span class="emacs">emacs</span></span></h3>
+      </div>
+      <div id="outline-container-orgc7eaff2" class="outline-3">
+        <h3 id="orgc7eaff2"><span class=
+        "section-number-3">2.3.</span> <a href=
+        "org_roam.html#ID-193fb17e-b4ea-4b4b-bc78-056815359664">org-roam</a></h3>
+      </div>
+      <div id="outline-container-org85ac4e7" class="outline-3">
+        <h3 id="org85ac4e7"><span class=
+        "section-number-3">2.4.</span> <a href=
+        "org_mode.html#ID-e2bc5e53-a5f7-4aed-b0b1-644183b2932e">org-mode</a></h3>
+      </div>
+    </div>
+    <div id="outline-container-org71013ce" class="outline-2">
+      <h2 id="org71013ce"><span class="section-number-2">3.</span>
+      Vue</h2>
+      <div class="outline-text-2" id="text-3"></div>
+      <div id="outline-container-org788e769" class="outline-3">
+        <h3 id="org788e769"><span class=
+        "section-number-3">3.1.</span> <span class=
+        "todo SOMEDAY">SOMEDAY</span> <a href=
+        "vue_changelog.html#ID-83dc97dc-8e1c-44b0-9254-dfecbb5a4629">
+        Vue ChangeLog</a></h3>
+      </div>
+      <div id="outline-container-org97530b9" class="outline-3">
+        <h3 id="org97530b9"><span class=
+        "section-number-3">3.2.</span> <span class=
+        "todo TODO">TODO</span> <a href=
+        "vue_script_setup.html#ID-1037e29e-a2c1-4a29-a346-1575d2ea6369">
+        vue script setup</a></h3>
+      </div>
+      <div id="outline-container-org695a83e" class="outline-3">
+        <h3 id="org695a83e"><span class=
+        "section-number-3">3.3.</span> <span class=
+        "done DONE">DONE</span> <a href=
+        "build_your_own_vue_reactivity.html#ID-f4fd05f7-cec7-46fd-8b58-c4c736b1a58c">
+        build your own vue reactivity</a></h3>
+        <div class="outline-text-3" id="text-3-3"></div>
+      </div>
+      <div id="outline-container-orgbc96150" class="outline-3">
+        <h3 id="orgbc96150"><span class=
+        "section-number-3">3.4.</span> <span class=
+        "done DONE">DONE</span></h3>
+        <div class="outline-text-3" id="text-3-4"></div>
+      </div>
+      <div id="outline-container-org5c6734b" class="outline-3">
+        <h3 id="org5c6734b"><span class=
+        "section-number-3">3.5.</span> <span class=
+        "todo TODO">TODO</span> <a href=
+        "build_your_own_runtime_core.html#ID-d0fc0f76-8429-429c-99a0-206792da22ad">
+        build your own runtime-core</a></h3>
+      </div>
+    </div>
+    <div id="outline-container-org6fe64d4" class="outline-2">
+      <h2 id="org6fe64d4"><span class="section-number-2">4.</span>
+      React</h2>
+      <div class="outline-text-2" id="text-4"></div>
+      <div id="outline-container-org2b28afc" class="outline-3">
+        <h3 id="org2b28afc"><span class=
+        "section-number-3">4.1.</span> <span class=
+        "todo TODO">TODO</span> <a href=
+        "build_your_own_react.html#ID-293eb7ed-0b86-4a5c-acc2-ea5b26e92326">
+        Build your own react</a></h3>
+      </div>
+    </div>
+    <div id="outline-container-org6ff8b9b" class="outline-2">
+      <h2 id="org6ff8b9b"><span class="section-number-2">5.</span>
+      JavaScript</h2>
+      <div class="outline-text-2" id="text-5"></div>
+      <div id="outline-container-org248896d" class="outline-3">
+        <h3 id="org248896d"><span class=
+        "section-number-3">5.1.</span> <span class=
+        "todo TODO">TODO</span> <a href=
+        "javascript_proxy_and_reflect.html#ID-cc2b98c6-21d9-488c-9a05-8485a36c1e01">
+        JavaScript Proxy And Reflect</a></h3>
+      </div>
+    </div>
+    <div id="outline-container-orgb1e7e65" class="outline-2">
+      <h2 id="orgb1e7e65"><span class="section-number-2">6.</span>
+      Shell Programming</h2>
+      <div class="outline-text-2" id="text-6"></div>
+      <div id="outline-container-org3da4932" class="outline-3">
+        <h3 id="org3da4932"><span class=
+        "section-number-3">6.1.</span> <span class=
+        "todo TODO">TODO</span> <a href=
+        "sed_command.html#ID-1a7e98ba-a7f1-4758-b3a0-6ee1e148a61d">sed
+        command</a></h3>
+      </div>
+      <div id="outline-container-org3d3ae7e" class="outline-3">
+        <h3 id="org3d3ae7e"><span class=
+        "section-number-3">6.2.</span> <span class=
+        "todo TODO">TODO</span> <a href=
+        "shell_basis.html#ID-a10d6fd1-893b-4ed4-967d-d57388ba6525">shell
+        basis</a></h3>
+      </div>
+    </div>
+    <div id="outline-container-orga9c4ede" class="outline-2">
+      <h2 id="orga9c4ede"><span class="section-number-2">7.</span>
+      怪谈杂物间</h2>
+      <div class="outline-text-2" id="text-7"></div>
+      <div id="outline-container-orgeb665e4" class="outline-3">
+        <h3 id="orgeb665e4"><span class=
+        "section-number-3">7.1.</span> <a href=
+        "collections.html#ID-95666e03-38b5-4ad4-b50f-ef40f6cc36d8">collections</a></h3>
+      </div>
+    </div>
+  </div>
+  <div id="postamble" class="status">
+    <p class="author">Author: Zhicheng Lee</p>
+    <p class="date">Created: 2022-04-18 Mon 14:52</p>
+  </div>
+</body>
 </html>
