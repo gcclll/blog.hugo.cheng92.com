@@ -8,8 +8,8 @@ import { switchTheme } from './switch'
 import { handleEvents } from './event'
 import './css/theme.my.scss'
 import './css/link.scss'
-import './css/block.scss';
-import './css/tooltip.scss';
+import './css/block.scss'
+import './css/tooltip.scss'
 import './css/global.scss'
 
 $(function () {
@@ -53,6 +53,12 @@ $(function () {
       `<img class="title-phone" src="/assets/img/phone.svg"/>`
     )
   }
+
+  // add createdAt & updatedAt
+  const { createdAt, updatedAt } = cached.currentPageStat
+  $(
+    `<p id="cuat"><span>创建于：${createdAt}</span><span>更新于：${updatedAt}</span></p>`
+  ).insertAfter('h1.title')
 
   // 修改 span 标记颜色
   $('span').each(function () {

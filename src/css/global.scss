@@ -3,6 +3,19 @@
   width: 316px !important;
 }
 
+// createdAt & updatedAt
+#cuat {
+  color: #8a8a8a;
+  font-size: 12px;
+  span {
+    margin-right: 1rem;
+  }
+}
+
+h1.title {
+  margin-bottom: 0.2em;
+}
+
 #content {
   overflow: auto;
   img.my-search-icon,

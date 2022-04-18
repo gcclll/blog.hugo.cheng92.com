@@ -10,6 +10,15 @@ const filename = location.pathname.replace(/.*\//g, '')
 const loadedMap = {}
 const path = '/assets/js/stats'
 
+const s = {
+  get(key) {
+    return window.localStorage.getItem(key)
+  },
+  set(key, val) {
+    return window.localStorage.getItem(key, val)
+  }
+}
+
 function allLoaded() {
   const loaded = _.keys(loadedMap).length === _.keys(window.$pages).length
   console.log('loaded=', loaded)
@@ -66,6 +75,7 @@ export const cached = {
   pages,
   loadPageStats,
   filename,
+  currentPageStat: window.$pages[filename] || {},
   current: [], // 本文
   whole: [] // 全站
 }
