@@ -12,3 +12,7 @@ div[id^='outline-container-'] a {
     background: none;
   }
 }
+
+a[data-fancybox='gallery'] {
+  background: none !important;
+}

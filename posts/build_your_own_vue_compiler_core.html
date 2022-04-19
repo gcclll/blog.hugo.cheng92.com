@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <!-- 2022-04-18 Mon 15:54 -->
+  <!-- 2022-04-18 Mon 17:05 -->
   <meta charset="utf-8">
   <meta name="viewport" content=
   "width=device-width, initial-scale=1">
@@ -212,6 +212,10 @@
   "/assets/js/lodash.min.js"></script>
   <script type="text/javascript" src=
   "/assets/js/readtheorg.js"></script>
+  <link rel="stylesheet" href="/assets/js/fancybox/fancybox.css"
+  type="text/css" media="screen">
+  <script type="text/javascript" src=
+  "/assets/js/fancybox/fancybox.umd.js"></script>
   <script type="text/javascript" src=
   "/assets/js/mobile-detect.min.js"></script>
   <script type="text/javascript" src=
@@ -280,13 +284,85 @@
 <body>
   <div id="content" class="content">
     <h1 class="title">build your own vue compiler-core</h1>
+    <div id="table-of-contents" role="doc-toc">
+      <h2>Table of Contents</h2>
+      <div id="text-table-of-contents" role="doc-toc">
+        <ul>
+          <li>
+            <a href="#org60aa79b">1. ast parser</a>
+          </li>
+          <li>
+            <a href="#orgafe90db">2. transform</a>
+          </li>
+          <li>
+            <a href="#org9bbb13b">3. codegen</a>
+          </li>
+        </ul>
+      </div>
+    </div>
     <p><a href="/"><img src=
     "https://img.shields.io/badge/GCCLL-Homepage-green?logo=gnu-emacs"></a></p>
-    <p>TODO compiler-core</p>
+    <div style=
+    "padding: 1em; background-color: #CCFFCC;border-radius: 15px; font-size: 0.9em; box-shadow: 0.05em 0.1em 5px 0.01em #00000057;">
+      <h3>Vue3 Compiler-core</h3>
+      <p>vue3 编译器核心模块 -&gt; <a href=
+      "https://github.com/vuejs/core/blob/main/packages/compiler-core/src/index.ts">
+      core/index.ts at main · vuejs/core</a></p>
+      <p><span style=
+      "color:green;">该模块主要实现将SFC文件编译成render函数，其实主要包含三个阶段</span></p>
+      <ol class="org-ol">
+        <li>ast parser 阶段, 将 SFC 中的 <code>&lt;template&gt;</code>
+        编译成 AST(抽象语法树)；</li>
+        <li>transform 阶段，对 ast 的加工处理，比如：处理
+        <code>for/if/on/bind</code> 等指令；</li>
+        <li>codegen 阶段，根据 ast 生成代码字符串，然后用 <code>new
+        Function(code)</code> 生成 <code>render</code> 函数；</li>
+      </ol>
+      <p>旧博客中的相关文章：</p>
+      <p><a href=
+      "https://www.cheng92.com/vue/vue3-source-code-compiler-core-parse_ts/">
+      Vue3.0 源码系列（二）编译器核心 - Compiler core 1: parse.ts -
+      若叶知秋</a></p>
+      <p><a href=
+      "https://www.cheng92.com/vue/vue3-source-code-compiler-core-ast_ts/">
+      Vue3.0 源码系列（二）编译器核心 - Compiler core 2: ast.ts - 若叶知秋</a></p>
+      <p><a href=
+      "https://www.cheng92.com/vue/vue3-source-code-compiler-core-compile_ts/">
+      Vue3.0 源码系列（二）编译器核心 - Compiler core 3: compile.ts -
+      若叶知秋</a></p>
+      <p><a href=
+      "https://www.cheng92.com/vue/vue-mind-map-house-cc/">Vue3
+      源码头脑风暴之☞compiler-core - 若叶知秋</a></p>
+      <p><a href=
+      "https://www.cheng92.com/vue/vue-mind-map-compiler-core-parser/">
+      Vue3 源码头脑风暴之 2 ☞compiler-core - ast parser - 若叶知秋</a></p>
+      <p><a href=
+      "https://www.cheng92.com/vue/vue-mind-map-compiler-core-transform-generate/">
+      Vue3 源码头脑风暴之 3 ☞compiler-core - transform + codegen -
+      若叶知秋</a></p>
+    </div><br>
+    <div id="outline-container-org60aa79b" class="outline-2">
+      <h2 id="org60aa79b"><span class="section-number-2">1.</span>
+      ast parser</h2>
+      <div class="outline-text-2" id="text-1">
+        <a href=
+        "../assets/img/vue3/compiler-core/compiler-core-parser.svg"
+        data-fancybox="gallery" data-caption="Preview"><img src=
+        "../assets/img/vue3/compiler-core/compiler-core-parser.svg"></a>
+      </div>
+    </div>
+    <div id="outline-container-orgafe90db" class="outline-2">
+      <h2 id="orgafe90db"><span class="section-number-2">2.</span>
+      transform</h2>
+    </div>
+    <div id="outline-container-org9bbb13b" class="outline-2">
+      <h2 id="org9bbb13b"><span class="section-number-2">3.</span>
+      codegen</h2>
+    </div>
   </div>
   <div id="postamble" class="status">
     <p class="author">Author: Zhicheng Lee</p>
-    <p class="date">Created: 2022-04-18 Mon 15:54</p>
+    <p class="date">Created: 2022-04-18 Mon 17:05</p>
   </div>
 </body>
 </html>
