@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <!-- 2022-03-14 Mon 17:46 -->
+  <!-- 2022-04-25 Mon 09:38 -->
   <meta charset="utf-8">
   <meta name="viewport" content=
   "width=device-width, initial-scale=1">
@@ -200,6 +200,8 @@
   "/assets/css/global.css">
   <link rel="stylesheet" type="text/css" href=
   "/assets/css/element-plus.css">
+  <link rel="icon" type="image/png" sizes="48x48" href=
+  "/favicon.ico">
   <script type="text/javascript" src=
   "/assets/js/jquery.min.js"></script>
   <script type="text/javascript" src=
@@ -210,6 +212,10 @@
   "/assets/js/lodash.min.js"></script>
   <script type="text/javascript" src=
   "/assets/js/readtheorg.js"></script>
+  <link rel="stylesheet" href="/assets/js/fancybox/fancybox.css"
+  type="text/css" media="screen">
+  <script type="text/javascript" src=
+  "/assets/js/fancybox/fancybox.umd.js"></script>
   <script type="text/javascript" src=
   "/assets/js/mobile-detect.min.js"></script>
   <script type="text/javascript" src=
@@ -220,9 +226,12 @@
   <script type="text/javascript" src=
   "/assets/js/dist/stats.js"></script>
   <script type="text/javascript" src=
+  "/assets/js/dist/apps.js"></script>
+  <script type="text/javascript" src=
   "/assets/js/dist/global.js"></script>
   <meta name="category" content="vue">
   <meta name="tags" content="CHANGELOG">
+  <meta name="createdAt" content="2022-03-02 09:37:20">
   <style>
         /* From: https://endlessparentheses.com/public/css/endless.css */
         /* See also: https://meta.superuser.com/questions/4788/css-for-the-new-kbd-style */
@@ -281,7 +290,7 @@
       <div id="text-table-of-contents" role="doc-toc">
         <ul>
           <li>
-            <a href="#org000b2fe">1. 3.2 All Important Changes</a>
+            <a href="#org10c3f97">1. 3.2 All Important Changes</a>
             <ul>
               <li>
                 <a href="#slot-args">1.1. [3.2.4]
@@ -292,7 +301,7 @@
                 被解析成了 <code>[object Object]</code> ?</a>
               </li>
               <li>
-                <a href="#org1e08537">1.3. <span class=
+                <a href="#orge9879ae">1.3. <span class=
                 "todo TODO">TODO</span> EffectScope ?</a>
               </li>
               <li>
@@ -310,226 +319,226 @@
             </ul>
           </li>
           <li>
-            <a href="#orgbf1fd6c">2. 3.2.23~29</a>
+            <a href="#org4868852">2. 3.2.23~29</a>
             <ul>
               <li>
-                <a href="#org0d8594f">2.1. Bug Fixes
+                <a href="#orgaed90bd">2.1. Bug Fixes
                 <code>[1/1]</code></a>
               </li>
               <li>
-                <a href="#orgcf1f1fd">2.2. Features
+                <a href="#org50262ed">2.2. Features
                 <code>[3/3]</code></a>
               </li>
             </ul>
           </li>
           <li>
-            <a href="#org69b0cf2">3. <span class=
+            <a href="#org58b9aef">3. <span class=
             "done DONE">DONE</span> 3.2.14~22 (2021-09-22 ~
             2021-11-15)</a>
             <ul>
               <li>
-                <a href="#org11cacda">3.1. Bug Fixes
+                <a href="#org86433b0">3.1. Bug Fixes
                 <code>[10/10]</code></a>
               </li>
               <li>
-                <a href="#org8235684">3.2. Features
+                <a href="#org9714dcd">3.2. Features
                 <code>[1/1]</code></a>
               </li>
             </ul>
           </li>
           <li>
-            <a href="#orgf1a6c64">4. 3.2.13</a>
+            <a href="#orgb10fd3c">4. 3.2.13</a>
             <ul>
               <li>
-                <a href="#org0bc3a11">4.1. Bug Fixes
+                <a href="#org6f11c6b">4.1. Bug Fixes
                 <code>[1/1]</code></a>
               </li>
             </ul>
           </li>
           <li>
-            <a href="#orgb8e0016">5. 3.2.12</a>
+            <a href="#org851a2cb">5. 3.2.12</a>
             <ul>
               <li>
-                <a href="#org5adedce">5.1. Bug Fixes
+                <a href="#org72c42d2">5.1. Bug Fixes
                 <code>[2/2]</code></a>
               </li>
             </ul>
           </li>
           <li>
-            <a href="#orgd241808">6. 3.2.4</a>
+            <a href="#orgb7888da">6. 3.2.4</a>
             <ul>
               <li>
-                <a href="#org5d842fc">6.1. Bug Fixes
+                <a href="#org2ed2006">6.1. Bug Fixes
                 <code>[1/1]</code></a>
               </li>
             </ul>
           </li>
           <li>
-            <a href="#orgaac4f5f">7. 3.2.0-beta.8</a>
+            <a href="#org702f874">7. 3.2.0-beta.8</a>
             <ul>
               <li>
-                <a href="#org3d1b971">7.1. Bug Fixes
+                <a href="#org0aa7adc">7.1. Bug Fixes
                 <code>[8/8]</code></a>
               </li>
               <li>
-                <a href="#org3e80a32">7.2. Features
+                <a href="#orgf681d67">7.2. Features
                 <code>[1/1]</code></a>
               </li>
             </ul>
           </li>
           <li>
-            <a href="#org6551e51">8. 3.2.0-beta.7</a>
+            <a href="#org952aaa5">8. 3.2.0-beta.7</a>
             <ul>
               <li>
-                <a href="#orgb94762b">8.1. Bug Fixes
+                <a href="#org664ef54">8.1. Bug Fixes
                 <code>[4/4]</code></a>
               </li>
               <li>
-                <a href="#orgfd55979">8.2. Features
+                <a href="#org7f0ad8a">8.2. Features
                 <code>[2/2]</code></a>
               </li>
             </ul>
           </li>
           <li>
-            <a href="#orgc290657">9. 3.2.0-beta.6</a>
+            <a href="#orgb20f919">9. 3.2.0-beta.6</a>
             <ul>
               <li>
-                <a href="#orgc99ae40">9.1. Bug Fixes
+                <a href="#org15090cf">9.1. Bug Fixes
                 <code>[3/3]</code></a>
               </li>
               <li>
-                <a href="#orgef54dbb">9.2. Features
+                <a href="#org1ea1f23">9.2. Features
                 <code>[1/1]</code></a>
               </li>
             </ul>
           </li>
           <li>
-            <a href="#org7039d9d">10. 3.2.0-beta.5</a>
+            <a href="#org5a25a7e">10. 3.2.0-beta.5</a>
             <ul>
               <li>
-                <a href="#orgb535c84">10.1. Bug Fixes
+                <a href="#org70229c1">10.1. Bug Fixes
                 <code>[4/4]</code></a>
               </li>
               <li>
-                <a href="#org0ff16a4">10.2. Features
+                <a href="#org3f3b7c6">10.2. Features
                 <code>[4/4]</code></a>
               </li>
             </ul>
           </li>
           <li>
-            <a href="#orge0e7de8">11. 3.2.0-beta.4</a>
+            <a href="#org1e9a0a4">11. 3.2.0-beta.4</a>
             <ul>
               <li>
-                <a href="#org309ba3b">11.1. Bug Fixes
+                <a href="#orgf97f5a1">11.1. Bug Fixes
                 <code>[2/2]</code></a>
               </li>
               <li>
-                <a href="#org33bf65b">11.2. Performance
+                <a href="#org050cc34">11.2. Performance
                 Improvements <code>[1/1]</code></a>
               </li>
             </ul>
           </li>
           <li>
-            <a href="#orgaa3ced8">12. 3.2.0-beta.3</a>
+            <a href="#orged70ccc">12. 3.2.0-beta.3</a>
             <ul>
               <li>
-                <a href="#orgd92aae5">12.1. Bug Fixes
+                <a href="#orgbc0654b">12.1. Bug Fixes
                 <code>[4/4]</code></a>
               </li>
               <li>
-                <a href="#org38f8435">12.2. Features
+                <a href="#orge393084">12.2. Features
                 <code>[2/2]</code></a>
               </li>
             </ul>
           </li>
           <li>
-            <a href="#org62cf55d">13. 3.2.0-beta.2</a>
+            <a href="#orgbc90303">13. 3.2.0-beta.2</a>
             <ul>
               <li>
-                <a href="#org632b1d2">13.1. Bug Fixes
+                <a href="#org36fb5f1">13.1. Bug Fixes
                 <code>[11/11]</code></a>
               </li>
               <li>
-                <a href="#org3b3a7ab">13.2. Features
+                <a href="#orgc0b3da0">13.2. Features
                 <code>[3/3]</code></a>
               </li>
               <li>
-                <a href="#org2065767">13.3. Performance
+                <a href="#orgb3ae176">13.3. Performance
                 Improvements <code>[1/1]</code></a>
               </li>
             </ul>
           </li>
           <li>
-            <a href="#org1572178">14. 3.2.0-beta.1</a>
+            <a href="#orge572534">14. 3.2.0-beta.1</a>
             <ul>
               <li>
-                <a href="#orge5e76ad">14.1. Code Refactoring(代码重构)
+                <a href="#org20a16be">14.1. Code Refactoring(代码重构)
                 <code>[1/1]</code></a>
               </li>
               <li>
-                <a href="#org5b5081d">14.2. Bug Fixes
+                <a href="#org241abd7">14.2. Bug Fixes
                 <code>[4/4]</code></a>
               </li>
               <li>
-                <a href="#org6ba2ce7">14.3. Features
+                <a href="#org90f900a">14.3. Features
                 <code>[10/10]</code></a>
               </li>
               <li>
-                <a href="#org8d8a413">14.4. Performance
+                <a href="#org4430a70">14.4. Performance
                 improvements <code>[7/7]</code></a>
               </li>
               <li>
-                <a href="#org86ed1df">14.5. Breaking Changes
+                <a href="#org0b016c7">14.5. Breaking Changes
                 <code>[1/1]</code></a>
               </li>
             </ul>
           </li>
           <li>
-            <a href="#orgcbf9c47">15. 小结</a>
+            <a href="#orgc86c776">15. 小结</a>
           </li>
           <li>
-            <a href="#org4ed0d58">16. 3.0.8</a>
+            <a href="#org1b7d020">16. 3.0.8</a>
             <ul>
               <li>
-                <a href="#orgb84366e">16.1. <span class=
+                <a href="#orge8bd725">16.1. <span class=
                 "done DONE">DONE</span> Performance Improvements
                 <code>[1/1]</code></a>
               </li>
             </ul>
           </li>
           <li>
-            <a href="#orgbfbaa56">17. 3.0.7</a>
+            <a href="#org160e344">17. 3.0.7</a>
             <ul>
               <li>
-                <a href="#org3e12a38">17.1. <span class=
+                <a href="#orgc86862b">17.1. <span class=
                 "done DONE">DONE</span> Bug Fixes
                 <code>[6/6]</code></a>
               </li>
               <li>
-                <a href="#org68bdaf9">17.2. <span class=
+                <a href="#org91184ef">17.2. <span class=
                 "done DONE">DONE</span> Performance Improvements
                 <code>[1/1]</code></a>
               </li>
             </ul>
           </li>
           <li>
-            <a href="#org610afca">18. 3.0.6</a>
+            <a href="#orga9c1682">18. 3.0.6</a>
             <ul>
               <li>
-                <a href="#orgbd70deb">18.1. Bug Fixes
+                <a href="#org311c691">18.1. Bug Fixes
                 <code>[3/3]</code></a>
               </li>
               <li>
-                <a href="#org83d73c0">18.2. Features
+                <a href="#org378e389">18.2. Features
                 <code>[1/1]</code></a>
               </li>
             </ul>
           </li>
           <li>
-            <a href="#orgf2e8503">19. 3.0.5</a>
+            <a href="#org05c7f76">19. 3.0.5</a>
             <ul>
               <li>
-                <a href="#orgc86f7da">19.1. <span class=
+                <a href="#org11a8296">19.1. <span class=
                 "done DONE">DONE</span> <b>Bug Fixes</b>
                 <code>[2/2]</code></a>
               </li>
@@ -555,8 +564,8 @@
       Vue3</abbr> 技术栈的开发。</p>
     </div><br>
     <br>
-    <div id="outline-container-org000b2fe" class="outline-2">
-      <h2 id="org000b2fe"><span class="section-number-2">1.</span>
+    <div id="outline-container-org10c3f97" class="outline-2">
+      <h2 id="org10c3f97"><span class="section-number-2">1.</span>
       3.2 All Important Changes</h2>
       <div class="outline-text-2" id="text-1">
         <ul class="org-ul">
@@ -1023,8 +1032,8 @@ export default {
           </div>
         </div>
       </div>
-      <div id="outline-container-org1e08537" class="outline-3">
-        <h3 id="org1e08537"><span class=
+      <div id="outline-container-orge9879ae" class="outline-3">
+        <h3 id="orge9879ae"><span class=
         "section-number-3">1.3.</span> <span class=
         "todo TODO">TODO</span> EffectScope ?</h3>
       </div>
@@ -1033,10 +1042,8 @@ export default {
         <h3 id="deferredComputed"><span class=
         "section-number-3">1.4.</span> deferredComputed</h3>
         <div class="outline-text-3" id="text-deferredComputed">
-          <div class="warn" id="orgf8344a9">
-            <p></p>
+          <div class="warn" id="orge44a0d5">
             <p><strong>WARNING</strong></p>
-            <p></p>
             <p>没有被暴露的 api ，只限 vue 内部 @vue/reactivity 使用。</p>
           </div>
           <div class="org-src-container">
@@ -1765,12 +1772,12 @@ _(<span class=
         </div>
       </div>
     </div>
-    <div id="outline-container-orgbf1fd6c" class="outline-2">
-      <h2 id="orgbf1fd6c"><span class="section-number-2">2.</span>
+    <div id="outline-container-org4868852" class="outline-2">
+      <h2 id="org4868852"><span class="section-number-2">2.</span>
       3.2.23~29</h2>
       <div class="outline-text-2" id="text-2"></div>
-      <div id="outline-container-org0d8594f" class="outline-3">
-        <h3 id="org0d8594f"><span class=
+      <div id="outline-container-orgaed90bd" class="outline-3">
+        <h3 id="orgaed90bd"><span class=
         "section-number-3">2.1.</span> Bug Fixes
         <code>[1/1]</code></h3>
         <div class="outline-text-3" id="text-2-1">
@@ -1811,8 +1818,8 @@ _(<span class=
           </ul>
         </div>
       </div>
-      <div id="outline-container-orgcf1f1fd" class="outline-3">
-        <h3 id="orgcf1f1fd"><span class=
+      <div id="outline-container-org50262ed" class="outline-3">
+        <h3 id="org50262ed"><span class=
         "section-number-3">2.2.</span> Features
         <code>[3/3]</code></h3>
         <div class="outline-text-3" id="text-2-2">
@@ -1906,16 +1913,16 @@ _(<span class=
         </div>
       </div>
     </div>
-    <div id="outline-container-org69b0cf2" class="outline-2">
-      <h2 id="org69b0cf2"><span class="section-number-2">3.</span>
+    <div id="outline-container-org58b9aef" class="outline-2">
+      <h2 id="org58b9aef"><span class="section-number-2">3.</span>
       <span class="done DONE">DONE</span> 3.2.14~22 (2021-09-22 ~
       2021-11-15)</h2>
       <div class="outline-text-2" id="text-3">
         <p>这段时间的更新还是以修复 bug 为主的，另外更新了一个主要的特性
         <code>defineProps</code> 支持解 构。</p>
       </div>
-      <div id="outline-container-org11cacda" class="outline-3">
-        <h3 id="org11cacda"><span class=
+      <div id="outline-container-org86433b0" class="outline-3">
+        <h3 id="org86433b0"><span class=
         "section-number-3">3.1.</span> Bug Fixes
         <code>[10/10]</code></h3>
         <div class="outline-text-3" id="text-3-1">
@@ -2182,8 +2189,8 @@ onMounted(()=&gt;{
           </ul>
         </div>
       </div>
-      <div id="outline-container-org8235684" class="outline-3">
-        <h3 id="org8235684"><span class=
+      <div id="outline-container-org9714dcd" class="outline-3">
+        <h3 id="org9714dcd"><span class=
         "section-number-3">3.2.</span> Features
         <code>[1/1]</code></h3>
         <div class="outline-text-3" id="text-3-2">
@@ -2204,12 +2211,12 @@ onMounted(()=&gt;{
         </div>
       </div>
     </div>
-    <div id="outline-container-orgf1a6c64" class="outline-2">
-      <h2 id="orgf1a6c64"><span class="section-number-2">4.</span>
+    <div id="outline-container-orgb10fd3c" class="outline-2">
+      <h2 id="orgb10fd3c"><span class="section-number-2">4.</span>
       3.2.13</h2>
       <div class="outline-text-2" id="text-4"></div>
-      <div id="outline-container-org0bc3a11" class="outline-3">
-        <h3 id="org0bc3a11"><span class=
+      <div id="outline-container-org6f11c6b" class="outline-3">
+        <h3 id="org6f11c6b"><span class=
         "section-number-3">4.1.</span> Bug Fixes
         <code>[1/1]</code></h3>
         <div class="outline-text-3" id="text-4-1">
@@ -2362,12 +2369,12 @@ onMounted(()=&gt;{
         </div>
       </div>
     </div>
-    <div id="outline-container-orgb8e0016" class="outline-2">
-      <h2 id="orgb8e0016"><span class="section-number-2">5.</span>
+    <div id="outline-container-org851a2cb" class="outline-2">
+      <h2 id="org851a2cb"><span class="section-number-2">5.</span>
       3.2.12</h2>
       <div class="outline-text-2" id="text-5"></div>
-      <div id="outline-container-org5adedce" class="outline-3">
-        <h3 id="org5adedce"><span class=
+      <div id="outline-container-org72c42d2" class="outline-3">
+        <h3 id="org72c42d2"><span class=
         "section-number-3">5.1.</span> Bug Fixes
         <code>[2/2]</code></h3>
         <div class="outline-text-3" id="text-5-1">
@@ -2401,12 +2408,12 @@ onMounted(()=&gt;{
         </div>
       </div>
     </div>
-    <div id="outline-container-orgd241808" class="outline-2">
-      <h2 id="orgd241808"><span class="section-number-2">6.</span>
+    <div id="outline-container-orgb7888da" class="outline-2">
+      <h2 id="orgb7888da"><span class="section-number-2">6.</span>
       3.2.4</h2>
       <div class="outline-text-2" id="text-6"></div>
-      <div id="outline-container-org5d842fc" class="outline-3">
-        <h3 id="org5d842fc"><span class=
+      <div id="outline-container-org2ed2006" class="outline-3">
+        <h3 id="org2ed2006"><span class=
         "section-number-3">6.1.</span> Bug Fixes
         <code>[1/1]</code></h3>
         <div class="outline-text-3" id="text-6-1">
@@ -2420,8 +2427,8 @@ onMounted(()=&gt;{
         </div>
       </div>
     </div>
-    <div id="outline-container-orgaac4f5f" class="outline-2">
-      <h2 id="orgaac4f5f"><span class="section-number-2">7.</span>
+    <div id="outline-container-org702f874" class="outline-2">
+      <h2 id="org702f874"><span class="section-number-2">7.</span>
       3.2.0-beta.8</h2>
       <div class="outline-text-2" id="text-7">
         <ul class="org-ul">
@@ -2433,8 +2440,8 @@ onMounted(()=&gt;{
           count]"/&gt;</code></li>
         </ul>
       </div>
-      <div id="outline-container-org3d1b971" class="outline-3">
-        <h3 id="org3d1b971"><span class=
+      <div id="outline-container-org0aa7adc" class="outline-3">
+        <h3 id="org0aa7adc"><span class=
         "section-number-3">7.1.</span> Bug Fixes
         <code>[8/8]</code></h3>
         <div class="outline-text-3" id="text-7-1">
@@ -2539,8 +2546,8 @@ onMounted(()=&gt;{
           </ul>
         </div>
       </div>
-      <div id="outline-container-org3e80a32" class="outline-3">
-        <h3 id="org3e80a32"><span class=
+      <div id="outline-container-orgf681d67" class="outline-3">
+        <h3 id="orgf681d67"><span class=
         "section-number-3">7.2.</span> Features
         <code>[1/1]</code></h3>
         <div class="outline-text-3" id="text-7-2">
@@ -2558,12 +2565,12 @@ onMounted(()=&gt;{
         </div>
       </div>
     </div>
-    <div id="outline-container-org6551e51" class="outline-2">
-      <h2 id="org6551e51"><span class="section-number-2">8.</span>
+    <div id="outline-container-org952aaa5" class="outline-2">
+      <h2 id="org952aaa5"><span class="section-number-2">8.</span>
       3.2.0-beta.7</h2>
       <div class="outline-text-2" id="text-8"></div>
-      <div id="outline-container-orgb94762b" class="outline-3">
-        <h3 id="orgb94762b"><span class=
+      <div id="outline-container-org664ef54" class="outline-3">
+        <h3 id="org664ef54"><span class=
         "section-number-3">8.1.</span> Bug Fixes
         <code>[4/4]</code></h3>
         <div class="outline-text-3" id="text-8-1">
@@ -2709,8 +2716,8 @@ onMounted(()=&gt;{
           </ul>
         </div>
       </div>
-      <div id="outline-container-orgfd55979" class="outline-3">
-        <h3 id="orgfd55979"><span class=
+      <div id="outline-container-org7f0ad8a" class="outline-3">
+        <h3 id="org7f0ad8a"><span class=
         "section-number-3">8.2.</span> Features
         <code>[2/2]</code></h3>
         <div class="outline-text-3" id="text-8-2">
@@ -3050,8 +3057,8 @@ onMounted(()=&gt;{
         </div>
       </div>
     </div>
-    <div id="outline-container-orgc290657" class="outline-2">
-      <h2 id="orgc290657"><span class="section-number-2">9.</span>
+    <div id="outline-container-orgb20f919" class="outline-2">
+      <h2 id="orgb20f919"><span class="section-number-2">9.</span>
       3.2.0-beta.6</h2>
       <div class="outline-text-2" id="text-9">
         <ul class="org-ul">
@@ -3059,8 +3066,8 @@ onMounted(()=&gt;{
           的时候要能自动 unref, provide + inject 实际上是原型链的实现</li>
         </ul>
       </div>
-      <div id="outline-container-orgc99ae40" class="outline-3">
-        <h3 id="orgc99ae40"><span class=
+      <div id="outline-container-org15090cf" class="outline-3">
+        <h3 id="org15090cf"><span class=
         "section-number-3">9.1.</span> Bug Fixes
         <code>[3/3]</code></h3>
         <div class="outline-text-3" id="text-9-1">
@@ -3296,8 +3303,8 @@ onMounted(()=&gt;{
           </ul>
         </div>
       </div>
-      <div id="outline-container-orgef54dbb" class="outline-3">
-        <h3 id="orgef54dbb"><span class=
+      <div id="outline-container-org1ea1f23" class="outline-3">
+        <h3 id="org1ea1f23"><span class=
         "section-number-3">9.2.</span> Features
         <code>[1/1]</code></h3>
         <div class="outline-text-3" id="text-9-2">
@@ -3341,12 +3348,12 @@ onMounted(()=&gt;{
         </div>
       </div>
     </div>
-    <div id="outline-container-org7039d9d" class="outline-2">
-      <h2 id="org7039d9d"><span class="section-number-2">10.</span>
+    <div id="outline-container-org5a25a7e" class="outline-2">
+      <h2 id="org5a25a7e"><span class="section-number-2">10.</span>
       3.2.0-beta.5</h2>
       <div class="outline-text-2" id="text-10"></div>
-      <div id="outline-container-orgb535c84" class="outline-3">
-        <h3 id="orgb535c84"><span class=
+      <div id="outline-container-org70229c1" class="outline-3">
+        <h3 id="org70229c1"><span class=
         "section-number-3">10.1.</span> Bug Fixes
         <code>[4/4]</code></h3>
         <div class="outline-text-3" id="text-10-1">
@@ -3396,8 +3403,8 @@ onMounted(()=&gt;{
           </ul>
         </div>
       </div>
-      <div id="outline-container-org0ff16a4" class="outline-3">
-        <h3 id="org0ff16a4"><span class=
+      <div id="outline-container-org3f3b7c6" class="outline-3">
+        <h3 id="org3f3b7c6"><span class=
         "section-number-3">10.2.</span> Features
         <code>[4/4]</code></h3>
         <div class="outline-text-3" id="text-10-2">
@@ -3746,12 +3753,12 @@ onMounted(()=&gt;{
         </div>
       </div>
     </div>
-    <div id="outline-container-orge0e7de8" class="outline-2">
-      <h2 id="orge0e7de8"><span class="section-number-2">11.</span>
+    <div id="outline-container-org1e9a0a4" class="outline-2">
+      <h2 id="org1e9a0a4"><span class="section-number-2">11.</span>
       3.2.0-beta.4</h2>
       <div class="outline-text-2" id="text-11"></div>
-      <div id="outline-container-org309ba3b" class="outline-3">
-        <h3 id="org309ba3b"><span class=
+      <div id="outline-container-orgf97f5a1" class="outline-3">
+        <h3 id="orgf97f5a1"><span class=
         "section-number-3">11.1.</span> Bug Fixes
         <code>[2/2]</code></h3>
         <div class="outline-text-3" id="text-11-1">
@@ -3787,8 +3794,8 @@ onMounted(()=&gt;{
           </ul>
         </div>
       </div>
-      <div id="outline-container-org33bf65b" class="outline-3">
-        <h3 id="org33bf65b"><span class=
+      <div id="outline-container-org050cc34" class="outline-3">
+        <h3 id="org050cc34"><span class=
         "section-number-3">11.2.</span> Performance Improvements
         <code>[1/1]</code></h3>
         <div class="outline-text-3" id="text-11-2">
@@ -3820,8 +3827,8 @@ onMounted(()=&gt;{
         </div>
       </div>
     </div>
-    <div id="outline-container-orgaa3ced8" class="outline-2">
-      <h2 id="orgaa3ced8"><span class="section-number-2">12.</span>
+    <div id="outline-container-orged70ccc" class="outline-2">
+      <h2 id="orged70ccc"><span class="section-number-2">12.</span>
       3.2.0-beta.3</h2>
       <div class="outline-text-2" id="text-12">
         <ul class="org-ul">
@@ -3842,8 +3849,8 @@ onMounted(()=&gt;{
           </li>
         </ul>
       </div>
-      <div id="outline-container-orgd92aae5" class="outline-3">
-        <h3 id="orgd92aae5"><span class=
+      <div id="outline-container-orgbc0654b" class="outline-3">
+        <h3 id="orgbc0654b"><span class=
         "section-number-3">12.1.</span> Bug Fixes
         <code>[4/4]</code></h3>
         <div class="outline-text-3" id="text-12-1">
@@ -3869,8 +3876,8 @@ onMounted(()=&gt;{
           </ul>
         </div>
       </div>
-      <div id="outline-container-org38f8435" class="outline-3">
-        <h3 id="org38f8435"><span class=
+      <div id="outline-container-orge393084" class="outline-3">
+        <h3 id="orge393084"><span class=
         "section-number-3">12.2.</span> Features
         <code>[2/2]</code></h3>
         <div class="outline-text-3" id="text-12-2">
@@ -4120,8 +4127,8 @@ nextTick().then(() =&gt; {
         </div>
       </div>
     </div>
-    <div id="outline-container-org62cf55d" class="outline-2">
-      <h2 id="org62cf55d"><span class="section-number-2">13.</span>
+    <div id="outline-container-orgbc90303" class="outline-2">
+      <h2 id="orgbc90303"><span class="section-number-2">13.</span>
       3.2.0-beta.2</h2>
       <div class="outline-text-2" id="text-13">
         <ol class="org-ol">
@@ -4137,8 +4144,8 @@ nextTick().then(() =&gt; {
           解构问题</li>
         </ol>
       </div>
-      <div id="outline-container-org632b1d2" class="outline-3">
-        <h3 id="org632b1d2"><span class=
+      <div id="outline-container-org36fb5f1" class="outline-3">
+        <h3 id="org36fb5f1"><span class=
         "section-number-3">13.1.</span> Bug Fixes
         <code>[11/11]</code></h3>
         <div class="outline-text-3" id="text-13-1">
@@ -4753,8 +4760,8 @@ _(<span class=
           </ul>
         </div>
       </div>
-      <div id="outline-container-org3b3a7ab" class="outline-3">
-        <h3 id="org3b3a7ab"><span class=
+      <div id="outline-container-orgc0b3da0" class="outline-3">
+        <h3 id="orgc0b3da0"><span class=
         "section-number-3">13.2.</span> Features
         <code>[3/3]</code></h3>
         <div class="outline-text-3" id="text-13-2">
@@ -4858,8 +4865,8 @@ _(<span class=
           </ul>
         </div>
       </div>
-      <div id="outline-container-org2065767" class="outline-3">
-        <h3 id="org2065767"><span class=
+      <div id="outline-container-orgb3ae176" class="outline-3">
+        <h3 id="orgb3ae176"><span class=
         "section-number-3">13.3.</span> Performance Improvements
         <code>[1/1]</code></h3>
         <div class="outline-text-3" id="text-13-3">
@@ -4979,8 +4986,8 @@ _(<span class="org-string">'empty tag'</span>, <span class=
         </div>
       </div>
     </div>
-    <div id="outline-container-org1572178" class="outline-2">
-      <h2 id="org1572178"><span class="section-number-2">14.</span>
+    <div id="outline-container-orge572534" class="outline-2">
+      <h2 id="orge572534"><span class="section-number-2">14.</span>
       3.2.0-beta.1</h2>
       <div class="outline-text-2" id="text-14">
         <ol class="org-ol">
@@ -5042,8 +5049,8 @@ _(<span class="org-string">'empty tag'</span>, <span class=
           不再是函数，而是一个 <code>ReactiveEffect</code> 实例对象。</li>
         </ol>
       </div>
-      <div id="outline-container-orge5e76ad" class="outline-3">
-        <h3 id="orge5e76ad"><span class=
+      <div id="outline-container-org20a16be" class="outline-3">
+        <h3 id="org20a16be"><span class=
         "section-number-3">14.1.</span> Code Refactoring(代码重构)
         <code>[1/1]</code></h3>
         <div class="outline-text-3" id="text-14-1">
@@ -5064,8 +5071,8 @@ _(<span class="org-string">'empty tag'</span>, <span class=
           </ul>
         </div>
       </div>
-      <div id="outline-container-org5b5081d" class="outline-3">
-        <h3 id="org5b5081d"><span class=
+      <div id="outline-container-org241abd7" class="outline-3">
+        <h3 id="org241abd7"><span class=
         "section-number-3">14.2.</span> Bug Fixes
         <code>[4/4]</code></h3>
         <div class="outline-text-3" id="text-14-2">
@@ -5207,8 +5214,8 @@ _(<span class="org-string">'empty tag'</span>, <span class=
           </ul>
         </div>
       </div>
-      <div id="outline-container-org6ba2ce7" class="outline-3">
-        <h3 id="org6ba2ce7"><span class=
+      <div id="outline-container-org90f900a" class="outline-3">
+        <h3 id="org90f900a"><span class=
         "section-number-3">14.3.</span> Features
         <code>[10/10]</code></h3>
         <div class="outline-text-3" id="text-14-3">
@@ -5886,8 +5893,8 @@ console.log(<span class="org-string">'c.value = '</span> + c.value)
           </ul>
         </div>
       </div>
-      <div id="outline-container-org8d8a413" class="outline-3">
-        <h3 id="org8d8a413"><span class=
+      <div id="outline-container-org4430a70" class="outline-3">
+        <h3 id="org4430a70"><span class=
         "section-number-3">14.4.</span> Performance improvements
         <code>[7/7]</code></h3>
         <div class="outline-text-3" id="text-14-4">
@@ -6540,8 +6547,8 @@ test(<span class="org-string">'as block'</span>, <span class=
           </ul>
         </div>
       </div>
-      <div id="outline-container-org86ed1df" class="outline-3">
-        <h3 id="org86ed1df"><span class=
+      <div id="outline-container-org0b016c7" class="outline-3">
+        <h3 id="org0b016c7"><span class=
         "section-number-3">14.5.</span> Breaking Changes
         <code>[1/1]</code></h3>
         <div class="outline-text-3" id="text-14-5">
@@ -6553,8 +6560,8 @@ test(<span class="org-string">'as block'</span>, <span class=
         </div>
       </div>
     </div>
-    <div id="outline-container-orgcbf9c47" class="outline-2">
-      <h2 id="orgcbf9c47"><span class="section-number-2">15.</span>
+    <div id="outline-container-orgc86c776" class="outline-2">
+      <h2 id="orgc86c776"><span class="section-number-2">15.</span>
       小结</h2>
       <div class="outline-text-2" id="text-15">
         <p>3.2 更新重点摘要：</p>
@@ -6568,8 +6575,8 @@ test(<span class="org-string">'as block'</span>, <span class=
         </ol>
       </div>
     </div>
-    <div id="outline-container-org4ed0d58" class="outline-2">
-      <h2 id="org4ed0d58"><span class="section-number-2">16.</span>
+    <div id="outline-container-org1b7d020" class="outline-2">
+      <h2 id="org1b7d020"><span class="section-number-2">16.</span>
       3.0.8</h2>
       <div class="outline-text-2" id="text-16">
         <ol class="org-ol">
@@ -6586,8 +6593,8 @@ test(<span class="org-string">'as block'</span>, <span class=
           </li>
         </ol>
       </div>
-      <div id="outline-container-orgb84366e" class="outline-3">
-        <h3 id="orgb84366e"><span class=
+      <div id="outline-container-orge8bd725" class="outline-3">
+        <h3 id="orge8bd725"><span class=
         "section-number-3">16.1.</span> <span class=
         "done DONE">DONE</span> Performance Improvements
         <code>[1/1]</code></h3>
@@ -6688,8 +6695,8 @@ console.log(code)
         </div>
       </div>
     </div>
-    <div id="outline-container-orgbfbaa56" class="outline-2">
-      <h2 id="orgbfbaa56"><span class="section-number-2">17.</span>
+    <div id="outline-container-org160e344" class="outline-2">
+      <h2 id="org160e344"><span class="section-number-2">17.</span>
       3.0.7</h2>
       <div class="outline-text-2" id="text-17">
         <ol class="org-ol">
@@ -6730,8 +6737,8 @@ console.log(code)
           </li>
         </ol>
       </div>
-      <div id="outline-container-org3e12a38" class="outline-3">
-        <h3 id="org3e12a38"><span class=
+      <div id="outline-container-orgc86862b" class="outline-3">
+        <h3 id="orgc86862b"><span class=
         "section-number-3">17.1.</span> <span class=
         "done DONE">DONE</span> Bug Fixes <code>[6/6]</code></h3>
         <div class="outline-text-3" id="text-17-1">
@@ -6780,7 +6787,7 @@ console.log(<span class="org-string">'------ end ------ '</span>);
 </pre>
               </div>
               <p><span style="color:blue;">+RESULTS</span>:</p>
-              <pre class="example" id="org7ad0010">
+              <pre class="example" id="org348343d">
   &gt; 1. comments
 
   // export default
@@ -6995,8 +7002,8 @@ console.log(<span class="org-string">'------ end ------ '</span>);
           </ul>
         </div>
       </div>
-      <div id="outline-container-org68bdaf9" class="outline-3">
-        <h3 id="org68bdaf9"><span class=
+      <div id="outline-container-org91184ef" class="outline-3">
+        <h3 id="org91184ef"><span class=
         "section-number-3">17.2.</span> <span class=
         "done DONE">DONE</span> Performance Improvements
         <code>[1/1]</code></h3>
@@ -7038,8 +7045,8 @@ console.log(<span class="org-string">'------ end ------ '</span>);
         </div>
       </div>
     </div>
-    <div id="outline-container-org610afca" class="outline-2">
-      <h2 id="org610afca"><span class="section-number-2">18.</span>
+    <div id="outline-container-orga9c1682" class="outline-2">
+      <h2 id="orga9c1682"><span class="section-number-2">18.</span>
       3.0.6</h2>
       <div class="outline-text-2" id="text-18">
         <p>此次更新重点内容(值得关注的点)：</p>
@@ -7093,8 +7100,8 @@ console.log(<span class="org-string">'------ end ------ '</span>);
           </li>
         </ol>
       </div>
-      <div id="outline-container-orgbd70deb" class="outline-3">
-        <h3 id="orgbd70deb"><span class=
+      <div id="outline-container-org311c691" class="outline-3">
+        <h3 id="org311c691"><span class=
         "section-number-3">18.1.</span> Bug Fixes
         <code>[3/3]</code></h3>
         <div class="outline-text-3" id="text-18-1">
@@ -7301,8 +7308,8 @@ false
           </ul>
         </div>
       </div>
-      <div id="outline-container-org83d73c0" class="outline-3">
-        <h3 id="org83d73c0"><span class=
+      <div id="outline-container-org378e389" class="outline-3">
+        <h3 id="org378e389"><span class=
         "section-number-3">18.2.</span> Features
         <code>[1/1]</code></h3>
         <div class="outline-text-3" id="text-18-2">
@@ -7363,12 +7370,12 @@ console.log(s(root))
         </div>
       </div>
     </div>
-    <div id="outline-container-orgf2e8503" class="outline-2">
-      <h2 id="orgf2e8503"><span class="section-number-2">19.</span>
+    <div id="outline-container-org05c7f76" class="outline-2">
+      <h2 id="org05c7f76"><span class="section-number-2">19.</span>
       3.0.5</h2>
       <div class="outline-text-2" id="text-19"></div>
-      <div id="outline-container-orgc86f7da" class="outline-3">
-        <h3 id="orgc86f7da"><span class=
+      <div id="outline-container-org11a8296" class="outline-3">
+        <h3 id="org11a8296"><span class=
         "section-number-3">19.1.</span> <span class=
         "done DONE">DONE</span> <b>Bug Fixes</b>
         <code>[2/2]</code></h3>
@@ -7495,7 +7502,7 @@ console.log(s(root))
   </div>
   <div id="postamble" class="status">
     <p class="author">Author: Zhicheng Lee</p>
-    <p class="date">Created: 2022-03-14 Mon 17:46</p>
+    <p class="date">Created: 2022-04-25 Mon 09:38</p>
   </div>
 </body>
 </html>

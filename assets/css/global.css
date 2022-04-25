@@ -124,6 +124,19 @@ strong {
   color: #a020f0;
 }
 
+div[id^=outline-container-] a {
+  font-family: "EB Garamond";
+  text-decoration: none;
+  background: linear-gradient(to bottom, transparent 70%, rgba(49, 184, 204, 0.5) 70%);
+}
+div[id^=outline-container-] a.footref, div[id^=outline-container-] a.coderef {
+  background: none;
+}
+
+a[data-fancybox=gallery] {
+  background: none !important;
+}
+
 #table-of-contents {
   width: 316px !important;
 }
@@ -426,19 +439,6 @@ blockquote {
     width: 100% !important;
   }
 }
-div[id^=outline-container-] a {
-  font-family: "EB Garamond";
-  text-decoration: none;
-  background: linear-gradient(to bottom, transparent 70%, rgba(49, 184, 204, 0.5) 70%);
-}
-div[id^=outline-container-] a.footref, div[id^=outline-container-] a.coderef {
-  background: none;
-}
-
-a[data-fancybox=gallery] {
-  background: none !important;
-}
-
 .post-content .warn-block {
   padding: 0.1rem 1.5rem;
   border-left-width: 0.5rem;

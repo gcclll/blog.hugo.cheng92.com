@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <!-- 2022-03-10 Thu 11:36 -->
+  <!-- 2022-04-25 Mon 09:38 -->
   <meta charset="utf-8">
   <meta name="viewport" content=
   "width=device-width, initial-scale=1">
@@ -192,48 +192,46 @@
     { background-color: #ffff00; color: #000000; font-weight: bold; }
   .org-svg { width: 90%; }
   </style>
-  <link rel="stylesheet" href=
-  "https://cdn.jsdelivr.net/npm/bootstrap@3.4.1/dist/css/bootstrap.min.css"
-  integrity=
-  "sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu"
-  crossorigin="anonymous">
-  <link rel="stylesheet" href=
-  "https://cdn.jsdelivr.net/npm/bootstrap@3.4.1/dist/css/bootstrap-theme.min.css"
-  integrity=
-  "sha384-6pzBo3FDv/PJ8r2KRkGHifhEocL+1X2rVCTTkUfGk7/0pbek5mMa1upzvWbrUbOZ"
-  crossorigin="anonymous">
   <link rel="stylesheet" type="text/css" href=
-  "https://fniessen.github.io/org-html-themes/src/readtheorg_theme/css/htmlize.css">
+  "/assets/css/htmlize.css">
   <link rel="stylesheet" type="text/css" href=
-  "https://fniessen.github.io/org-html-themes/src/readtheorg_theme/css/readtheorg.css">
+  "/assets/css/readtheorg.css">
   <link rel="stylesheet" type="text/css" href=
   "/assets/css/global.css">
-  <link rel="stylesheet" href=
-  "//unpkg.com/element-plus/dist/index.css">
-  <script src=
-  "https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
-  <script src=
-  "https://cdn.jsdelivr.net/npm/bootstrap@3.4.1/dist/js/bootstrap.min.js"
-  integrity=
-  "sha384-aJ21OjlMXNL5UyIl/XNwTMqvzeRMZH2w8c5cRVpzpU8Y5bApTppSuUkhZXN0VxHd"
-  crossorigin="anonymous"></script>
-  <script src=
-  "https://cdn.jsdelivr.net/npm/lodash@4.17.21/lodash.min.js"></script>
-  <script src=
-  "https://cdnjs.cloudflare.com/ajax/libs/mobile-detect/1.4.5/mobile-detect.min.js"></script>
-  <script src='//unpkg.com/valine/dist/Valine.min.js'></script>
-  <script src="//unpkg.com/vue@next"></script>
-  <script src="//unpkg.com/element-plus"></script>
+  <link rel="stylesheet" type="text/css" href=
+  "/assets/css/element-plus.css">
+  <link rel="icon" type="image/png" sizes="48x48" href=
+  "/favicon.ico">
   <script type="text/javascript" src=
-  "https://fniessen.github.io/org-html-themes/src/lib/js/jquery.stickytableheaders.min.js"></script>
+  "/assets/js/jquery.min.js"></script>
   <script type="text/javascript" src=
-  "https://fniessen.github.io/org-html-themes/src/readtheorg_theme/js/readtheorg.js"></script>
+  "/assets/js/jquery.stickytableheaders.min.js"></script>
+  <script type="text/javascript" src=
+  "/assets/js/bootstrap.min.js"></script>
+  <script type="text/javascript" src=
+  "/assets/js/lodash.min.js"></script>
+  <script type="text/javascript" src=
+  "/assets/js/readtheorg.js"></script>
+  <link rel="stylesheet" href="/assets/js/fancybox/fancybox.css"
+  type="text/css" media="screen">
+  <script type="text/javascript" src=
+  "/assets/js/fancybox/fancybox.umd.js"></script>
+  <script type="text/javascript" src=
+  "/assets/js/mobile-detect.min.js"></script>
+  <script type="text/javascript" src=
+  "/assets/js/Valine.min.js"></script>
+  <script type="text/javascript" src="/assets/js/vue.js"></script>
+  <script type="text/javascript" src=
+  "/assets/js/element-plus.js"></script>
   <script type="text/javascript" src=
   "/assets/js/dist/stats.js"></script>
+  <script type="text/javascript" src=
+  "/assets/js/dist/apps.js"></script>
   <script type="text/javascript" src=
   "/assets/js/dist/global.js"></script>
   <meta name="category" content="vue">
   <meta name="tags" content="setup">
+  <meta name="createdAt" content="2022-03-02 09:38:36">
   <style>
         /* From: https://endlessparentheses.com/public/css/endless.css */
         /* See also: https://meta.superuser.com/questions/4788/css-for-the-new-kbd-style */
@@ -292,15 +290,15 @@
       <div id="text-table-of-contents" role="doc-toc">
         <ul>
           <li>
-            <a href="#org8230052">1. 说明</a>
+            <a href="#orgf0df572">1. 说明</a>
           </li>
         </ul>
       </div>
     </div>
     <p><a href="/"><img src=
     "https://img.shields.io/badge/GCCLL-Homepage-green?logo=gnu-emacs"></a></p>
-    <div id="outline-container-org8230052" class="outline-2">
-      <h2 id="org8230052"><span class="section-number-2">1.</span>
+    <div id="outline-container-orgf0df572" class="outline-2">
+      <h2 id="orgf0df572"><span class="section-number-2">1.</span>
       说明</h2>
       <div class="outline-text-2" id="text-1">
         <p>涉及的源码包： <a href=
@@ -316,25 +314,25 @@
         "https://babeljs.io/docs/en/babel-parser">@babel/parser-&gt;parse</a>
         解析出 AST</p>
         <div class="org-src-container">
-          <pre class="src src-js"><span style=
-          "color: #51afef;">const</span> { parse } = require(process.env.HOME+<span style="color: #98be65;">'/.nlib/@babel/parser'</span>)
+          <pre class="src src-js"><span class=
+          "org-keyword">const</span> { parse } = require(process.env.HOME+<span class="org-string">'/.nlib/@babel/parser'</span>)
 
-<span style="color: #51afef;">const</span> <span style=
-"color: #dcaeea;">ast</span> = parse(<span style=
-"color: #98be65;">`</span>
-<span style="color: #98be65;">const foo = 100, bar = 200;</span>
-<span style="color: #98be65;">function baz() {</span>
-<span style="color: #98be65;">  console.log(foo + bar)</span>
-<span style="color: #98be65;">}</span>
-<span style="color: #98be65;">`</span>)
-<span style="color: #51afef;">const</span> <span style=
-"color: #dcaeea;">program</span> = ast.program
-console.log(<span style=
-"color: #98be65;">'&gt;&gt;&gt; foo 变量声明 AST\n'</span>, program.body[<span style="color: #da8548; font-weight: bold;">0</span>].declarations[<span style="color: #da8548; font-weight: bold;">0</span>]);
-<span style="color: #5B6268;">// </span><span style=
-"color: #5B6268;">console.log('&gt;&gt;&gt; bar 变量声明 AST\n', program.body[0].declarations[1]);</span>
-console.log(<span style=
-"color: #98be65;">'&gt;&gt;&gt; baz 函数声明 AST\n'</span>, program.body[<span style="color: #da8548; font-weight: bold;">1</span>]);
+<span class="org-keyword">const</span> <span class=
+"org-variable-name">ast</span> = parse(<span class=
+"org-string">`</span>
+<span class="org-string">const foo = 100, bar = 200;</span>
+<span class="org-string">function baz() {</span>
+<span class="org-string">  console.log(foo + bar)</span>
+<span class="org-string">}</span>
+<span class="org-string">`</span>)
+<span class="org-keyword">const</span> <span class=
+"org-variable-name">program</span> = ast.program
+console.log(<span class=
+"org-string">'&gt;&gt;&gt; foo 变量声明 AST\n'</span>, program.body[<span class="org-highlight-numbers-number">0</span>].declarations[<span class="org-highlight-numbers-number">0</span>]);
+<span class="org-comment-delimiter">// </span><span class=
+"org-comment">console.log('&gt;&gt;&gt; bar 变量声明 AST\n', program.body[0].declarations[1]);</span>
+console.log(<span class=
+"org-string">'&gt;&gt;&gt; baz 函数声明 AST\n'</span>, program.body[<span class="org-highlight-numbers-number">1</span>]);
 </pre>
         </div>
         <details class="code-details" style=
@@ -346,109 +344,97 @@ console.log(<span style=
           <div class="org-src-container">
             <pre class="src src-js">&gt;&gt;&gt; foo 变量声明 AST
  Node {
-  type: <span style="color: #98be65;">'VariableDeclarator'</span>,
-  start: <span style="color: #da8548; font-weight: bold;">7</span>,
-  end: <span style="color: #da8548; font-weight: bold;">16</span>,
+  type: <span class="org-string">'VariableDeclarator'</span>,
+  start: <span class="org-highlight-numbers-number">7</span>,
+  end: <span class="org-highlight-numbers-number">16</span>,
   loc: SourceLocation {
-    start: Position { line: <span style=
-"color: #da8548; font-weight: bold;">2</span>, column: <span style=
-"color: #da8548; font-weight: bold;">6</span>, index: <span style=
-"color: #da8548; font-weight: bold;">7</span> },
-    end: Position { line: <span style=
-"color: #da8548; font-weight: bold;">2</span>, column: <span style=
-"color: #da8548; font-weight: bold;">15</span>, index: <span style=
-"color: #da8548; font-weight: bold;">16</span> },
-    filename: <span style="color: #a9a1e1;">undefined</span>,
-    identifierName: <span style="color: #a9a1e1;">undefined</span>
+    start: Position { line: <span class=
+"org-highlight-numbers-number">2</span>, column: <span class=
+"org-highlight-numbers-number">6</span>, index: <span class=
+"org-highlight-numbers-number">7</span> },
+    end: Position { line: <span class=
+"org-highlight-numbers-number">2</span>, column: <span class=
+"org-highlight-numbers-number">15</span>, index: <span class=
+"org-highlight-numbers-number">16</span> },
+    filename: <span class="org-constant">undefined</span>,
+    identifierName: <span class="org-constant">undefined</span>
   },
   id: Node {
-    type: <span style="color: #98be65;">'Identifier'</span>,
-    start: <span style=
-"color: #da8548; font-weight: bold;">7</span>,
-    end: <span style=
-"color: #da8548; font-weight: bold;">10</span>,
+    type: <span class="org-string">'Identifier'</span>,
+    start: <span class="org-highlight-numbers-number">7</span>,
+    end: <span class="org-highlight-numbers-number">10</span>,
     loc: SourceLocation {
       start: [Position],
       end: [Position],
-      filename: <span style="color: #a9a1e1;">undefined</span>,
-      identifierName: <span style="color: #98be65;">'foo'</span>
+      filename: <span class="org-constant">undefined</span>,
+      identifierName: <span class="org-string">'foo'</span>
     },
-    name: <span style="color: #98be65;">'foo'</span>
+    name: <span class="org-string">'foo'</span>
   },
   init: Node {
-    type: <span style="color: #98be65;">'NumericLiteral'</span>,
-    start: <span style=
-"color: #da8548; font-weight: bold;">13</span>,
-    end: <span style=
-"color: #da8548; font-weight: bold;">16</span>,
+    type: <span class="org-string">'NumericLiteral'</span>,
+    start: <span class="org-highlight-numbers-number">13</span>,
+    end: <span class="org-highlight-numbers-number">16</span>,
     loc: SourceLocation {
       start: [Position],
       end: [Position],
-      filename: <span style="color: #a9a1e1;">undefined</span>,
-      identifierName: <span style=
-"color: #a9a1e1;">undefined</span>
+      filename: <span class="org-constant">undefined</span>,
+      identifierName: <span class="org-constant">undefined</span>
     },
-    extra: { rawValue: <span style=
-"color: #da8548; font-weight: bold;">100</span>, raw: <span style=
-"color: #98be65;">'100'</span> },
-    value: <span style=
-"color: #da8548; font-weight: bold;">100</span>
+    extra: { rawValue: <span class=
+"org-highlight-numbers-number">100</span>, raw: <span class=
+"org-string">'100'</span> },
+    value: <span class="org-highlight-numbers-number">100</span>
   }
 }
 &gt;&gt;&gt; baz 函数声明 AST
  Node {
-  type: <span style="color: #98be65;">'FunctionDeclaration'</span>,
-  start: <span style=
-"color: #da8548; font-weight: bold;">29</span>,
-  end: <span style="color: #da8548; font-weight: bold;">72</span>,
+  type: <span class="org-string">'FunctionDeclaration'</span>,
+  start: <span class="org-highlight-numbers-number">29</span>,
+  end: <span class="org-highlight-numbers-number">72</span>,
   loc: SourceLocation {
-    start: Position { line: <span style=
-"color: #da8548; font-weight: bold;">3</span>, column: <span style=
-"color: #da8548; font-weight: bold;">0</span>, index: <span style=
-"color: #da8548; font-weight: bold;">29</span> },
-    end: Position { line: <span style=
-"color: #da8548; font-weight: bold;">5</span>, column: <span style=
-"color: #da8548; font-weight: bold;">1</span>, index: <span style=
-"color: #da8548; font-weight: bold;">72</span> },
-    filename: <span style="color: #a9a1e1;">undefined</span>,
-    identifierName: <span style="color: #a9a1e1;">undefined</span>
+    start: Position { line: <span class=
+"org-highlight-numbers-number">3</span>, column: <span class=
+"org-highlight-numbers-number">0</span>, index: <span class=
+"org-highlight-numbers-number">29</span> },
+    end: Position { line: <span class=
+"org-highlight-numbers-number">5</span>, column: <span class=
+"org-highlight-numbers-number">1</span>, index: <span class=
+"org-highlight-numbers-number">72</span> },
+    filename: <span class="org-constant">undefined</span>,
+    identifierName: <span class="org-constant">undefined</span>
   },
   id: Node {
-    type: <span style="color: #98be65;">'Identifier'</span>,
-    start: <span style=
-"color: #da8548; font-weight: bold;">38</span>,
-    end: <span style=
-"color: #da8548; font-weight: bold;">41</span>,
+    type: <span class="org-string">'Identifier'</span>,
+    start: <span class="org-highlight-numbers-number">38</span>,
+    end: <span class="org-highlight-numbers-number">41</span>,
     loc: SourceLocation {
       start: [Position],
       end: [Position],
-      filename: <span style="color: #a9a1e1;">undefined</span>,
-      identifierName: <span style="color: #98be65;">'baz'</span>
+      filename: <span class="org-constant">undefined</span>,
+      identifierName: <span class="org-string">'baz'</span>
     },
-    name: <span style="color: #98be65;">'baz'</span>
+    name: <span class="org-string">'baz'</span>
   },
-  generator: <span style="color: #a9a1e1;">false</span>,
-  <span style="color: #51afef;">async</span>: <span style=
-"color: #a9a1e1;">false</span>,
+  generator: <span class="org-constant">false</span>,
+  <span class="org-keyword">async</span>: <span class=
+"org-constant">false</span>,
   params: [],
   body: Node {
-    type: <span style="color: #98be65;">'BlockStatement'</span>,
-    start: <span style=
-"color: #da8548; font-weight: bold;">44</span>,
-    end: <span style=
-"color: #da8548; font-weight: bold;">72</span>,
+    type: <span class="org-string">'BlockStatement'</span>,
+    start: <span class="org-highlight-numbers-number">44</span>,
+    end: <span class="org-highlight-numbers-number">72</span>,
     loc: SourceLocation {
       start: [Position],
       end: [Position],
-      filename: <span style="color: #a9a1e1;">undefined</span>,
-      identifierName: <span style=
-"color: #a9a1e1;">undefined</span>
+      filename: <span class="org-constant">undefined</span>,
+      identifierName: <span class="org-constant">undefined</span>
     },
     body: [ [Node] ],
     directives: []
   }
 }
-<span style="color: #a9a1e1;">undefined</span>
+<span class="org-constant">undefined</span>
 </pre>
           </div>
         </details>
@@ -456,42 +442,42 @@ console.log(<span style=
         "https://github.com/Rich-Harris/magic-string">magic-string</a>
         字符串替换</p>
         <div class="org-src-container">
-          <pre class="src src-js"><span style=
-          "color: #51afef;">const</span> <span style=
-          "color: #dcaeea;">MagicString</span> = require(process.env.HOME+<span style="color: #98be65;">'/.nlib/magic-string'</span>)
+          <pre class="src src-js"><span class=
+          "org-keyword">const</span> <span class=
+          "org-variable-name">MagicString</span> = require(process.env.HOME+<span class="org-string">'/.nlib/magic-string'</span>)
 
-<span style="color: #51afef;">const</span> <span style=
-"color: #dcaeea;">log</span> = console.log
-<span style="color: #51afef;">const</span> <span style=
-"color: #dcaeea;">s</span> = <span style=
-"color: #51afef;">new</span> <span style=
-"color: #ECBE7B;">MagicString</span>(<span style=
-"color: #98be65;">'problems = 99'</span>)
+<span class="org-keyword">const</span> <span class=
+"org-variable-name">log</span> = console.log
+<span class="org-keyword">const</span> <span class=
+"org-variable-name">s</span> = <span class=
+"org-keyword">new</span> <span class=
+"org-type">MagicString</span>(<span class=
+"org-string">'problems = 99'</span>)
 
-log(<span style=
-"color: #98be65;">'替换变量名 -&gt; '</span>, s.overwrite(<span style=
-"color: #da8548; font-weight: bold;">0</span>, <span style=
-"color: #da8548; font-weight: bold;">8</span>, <span style=
-"color: #98be65;">'answer'</span>).toString())
-log(<span style=
-"color: #98be65;">'替换变量值 -&gt; '</span>, s.overwrite(<span style=
-"color: #da8548; font-weight: bold;">11</span>, <span style=
-"color: #da8548; font-weight: bold;">13</span>, <span style=
-"color: #98be65;">'42'</span>).toString())
-log(<span style=
-"color: #98be65;">'前后加内容 -&gt; '</span>, s.prepend(<span style=
-"color: #98be65;">'var '</span>).append(<span style=
-"color: #98be65;">';'</span>).toString())
-<span style="color: #51afef;">const</span> <span style=
-"color: #dcaeea;">map</span> = s.generateMap({
-  source: <span style="color: #98be65;">'source.js'</span>,
-  file: <span style="color: #98be65;">'converted.js.map'</span>,
-  includeContent: <span style="color: #a9a1e1;">true</span>
-}) <span style="color: #5B6268;">// </span><span style=
-"color: #5B6268;">generates a v3 sourcemap</span>
+log(<span class=
+"org-string">'替换变量名 -&gt; '</span>, s.overwrite(<span class=
+"org-highlight-numbers-number">0</span>, <span class=
+"org-highlight-numbers-number">8</span>, <span class=
+"org-string">'answer'</span>).toString())
+log(<span class=
+"org-string">'替换变量值 -&gt; '</span>, s.overwrite(<span class=
+"org-highlight-numbers-number">11</span>, <span class=
+"org-highlight-numbers-number">13</span>, <span class=
+"org-string">'42'</span>).toString())
+log(<span class=
+"org-string">'前后加内容 -&gt; '</span>, s.prepend(<span class=
+"org-string">'var '</span>).append(<span class=
+"org-string">';'</span>).toString())
+<span class="org-keyword">const</span> <span class=
+"org-variable-name">map</span> = s.generateMap({
+  source: <span class="org-string">'source.js'</span>,
+  file: <span class="org-string">'converted.js.map'</span>,
+  includeContent: <span class="org-constant">true</span>
+}) <span class="org-comment-delimiter">// </span><span class=
+"org-comment">generates a v3 sourcemap</span>
 
-log(<span style=
-"color: #98be65;">'生产 source map -&gt; '</span>, map.toString())
+log(<span class=
+"org-string">'生产 source map -&gt; '</span>, map.toString())
 </pre>
         </div>
         <pre class="example">
@@ -505,25 +491,25 @@ undefined
         "https://github.com/Rich-Harris/estree-walker">estree-walker</a>
         AST 树遍历</p>
         <div class="org-src-container">
-          <pre class="src src-js"><span style=
-          "color: #51afef;">const</span> <span style=
-          "color: #dcaeea;">walk</span> = require(<span style=
-          "color: #98be65;">'estree-walker'</span>).walk
-<span style="color: #51afef;">const</span> <span style=
-"color: #dcaeea;">acorn</span> = require(<span style=
-"color: #98be65;">'acorn'</span>)
+          <pre class="src src-js"><span class=
+          "org-keyword">const</span> <span class=
+          "org-variable-name">walk</span> = require(<span class=
+          "org-string">'estree-walker'</span>).walk
+<span class="org-keyword">const</span> <span class=
+"org-variable-name">acorn</span> = require(<span class=
+"org-string">'acorn'</span>)
 
-<span style="color: #51afef;">const</span> <span style=
-"color: #dcaeea;">ast</span> = acorn.parse(<span style=
-"color: #98be65;">`const foo = 100`</span>)
+<span class="org-keyword">const</span> <span class=
+"org-variable-name">ast</span> = acorn.parse(<span class=
+"org-string">`const foo = 100`</span>)
 walk(ast, {
   enter(node, parent, prop, index) {
-    console.log(<span style=
-"color: #98be65;">'enter&gt;&gt;&gt;'</span>, node, parent, prop, index);
+    console.log(<span class=
+"org-string">'enter&gt;&gt;&gt;'</span>, node, parent, prop, index);
   },
   leave(node, parent, prop, index) {
-    console.log(<span style=
-"color: #98be65;">'leave&gt;&gt;&gt;'</span>, node, parent, prop, index);
+    console.log(<span class=
+"org-string">'leave&gt;&gt;&gt;'</span>, node, parent, prop, index);
   }
 })
 </pre>
@@ -533,7 +519,7 @@ walk(ast, {
   </div>
   <div id="postamble" class="status">
     <p class="author">Author: Zhicheng Lee</p>
-    <p class="date">Created: 2022-03-10 Thu 11:36</p>
+    <p class="date">Created: 2022-04-25 Mon 09:38</p>
   </div>
 </body>
 </html>

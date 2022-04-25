@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <!-- 2022-04-19 Tue 09:18 -->
+  <!-- 2022-04-25 Mon 09:39 -->
   <meta charset="utf-8">
   <meta name="viewport" content=
   "width=device-width, initial-scale=1">
@@ -231,6 +231,7 @@
   "/assets/js/dist/global.js"></script>
   <meta name="category" content="vue">
   <meta name="tags" content="reactivity">
+  <meta name="createdAt" content="2022-04-12 09:38:54">
   <style>
         /* From: https://endlessparentheses.com/public/css/endless.css */
         /* See also: https://meta.superuser.com/questions/4788/css-for-the-new-kbd-style */
@@ -289,32 +290,32 @@
       <div id="text-table-of-contents" role="doc-toc">
         <ul>
           <li>
-            <a href="#orgd2b2379">1. READY(handlers)</a>
+            <a href="#orgd50516f">1. READY(handlers)</a>
           </li>
           <li>
-            <a href="#org47b693d">2. Global variables</a>
+            <a href="#orge4fed65">2. Global variables</a>
           </li>
           <li>
-            <a href="#org586b531">3. reactive(target: object)</a>
+            <a href="#org274e6f9">3. reactive(target: object)</a>
             <ul>
               <li>
-                <a href="#org9d6cc99">3.1. reactive with
+                <a href="#org7d80269">3.1. reactive with
                 track&amp;trigger</a>
               </li>
             </ul>
           </li>
           <li>
-            <a href="#org99f555b">4. createReactiveObject</a>
+            <a href="#orgdb3a3f7">4. createReactiveObject</a>
           </li>
           <li>
-            <a href="#org2a38de0">5. mutableHandlers</a>
+            <a href="#orgfb2c9c8">5. mutableHandlers</a>
             <ul>
               <li>
                 <a href="#base-handler-createGetter">5.1.
                 createGetter</a>
                 <ul>
                   <li>
-                    <a href="#org3ee6d6b">5.1.1. createGetter with
+                    <a href="#org24cc060">5.1.1. createGetter with
                     track</a>
                   </li>
                 </ul>
@@ -324,16 +325,16 @@
                 createSetter</a>
                 <ul>
                   <li>
-                    <a href="#orgfab99c9">5.2.1. set with
+                    <a href="#org64ffac2">5.2.1. set with
                     trigger</a>
                   </li>
                 </ul>
               </li>
               <li>
-                <a href="#org24bb624">5.3. deleteProperty</a>
+                <a href="#org75a182d">5.3. deleteProperty</a>
                 <ul>
                   <li>
-                    <a href="#org21dba4b">5.3.1. delete with
+                    <a href="#org20469b7">5.3.1. delete with
                     trigger</a>
                   </li>
                 </ul>
@@ -342,26 +343,26 @@
                 <a href="#base-handler-has">5.4. has</a>
                 <ul>
                   <li>
-                    <a href="#org07ebdfe">5.4.1. has with track</a>
+                    <a href="#org9e4d962">5.4.1. has with track</a>
                   </li>
                 </ul>
               </li>
               <li>
-                <a href="#orgf7cb793">5.5. ownKeys</a>
+                <a href="#org47e4e78">5.5. ownKeys</a>
                 <ul>
                   <li>
-                    <a href="#org32f94ce">5.5.1. ownKeys with
+                    <a href="#org887f1bf">5.5.1. ownKeys with
                     track</a>
                   </li>
                 </ul>
               </li>
               <li>
-                <a href="#org0400150">5.6. Testing</a>
+                <a href="#org7cdf874">5.6. Testing</a>
               </li>
             </ul>
           </li>
           <li>
-            <a href="#org6676186">6. mutableCollectionHandlers</a>
+            <a href="#org8559b7e">6. mutableCollectionHandlers</a>
             <ul>
               <li>
                 <a href=
@@ -373,7 +374,7 @@
                 mutableInstrumentations</a>
                 <ul>
                   <li>
-                    <a href="#org411339a">6.2.1. witch track &
+                    <a href="#org9432863">6.2.1. witch track &
                     trigger</a>
                   </li>
                 </ul>
@@ -382,7 +383,7 @@
                 <a href="#ref-collection-get">6.3. get</a>
                 <ul>
                   <li>
-                    <a href="#org30d0cc8">6.3.1. get with track</a>
+                    <a href="#orgd6cf2d3">6.3.1. get with track</a>
                   </li>
                 </ul>
               </li>
@@ -390,7 +391,7 @@
                 <a href="#ref-collection-has">6.4. has</a>
                 <ul>
                   <li>
-                    <a href="#org421b0ae">6.4.1. has with track</a>
+                    <a href="#org3229c95">6.4.1. has with track</a>
                   </li>
                 </ul>
               </li>
@@ -398,7 +399,7 @@
                 <a href="#ref-collection-size">6.5. size</a>
                 <ul>
                   <li>
-                    <a href="#orga3a3436">6.5.1. size with
+                    <a href="#orgde1384e">6.5.1. size with
                     track</a>
                   </li>
                 </ul>
@@ -407,7 +408,7 @@
                 <a href="#ref-collection-add">6.6. add</a>
                 <ul>
                   <li>
-                    <a href="#org2eaae1f">6.6.1. add with
+                    <a href="#org4430a7b">6.6.1. add with
                     trigger</a>
                   </li>
                 </ul>
@@ -416,7 +417,7 @@
                 <a href="#ref-collection-set">6.7. set</a>
                 <ul>
                   <li>
-                    <a href="#org1afa152">6.7.1. set with
+                    <a href="#orgb63dff9">6.7.1. set with
                     trigger</a>
                   </li>
                 </ul>
@@ -425,7 +426,7 @@
                 <a href="#ref-collection-delete">6.8. delete</a>
                 <ul>
                   <li>
-                    <a href="#org9006a4e">6.8.1. delete with
+                    <a href="#org9dff5a8">6.8.1. delete with
                     trigger</a>
                   </li>
                 </ul>
@@ -434,7 +435,7 @@
                 <a href="#ref-collection-clear">6.9. clear</a>
                 <ul>
                   <li>
-                    <a href="#org13abcaa">6.9.1. clear with
+                    <a href="#orgb01d7c9">6.9.1. clear with
                     trigger</a>
                   </li>
                 </ul>
@@ -443,179 +444,179 @@
                 <a href="#ref-collection-forEach">6.10. forEach</a>
                 <ul>
                   <li>
-                    <a href="#org4f90e41">6.10.1. forEach with
+                    <a href="#org3e90b40">6.10.1. forEach with
                     track</a>
                   </li>
                 </ul>
               </li>
               <li>
-                <a href="#org428b0ba">6.11.
+                <a href="#orga6f537e">6.11.
                 keys&amp;values&amp;entries</a>
                 <ul>
                   <li>
-                    <a href="#orgaf3daaa">6.11.1. iterator with
+                    <a href="#orgcbe7035">6.11.1. iterator with
                     track</a>
                   </li>
                 </ul>
               </li>
               <li>
-                <a href="#org87834fd">6.12. Testing</a>
+                <a href="#orgd3cf8de">6.12. Testing</a>
               </li>
             </ul>
           </li>
           <li>
-            <a href="#orga6cb92b">7. phase one(no track &
+            <a href="#orgf7cbd31">7. phase one(no track &
             trigger)</a>
           </li>
           <li>
-            <a href="#org507642d">8.
+            <a href="#org77fdb19">8.
             track&amp;trigger&amp;effect</a>
             <ul>
               <li>
-                <a href="#orga7a0dce">8.1. track()</a>
+                <a href="#org81c6aae">8.1. track()</a>
                 <ul>
                   <li>
-                    <a href="#orgb79ba89">8.1.1. createDep()</a>
+                    <a href="#org5bfae97">8.1.1. createDep()</a>
                   </li>
                   <li>
-                    <a href="#org65be172">8.1.2.
+                    <a href="#org2e136b9">8.1.2.
                     wasTracked(dep)</a>
                   </li>
                   <li>
-                    <a href="#orgbe093a9">8.1.3.
+                    <a href="#org4af7990">8.1.3.
                     newTracked(dep)</a>
                   </li>
                   <li>
-                    <a href="#org46639b5">8.1.4.
+                    <a href="#org9806476">8.1.4.
                     initDepMarkers()</a>
                   </li>
                   <li>
-                    <a href="#org0637f84">8.1.5.
+                    <a href="#org88a0dbf">8.1.5.
                     finalizeDepMarkers()</a>
                   </li>
                   <li>
-                    <a href="#orgdb0636e">8.1.6. trackEffects(dep,
+                    <a href="#orgf913603">8.1.6. trackEffects(dep,
                     debuggerEventExtraInfo)</a>
                   </li>
                 </ul>
               </li>
               <li>
-                <a href="#org765a7f8">8.2. trigger()</a>
+                <a href="#org6f7422f">8.2. trigger()</a>
                 <ul>
                   <li>
-                    <a href="#org355a011">8.2.1.
+                    <a href="#orgfcb1323">8.2.1.
                     triggerEffects()</a>
                   </li>
                 </ul>
               </li>
               <li>
-                <a href="#org24ec727">8.3. effect()</a>
+                <a href="#org3431543">8.3. effect()</a>
               </li>
               <li>
-                <a href="#org67151d9">8.4. normal objects</a>
+                <a href="#orgb0ec359">8.4. normal objects</a>
               </li>
               <li>
-                <a href="#org69bb608">8.5. colletion
+                <a href="#org700cb79">8.5. colletion
                 objects(Map,Set)</a>
               </li>
               <li>
-                <a href="#orge9e1774">8.6. phase 2 updating</a>
+                <a href="#org49a240e">8.6. phase 2 updating</a>
                 <ul>
                   <li>
-                    <a href="#org07c3f29">8.6.1. normal objects</a>
+                    <a href="#org77c449c">8.6.1. normal objects</a>
                   </li>
                   <li>
-                    <a href="#orge274450">8.6.2. collection
+                    <a href="#orga1413f2">8.6.2. collection
                     objects(Map,Set)</a>
                   </li>
                   <li>
-                    <a href="#org36fdb83">8.6.3. whole phase
+                    <a href="#org1bb9026">8.6.3. whole phase
                     code</a>
                   </li>
                 </ul>
               </li>
               <li>
-                <a href="#org5e9b2bc">8.7. Testing</a>
+                <a href="#org62bf944">8.7. Testing</a>
               </li>
             </ul>
           </li>
           <li>
-            <a href="#org8f7191a">9. effect scope</a>
+            <a href="#orgd8c612c">9. effect scope</a>
             <ul>
               <li>
-                <a href="#org235aa4a">9.1. EffectScope</a>
+                <a href="#orge33532f">9.1. EffectScope</a>
               </li>
               <li>
-                <a href="#orge1001b0">9.2.
+                <a href="#org00259aa">9.2.
                 recordEffectScope(effect, scope)</a>
               </li>
               <li>
-                <a href="#org1002611">9.3. onScopeDispose(fn)</a>
+                <a href="#org9a3a3f9">9.3. onScopeDispose(fn)</a>
               </li>
               <li>
-                <a href="#orgfc1437b">9.4. track dep</a>
+                <a href="#org3177417">9.4. track dep</a>
               </li>
             </ul>
           </li>
           <li>
-            <a href="#org2b4f0dc">10. computed</a>
+            <a href="#orge00c7c1">10. computed</a>
           </li>
           <li>
-            <a href="#orgf2736c6">11. defferedComputed</a>
+            <a href="#org30ce288">11. defferedComputed</a>
             <ul>
               <li>
-                <a href="#org8e35602">11.1.
+                <a href="#org06b3983">11.1.
                 DeferredComputedRefImpl</a>
               </li>
               <li>
-                <a href="#orgfe3fcfa">11.2. scheduler(fn)</a>
+                <a href="#org558668d">11.2. scheduler(fn)</a>
               </li>
               <li>
-                <a href="#orgff5e88b">11.3. flush()</a>
+                <a href="#orgda697e5">11.3. flush()</a>
               </li>
             </ul>
           </li>
           <li>
-            <a href="#orgf3587d2">12. ref</a>
+            <a href="#org0202fb7">12. ref</a>
             <ul>
               <li>
-                <a href="#orgf25cca5">12.1. createRef()</a>
+                <a href="#org23f7bea">12.1. createRef()</a>
               </li>
               <li>
-                <a href="#orgb5ae10d">12.2. RefImpl</a>
+                <a href="#org98ad065">12.2. RefImpl</a>
               </li>
               <li>
-                <a href="#orgedf19be">12.3. ObjectRefImpl</a>
+                <a href="#orgb0df118">12.3. ObjectRefImpl</a>
               </li>
               <li>
-                <a href="#org44fc0ea">12.4. triggerRef(ref)</a>
+                <a href="#orga079f73">12.4. triggerRef(ref)</a>
               </li>
               <li>
-                <a href="#orga377241">12.5. unref(ref)</a>
+                <a href="#orgd5656e1">12.5. unref(ref)</a>
               </li>
               <li>
-                <a href="#org2422c01">12.6. proxyRefs()</a>
+                <a href="#orgf6fb6aa">12.6. proxyRefs()</a>
               </li>
               <li>
-                <a href="#orgaaf7b9b">12.7. toRefs()</a>
+                <a href="#org6d6059c">12.7. toRefs()</a>
               </li>
               <li>
-                <a href="#orgfa4f876">12.8. toRef()</a>
+                <a href="#org3b3ac39">12.8. toRef()</a>
               </li>
               <li>
-                <a href="#org2e536c4">12.9. trackRefValue(ref)</a>
+                <a href="#org6538967">12.9. trackRefValue(ref)</a>
               </li>
               <li>
-                <a href="#org507c1fa">12.10.
+                <a href="#orgc3b4064">12.10.
                 triggerRefValue(ref,newVal)</a>
               </li>
             </ul>
           </li>
           <li>
-            <a href="#org164a8eb">13. reactivity</a>
+            <a href="#org604c2e1">13. reactivity</a>
           </li>
           <li>
-            <a href="#org88d82ee">14. FootNotes</a>
+            <a href="#org60a6ab8">14. FootNotes</a>
           </li>
         </ul>
       </div>
@@ -626,48 +627,51 @@
     "padding: 1em; background-color: #CCFFCC;border-radius: 15px; font-size: 0.9em; box-shadow: 0.05em 0.1em 5px 0.01em #00000057;">
       <h3>Vue3 Reactivity</h3>
       <p>从零开始实现 <abbr class="tooltip" title=
-      "zsh:1: command not found: wn&lt;br&gt;">vue3</abbr> 的
-      reactivity 模块，基于 Proxy + Reflect api 实现响应式。大致 实现路径 reactive
-      -&gt; proxy 开启代理 -&gt; reflect 映射到原子操作，监听 get/set 执行 track &
-      trigger 收集依赖。</p>
+      "The Progressive JavaScript Framework !&lt;br&gt;&lt;br&gt;An approachable, performant and versatile framework for building web user interfaces.&lt;br&gt;&lt;br&gt;&lt;strong&gt;Installation&lt;/strong&gt;:&lt;br&gt;&lt;br&gt;=$ npm init vue@latest=&lt;br&gt;&lt;br&gt;&lt;strong&gt;Without Build Tools&lt;/strong&gt;:">
+      Vue3</abbr> 的 reactivity 模块，基于 Proxy + Reflect api 实现响应式。大致
+      实现路径 reactive -&gt; proxy 开启代理 -&gt; reflect 映射到原子操作，监听
+      get/set 执行 track & trigger 收集依赖。</p>
       <p><i><span style=
       "color:blue;">注意：这里会省略部分不影响理解的代码，和一些非法参数等等的检查，目的是为了减少代码量，但不影响学习和理解源代码</span></i></p>
       <p><a href=
       "https://www.cheng92.com/vue/vue-mind-map-reactivity/">Vue3
       源码头脑风暴之 1 ☞reactivity - 若叶知秋</a></p>
     </div><br>
-    <div id="outline-container-orgd2b2379" class="outline-2">
-      <h2 id="orgd2b2379"><span class="section-number-2">1.</span>
+    <div id="outline-container-orgd50516f" class="outline-2">
+      <h2 id="orgd50516f"><span class="section-number-2">1.</span>
       READY(handlers)</h2>
       <div class="outline-text-2" id="text-1">
         <p>由于 <abbr class="tooltip" title=
-        "zsh:1: command not found: wn&lt;br&gt;">Proxy</abbr> +
-        <abbr class="tooltip" title=
-        "zsh:1: command not found: wn&lt;br&gt;">Reflect</abbr>
-        并没有针对集合类型(<code>Set</code>,
+        "&lt;strong&gt;Proxy&lt;/strong&gt; &lt;hr&gt;&lt;br&gt;The Proxy object enables you to create a proxy for another object, which&lt;br&gt;can intercept and redefine fundamental operations for that object.&lt;br&gt;&lt;br&gt;&lt;strong&gt;Description&lt;/strong&gt; &lt;hr&gt;&lt;br&gt;A Proxy is created with two parameters:&lt;br&gt;&lt;br&gt;- target: the original object which you want to proxy&lt;br&gt;&lt;br&gt;- handler: an object that defines which operations will be intercepted and how&lt;br&gt;to redefine intercepted operations. For example, this code defines a simple&lt;br&gt;target with just two properties, and an even simpler handler with no properties:&lt;br&gt;&lt;br&gt;&lt;pre class='tooltip'&gt;const target = {&lt;br&gt; message1: ''hello'',&lt;br&gt; message2: ''everyone''&lt;br&gt;};&lt;br&gt;&lt;br&gt;const handler1 = {};&lt;br&gt;&lt;br&gt;const proxy1 = new Proxy(target, handler1);&lt;br&gt;&lt;/PRE&gt;&lt;br&gt;Because the handler is empty, this proxy behaves just like the original target:&lt;br&gt;&lt;br&gt;&lt;pre class='tooltip'&gt;console.log(proxy1.message1); &lt;em&gt;/ hello&lt;br&gt;console.log(proxy1.message2); &lt;/em&gt;/ everyone&lt;br&gt;&lt;/PRE&gt;&lt;br&gt;To customize the proxy, we define functions on the handler object:&lt;br&gt;&lt;br&gt;&lt;pre class='tooltip'&gt;const target = {&lt;br&gt; message1: ''hello'',&lt;br&gt; message2: ''everyone''&lt;br&gt;};&lt;br&gt;&lt;br&gt;const handler2 = {&lt;br&gt; get: function(target, prop, receiver) {&lt;br&gt;  return ''world'';&lt;br&gt; }&lt;br&gt;};&lt;br&gt;&lt;br&gt;const proxy2 = new Proxy(target, handler2);&lt;br&gt;&lt;/PRE&gt;&lt;br&gt;Here we've provided an implementation of the get() handler, which intercepts&lt;br&gt;attempts to access properties in the target.&lt;br&gt;&lt;br&gt;Handler functions are sometimes called traps, presumably because they trap calls&lt;br&gt;to the target object. The very simple trap in handler2 above redefines all&lt;br&gt;property accessors:&lt;br&gt;&lt;br&gt;&lt;pre class='tooltip'&gt;console.log(proxy2.message1); &lt;em&gt;/ world&lt;br&gt;console.log(proxy2.message2); &lt;/em&gt;/ world&lt;br&gt;&lt;/PRE&gt;&lt;br&gt;With the help of the Reflect class we can give some accessors the original&lt;br&gt;behavior and redefine others:&lt;br&gt;&lt;br&gt;&lt;pre class='tooltip'&gt;const target = {&lt;br&gt; message1: ''hello'',&lt;br&gt; message2: ''everyone''&lt;br&gt;};&lt;br&gt;&lt;br&gt;const handler3 = {&lt;br&gt; get: function (target, prop, receiver) {&lt;br&gt;  if (prop === ''message2'') {&lt;br&gt;   return ''world'';&lt;br&gt;  }&lt;br&gt;  return Reflect.get(...arguments);&lt;br&gt; },&lt;br&gt;};&lt;br&gt;&lt;br&gt;const proxy3 = new Proxy(target, handler3);&lt;br&gt;&lt;br&gt;console.log(proxy3.message1); &lt;em&gt;/ hello&lt;br&gt;console.log(proxy3.message2); &lt;/em&gt;/ world&lt;br&gt;&lt;/PRE&gt;&lt;br&gt;&lt;strong&gt;Constructor&lt;/strong&gt; &lt;hr&gt;&lt;br&gt;&lt;pre class='tooltip'&gt;Proxy()&lt;br&gt;&lt;/PRE&gt;&lt;br&gt;Creates a new Proxy object.&lt;br&gt;&lt;br&gt;&lt;strong&gt;Static methods&lt;/strong&gt; &lt;hr&gt;&lt;br&gt;&lt;pre class='tooltip'&gt;Proxy.revocable()&lt;br&gt;&lt;/PRE&gt;&lt;br&gt;Creates a revocable Proxy object.&lt;br&gt;&lt;br&gt;&lt;strong&gt;Examples&lt;/strong&gt;&lt;br&gt;&lt;br&gt;&lt;strong&gt;Basic example&lt;/strong&gt; &lt;hr&gt;&lt;br&gt;In this simple example, the number 37 gets returned as the default value when&lt;br&gt;the property name is not in the object. It is using the get() handler.&lt;br&gt;&lt;br&gt;&lt;pre class='tooltip'&gt;const handler = {&lt;br&gt; get: function(obj, prop) {&lt;br&gt;  return prop in obj ?&lt;br&gt;   obj[prop] :&lt;br&gt;   37;&lt;br&gt; }&lt;br&gt;};&lt;br&gt;&lt;br&gt;const p = new Proxy({}, handler);&lt;br&gt;p.a = 1;&lt;br&gt;p.b = undefined;&lt;br&gt;&lt;br&gt;console.log(p.a, p.b);&lt;br&gt;&lt;em&gt;/ 1, undefined&lt;br&gt;&lt;br&gt;console.log('c' in p, p.c);&lt;br&gt;&lt;/em&gt;/ false, 37&lt;br&gt;&lt;/PRE&gt;&lt;br&gt;&lt;a target='_blank' href='https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Proxy'&gt;More&lt;/a&gt;&lt;br&gt;&lt;br&gt;&lt;br&gt;&lt;br&gt;&lt;br&gt;&lt;br&gt;">
+        Proxy</abbr> + <abbr class="tooltip" title=
+        "&lt;h2&gt;Description&lt;/h2&gt;&lt;br&gt;&lt;br&gt;Unlike most global objects, Reflect is not a constructor.&lt;br&gt;You cannot use it with a new operator or invoke the Reflect object as a&lt;br&gt;function. All properties and methods of Reflect are static (just like the Math&lt;br&gt;object).&lt;br&gt;&lt;br&gt;The Reflect object provides the following static functions which have the same&lt;br&gt;names as the proxy handler methods.&lt;br&gt;&lt;br&gt;Some of these methods are also the same as corresponding methods on Object,&lt;br&gt;although they do have some subtle differences between them.&lt;br&gt;&lt;br&gt;&lt;h2&gt;Static methods&lt;/h2&gt;&lt;br&gt;&lt;br&gt;&lt;h3&gt;Reflect.apply(target, thisArgument, argumentsList)&lt;/h3&gt;&lt;br&gt;&lt;br&gt;Calls a target function with arguments as specified by the argumentsList&lt;br&gt;parameter. See also Function.prototype.apply().&lt;br&gt;&lt;br&gt;&lt;h3&gt;Reflect.construct(target, argumentsList[, newTarget])&lt;/h3&gt;&lt;br&gt;&lt;br&gt;The new operator as a function. Equivalent to calling new&lt;br&gt;target(...argumentsList). Also provides the option to specify a different&lt;br&gt;prototype.&lt;br&gt;&lt;br&gt;&lt;h3&gt;Reflect.defineProperty(target, propertyKey, attributes)&lt;/h3&gt;&lt;br&gt;&lt;br&gt;Similar to Object.defineProperty(). Returns a boolean that is true if the&lt;br&gt;property was successfully defined.&lt;br&gt;&lt;br&gt;&lt;h3&gt;Reflect.deleteProperty(target, propertyKey)&lt;/h3&gt;&lt;br&gt;&lt;br&gt;The delete operator as a function. Equivalent to calling delete&lt;br&gt;target[propertyKey].&lt;br&gt;&lt;br&gt;&lt;h3&gt;Reflect.get(target, propertyKey[, receiver])&lt;/h3&gt;&lt;br&gt;&lt;br&gt;Returns the value of the property. Works like getting a property from an object&lt;br&gt;(target[propertyKey]) as a function.&lt;br&gt;&lt;br&gt;&lt;h3&gt;Reflect.getOwnPropertyDescriptor(target, propertyKey)&lt;/h3&gt;&lt;br&gt;&lt;br&gt;Similar to Object.getOwnPropertyDescriptor(). Returns a property descriptor of&lt;br&gt;the given property if it exists on the object, undefined otherwise.&lt;br&gt;&lt;br&gt;&lt;h3&gt;Reflect.getPrototypeOf(target)&lt;/h3&gt;&lt;br&gt;&lt;br&gt;Same as Object.getPrototypeOf().&lt;br&gt;&lt;br&gt;&lt;h3&gt;Reflect.has(target, propertyKey)&lt;/h3&gt;&lt;br&gt;&lt;br&gt;Returns a boolean indicating whether the target has the property. Either as own&lt;br&gt;or inherited. Works like the in operator as a function.&lt;br&gt;&lt;br&gt;&lt;h3&gt;Reflect.isExtensible(target)&lt;/h3&gt;&lt;br&gt;&lt;br&gt;Same as Object.isExtensible(). Returns a boolean that is true if the target is&lt;br&gt;extensible.&lt;br&gt;&lt;br&gt;&lt;h3&gt;Reflect.ownKeys(target)&lt;/h3&gt;&lt;br&gt;&lt;br&gt;Returns an array of the target object's own (not inherited) property keys.&lt;br&gt;&lt;br&gt;&lt;h3&gt;Reflect.preventExtensions(target)&lt;/h3&gt;&lt;br&gt;&lt;br&gt;Similar to Object.preventExtensions(). Returns a boolean that is true if the&lt;br&gt;update was successful.&lt;br&gt;&lt;br&gt;&lt;h3&gt;Reflect.set(target, propertyKey, value[, receiver])&lt;/h3&gt;&lt;br&gt;&lt;br&gt;A function that assigns values to properties. Returns a boolean that is true if&lt;br&gt;the update was successful.&lt;br&gt;&lt;br&gt;&lt;h3&gt;Reflect.setPrototypeOf(target, prototype)&lt;/h3&gt;&lt;br&gt;&lt;br&gt;A function that sets the prototype of an object. Returns a boolean that is true&lt;br&gt;if the update was successful.">
+        Reflect</abbr> 并没有针对集合类型(<code>Set</code>,
         <code>Map</code>)的数据有直接的映射接口，因此对 于这两类数据要做特殊处理，直接通过 getter,
         setter 方法来变相实现 reactive 功能。</p>
         <p>所以这里用到两种 handlers， 一个是 <code>mutableHandlers</code>
         针对普通类型的对象，一个是 <code>mutableCollectionHandlers</code>
         集合类型的对象。</p>
         <p>而 handlers 是传递给 <abbr class="tooltip" title=
-        "zsh:1: command not found: wn&lt;br&gt;">Proxy</abbr>
-        接口的一个参数，具体的使用要参考 <abbr class="tooltip" title=
-        "zsh:1: command not found: wn&lt;br&gt;">Proxy</abbr> +
-        <abbr class="tooltip" title=
-        "zsh:1: command not found: wn&lt;br&gt;">Reflect</abbr>
-        的使用。</p>
+        "&lt;strong&gt;Proxy&lt;/strong&gt; &lt;hr&gt;&lt;br&gt;The Proxy object enables you to create a proxy for another object, which&lt;br&gt;can intercept and redefine fundamental operations for that object.&lt;br&gt;&lt;br&gt;&lt;strong&gt;Description&lt;/strong&gt; &lt;hr&gt;&lt;br&gt;A Proxy is created with two parameters:&lt;br&gt;&lt;br&gt;- target: the original object which you want to proxy&lt;br&gt;&lt;br&gt;- handler: an object that defines which operations will be intercepted and how&lt;br&gt;to redefine intercepted operations. For example, this code defines a simple&lt;br&gt;target with just two properties, and an even simpler handler with no properties:&lt;br&gt;&lt;br&gt;&lt;pre class='tooltip'&gt;const target = {&lt;br&gt; message1: ''hello'',&lt;br&gt; message2: ''everyone''&lt;br&gt;};&lt;br&gt;&lt;br&gt;const handler1 = {};&lt;br&gt;&lt;br&gt;const proxy1 = new Proxy(target, handler1);&lt;br&gt;&lt;/PRE&gt;&lt;br&gt;Because the handler is empty, this proxy behaves just like the original target:&lt;br&gt;&lt;br&gt;&lt;pre class='tooltip'&gt;console.log(proxy1.message1); &lt;em&gt;/ hello&lt;br&gt;console.log(proxy1.message2); &lt;/em&gt;/ everyone&lt;br&gt;&lt;/PRE&gt;&lt;br&gt;To customize the proxy, we define functions on the handler object:&lt;br&gt;&lt;br&gt;&lt;pre class='tooltip'&gt;const target = {&lt;br&gt; message1: ''hello'',&lt;br&gt; message2: ''everyone''&lt;br&gt;};&lt;br&gt;&lt;br&gt;const handler2 = {&lt;br&gt; get: function(target, prop, receiver) {&lt;br&gt;  return ''world'';&lt;br&gt; }&lt;br&gt;};&lt;br&gt;&lt;br&gt;const proxy2 = new Proxy(target, handler2);&lt;br&gt;&lt;/PRE&gt;&lt;br&gt;Here we've provided an implementation of the get() handler, which intercepts&lt;br&gt;attempts to access properties in the target.&lt;br&gt;&lt;br&gt;Handler functions are sometimes called traps, presumably because they trap calls&lt;br&gt;to the target object. The very simple trap in handler2 above redefines all&lt;br&gt;property accessors:&lt;br&gt;&lt;br&gt;&lt;pre class='tooltip'&gt;console.log(proxy2.message1); &lt;em&gt;/ world&lt;br&gt;console.log(proxy2.message2); &lt;/em&gt;/ world&lt;br&gt;&lt;/PRE&gt;&lt;br&gt;With the help of the Reflect class we can give some accessors the original&lt;br&gt;behavior and redefine others:&lt;br&gt;&lt;br&gt;&lt;pre class='tooltip'&gt;const target = {&lt;br&gt; message1: ''hello'',&lt;br&gt; message2: ''everyone''&lt;br&gt;};&lt;br&gt;&lt;br&gt;const handler3 = {&lt;br&gt; get: function (target, prop, receiver) {&lt;br&gt;  if (prop === ''message2'') {&lt;br&gt;   return ''world'';&lt;br&gt;  }&lt;br&gt;  return Reflect.get(...arguments);&lt;br&gt; },&lt;br&gt;};&lt;br&gt;&lt;br&gt;const proxy3 = new Proxy(target, handler3);&lt;br&gt;&lt;br&gt;console.log(proxy3.message1); &lt;em&gt;/ hello&lt;br&gt;console.log(proxy3.message2); &lt;/em&gt;/ world&lt;br&gt;&lt;/PRE&gt;&lt;br&gt;&lt;strong&gt;Constructor&lt;/strong&gt; &lt;hr&gt;&lt;br&gt;&lt;pre class='tooltip'&gt;Proxy()&lt;br&gt;&lt;/PRE&gt;&lt;br&gt;Creates a new Proxy object.&lt;br&gt;&lt;br&gt;&lt;strong&gt;Static methods&lt;/strong&gt; &lt;hr&gt;&lt;br&gt;&lt;pre class='tooltip'&gt;Proxy.revocable()&lt;br&gt;&lt;/PRE&gt;&lt;br&gt;Creates a revocable Proxy object.&lt;br&gt;&lt;br&gt;&lt;strong&gt;Examples&lt;/strong&gt;&lt;br&gt;&lt;br&gt;&lt;strong&gt;Basic example&lt;/strong&gt; &lt;hr&gt;&lt;br&gt;In this simple example, the number 37 gets returned as the default value when&lt;br&gt;the property name is not in the object. It is using the get() handler.&lt;br&gt;&lt;br&gt;&lt;pre class='tooltip'&gt;const handler = {&lt;br&gt; get: function(obj, prop) {&lt;br&gt;  return prop in obj ?&lt;br&gt;   obj[prop] :&lt;br&gt;   37;&lt;br&gt; }&lt;br&gt;};&lt;br&gt;&lt;br&gt;const p = new Proxy({}, handler);&lt;br&gt;p.a = 1;&lt;br&gt;p.b = undefined;&lt;br&gt;&lt;br&gt;console.log(p.a, p.b);&lt;br&gt;&lt;em&gt;/ 1, undefined&lt;br&gt;&lt;br&gt;console.log('c' in p, p.c);&lt;br&gt;&lt;/em&gt;/ false, 37&lt;br&gt;&lt;/PRE&gt;&lt;br&gt;&lt;a target='_blank' href='https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Proxy'&gt;More&lt;/a&gt;&lt;br&gt;&lt;br&gt;&lt;br&gt;&lt;br&gt;&lt;br&gt;&lt;br&gt;">
+        Proxy</abbr> 接口的一个参数，具体的使用要参考 <abbr class="tooltip" title=
+        "&lt;strong&gt;Proxy&lt;/strong&gt; &lt;hr&gt;&lt;br&gt;The Proxy object enables you to create a proxy for another object, which&lt;br&gt;can intercept and redefine fundamental operations for that object.&lt;br&gt;&lt;br&gt;&lt;strong&gt;Description&lt;/strong&gt; &lt;hr&gt;&lt;br&gt;A Proxy is created with two parameters:&lt;br&gt;&lt;br&gt;- target: the original object which you want to proxy&lt;br&gt;&lt;br&gt;- handler: an object that defines which operations will be intercepted and how&lt;br&gt;to redefine intercepted operations. For example, this code defines a simple&lt;br&gt;target with just two properties, and an even simpler handler with no properties:&lt;br&gt;&lt;br&gt;&lt;pre class='tooltip'&gt;const target = {&lt;br&gt; message1: ''hello'',&lt;br&gt; message2: ''everyone''&lt;br&gt;};&lt;br&gt;&lt;br&gt;const handler1 = {};&lt;br&gt;&lt;br&gt;const proxy1 = new Proxy(target, handler1);&lt;br&gt;&lt;/PRE&gt;&lt;br&gt;Because the handler is empty, this proxy behaves just like the original target:&lt;br&gt;&lt;br&gt;&lt;pre class='tooltip'&gt;console.log(proxy1.message1); &lt;em&gt;/ hello&lt;br&gt;console.log(proxy1.message2); &lt;/em&gt;/ everyone&lt;br&gt;&lt;/PRE&gt;&lt;br&gt;To customize the proxy, we define functions on the handler object:&lt;br&gt;&lt;br&gt;&lt;pre class='tooltip'&gt;const target = {&lt;br&gt; message1: ''hello'',&lt;br&gt; message2: ''everyone''&lt;br&gt;};&lt;br&gt;&lt;br&gt;const handler2 = {&lt;br&gt; get: function(target, prop, receiver) {&lt;br&gt;  return ''world'';&lt;br&gt; }&lt;br&gt;};&lt;br&gt;&lt;br&gt;const proxy2 = new Proxy(target, handler2);&lt;br&gt;&lt;/PRE&gt;&lt;br&gt;Here we've provided an implementation of the get() handler, which intercepts&lt;br&gt;attempts to access properties in the target.&lt;br&gt;&lt;br&gt;Handler functions are sometimes called traps, presumably because they trap calls&lt;br&gt;to the target object. The very simple trap in handler2 above redefines all&lt;br&gt;property accessors:&lt;br&gt;&lt;br&gt;&lt;pre class='tooltip'&gt;console.log(proxy2.message1); &lt;em&gt;/ world&lt;br&gt;console.log(proxy2.message2); &lt;/em&gt;/ world&lt;br&gt;&lt;/PRE&gt;&lt;br&gt;With the help of the Reflect class we can give some accessors the original&lt;br&gt;behavior and redefine others:&lt;br&gt;&lt;br&gt;&lt;pre class='tooltip'&gt;const target = {&lt;br&gt; message1: ''hello'',&lt;br&gt; message2: ''everyone''&lt;br&gt;};&lt;br&gt;&lt;br&gt;const handler3 = {&lt;br&gt; get: function (target, prop, receiver) {&lt;br&gt;  if (prop === ''message2'') {&lt;br&gt;   return ''world'';&lt;br&gt;  }&lt;br&gt;  return Reflect.get(...arguments);&lt;br&gt; },&lt;br&gt;};&lt;br&gt;&lt;br&gt;const proxy3 = new Proxy(target, handler3);&lt;br&gt;&lt;br&gt;console.log(proxy3.message1); &lt;em&gt;/ hello&lt;br&gt;console.log(proxy3.message2); &lt;/em&gt;/ world&lt;br&gt;&lt;/PRE&gt;&lt;br&gt;&lt;strong&gt;Constructor&lt;/strong&gt; &lt;hr&gt;&lt;br&gt;&lt;pre class='tooltip'&gt;Proxy()&lt;br&gt;&lt;/PRE&gt;&lt;br&gt;Creates a new Proxy object.&lt;br&gt;&lt;br&gt;&lt;strong&gt;Static methods&lt;/strong&gt; &lt;hr&gt;&lt;br&gt;&lt;pre class='tooltip'&gt;Proxy.revocable()&lt;br&gt;&lt;/PRE&gt;&lt;br&gt;Creates a revocable Proxy object.&lt;br&gt;&lt;br&gt;&lt;strong&gt;Examples&lt;/strong&gt;&lt;br&gt;&lt;br&gt;&lt;strong&gt;Basic example&lt;/strong&gt; &lt;hr&gt;&lt;br&gt;In this simple example, the number 37 gets returned as the default value when&lt;br&gt;the property name is not in the object. It is using the get() handler.&lt;br&gt;&lt;br&gt;&lt;pre class='tooltip'&gt;const handler = {&lt;br&gt; get: function(obj, prop) {&lt;br&gt;  return prop in obj ?&lt;br&gt;   obj[prop] :&lt;br&gt;   37;&lt;br&gt; }&lt;br&gt;};&lt;br&gt;&lt;br&gt;const p = new Proxy({}, handler);&lt;br&gt;p.a = 1;&lt;br&gt;p.b = undefined;&lt;br&gt;&lt;br&gt;console.log(p.a, p.b);&lt;br&gt;&lt;em&gt;/ 1, undefined&lt;br&gt;&lt;br&gt;console.log('c' in p, p.c);&lt;br&gt;&lt;/em&gt;/ false, 37&lt;br&gt;&lt;/PRE&gt;&lt;br&gt;&lt;a target='_blank' href='https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Proxy'&gt;More&lt;/a&gt;&lt;br&gt;&lt;br&gt;&lt;br&gt;&lt;br&gt;&lt;br&gt;&lt;br&gt;">
+        Proxy</abbr> + <abbr class="tooltip" title=
+        "&lt;h2&gt;Description&lt;/h2&gt;&lt;br&gt;&lt;br&gt;Unlike most global objects, Reflect is not a constructor.&lt;br&gt;You cannot use it with a new operator or invoke the Reflect object as a&lt;br&gt;function. All properties and methods of Reflect are static (just like the Math&lt;br&gt;object).&lt;br&gt;&lt;br&gt;The Reflect object provides the following static functions which have the same&lt;br&gt;names as the proxy handler methods.&lt;br&gt;&lt;br&gt;Some of these methods are also the same as corresponding methods on Object,&lt;br&gt;although they do have some subtle differences between them.&lt;br&gt;&lt;br&gt;&lt;h2&gt;Static methods&lt;/h2&gt;&lt;br&gt;&lt;br&gt;&lt;h3&gt;Reflect.apply(target, thisArgument, argumentsList)&lt;/h3&gt;&lt;br&gt;&lt;br&gt;Calls a target function with arguments as specified by the argumentsList&lt;br&gt;parameter. See also Function.prototype.apply().&lt;br&gt;&lt;br&gt;&lt;h3&gt;Reflect.construct(target, argumentsList[, newTarget])&lt;/h3&gt;&lt;br&gt;&lt;br&gt;The new operator as a function. Equivalent to calling new&lt;br&gt;target(...argumentsList). Also provides the option to specify a different&lt;br&gt;prototype.&lt;br&gt;&lt;br&gt;&lt;h3&gt;Reflect.defineProperty(target, propertyKey, attributes)&lt;/h3&gt;&lt;br&gt;&lt;br&gt;Similar to Object.defineProperty(). Returns a boolean that is true if the&lt;br&gt;property was successfully defined.&lt;br&gt;&lt;br&gt;&lt;h3&gt;Reflect.deleteProperty(target, propertyKey)&lt;/h3&gt;&lt;br&gt;&lt;br&gt;The delete operator as a function. Equivalent to calling delete&lt;br&gt;target[propertyKey].&lt;br&gt;&lt;br&gt;&lt;h3&gt;Reflect.get(target, propertyKey[, receiver])&lt;/h3&gt;&lt;br&gt;&lt;br&gt;Returns the value of the property. Works like getting a property from an object&lt;br&gt;(target[propertyKey]) as a function.&lt;br&gt;&lt;br&gt;&lt;h3&gt;Reflect.getOwnPropertyDescriptor(target, propertyKey)&lt;/h3&gt;&lt;br&gt;&lt;br&gt;Similar to Object.getOwnPropertyDescriptor(). Returns a property descriptor of&lt;br&gt;the given property if it exists on the object, undefined otherwise.&lt;br&gt;&lt;br&gt;&lt;h3&gt;Reflect.getPrototypeOf(target)&lt;/h3&gt;&lt;br&gt;&lt;br&gt;Same as Object.getPrototypeOf().&lt;br&gt;&lt;br&gt;&lt;h3&gt;Reflect.has(target, propertyKey)&lt;/h3&gt;&lt;br&gt;&lt;br&gt;Returns a boolean indicating whether the target has the property. Either as own&lt;br&gt;or inherited. Works like the in operator as a function.&lt;br&gt;&lt;br&gt;&lt;h3&gt;Reflect.isExtensible(target)&lt;/h3&gt;&lt;br&gt;&lt;br&gt;Same as Object.isExtensible(). Returns a boolean that is true if the target is&lt;br&gt;extensible.&lt;br&gt;&lt;br&gt;&lt;h3&gt;Reflect.ownKeys(target)&lt;/h3&gt;&lt;br&gt;&lt;br&gt;Returns an array of the target object's own (not inherited) property keys.&lt;br&gt;&lt;br&gt;&lt;h3&gt;Reflect.preventExtensions(target)&lt;/h3&gt;&lt;br&gt;&lt;br&gt;Similar to Object.preventExtensions(). Returns a boolean that is true if the&lt;br&gt;update was successful.&lt;br&gt;&lt;br&gt;&lt;h3&gt;Reflect.set(target, propertyKey, value[, receiver])&lt;/h3&gt;&lt;br&gt;&lt;br&gt;A function that assigns values to properties. Returns a boolean that is true if&lt;br&gt;the update was successful.&lt;br&gt;&lt;br&gt;&lt;h3&gt;Reflect.setPrototypeOf(target, prototype)&lt;/h3&gt;&lt;br&gt;&lt;br&gt;A function that sets the prototype of an object. Returns a boolean that is true&lt;br&gt;if the update was successful.">
+        Reflect</abbr> 的使用。</p>
         <p>当传递一个对象 <code>target</code> 给 <abbr class="tooltip"
-        title="zsh:1: command not found: wn&lt;br&gt;">Proxy</abbr>
-        的时候，它会返回一个代理后的对象，对这个对象 做的一些原子操作会被 handlers 里面提供的方法所拦截，然后在这些
-        handlers 对应的方 法里面又可以通过 <abbr class="tooltip" title=
-        "zsh:1: command not found: wn&lt;br&gt;">Reflect</abbr>
-        来执行原子操作(比如：赋值和取值)，这样就能监听某一 个对象的原子操作在它们变更时来执行一些我们所想要的操作。</p>
+        title=
+        "&lt;strong&gt;Proxy&lt;/strong&gt; &lt;hr&gt;&lt;br&gt;The Proxy object enables you to create a proxy for another object, which&lt;br&gt;can intercept and redefine fundamental operations for that object.&lt;br&gt;&lt;br&gt;&lt;strong&gt;Description&lt;/strong&gt; &lt;hr&gt;&lt;br&gt;A Proxy is created with two parameters:&lt;br&gt;&lt;br&gt;- target: the original object which you want to proxy&lt;br&gt;&lt;br&gt;- handler: an object that defines which operations will be intercepted and how&lt;br&gt;to redefine intercepted operations. For example, this code defines a simple&lt;br&gt;target with just two properties, and an even simpler handler with no properties:&lt;br&gt;&lt;br&gt;&lt;pre class='tooltip'&gt;const target = {&lt;br&gt; message1: ''hello'',&lt;br&gt; message2: ''everyone''&lt;br&gt;};&lt;br&gt;&lt;br&gt;const handler1 = {};&lt;br&gt;&lt;br&gt;const proxy1 = new Proxy(target, handler1);&lt;br&gt;&lt;/PRE&gt;&lt;br&gt;Because the handler is empty, this proxy behaves just like the original target:&lt;br&gt;&lt;br&gt;&lt;pre class='tooltip'&gt;console.log(proxy1.message1); &lt;em&gt;/ hello&lt;br&gt;console.log(proxy1.message2); &lt;/em&gt;/ everyone&lt;br&gt;&lt;/PRE&gt;&lt;br&gt;To customize the proxy, we define functions on the handler object:&lt;br&gt;&lt;br&gt;&lt;pre class='tooltip'&gt;const target = {&lt;br&gt; message1: ''hello'',&lt;br&gt; message2: ''everyone''&lt;br&gt;};&lt;br&gt;&lt;br&gt;const handler2 = {&lt;br&gt; get: function(target, prop, receiver) {&lt;br&gt;  return ''world'';&lt;br&gt; }&lt;br&gt;};&lt;br&gt;&lt;br&gt;const proxy2 = new Proxy(target, handler2);&lt;br&gt;&lt;/PRE&gt;&lt;br&gt;Here we've provided an implementation of the get() handler, which intercepts&lt;br&gt;attempts to access properties in the target.&lt;br&gt;&lt;br&gt;Handler functions are sometimes called traps, presumably because they trap calls&lt;br&gt;to the target object. The very simple trap in handler2 above redefines all&lt;br&gt;property accessors:&lt;br&gt;&lt;br&gt;&lt;pre class='tooltip'&gt;console.log(proxy2.message1); &lt;em&gt;/ world&lt;br&gt;console.log(proxy2.message2); &lt;/em&gt;/ world&lt;br&gt;&lt;/PRE&gt;&lt;br&gt;With the help of the Reflect class we can give some accessors the original&lt;br&gt;behavior and redefine others:&lt;br&gt;&lt;br&gt;&lt;pre class='tooltip'&gt;const target = {&lt;br&gt; message1: ''hello'',&lt;br&gt; message2: ''everyone''&lt;br&gt;};&lt;br&gt;&lt;br&gt;const handler3 = {&lt;br&gt; get: function (target, prop, receiver) {&lt;br&gt;  if (prop === ''message2'') {&lt;br&gt;   return ''world'';&lt;br&gt;  }&lt;br&gt;  return Reflect.get(...arguments);&lt;br&gt; },&lt;br&gt;};&lt;br&gt;&lt;br&gt;const proxy3 = new Proxy(target, handler3);&lt;br&gt;&lt;br&gt;console.log(proxy3.message1); &lt;em&gt;/ hello&lt;br&gt;console.log(proxy3.message2); &lt;/em&gt;/ world&lt;br&gt;&lt;/PRE&gt;&lt;br&gt;&lt;strong&gt;Constructor&lt;/strong&gt; &lt;hr&gt;&lt;br&gt;&lt;pre class='tooltip'&gt;Proxy()&lt;br&gt;&lt;/PRE&gt;&lt;br&gt;Creates a new Proxy object.&lt;br&gt;&lt;br&gt;&lt;strong&gt;Static methods&lt;/strong&gt; &lt;hr&gt;&lt;br&gt;&lt;pre class='tooltip'&gt;Proxy.revocable()&lt;br&gt;&lt;/PRE&gt;&lt;br&gt;Creates a revocable Proxy object.&lt;br&gt;&lt;br&gt;&lt;strong&gt;Examples&lt;/strong&gt;&lt;br&gt;&lt;br&gt;&lt;strong&gt;Basic example&lt;/strong&gt; &lt;hr&gt;&lt;br&gt;In this simple example, the number 37 gets returned as the default value when&lt;br&gt;the property name is not in the object. It is using the get() handler.&lt;br&gt;&lt;br&gt;&lt;pre class='tooltip'&gt;const handler = {&lt;br&gt; get: function(obj, prop) {&lt;br&gt;  return prop in obj ?&lt;br&gt;   obj[prop] :&lt;br&gt;   37;&lt;br&gt; }&lt;br&gt;};&lt;br&gt;&lt;br&gt;const p = new Proxy({}, handler);&lt;br&gt;p.a = 1;&lt;br&gt;p.b = undefined;&lt;br&gt;&lt;br&gt;console.log(p.a, p.b);&lt;br&gt;&lt;em&gt;/ 1, undefined&lt;br&gt;&lt;br&gt;console.log('c' in p, p.c);&lt;br&gt;&lt;/em&gt;/ false, 37&lt;br&gt;&lt;/PRE&gt;&lt;br&gt;&lt;a target='_blank' href='https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Proxy'&gt;More&lt;/a&gt;&lt;br&gt;&lt;br&gt;&lt;br&gt;&lt;br&gt;&lt;br&gt;&lt;br&gt;">
+        Proxy</abbr> 的时候，它会返回一个代理后的对象，对这个对象 做的一些原子操作会被 handlers
+        里面提供的方法所拦截，然后在这些 handlers 对应的方 法里面又可以通过 <abbr class=
+        "tooltip" title=
+        "&lt;h2&gt;Description&lt;/h2&gt;&lt;br&gt;&lt;br&gt;Unlike most global objects, Reflect is not a constructor.&lt;br&gt;You cannot use it with a new operator or invoke the Reflect object as a&lt;br&gt;function. All properties and methods of Reflect are static (just like the Math&lt;br&gt;object).&lt;br&gt;&lt;br&gt;The Reflect object provides the following static functions which have the same&lt;br&gt;names as the proxy handler methods.&lt;br&gt;&lt;br&gt;Some of these methods are also the same as corresponding methods on Object,&lt;br&gt;although they do have some subtle differences between them.&lt;br&gt;&lt;br&gt;&lt;h2&gt;Static methods&lt;/h2&gt;&lt;br&gt;&lt;br&gt;&lt;h3&gt;Reflect.apply(target, thisArgument, argumentsList)&lt;/h3&gt;&lt;br&gt;&lt;br&gt;Calls a target function with arguments as specified by the argumentsList&lt;br&gt;parameter. See also Function.prototype.apply().&lt;br&gt;&lt;br&gt;&lt;h3&gt;Reflect.construct(target, argumentsList[, newTarget])&lt;/h3&gt;&lt;br&gt;&lt;br&gt;The new operator as a function. Equivalent to calling new&lt;br&gt;target(...argumentsList). Also provides the option to specify a different&lt;br&gt;prototype.&lt;br&gt;&lt;br&gt;&lt;h3&gt;Reflect.defineProperty(target, propertyKey, attributes)&lt;/h3&gt;&lt;br&gt;&lt;br&gt;Similar to Object.defineProperty(). Returns a boolean that is true if the&lt;br&gt;property was successfully defined.&lt;br&gt;&lt;br&gt;&lt;h3&gt;Reflect.deleteProperty(target, propertyKey)&lt;/h3&gt;&lt;br&gt;&lt;br&gt;The delete operator as a function. Equivalent to calling delete&lt;br&gt;target[propertyKey].&lt;br&gt;&lt;br&gt;&lt;h3&gt;Reflect.get(target, propertyKey[, receiver])&lt;/h3&gt;&lt;br&gt;&lt;br&gt;Returns the value of the property. Works like getting a property from an object&lt;br&gt;(target[propertyKey]) as a function.&lt;br&gt;&lt;br&gt;&lt;h3&gt;Reflect.getOwnPropertyDescriptor(target, propertyKey)&lt;/h3&gt;&lt;br&gt;&lt;br&gt;Similar to Object.getOwnPropertyDescriptor(). Returns a property descriptor of&lt;br&gt;the given property if it exists on the object, undefined otherwise.&lt;br&gt;&lt;br&gt;&lt;h3&gt;Reflect.getPrototypeOf(target)&lt;/h3&gt;&lt;br&gt;&lt;br&gt;Same as Object.getPrototypeOf().&lt;br&gt;&lt;br&gt;&lt;h3&gt;Reflect.has(target, propertyKey)&lt;/h3&gt;&lt;br&gt;&lt;br&gt;Returns a boolean indicating whether the target has the property. Either as own&lt;br&gt;or inherited. Works like the in operator as a function.&lt;br&gt;&lt;br&gt;&lt;h3&gt;Reflect.isExtensible(target)&lt;/h3&gt;&lt;br&gt;&lt;br&gt;Same as Object.isExtensible(). Returns a boolean that is true if the target is&lt;br&gt;extensible.&lt;br&gt;&lt;br&gt;&lt;h3&gt;Reflect.ownKeys(target)&lt;/h3&gt;&lt;br&gt;&lt;br&gt;Returns an array of the target object's own (not inherited) property keys.&lt;br&gt;&lt;br&gt;&lt;h3&gt;Reflect.preventExtensions(target)&lt;/h3&gt;&lt;br&gt;&lt;br&gt;Similar to Object.preventExtensions(). Returns a boolean that is true if the&lt;br&gt;update was successful.&lt;br&gt;&lt;br&gt;&lt;h3&gt;Reflect.set(target, propertyKey, value[, receiver])&lt;/h3&gt;&lt;br&gt;&lt;br&gt;A function that assigns values to properties. Returns a boolean that is true if&lt;br&gt;the update was successful.&lt;br&gt;&lt;br&gt;&lt;h3&gt;Reflect.setPrototypeOf(target, prototype)&lt;/h3&gt;&lt;br&gt;&lt;br&gt;A function that sets the prototype of an object. Returns a boolean that is true&lt;br&gt;if the update was successful.">
+        Reflect</abbr> 来执行原子操作(比如：赋值和取值)，这样就能监听某一
+        个对象的原子操作在它们变更时来执行一些我们所想要的操作。</p>
         <p>更多与 <abbr class="tooltip" title=
-        "zsh:1: command not found: wn&lt;br&gt;">proxy</abbr> 和
-        <abbr class="tooltip" title=
-        "zsh:1: command not found: wn&lt;br&gt;">reflect</abbr>
-        相关的内容请点击 <a href=
+        "&lt;strong&gt;Proxy&lt;/strong&gt; &lt;hr&gt;&lt;br&gt;The Proxy object enables you to create a proxy for another object, which&lt;br&gt;can intercept and redefine fundamental operations for that object.&lt;br&gt;&lt;br&gt;&lt;strong&gt;Description&lt;/strong&gt; &lt;hr&gt;&lt;br&gt;A Proxy is created with two parameters:&lt;br&gt;&lt;br&gt;- target: the original object which you want to proxy&lt;br&gt;&lt;br&gt;- handler: an object that defines which operations will be intercepted and how&lt;br&gt;to redefine intercepted operations. For example, this code defines a simple&lt;br&gt;target with just two properties, and an even simpler handler with no properties:&lt;br&gt;&lt;br&gt;&lt;pre class='tooltip'&gt;const target = {&lt;br&gt; message1: ''hello'',&lt;br&gt; message2: ''everyone''&lt;br&gt;};&lt;br&gt;&lt;br&gt;const handler1 = {};&lt;br&gt;&lt;br&gt;const proxy1 = new Proxy(target, handler1);&lt;br&gt;&lt;/PRE&gt;&lt;br&gt;Because the handler is empty, this proxy behaves just like the original target:&lt;br&gt;&lt;br&gt;&lt;pre class='tooltip'&gt;console.log(proxy1.message1); &lt;em&gt;/ hello&lt;br&gt;console.log(proxy1.message2); &lt;/em&gt;/ everyone&lt;br&gt;&lt;/PRE&gt;&lt;br&gt;To customize the proxy, we define functions on the handler object:&lt;br&gt;&lt;br&gt;&lt;pre class='tooltip'&gt;const target = {&lt;br&gt; message1: ''hello'',&lt;br&gt; message2: ''everyone''&lt;br&gt;};&lt;br&gt;&lt;br&gt;const handler2 = {&lt;br&gt; get: function(target, prop, receiver) {&lt;br&gt;  return ''world'';&lt;br&gt; }&lt;br&gt;};&lt;br&gt;&lt;br&gt;const proxy2 = new Proxy(target, handler2);&lt;br&gt;&lt;/PRE&gt;&lt;br&gt;Here we've provided an implementation of the get() handler, which intercepts&lt;br&gt;attempts to access properties in the target.&lt;br&gt;&lt;br&gt;Handler functions are sometimes called traps, presumably because they trap calls&lt;br&gt;to the target object. The very simple trap in handler2 above redefines all&lt;br&gt;property accessors:&lt;br&gt;&lt;br&gt;&lt;pre class='tooltip'&gt;console.log(proxy2.message1); &lt;em&gt;/ world&lt;br&gt;console.log(proxy2.message2); &lt;/em&gt;/ world&lt;br&gt;&lt;/PRE&gt;&lt;br&gt;With the help of the Reflect class we can give some accessors the original&lt;br&gt;behavior and redefine others:&lt;br&gt;&lt;br&gt;&lt;pre class='tooltip'&gt;const target = {&lt;br&gt; message1: ''hello'',&lt;br&gt; message2: ''everyone''&lt;br&gt;};&lt;br&gt;&lt;br&gt;const handler3 = {&lt;br&gt; get: function (target, prop, receiver) {&lt;br&gt;  if (prop === ''message2'') {&lt;br&gt;   return ''world'';&lt;br&gt;  }&lt;br&gt;  return Reflect.get(...arguments);&lt;br&gt; },&lt;br&gt;};&lt;br&gt;&lt;br&gt;const proxy3 = new Proxy(target, handler3);&lt;br&gt;&lt;br&gt;console.log(proxy3.message1); &lt;em&gt;/ hello&lt;br&gt;console.log(proxy3.message2); &lt;/em&gt;/ world&lt;br&gt;&lt;/PRE&gt;&lt;br&gt;&lt;strong&gt;Constructor&lt;/strong&gt; &lt;hr&gt;&lt;br&gt;&lt;pre class='tooltip'&gt;Proxy()&lt;br&gt;&lt;/PRE&gt;&lt;br&gt;Creates a new Proxy object.&lt;br&gt;&lt;br&gt;&lt;strong&gt;Static methods&lt;/strong&gt; &lt;hr&gt;&lt;br&gt;&lt;pre class='tooltip'&gt;Proxy.revocable()&lt;br&gt;&lt;/PRE&gt;&lt;br&gt;Creates a revocable Proxy object.&lt;br&gt;&lt;br&gt;&lt;strong&gt;Examples&lt;/strong&gt;&lt;br&gt;&lt;br&gt;&lt;strong&gt;Basic example&lt;/strong&gt; &lt;hr&gt;&lt;br&gt;In this simple example, the number 37 gets returned as the default value when&lt;br&gt;the property name is not in the object. It is using the get() handler.&lt;br&gt;&lt;br&gt;&lt;pre class='tooltip'&gt;const handler = {&lt;br&gt; get: function(obj, prop) {&lt;br&gt;  return prop in obj ?&lt;br&gt;   obj[prop] :&lt;br&gt;   37;&lt;br&gt; }&lt;br&gt;};&lt;br&gt;&lt;br&gt;const p = new Proxy({}, handler);&lt;br&gt;p.a = 1;&lt;br&gt;p.b = undefined;&lt;br&gt;&lt;br&gt;console.log(p.a, p.b);&lt;br&gt;&lt;em&gt;/ 1, undefined&lt;br&gt;&lt;br&gt;console.log('c' in p, p.c);&lt;br&gt;&lt;/em&gt;/ false, 37&lt;br&gt;&lt;/PRE&gt;&lt;br&gt;&lt;a target='_blank' href='https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Proxy'&gt;More&lt;/a&gt;&lt;br&gt;&lt;br&gt;&lt;br&gt;&lt;br&gt;&lt;br&gt;&lt;br&gt;">
+        Proxy</abbr> 和 <abbr class="tooltip" title=
+        "&lt;h2&gt;Description&lt;/h2&gt;&lt;br&gt;&lt;br&gt;Unlike most global objects, Reflect is not a constructor.&lt;br&gt;You cannot use it with a new operator or invoke the Reflect object as a&lt;br&gt;function. All properties and methods of Reflect are static (just like the Math&lt;br&gt;object).&lt;br&gt;&lt;br&gt;The Reflect object provides the following static functions which have the same&lt;br&gt;names as the proxy handler methods.&lt;br&gt;&lt;br&gt;Some of these methods are also the same as corresponding methods on Object,&lt;br&gt;although they do have some subtle differences between them.&lt;br&gt;&lt;br&gt;&lt;h2&gt;Static methods&lt;/h2&gt;&lt;br&gt;&lt;br&gt;&lt;h3&gt;Reflect.apply(target, thisArgument, argumentsList)&lt;/h3&gt;&lt;br&gt;&lt;br&gt;Calls a target function with arguments as specified by the argumentsList&lt;br&gt;parameter. See also Function.prototype.apply().&lt;br&gt;&lt;br&gt;&lt;h3&gt;Reflect.construct(target, argumentsList[, newTarget])&lt;/h3&gt;&lt;br&gt;&lt;br&gt;The new operator as a function. Equivalent to calling new&lt;br&gt;target(...argumentsList). Also provides the option to specify a different&lt;br&gt;prototype.&lt;br&gt;&lt;br&gt;&lt;h3&gt;Reflect.defineProperty(target, propertyKey, attributes)&lt;/h3&gt;&lt;br&gt;&lt;br&gt;Similar to Object.defineProperty(). Returns a boolean that is true if the&lt;br&gt;property was successfully defined.&lt;br&gt;&lt;br&gt;&lt;h3&gt;Reflect.deleteProperty(target, propertyKey)&lt;/h3&gt;&lt;br&gt;&lt;br&gt;The delete operator as a function. Equivalent to calling delete&lt;br&gt;target[propertyKey].&lt;br&gt;&lt;br&gt;&lt;h3&gt;Reflect.get(target, propertyKey[, receiver])&lt;/h3&gt;&lt;br&gt;&lt;br&gt;Returns the value of the property. Works like getting a property from an object&lt;br&gt;(target[propertyKey]) as a function.&lt;br&gt;&lt;br&gt;&lt;h3&gt;Reflect.getOwnPropertyDescriptor(target, propertyKey)&lt;/h3&gt;&lt;br&gt;&lt;br&gt;Similar to Object.getOwnPropertyDescriptor(). Returns a property descriptor of&lt;br&gt;the given property if it exists on the object, undefined otherwise.&lt;br&gt;&lt;br&gt;&lt;h3&gt;Reflect.getPrototypeOf(target)&lt;/h3&gt;&lt;br&gt;&lt;br&gt;Same as Object.getPrototypeOf().&lt;br&gt;&lt;br&gt;&lt;h3&gt;Reflect.has(target, propertyKey)&lt;/h3&gt;&lt;br&gt;&lt;br&gt;Returns a boolean indicating whether the target has the property. Either as own&lt;br&gt;or inherited. Works like the in operator as a function.&lt;br&gt;&lt;br&gt;&lt;h3&gt;Reflect.isExtensible(target)&lt;/h3&gt;&lt;br&gt;&lt;br&gt;Same as Object.isExtensible(). Returns a boolean that is true if the target is&lt;br&gt;extensible.&lt;br&gt;&lt;br&gt;&lt;h3&gt;Reflect.ownKeys(target)&lt;/h3&gt;&lt;br&gt;&lt;br&gt;Returns an array of the target object's own (not inherited) property keys.&lt;br&gt;&lt;br&gt;&lt;h3&gt;Reflect.preventExtensions(target)&lt;/h3&gt;&lt;br&gt;&lt;br&gt;Similar to Object.preventExtensions(). Returns a boolean that is true if the&lt;br&gt;update was successful.&lt;br&gt;&lt;br&gt;&lt;h3&gt;Reflect.set(target, propertyKey, value[, receiver])&lt;/h3&gt;&lt;br&gt;&lt;br&gt;A function that assigns values to properties. Returns a boolean that is true if&lt;br&gt;the update was successful.&lt;br&gt;&lt;br&gt;&lt;h3&gt;Reflect.setPrototypeOf(target, prototype)&lt;/h3&gt;&lt;br&gt;&lt;br&gt;A function that sets the prototype of an object. Returns a boolean that is true&lt;br&gt;if the update was successful.">
+        Reflect</abbr> 相关的内容请点击 <a href=
         "javascript_proxy_and_reflect.html#ID-cc2b98c6-21d9-488c-9a05-8485a36c1e01">
         JavaScript Proxy And Reflect</a>。</p><a href=
         "../assets/img/vue3plus/reactive.svg" data-fancybox=
@@ -678,8 +682,8 @@
         "Preview">------------- reactivity.svg ---------------</a>
       </div>
     </div>
-    <div id="outline-container-org47b693d" class="outline-2">
-      <h2 id="org47b693d"><span class="section-number-2">2.</span>
+    <div id="outline-container-orge4fed65" class="outline-2">
+      <h2 id="orge4fed65"><span class="section-number-2">2.</span>
       Global variables</h2>
       <div class="outline-text-2" id="text-2">
         <p>这里把用到的所有全局变量集中到下面。</p>
@@ -690,7 +694,7 @@
             "green">全局变量</font></strong>
           </summary>
           <div class="org-src-container">
-            <pre class="src src-js" id="org3b9e0c4"><span class=
+            <pre class="src src-js" id="org15f3d01"><span class=
             "linenr">  1: </span><span class=
             "org-keyword">const</span> <span class=
             "org-variable-name">NOOP</span> = () =&gt; {}
@@ -1211,7 +1215,7 @@
         </details>
         <p>effect.s 中相关的函数：</p>
         <div class="org-src-container">
-          <pre class="src src-js" id="org1e5105f"><span class=
+          <pre class="src src-js" id="org4421756"><span class=
           "linenr">1: </span><span class=
           "org-keyword">function</span> <span class=
           "org-function-name">cleanupEffect</span>(<span class=
@@ -1236,7 +1240,7 @@
         </div>
         <p>每个订阅函数最终都会被封装成一个 <code>ReactiveEffect</code> 被收集到
         <code>targetMap -&gt; depsMap -&gt;</code> <a href=
-        "#org5ccf4b4">Dep</a> 中</p><br>
+        "#org36e6ce0">Dep</a> 中</p><br>
         <details class="code-details" style=
         "padding: 1em; background-color: #e5f5e5; /* background-color: pink; */ border-radius: 15px; color: hsl(157 75%); font-size: 0.9em; box-shadow: 0.05em 0.1em 5px 0.01em #00000057;">
           <summary>
@@ -1244,7 +1248,7 @@
             "green">ReactiveEffect</font></strong>
           </summary>
           <div class="org-src-container">
-            <pre class="src src-js" id="orgb577f80"><span class=
+            <pre class="src src-js" id="org16ef9a6"><span class=
             "linenr"> 1: </span><span class=
             "org-keyword">class</span> ReactiveEffect {
 <span class="linenr"> 2: </span>  active = <span class=
@@ -1391,7 +1395,7 @@
             effects 嵌套层级控制</font></strong>
           </summary>
           <div class="org-src-container">
-            <pre class="src src-diff" id="org1982b96"><span class=
+            <pre class="src src-diff" id="orgb51bfab"><span class=
             "org-diff-context">class ReactiveEffect {</span>
 <span class="org-diff-context">  active = true</span>
 <span class="org-diff-context">  // 依赖列表</span>
@@ -1486,14 +1490,14 @@
         </details>
       </div>
     </div>
-    <div id="outline-container-org586b531" class="outline-2">
-      <h2 id="org586b531"><span class="section-number-2">3.</span>
+    <div id="outline-container-org274e6f9" class="outline-2">
+      <h2 id="org274e6f9"><span class="section-number-2">3.</span>
       reactive(target: object)</h2>
       <div class="outline-text-2" id="text-3">
-        <p>相关代码：<a href="#org3b9e0c4">globalVars</a>, <a href=
-        "#orgdd2216e">createReactiveObject</a></p>
+        <p>相关代码：<a href="#org15f3d01">globalVars</a>, <a href=
+        "#org1d2a769">createReactiveObject</a></p>
         <div class="org-src-container">
-          <pre class="src src-js" id="orga43586a"><span class=
+          <pre class="src src-js" id="orgd30aa30"><span class=
           "linenr"> 1: </span>&lt;&lt;globalVars&gt;&gt;
 <span class="linenr"> 2: </span>
 <span class="linenr"> 3: </span><span class=
@@ -1551,8 +1555,8 @@
             "CodeHighlightOff(this, 'coderef-reactiveMap');">reactiveMap</a>
             这里是一个应用级别的全局变量，用来存储 target=&gt;proxy 的对应关系，
             可以用来避免对一个已经是 <abbr class="tooltip" title=
-            "zsh:1: command not found: wn&lt;br&gt;">Proxy</abbr>
-            的对象进行重复代理。
+            "&lt;strong&gt;Proxy&lt;/strong&gt; &lt;hr&gt;&lt;br&gt;The Proxy object enables you to create a proxy for another object, which&lt;br&gt;can intercept and redefine fundamental operations for that object.&lt;br&gt;&lt;br&gt;&lt;strong&gt;Description&lt;/strong&gt; &lt;hr&gt;&lt;br&gt;A Proxy is created with two parameters:&lt;br&gt;&lt;br&gt;- target: the original object which you want to proxy&lt;br&gt;&lt;br&gt;- handler: an object that defines which operations will be intercepted and how&lt;br&gt;to redefine intercepted operations. For example, this code defines a simple&lt;br&gt;target with just two properties, and an even simpler handler with no properties:&lt;br&gt;&lt;br&gt;&lt;pre class='tooltip'&gt;const target = {&lt;br&gt; message1: ''hello'',&lt;br&gt; message2: ''everyone''&lt;br&gt;};&lt;br&gt;&lt;br&gt;const handler1 = {};&lt;br&gt;&lt;br&gt;const proxy1 = new Proxy(target, handler1);&lt;br&gt;&lt;/PRE&gt;&lt;br&gt;Because the handler is empty, this proxy behaves just like the original target:&lt;br&gt;&lt;br&gt;&lt;pre class='tooltip'&gt;console.log(proxy1.message1); &lt;em&gt;/ hello&lt;br&gt;console.log(proxy1.message2); &lt;/em&gt;/ everyone&lt;br&gt;&lt;/PRE&gt;&lt;br&gt;To customize the proxy, we define functions on the handler object:&lt;br&gt;&lt;br&gt;&lt;pre class='tooltip'&gt;const target = {&lt;br&gt; message1: ''hello'',&lt;br&gt; message2: ''everyone''&lt;br&gt;};&lt;br&gt;&lt;br&gt;const handler2 = {&lt;br&gt; get: function(target, prop, receiver) {&lt;br&gt;  return ''world'';&lt;br&gt; }&lt;br&gt;};&lt;br&gt;&lt;br&gt;const proxy2 = new Proxy(target, handler2);&lt;br&gt;&lt;/PRE&gt;&lt;br&gt;Here we've provided an implementation of the get() handler, which intercepts&lt;br&gt;attempts to access properties in the target.&lt;br&gt;&lt;br&gt;Handler functions are sometimes called traps, presumably because they trap calls&lt;br&gt;to the target object. The very simple trap in handler2 above redefines all&lt;br&gt;property accessors:&lt;br&gt;&lt;br&gt;&lt;pre class='tooltip'&gt;console.log(proxy2.message1); &lt;em&gt;/ world&lt;br&gt;console.log(proxy2.message2); &lt;/em&gt;/ world&lt;br&gt;&lt;/PRE&gt;&lt;br&gt;With the help of the Reflect class we can give some accessors the original&lt;br&gt;behavior and redefine others:&lt;br&gt;&lt;br&gt;&lt;pre class='tooltip'&gt;const target = {&lt;br&gt; message1: ''hello'',&lt;br&gt; message2: ''everyone''&lt;br&gt;};&lt;br&gt;&lt;br&gt;const handler3 = {&lt;br&gt; get: function (target, prop, receiver) {&lt;br&gt;  if (prop === ''message2'') {&lt;br&gt;   return ''world'';&lt;br&gt;  }&lt;br&gt;  return Reflect.get(...arguments);&lt;br&gt; },&lt;br&gt;};&lt;br&gt;&lt;br&gt;const proxy3 = new Proxy(target, handler3);&lt;br&gt;&lt;br&gt;console.log(proxy3.message1); &lt;em&gt;/ hello&lt;br&gt;console.log(proxy3.message2); &lt;/em&gt;/ world&lt;br&gt;&lt;/PRE&gt;&lt;br&gt;&lt;strong&gt;Constructor&lt;/strong&gt; &lt;hr&gt;&lt;br&gt;&lt;pre class='tooltip'&gt;Proxy()&lt;br&gt;&lt;/PRE&gt;&lt;br&gt;Creates a new Proxy object.&lt;br&gt;&lt;br&gt;&lt;strong&gt;Static methods&lt;/strong&gt; &lt;hr&gt;&lt;br&gt;&lt;pre class='tooltip'&gt;Proxy.revocable()&lt;br&gt;&lt;/PRE&gt;&lt;br&gt;Creates a revocable Proxy object.&lt;br&gt;&lt;br&gt;&lt;strong&gt;Examples&lt;/strong&gt;&lt;br&gt;&lt;br&gt;&lt;strong&gt;Basic example&lt;/strong&gt; &lt;hr&gt;&lt;br&gt;In this simple example, the number 37 gets returned as the default value when&lt;br&gt;the property name is not in the object. It is using the get() handler.&lt;br&gt;&lt;br&gt;&lt;pre class='tooltip'&gt;const handler = {&lt;br&gt; get: function(obj, prop) {&lt;br&gt;  return prop in obj ?&lt;br&gt;   obj[prop] :&lt;br&gt;   37;&lt;br&gt; }&lt;br&gt;};&lt;br&gt;&lt;br&gt;const p = new Proxy({}, handler);&lt;br&gt;p.a = 1;&lt;br&gt;p.b = undefined;&lt;br&gt;&lt;br&gt;console.log(p.a, p.b);&lt;br&gt;&lt;em&gt;/ 1, undefined&lt;br&gt;&lt;br&gt;console.log('c' in p, p.c);&lt;br&gt;&lt;/em&gt;/ false, 37&lt;br&gt;&lt;/PRE&gt;&lt;br&gt;&lt;a target='_blank' href='https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Proxy'&gt;More&lt;/a&gt;&lt;br&gt;&lt;br&gt;&lt;br&gt;&lt;br&gt;&lt;br&gt;&lt;br&gt;">
+            Proxy</abbr> 的对象进行重复代理。
           </li>
         </ol><a href=
         "../assets/img/vue3/reactivity/reactivity-create-reactive-object.svg"
@@ -1563,13 +1567,13 @@
         data-fancybox="gallery" data-caption="Preview"><img src=
         "../assets/img/vue3/reactivity/reactivity-basehd-get-03-track-recursively.svg"></a>
       </div>
-      <div id="outline-container-org9d6cc99" class="outline-3">
-        <h3 id="org9d6cc99"><span class=
+      <div id="outline-container-org7d80269" class="outline-3">
+        <h3 id="org7d80269"><span class=
         "section-number-3">3.1.</span> reactive with
         track&amp;trigger</h3>
         <div class="outline-text-3" id="text-3-1">
           <div class="org-src-container">
-            <pre class="src src-js" id="org24fafc8"><span class=
+            <pre class="src src-js" id="org5e72d86"><span class=
             "linenr"> 1: </span>&lt;&lt;globalVars&gt;&gt;
 <span class="linenr"> 2: </span>
 <span class="linenr"> 3: </span>&lt;&lt;track&gt;&gt;
@@ -1611,8 +1615,8 @@
         </div>
       </div>
     </div>
-    <div id="outline-container-org99f555b" class="outline-2">
-      <h2 id="org99f555b"><span class="section-number-2">4.</span>
+    <div id="outline-container-orgdb3a3f7" class="outline-2">
+      <h2 id="orgdb3a3f7"><span class="section-number-2">4.</span>
       createReactiveObject</h2>
       <div class="outline-text-2" id="text-4">
         <p>这个才是真正创建代理的地方，也是 <span style=
@@ -1644,7 +1648,7 @@
 </pre>
         </div>
         <p>参数说明：</p>
-        <table id="org2b87770">
+        <table id="org4f4e6e1">
           <colgroup>
             <col class="org-left">
             <col class="org-left">
@@ -1677,7 +1681,7 @@
               <code>collectionHandlers</code></td>
               <td class="org-left">a param to Proxy for
               collectional objects(<abbr class="tooltip" title=
-              "zsh:1: command not found: wn&lt;br&gt;">Map</abbr>,
+              "&lt;strong&gt;Map (totally defined function):&lt;/strong&gt; &lt;em&gt;Every source value x is associated &lt;strong&gt;exactly one&lt;/strong&gt;&lt;br&gt;target value y.&lt;/em&gt;&lt;br&gt;&lt;hr&gt;&lt;br&gt;A relation &lt;EM&gt;R : V → V&lt;/EM&gt; can be visualised as a drawing: A dot for each element&lt;br&gt;&lt;em&gt;x&lt;/em&gt; of &lt;EM&gt;V&lt;/EM&gt;, and a directed line &lt;em&gt;x ⟶ y&lt;/em&gt; between two points exactly when &lt;em&gt;x 〔R〕&lt;br&gt;y&lt;/em&gt;. That is relations are &lt;em&gt;simple graphs&lt;/em&gt;; one refers to the directed lines&lt;br&gt;as &lt;em&gt;edges&lt;/em&gt; and the dots as &lt;em&gt;nodes&lt;/em&gt;.&lt;br&gt;&lt;br&gt;As a simple relation, being a mapping means: &lt;em&gt;Every node has exactly one outgoing edge.&lt;/em&gt;&lt;br&gt;&lt;hr&gt;&lt;br&gt;  &lt;EM&gt;F&lt;/EM&gt; is a map&lt;br&gt;≡ &lt;EM&gt;F&lt;/EM&gt; is total and univalent&lt;br&gt;≡ &lt;em&gt;F ⨾ ∼ Id  =  ∼ F&lt;/em&gt;&lt;br&gt;≡ &lt;em&gt;∀ S • F ⨾ ∼ S  =  ∼ (F ⨾ S)&lt;/em&gt;&lt;br&gt;&lt;br&gt;Where &lt;em&gt;⨾, ⊤, ⊥, Id, ˘, ∼&lt;/em&gt; are relation composition, the universal relation, the&lt;br&gt;empty relation, the identity relation, relation converse (transpose), and complement.&lt;br&gt;&lt;hr&gt;&lt;br&gt;The final rule says &lt;em&gt;the preimage of the complement is the complement of the&lt;br&gt;preimage&lt;/em&gt;; or, using conventional direct image notation, &lt;em&gt;f⁻¹(∼ A)  =  ∼&lt;br&gt;f⁻¹(A)&lt;/em&gt;.&lt;br&gt;&lt;br&gt;In conventional direct image notation, this amount to a Galois connection: &lt;em&gt;A ⊆&lt;br&gt;f⁻¹(B)  ≡  f(A) ⊆ B&lt;/em&gt;.&lt;br&gt;&lt;br&gt;A mapping is so very close to being invertible since mappings &lt;EM&gt;F&lt;/EM&gt; always&lt;br&gt;satisfy: &lt;em&gt;F ˘ ⨾ F ⊆ Id&lt;/em&gt; and &lt;em&gt;Id ⊆ F ⨾ F˘&lt;/em&gt;.&lt;br&gt;&lt;br&gt;Shunting rule:* If &lt;EM&gt;F&lt;/EM&gt; is a map, then &lt;em&gt;R ⊆ S ⨾ F ˘  ≡  R ⨾ F ⊆ S&lt;/em&gt;.&lt;br&gt;&lt;br&gt;More generally, given an equivalence Ξ, if relation &lt;em&gt;F&lt;/em&gt; is total and Ξ-univalent&lt;br&gt;---i.e., &lt;em&gt;F˘ ⨾ F ⊆ Ξ&lt;/em&gt;--- and if &lt;em&gt;S&lt;/em&gt; is Ξ-target-saturated ---i.e., &lt;em&gt;S ⨾ Ξ = S&lt;/em&gt;---&lt;br&gt;then &lt;em&gt;R ⊆ S ⨾ F ˘  ≡  R ⨾ F ⊆ S&lt;/em&gt;.">Map</abbr>,
               <abbr class="tooltip" title=
               "zsh:1: command not found: wn&lt;br&gt;">Set</abbr>)</td>
             </tr>
@@ -1689,7 +1693,7 @@
           </tbody>
         </table>
         <div class="org-src-container">
-          <pre class="src src-js" id="orgdd2216e"><span class=
+          <pre class="src src-js" id="org1d2a769"><span class=
           "org-keyword">function</span> <span class=
           "org-function-name">createReactiveObject</span>(
   <span class="org-variable-name">target</span>,
@@ -1724,8 +1728,8 @@
         </div>
       </div>
     </div>
-    <div id="outline-container-org2a38de0" class="outline-2">
-      <h2 id="org2a38de0"><span class="section-number-2">5.</span>
+    <div id="outline-container-orgfb2c9c8" class="outline-2">
+      <h2 id="orgfb2c9c8"><span class="section-number-2">5.</span>
       mutableHandlers</h2>
       <div class="outline-text-2" id="text-5">
         <p>针对普通类型(<abbr class="tooltip" title=
@@ -1734,7 +1738,7 @@
         "zsh:1: command not found: wn&lt;br&gt;">Array</abbr>)的对象的
         Proxy 参数。</p>
         <div class="org-src-container">
-          <pre class="src src-js" id="orge35405b"><span id=
+          <pre class="src src-js" id="org0ed8243"><span id=
           "coderef-mutableHandlers" class="coderef-off"><span class=
           "linenr"> 1: </span><span class=
           "org-keyword">const</span> <span class=
@@ -1776,7 +1780,7 @@
         </div>
         <p>add track & trigger</p>
         <div class="org-src-container">
-          <pre class="src src-js" id="orga1f86aa"><span id=
+          <pre class="src src-js" id="org7619a02"><span id=
           "coderef-mutableHandlersP2" class=
           "coderef-off"><span class="linenr"> 1: </span><span class=
           "org-keyword">const</span> <span class=
@@ -1828,7 +1832,7 @@
           data-fancybox="gallery" data-caption="Preview"><img src=
           "../assets/img/vue3/reactivity/reactivity-basehd-get-01.svg"></a>
           <div class="org-src-container">
-            <pre class="src src-js" id="org04dc48c"><span class=
+            <pre class="src src-js" id="org45472c1"><span class=
             "org-keyword">function</span> <span class=
             "org-function-name">createGetter</span>(<span class=
             "org-variable-name">isReadonly</span> = <span class=
@@ -1855,13 +1859,13 @@
 </pre>
           </div>
         </div>
-        <div id="outline-container-org3ee6d6b" class="outline-4">
-          <h4 id="org3ee6d6b"><span class=
+        <div id="outline-container-org24cc060" class="outline-4">
+          <h4 id="org24cc060"><span class=
           "section-number-4">5.1.1.</span> createGetter with
           track</h4>
           <div class="outline-text-4" id="text-5-1-1">
             <div class="org-src-container">
-              <pre class="src src-js" id="org7dc64be"><span class=
+              <pre class="src src-js" id="orga575211"><span class=
               "linenr"> 1: </span><span class=
               "org-keyword">function</span> <span class=
               "org-function-name">createGetter</span>(<span class=
@@ -1981,7 +1985,7 @@
               </summary>
               <div class="org-src-container">
                 <pre class="src src-diff" id=
-                "orgbbb9f48"><span class=
+                "org52c950c"><span class=
                 "org-diff-context">function createGetter(isReadonly = false, shallow = false) {</span>
 
 <span class=
@@ -2017,7 +2021,7 @@
               </summary>
               <div class="org-src-container">
                 <pre class="src src-diff" id=
-                "org2e1c4d0"><span class=
+                "orge79ff7e"><span class=
                 "org-diff-context">function createGetter(isReadonly = false, shallow = false) {</span>
 
 <span class=
@@ -2101,7 +2105,7 @@
         <div class="outline-text-3" id=
         "text-base-handler-createSetter">
           <div class="org-src-container">
-            <pre class="src src-js" id="org94a0cfc"><span class=
+            <pre class="src src-js" id="org198461c"><span class=
             "linenr"> 1: </span><span class=
             "org-keyword">function</span> <span class=
             "org-function-name">createSetter</span>(<span class=
@@ -2148,12 +2152,12 @@
 </pre>
           </div>
         </div>
-        <div id="outline-container-orgfab99c9" class="outline-4">
-          <h4 id="orgfab99c9"><span class=
+        <div id="outline-container-org64ffac2" class="outline-4">
+          <h4 id="org64ffac2"><span class=
           "section-number-4">5.2.1.</span> set with trigger</h4>
           <div class="outline-text-4" id="text-5-2-1">
             <div class="org-src-container">
-              <pre class="src src-js" id="org8cd7cd3"><span class=
+              <pre class="src src-js" id="orgc00c824"><span class=
               "linenr"> 1: </span><span class=
               "org-keyword">function</span> <span class=
               "org-function-name">createSetter</span>(<span class=
@@ -2223,7 +2227,7 @@
               </summary>
               <div class="org-src-container">
                 <pre class="src src-diff" id=
-                "orgfc08dc3"><span class=
+                "orga5bd926"><span class=
                 "org-diff-context">function createSetter(shallow = false) {</span>
 <span class=
 "org-diff-context">  return function set(target, key, value, receiver) {</span>
@@ -2269,12 +2273,12 @@
           </div>
         </div>
       </div>
-      <div id="outline-container-org24bb624" class="outline-3">
-        <h3 id="org24bb624"><span class=
+      <div id="outline-container-org75a182d" class="outline-3">
+        <h3 id="org75a182d"><span class=
         "section-number-3">5.3.</span> deleteProperty</h3>
         <div class="outline-text-3" id="text-5-3">
           <div class="org-src-container">
-            <pre class="src src-js" id="orgd64dc51"><span class=
+            <pre class="src src-js" id="org9b476cb"><span class=
             "org-keyword">function</span> <span class=
             "org-function-name">deleteProperty</span>(<span class=
             "org-variable-name">target</span>, <span class=
@@ -2292,12 +2296,12 @@
 </pre>
           </div>
         </div>
-        <div id="outline-container-org21dba4b" class="outline-4">
-          <h4 id="org21dba4b"><span class=
+        <div id="outline-container-org20469b7" class="outline-4">
+          <h4 id="org20469b7"><span class=
           "section-number-4">5.3.1.</span> delete with trigger</h4>
           <div class="outline-text-4" id="text-5-3-1">
             <div class="org-src-container">
-              <pre class="src src-js" id="orgbc46d09"><span class=
+              <pre class="src src-js" id="orgda63370"><span class=
               "linenr"> 1: </span><span class=
               "org-keyword">function</span> <span class=
               "org-function-name">deleteProperty</span>(<span class=
@@ -2333,7 +2337,7 @@
               </summary>
               <div class="org-src-container">
                 <pre class="src src-diff" id=
-                "org5343f43"><span class=
+                "org69ce9bc"><span class=
                 "org-diff-context">function deleteProperty(target, key) {</span>
 <span class=
 "org-diff-context">  const hadKey = hasOwn(target, key)</span>
@@ -2363,7 +2367,7 @@
         "section-number-3">5.4.</span> has</h3>
         <div class="outline-text-3" id="text-base-handler-has">
           <div class="org-src-container">
-            <pre class="src src-js" id="org672d700"><span class=
+            <pre class="src src-js" id="orga6f1cb4"><span class=
             "org-keyword">function</span> <span class=
             "org-function-name">has</span>(<span class=
             "org-variable-name">target</span>, <span class=
@@ -2377,12 +2381,12 @@
 </pre>
           </div>
         </div>
-        <div id="outline-container-org07ebdfe" class="outline-4">
-          <h4 id="org07ebdfe"><span class=
+        <div id="outline-container-org9e4d962" class="outline-4">
+          <h4 id="org9e4d962"><span class=
           "section-number-4">5.4.1.</span> has with track</h4>
           <div class="outline-text-4" id="text-5-4-1">
             <div class="org-src-container">
-              <pre class="src src-js" id="org4aead3c"><span class=
+              <pre class="src src-js" id="org84cfe9c"><span class=
               "linenr">1: </span><span class=
               "org-keyword">function</span> <span class=
               "org-function-name">has</span>(<span class=
@@ -2409,7 +2413,7 @@
               </summary>
               <div class="org-src-container">
                 <pre class="src src-diff" id=
-                "orgda7723a"><span class=
+                "org00ad09f"><span class=
                 "org-diff-context">function has(target, key) {</span>
 <span class="org-diff-indicator-added">+</span><span class=
 "org-diff-added"> track(target, 'iterate', isArray(target) ? 'length' : ITERATE_KEY)</span>
@@ -2425,12 +2429,12 @@
           </div>
         </div>
       </div>
-      <div id="outline-container-orgf7cb793" class="outline-3">
-        <h3 id="orgf7cb793"><span class=
+      <div id="outline-container-org47e4e78" class="outline-3">
+        <h3 id="org47e4e78"><span class=
         "section-number-3">5.5.</span> ownKeys</h3>
         <div class="outline-text-3" id="text-5-5">
           <div class="org-src-container">
-            <pre class="src src-js" id="org896dc3e"><span class=
+            <pre class="src src-js" id="orgbb16173"><span class=
             "org-keyword">function</span> <span class=
             "org-function-name">ownKeys</span>(<span class=
             "org-variable-name">target</span>) {
@@ -2441,12 +2445,12 @@
 </pre>
           </div>
         </div>
-        <div id="outline-container-org32f94ce" class="outline-4">
-          <h4 id="org32f94ce"><span class=
+        <div id="outline-container-org887f1bf" class="outline-4">
+          <h4 id="org887f1bf"><span class=
           "section-number-4">5.5.1.</span> ownKeys with track</h4>
           <div class="outline-text-4" id="text-5-5-1">
             <div class="org-src-container">
-              <pre class="src src-js" id="org3c175dd"><span class=
+              <pre class="src src-js" id="org778116e"><span class=
               "linenr">1: </span><span class=
               "org-keyword">function</span> <span class=
               "org-function-name">ownKeys</span>(<span class=
@@ -2469,7 +2473,7 @@
               </summary>
               <div class="org-src-container">
                 <pre class="src src-diff" id=
-                "orgcdc7bb7"><span class=
+                "org8532f0d"><span class=
                 "org-diff-context">function ownKeys(target) {</span>
 <span class="org-diff-indicator-added">+</span><span class=
 "org-diff-added">  track(target, 'iterate', isArray(target) ? 'length' : ITERATE_KEY)</span>
@@ -2484,8 +2488,8 @@
           </div>
         </div>
       </div>
-      <div id="outline-container-org0400150" class="outline-3">
-        <h3 id="org0400150"><span class=
+      <div id="outline-container-org7cdf874" class="outline-3">
+        <h3 id="org7cdf874"><span class=
         "section-number-3">5.6.</span> Testing</h3>
         <div class="outline-text-3" id="text-5-6">
           <p>先将 <a href="#coderef-mutableCollectionHandlers" class=
@@ -2506,8 +2510,8 @@
               <strong><font face="Courier" size="3" color=
               "red">测试非集合类型 get 操作</font></strong>
             </summary>
-            <p><a href="#org04dc48c">createGetter</a>, <a href=
-            "#orga43586a">reactive</a></p>
+            <p><a href="#org45472c1">createGetter</a>, <a href=
+            "#orgd30aa30">reactive</a></p>
             <div class="org-src-container">
               <pre class="src src-js"><span class=
               "linenr"> 1: </span><span class=
@@ -2548,8 +2552,8 @@ undefined
               <strong><font face="Courier" size="3" color=
               "red">测试非集合类型 set 操作</font></strong>
             </summary>
-            <p><a href="#org94a0cfc">createSetter</a>, <a href=
-            "#orga43586a">reactive</a></p>
+            <p><a href="#org198461c">createSetter</a>, <a href=
+            "#orgd30aa30">reactive</a></p>
             <div class="org-src-container">
               <pre class="src src-js"><span class=
               "linenr"> 1: </span><span class=
@@ -2593,8 +2597,8 @@ undefined
               <strong><font face="Courier" size="3" color=
               "red">测试非集合类型 delete 操作</font></strong>
             </summary>
-            <p><a href="#orgd64dc51">deleteProperty</a>, <a href=
-            "#orga43586a">reactive</a></p>
+            <p><a href="#org9b476cb">deleteProperty</a>, <a href=
+            "#orgd30aa30">reactive</a></p>
             <div class="org-src-container">
               <pre class="src src-js"><span class=
               "linenr"> 1: </span><span class=
@@ -2636,8 +2640,8 @@ undefined
               <strong><font face="Courier" size="3" color=
               "red">测试非集合类型 has 操作</font></strong>
             </summary>
-            <p><a href="#org672d700">object-has</a>, <a href=
-            "#orga43586a">reactive</a></p>
+            <p><a href="#orga6f1cb4">object-has</a>, <a href=
+            "#orgd30aa30">reactive</a></p>
             <div class="org-src-container">
               <pre class="src src-js"><span class=
               "linenr"> 1: </span><span class=
@@ -2679,8 +2683,8 @@ undefined
               <strong><font face="Courier" size="3" color=
               "red">测试非集合类型 ownKeys 操作</font></strong>
             </summary>
-            <p><a href="#org896dc3e">ownKeys</a>, <a href=
-            "#orga43586a">reactive</a></p>
+            <p><a href="#orgbb16173">ownKeys</a>, <a href=
+            "#orgd30aa30">reactive</a></p>
             <p>各种迭达操作时会调用的原子操作。</p>
             <div class="org-src-container">
               <pre class="src src-js"><span class=
@@ -2726,13 +2730,13 @@ undefined
         </div>
       </div>
     </div>
-    <div id="outline-container-org6676186" class="outline-2">
-      <h2 id="org6676186"><span class="section-number-2">6.</span>
+    <div id="outline-container-org8559b7e" class="outline-2">
+      <h2 id="org8559b7e"><span class="section-number-2">6.</span>
       mutableCollectionHandlers</h2>
       <div class="outline-text-2" id="text-6">
         <p>针对集合类型的对象，因为 <abbr class="tooltip" title=
-        "zsh:1: command not found: wn&lt;br&gt;">Reflect</abbr>
-        并没有提供对应的原子操作的方法，所以需要通过 getter/setter 方法与对应
+        "&lt;h2&gt;Description&lt;/h2&gt;&lt;br&gt;&lt;br&gt;Unlike most global objects, Reflect is not a constructor.&lt;br&gt;You cannot use it with a new operator or invoke the Reflect object as a&lt;br&gt;function. All properties and methods of Reflect are static (just like the Math&lt;br&gt;object).&lt;br&gt;&lt;br&gt;The Reflect object provides the following static functions which have the same&lt;br&gt;names as the proxy handler methods.&lt;br&gt;&lt;br&gt;Some of these methods are also the same as corresponding methods on Object,&lt;br&gt;although they do have some subtle differences between them.&lt;br&gt;&lt;br&gt;&lt;h2&gt;Static methods&lt;/h2&gt;&lt;br&gt;&lt;br&gt;&lt;h3&gt;Reflect.apply(target, thisArgument, argumentsList)&lt;/h3&gt;&lt;br&gt;&lt;br&gt;Calls a target function with arguments as specified by the argumentsList&lt;br&gt;parameter. See also Function.prototype.apply().&lt;br&gt;&lt;br&gt;&lt;h3&gt;Reflect.construct(target, argumentsList[, newTarget])&lt;/h3&gt;&lt;br&gt;&lt;br&gt;The new operator as a function. Equivalent to calling new&lt;br&gt;target(...argumentsList). Also provides the option to specify a different&lt;br&gt;prototype.&lt;br&gt;&lt;br&gt;&lt;h3&gt;Reflect.defineProperty(target, propertyKey, attributes)&lt;/h3&gt;&lt;br&gt;&lt;br&gt;Similar to Object.defineProperty(). Returns a boolean that is true if the&lt;br&gt;property was successfully defined.&lt;br&gt;&lt;br&gt;&lt;h3&gt;Reflect.deleteProperty(target, propertyKey)&lt;/h3&gt;&lt;br&gt;&lt;br&gt;The delete operator as a function. Equivalent to calling delete&lt;br&gt;target[propertyKey].&lt;br&gt;&lt;br&gt;&lt;h3&gt;Reflect.get(target, propertyKey[, receiver])&lt;/h3&gt;&lt;br&gt;&lt;br&gt;Returns the value of the property. Works like getting a property from an object&lt;br&gt;(target[propertyKey]) as a function.&lt;br&gt;&lt;br&gt;&lt;h3&gt;Reflect.getOwnPropertyDescriptor(target, propertyKey)&lt;/h3&gt;&lt;br&gt;&lt;br&gt;Similar to Object.getOwnPropertyDescriptor(). Returns a property descriptor of&lt;br&gt;the given property if it exists on the object, undefined otherwise.&lt;br&gt;&lt;br&gt;&lt;h3&gt;Reflect.getPrototypeOf(target)&lt;/h3&gt;&lt;br&gt;&lt;br&gt;Same as Object.getPrototypeOf().&lt;br&gt;&lt;br&gt;&lt;h3&gt;Reflect.has(target, propertyKey)&lt;/h3&gt;&lt;br&gt;&lt;br&gt;Returns a boolean indicating whether the target has the property. Either as own&lt;br&gt;or inherited. Works like the in operator as a function.&lt;br&gt;&lt;br&gt;&lt;h3&gt;Reflect.isExtensible(target)&lt;/h3&gt;&lt;br&gt;&lt;br&gt;Same as Object.isExtensible(). Returns a boolean that is true if the target is&lt;br&gt;extensible.&lt;br&gt;&lt;br&gt;&lt;h3&gt;Reflect.ownKeys(target)&lt;/h3&gt;&lt;br&gt;&lt;br&gt;Returns an array of the target object's own (not inherited) property keys.&lt;br&gt;&lt;br&gt;&lt;h3&gt;Reflect.preventExtensions(target)&lt;/h3&gt;&lt;br&gt;&lt;br&gt;Similar to Object.preventExtensions(). Returns a boolean that is true if the&lt;br&gt;update was successful.&lt;br&gt;&lt;br&gt;&lt;h3&gt;Reflect.set(target, propertyKey, value[, receiver])&lt;/h3&gt;&lt;br&gt;&lt;br&gt;A function that assigns values to properties. Returns a boolean that is true if&lt;br&gt;the update was successful.&lt;br&gt;&lt;br&gt;&lt;h3&gt;Reflect.setPrototypeOf(target, prototype)&lt;/h3&gt;&lt;br&gt;&lt;br&gt;A function that sets the prototype of an object. Returns a boolean that is true&lt;br&gt;if the update was successful.">
+        Reflect</abbr> 并没有提供对应的原子操作的方法，所以需要通过 getter/setter 方法与对应
         <code>Reflect.get</code> 结合对集合类型变相实现响应式。</p>
         <p>因为任何方法的调用实际上都是 get<sup><a id="fnr.1" class="footref"
         href="#fn.1" role="doc-backlink">1</a></sup>
@@ -2741,11 +2745,11 @@ undefined
         "../assets/img/vue3/reactivity/reactivity-collection-proxy.svg"></a>
         <p>集合类型包含的方法有： <code>get, has, size, add, set, delete,
         clear, forEach</code> 对它们实 现 <abbr class="tooltip" title=
-        "zsh:1: command not found: wn&lt;br&gt;">Proxy</abbr>
-        方式其实就是一个 proxy get - Reflect.get 方法，所以
+        "&lt;strong&gt;Proxy&lt;/strong&gt; &lt;hr&gt;&lt;br&gt;The Proxy object enables you to create a proxy for another object, which&lt;br&gt;can intercept and redefine fundamental operations for that object.&lt;br&gt;&lt;br&gt;&lt;strong&gt;Description&lt;/strong&gt; &lt;hr&gt;&lt;br&gt;A Proxy is created with two parameters:&lt;br&gt;&lt;br&gt;- target: the original object which you want to proxy&lt;br&gt;&lt;br&gt;- handler: an object that defines which operations will be intercepted and how&lt;br&gt;to redefine intercepted operations. For example, this code defines a simple&lt;br&gt;target with just two properties, and an even simpler handler with no properties:&lt;br&gt;&lt;br&gt;&lt;pre class='tooltip'&gt;const target = {&lt;br&gt; message1: ''hello'',&lt;br&gt; message2: ''everyone''&lt;br&gt;};&lt;br&gt;&lt;br&gt;const handler1 = {};&lt;br&gt;&lt;br&gt;const proxy1 = new Proxy(target, handler1);&lt;br&gt;&lt;/PRE&gt;&lt;br&gt;Because the handler is empty, this proxy behaves just like the original target:&lt;br&gt;&lt;br&gt;&lt;pre class='tooltip'&gt;console.log(proxy1.message1); &lt;em&gt;/ hello&lt;br&gt;console.log(proxy1.message2); &lt;/em&gt;/ everyone&lt;br&gt;&lt;/PRE&gt;&lt;br&gt;To customize the proxy, we define functions on the handler object:&lt;br&gt;&lt;br&gt;&lt;pre class='tooltip'&gt;const target = {&lt;br&gt; message1: ''hello'',&lt;br&gt; message2: ''everyone''&lt;br&gt;};&lt;br&gt;&lt;br&gt;const handler2 = {&lt;br&gt; get: function(target, prop, receiver) {&lt;br&gt;  return ''world'';&lt;br&gt; }&lt;br&gt;};&lt;br&gt;&lt;br&gt;const proxy2 = new Proxy(target, handler2);&lt;br&gt;&lt;/PRE&gt;&lt;br&gt;Here we've provided an implementation of the get() handler, which intercepts&lt;br&gt;attempts to access properties in the target.&lt;br&gt;&lt;br&gt;Handler functions are sometimes called traps, presumably because they trap calls&lt;br&gt;to the target object. The very simple trap in handler2 above redefines all&lt;br&gt;property accessors:&lt;br&gt;&lt;br&gt;&lt;pre class='tooltip'&gt;console.log(proxy2.message1); &lt;em&gt;/ world&lt;br&gt;console.log(proxy2.message2); &lt;/em&gt;/ world&lt;br&gt;&lt;/PRE&gt;&lt;br&gt;With the help of the Reflect class we can give some accessors the original&lt;br&gt;behavior and redefine others:&lt;br&gt;&lt;br&gt;&lt;pre class='tooltip'&gt;const target = {&lt;br&gt; message1: ''hello'',&lt;br&gt; message2: ''everyone''&lt;br&gt;};&lt;br&gt;&lt;br&gt;const handler3 = {&lt;br&gt; get: function (target, prop, receiver) {&lt;br&gt;  if (prop === ''message2'') {&lt;br&gt;   return ''world'';&lt;br&gt;  }&lt;br&gt;  return Reflect.get(...arguments);&lt;br&gt; },&lt;br&gt;};&lt;br&gt;&lt;br&gt;const proxy3 = new Proxy(target, handler3);&lt;br&gt;&lt;br&gt;console.log(proxy3.message1); &lt;em&gt;/ hello&lt;br&gt;console.log(proxy3.message2); &lt;/em&gt;/ world&lt;br&gt;&lt;/PRE&gt;&lt;br&gt;&lt;strong&gt;Constructor&lt;/strong&gt; &lt;hr&gt;&lt;br&gt;&lt;pre class='tooltip'&gt;Proxy()&lt;br&gt;&lt;/PRE&gt;&lt;br&gt;Creates a new Proxy object.&lt;br&gt;&lt;br&gt;&lt;strong&gt;Static methods&lt;/strong&gt; &lt;hr&gt;&lt;br&gt;&lt;pre class='tooltip'&gt;Proxy.revocable()&lt;br&gt;&lt;/PRE&gt;&lt;br&gt;Creates a revocable Proxy object.&lt;br&gt;&lt;br&gt;&lt;strong&gt;Examples&lt;/strong&gt;&lt;br&gt;&lt;br&gt;&lt;strong&gt;Basic example&lt;/strong&gt; &lt;hr&gt;&lt;br&gt;In this simple example, the number 37 gets returned as the default value when&lt;br&gt;the property name is not in the object. It is using the get() handler.&lt;br&gt;&lt;br&gt;&lt;pre class='tooltip'&gt;const handler = {&lt;br&gt; get: function(obj, prop) {&lt;br&gt;  return prop in obj ?&lt;br&gt;   obj[prop] :&lt;br&gt;   37;&lt;br&gt; }&lt;br&gt;};&lt;br&gt;&lt;br&gt;const p = new Proxy({}, handler);&lt;br&gt;p.a = 1;&lt;br&gt;p.b = undefined;&lt;br&gt;&lt;br&gt;console.log(p.a, p.b);&lt;br&gt;&lt;em&gt;/ 1, undefined&lt;br&gt;&lt;br&gt;console.log('c' in p, p.c);&lt;br&gt;&lt;/em&gt;/ false, 37&lt;br&gt;&lt;/PRE&gt;&lt;br&gt;&lt;a target='_blank' href='https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Proxy'&gt;More&lt;/a&gt;&lt;br&gt;&lt;br&gt;&lt;br&gt;&lt;br&gt;&lt;br&gt;&lt;br&gt;">
+        Proxy</abbr> 方式其实就是一个 proxy get - Reflect.get 方法，所以
         mutableCollectionHandlers 就很简单只有一个 <code>get</code> 方法。</p>
         <div class="org-src-container">
-          <pre class="src src-js" id="org68ef3b9"><span class=
+          <pre class="src src-js" id="org3f3f8ac"><span class=
           "linenr">1: </span>&lt;&lt;mutableInstrumentations&gt;&gt;
 <span class="linenr">2: </span>&lt;&lt;collection-iterator&gt;&gt;
 <span class=
@@ -2762,16 +2766,16 @@ undefined
 </pre>
         </div>
         <p>所有的代码都封装在以 <a href=
-        "#org3de47fc">createInstrumentationGetter</a> 为入口的代码中了。</p>
+        "#orgdf03c21">createInstrumentationGetter</a> 为入口的代码中了。</p>
         <p>接下来重点看下它是如何实现 Map/Set 类型的代理的？？？</p>
-        <div class="tip" id="orgc8b1ca6">
+        <div class="tip" id="org1df3385">
           <p>vue 源码是基于 typescript 实现的，所以下面集合相关的函数的第一个参数是
           <code>function (this: Xxxx)</code> 方法，在 javascript
           中其实就是函数内部的 <code>this</code> 。</p>
         </div>
         <p>add track & trigger</p>
         <div class="org-src-container">
-          <pre class="src src-js" id="org0f1f4c4"><span class=
+          <pre class="src src-js" id="orgeaef359"><span class=
           "linenr">1: </span>&lt;&lt;mutableInstrumentationsP2&gt;&gt;
 <span class=
 "linenr">2: </span>&lt;&lt;collection-iteratorP2&gt;&gt;
@@ -2798,7 +2802,7 @@ undefined
         <div class="outline-text-3" id=
         "text-ref-collection-createInstrumentationGetter">
           <div class="org-src-container">
-            <pre class="src src-js" id="org3de47fc"><span class=
+            <pre class="src src-js" id="orgdf03c21"><span class=
             "org-keyword">function</span> <span class=
             "org-function-name">createInstrumentationGetter</span>(<span class=
             "org-variable-name">isReadonly</span>, <span class=
@@ -2854,7 +2858,7 @@ undefined
         <div class="outline-text-3" id=
         "text-collection-mutableInstrumentations">
           <div class="org-src-container">
-            <pre class="src src-js" id="org61c8841"><span class=
+            <pre class="src src-js" id="org2a06b3c"><span class=
             "linenr"> 1: </span>&lt;&lt;collection-get&gt;&gt;
 <span class="linenr"> 2: </span>&lt;&lt;collection-size&gt;&gt;
 <span class="linenr"> 3: </span>&lt;&lt;collection-has&gt;&gt;
@@ -2891,13 +2895,13 @@ undefined
 </pre>
           </div>
         </div>
-        <div id="outline-container-org411339a" class="outline-4">
-          <h4 id="org411339a"><span class=
+        <div id="outline-container-org9432863" class="outline-4">
+          <h4 id="org9432863"><span class=
           "section-number-4">6.2.1.</span> witch track &
           trigger</h4>
           <div class="outline-text-4" id="text-6-2-1">
             <div class="org-src-container">
-              <pre class="src src-js" id="orgfadf4e2"><span class=
+              <pre class="src src-js" id="org56baa64"><span class=
               "linenr"> 1: </span>&lt;&lt;collection-getP2&gt;&gt;
 <span class="linenr"> 2: </span>&lt;&lt;collection-sizeP2&gt;&gt;
 <span class="linenr"> 3: </span>&lt;&lt;collection-hasP2&gt;&gt;
@@ -2942,7 +2946,7 @@ undefined
         "section-number-3">6.3.</span> get</h3>
         <div class="outline-text-3" id="text-ref-collection-get">
           <div class="org-src-container">
-            <pre class="src src-js" id="org11349da"><span class=
+            <pre class="src src-js" id="orgd3dac89"><span class=
             "linenr"> 1: </span><span class=
             "org-keyword">function</span> <span class=
             "org-function-name">get</span>(<span class=
@@ -2999,19 +3003,19 @@ undefined
           <code>get</code> 方法来实现的，比如： <code>map.get('count')</code>
           实现是对 map get 进行了代理， 当调用它时首先是发生了 map -&gt; get 这个名为
           <code>get</code> 的函数的取值操作，最后这个操作都 被代理到了 <a href=
-          "#org68ef3b9">mutableCollectionHandlers</a> 中去了，因为当调用
+          "#org3f3f8ac">mutableCollectionHandlers</a> 中去了，因为当调用
           <code>map.get()</code> 的时候实际是在 调用
           <code>mutableCollectionHandlers.get()</code> 最后调用的就是这里的
           <code>get</code> 函数。</p>
           <p>其实一顿操作过后，在这个函数里最后调用的还是 <code>map.get</code>
           这个原生函数，得到值返回， 在返回之前会对这个结果进行 reactive 化。</p>
         </div>
-        <div id="outline-container-org30d0cc8" class="outline-4">
-          <h4 id="org30d0cc8"><span class=
+        <div id="outline-container-orgd6cf2d3" class="outline-4">
+          <h4 id="orgd6cf2d3"><span class=
           "section-number-4">6.3.1.</span> get with track</h4>
           <div class="outline-text-4" id="text-6-3-1">
             <div class="org-src-container">
-              <pre class="src src-js" id="org3b5eea6"><span class=
+              <pre class="src src-js" id="orgc913f1e"><span class=
               "linenr"> 1: </span><span class=
               "org-keyword">function</span> <span class=
               "org-function-name">get</span>(<span class=
@@ -3077,7 +3081,7 @@ undefined
               </summary>
               <div class="org-src-container">
                 <pre class="src src-diff" id=
-                "orgf8f5efc"><span class=
+                "org7236a9c"><span class=
                 "org-diff-context">function get(target, key, isReadonly, isShallow) {</span>
 <span class=
 "org-diff-context">  target = target.__v_raw // 取出代理之前的原始对象</span>
@@ -3124,7 +3128,7 @@ undefined
         "section-number-3">6.4.</span> has</h3>
         <div class="outline-text-3" id="text-ref-collection-has">
           <div class="org-src-container">
-            <pre class="src src-js" id="orgebd16f7"><span class=
+            <pre class="src src-js" id="orgf1bd4a9"><span class=
             "linenr">1: </span><span class=
             "org-keyword">function</span> <span class=
             "org-function-name">has</span>(<span class=
@@ -3150,12 +3154,12 @@ undefined
 </pre>
           </div>
         </div>
-        <div id="outline-container-org421b0ae" class="outline-4">
-          <h4 id="org421b0ae"><span class=
+        <div id="outline-container-org3229c95" class="outline-4">
+          <h4 id="org3229c95"><span class=
           "section-number-4">6.4.1.</span> has with track</h4>
           <div class="outline-text-4" id="text-6-4-1">
             <div class="org-src-container">
-              <pre class="src src-js" id="org4178566"><span class=
+              <pre class="src src-js" id="org631bf4c"><span class=
               "linenr"> 1: </span><span class=
               "org-keyword">function</span> <span class=
               "org-function-name">has</span>(<span class=
@@ -3203,7 +3207,7 @@ undefined
               </summary>
               <div class="org-src-container">
                 <pre class="src src-diff" id=
-                "org205ed53"><span class=
+                "org2740ac9"><span class=
                 "org-diff-context">function has(key, isReadonly) {</span>
 <span class="org-diff-context">  target = this.__v_raw</span>
 <span class=
@@ -3239,7 +3243,7 @@ undefined
         "section-number-3">6.5.</span> size</h3>
         <div class="outline-text-3" id="text-ref-collection-size">
           <div class="org-src-container">
-            <pre class="src src-js" id="orga28d6f0"><span class=
+            <pre class="src src-js" id="orgb5c0d5e"><span class=
             "linenr">1: </span><span class=
             "org-keyword">function</span> <span class=
             "org-function-name">size</span>(<span class=
@@ -3256,12 +3260,12 @@ undefined
 </pre>
           </div>
         </div>
-        <div id="outline-container-orga3a3436" class="outline-4">
-          <h4 id="orga3a3436"><span class=
+        <div id="outline-container-orgde1384e" class="outline-4">
+          <h4 id="orgde1384e"><span class=
           "section-number-4">6.5.1.</span> size with track</h4>
           <div class="outline-text-4" id="text-6-5-1">
             <div class="org-src-container">
-              <pre class="src src-js" id="org298435c"><span class=
+              <pre class="src src-js" id="org2620840"><span class=
               "linenr">1: </span><span class=
               "org-keyword">function</span> <span class=
               "org-function-name">size</span>(<span class=
@@ -3286,7 +3290,7 @@ undefined
               </summary>
               <div class="org-src-container">
                 <pre class="src src-diff" id=
-                "org1685a7e"><span class=
+                "org468cd36"><span class=
                 "org-diff-context">function size(target, isReadonly) {</span>
 <span class="org-diff-context">  target = target.__v_raw</span>
 <span class="org-diff-indicator-added">+</span><span class=
@@ -3309,7 +3313,7 @@ undefined
         <div class="outline-text-3" id="text-ref-collection-add">
           <p><code>Set.prototype.add</code> 添加元素。</p>
           <div class="org-src-container">
-            <pre class="src src-js" id="orgcd2b937"><span class=
+            <pre class="src src-js" id="orgb9a8305"><span class=
             "linenr"> 1: </span><span class=
             "org-keyword">function</span> <span class=
             "org-function-name">add</span>(<span class=
@@ -3338,12 +3342,12 @@ undefined
 </pre>
           </div>
         </div>
-        <div id="outline-container-org2eaae1f" class="outline-4">
-          <h4 id="org2eaae1f"><span class=
+        <div id="outline-container-org4430a7b" class="outline-4">
+          <h4 id="org4430a7b"><span class=
           "section-number-4">6.6.1.</span> add with trigger</h4>
           <div class="outline-text-4" id="text-6-6-1">
             <div class="org-src-container">
-              <pre class="src src-js" id="orgd5f4b90"><span class=
+              <pre class="src src-js" id="orgc92e408"><span class=
               "linenr"> 1: </span><span class=
               "org-keyword">function</span> <span class=
               "org-function-name">add</span>(<span class=
@@ -3381,7 +3385,7 @@ undefined
               </summary>
               <div class="org-src-container">
                 <pre class="src src-diff" id=
-                "org54c94b1"><span class=
+                "orgcdb219c"><span class=
                 "org-diff-context">function add(value) {</span>
 <span class="org-diff-context">  value = toRaw(value)</span>
 <span class="org-diff-context">  const target = toRaw(this)</span>
@@ -3411,7 +3415,7 @@ undefined
         "section-number-3">6.7.</span> set</h3>
         <div class="outline-text-3" id="text-ref-collection-set">
           <div class="org-src-container">
-            <pre class="src src-js" id="orga90f8fc"><span class=
+            <pre class="src src-js" id="org7a853c4"><span class=
             "linenr"> 1: </span><span class=
             "org-keyword">function</span> <span class=
             "org-function-name">set</span>(<span class=
@@ -3446,12 +3450,12 @@ undefined
 </pre>
           </div>
         </div>
-        <div id="outline-container-org1afa152" class="outline-4">
-          <h4 id="org1afa152"><span class=
+        <div id="outline-container-orgb63dff9" class="outline-4">
+          <h4 id="orgb63dff9"><span class=
           "section-number-4">6.7.1.</span> set with trigger</h4>
           <div class="outline-text-4" id="text-6-7-1">
             <div class="org-src-container">
-              <pre class="src src-js" id="orgd79a1e5"><span class=
+              <pre class="src src-js" id="org5c94a56"><span class=
               "linenr"> 1: </span><span class=
               "org-keyword">function</span> <span class=
               "org-function-name">set</span>(<span class=
@@ -3503,7 +3507,7 @@ undefined
               </summary>
               <div class="org-src-container">
                 <pre class="src src-diff" id=
-                "orgde4c6aa"><span class=
+                "org799ad6d"><span class=
                 "org-diff-context">function set(key, value) {</span>
 <span class="org-diff-context">  value = toRaw(value)</span>
 <span class="org-diff-context">  const target = toRaw(this)</span>
@@ -3548,7 +3552,7 @@ undefined
         <div class="outline-text-3" id=
         "text-ref-collection-delete">
           <div class="org-src-container">
-            <pre class="src src-js" id="org92a83bf"><span class=
+            <pre class="src src-js" id="org0cdd94f"><span class=
             "linenr"> 1: </span><span class=
             "org-keyword">function</span> <span class=
             "org-function-name">deleteEntry</span>(<span class=
@@ -3583,12 +3587,12 @@ undefined
 </pre>
           </div>
         </div>
-        <div id="outline-container-org9006a4e" class="outline-4">
-          <h4 id="org9006a4e"><span class=
+        <div id="outline-container-org9dff5a8" class="outline-4">
+          <h4 id="org9dff5a8"><span class=
           "section-number-4">6.8.1.</span> delete with trigger</h4>
           <div class="outline-text-4" id="text-6-8-1">
             <div class="org-src-container">
-              <pre class="src src-js" id="org41c72de"><span class=
+              <pre class="src src-js" id="org2f4cdce"><span class=
               "linenr"> 1: </span><span class=
               "org-keyword">function</span> <span class=
               "org-function-name">deleteEntry</span>(<span class=
@@ -3636,7 +3640,7 @@ undefined
               </summary>
               <div class="org-src-container">
                 <pre class="src src-diff" id=
-                "org51d1546"><span class=
+                "org8079a2a"><span class=
                 "org-diff-context">function deleteEntry(key) {</span>
 <span class="org-diff-context">  const target = toRaw(this)</span>
 <span class=
@@ -3675,7 +3679,7 @@ undefined
         "section-number-3">6.9.</span> clear</h3>
         <div class="outline-text-3" id="text-ref-collection-clear">
           <div class="org-src-container">
-            <pre class="src src-js" id="org0dd77f6"><span class=
+            <pre class="src src-js" id="orgd6a3b99"><span class=
             "linenr"> 1: </span><span class=
             "org-keyword">function</span> <span class=
             "org-function-name">clear</span>() {
@@ -3709,12 +3713,12 @@ undefined
 </pre>
           </div>
         </div>
-        <div id="outline-container-org13abcaa" class="outline-4">
-          <h4 id="org13abcaa"><span class=
+        <div id="outline-container-orgb01d7c9" class="outline-4">
+          <h4 id="orgb01d7c9"><span class=
           "section-number-4">6.9.1.</span> clear with trigger</h4>
           <div class="outline-text-4" id="text-6-9-1">
             <div class="org-src-container">
-              <pre class="src src-js" id="org7ad6500"><span class=
+              <pre class="src src-js" id="org26c7a75"><span class=
               "linenr"> 1: </span><span class=
               "org-keyword">function</span> <span class=
               "org-function-name">clear</span>() {
@@ -3756,7 +3760,7 @@ undefined
               </summary>
               <div class="org-src-container">
                 <pre class="src src-diff" id=
-                "orgef2b805"><span class=
+                "org26fdace"><span class=
                 "org-diff-context">function clear() {</span>
 <span class="org-diff-context">  const target = toRaw(this)</span>
 <span class=
@@ -3788,7 +3792,7 @@ undefined
         <div class="outline-text-3" id=
         "text-ref-collection-forEach">
           <div class="org-src-container">
-            <pre class="src src-js" id="org7e8010b"><span class=
+            <pre class="src src-js" id="orga4a242b"><span class=
             "linenr"> 1: </span><span class=
             "org-keyword">function</span> <span class=
             "org-function-name">createForEach</span>(<span class=
@@ -3828,12 +3832,12 @@ undefined
 </pre>
           </div>
         </div>
-        <div id="outline-container-org4f90e41" class="outline-4">
-          <h4 id="org4f90e41"><span class=
+        <div id="outline-container-org3e90b40" class="outline-4">
+          <h4 id="org3e90b40"><span class=
           "section-number-4">6.10.1.</span> forEach with track</h4>
           <div class="outline-text-4" id="text-6-10-1">
             <div class="org-src-container">
-              <pre class="src src-js" id="orgbc2764b"><span class=
+              <pre class="src src-js" id="org23cbfde"><span class=
               "linenr"> 1: </span><span class=
               "org-keyword">function</span> <span class=
               "org-function-name">createForEach</span>(<span class=
@@ -3911,13 +3915,13 @@ undefined
           </div>
         </div>
       </div>
-      <div id="outline-container-org428b0ba" class="outline-3">
-        <h3 id="org428b0ba"><span class=
+      <div id="outline-container-orga6f537e" class="outline-3">
+        <h3 id="orga6f537e"><span class=
         "section-number-3">6.11.</span>
         keys&amp;values&amp;entries</h3>
         <div class="outline-text-3" id="text-6-11">
           <div class="org-src-container">
-            <pre class="src src-js" id="org763afbb"><span class=
+            <pre class="src src-js" id="orgab9d184"><span class=
             "linenr"> 1: </span><span class=
             "org-keyword">function</span> <span class=
             "org-function-name">createIterableMethod</span>(<span class=
@@ -3986,7 +3990,7 @@ undefined
           </div>
           <p>代理 Map, Set 的迭达器操作:</p>
           <div class="org-src-container">
-            <pre class="src src-js" id="org4272b3b"><span class=
+            <pre class="src src-js" id="org9afb1fd"><span class=
             "linenr"> 1: </span>&lt;&lt;createIterableMethod&gt;&gt;
 <span class="linenr"> 2: </span>
 <span class="linenr"> 3: </span><span class=
@@ -4009,13 +4013,13 @@ undefined
 </pre>
           </div>
         </div>
-        <div id="outline-container-orgaf3daaa" class="outline-4">
-          <h4 id="orgaf3daaa"><span class=
+        <div id="outline-container-orgcbe7035" class="outline-4">
+          <h4 id="orgcbe7035"><span class=
           "section-number-4">6.11.1.</span> iterator with
           track</h4>
           <div class="outline-text-4" id="text-6-11-1">
             <div class="org-src-container">
-              <pre class="src src-js" id="orgb12535b"><span class=
+              <pre class="src src-js" id="org499d5ac"><span class=
               "linenr"> 1: </span><span class=
               "org-keyword">function</span> <span class=
               "org-function-name">createIterableMethod</span>(<span class=
@@ -4085,7 +4089,7 @@ undefined
 </pre>
             </div>
             <div class="org-src-container">
-              <pre class="src src-js" id="orgcf26bd4"><span class=
+              <pre class="src src-js" id="org72dd8f7"><span class=
               "linenr"> 1: </span>&lt;&lt;createIterableMethodP2&gt;&gt;
 <span class="linenr"> 2: </span>
 <span class="linenr"> 3: </span><span class=
@@ -4115,7 +4119,7 @@ undefined
               </summary>
               <div class="org-src-container">
                 <pre class="src src-diff" id=
-                "org2562e4c"><span class=
+                "orge24bd35"><span class=
                 "org-diff-context">function createIterableMethod(method, isReadonly, isShallow) {</span>
 <span class="org-diff-context">  return function(...args) {</span>
 <span class=
@@ -4162,8 +4166,8 @@ undefined
           </div>
         </div>
       </div>
-      <div id="outline-container-org87834fd" class="outline-3">
-        <h3 id="org87834fd"><span class=
+      <div id="outline-container-orgd3cf8de" class="outline-3">
+        <h3 id="orgd3cf8de"><span class=
         "section-number-3">6.12.</span> Testing</h3>
         <div class="outline-text-3" id="text-6-12">
           <br>
@@ -4173,8 +4177,8 @@ undefined
               <strong><font face="Courier" size="3" color=
               "red">集合类型的 get 操作</font></strong>
             </summary>
-            <p><a href="#orga43586a">reactive</a>, <a href=
-            "#org11349da">collection-get</a></p>
+            <p><a href="#orgd30aa30">reactive</a>, <a href=
+            "#orgd3dac89">collection-get</a></p>
             <div class="org-src-container">
               <pre class="src src-js"><span class=
               "linenr"> 1: </span><span class=
@@ -4232,7 +4236,7 @@ undefined
             <ol class="org-ol">
               <li>第一行输出是 <code>observed.get</code> 方法的访问，被
               <code>proxy get</code> 代理到了 <a href=
-              "#org68ef3b9">mutableCollectionHandlers</a> 中的 <code>
+              "#org3f3f8ac">mutableCollectionHandlers</a> 中的 <code>
                 get</code> 结果，即此时的 <code>get</code> 调用已经被代理到了
                 <code>mutableCollectionHandlers.get</code> 。
               </li>
@@ -4254,8 +4258,8 @@ undefined
               <strong><font face="Courier" size="3" color=
               "red">集合类型的 has 操作</font></strong>
             </summary>
-            <p><a href="#orga43586a">reactive</a>, <a href=
-            "#orgebd16f7">collection-has</a></p>
+            <p><a href="#orgd30aa30">reactive</a>, <a href=
+            "#orgf1bd4a9">collection-has</a></p>
             <div class="org-src-container">
               <pre class="src src-js"><span class=
               "linenr"> 1: </span><span class=
@@ -4320,8 +4324,8 @@ undefined
               <strong><font face="Courier" size="3" color=
               "red">集合类型的 size 操作</font></strong>
             </summary>
-            <p><a href="#orga43586a">reactive</a>, <a href=
-            "#orga28d6f0">collection-size</a></p>
+            <p><a href="#orgd30aa30">reactive</a>, <a href=
+            "#orgb5c0d5e">collection-size</a></p>
             <div class="org-src-container">
               <pre class="src src-js"><span class=
               "linenr"> 1: </span><span class=
@@ -4387,8 +4391,8 @@ undefined
               <strong><font face="Courier" size="3" color=
               "red">集合类型的 add 操作</font></strong>
             </summary>
-            <p><a href="#orga43586a">reactive</a>, <a href=
-            "#orgcd2b937">collection-add</a></p>
+            <p><a href="#orgd30aa30">reactive</a>, <a href=
+            "#orgb9a8305">collection-add</a></p>
             <div class="org-src-container">
               <pre class="src src-js"><span class=
               "linenr"> 1: </span><span class=
@@ -4444,8 +4448,8 @@ undefined
               <strong><font face="Courier" size="3" color=
               "red">集合类型的 set 操作</font></strong>
             </summary>
-            <p><a href="#orga43586a">reactive</a>, <a href=
-            "#orga90f8fc">collection-set</a></p>
+            <p><a href="#orgd30aa30">reactive</a>, <a href=
+            "#org7a853c4">collection-set</a></p>
             <div class="org-src-container">
               <pre class="src src-js"><span class=
               "linenr"> 1: </span><span class=
@@ -4501,10 +4505,10 @@ undefined
               <strong><font face="Courier" size="3" color=
               "red">集合类型的 delete 操作</font></strong>
             </summary>
-            <p><a href="#orga43586a">reactive</a>, <a href=
-            "#org92a83bf">collection-delete</a>, <a href=
-            "#orga90f8fc">collection-set</a>, <a href=
-            "#orgcd2b937">collection-add</a></p>
+            <p><a href="#orgd30aa30">reactive</a>, <a href=
+            "#org0cdd94f">collection-delete</a>, <a href=
+            "#org7a853c4">collection-set</a>, <a href=
+            "#orgb9a8305">collection-add</a></p>
             <div class="org-src-container">
               <pre class="src src-js"><span class=
               "linenr"> 1: </span><span class=
@@ -4588,11 +4592,11 @@ undefined
               <strong><font face="Courier" size="3" color=
               "red">集合类型的 clear 操作</font></strong>
             </summary>
-            <p><a href="#orga43586a">reactive</a>, <a href=
-            "#org0dd77f6">collection-clear</a>, <a href=
-            "#org92a83bf">collection-delete</a>, <a href=
-            "#orga90f8fc">collection-set</a>, <a href=
-            "#orgcd2b937">collection-add</a></p>
+            <p><a href="#orgd30aa30">reactive</a>, <a href=
+            "#orgd6a3b99">collection-clear</a>, <a href=
+            "#org0cdd94f">collection-delete</a>, <a href=
+            "#org7a853c4">collection-set</a>, <a href=
+            "#orgb9a8305">collection-add</a></p>
             <div class="org-src-container">
               <pre class="src src-js"><span class=
               "linenr"> 1: </span><span class=
@@ -4662,12 +4666,12 @@ undefined
               <strong><font face="Courier" size="3" color=
               "red">集合类型的 forEach 操作</font></strong>
             </summary>
-            <p><a href="#orga43586a">reactive</a>, <a href=
-            "#org7e8010b">collection-forEach</a>, <a href=
-            "#org0dd77f6">collection-clear</a>, <a href=
-            "#org92a83bf">collection-delete</a>, <a href=
-            "#orga90f8fc">collection-set</a>, <a href=
-            "#orgcd2b937">collection-add</a></p>
+            <p><a href="#orgd30aa30">reactive</a>, <a href=
+            "#orga4a242b">collection-forEach</a>, <a href=
+            "#orgd6a3b99">collection-clear</a>, <a href=
+            "#org0cdd94f">collection-delete</a>, <a href=
+            "#org7a853c4">collection-set</a>, <a href=
+            "#orgb9a8305">collection-add</a></p>
             <div class="org-src-container">
               <pre class="src src-js"><span class=
               "linenr"> 1: </span><span class=
@@ -4764,13 +4768,13 @@ undefined
               "red">集合类型的 keys values entries Symbol.iterator
               操作</font></strong>
             </summary>
-            <p><a href="#orga43586a">reactive</a>, <a href=
-            "#org4272b3b">collection-iterator</a>, <a href=
-            "#org7e8010b">collection-forEach</a>, <a href=
-            "#org0dd77f6">collection-clear</a>, <a href=
-            "#org92a83bf">collection-delete</a>, <a href=
-            "#orga90f8fc">collection-set</a>, <a href=
-            "#orgcd2b937">collection-add</a></p>
+            <p><a href="#orgd30aa30">reactive</a>, <a href=
+            "#org9afb1fd">collection-iterator</a>, <a href=
+            "#orga4a242b">collection-forEach</a>, <a href=
+            "#orgd6a3b99">collection-clear</a>, <a href=
+            "#org0cdd94f">collection-delete</a>, <a href=
+            "#org7a853c4">collection-set</a>, <a href=
+            "#orgb9a8305">collection-add</a></p>
             <div class="org-src-container">
               <pre class="src src-js"><span class=
               "linenr"> 1: </span><span class=
@@ -4911,8 +4915,8 @@ undefined
         </div>
       </div>
     </div>
-    <div id="outline-container-orga6cb92b" class="outline-2">
-      <h2 id="orga6cb92b"><span class="section-number-2">7.</span>
+    <div id="outline-container-orgf7cbd31" class="outline-2">
+      <h2 id="orgf7cbd31"><span class="section-number-2">7.</span>
       phase one(no track & trigger)</h2>
       <div class="outline-text-2" id="text-7">
         <p>不含 track 和 trigger 代码的 reactive 实现代码。</p>
@@ -6125,8 +6129,8 @@ undefined
         更新)。</p>
       </div>
     </div>
-    <div id="outline-container-org507642d" class="outline-2">
-      <h2 id="org507642d"><span class="section-number-2">8.</span>
+    <div id="outline-container-org77fdb19" class="outline-2">
+      <h2 id="org77fdb19"><span class="section-number-2">8.</span>
       track&amp;trigger&amp;effect</h2>
       <div class="outline-text-2" id="text-8">
         <p><a href=
@@ -6136,18 +6140,18 @@ undefined
         data-fancybox="gallery" data-caption="Preview"><img src=
         "../assets/img/vue3/reactivity/reactivity-basehd-get-02-track.svg"></a>
         <p>reactive 中订阅发布逻辑相关的三大函数：</p>
-        <p><a href="#org093efe6">track</a>: get
+        <p><a href="#org91fd9b3">track</a>: get
         取值操作时去收集当前的函数(也就是这个变量的监听者其实就是一个函数，只 不过被封装成了一个
         ReactiveEffect 类。)</p>
-        <p><a href="#orgca45fba">trigger</a>: set 设值操作时会去触发 track
+        <p><a href="#org37950a2">trigger</a>: set 设值操作时会去触发 track
         收集到的依赖并执行它们，这个执行的动作实际 是由 这个模块去管理的，这里就不深入探讨这个了有兴趣 的同学可以参考
         <a href=
         "https://www.cheng92.com/vue/vue-teardown-2-sheduler/">Vue3
         功能拆解② Scheduler 渲染机制 - 若叶知秋</a> <sup><a id="fnr.2" class=
         "footref" href="#fn.2" role="doc-backlink">2</a></sup> 或
         。</p>
-        <p><a href="#orgd992db6">effect</a>: 将一个函数封装成 <a href=
-        "#orgb577f80">ReactiveEffect</a> 类，调用的时候会立即执行一个 fn
+        <p><a href="#orga36d82b">effect</a>: 将一个函数封装成 <a href=
+        "#org16ef9a6">ReactiveEffect</a> 类，调用的时候会立即执行一个 fn
         收集依赖。</p>
         <p>三者关系图：</p><a href=
         "../assets/img/vue3/reactivity/reactivity-effect-track-trigger.svg"
@@ -6199,15 +6203,15 @@ undefined
           </li>
         </ol>
         <p>有了上面的分析下面来为上面那些被代理的原子操作添加 track 和 trigger 相关代码。</p>
-        <p>按照如下步骤添加相关代码(先实现 <a href="#org093efe6">track</a> 和
-        <a href="#orgca45fba">trigger</a>)，请看</p>
+        <p>按照如下步骤添加相关代码(先实现 <a href="#org91fd9b3">track</a> 和
+        <a href="#org37950a2">trigger</a>)，请看</p>
       </div>
-      <div id="outline-container-orga7a0dce" class="outline-3">
-        <h3 id="orga7a0dce"><span class=
+      <div id="outline-container-org81c6aae" class="outline-3">
+        <h3 id="org81c6aae"><span class=
         "section-number-3">8.1.</span> track()</h3>
         <div class="outline-text-3" id="text-8-1">
           <div class="org-src-container">
-            <pre class="src src-js" id="org093efe6"><span class=
+            <pre class="src src-js" id="org91fd9b3"><span class=
             "linenr"> 1: </span>&lt;&lt;createDep&gt;&gt;
 <span class="linenr"> 2: </span>&lt;&lt;trackEffects&gt;&gt;
 <span class="linenr"> 3: </span>
@@ -6256,8 +6260,8 @@ undefined
 </pre>
           </div>
         </div>
-        <div id="outline-container-orgb79ba89" class="outline-4">
-          <h4 id="orgb79ba89"><span class=
+        <div id="outline-container-org5bfae97" class="outline-4">
+          <h4 id="org5bfae97"><span class=
           "section-number-4">8.1.1.</span> createDep()</h4>
           <div class="outline-text-4" id="text-8-1-1">
             <p><a href=
@@ -6281,7 +6285,7 @@ undefined
 </pre>
             </div>
             <div class="org-src-container">
-              <pre class="src src-js" id="org5ccf4b4"><span class=
+              <pre class="src src-js" id="org36e6ce0"><span class=
               "linenr">1: </span><span class=
               "org-keyword">const</span> <span class=
               "org-variable-name">createDep</span> = (effects) =&gt; {
@@ -6308,7 +6312,7 @@ undefined
               </summary>
               <div class="org-src-container">
                 <pre class="src src-diff" id=
-                "org445049f"><span class=
+                "org3350b84"><span class=
                 "org-diff-context">const createDep = (effects) =&gt; {</span>
 <span class="org-diff-indicator-removed">-</span><span class=
 "org-diff-removed">  const dep = new Set()</span>
@@ -6323,12 +6327,12 @@ undefined
             </details>
           </div>
         </div>
-        <div id="outline-container-org65be172" class="outline-4">
-          <h4 id="org65be172"><span class=
+        <div id="outline-container-org2e136b9" class="outline-4">
+          <h4 id="org2e136b9"><span class=
           "section-number-4">8.1.2.</span> wasTracked(dep)</h4>
           <div class="outline-text-4" id="text-8-1-2">
             <div class="org-src-container">
-              <pre class="src src-js" id="org942fae9"><span class=
+              <pre class="src src-js" id="orgbbdbea6"><span class=
               "linenr">1: </span><span class=
               "org-keyword">const</span> <span class=
               "org-variable-name">wasTracked</span> = dep =&gt; (dep.w & trackOpBit) &gt; <span class="org-highlight-numbers-number">0</span>
@@ -6336,12 +6340,12 @@ undefined
             </div>
           </div>
         </div>
-        <div id="outline-container-orgbe093a9" class="outline-4">
-          <h4 id="orgbe093a9"><span class=
+        <div id="outline-container-org4af7990" class="outline-4">
+          <h4 id="org4af7990"><span class=
           "section-number-4">8.1.3.</span> newTracked(dep)</h4>
           <div class="outline-text-4" id="text-8-1-3">
             <div class="org-src-container">
-              <pre class="src src-js" id="orge80414b"><span class=
+              <pre class="src src-js" id="org72b0c06"><span class=
               "linenr">1: </span><span class=
               "org-keyword">const</span> <span class=
               "org-variable-name">newTracked</span> = dep =&gt; (dep.n & trackOpBit) &gt; <span class="org-highlight-numbers-number">0</span>
@@ -6349,12 +6353,12 @@ undefined
             </div>
           </div>
         </div>
-        <div id="outline-container-org46639b5" class="outline-4">
-          <h4 id="org46639b5"><span class=
+        <div id="outline-container-org9806476" class="outline-4">
+          <h4 id="org9806476"><span class=
           "section-number-4">8.1.4.</span> initDepMarkers()</h4>
           <div class="outline-text-4" id="text-8-1-4">
             <div class="org-src-container">
-              <pre class="src src-js" id="org49e3827"><span class=
+              <pre class="src src-js" id="orgc2c67be"><span class=
               "linenr">1: </span><span class=
               "org-keyword">const</span> <span class=
               "org-variable-name">initDepMarkers</span> = ({ deps }) =&gt; {
@@ -6377,13 +6381,13 @@ undefined
             </div>
           </div>
         </div>
-        <div id="outline-container-org0637f84" class="outline-4">
-          <h4 id="org0637f84"><span class=
+        <div id="outline-container-org88a0dbf" class="outline-4">
+          <h4 id="org88a0dbf"><span class=
           "section-number-4">8.1.5.</span>
           finalizeDepMarkers()</h4>
           <div class="outline-text-4" id="text-8-1-5">
             <div class="org-src-container">
-              <pre class="src src-js" id="org4382b11"><span class=
+              <pre class="src src-js" id="org76398bf"><span class=
               "linenr"> 1: </span><span class=
               "org-keyword">const</span> <span class=
               "org-variable-name">finalizeDepMarkers</span> = (effect) =&gt; {
@@ -6425,8 +6429,8 @@ undefined
             </div>
           </div>
         </div>
-        <div id="outline-container-orgdb0636e" class="outline-4">
-          <h4 id="orgdb0636e"><span class=
+        <div id="outline-container-orgf913603" class="outline-4">
+          <h4 id="orgf913603"><span class=
           "section-number-4">8.1.6.</span> trackEffects(dep,
           debuggerEventExtraInfo)</h4>
           <div class="outline-text-4" id="text-8-1-6">
@@ -6434,7 +6438,7 @@ undefined
             "https://github.com/vuejs/core/blob/main/packages/reactivity/src/effect.ts#60">
             core/effect.ts at main · vuejs/core</a></p>
             <div class="org-src-container">
-              <pre class="src src-js" id="orgd7ede9b"><span class=
+              <pre class="src src-js" id="org8622ab2"><span class=
               "linenr"> 1: </span><span class=
               "org-keyword">function</span> <span class=
               "org-function-name">trackEffects</span>(<span class=
@@ -6486,7 +6490,7 @@ undefined
               </summary>
               <div class="org-src-container">
                 <pre class="src src-diff" id=
-                "org13e4b3a"><span class=
+                "org726e49b"><span class=
                 "org-diff-context">function trackEffects(dep, debuggerEventExtraInfo) {</span>
 <span class=
 "org-diff-context">  // TODO maxMarkerBits 检查，这里省略直接检查是不是已经存在了</span>
@@ -6525,15 +6529,15 @@ undefined
           </div>
         </div>
       </div>
-      <div id="outline-container-org765a7f8" class="outline-3">
-        <h3 id="org765a7f8"><span class=
+      <div id="outline-container-org6f7422f" class="outline-3">
+        <h3 id="org6f7422f"><span class=
         "section-number-3">8.2.</span> trigger()</h3>
         <div class="outline-text-3" id="text-8-2">
-          <p>trigger 就是当值发生变更时将 <a href="#org093efe6">track</a>
+          <p>trigger 就是当值发生变更时将 <a href="#org91fd9b3">track</a>
           中收集到的 <code>targetMap -&gt; depsMap</code> 中的 effects
           拿出来执行。</p>
           <div class="org-src-container">
-            <pre class="src src-js" id="orgca45fba"><span class=
+            <pre class="src src-js" id="org37950a2"><span class=
             "linenr"> 1: </span>&lt;&lt;triggerEffects&gt;&gt;
 <span class="linenr"> 2: </span>
 <span class="linenr"> 3: </span><span class=
@@ -6698,12 +6702,12 @@ undefined
 </pre>
           </div>
         </div>
-        <div id="outline-container-org355a011" class="outline-4">
-          <h4 id="org355a011"><span class=
+        <div id="outline-container-orgfcb1323" class="outline-4">
+          <h4 id="orgfcb1323"><span class=
           "section-number-4">8.2.1.</span> triggerEffects()</h4>
           <div class="outline-text-4" id="text-8-2-1">
             <div class="org-src-container">
-              <pre class="src src-js" id="orgfbb5c09"><span id=
+              <pre class="src src-js" id="orgcf85794"><span id=
               "coderef-triggerEffects" class=
               "coderef-off"><span class=
               "linenr"> 1: </span><span class=
@@ -6738,7 +6742,7 @@ undefined
 </pre>
             </div>
             <p>这里会去执行 <code>effect.run()</code> 也就是具体的订阅者函数被封装后的
-            <a href="#orgb577f80">ReactiveEffect</a> 中的 run
+            <a href="#org16ef9a6">ReactiveEffect</a> 中的 run
             方法，在这个方法里面会去真正的执行订阅者函数，且执行的时候会使用 try…finally
             去保证这个函数的清理工作正常运行，具体请看 <a href="#coderef-effect-run"
             class="coderef" onmouseover=
@@ -6749,8 +6753,8 @@ undefined
           </div>
         </div>
       </div>
-      <div id="outline-container-org24ec727" class="outline-3">
-        <h3 id="org24ec727"><span class=
+      <div id="outline-container-org3431543" class="outline-3">
+        <h3 id="org3431543"><span class=
         "section-number-3">8.3.</span> effect()</h3>
         <div class="outline-text-3" id="text-8-3">
           <a href=
@@ -6771,7 +6775,7 @@ undefined
 </pre>
           </div>
           <div class="org-src-container">
-            <pre class="src src-js" id="orgd992db6"><span class=
+            <pre class="src src-js" id="orga36d82b"><span class=
             "linenr"> 1: </span><span class=
             "org-keyword">function</span> <span class=
             "org-function-name">effect</span>(<span class=
@@ -6827,7 +6831,7 @@ undefined
           <p>这个 effect 其实很简单，其作用就是</p>
           <ol class="org-ol">
             <li>将一个函数 <code>fn</code> 封装成 <a href=
-            "#orgb577f80">ReactiveEffect</a> 类实例
+            "#org16ef9a6">ReactiveEffect</a> 类实例
             </li>
             <li>立即执行它收集依赖</li>
             <li>返回 <code>effect.run</code> 这个方法，可以让调用者后续可以手动触发
@@ -6860,8 +6864,8 @@ undefined
           </div>
         </div>
       </div>
-      <div id="outline-container-org67151d9" class="outline-3">
-        <h3 id="org67151d9"><span class=
+      <div id="outline-container-orgb0ec359" class="outline-3">
+        <h3 id="orgb0ec359"><span class=
         "section-number-3">8.4.</span> normal objects</h3>
         <div class="outline-text-3" id="text-8-4">
           <table>
@@ -6878,50 +6882,50 @@ undefined
             <tbody>
               <tr>
                 <td class="org-left">
-                  <a href="#org7dc64be">object get</a>
+                  <a href="#orga575211">object get</a>
                 </td>
                 <td class="org-left">
-                  <a href="#org166b14f">go test 🛬</a>
-                </td>
-              </tr>
-              <tr>
-                <td class="org-left">
-                  <a href="#org4aead3c">object has</a>
-                </td>
-                <td class="org-left">
-                  <a href="#orgbd97aed">go test 🛬</a>
+                  <a href="#orgf776dc1">go test 🛬</a>
                 </td>
               </tr>
               <tr>
                 <td class="org-left">
-                  <a href="#org3c175dd">object ownKeys</a>
+                  <a href="#org84cfe9c">object has</a>
                 </td>
                 <td class="org-left">
-                  <a href="#org6566109">go test 🛬</a>
-                </td>
-              </tr>
-              <tr>
-                <td class="org-left">
-                  <a href="#org8cd7cd3">object set</a>
-                </td>
-                <td class="org-left">
-                  <a href="#orgc598e48">go test 🛬</a>
+                  <a href="#org32c3d44">go test 🛬</a>
                 </td>
               </tr>
               <tr>
                 <td class="org-left">
-                  <a href="#orgbc46d09">object delete</a>
+                  <a href="#org778116e">object ownKeys</a>
                 </td>
                 <td class="org-left">
-                  <a href="#org074293a">go test 🛬</a>
+                  <a href="#org074158c">go test 🛬</a>
+                </td>
+              </tr>
+              <tr>
+                <td class="org-left">
+                  <a href="#orgc00c824">object set</a>
+                </td>
+                <td class="org-left">
+                  <a href="#org9fe14ed">go test 🛬</a>
+                </td>
+              </tr>
+              <tr>
+                <td class="org-left">
+                  <a href="#orgda63370">object delete</a>
+                </td>
+                <td class="org-left">
+                  <a href="#org2bd9118">go test 🛬</a>
                 </td>
               </tr>
             </tbody>
           </table>
         </div>
       </div>
-      <div id="outline-container-org69bb608" class="outline-3">
-        <h3 id="org69bb608"><span class=
+      <div id="outline-container-org700cb79" class="outline-3">
+        <h3 id="org700cb79"><span class=
         "section-number-3">8.5.</span> colletion
         objects(Map,Set)</h3>
         <div class="outline-text-3" id="text-8-5">
@@ -6939,88 +6943,88 @@ undefined
             <tbody>
               <tr>
                 <td class="org-left">
-                  <a href="#org3b5eea6">collection get</a>
+                  <a href="#orgc913f1e">collection get</a>
                 </td>
                 <td class="org-left">
-                  <a href="#orgd48cd50">go test 🛬</a>
-                </td>
-              </tr>
-              <tr>
-                <td class="org-left">
-                  <a href="#org4178566">collection has</a>
-                </td>
-                <td class="org-left">
-                  <a href="#orgd48cd50">go test 🛬</a>
+                  <a href="#org846d5d0">go test 🛬</a>
                 </td>
               </tr>
               <tr>
                 <td class="org-left">
-                  <a href="#org298435c">collection size</a>
+                  <a href="#org631bf4c">collection has</a>
                 </td>
                 <td class="org-left">
-                  <a href="#orgd48cd50">go test 🛬</a>
-                </td>
-              </tr>
-              <tr>
-                <td class="org-left">
-                  <a href="#orgd5f4b90">collection add</a>
-                </td>
-                <td class="org-left">
-                  <a href="#orgd48cd50">go test 🛬</a>
+                  <a href="#org846d5d0">go test 🛬</a>
                 </td>
               </tr>
               <tr>
                 <td class="org-left">
-                  <a href="#orgd79a1e5">collection set</a>
+                  <a href="#org2620840">collection size</a>
                 </td>
                 <td class="org-left">
-                  <a href="#orgd48cd50">go test 🛬</a>
-                </td>
-              </tr>
-              <tr>
-                <td class="org-left">
-                  <a href="#org41c72de">collection delete</a>
-                </td>
-                <td class="org-left">
-                  <a href="#orgd48cd50">go test 🛬</a>
+                  <a href="#org846d5d0">go test 🛬</a>
                 </td>
               </tr>
               <tr>
                 <td class="org-left">
-                  <a href="#org7ad6500">collection clear</a>
+                  <a href="#orgc92e408">collection add</a>
                 </td>
                 <td class="org-left">
-                  <a href="#orgd48cd50">go test 🛬</a>
-                </td>
-              </tr>
-              <tr>
-                <td class="org-left">
-                  <a href="#orgbc2764b">collection forEach</a>
-                </td>
-                <td class="org-left">
-                  <a href="#orgd48cd50">go test 🛬</a>
+                  <a href="#org846d5d0">go test 🛬</a>
                 </td>
               </tr>
               <tr>
                 <td class="org-left">
-                  <a href="#orgcf26bd4">collection iterator</a>
+                  <a href="#org5c94a56">collection set</a>
                 </td>
                 <td class="org-left">
-                  <a href="#orgd48cd50">go test 🛬</a>
+                  <a href="#org846d5d0">go test 🛬</a>
+                </td>
+              </tr>
+              <tr>
+                <td class="org-left">
+                  <a href="#org2f4cdce">collection delete</a>
+                </td>
+                <td class="org-left">
+                  <a href="#org846d5d0">go test 🛬</a>
+                </td>
+              </tr>
+              <tr>
+                <td class="org-left">
+                  <a href="#org26c7a75">collection clear</a>
+                </td>
+                <td class="org-left">
+                  <a href="#org846d5d0">go test 🛬</a>
+                </td>
+              </tr>
+              <tr>
+                <td class="org-left">
+                  <a href="#org23cbfde">collection forEach</a>
+                </td>
+                <td class="org-left">
+                  <a href="#org846d5d0">go test 🛬</a>
+                </td>
+              </tr>
+              <tr>
+                <td class="org-left">
+                  <a href="#org72dd8f7">collection iterator</a>
+                </td>
+                <td class="org-left">
+                  <a href="#org846d5d0">go test 🛬</a>
                 </td>
               </tr>
             </tbody>
           </table>
         </div>
       </div>
-      <div id="outline-container-orge9e1774" class="outline-3">
-        <h3 id="orge9e1774"><span class=
+      <div id="outline-container-org49a240e" class="outline-3">
+        <h3 id="org49a240e"><span class=
         "section-number-3">8.6.</span> phase 2 updating</h3>
         <div class="outline-text-3" id="text-8-6">
           <p>加上 track, trigger 之后实际添加的代码：</p>
         </div>
-        <div id="outline-container-org07c3f29" class="outline-4">
-          <h4 id="org07c3f29"><span class=
+        <div id="outline-container-org77c449c" class="outline-4">
+          <h4 id="org77c449c"><span class=
           "section-number-4">8.6.1.</span> normal objects</h4>
           <div class="outline-text-4" id="text-8-6-1">
             <details class="code-details" style=
@@ -7139,8 +7143,8 @@ undefined
             </details>
           </div>
         </div>
-        <div id="outline-container-orge274450" class="outline-4">
-          <h4 id="orge274450"><span class=
+        <div id="outline-container-orga1413f2" class="outline-4">
+          <h4 id="orga1413f2"><span class=
           "section-number-4">8.6.2.</span> collection
           objects(Map,Set)</h4>
           <div class="outline-text-4" id="text-8-6-2">
@@ -7367,8 +7371,8 @@ undefined
             </details>
           </div>
         </div>
-        <div id="outline-container-org36fdb83" class="outline-4">
-          <h4 id="org36fdb83"><span class=
+        <div id="outline-container-org1bb9026" class="outline-4">
+          <h4 id="org1bb9026"><span class=
           "section-number-4">8.6.3.</span> whole phase code</h4>
           <div class="outline-text-4" id="text-8-6-3">
             <details class="code-details" style=
@@ -7378,7 +7382,7 @@ undefined
                 "green">CodeP2</font></strong>
               </summary>
               <div class="org-src-container">
-                <pre class="src src-js" id="orgf1d6e6c"><span class=
+                <pre class="src src-js" id="orgd57fa83"><span class=
                 "linenr">1: </span>&lt;&lt;reactiveP2&gt;&gt;
 <span class="linenr">2: </span>&lt;&lt;effect&gt;&gt;
 </pre>
@@ -7387,8 +7391,8 @@ undefined
           </div>
         </div>
       </div>
-      <div id="outline-container-org5e9b2bc" class="outline-3">
-        <h3 id="org5e9b2bc"><span class=
+      <div id="outline-container-org62bf944" class="outline-3">
+        <h3 id="org62bf944"><span class=
         "section-number-3">8.7.</span> Testing</h3>
         <div class="outline-text-3" id="text-8-7">
           <p>普通类型：</p><br>
@@ -7398,11 +7402,11 @@ undefined
               <strong><font face="Courier" size="3" color=
               "green">createGetter</font></strong>
             </summary>
-            <p><a href="#org7dc64be">get with track</a>, <a href=
-            "#org24fafc8">reactive</a>, <a href=
-            "#orgd992db6">effect</a></p>
+            <p><a href="#orga575211">get with track</a>, <a href=
+            "#org5e72d86">reactive</a>, <a href=
+            "#orga36d82b">effect</a></p>
             <div class="org-src-container">
-              <pre class="src src-js" id="org166b14f"><span class=
+              <pre class="src src-js" id="orgf776dc1"><span class=
               "linenr"> 1: </span>&lt;&lt;reactiveP2&gt;&gt;
 <span class="linenr"> 2: </span>&lt;&lt;effect&gt;&gt;
 <span class="linenr"> 3: </span>
@@ -7426,7 +7430,7 @@ undefined
 <span class="linenr">12: </span>logEnd()
 </pre>
             </div>
-            <pre class="example" id="org870e125">
+            <pre class="example" id="org82b8dd3">
 effect|run| active=true, shouldTrack=true
 run times 1 ...
 track| type=get, key=count, targetMap=[object WeakMap], dep=[object Set]
@@ -7524,7 +7528,7 @@ undefined
 <span class="linenr">20: </span>    logEnd()
 </pre>
                 </div>
-                <pre class="example" id="org9788534">
+                <pre class="example" id="org9cfdda5">
    effect|run| active=true, shouldTrack=true
    track| type=get, key=count, targetMap=[object WeakMap], dep=[object Set]
    trackEffects| shouldTrack=true, activeEffect=[object Object], dep=1, activeEffect.deps=1
@@ -7592,14 +7596,14 @@ undefined
               <strong><font face="Courier" size="3" color=
               "green">has</font></strong>
             </summary>
-            <p><a href="#org4aead3c">has</a>, <a href=
-            "#org24fafc8">reactive</a>, <a href=
-            "#orgd992db6">effect</a></p>
+            <p><a href="#org84cfe9c">has</a>, <a href=
+            "#org5e72d86">reactive</a>, <a href=
+            "#orga36d82b">effect</a></p>
             <p><code>key in object</code> 属性检测会触发 <a href=
-            "#org4aead3c">has proxy</a> -&gt;
+            "#org84cfe9c">has proxy</a> -&gt;
             <code>Reflect.has()</code></p>
             <div class="org-src-container">
-              <pre class="src src-js" id="orgbd97aed"><span class=
+              <pre class="src src-js" id="org32c3d44"><span class=
               "linenr"> 1: </span>&lt;&lt;reactiveP2&gt;&gt;
 <span class="linenr"> 2: </span>&lt;&lt;effect&gt;&gt;
 <span class="linenr"> 3: </span>
@@ -7642,14 +7646,14 @@ undefined
               <strong><font face="Courier" size="3" color=
               "green">ownKeys</font></strong>
             </summary>
-            <p><a href="#org3c175dd">ownKeys</a>, <a href=
-            "#org24fafc8">reactive</a>, <a href=
-            "#orgd992db6">effect</a></p>
+            <p><a href="#org778116e">ownKeys</a>, <a href=
+            "#org5e72d86">reactive</a>, <a href=
+            "#orga36d82b">effect</a></p>
             <p>当对一个对象使用 <code>for...in</code> 进行遍历的时候会触发 <a href=
-            "#org3c175dd">ownKeys proxy</a> -&gt;
+            "#org778116e">ownKeys proxy</a> -&gt;
             <code>Reflect.ownKeys()</code></p>
             <div class="org-src-container">
-              <pre class="src src-js" id="org6566109"><span class=
+              <pre class="src src-js" id="org074158c"><span class=
               "linenr"> 1: </span>&lt;&lt;reactiveP2&gt;&gt;
 <span class="linenr"> 2: </span>&lt;&lt;effect&gt;&gt;
 <span class="linenr"> 3: </span>
@@ -7698,11 +7702,11 @@ undefined
               <strong><font face="Courier" size="3" color=
               "green">createSetter</font></strong>
             </summary>
-            <p><a href="#org8cd7cd3">set</a>, <a href=
-            "#org24fafc8">reactive</a>, <a href=
-            "#orgd992db6">effect</a></p>
+            <p><a href="#orgc00c824">set</a>, <a href=
+            "#org5e72d86">reactive</a>, <a href=
+            "#orga36d82b">effect</a></p>
             <div class="org-src-container">
-              <pre class="src src-js" id="orgc598e48"><span class=
+              <pre class="src src-js" id="org9fe14ed"><span class=
               "linenr"> 1: </span>&lt;&lt;reactiveP2&gt;&gt;
 <span class="linenr"> 2: </span>&lt;&lt;effect&gt;&gt;
 <span class="linenr"> 3: </span>
@@ -7726,7 +7730,7 @@ undefined
 <span class="linenr">12: </span>logEnd()
 </pre>
             </div>
-            <pre class="example" id="org87f89d9">
+            <pre class="example" id="org8aa16d3">
 effect|run| active=true, shouldTrack=true
 track| type=get, key=count, targetMap=[object WeakMap], dep=[object Set]
 trackEffects| shouldTrack=true, activeEffect=[object Object], dep=1, activeEffect.deps=1
@@ -7753,11 +7757,11 @@ undefined
               <strong><font face="Courier" size="3" color=
               "green">deleteProperty</font></strong>
             </summary>
-            <p><a href="#orgbc46d09">delete</a>, <a href=
-            "#org24fafc8">reactive</a>, <a href=
-            "#orgd992db6">effect</a></p>
+            <p><a href="#orgda63370">delete</a>, <a href=
+            "#org5e72d86">reactive</a>, <a href=
+            "#orga36d82b">effect</a></p>
             <div class="org-src-container">
-              <pre class="src src-js" id="org074293a"><span class=
+              <pre class="src src-js" id="org2bd9118"><span class=
               "linenr"> 1: </span>&lt;&lt;reactiveP2&gt;&gt;
 <span class="linenr"> 2: </span>&lt;&lt;effect&gt;&gt;
 <span class="linenr"> 3: </span>
@@ -7788,7 +7792,7 @@ undefined
 "org-string">'delete count'</span>)
 </pre>
             </div>
-            <pre class="example" id="org3b768ff">
+            <pre class="example" id="org8e439db">
 effect|run| active=true, shouldTrack=true
 track| type=get, key=count, targetMap=[object WeakMap], dep=[object Set]
 trackEffects| shouldTrack=true, activeEffect=[object Object], dep=1, activeEffect.deps=1
@@ -7829,16 +7833,16 @@ undefined
               <strong><font face="Courier" size="3" color=
               "green">get-has-size-...</font></strong>
             </summary>
-            <p><a href="#org3b5eea6">get</a>, <a href=
-            "#orgd79a1e5">set</a>, <a href="#org4178566">has</a>,
-            <a href="#org298435c">size</a>, <a href=
-            "#org3b5eea6">get</a>, <a href="#orgd5f4b90">add</a>,
-            <a href="#orgbc2764b">forEach</a>, <a href=
-            "#orgcf26bd4">iterator</a>, <a href=
-            "#org24fafc8">reactive</a>, <a href=
-            "#orgd992db6">effect</a></p>
+            <p><a href="#orgc913f1e">get</a>, <a href=
+            "#org5c94a56">set</a>, <a href="#org631bf4c">has</a>,
+            <a href="#org2620840">size</a>, <a href=
+            "#orgc913f1e">get</a>, <a href="#orgc92e408">add</a>,
+            <a href="#org23cbfde">forEach</a>, <a href=
+            "#org72dd8f7">iterator</a>, <a href=
+            "#org5e72d86">reactive</a>, <a href=
+            "#orga36d82b">effect</a></p>
             <div class="org-src-container">
-              <pre class="src src-js" id="orgd48cd50"><span class=
+              <pre class="src src-js" id="org846d5d0"><span class=
               "linenr"> 1: </span>&lt;&lt;reactiveP2&gt;&gt;
 <span class="linenr"> 2: </span>&lt;&lt;effect&gt;&gt;
 <span class="linenr"> 3: </span>
@@ -7956,8 +7960,8 @@ undefined
         </div>
       </div>
     </div>
-    <div id="outline-container-org8f7191a" class="outline-2">
-      <h2 id="org8f7191a"><span class="section-number-2">9.</span>
+    <div id="outline-container-orgd8c612c" class="outline-2">
+      <h2 id="orgd8c612c"><span class="section-number-2">9.</span>
       effect scope</h2>
       <div class="outline-text-2" id="text-9">
         <p>这个顾名思义其实就是一个 effect 影响的控制范围。</p>
@@ -8148,7 +8152,7 @@ undefined
         "CodeHighlightOff(this, 'coderef-effect-scope-stop');">effect-scope-stop</a>
         这里调用了外层 effect scope 的 <code>stop()</code> 函数，此时它这个链条上 的所以
         effect scope 都被强制停止(其实就是调用了 <a href=
-        "#orgb577f80">ReactiveEffect</a> 与 effect 相关的一系列清理函数，比如：
+        "#org16ef9a6">ReactiveEffect</a> 与 effect 相关的一系列清理函数，比如：
         cleanup, stop)，等于是所以 的信赖被清理了，因此当后面执行 <a href=
         "#coderef-effect-scope-set-value-2" class="coderef"
         onmouseover=
@@ -8157,18 +8161,18 @@ undefined
         "CodeHighlightOff(this, 'coderef-effect-scope-set-value-2');">
         effect-scope-set-value-2</a> 之后 <code>dummy,doubled</code>
         值 并没有发生变化。</p>
-        <p>实现： <a href="#orgb577f80">ReactiveEffect</a> 构造函数中，当每次调用
-        <a href="#orgd992db6">effect</a> 函数时都会新建一个 <a href=
-        "#orgb577f80">ReactiveEffect</a> 实例，此时会去调用 <a href=
-        "#org8ac0a0f">recordEffectScope</a> 记录一次 effect scope(前提是
+        <p>实现： <a href="#org16ef9a6">ReactiveEffect</a> 构造函数中，当每次调用
+        <a href="#orga36d82b">effect</a> 函数时都会新建一个 <a href=
+        "#org16ef9a6">ReactiveEffect</a> 实例，此时会去调用 <a href=
+        "#orgc9b4e19">recordEffectScope</a> 记录一次 effect scope(前提是
         此时的 是有值的)</p>
       </div>
-      <div id="outline-container-org235aa4a" class="outline-3">
-        <h3 id="org235aa4a"><span class=
+      <div id="outline-container-orge33532f" class="outline-3">
+        <h3 id="orge33532f"><span class=
         "section-number-3">9.1.</span> EffectScope</h3>
         <div class="outline-text-3" id="text-9-1">
           <div class="org-src-container">
-            <pre class="src src-js" id="orgaf49271"><span class=
+            <pre class="src src-js" id="orgf640501"><span class=
             "linenr"> 1: </span><span class=
             "org-keyword">class</span> EffectScope {
 <span class="linenr"> 2: </span>  active = <span class=
@@ -8295,13 +8299,13 @@ undefined
           </div>
         </div>
       </div>
-      <div id="outline-container-orge1001b0" class="outline-3">
-        <h3 id="orge1001b0"><span class=
+      <div id="outline-container-org00259aa" class="outline-3">
+        <h3 id="org00259aa"><span class=
         "section-number-3">9.2.</span> recordEffectScope(effect,
         scope)</h3>
         <div class="outline-text-3" id="text-9-2">
           <div class="org-src-container">
-            <pre class="src src-js" id="org8ac0a0f"><span class=
+            <pre class="src src-js" id="orgc9b4e19"><span class=
             "linenr">1: </span><span class=
             "org-keyword">function</span> <span class=
             "org-function-name">recordEffectScope</span>(<span class=
@@ -8317,15 +8321,15 @@ undefined
           </div>
         </div>
       </div>
-      <div id="outline-container-org1002611" class="outline-3">
-        <h3 id="org1002611"><span class=
+      <div id="outline-container-org9a3a3f9" class="outline-3">
+        <h3 id="org9a3a3f9"><span class=
         "section-number-3">9.3.</span> onScopeDispose(fn)</h3>
         <div class="outline-text-3" id="text-9-3">
           <p>在调用 <code>scope.stop()</code> 的时候触发
           <code>cleanups</code> 清理，这个函数是用来监听清理动作的，当发 生清理时执行
           <code>fn</code> 回调做些什么事。</p>
           <div class="org-src-container">
-            <pre class="src src-js" id="org08e1014"><span class=
+            <pre class="src src-js" id="orgada1bfa"><span class=
             "linenr">1: </span><span class=
             "org-keyword">function</span> <span class=
             "org-function-name">onScopeDispose</span>(<span class=
@@ -8340,11 +8344,11 @@ undefined
           </div>
         </div>
       </div>
-      <div id="outline-container-orgfc1437b" class="outline-3">
-        <h3 id="orgfc1437b"><span class=
+      <div id="outline-container-org3177417" class="outline-3">
+        <h3 id="org3177417"><span class=
         "section-number-3">9.4.</span> track dep</h3>
         <div class="outline-text-3" id="text-9-4">
-          <p>effect scope <a href="#org1982b96">递归层级控制</a>, 嵌套深度最大是
+          <p>effect scope <a href="#orgb51bfab">递归层级控制</a>, 嵌套深度最大是
           30<a href="#coderef-maxMarkerBits" class="coderef"
           onmouseover=
           "CodeHighlightOn(this, 'coderef-maxMarkerBits');"
@@ -8353,19 +8357,19 @@ undefined
         </div>
       </div>
     </div>
-    <div id="outline-container-org2b4f0dc" class="outline-2">
-      <h2 id="org2b4f0dc"><span class="section-number-2">10.</span>
+    <div id="outline-container-orge00c7c1" class="outline-2">
+      <h2 id="orge00c7c1"><span class="section-number-2">10.</span>
       computed</h2>
       <div class="outline-text-2" id="text-10">
-        <p>在此之前实现了 <a href="#orga43586a">reactive</a>, <a href=
-        "#orgd992db6">effect</a>, <a href="#org093efe6">track</a>,
-        <a href="#orgca45fba">trigger</a>， 这一节将来讲讲计算属性如何实现 的？</p>
+        <p>在此之前实现了 <a href="#orgd30aa30">reactive</a>, <a href=
+        "#orga36d82b">effect</a>, <a href="#org91fd9b3">track</a>,
+        <a href="#org37950a2">trigger</a>， 这一节将来讲讲计算属性如何实现 的？</p>
         <p><kbd style="">计算属性特点：脏位检查，不立即更新(下次取值触发更新)</kbd></p>
         <p>计算属性模板，当你使用 <code>computed(() =&gt; {...})</code>
-        的时候实际它返回的是一个 <a href="#orge47496d">ComputedRefImpl</a>
+        的时候实际它返回的是一个 <a href="#org9c8abc7">ComputedRefImpl</a>
         实例，读取操作都被进一步封装了。</p>
         <div class="org-src-container">
-          <pre class="src src-js" id="orge47496d"><span class=
+          <pre class="src src-js" id="org9c8abc7"><span class=
           "linenr"> 1: </span><span class=
           "org-keyword">class</span> ComputedRefImpl {
 <span class="linenr"> 2: </span>  dep = <span class=
@@ -8458,7 +8462,7 @@ undefined
         onmouseout=
         "CodeHighlightOff(this, 'coderef-computed-new-effect');">17</a>
         行有个需要注意的点就是计算属性创建一个 <a href=
-        "#orgb577f80">ReactiveEffect</a> 的时候有传入第二个参数<a href=
+        "#org16ef9a6">ReactiveEffect</a> 的时候有传入第二个参数<a href=
         "#coderef-ReactiveEffect-constructor" class="coderef"
         onmouseover=
         "CodeHighlightOn(this, 'coderef-ReactiveEffect-constructor');"
@@ -8466,8 +8470,8 @@ undefined
         "CodeHighlightOff(this, 'coderef-ReactiveEffect-constructor');">118</a>(即：
         <code>scheduler</code>)</p>
         <p>而 <code>scheduler</code> 这个函数是在 <a href=
-        "#orgca45fba">trigger</a> -&gt; <a href=
-        "#orgfbb5c09">triggerEffects</a> 中被调用，且注意看它是替代了
+        "#org37950a2">trigger</a> -&gt; <a href=
+        "#orgcf85794">triggerEffects</a> 中被调用，且注意看它是替代了
         <code>effect.run</code> 的，换句话说这里<a href=
         "#coderef-computed-new-effect" class="coderef" onmouseover=
         "CodeHighlightOn(this, 'coderef-computed-new-effect');"
@@ -8500,13 +8504,13 @@ undefined
         "CodeHighlightOff(this, 'coderef-is-_dirty-to-run');">36</a>
         取值时候会触发脏位检测才去调用 <code>self.effect.run()</code>
         计算出真正的结果值。</p>
-        <div class="warning" id="orgd03afb1">
+        <div class="warning" id="orgbd2a931">
           <p><span style="color:red;">BUG1</span>: <a href=
-          "#org04dc48c">createGetter</a> 中需要增加 ref
+          "#org45472c1">createGetter</a> 中需要增加 ref
           类型检测，不然取不到实际的值，因为 ref 类型的值 是在 <code>value</code>
-          上，修复新增代码(<a href="#org2e1c4d0">FIX</a>) 。</p>
+          上，修复新增代码(<a href="#orge79ff7e">FIX</a>) 。</p>
           <p><span style="color:red;">BUG2</span>: <a href=
-          "#orgca45fba">trigger</a> -&gt; <code>length &gt;
+          "#org37950a2">trigger</a> -&gt; <code>length &gt;
           1</code> 时 -&gt; <a href=
           "#coderef-trigger-deps-length-gt-1" class="coderef"
           onmouseover=
@@ -8514,13 +8518,13 @@ undefined
           onmouseout=
           "CodeHighlightOff(this, 'coderef-trigger-deps-length-gt-1');">
           triggerEffects(createDep(effects))</a> -&gt; <a href=
-          "#org5ccf4b4">createDep()</a> 中没有使用 effects
+          "#org36e6ce0">createDep()</a> 中没有使用 effects
           问题，导致无法新增属性时无法触发 effects 执行(<a href=
-          "#org445049f">FIX</a>)。</p>
+          "#org3350b84">FIX</a>)。</p>
         </div>
         <p><code>computed()</code></p>
         <div class="org-src-container">
-          <pre class="src src-js" id="org37881be"><span class=
+          <pre class="src src-js" id="org8f2e97c"><span class=
           "linenr"> 1: </span>&lt;&lt;ComputedRefImpl&gt;&gt;
 <span class="linenr"> 2: </span><span class=
 "org-keyword">function</span> <span class=
@@ -8597,7 +8601,7 @@ undefined
 "org-string">`second get cValue, cValue=${cValue.value}`</span>)
 </pre>
           </div>
-          <pre class="example" id="org880bdf2">
+          <pre class="example" id="orgf352c5e">
 ComputedRefImpl|constructor| _dirty=true, _value=undefined, isRef=true
 computed| onlyGetter=true, isRef=true, _value=undefined, _dirty=true
 ComputedRefImpl|get|before, _dirty=true, _cacheable=true, _value=undefined
@@ -8632,20 +8636,20 @@ undefined
         </details>
       </div>
     </div>
-    <div id="outline-container-orgf2736c6" class="outline-2">
-      <h2 id="orgf2736c6"><span class="section-number-2">11.</span>
+    <div id="outline-container-org30ce288" class="outline-2">
+      <h2 id="org30ce288"><span class="section-number-2">11.</span>
       defferedComputed</h2>
       <div class="outline-text-2" id="text-11">
         <p>延迟计算属性(<code>defferedComputed</code>)和 <a href=
-        "#org37881be">computed</a> 的唯一区别在于，当依赖的变量发生变化的
+        "#org8f2e97c">computed</a> 的唯一区别在于，当依赖的变量发生变化的
         时候不会立即触发视图更新(即 <a href=
-        "#org972f59b">triggerRefValue(this)</a>) 而是将这人更新动作 push 到一
+        "#orge8988f8">triggerRefValue(this)</a>) 而是将这人更新动作 push 到一
         个队列中去，在 <code>tick=Promise.resolve()</code>
         之后去启动执行，这么做的好处是，当有多次会
         造成计算属性发生变更的动作发生时，能将这些行为合并到一个队列在某个时刻一次行去执
         行，保证只有最后一次更新才生效。</p>
         <div class="org-src-container">
-          <pre class="src src-js" id="org96602ee"><span class=
+          <pre class="src src-js" id="orgd67d1d2"><span class=
           "linenr"> 1: </span><span class=
           "org-keyword">const</span> <span class=
           "org-variable-name">tick</span> = Promise.resolve()
@@ -8721,7 +8725,7 @@ undefined
 <span class="linenr">21: </span>}())
 </pre>
           </div>
-          <pre class="example" id="org74c5f07">
+          <pre class="example" id="org577b4bc">
 effect|run| active=true, shouldTrack=true
 trackRefValue| shouldTrack=true, activeEffect=[object Object]
 trackEffects| shouldTrack=true, activeEffect=[object Object], dep=1, activeEffect.deps=1
@@ -8759,13 +8763,13 @@ after, c.value=3, times=2
 </pre>
         </details>
       </div>
-      <div id="outline-container-org8e35602" class="outline-3">
-        <h3 id="org8e35602"><span class=
+      <div id="outline-container-org06b3983" class="outline-3">
+        <h3 id="org06b3983"><span class=
         "section-number-3">11.1.</span>
         DeferredComputedRefImpl</h3>
         <div class="outline-text-3" id="text-11-1">
           <div class="org-src-container">
-            <pre class="src src-js" id="org220e4fd"><span class=
+            <pre class="src src-js" id="org59c7c71"><span class=
             "linenr"> 1: </span><span class=
             "org-keyword">class</span> DeferredComputedRefImpl {
 <span class="linenr"> 2: </span>  dep = <span class=
@@ -8893,12 +8897,12 @@ after, c.value=3, times=2
           </div>
         </div>
       </div>
-      <div id="outline-container-orgfe3fcfa" class="outline-3">
-        <h3 id="orgfe3fcfa"><span class=
+      <div id="outline-container-org558668d" class="outline-3">
+        <h3 id="org558668d"><span class=
         "section-number-3">11.2.</span> scheduler(fn)</h3>
         <div class="outline-text-3" id="text-11-2">
           <div class="org-src-container">
-            <pre class="src src-js" id="orgdb48031"><span class=
+            <pre class="src src-js" id="org86a2961"><span class=
             "linenr">1: </span><span class=
             "org-keyword">const</span> <span class=
             "org-variable-name">scheduler</span> = (fn) =&gt; {
@@ -8916,12 +8920,12 @@ after, c.value=3, times=2
           </div>
         </div>
       </div>
-      <div id="outline-container-orgff5e88b" class="outline-3">
-        <h3 id="orgff5e88b"><span class=
+      <div id="outline-container-orgda697e5" class="outline-3">
+        <h3 id="orgda697e5"><span class=
         "section-number-3">11.3.</span> flush()</h3>
         <div class="outline-text-3" id="text-11-3">
           <div class="org-src-container">
-            <pre class="src src-js" id="orgefcda27"><span class=
+            <pre class="src src-js" id="orgb3ea876"><span class=
             "linenr">1: </span><span class=
             "org-keyword">const</span> <span class=
             "org-variable-name">flush</span> = () =&gt; {
@@ -8944,17 +8948,17 @@ after, c.value=3, times=2
         </div>
       </div>
     </div>
-    <div id="outline-container-orgf3587d2" class="outline-2">
-      <h2 id="orgf3587d2"><span class="section-number-2">12.</span>
+    <div id="outline-container-org0202fb7" class="outline-2">
+      <h2 id="org0202fb7"><span class="section-number-2">12.</span>
       ref</h2>
       <div class="outline-text-2" id="text-12">
-        <p>ref 是在 <a href="#org37881be">computed</a>
+        <p>ref 是在 <a href="#org8f2e97c">computed</a>
         基础之上衍生而来的一种新的类型，初忠是为了让普通类型的值也能具 备响应式特性。</p><a href=
         "../assets/img/vue3/reactivity/reactivity-ref.svg"
         data-fancybox="gallery" data-caption="Preview"><img src=
         "../assets/img/vue3/reactivity/reactivity-ref.svg"></a>
         <div class="org-src-container">
-          <pre class="src src-js" id="org7968aea"><span class=
+          <pre class="src src-js" id="org6cda45e"><span class=
           "linenr"> 1: </span>&lt;&lt;createRef&gt;&gt;
 <span class="linenr"> 2: </span>&lt;&lt;RefImpl&gt;&gt;
 <span class="linenr"> 3: </span>&lt;&lt;ObjectRefImpl&gt;&gt;
@@ -9007,12 +9011,12 @@ undefined
 </pre>
         </details>
       </div>
-      <div id="outline-container-orgf25cca5" class="outline-3">
-        <h3 id="orgf25cca5"><span class=
+      <div id="outline-container-org23f7bea" class="outline-3">
+        <h3 id="org23f7bea"><span class=
         "section-number-3">12.1.</span> createRef()</h3>
         <div class="outline-text-3" id="text-12-1">
           <div class="org-src-container">
-            <pre class="src src-js" id="org83fe8c1"><span class=
+            <pre class="src src-js" id="org8fe553d"><span class=
             "linenr">1: </span><span class=
             "org-keyword">function</span> <span class=
             "org-function-name">createRef</span>(<span class=
@@ -9033,12 +9037,12 @@ undefined
           </div>
         </div>
       </div>
-      <div id="outline-container-orgb5ae10d" class="outline-3">
-        <h3 id="orgb5ae10d"><span class=
+      <div id="outline-container-org98ad065" class="outline-3">
+        <h3 id="org98ad065"><span class=
         "section-number-3">12.2.</span> RefImpl</h3>
         <div class="outline-text-3" id="text-12-2">
           <div class="org-src-container">
-            <pre class="src src-js" id="org1392e7c"><span class=
+            <pre class="src src-js" id="org34342f0"><span class=
             "linenr"> 1: </span><span class=
             "org-keyword">class</span> RefImpl {
 <span class="linenr"> 2: </span>  _value
@@ -9087,13 +9091,13 @@ undefined
           </div>
         </div>
       </div>
-      <div id="outline-container-orgedf19be" class="outline-3">
-        <h3 id="orgedf19be"><span class=
+      <div id="outline-container-orgb0df118" class="outline-3">
+        <h3 id="orgb0df118"><span class=
         "section-number-3">12.3.</span> ObjectRefImpl</h3>
         <div class="outline-text-3" id="text-12-3">
           <p>将整对象某个属性进行 ref 化。</p>
           <div class="org-src-container">
-            <pre class="src src-js" id="org564c21d"><span class=
+            <pre class="src src-js" id="org4360275"><span class=
             "linenr"> 1: </span><span class=
             "org-keyword">class</span> ObjectRefImpl {
 <span class="linenr"> 2: </span>  __v_isRef = <span class=
@@ -9143,17 +9147,17 @@ undefined
 "org-comment">=&gt; { foo: 2, bar: 3 }</span>
 </pre>
           </div>
-          <p><a href="#org90c4ebf">toRefs(object)</a> =&gt;
-          <a href="#org2b68d56">toRef(o, key, dv)</a> =&gt;
+          <p><a href="#org2939840">toRefs(object)</a> =&gt;
+          <a href="#orgbace456">toRef(o, key, dv)</a> =&gt;
           <code>new ObjectRefImpl(o, key, dv)</code></p>
         </div>
       </div>
-      <div id="outline-container-org44fc0ea" class="outline-3">
-        <h3 id="org44fc0ea"><span class=
+      <div id="outline-container-orga079f73" class="outline-3">
+        <h3 id="orga079f73"><span class=
         "section-number-3">12.4.</span> triggerRef(ref)</h3>
         <div class="outline-text-3" id="text-12-4">
           <div class="org-src-container">
-            <pre class="src src-js" id="orge642b83"><span class=
+            <pre class="src src-js" id="org8186b11"><span class=
             "linenr">1: </span><span class=
             "org-keyword">function</span> <span class=
             "org-function-name">triggerRef</span>(<span class=
@@ -9166,12 +9170,12 @@ undefined
           </div>
         </div>
       </div>
-      <div id="outline-container-orga377241" class="outline-3">
-        <h3 id="orga377241"><span class=
+      <div id="outline-container-orgd5656e1" class="outline-3">
+        <h3 id="orgd5656e1"><span class=
         "section-number-3">12.5.</span> unref(ref)</h3>
         <div class="outline-text-3" id="text-12-5">
           <div class="org-src-container">
-            <pre class="src src-js" id="org4c959b8"><span class=
+            <pre class="src src-js" id="orgea0cfb3"><span class=
             "linenr">1: </span><span class=
             "org-keyword">function</span> <span class=
             "org-function-name">unref</span>(<span class=
@@ -9183,12 +9187,12 @@ undefined
           </div>
         </div>
       </div>
-      <div id="outline-container-org2422c01" class="outline-3">
-        <h3 id="org2422c01"><span class=
+      <div id="outline-container-orgf6fb6aa" class="outline-3">
+        <h3 id="orgf6fb6aa"><span class=
         "section-number-3">12.6.</span> proxyRefs()</h3>
         <div class="outline-text-3" id="text-12-6">
           <div class="org-src-container">
-            <pre class="src src-js" id="org6399ad7"><span class=
+            <pre class="src src-js" id="orgf93a5da"><span class=
             "linenr">1: </span><span class=
             "org-keyword">function</span> <span class=
             "org-function-name">proxyRefs</span>(<span class=
@@ -9204,12 +9208,12 @@ undefined
           </div>
         </div>
       </div>
-      <div id="outline-container-orgaaf7b9b" class="outline-3">
-        <h3 id="orgaaf7b9b"><span class=
+      <div id="outline-container-org6d6059c" class="outline-3">
+        <h3 id="org6d6059c"><span class=
         "section-number-3">12.7.</span> toRefs()</h3>
         <div class="outline-text-3" id="text-12-7">
           <div class="org-src-container">
-            <pre class="src src-js" id="org90c4ebf"><span class=
+            <pre class="src src-js" id="org2939840"><span class=
             "linenr">1: </span><span class=
             "org-keyword">function</span> <span class=
             "org-function-name">toRefs</span>(<span class=
@@ -9233,12 +9237,12 @@ undefined
           </div>
         </div>
       </div>
-      <div id="outline-container-orgfa4f876" class="outline-3">
-        <h3 id="orgfa4f876"><span class=
+      <div id="outline-container-org3b3ac39" class="outline-3">
+        <h3 id="org3b3ac39"><span class=
         "section-number-3">12.8.</span> toRef()</h3>
         <div class="outline-text-3" id="text-12-8">
           <div class="org-src-container">
-            <pre class="src src-js" id="org2b68d56"><span class=
+            <pre class="src src-js" id="orgbace456"><span class=
             "linenr">1: </span><span class=
             "org-keyword">function</span> <span class=
             "org-function-name">toRef</span>(<span class=
@@ -9259,12 +9263,12 @@ undefined
           </div>
         </div>
       </div>
-      <div id="outline-container-org2e536c4" class="outline-3">
-        <h3 id="org2e536c4"><span class=
+      <div id="outline-container-org6538967" class="outline-3">
+        <h3 id="org6538967"><span class=
         "section-number-3">12.9.</span> trackRefValue(ref)</h3>
         <div class="outline-text-3" id="text-12-9">
           <div class="org-src-container">
-            <pre class="src src-js" id="org281cc01"><span class=
+            <pre class="src src-js" id="orgfcc3170"><span class=
             "linenr">1: </span><span class=
             "org-keyword">function</span> <span class=
             "org-function-name">trackRefValue</span>(<span class=
@@ -9282,13 +9286,13 @@ undefined
           </div>
         </div>
       </div>
-      <div id="outline-container-org507c1fa" class="outline-3">
-        <h3 id="org507c1fa"><span class=
+      <div id="outline-container-orgc3b4064" class="outline-3">
+        <h3 id="orgc3b4064"><span class=
         "section-number-3">12.10.</span>
         triggerRefValue(ref,newVal)</h3>
         <div class="outline-text-3" id="text-12-10">
           <div class="org-src-container">
-            <pre class="src src-js" id="org972f59b"><span class=
+            <pre class="src src-js" id="orge8988f8"><span class=
             "linenr">1: </span><span class=
             "org-keyword">function</span> <span class=
             "org-function-name">triggerRefValue</span>(<span class=
@@ -9310,8 +9314,8 @@ undefined
         </div>
       </div>
     </div>
-    <div id="outline-container-org164a8eb" class="outline-2">
-      <h2 id="org164a8eb"><span class="section-number-2">13.</span>
+    <div id="outline-container-org604c2e1" class="outline-2">
+      <h2 id="org604c2e1"><span class="section-number-2">13.</span>
       reactivity</h2>
       <div class="outline-text-2" id="text-13">
         <br>
@@ -9322,7 +9326,7 @@ undefined
             "green">完整代码</font></strong>
           </summary>
           <div class="org-src-container">
-            <pre class="src src-js" id="org7f7509b"><span class=
+            <pre class="src src-js" id="org5fe16a4"><span class=
             "linenr">  1: </span><span class=
             "org-keyword">const</span> <span class=
             "org-variable-name">NOOP</span> = () =&gt; {}
@@ -11473,7 +11477,7 @@ undefined
 "org-string">`#2 after set value.foo, cValue.value = ${cValue.value}`</span>)
 </pre>
         </div>
-        <pre class="example" id="org11fac05">
+        <pre class="example" id="orgd956527">
 ComputedRefImpl|constructor| _dirty=true, _value=undefined, isRef=true
 computed| onlyGetter=true, isRef=true, _value=undefined, _dirty=true
 ComputedRefImpl|get|before, _dirty=true, _cacheable=true, _value=undefined
@@ -11509,8 +11513,8 @@ undefined
         "../assets/img/vue3/reactivity/reactivity-computed-test-01.svg"></a>
       </div>
     </div>
-    <div id="outline-container-org88d82ee" class="outline-2">
-      <h2 id="org88d82ee"><span class="section-number-2">14.</span>
+    <div id="outline-container-org60a6ab8" class="outline-2">
+      <h2 id="org60a6ab8"><span class="section-number-2">14.</span>
       FootNotes</h2>
       <div class="outline-text-2" id="text-14"></div>
     </div>
@@ -11538,7 +11542,7 @@ undefined
   </div>
   <div id="postamble" class="status">
     <p class="author">Author: Zhicheng Lee</p>
-    <p class="date">Created: 2022-04-19 Tue 09:18</p>
+    <p class="date">Created: 2022-04-25 Mon 09:39</p>
   </div>
 </body>
 </html>

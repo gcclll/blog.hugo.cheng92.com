@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <!-- 2022-04-18 Mon 15:50 -->
+  <!-- 2022-04-25 Mon 09:39 -->
   <meta charset="utf-8">
   <meta name="viewport" content=
   "width=device-width, initial-scale=1">
@@ -212,6 +212,10 @@
   "/assets/js/lodash.min.js"></script>
   <script type="text/javascript" src=
   "/assets/js/readtheorg.js"></script>
+  <link rel="stylesheet" href="/assets/js/fancybox/fancybox.css"
+  type="text/css" media="screen">
+  <script type="text/javascript" src=
+  "/assets/js/fancybox/fancybox.umd.js"></script>
   <script type="text/javascript" src=
   "/assets/js/mobile-detect.min.js"></script>
   <script type="text/javascript" src=
@@ -227,6 +231,7 @@
   "/assets/js/dist/global.js"></script>
   <meta name="category" content="vue">
   <meta name="tags" content="scheduler">
+  <meta name="createdAt" content="2022-04-16 09:39:36">
   <style>
         /* From: https://endlessparentheses.com/public/css/endless.css */
         /* See also: https://meta.superuser.com/questions/4788/css-for-the-new-kbd-style */
@@ -285,72 +290,72 @@
       <div id="text-table-of-contents" role="doc-toc">
         <ul>
           <li>
-            <a href="#orgbf28339">1. 简介</a>
+            <a href="#org5cb8b4c">1. 简介</a>
           </li>
           <li>
-            <a href="#orgf5d23b3">2. Global Variables</a>
+            <a href="#org65d8e21">2. Global Variables</a>
           </li>
           <li>
-            <a href="#org6874a2e">3. APIs</a>
+            <a href="#orge7b7eed">3. APIs</a>
           </li>
           <li>
-            <a href="#orgdfb5c22">4. nextTick(fn)</a>
+            <a href="#org2ad5b2a">4. nextTick(fn)</a>
           </li>
           <li>
-            <a href="#org738a570">5. queueJob()</a>
+            <a href="#orgff995dc">5. queueJob()</a>
           </li>
           <li>
-            <a href="#org3d06be0">6. queueFlush()</a>
+            <a href="#orgcc480ea">6. queueFlush()</a>
           </li>
           <li>
-            <a href="#org4abe6ff">7. flushJobs()</a>
+            <a href="#org65eb712">7. flushJobs()</a>
           </li>
           <li>
-            <a href="#orgbc4cf93">8. queueCb()</a>
+            <a href="#org402b4b8">8. queueCb()</a>
           </li>
           <li>
-            <a href="#org721ada2">9. queuePreFlushCb()</a>
+            <a href="#org0514c14">9. queuePreFlushCb()</a>
           </li>
           <li>
-            <a href="#orgd8459c5">10. flushPreFlushCbs()</a>
+            <a href="#orged562ed">10. flushPreFlushCbs()</a>
           </li>
           <li>
-            <a href="#orgc7675d2">11. queuePostFlushCb()</a>
+            <a href="#orgccbe8ba">11. queuePostFlushCb()</a>
           </li>
           <li>
-            <a href="#orgefec138">12. flushPostFlushCbs()</a>
+            <a href="#org19e9ace">12. flushPostFlushCbs()</a>
           </li>
           <li>
-            <a href="#org7c7167e">13. invalidateJob()</a>
+            <a href="#org20c77db">13. invalidateJob()</a>
           </li>
           <li>
-            <a href="#org160c746">14. allowRecurse</a>
+            <a href="#orgefd5bb4">14. allowRecurse</a>
           </li>
           <li>
-            <a href="#orga087369">15. Testing</a>
+            <a href="#org213e8c3">15. Testing</a>
           </li>
           <li>
             <a href="#scheduler-mindmap">16. scheduler flow
             mindmap</a>
           </li>
           <li>
-            <a href="#org2b49ab5">17. Q&amp;A</a>
+            <a href="#org7f80a09">17. Q&amp;A</a>
             <ul>
               <li>
-                <a href="#orgf84ffbb">17.1. pre,job,post
+                <a href="#orgfaddf5f">17.1. pre,job,post
                 三种任务都分别代表什么？</a>
                 <ul>
                   <li>
-                    <a href="#org8dd3830">17.1.1. pre cbs</a>
+                    <a href="#org8ed08c2">17.1.1. pre cbs</a>
                   </li>
                   <li>
-                    <a href="#org589fc43">17.1.2. post cbs</a>
+                    <a href="#org90972a1">17.1.2. post cbs</a>
                   </li>
                   <li>
-                    <a href="#org82f82f4">17.1.3. job</a>
+                    <a href="#orge3bcd35">17.1.3. job</a>
                   </li>
                   <li>
-                    <a href="#org2388dcb">17.1.4. 小结</a>
+                    <a href="#org1842d1f">17.1.4. 小结</a>
                   </li>
                 </ul>
               </li>
@@ -376,8 +381,8 @@
       功能拆解② Scheduler 渲染机制 - 若叶知秋</a></p>
       <p>这里会用 js 重新实现一遍。</p>
     </div>
-    <div id="outline-container-orgbf28339" class="outline-2">
-      <h2 id="orgbf28339"><span class="section-number-2">1.</span>
+    <div id="outline-container-org5cb8b4c" class="outline-2">
+      <h2 id="org5cb8b4c"><span class="section-number-2">1.</span>
       简介</h2>
       <div class="outline-text-2" id="text-1">
         <p>该功能是用来管理 vue-next 中渲染相关的异步任务的(包括节点更新， props 更新等等都 是由这个
@@ -390,19 +395,19 @@
           <li>pre 类型</li>
         </ol>
         <p>pre, job, post 关系网：</p>
-        <div id="org71aef82" class="figure">
+        <div id="org0c3267a" class="figure">
           <p><img src="../assets/img/vue3plus/s/pre-job-post.svg"
           alt="pre-job-post.svg" class="org-svg"></p>
         </div>
       </div>
     </div>
-    <div id="outline-container-orgf5d23b3" class="outline-2">
-      <h2 id="orgf5d23b3"><span class="section-number-2">2.</span>
+    <div id="outline-container-org65d8e21" class="outline-2">
+      <h2 id="org65d8e21"><span class="section-number-2">2.</span>
       Global Variables</h2>
       <div class="outline-text-2" id="text-2">
         <p>global variables used.</p>
         <div class="org-src-container">
-          <pre class="src src-js" id="org720e5b9"><span id=
+          <pre class="src src-js" id="org5e2239b"><span id=
           "coderef-isFlushing" class="coderef-off"><span class=
           "linenr"> 1: </span><span class=
           "org-keyword">let</span> <span class=
@@ -629,8 +634,8 @@
         </div>
       </div>
     </div>
-    <div id="outline-container-org6874a2e" class="outline-2">
-      <h2 id="org6874a2e"><span class="section-number-2">3.</span>
+    <div id="outline-container-orge7b7eed" class="outline-2">
+      <h2 id="orge7b7eed"><span class="section-number-2">3.</span>
       APIs</h2>
       <div class="outline-text-2" id="text-3">
         <table>
@@ -647,58 +652,58 @@
           <tbody>
             <tr>
               <td class="org-left">
-                <a href="#org420c0ce">nextTick()</a>
+                <a href="#org722a118">nextTick()</a>
               </td>
               <td class="org-left">trigger render next tick</td>
             </tr>
             <tr>
               <td class="org-left">
-                <a href="#orgba72289">queueJob()</a>
+                <a href="#org9e9d3d3">queueJob()</a>
               </td>
               <td class="org-left">-</td>
             </tr>
             <tr>
               <td class="org-left">
-                <a href="#orgc5dcdeb">queueFlush()</a>
+                <a href="#org753205e">queueFlush()</a>
               </td>
               <td class="org-left">flush all tasks in job
               queue</td>
             </tr>
             <tr>
               <td class="org-left">
-                <a href="#orgb906428">queueCb()</a>
+                <a href="#org6fe12d6">queueCb()</a>
               </td>
               <td class="org-left">task enqueue</td>
             </tr>
             <tr>
               <td class="org-left">
-                <a href="#orgea2592b">queuePreFlushCb()</a>
+                <a href="#org2b94e2c">queuePreFlushCb()</a>
               </td>
               <td class="org-left">enqueue pre tasks in pre
               queue</td>
             </tr>
             <tr>
               <td class="org-left">
-                <a href="#orgddb2d20">queuePostFlushCb()</a>
+                <a href="#org4c8d4f7">queuePostFlushCb()</a>
               </td>
               <td class="org-left">enqueue post tasks in post
               queue</td>
             </tr>
             <tr>
               <td class="org-left">
-                <a href="#orgbba497b">flushPreFlushCbs()</a>
+                <a href="#org0acf8de">flushPreFlushCbs()</a>
               </td>
               <td class="org-left">flush pre task queue</td>
             </tr>
             <tr>
               <td class="org-left">
-                <a href="#org49e0da9">flushPostFlushCbs()</a>
+                <a href="#orgd722fdb">flushPostFlushCbs()</a>
               </td>
               <td class="org-left">flush post task queue</td>
             </tr>
             <tr>
               <td class="org-left">
-                <a href="#org1a47dd8">flushJobs()</a>
+                <a href="#org6fc1b0c">flushJobs()</a>
               </td>
               <td class="org-left">flush all tasks in queue</td>
             </tr>
@@ -723,9 +728,9 @@
             onmouseover="CodeHighlightOn(this, 'coderef-queue');"
             onmouseout=
             "CodeHighlightOff(this, 'coderef-queue');">queue</a>
-            -&gt; <a href="#orgba72289">queueJob()</a> -&gt;
-            <a href="#orgc5dcdeb">queueFlush()</a> -&gt; <a href=
-            "#org1a47dd8">flushJobs()</a>
+            -&gt; <a href="#org9e9d3d3">queueJob()</a> -&gt;
+            <a href="#org753205e">queueFlush()</a> -&gt; <a href=
+            "#org6fc1b0c">flushJobs()</a>
           </li>
           <li>
             <span style="color:red;">pre</span> -&gt; <a href=
@@ -744,9 +749,9 @@
             "CodeHighlightOn(this, 'coderef-activePreFlushCbs');"
             onmouseout=
             "CodeHighlightOff(this, 'coderef-activePreFlushCbs');">activePreFlushCbs</a>
-            -&gt; <a href="#orgea2592b">queuePreFlushCb()</a> -&gt;
-            <a href="#orgbba497b">flushPreFlushCbs()</a> -&gt;
-            <a href="#org1a47dd8">flushJobs()</a>
+            -&gt; <a href="#org2b94e2c">queuePreFlushCb()</a> -&gt;
+            <a href="#org0acf8de">flushPreFlushCbs()</a> -&gt;
+            <a href="#org6fc1b0c">flushJobs()</a>
           </li>
           <li>
             <span style="color:red;">post</span> -&gt; <a href=
@@ -766,8 +771,8 @@
             onmouseout=
             "CodeHighlightOff(this, 'coderef-activePostFlushCbs');">
             activePostFlushCbs</a> -&gt; -&gt; <a href=
-            "#org49e0da9">flushPostFlushCbs()</a> -&gt; <a href=
-            "#org1a47dd8">flushJobs()</a>
+            "#orgd722fdb">flushPostFlushCbs()</a> -&gt; <a href=
+            "#org6fc1b0c">flushJobs()</a>
           </li>
         </ol><br>
         <details class="code-details" style=
@@ -777,7 +782,7 @@
             "green">queueJob</font></strong>
           </summary>
           <div class="org-src-container">
-            <pre class="src src-js" id="org07560d6"><span class=
+            <pre class="src src-js" id="orge38f865"><span class=
             "linenr">1: </span>&lt;&lt;GlobalVars&gt;&gt;
 <span class="linenr">2: </span>
 <span class="linenr">3: </span>&lt;&lt;nextTick&gt;&gt;
@@ -797,7 +802,7 @@
             "green">pre</font></strong>
           </summary>
           <div class="org-src-container">
-            <pre class="src src-js" id="org0957e9f"><span class=
+            <pre class="src src-js" id="org684b7e2"><span class=
             "linenr"> 1: </span>&lt;&lt;GlobalVars&gt;&gt;
 <span class="linenr"> 2: </span>
 <span class="linenr"> 3: </span>&lt;&lt;nextTick&gt;&gt;
@@ -823,7 +828,7 @@
             "green">post</font></strong>
           </summary>
           <div class="org-src-container">
-            <pre class="src src-js" id="org3cc14eb"><span class=
+            <pre class="src src-js" id="orgd0e9ccd"><span class=
             "linenr"> 1: </span>&lt;&lt;GlobalVars&gt;&gt;
 <span class="linenr"> 2: </span>
 <span class="linenr"> 3: </span>&lt;&lt;nextTick&gt;&gt;
@@ -853,7 +858,7 @@
             "green">scheduler</font></strong>
           </summary>
           <div class="org-src-container">
-            <pre class="src src-js" id="org6997a13"><span id=
+            <pre class="src src-js" id="org52795f8"><span id=
             "coderef-isFlushing" class="coderef-off"><span class=
             "linenr">  1: </span><span class=
             "org-keyword">let</span> <span class=
@@ -1369,8 +1374,8 @@
         </details>
       </div>
     </div>
-    <div id="outline-container-orgdfb5c22" class="outline-2">
-      <h2 id="orgdfb5c22"><span class="section-number-2">4.</span>
+    <div id="outline-container-org2ad5b2a" class="outline-2">
+      <h2 id="org2ad5b2a"><span class="section-number-2">4.</span>
       nextTick(fn)</h2>
       <div class="outline-text-2" id="text-4">
         <p>当前事件队列循环中同步代码执行完之后再去执行 fn 或后面的代码(使用 <code>await
@@ -1392,12 +1397,12 @@
             onmouseout=
             "CodeHighlightOff(this, 'coderef-currentFlushPromise');">
             currentFlushPromise</a>，当 queue 队列中的所有任务执行完成之后返回的一个
-            promise 实例，因为 <a href="#org1a47dd8">flushJobs()</a> 中
+            promise 实例，因为 <a href="#org6fc1b0c">flushJobs()</a> 中
             flush 任务时都是同步操作
           </li>
         </ol>
         <div class="org-src-container">
-          <pre class="src src-js" id="org420c0ce"><span class=
+          <pre class="src src-js" id="org722a118"><span class=
           "linenr">1: </span><span class=
           "org-keyword">function</span> <span class=
           "org-function-name">nextTick</span>(<span class=
@@ -1453,15 +1458,15 @@ run third...
 </pre>
       </div>
     </div>
-    <div id="outline-container-org738a570" class="outline-2">
-      <h2 id="org738a570"><span class="section-number-2">5.</span>
+    <div id="outline-container-orgff995dc" class="outline-2">
+      <h2 id="orgff995dc"><span class="section-number-2">5.</span>
       queueJob()</h2>
       <div class="outline-text-2" id="text-5">
         <p>任务入列, <code>queueJob()</code> -&gt; <a href=
-        "#orgc5dcdeb">queueFlush()</a> -&gt; <a href=
-        "#org1a47dd8">flushJobs()</a> 。</p>
+        "#org753205e">queueFlush()</a> -&gt; <a href=
+        "#org6fc1b0c">flushJobs()</a> 。</p>
         <div class="org-src-container">
-          <pre class="src src-js" id="orgba72289"><span class=
+          <pre class="src src-js" id="org9e9d3d3"><span class=
           "linenr"> 1: </span><span class=
           "org-keyword">function</span> <span class=
           "org-function-name">queueJob</span>(<span class=
@@ -1500,11 +1505,11 @@ run third...
 </pre>
         </div>
         <p><span style="color:red;">Testing...</span></p>
-        <p><a href="#org720e5b9">GlobalVars</a>, <a href=
-        "#org420c0ce">nextTick</a>, <a href=
-        "#orgba72289">queueJob</a>, <a href=
-        "#orgc5dcdeb">queueFlush</a>, <a href=
-        "#org1a47dd8">flushJobs</a></p>
+        <p><a href="#org5e2239b">GlobalVars</a>, <a href=
+        "#org722a118">nextTick</a>, <a href=
+        "#org9e9d3d3">queueJob</a>, <a href=
+        "#org753205e">queueFlush</a>, <a href=
+        "#org6fc1b0c">flushJobs</a></p>
         <div class="org-src-container">
           <pre class="src src-js"><span class=
           "linenr"> 1: </span>&lt;&lt;GlobalVars&gt;&gt;
@@ -1560,14 +1565,14 @@ run third...
         "CodeHighlightOn(this, 'coderef-test-job-2');" onmouseout=
         "CodeHighlightOff(this, 'coderef-test-job-2');">12</a>
         打印之后打印出来。</p>
-        <p>这是因为 <a href="#orgc5dcdeb">queueFlush()</a> 中调用 <a href=
-        "#org1a47dd8">flushJobs()</a> 时候是以
+        <p>这是因为 <a href="#org753205e">queueFlush()</a> 中调用 <a href=
+        "#org6fc1b0c">flushJobs()</a> 时候是以
         <code>resolvedPromise.then(flushJobs)</code> 方式调用的，也就是说要等
         <code>resolvedPromise</code> 状态完 成之后才会触发，而这个 promise 其实是一个
         <code>fullfilled</code> 状态的全局 promise 所以它总 会在前一个 queue
-        flush 动作之后触发(因为 <a href="#org1a47dd8">flushJobs()</a>
+        flush 动作之后触发(因为 <a href="#org6fc1b0c">flushJobs()</a>
         函数中代码都是同步代码)。</p>
-        <div class="tip" id="org6236187">
+        <div class="tip" id="org13cce9e">
           <p>而 <code>currentFlushPromise</code> 这个全局变量是用来记录当前正在执行中的
           promise 也就是上面 说的
           <code>resolvedPromise.then(flushJobs)</code> 返回的一个
@@ -1658,9 +1663,9 @@ flushJobs| queue=0,pendingPreFlushCbs=0,pendingPostFlushCbs=0
 <span class="linenr">6: </span>}
 </pre>
         </div>
-        <div class="tip" id="org8c4af16">
+        <div class="tip" id="org5a69271">
           <p>也就是说当在 for 循环中更新被遍历的数组时，是可以被感知到了，因为当在 <a href=
-          "#org1a47dd8">flushJobs()</a> 中 flush <a href=
+          "#org6fc1b0c">flushJobs()</a> 中 flush <a href=
           "#coderef-queue" class="coderef" onmouseover=
           "CodeHighlightOn(this, 'coderef-queue');" onmouseout=
           "CodeHighlightOff(this, 'coderef-queue');">queue</a> 中的
@@ -1668,13 +1673,13 @@ flushJobs| queue=0,pendingPreFlushCbs=0,pendingPostFlushCbs=0
         </div>
       </div>
     </div>
-    <div id="outline-container-org3d06be0" class="outline-2">
-      <h2 id="org3d06be0"><span class="section-number-2">6.</span>
+    <div id="outline-container-orgcc480ea" class="outline-2">
+      <h2 id="orgcc480ea"><span class="section-number-2">6.</span>
       queueFlush()</h2>
       <div class="outline-text-2" id="text-6">
         <p>这个函数的作用是：当用任务入列就启动 flush 动作去刷新队列中的任务。</p>
         <div class="org-src-container">
-          <pre class="src src-js" id="orgc5dcdeb"><span class=
+          <pre class="src src-js" id="org753205e"><span class=
           "linenr">1: </span><span class=
           "org-keyword">function</span> <span class=
           "org-function-name">queueFlush</span>() {
@@ -1692,13 +1697,13 @@ flushJobs| queue=0,pendingPreFlushCbs=0,pendingPostFlushCbs=0
         </div>
       </div>
     </div>
-    <div id="outline-container-org4abe6ff" class="outline-2">
-      <h2 id="org4abe6ff"><span class="section-number-2">7.</span>
+    <div id="outline-container-org65eb712" class="outline-2">
+      <h2 id="org65eb712"><span class="section-number-2">7.</span>
       flushJobs()</h2>
       <div class="outline-text-2" id="text-7">
         <p>三种任务执行的顺序： pre cbs -&gt; jobs -&gt; post cbs 。</p>
         <div class="org-src-container">
-          <pre class="src src-js" id="org1a47dd8"><span class=
+          <pre class="src src-js" id="org6fc1b0c"><span class=
           "linenr"> 1: </span><span class=
           "org-keyword">function</span> <span class=
           "org-function-name">flushJobs</span>(<span class=
@@ -1786,7 +1791,7 @@ flushJobs| queue=0,pendingPreFlushCbs=0,pendingPostFlushCbs=0
         </div>
         <p>增加 pre cbs flush 代码。</p>
         <div class="org-src-container">
-          <pre class="src src-diff" id="orga184474"><span class=
+          <pre class="src src-diff" id="org89a9166"><span class=
           "org-diff-context">function flushJobs(seen) {</span>
 <span class="org-diff-context">  // 这个函数里面都是同步操作</span>
 <span class="org-diff-context">  isFlushPending = false</span>
@@ -1841,7 +1846,7 @@ flushJobs| queue=0,pendingPreFlushCbs=0,pendingPostFlushCbs=0
         </div>
         <p>增加 post cbs flush 代码。</p>
         <div class="org-src-container">
-          <pre class="src src-diff" id="orgebc8b47"><span class=
+          <pre class="src src-diff" id="org3d23f18"><span class=
           "org-diff-context">function flushJobs(seen) {</span>
 <span class="org-diff-context">  // 这个函数里面都是同步操作</span>
 <span class="org-diff-context">  isFlushPending = false</span>
@@ -1899,18 +1904,18 @@ flushJobs| queue=0,pendingPreFlushCbs=0,pendingPostFlushCbs=0
         </div>
       </div>
     </div>
-    <div id="outline-container-orgbc4cf93" class="outline-2">
-      <h2 id="orgbc4cf93"><span class="section-number-2">8.</span>
+    <div id="outline-container-org402b4b8" class="outline-2">
+      <h2 id="org402b4b8"><span class="section-number-2">8.</span>
       queueCb()</h2>
       <div class="outline-text-2" id="text-8">
         <p>这个函数主要是用来对 pre 和 post 类型的 cb 入列函数。</p>
         <p>对比 <code>queueCb</code> 和 <a href=
-        "#orgba72289">queueJob</a> 会发现两者没多大的差别，先同步收集再异步
-        flush(<a href="#orgc5dcdeb">queueFlush()</a> -&gt; <a href=
-        "#org1a47dd8">flushJobs</a>)，两者判断条件有细微差别，另外 <a href=
-        "#orgba72289">queueJob</a> 支持数组 形式的 cb：</p>
+        "#org9e9d3d3">queueJob</a> 会发现两者没多大的差别，先同步收集再异步
+        flush(<a href="#org753205e">queueFlush()</a> -&gt; <a href=
+        "#org6fc1b0c">flushJobs</a>)，两者判断条件有细微差别，另外 <a href=
+        "#org9e9d3d3">queueJob</a> 支持数组 形式的 cb：</p>
         <div class="org-src-container">
-          <pre class="src src-js" id="orgb906428"><span class=
+          <pre class="src src-js" id="org6fe12d6"><span class=
           "linenr"> 1: </span><span class=
           "org-keyword">function</span> <span class=
           "org-function-name">queueCb</span>(<span class=
@@ -1934,12 +1939,12 @@ flushJobs| queue=0,pendingPreFlushCbs=0,pendingPostFlushCbs=0
         </div>
       </div>
     </div>
-    <div id="outline-container-org721ada2" class="outline-2">
-      <h2 id="org721ada2"><span class="section-number-2">9.</span>
+    <div id="outline-container-org0514c14" class="outline-2">
+      <h2 id="org0514c14"><span class="section-number-2">9.</span>
       queuePreFlushCb()</h2>
       <div class="outline-text-2" id="text-9">
         <div class="org-src-container">
-          <pre class="src src-js" id="orgea2592b"><span class=
+          <pre class="src src-js" id="org2b94e2c"><span class=
           "linenr">1: </span><span class=
           "org-keyword">function</span> <span class=
           "org-function-name">queuePreFlushCb</span>(<span class=
@@ -1951,12 +1956,12 @@ flushJobs| queue=0,pendingPreFlushCbs=0,pendingPostFlushCbs=0
         </div>
       </div>
     </div>
-    <div id="outline-container-orgd8459c5" class="outline-2">
-      <h2 id="orgd8459c5"><span class="section-number-2">10.</span>
+    <div id="outline-container-orged562ed" class="outline-2">
+      <h2 id="orged562ed"><span class="section-number-2">10.</span>
       flushPreFlushCbs()</h2>
       <div class="outline-text-2" id="text-10">
         <div class="org-src-container">
-          <pre class="src src-js" id="orgbba497b"><span class=
+          <pre class="src src-js" id="org0acf8de"><span class=
           "linenr"> 1: </span><span class=
           "org-keyword">function</span> <span class=
           "org-function-name">flushPreFlushCbs</span>(<span class=
@@ -2016,9 +2021,9 @@ flushJobs| queue=0,pendingPreFlushCbs=0,pendingPostFlushCbs=0
         "CodeHighlightOn(this, 'coderef-activePreFlushCbs');"
         onmouseout=
         "CodeHighlightOff(this, 'coderef-activePreFlushCbs');">activePreFlushCbs</a>
-        -&gt; <a href="#orgea2592b">queuePreFlushCb()</a> -&gt;
-        <a href="#orgbba497b">flushPreFlushCbs()</a> -&gt; <a href=
-        "#org1a47dd8">flushJobs()</a></p>
+        -&gt; <a href="#org2b94e2c">queuePreFlushCb()</a> -&gt;
+        <a href="#org0acf8de">flushPreFlushCbs()</a> -&gt; <a href=
+        "#org6fc1b0c">flushJobs()</a></p>
         <p><a href="#coderef-activePreFlushCbs" class="coderef"
         onmouseover=
         "CodeHighlightOn(this, 'coderef-activePreFlushCbs');"
@@ -2033,22 +2038,22 @@ flushJobs| queue=0,pendingPreFlushCbs=0,pendingPostFlushCbs=0
         flushing 期间能继续收集新的任务，
         这样如果在执行期间有新的任务入列，那么在函数最后的递归操作会对这些新入列的任务继 续 flush
         掉，直到再也没有新的任务入列为止。</p>
-        <div class="tip" id="org4ad3a58">
-          <p>当 <a href="#orgea2592b">queuePreFlushCb</a> 在 <a href=
-          "#orgba72289">queueJob</a> 中使用时不会主动触发 cbs 执行，如果 需要立即执行 这些
-          cbs 需要手动调用 <a href="#orgbba497b">flushPreFlushCbs(seen,
+        <div class="tip" id="org4b02726">
+          <p>当 <a href="#org2b94e2c">queuePreFlushCb</a> 在 <a href=
+          "#org9e9d3d3">queueJob</a> 中使用时不会主动触发 cbs 执行，如果 需要立即执行 这些
+          cbs 需要手动调用 <a href="#org0acf8de">flushPreFlushCbs(seen,
           parentJob)</a> 去刷掉 pre cbs 任务，或 者等到当前 job 执行完了下一个
-          <a href="#org1a47dd8">flushJobs()</a> 调用中执行，因为 <a href=
-          "#orgba72289">queueJob()</a> 执行期间 <code>isFlushing =
-          true</code> ，而在 <a href="#orgc5dcdeb">queueFlush()</a>
+          <a href="#org6fc1b0c">flushJobs()</a> 调用中执行，因为 <a href=
+          "#org9e9d3d3">queueJob()</a> 执行期间 <code>isFlushing =
+          true</code> ，而在 <a href="#org753205e">queueFlush()</a>
           中有检测这个值， 如果正在执行 flushing 是 不会继续执行的。</p>
         </div>
         <p><span id="queuePreFlushCb-usage"></span> 用途： 通过全局搜索
-        <a href="#orgea2592b">queuePreFlushCb</a> 只有在 <a href=
+        <a href="#org2b94e2c">queuePreFlushCb</a> 只有在 <a href=
         "https://github.com/vuejs/core/blob/main/packages/runtime-core/src/apiWatch.ts">
         core/apiWatch.ts at main · vuejs/core</a> <span style=
         "color:green;">watch</span> 中被调用，且默认就是 pre 类型。</p>
-        <div id="org9fe8ec4" class="figure">
+        <div id="org17a7ecc" class="figure">
           <p><img src=
           "../assets/img/vue3plus/s/queuePreFlushCb.png" alt=
           "queuePreFlushCb.png"></p>
@@ -2209,7 +2214,7 @@ queueFlush| isFlushing=true,isFlushPending=false
 flushJobs| queue=0,pendingPreFlushCbs=0,pendingPostFlushCbs=0
 [ 'cb1', 'cb2', 'job1' ]
 </pre>
-        <div id="org5f90092" class="figure">
+        <div id="orge6ebd26" class="figure">
           <p><img src=
           "../assets/img/vue3/runtime-core/vue-runtime-core-test-preflush-inside-queuejob.jpg"
           alt=
@@ -2221,12 +2226,12 @@ flushJobs| queue=0,pendingPreFlushCbs=0,pendingPostFlushCbs=0
         "CodeHighlightOn(this, 'coderef-test-pre-queue-job1');"
         onmouseout=
         "CodeHighlightOff(this, 'coderef-test-pre-queue-job1');">15</a>
-        先执行， <a href="#orgba72289">queueJob</a> -&gt; push job1
+        先执行， <a href="#org9e9d3d3">queueJob</a> -&gt; push job1
         -&gt; queue:[job1] -&gt; <a href=
-        "#orgc5dcdeb">queueFlush()</a> 在 <a href=
-        "#orgc5dcdeb">queueFlush()</a> 中调用
+        "#org753205e">queueFlush()</a> 在 <a href=
+        "#org753205e">queueFlush()</a> 中调用
         <code>resolvedPromise.then(flushJobs)</code> 异步执行 <a href=
-        "#org1a47dd8">flushJobs()</a> 函数刷掉所有任务(pre/job/post)</p>
+        "#org6fc1b0c">flushJobs()</a> 函数刷掉所有任务(pre/job/post)</p>
         <p>并且记录当前 tick 下的 <code>promise:
         currentFlushPromise</code></p>
         <p>此时的 <code>pendingPreFlushCbs[]</code> 中是没有任何任务的，所以继续执行
@@ -2333,12 +2338,12 @@ flushJobs| queue=0,pendingPreFlushCbs=0,pendingPostFlushCbs=0
         log 输出 ’cb1,cb2,job1’</p>
       </div>
     </div>
-    <div id="outline-container-orgc7675d2" class="outline-2">
-      <h2 id="orgc7675d2"><span class="section-number-2">11.</span>
+    <div id="outline-container-orgccbe8ba" class="outline-2">
+      <h2 id="orgccbe8ba"><span class="section-number-2">11.</span>
       queuePostFlushCb()</h2>
       <div class="outline-text-2" id="text-11">
         <div class="org-src-container">
-          <pre class="src src-js" id="orgddb2d20"><span class=
+          <pre class="src src-js" id="org4c8d4f7"><span class=
           "linenr">1: </span><span class=
           "org-keyword">function</span> <span class=
           "org-function-name">queuePostFlushCb</span>(<span class=
@@ -2350,12 +2355,12 @@ flushJobs| queue=0,pendingPreFlushCbs=0,pendingPostFlushCbs=0
         </div>
       </div>
     </div>
-    <div id="outline-container-orgefec138" class="outline-2">
-      <h2 id="orgefec138"><span class="section-number-2">12.</span>
+    <div id="outline-container-org19e9ace" class="outline-2">
+      <h2 id="org19e9ace"><span class="section-number-2">12.</span>
       flushPostFlushCbs()</h2>
       <div class="outline-text-2" id="text-12">
         <div class="org-src-container">
-          <pre class="src src-js" id="org49e0da9"><span class=
+          <pre class="src src-js" id="orgd722fdb"><span class=
           "linenr"> 1: </span><span class=
           "org-keyword">function</span> <span class=
           "org-function-name">flushPostFlushCbs</span>(<span class=
@@ -2505,7 +2510,7 @@ flushJobs| queue=0,pendingPreFlushCbs=0,pendingPostFlushCbs=0
 <span class="linenr">38: </span>run();
 </pre>
         </div>
-        <pre class="example" id="orgb07a391">
+        <pre class="example" id="org65d9ad5">
 queueFlush| isFlushing=false,isFlushPending=false
 queueFlush| isFlushing=false,isFlushPending=true
 queueFlush| isFlushing=false,isFlushPending=true
@@ -2529,22 +2534,22 @@ flushJobs| queue=0,pendingPreFlushCbs=0,pendingPostFlushCbs=0
   'cb6'
 ]
 </pre>
-        <div class="tip" id="orgad1b538">
-          <p>对于 <a href="#orgddb2d20">queuePostFlushCb()</a> 和
-          <a href="#orgba72289">queueJob()</a> 的混用只要记住一点， <a href=
-          "#orgddb2d20">queuePostFlushCb()</a> 不会触 发
+        <div class="tip" id="org02c0194">
+          <p>对于 <a href="#org4c8d4f7">queuePostFlushCb()</a> 和
+          <a href="#org9e9d3d3">queueJob()</a> 的混用只要记住一点， <a href=
+          "#org4c8d4f7">queuePostFlushCb()</a> 不会触 发
           <code>activePostFlushCbs</code> 改变，因为 isFlushing =
-          true，所以只会在当前 <a href="#org1a47dd8">flushJobs()</a>
+          true，所以只会在当前 <a href="#org6fc1b0c">flushJobs()</a>
           执行到最后递归检测的时候才会进入下一次的 post+job 调用。</p>
         </div>
       </div>
     </div>
-    <div id="outline-container-org7c7167e" class="outline-2">
-      <h2 id="org7c7167e"><span class="section-number-2">13.</span>
+    <div id="outline-container-org20c77db" class="outline-2">
+      <h2 id="org20c77db"><span class="section-number-2">13.</span>
       invalidateJob()</h2>
       <div class="outline-text-2" id="text-13">
         <div class="org-src-container">
-          <pre class="src src-js" id="org7fab00b"><span class=
+          <pre class="src src-js" id="org25e8b41"><span class=
           "linenr">1: </span><span class=
           "org-keyword">function</span> <span class=
           "org-function-name">invalidateJob</span>(<span class=
@@ -2612,7 +2617,7 @@ flushJobs| queue=0,pendingPreFlushCbs=0,pendingPostFlushCbs=0
 <span class="linenr">26: </span>run();
 </pre>
         </div>
-        <pre class="example" id="org4d7bcd1">
+        <pre class="example" id="orgdff0868">
 queueJob| queue=0,job existed=false
 queueFlush| isFlushing=false,isFlushPending=false
 queueJob| queue=1,job existed=false
@@ -2627,14 +2632,14 @@ flushJobs| queue=0,pendingPreFlushCbs=0,pendingPostFlushCbs=0
 </pre>
       </div>
     </div>
-    <div id="outline-container-org160c746" class="outline-2">
-      <h2 id="org160c746"><span class="section-number-2">14.</span>
+    <div id="outline-container-orgefd5bb4" class="outline-2">
+      <h2 id="orgefd5bb4"><span class="section-number-2">14.</span>
       allowRecurse</h2>
       <div class="outline-text-2" id="text-14">
         <p>这个选项是用来控制是不是可以在 job fn 里面递归调用 <code>queueJob(job)</code>
         。</p>
-        <p>在源码里这个选项出现在两个地方，一个是 <a href="#orgb906428">queueCb()</a>
-        中，另一个是 <a href="#orgba72289">queueJob()</a> 作用都是在检查当前入列的
+        <p>在源码里这个选项出现在两个地方，一个是 <a href="#org6fe12d6">queueCb()</a>
+        中，另一个是 <a href="#org9e9d3d3">queueJob()</a> 作用都是在检查当前入列的
         job 是不是已经在队列里了，控制查找的起始索引 位置。</p>
         <p><span style="color:red;">queueJob</span>:
         <code>!queue.includes(job, isFlushing &amp;&
@@ -2642,7 +2647,7 @@ flushJobs| queue=0,pendingPreFlushCbs=0,pendingPostFlushCbs=0
         <p><span style="color:red;">queueCb</span>:
         <code>!activeQueue.includes(cb, cb.allowRecurse ? index + 1
         : index)</code></p>
-        <div id="org3dc0f86" class="figure">
+        <div id="orgd22e4c1" class="figure">
           <p><img src=
           "../assets/img/vue3/runtime-core/vue-runtime-core-job-allowRecurse.jpg"
           alt="vue-runtime-core-job-allowRecurse.jpg"></p>
@@ -2700,7 +2705,7 @@ flushJobs| queue=0,pendingPreFlushCbs=0,pendingPostFlushCbs=0
 "org-highlight-numbers-number">0</span>
 </pre>
         </div>
-        <pre class="example" id="org0a89e22">
+        <pre class="example" id="orgf292c01">
 queueJob| queue=0,job existed=false
 queueFlush| isFlushing=false,isFlushPending=false
 queueJob| queue=1,job existed=true
@@ -2725,8 +2730,8 @@ after count: 3
 </pre>
       </div>
     </div>
-    <div id="outline-container-orga087369" class="outline-2">
-      <h2 id="orga087369"><span class="section-number-2">15.</span>
+    <div id="outline-container-org213e8c3" class="outline-2">
+      <h2 id="org213e8c3"><span class="section-number-2">15.</span>
       Testing</h2>
       <div class="outline-text-2" id="text-15">
         <br>
@@ -2833,7 +2838,7 @@ after count: 3
 <span class="linenr">47: </span>run();
 </pre>
           </div>
-          <pre class="example" id="org07b2139">
+          <pre class="example" id="orgb5787e7">
 queueFlush| isFlushing=false,isFlushPending=false
 queueFlush| isFlushing=false,isFlushPending=true
 queueFlush| isFlushing=false,isFlushPending=true
@@ -2858,21 +2863,21 @@ cb1,cb2,cb3,cb4,job1,cb5
             且此时的 <code>pendingPreFlushCbs</code> 清空了，等待新任务入列</li>
             <li>
               <p>在执行 cb3 期间，调用 <a href=
-              "#orgea2592b">queuePreFlushCb(cb4)</a> 此时 push cb4
+              "#org2b94e2c">queuePreFlushCb(cb4)</a> 此时 push cb4
               -&gt; <code>pendingPreFlushCbs</code> ，但实际不会影响本次的 for
-              循环执行，这点和 <a href="#orgba72289">queueJob</a> 有点
+              循环执行，这点和 <a href="#org9e9d3d3">queueJob</a> 有点
               不同，它直接使用的是 queue -&gt; for 所以有新的任务入列会立即改变 for 的执行长度
               (<code>queue.length</code>)</p>
               <p>pre 处理会等到 <code>activePreFlushCbs</code> for
               执行循环结束后，在函数的最后递归调用 <a href=
-              "#orgbba497b">flushPreFlushCbs()</a> 来刷掉新入列的任务(如：
+              "#org0acf8de">flushPreFlushCbs()</a> 来刷掉新入列的任务(如：
               cb4)</p>
             </li>
             <li>
-              <p><a href="#orgba72289">queueJob()</a> 在 <a href=
-              "#orgea2592b">queuePreFlushCb()</a> 中调用的时候， queue job
+              <p><a href="#org9e9d3d3">queueJob()</a> 在 <a href=
+              "#org2b94e2c">queuePreFlushCb()</a> 中调用的时候， queue job
               总是在 pre cb 之后被执行， 这也 是 <a href=
-              "#org1a47dd8">flushJobs()</a> 中处理代码应体现出的结果。</p>
+              "#org6fc1b0c">flushJobs()</a> 中处理代码应体现出的结果。</p>
               <div class="org-src-container">
                 <pre class="src src-js"><span class=
                 "linenr">1: </span>   <span class=
@@ -2892,14 +2897,14 @@ cb1,cb2,cb3,cb4,job1,cb5
               </div>
               <p>并且如上面实例结果 cb4 嵌套在 cb3 ，job1 嵌套在了 cb2 中，但是最后还是 cb4
               先 得到执行了，job1 再执行。</p>
-              <div class="tip" id="org8146409">
+              <div class="tip" id="org6a089b2">
                 <p>因此，对于 pre cbs 和 queue jobs 两个类型的任务，不管什么时机入列的，都会
                 是 先执行 pre cbs 再执行 queue jobs。</p>
               </div>
             </li>
             <li>
-              <p><a href="#orgea2592b">queuePreFlushCb()</a> 在
-              <a href="#orgba72289">queueJob()</a> 中调用的时候，新的 pre
+              <p><a href="#org2b94e2c">queuePreFlushCb()</a> 在
+              <a href="#org9e9d3d3">queueJob()</a> 中调用的时候，新的 pre
               job 会在 queue job 后 执行</p>
               <p>原因： <code>flushPreFlushCbs()</code> 先于 queue jobs
               执行，因此 queue jobs(<span style=
@@ -2991,7 +2996,7 @@ cb1,cb2,cb3,cb4,job1,cb5
 <span class="linenr">28: </span>run();
 </pre>
           </div>
-          <pre class="example" id="org247facf">
+          <pre class="example" id="org2f8d62c">
 queueJob| queue=0,job existed=false
 queueFlush| isFlushing=false,isFlushPending=false
 queueJob| queue=1,job existed=false
@@ -3017,7 +3022,7 @@ flushJobs| queue=0,pendingPreFlushCbs=0,pendingPostFlushCbs=0
           <script src="../assets/tests/PoeRZzOa.js"></script>
           <p>测试源码：</p>
           <div class="org-src-container">
-            <pre class="src src-js" id="org95c858d"><span class=
+            <pre class="src src-js" id="orga612fc3"><span class=
             "linenr"> 1: </span><span class=
             "org-doc">/** jsx?|tsx? file header */</span>
 <span class="linenr"> 2: </span>
@@ -3129,32 +3134,32 @@ flushJobs| queue=0,pendingPreFlushCbs=0,pendingPostFlushCbs=0
       <h2 id="scheduler-mindmap"><span class=
       "section-number-2">16.</span> scheduler flow mindmap</h2>
       <div class="outline-text-2" id="text-scheduler-mindmap">
-        <div id="org6269baf" class="figure">
+        <div id="org8f60b1a" class="figure">
           <p><img src=
           "../assets/img/vue3/runtime-core/vue-runtime-core-scheduler.svg"
           alt="vue-runtime-core-scheduler.svg" class="org-svg"></p>
         </div>
       </div>
     </div>
-    <div id="outline-container-org2b49ab5" class="outline-2">
-      <h2 id="org2b49ab5"><span class="section-number-2">17.</span>
+    <div id="outline-container-org7f80a09" class="outline-2">
+      <h2 id="org7f80a09"><span class="section-number-2">17.</span>
       Q&amp;A</h2>
       <div class="outline-text-2" id="text-17"></div>
-      <div id="outline-container-orgf84ffbb" class="outline-3">
-        <h3 id="orgf84ffbb"><span class=
+      <div id="outline-container-orgfaddf5f" class="outline-3">
+        <h3 id="orgfaddf5f"><span class=
         "section-number-3">17.1.</span> pre,job,post
         三种任务都分别代表什么？</h3>
         <div class="outline-text-3" id="text-17-1">
           <p>要搞清楚它们分别代表什么，就要先知道它们都是在哪里被调用了。</p>
         </div>
-        <div id="outline-container-org8dd3830" class="outline-4">
-          <h4 id="org8dd3830"><span class=
+        <div id="outline-container-org8ed08c2" class="outline-4">
+          <h4 id="org8ed08c2"><span class=
           "section-number-4">17.1.1.</span> pre cbs</h4>
           <div class="outline-text-4" id="text-17-1-1">
-            <p>首先对于 <a href="#orgea2592b">queuePreFlushCb</a>
+            <p>首先对于 <a href="#org2b94e2c">queuePreFlushCb</a>
             这个在上面中就有讲过只有在 <code>doWatch()</code> 这个 api 函数中被调用到，也就是
             <code>watch</code>, <code>this.$watch</code> 时候使用的。</p>
-            <p>与之对应的 <a href="#orgbba497b">flushPreFlushCbs()</a>
+            <p>与之对应的 <a href="#org0acf8de">flushPreFlushCbs()</a>
             是在 <span style=
             "color:orange;">renderer.ts:updateComponentPreRender</span>
             这个函数 里调用的，相关详情请查看该文：<a href=
@@ -3162,7 +3167,7 @@ flushJobs| queue=0,pendingPreFlushCbs=0,pendingPostFlushCbs=0
             your own vue runtime-core</a> 。</p>
             <p>这里简单回顾下 <code>updateComponentPreRender</code>
             调用路径(往回推)</p>
-            <div id="orgff73073" class="figure">
+            <div id="org76a78e0" class="figure">
               <p><img src=
               "../assets/img/vue3plus/s/flushPreFlushCbs-called-flow.svg"
               alt="flushPreFlushCbs-called-flow.svg" class=
@@ -3223,13 +3228,13 @@ flushJobs| queue=0,pendingPreFlushCbs=0,pendingPostFlushCbs=0
             props 更新之后。</p>
           </div>
         </div>
-        <div id="outline-container-org589fc43" class="outline-4">
-          <h4 id="org589fc43"><span class=
+        <div id="outline-container-org90972a1" class="outline-4">
+          <h4 id="org90972a1"><span class=
           "section-number-4">17.1.2.</span> post cbs</h4>
           <div class="outline-text-4" id="text-17-1-2">
-            <p><a href="#orgddb2d20">queuePostFlushCb()</a>
+            <p><a href="#org4c8d4f7">queuePostFlushCb()</a>
             被调用的地方：</p>
-            <div id="orgac843c1" class="figure">
+            <div id="orge6b54b5" class="figure">
               <p><img src=
               "../assets/img/vue3plus/s/queuePostFlushCb.png" alt=
               "queuePostFlushCb.png"></p>
@@ -3260,7 +3265,7 @@ flushJobs| queue=0,pendingPreFlushCbs=0,pendingPostFlushCbs=0
               <code>instance.isUnmounted</code> 标识 的更新</li>
             </ol>
             <p>从上面 6 个点看来，也就是说，生命周期函数的回调都会被当做是 post cbs 类型。</p>
-            <p>而对应的 <a href="#org49e0da9">flushPostFlushCbs()</a>
+            <p>而对应的 <a href="#orgd722fdb">flushPostFlushCbs()</a>
             触发是在 <code>render()</code> 函数最后：</p>
             <div class="org-src-container">
               <pre class="src src-js"><span class=
@@ -3292,11 +3297,11 @@ flushJobs| queue=0,pendingPreFlushCbs=0,pendingPostFlushCbs=0
 </pre>
             </div>
             <p>的调用都是发生在 unmount 或 patch 这个流程下，完了之后再调用 <a href=
-            "#org49e0da9">flushPostFlushCbs()</a> 启动队列刷新。</p>
+            "#orgd722fdb">flushPostFlushCbs()</a> 启动队列刷新。</p>
           </div>
         </div>
-        <div id="outline-container-org82f82f4" class="outline-4">
-          <h4 id="org82f82f4"><span class=
+        <div id="outline-container-orge3bcd35" class="outline-4">
+          <h4 id="orge3bcd35"><span class=
           "section-number-4">17.1.3.</span> job</h4>
           <div class="outline-text-4" id="text-17-1-3">
             <div style=
@@ -3366,11 +3371,11 @@ flushJobs| queue=0,pendingPreFlushCbs=0,pendingPostFlushCbs=0
 </pre>
             </div>
             <p>不管是哪种情况都是在组件非首次加载更新时触发的 <a href=
-            "#orgba72289">queueJob()</a> 。</p>
+            "#org9e9d3d3">queueJob()</a> 。</p>
           </div>
         </div>
-        <div id="outline-container-org2388dcb" class="outline-4">
-          <h4 id="org2388dcb"><span class=
+        <div id="outline-container-org1842d1f" class="outline-4">
+          <h4 id="org1842d1f"><span class=
           "section-number-4">17.1.4.</span> 小结</h4>
           <div class="outline-text-4" id="text-17-1-4">
             <p>根据前面三种类型调用点的分析大概得出结论：</p>
@@ -3387,7 +3392,7 @@ flushJobs| queue=0,pendingPreFlushCbs=0,pendingPostFlushCbs=0
   </div>
   <div id="postamble" class="status">
     <p class="author">Author: Zhicheng Lee</p>
-    <p class="date">Created: 2022-04-18 Mon 15:50</p>
+    <p class="date">Created: 2022-04-25 Mon 09:39</p>
   </div>
 </body>
 </html>

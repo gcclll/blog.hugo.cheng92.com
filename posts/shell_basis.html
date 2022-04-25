@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <!-- 2022-03-10 Thu 11:37 -->
+  <!-- 2022-04-25 Mon 09:41 -->
   <meta charset="utf-8">
   <meta name="viewport" content=
   "width=device-width, initial-scale=1">
@@ -192,48 +192,46 @@
     { background-color: #ffff00; color: #000000; font-weight: bold; }
   .org-svg { width: 90%; }
   </style>
-  <link rel="stylesheet" href=
-  "https://cdn.jsdelivr.net/npm/bootstrap@3.4.1/dist/css/bootstrap.min.css"
-  integrity=
-  "sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu"
-  crossorigin="anonymous">
-  <link rel="stylesheet" href=
-  "https://cdn.jsdelivr.net/npm/bootstrap@3.4.1/dist/css/bootstrap-theme.min.css"
-  integrity=
-  "sha384-6pzBo3FDv/PJ8r2KRkGHifhEocL+1X2rVCTTkUfGk7/0pbek5mMa1upzvWbrUbOZ"
-  crossorigin="anonymous">
   <link rel="stylesheet" type="text/css" href=
-  "https://fniessen.github.io/org-html-themes/src/readtheorg_theme/css/htmlize.css">
+  "/assets/css/htmlize.css">
   <link rel="stylesheet" type="text/css" href=
-  "https://fniessen.github.io/org-html-themes/src/readtheorg_theme/css/readtheorg.css">
+  "/assets/css/readtheorg.css">
   <link rel="stylesheet" type="text/css" href=
   "/assets/css/global.css">
-  <link rel="stylesheet" href=
-  "//unpkg.com/element-plus/dist/index.css">
-  <script src=
-  "https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
-  <script src=
-  "https://cdn.jsdelivr.net/npm/bootstrap@3.4.1/dist/js/bootstrap.min.js"
-  integrity=
-  "sha384-aJ21OjlMXNL5UyIl/XNwTMqvzeRMZH2w8c5cRVpzpU8Y5bApTppSuUkhZXN0VxHd"
-  crossorigin="anonymous"></script>
-  <script src=
-  "https://cdn.jsdelivr.net/npm/lodash@4.17.21/lodash.min.js"></script>
-  <script src=
-  "https://cdnjs.cloudflare.com/ajax/libs/mobile-detect/1.4.5/mobile-detect.min.js"></script>
-  <script src='//unpkg.com/valine/dist/Valine.min.js'></script>
-  <script src="//unpkg.com/vue@next"></script>
-  <script src="//unpkg.com/element-plus"></script>
+  <link rel="stylesheet" type="text/css" href=
+  "/assets/css/element-plus.css">
+  <link rel="icon" type="image/png" sizes="48x48" href=
+  "/favicon.ico">
   <script type="text/javascript" src=
-  "https://fniessen.github.io/org-html-themes/src/lib/js/jquery.stickytableheaders.min.js"></script>
+  "/assets/js/jquery.min.js"></script>
   <script type="text/javascript" src=
-  "https://fniessen.github.io/org-html-themes/src/readtheorg_theme/js/readtheorg.js"></script>
+  "/assets/js/jquery.stickytableheaders.min.js"></script>
+  <script type="text/javascript" src=
+  "/assets/js/bootstrap.min.js"></script>
+  <script type="text/javascript" src=
+  "/assets/js/lodash.min.js"></script>
+  <script type="text/javascript" src=
+  "/assets/js/readtheorg.js"></script>
+  <link rel="stylesheet" href="/assets/js/fancybox/fancybox.css"
+  type="text/css" media="screen">
+  <script type="text/javascript" src=
+  "/assets/js/fancybox/fancybox.umd.js"></script>
+  <script type="text/javascript" src=
+  "/assets/js/mobile-detect.min.js"></script>
+  <script type="text/javascript" src=
+  "/assets/js/Valine.min.js"></script>
+  <script type="text/javascript" src="/assets/js/vue.js"></script>
+  <script type="text/javascript" src=
+  "/assets/js/element-plus.js"></script>
   <script type="text/javascript" src=
   "/assets/js/dist/stats.js"></script>
+  <script type="text/javascript" src=
+  "/assets/js/dist/apps.js"></script>
   <script type="text/javascript" src=
   "/assets/js/dist/global.js"></script>
   <meta name="category" content="shell">
   <meta name="tags" content="basis">
+  <meta name="createdAt" content="2022-02-02 09:41:34">
   <style>
         /* From: https://endlessparentheses.com/public/css/endless.css */
         /* See also: https://meta.superuser.com/questions/4788/css-for-the-new-kbd-style */
@@ -312,34 +310,34 @@
         </ul>
         <p><code>#</code>: 从左边开始， <code>%</code>: 从右边开始</p>
         <div class="org-src-container">
-          <pre class="src src-sh"><span style=
-          "color: #5B6268;"># </span><span style=
-          "color: #5B6268;">从左边起最后一个 / 开始, 删除它及它之前的所有字符 =&gt; "file.txt"</span>
-<span style="color: #dcaeea;">var1</span>=/path/to/file.txt
-<span style="color: #ECBE7B;">echo</span> $<span style=
-"color: #51afef;">{</span><span style=
-"color: #dcaeea;">var1</span>##*/<span style=
-"color: #51afef;">}</span>
-<span style="color: #5B6268;"># </span><span style=
-"color: #5B6268;">从左边起第一个 to 开始, 删除它及它之前的所有字符 =&gt; "/path2/to/file.txt"</span>
-<span style=
-"color: #dcaeea;">var2</span>=/path1/to/path2/to/file.txt
-<span style="color: #ECBE7B;">echo</span> $<span style=
-"color: #51afef;">{</span><span style=
-"color: #dcaeea;">var2</span>#*to<span style=
-"color: #51afef;">}</span>
-<span style="color: #5B6268;"># </span><span style=
-"color: #5B6268;">从右边起最后一个 to 开始，删除它及它之后的所有字符 =&gt; "/path1/"</span>
-<span style="color: #ECBE7B;">echo</span> $<span style=
-"color: #51afef;">{</span><span style=
-"color: #dcaeea;">var2</span>%%to*<span style=
-"color: #51afef;">}</span>
-<span style="color: #5B6268;"># </span><span style=
-"color: #5B6268;">从右边起第一个 to 开始，删除它及它之后的所有字符 =&gt; "/path1/to/path2/"</span>
-<span style="color: #ECBE7B;">echo</span> $<span style=
-"color: #51afef;">{</span><span style=
-"color: #dcaeea;">var2</span>%to*<span style=
-"color: #51afef;">}</span>
+          <pre class="src src-sh"><span class=
+          "org-comment-delimiter"># </span><span class=
+          "org-comment">从左边起最后一个 / 开始, 删除它及它之前的所有字符 =&gt; "file.txt"</span>
+<span class="org-variable-name">var1</span>=/path/to/file.txt
+<span class="org-type">echo</span> $<span class=
+"org-rainbow-delimiters-depth-1">{</span><span class=
+"org-variable-name">var1</span>##*/<span class=
+"org-rainbow-delimiters-depth-1">}</span>
+<span class="org-comment-delimiter"># </span><span class=
+"org-comment">从左边起第一个 to 开始, 删除它及它之前的所有字符 =&gt; "/path2/to/file.txt"</span>
+<span class=
+"org-variable-name">var2</span>=/path1/to/path2/to/file.txt
+<span class="org-type">echo</span> $<span class=
+"org-rainbow-delimiters-depth-1">{</span><span class=
+"org-variable-name">var2</span>#*to<span class=
+"org-rainbow-delimiters-depth-1">}</span>
+<span class="org-comment-delimiter"># </span><span class=
+"org-comment">从右边起最后一个 to 开始，删除它及它之后的所有字符 =&gt; "/path1/"</span>
+<span class="org-type">echo</span> $<span class=
+"org-rainbow-delimiters-depth-1">{</span><span class=
+"org-variable-name">var2</span>%%to*<span class=
+"org-rainbow-delimiters-depth-1">}</span>
+<span class="org-comment-delimiter"># </span><span class=
+"org-comment">从右边起第一个 to 开始，删除它及它之后的所有字符 =&gt; "/path1/to/path2/"</span>
+<span class="org-type">echo</span> $<span class=
+"org-rainbow-delimiters-depth-1">{</span><span class=
+"org-variable-name">var2</span>%to*<span class=
+"org-rainbow-delimiters-depth-1">}</span>
 </pre>
         </div>
       </div>
@@ -347,7 +345,7 @@
   </div>
   <div id="postamble" class="status">
     <p class="author">Author: Zhicheng Lee</p>
-    <p class="date">Created: 2022-03-10 Thu 11:37</p>
+    <p class="date">Created: 2022-04-25 Mon 09:41</p>
   </div>
 </body>
 </html>
