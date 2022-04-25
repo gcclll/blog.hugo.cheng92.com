@@ -11,7 +11,7 @@ const GlMenuItem = Vue.defineComponent({
   template: `
     <el-menu-item v-for="(page, i) in list" :index="i+''" :key="page.timestamp">
       <div class="date-title">
-        <span class="date">{{page.date}}</span>
+        <span class="date">{{page.dateTitle}}</span>
         <span class="title">
           <a :href="page.url" v-html="page.title"></a>
         </span>

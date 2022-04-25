@@ -29,7 +29,7 @@ export function trimText(ele, h) {
   return $(ele).children(h).text().replace(/\n/g, '').replace(/\s+/g, ' ')
 }
 
-export const sortFn = (a, b) => new Date(b.birthtime) - new Date(a.birthtime)
+export const sortFn = (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
 
 export function findOutlines(parents, hn = 2) {
   const children = []
@@ -56,8 +56,12 @@ export function formatByDate(pages) {
   const result = {}
   if (pages && pages.length) {
     pages.forEach((page) => {
-      const { month, year } = page
-      const key = `${year}-${String(month).length === 1 ? '0' + month : month}`
+      if (!page.createdAt) {
+        console.warn(`[Error:formatByDate] no createdAt meta header.`)
+        return
+      }
+      const [year, month] = page.createdAt.match(/(\d{2,4})/g)
+      const key = `${year}-${month}`
 
       if (result[key] == null) {
         result[key] = []
@@ -80,17 +84,20 @@ export function formatPages() {
   const pages = {}
   for (let page in ts) {
     const obj = ts[page]
-    const { month, year } = obj
-    const key = `${year}-${String(month).length === 1 ? '0' + month : month}`
+    if (obj.createdAt) {
+      const [year, month, date] = obj.createdAt.match(/(\d{2,4})/g)
+      const key = `${year}-${month}`
+      obj.dateTitle = `${month}-${date}`
 
-    const url = obj.url || obj.href
-    if (!url) obj.href = obj.url = page
+      const url = obj.url || obj.href
+      if (!url) obj.href = obj.url = page
 
-    if (pages[key] == null) {
-      pages[key] = []
-    }
-    if (page !== 'index.html') {
+      if (pages[key] == null) {
+        pages[key] = []
+      }
       pages[key].push({ ...obj })
+    } else {
+      console.warn(`[Error:formatPages] no page createdAt meta header.`)
     }
   }
   // sort by `timestamp`
