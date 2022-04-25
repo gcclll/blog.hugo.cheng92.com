@@ -169,7 +169,7 @@ function parseRoots(roots) {
     `./assets/js/dist/stats.js`,
     `window.$pages=${JSON.stringify(
       roots.reduce((o, next) => {
-        const { birthtime, ctime, createdAt, updatedAt } = next.stats
+        const { birthtime, ctime, updatedAt } = next.stats
         const d = new Date(birthtime)
         let month = d.getMonth() + 1,
           year = d.getFullYear(),
@@ -187,6 +187,10 @@ function parseRoots(roots) {
         const metaTag = next.root.querySelector('meta[name=tags]')
         if (metaTag) {
           tags = (metaTag.getAttribute('content') || '').split(',')
+        }
+        let createdAt = next.root.querySelector('meta[name=createdAt]')
+        if (createdAt) {
+          createdAt = createdAt.getAttribute('content')
         }
 
         o[next.file] = {
