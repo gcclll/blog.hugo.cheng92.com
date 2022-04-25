@@ -49,21 +49,21 @@ export default Vue.defineComponent({
   </el-tabs>
   <el-divider class="gl-tag-divider" content-position="left">分类和标签</el-divider>
   <el-card class="gl-tag-card">
-    <template v-for="( n, name ) in tags.c">
-      <el-badge :value="n">
+    <template v-for="({key, value}) in tags.c">
+      <el-badge :value="value">
         <el-tag
           size="small"
           type="success"
-          @click="addTab(name)"
-        >{{name}}</el-tag>
+          @click="addTab(key)"
+        >{{key}}</el-tag>
       </el-badge>
     </template>
-    <template v-for="( n, name ) in tags.t">
-      <el-badge :value="n">
+    <template v-for="({key,value}) in tags.t">
+      <el-badge :value="value">
         <el-tag
           size="small"
-          @click="addTab(name, true)"
-        >{{name}}</el-tag>
+          @click="addTab(key, true)"
+        >{{key}}</el-tag>
       </el-badge>
     </template>
   </el-card>
@@ -84,8 +84,8 @@ export default Vue.defineComponent({
       activeName: 'archives',
       cached: {},
       tags: {
-        c: {}, // cat
-        t: {} // tags
+        c: [], // cat
+        t: [] // tags
       } // 所有 tag
     }
   },
@@ -157,8 +157,8 @@ export default Vue.defineComponent({
   beforeMount() {
     const list = _.flatten([..._.values(pages)])
 
-    const t = this.tags.t
-    const c = this.tags.c
+    const t = {}
+    const c = {}
 
     list.forEach((item) => {
       const { tags = [], category = [] } = item
@@ -179,6 +179,13 @@ export default Vue.defineComponent({
         }
       })
     })
+
+    this.tags.t = Object.keys(t)
+      .map((key) => ({ key, value: t[key] }))
+      .sort((a, b) => b.value - a.value)
+    this.tags.c = Object.keys(c)
+      .map((key) => ({ key, value: c[key] }))
+      .sort((a, b) => b.value - a.value)
 
     this.tabs.forEach((tab) => {
       switch (tab.value) {
