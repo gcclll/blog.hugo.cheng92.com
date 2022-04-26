@@ -1,0 +1,27 @@
+#+TITLE: Reactivity Drafts
+
+* Proxy + Reflect
+
+#+name: proxy
+#+begin_src js -n -r
+const observed = new Proxy({
+  count: 0
+}, {
+  get(target, prop, receiver) {
+    console.log('---- get ----', prop)
+    return Reflect.get(...arguments)
+  },
+
+  set(target, prop, value) {
+    console.log('---- set ----', prop, value)
+    return Reflect.set(...arguments)
+  },
+})
+
+observed.count++
+#+end_src
+
+#+RESULTS: proxy
+: ---- get ---- count
+: ---- set ---- count 1
+: undefined
