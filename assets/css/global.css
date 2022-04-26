@@ -121,6 +121,19 @@ pre.src-diff .org-diff-indicator-removed {
   background-color: #ffebe9;
 }
 
+div[id^=outline-container-] a {
+  font-family: "EB Garamond";
+  text-decoration: none;
+  background: linear-gradient(to bottom, transparent 70%, rgba(49, 184, 204, 0.5) 70%);
+}
+div[id^=outline-container-] a.footref, div[id^=outline-container-] a.coderef {
+  background: none;
+}
+
+a[data-fancybox=gallery] {
+  background: none !important;
+}
+
 #table-of-contents {
   width: 316px !important;
 }
@@ -423,19 +436,6 @@ blockquote {
     width: 100% !important;
   }
 }
-div[id^=outline-container-] a {
-  font-family: "EB Garamond";
-  text-decoration: none;
-  background: linear-gradient(to bottom, transparent 70%, rgba(49, 184, 204, 0.5) 70%);
-}
-div[id^=outline-container-] a.footref, div[id^=outline-container-] a.coderef {
-  background: none;
-}
-
-a[data-fancybox=gallery] {
-  background: none !important;
-}
-
 /* Set the colors in <pre> blocks from the Leuven theme */
 body {
   font-family: "EB Garamond", "Lato", "proxima-nova", "Helvetica Neue", Arial, sans-serif;
