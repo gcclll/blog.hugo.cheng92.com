@@ -11124,7 +11124,7 @@ function getBaseTransformPreset(prefixIdentifiers) {
 #+end_src
 ** testing
 
-测试及案例分析(含流程图)
+测试及案例分析(含流程图)，输入对应的模板生成 render 函数:
 
 #+begin_export html
 <script src="/assets/tests/compiler-core.js"></script>
@@ -11132,48 +11132,7 @@ function getBaseTransformPreset(prefixIdentifiers) {
 <script src="/assets/tests/Mr9KIGir.js"></script>
 #+end_export
 
-*** pure div
-
-~<div/>~
-
-#+begin_src js -n -r :exports both
-<<baseCompile>>
-
-logOff()
-const { code } = baseCompile('<div></div>', {
-  filename: 'foo.vue'
-})
-logOn()
-
-logg('code', code)
-#+end_src
-
-#+RESULTS:
-#+begin_example
---------- createStructuralDirectiveTransform ---------
-name=for, matches=(n) => n === name
---------- createStructuralDirectiveTransform ---------
-name=/^(if|else|else-if)$/, matches=(n) => name.test(n)
---------- code ---------
-const _Vue = Vue
-
-return function render(_ctx, _cache) {
-  with (_ctx) {
-    const { openBlock: _openBlock, createElementBlock: _createElementBlock } = _Vue
-
-    return (_openBlock(), _createElementBlock("div"))
-  }
-}
-undefined
-#+end_example
-
-#+begin_export html
-<a href="../assets/img/vue3/compiler-core/pcg/pcg-01-pure-div.svg"
-data-fancybox="gallery"
-data-caption="Preview"
-><img src="../assets/img/vue3/compiler-core/pcg/pcg-01-pure-div.svg"/></a>
-#+end_export
-
+旧博客中包含很多测试用例和对应的流程图可供参考：[[https://www.cheng92.com/vue/vue-mind-map-house-cc/][Vue3 源码头脑风暴之☞compiler-core - 若叶知秋]]
 * COMMENT Local Variables :ARCHIVE:
 # Local Variables:
 # after-save-hook: gcl/org-html-export-to-html
