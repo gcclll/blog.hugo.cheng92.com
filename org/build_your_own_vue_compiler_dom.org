@@ -1,0 +1,28 @@
+:PROPERTIES:
+:ID:       f17d718c-0d00-4c10-b3f9-e9e0d8295193
+:END:
+#+SETUPFILE:~/.gclrc/org/hugo_setup.org
+#+HUGO_SLUG: build_your_own_vue_compiler_dom
+#+PROPERTY: header-args:js :exports both
+#+PROPERTY: header-args :noweb no-export
+#+HTML_HEAD: <meta name="category" content="vue"/>
+#+HTML_HEAD: <meta name="tags" content="compiler-dom"/>
+#+HTML_HEAD: <meta name="createdAt" content="2022-04-27 14:49:00"/>
+#+TITLE: build your own vue compiler-dom
+<badge: GCCLL | Homepage | green | / | gnu-emacs | tinder>
+
+#+begin_box Vue3 compiler-dom :background-color green
+
+[[https://www.cheng92.com/vue/vue-mind-map-compiler-dom/][Vue3 源码头脑风暴之 4 ☞compiler-dom - 若叶知秋]]
+
+#+end_box
+
+[[https://blog.cheng92.com/posts/build_your_own_vue_compiler_core.html][build your own vue compiler-core]]
+
+#+name: compiler-core
+#+include: ../assets/tests/compiler-core.js src js -n -r
+
+* COMMENT Local Variables       :ARCHIVE:
+# Local Variables:
+# after-save-hook: gcl/org-html-export-to-html
+# End:

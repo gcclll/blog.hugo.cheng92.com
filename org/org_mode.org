@@ -40,6 +40,31 @@ reactive({ a: 1 })
 #+begin_tip
 注意点：引用都需要指定 doc:noweb 参数为 =yes= 。
 #+end_tip
+** import file to src block
+
+*** include
+
+#+name: gitconfig
+#+INCLUDE: "~/.gitconfig" src sh
+
+test
+
+#+begin_src sh :noweb yes
+<<gitconfig>>
+#+end_src
+
+*** 使用 sed 命令:
+
+#+BEGIN_SRC sh :wrap src python
+sed -n 9,18p wos.py
+#+END_SRC
+
+*** 或者使用 python:
+
+#+BEGIN_SRC python :results code
+with open("wos.py") as f:
+    print("".join(f.readlines()[8:17]))
+#+END_SRC
 
 * foot notes
 

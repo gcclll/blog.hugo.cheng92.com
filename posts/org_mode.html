@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <!-- 2022-04-25 Mon 09:36 -->
+  <!-- 2022-04-27 Wed 14:39 -->
   <meta charset="utf-8">
   <meta name="viewport" content=
   "width=device-width, initial-scale=1">
@@ -290,38 +290,53 @@
       <div id="text-table-of-contents" role="doc-toc">
         <ul>
           <li>
-            <a href="#org7bca662">1. code block</a>
+            <a href="#org2cf9109">1. code block</a>
             <ul>
               <li>
-                <a href="#org66683a2">1.1. reference other code
+                <a href="#org0cad578">1.1. reference other code
                 block</a>
+              </li>
+              <li>
+                <a href="#org047bf4d">1.2. import file to src
+                block</a>
+                <ul>
+                  <li>
+                    <a href="#orgb5fd1be">1.2.1. include</a>
+                  </li>
+                  <li>
+                    <a href="#orgce34264">1.2.2. 使用 sed 命令:</a>
+                  </li>
+                  <li>
+                    <a href="#orge421f56">1.2.3. 或者使用 python:</a>
+                  </li>
+                </ul>
               </li>
             </ul>
           </li>
           <li>
-            <a href="#orgdb2ea11">2. foot notes</a>
+            <a href="#org6dac89d">2. foot notes</a>
           </li>
           <li>
-            <a href="#org4d65dd8">3. FootNotes</a>
+            <a href="#org74d16b3">3. FootNotes</a>
           </li>
         </ul>
       </div>
     </div>
     <p><a href="/"><img src=
     "https://img.shields.io/badge/GCCLL-Homepage-green?logo=gnu-emacs"></a></p>
-    <div id="outline-container-org7bca662" class="outline-2">
-      <h2 id="org7bca662"><span class="section-number-2">1.</span>
+    <div id="outline-container-org2cf9109" class="outline-2">
+      <h2 id="org2cf9109"><span class="section-number-2">1.</span>
       code block</h2>
       <div class="outline-text-2" id="text-1"></div>
-      <div id="outline-container-org66683a2" class="outline-3">
-        <h3 id="org66683a2"><span class=
+      <div id="outline-container-org0cad578" class="outline-3">
+        <h3 id="org0cad578"><span class=
         "section-number-3">1.1.</span> reference other code
         block</h3>
         <div class="outline-text-3" id="text-1-1">
           <p><b>引用本文的其它代码</b></p>
           <p>被引用的代码块:</p>
           <div class="org-src-container">
-            <pre class="src src-js" id="orgaca9555"><span class=
+            <pre class="src src-js" id="orgb814342"><span class=
             "org-keyword">function</span> <span class=
             "org-function-name">reactive</span>(<span class=
             "org-variable-name">target</span>) {
@@ -344,16 +359,95 @@ reactive({ a: <span class=
 "org-highlight-numbers-number">1</span> })
 </pre>
           </div>
-          <div class="tip" id="orgbca6101">
+          <div class="tip" id="org0b8998f">
             <p>注意点：引用都需要指定 <abbr class="tooltip" title=
             "zsh:1: command not found: wn&lt;br&gt;">noweb</abbr>
             参数为 <code>yes</code> 。</p>
           </div>
         </div>
       </div>
+      <div id="outline-container-org047bf4d" class="outline-3">
+        <h3 id="org047bf4d"><span class=
+        "section-number-3">1.2.</span> import file to src
+        block</h3>
+        <div class="outline-text-3" id="text-1-2"></div>
+        <div id="outline-container-orgb5fd1be" class="outline-4">
+          <h4 id="orgb5fd1be"><span class=
+          "section-number-4">1.2.1.</span> include</h4>
+          <div class="outline-text-4" id="text-1-2-1">
+            <div class="org-src-container">
+              <pre class="src src-sh" id="org9bd5967"><span class=
+              "org-rainbow-delimiters-depth-1">[</span>http<span class=
+              "org-rainbow-delimiters-depth-1">]</span>
+    <span class="org-variable-name">sslVerify</span>=false
+<span class=
+"org-rainbow-delimiters-depth-1">[</span>user<span class=
+"org-rainbow-delimiters-depth-1">]</span>
+    <span class="org-variable-name">name</span> = gcclll
+    <span class=
+"org-variable-name">email</span> = gccll.love@gmail.com
+<span class=
+"org-rainbow-delimiters-depth-1">[</span>http <span class=
+"org-string">"https://github.com"</span><span class=
+"org-rainbow-delimiters-depth-1">]</span>
+    <span class=
+"org-variable-name">proxy</span> = socks5://127.0.0.1:7891
+</pre>
+            </div>
+            <p>test</p>
+            <div class="org-src-container">
+              <pre class="src src-sh"><span class=
+              "org-rainbow-delimiters-depth-1">[</span>http<span class=
+              "org-rainbow-delimiters-depth-1">]</span>
+    <span class="org-variable-name">sslVerify</span>=false
+<span class=
+"org-rainbow-delimiters-depth-1">[</span>user<span class=
+"org-rainbow-delimiters-depth-1">]</span>
+    <span class="org-variable-name">name</span> = gcclll
+    <span class=
+"org-variable-name">email</span> = gccll.love@gmail.com
+<span class=
+"org-rainbow-delimiters-depth-1">[</span>http <span class=
+"org-string">"https://github.com"</span><span class=
+"org-rainbow-delimiters-depth-1">]</span>
+    <span class=
+"org-variable-name">proxy</span> = socks5://127.0.0.1:7891
+</pre>
+            </div>
+          </div>
+        </div>
+        <div id="outline-container-orgce34264" class="outline-4">
+          <h4 id="orgce34264"><span class=
+          "section-number-4">1.2.2.</span> 使用 sed 命令:</h4>
+          <div class="outline-text-4" id="text-1-2-2">
+            <div class="org-src-container">
+              <pre class="src src-sh">sed -n 9,18p wos.py
+</pre>
+            </div>
+          </div>
+        </div>
+        <div id="outline-container-orge421f56" class="outline-4">
+          <h4 id="orge421f56"><span class=
+          "section-number-4">1.2.3.</span> 或者使用 python:</h4>
+          <div class="outline-text-4" id="text-1-2-3">
+            <div class="org-src-container">
+              <pre class="src src-python"><span class=
+              "org-keyword">with</span> <span class=
+              "org-builtin">open</span>(<span class=
+              "org-string">"wos.py"</span>) <span class=
+              "org-keyword">as</span> f:
+    <span class="org-builtin">print</span>(<span class=
+"org-string">""</span>.join(f.readlines()[<span class=
+"org-highlight-numbers-number">8</span>:<span class=
+"org-highlight-numbers-number">17</span>]))
+</pre>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
-    <div id="outline-container-orgdb2ea11" class="outline-2">
-      <h2 id="orgdb2ea11"><span class="section-number-2">2.</span>
+    <div id="outline-container-org6dac89d" class="outline-2">
+      <h2 id="org6dac89d"><span class="section-number-2">2.</span>
       foot notes</h2>
       <div class="outline-text-2" id="text-2">
         <p>number foot notes<sup><a id="fnr.1" class="footref"
@@ -362,8 +456,8 @@ reactive({ a: <span class=
         "#fn.2" role="doc-backlink">2</a></sup></p>
       </div>
     </div>
-    <div id="outline-container-org4d65dd8" class="outline-2">
-      <h2 id="org4d65dd8"><span class="section-number-2">3.</span>
+    <div id="outline-container-org74d16b3" class="outline-2">
+      <h2 id="org74d16b3"><span class="section-number-2">3.</span>
       FootNotes</h2>
       <div class="outline-text-2" id="text-3"></div>
     </div>
@@ -389,7 +483,7 @@ reactive({ a: <span class=
   </div>
   <div id="postamble" class="status">
     <p class="author">Author: Zhicheng Lee</p>
-    <p class="date">Created: 2022-04-25 Mon 09:37</p>
+    <p class="date">Created: 2022-04-27 Wed 14:39</p>
   </div>
 </body>
 </html>

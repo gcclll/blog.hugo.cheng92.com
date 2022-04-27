@@ -32,8 +32,10 @@
 CLOSED: [2022-04-14 Thu 14:28]
 ** DONE [[id:4a858df2-f6f8-4d2f-9cda-78c12cbf42b3][build your own vue scheduler]]
 CLOSED: [2022-04-18 Mon 14:49]
+** DONE [[id:5eff117f-92ba-490a-ba9c-e5f59e0cbe47][build your own vue compiler-core]]
+CLOSED: [2022-04-27 Wed 14:46]
+** TODO [[id:f17d718c-0d00-4c10-b3f9-e9e0d8295193][build your own vue compiler-dom]]
 ** TODO [[id:d0fc0f76-8429-429c-99a0-206792da22ad][build your own vue runtime-core]]
-** TODO [[id:5eff117f-92ba-490a-ba9c-e5f59e0cbe47][build your own vue compiler-core]]
 * React
 ** TODO [[id:293eb7ed-0b86-4a5c-acc2-ea5b26e92326][Build your own react]]
 * JavaScript

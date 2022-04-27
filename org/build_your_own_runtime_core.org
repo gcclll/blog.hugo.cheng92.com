@@ -11,7 +11,20 @@
 #+TITLE: build your own vue runtime-core
 <badge: GCCLL | Homepage | green | / | gnu-emacs | tinder>
 
-TODO runtime core
+#+begin_box Vue3 runtime-core :background-color green
+
+旧博客中的相关文章：
+
+[[https://www.cheng92.com/vue/vue-mind-map-runtime-core-1/][Vue3 源码头脑风暴之 7 ☞ runtime-core(1) - 若叶知秋]]
+
+[[https://www.cheng92.com/vue/vue-mind-map-runtime-core-2-render/][Vue3 源码头脑风暴之 7 ☞ runtime-core(2) - render - 若叶知秋]]
+
+#+end_box
+#+html: <br>
+
+依赖 [[https://blog.cheng92.com/posts/build_your_own_vue_compiler_core.html][build your own vue compiler-core]] 中的代码
+
+#+INCLUDE: ../assets/tests/compiler-core.js src js -n -r
 
 * COMMENT Local Variables       :ARCHIVE:
 # Local Variables:

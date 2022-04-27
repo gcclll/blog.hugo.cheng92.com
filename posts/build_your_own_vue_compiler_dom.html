@@ -1,11 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <!-- 2022-04-27 Wed 14:45 -->
+  <!-- 2022-04-27 Wed 14:50 -->
   <meta charset="utf-8">
   <meta name="viewport" content=
   "width=device-width, initial-scale=1">
-  <title>build your own vue runtime-core</title>
+  <title>build your own vue compiler-dom</title>
   <meta name="author" content="Zhicheng Lee">
   <meta name="generator" content="Org Mode">
   <style>
@@ -230,8 +230,8 @@
   <script type="text/javascript" src=
   "/assets/js/dist/global.js"></script>
   <meta name="category" content="vue">
-  <meta name="tags" content="runtime-core">
-  <meta name="createdAt" content="2022-04-16 09:40:04">
+  <meta name="tags" content="compiler-dom">
+  <meta name="createdAt" content="2022-04-27 14:49:00">
   <style>
         /* From: https://endlessparentheses.com/public/css/endless.css */
         /* See also: https://meta.superuser.com/questions/4788/css-for-the-new-kbd-style */
@@ -284,25 +284,21 @@
 </head>
 <body>
   <div id="content" class="content">
-    <h1 class="title">build your own vue runtime-core</h1>
+    <h1 class="title">build your own vue compiler-dom</h1>
     <p><a href="/"><img src=
     "https://img.shields.io/badge/GCCLL-Homepage-green?logo=gnu-emacs"></a></p>
     <div style=
     "padding: 1em; background-color: #CCFFCC;border-radius: 15px; font-size: 0.9em; box-shadow: 0.05em 0.1em 5px 0.01em #00000057;">
-      <h3>Vue3 runtime-core</h3>
-      <p>旧博客中的相关文章：</p>
+      <h3>Vue3 compiler-dom</h3>
       <p><a href=
-      "https://www.cheng92.com/vue/vue-mind-map-runtime-core-1/">Vue3
-      源码头脑风暴之 7 ☞ runtime-core(1) - 若叶知秋</a></p>
-      <p><a href=
-      "https://www.cheng92.com/vue/vue-mind-map-runtime-core-2-render/">
-      Vue3 源码头脑风暴之 7 ☞ runtime-core(2) - render - 若叶知秋</a></p>
-    </div><br>
-    <p>依赖 <a href=
+      "https://www.cheng92.com/vue/vue-mind-map-compiler-dom/">Vue3
+      源码头脑风暴之 4 ☞compiler-dom - 若叶知秋</a></p>
+    </div>
+    <p><a href=
     "https://blog.cheng92.com/posts/build_your_own_vue_compiler_core.html">
-    build your own vue compiler-core</a> 中的代码</p>
+    build your own vue compiler-core</a></p>
     <div class="org-src-container">
-      <pre class="src src-js"><span class=
+      <pre class="src src-js" id="org1c5aa3e"><span class=
       "linenr">   1: </span><span class=
       "org-keyword">let</span> <span class=
       "org-variable-name">__BROWSER__</span> = <span class=
@@ -14285,7 +14281,7 @@ undefined
   </div>
   <div id="postamble" class="status">
     <p class="author">Author: Zhicheng Lee</p>
-    <p class="date">Created: 2022-04-27 Wed 14:45</p>
+    <p class="date">Created: 2022-04-27 Wed 14:50</p>
   </div>
 </body>
 </html>
