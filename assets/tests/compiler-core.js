@@ -1,4 +1,5 @@
 let __BROWSER__ = typeof window !== 'undefined'
+let logs = {}, currentLogKey = 'cc'
 let w = {}
 let debugEle = null
 if (__BROWSER__) {
@@ -158,25 +159,30 @@ const logOff = () => (debugOn = false)
 const logEnd = (hint = "END") => {
   const m = `--------- ${hint} ---------`
   if (debugOn)
-    console.log(m)
+    pushLog(m, 'title')
   return m
 }
 const logBr = () => console.log("\n")
-let debugTraverseOn = true
+let debugTraverseOn = false
 const logTraverseOn = () => (debugTraverseOn=true)
 const logTraverseOff = () => (debugTraverseOn=false)
 const logg = ( hint, ...msg ) => {
   if (!debugTraverseOn && hint === 'traverseNode') return
-  const m = logEnd(hint)
-  if (__BROWSER__) {
-    w.log(m, true)
+  if (debugOn) {
+    const m = logEnd(hint)
+    msg.forEach((m) => pushLog(m))
   }
-  msg.forEach((m) => {
-    if (__BROWSER__) {
-      w.log(m)
-    }
-    log(m)
-  })
+}
+function pushLog(m, type = 'normal') {
+  ;( logs[currentLogKey] || (logs[currentLogKey] = [])).push({ value: m, type })
+  log(m)
+}
+function clearLog(key) {
+  if (key) {
+    logs[key] = []
+  } else {
+    logs = {}
+  }
 }
 
 const extend = Object.assign

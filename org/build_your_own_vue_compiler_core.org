@@ -188,20 +188,26 @@ const logEnd = (hint = "END") => {
   return m
 }
 const logBr = () => console.log("\n")
-let debugTraverseOn = true
+let debugTraverseOn = false
 const logTraverseOn = () => (debugTraverseOn=true)
 const logTraverseOff = () => (debugTraverseOn=false)
 const logg = ( hint, ...msg ) => {
   if (!debugTraverseOn && hint === 'traverseNode') return
-  const m = logEnd(hint)
-  msg.forEach((m) => pushLog(m))
+  if (debugOn) {
+    const m = logEnd(hint)
+    msg.forEach((m) => pushLog(m))
+  }
 }
 function pushLog(m, type = 'normal') {
   ;( logs[currentLogKey] || (logs[currentLogKey] = [])).push({ value: m, type })
   log(m)
 }
-function clearLog() {
-  logs = {}
+function clearLog(key) {
+  if (key) {
+    logs[key] = []
+  } else {
+    logs = {}
+  }
 }
 
 <<glovalFns>>
@@ -11123,7 +11129,7 @@ function getBaseTransformPreset(prefixIdentifiers) {
 #+begin_export html
 <script src="/assets/tests/compiler-core.js"></script>
 <div id="Mr9KIGir"></div>
-<script src="assets/tests/Mr9KIGir.js"></script>
+<script src="/assets/tests/Mr9KIGir.js"></script>
 #+end_export
 
 *** pure div

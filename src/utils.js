@@ -57,7 +57,9 @@ export function formatByDate(pages) {
   if (pages && pages.length) {
     pages.forEach((page) => {
       if (!page.createdAt) {
-        console.warn(`[Error:formatByDate] no createdAt meta header.`)
+        console.warn(
+          `[Error:formatByDate] ${page.name} no createdAt meta header.`
+        )
         return
       }
       const [year, month] = page.createdAt.match(/(\d{2,4})/g)
@@ -97,7 +99,7 @@ export function formatPages() {
       }
       pages[key].push({ ...obj })
     } else {
-      console.warn(`[Error:formatPages] no page createdAt meta header.`)
+      console.warn(`[Error:formatPages] ${page} no page createdAt meta header.`)
     }
   }
   // sort by `timestamp`

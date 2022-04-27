@@ -566,6 +566,8 @@ pre.debug {
   outline: 1px solid #ccc;
   padding: 5px;
   margin: 5px;
+  border: none;
+  background: none;
 }
 pre.debug .string {
   color: green;
@@ -584,6 +586,8 @@ pre.debug .key {
 }
 pre.debug.line {
   color: red;
+  border: none;
+  outline: none;
 }
 
 /*# sourceMappingURL=global.css.map */
