@@ -11,6 +11,7 @@ import './css/link.scss'
 import './css/block.scss'
 import './css/tooltip.scss'
 import './css/global.scss'
+import './css/debug.scss'
 
 $(function () {
   // 检测是不是移动端

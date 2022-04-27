@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html class="no-js" lang="">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>test</title>
+    <meta name="description" content="">
+    <meta name="viewport" content=
+    "width=device-width, initial-scale=1">
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+    <!-- Place favicon.ico in the root directory -->
+
+    <style type="text/css" media="screen">
+     pre {outline: 1px solid #ccc; padding: 5px; margin: 5px; }
+     .string { color: green; }
+     .number { color: darkorange; }
+     .boolean { color: blue; }
+     .null { color: magenta; }
+     .key { color: red; }
+
+    </style>
+</head>
+<body>
+    <!--[if lt IE 8]>
+      <p class="browserupgrade">
+      You are using an <strong>outdated</strong> browser. Please
+      <a href="http://browsehappy.com/">upgrade your browser</a> to improve
+      your experience.
+      </p>
+    <![endif]-->
+    <div id="debug"></div>
+    <script type="text/javascript" src="./utils.js"></script>
+    <script type="text/javascript" src=
+    "./compiler-core.js"></script>
+    <script>
+
+
+
+
+
+     const source = `<div/>`
+     const { code } = baseCompile(source,{ filename: 'foo.vue' })
+     window.log(code)
+    </script>
+</body>
+</html>
