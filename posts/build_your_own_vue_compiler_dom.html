@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <!-- 2022-04-27 Wed 15:32 -->
+  <!-- 2022-04-27 Wed 18:30 -->
   <meta charset="utf-8">
   <meta name="viewport" content=
   "width=device-width, initial-scale=1">
@@ -290,42 +290,42 @@
       <div id="text-table-of-contents" role="doc-toc">
         <ul>
           <li>
-            <a href="#org9eb722d">1. Global Variables</a>
+            <a href="#org18faf47">1. Global Variables</a>
           </li>
           <li>
-            <a href="#org4f9df92">2. APIs</a>
+            <a href="#org38f66d0">2. APIs</a>
           </li>
           <li>
-            <a href="#org6fcc797">3. transforms</a>
+            <a href="#org4832674">3. transforms</a>
             <ul>
               <li>
-                <a href="#org5c696c0">3.1. style</a>
+                <a href="#org8817a62">3.1. style</a>
               </li>
               <li>
-                <a href="#org826eab9">3.2. v-html</a>
+                <a href="#orgd48015a">3.2. v-html</a>
               </li>
               <li>
-                <a href="#org40727cc">3.3. v-text</a>
+                <a href="#org0500af8">3.3. v-text</a>
               </li>
               <li>
-                <a href="#org818eb81">3.4. v-model</a>
+                <a href="#orga162cfa">3.4. v-model</a>
               </li>
               <li>
-                <a href="#orga6b7663">3.5. v-on</a>
+                <a href="#org12d6d6f">3.5. v-on</a>
               </li>
               <li>
-                <a href="#org81e37b2">3.6. v-show</a>
+                <a href="#orgbf641c9">3.6. v-show</a>
               </li>
               <li>
-                <a href="#org0f5c07b">3.7. stringifyStatic</a>
+                <a href="#orge543cd6">3.7. stringifyStatic</a>
               </li>
             </ul>
           </li>
           <li>
-            <a href="#orga0168d3">4. compile()</a>
+            <a href="#org6dcc6a9">4. compile()</a>
           </li>
           <li>
-            <a href="#org2c4a086">5. parse</a>
+            <a href="#org8c99c06">5. parse</a>
           </li>
         </ul>
       </div>
@@ -349,7 +349,7 @@
       "https://blog.cheng92.com/posts/build_your_own_vue_compiler_core.html">
       build your own vue compiler-core</a></p>
       <div class="org-src-container">
-        <pre class="src src-js" id="orgfb4898a"><span class=
+        <pre class="src src-js" id="orgd2e7c6e"><span class=
         "linenr">   1: </span><span class=
         "org-keyword">let</span> <span class=
         "org-variable-name">__BROWSER__</span> = <span class=
@@ -14320,18 +14320,14 @@
 <span class="linenr">6935: </span>  <span class=
 "org-keyword">return</span> generate(ast, extend({}, options, { prefixIdentifiers }))
 <span class="linenr">6936: </span>}
+<span class="linenr">6937: </span>
 </pre>
       </div>
-      <pre class="example">
---------- createStructuralDirectiveTransform ---------
-name=for, matches=(n) =&gt; n === name
---------- createStructuralDirectiveTransform ---------
-name=/^(if|else|else-if)$/, matches=(n) =&gt; name.test(n)
-undefined
-</pre>
+      <p>##include: ../assets/tests/compiler-core.js src js -n
+      -r</p>
     </details>
-    <div id="outline-container-org9eb722d" class="outline-2">
-      <h2 id="org9eb722d"><span class="section-number-2">1.</span>
+    <div id="outline-container-org18faf47" class="outline-2">
+      <h2 id="org18faf47"><span class="section-number-2">1.</span>
       Global Variables</h2>
       <div class="outline-text-2" id="text-1">
         <br>
@@ -14342,376 +14338,441 @@ undefined
             "green">global variables</font></strong>
           </summary>
           <div class="org-src-container">
-            <pre class="src src-js" id="org1d662fa"><span class=
+            <pre class="src src-js" id="org9c8c60a"><span class=
             "linenr">  1: </span>&lt;&lt;namedChars&gt;&gt;
-<span class="linenr">  2: </span>
-<span class="linenr">  3: </span><span class=
-"org-keyword">const</span> <span class=
-"org-variable-name">V_MODEL_RADIO</span> = Symbol(__DEV__ ? <span class="org-string">`vModelRadio`</span> : <span class="org-string">``</span>)
-<span class="linenr">  4: </span><span class=
-"org-keyword">const</span> <span class=
-"org-variable-name">V_MODEL_CHECKBOX</span> = Symbol(__DEV__ ? <span class="org-string">`vModelCheckbox`</span> : <span class="org-string">``</span>)
-<span class="linenr">  5: </span><span class=
-"org-keyword">const</span> <span class=
-"org-variable-name">V_MODEL_TEXT</span> = Symbol(__DEV__ ? <span class="org-string">`vModelText`</span> : <span class="org-string">``</span>)
-<span class="linenr">  6: </span><span class=
-"org-keyword">const</span> <span class=
-"org-variable-name">V_MODEL_SELECT</span> = Symbol(__DEV__ ? <span class="org-string">`vModelSelect`</span> : <span class="org-string">``</span>)
+<span class="linenr">  2: </span>&lt;&lt;helpers-cd&gt;&gt;
+<span class="linenr">  3: </span>&lt;&lt;dom-attrs&gt;&gt;
+<span class="linenr">  4: </span>&lt;&lt;html-tags&gt;&gt;
+<span class="linenr">  5: </span>&lt;&lt;normalizeProp&gt;&gt;
+<span class="linenr">  6: </span>
 <span class="linenr">  7: </span><span class=
 "org-keyword">const</span> <span class=
-"org-variable-name">V_MODEL_DYNAMIC</span> = Symbol(__DEV__ ? <span class="org-string">`vModelDynamic`</span> : <span class="org-string">``</span>)
+"org-variable-name">noopDirectiveTransform</span> = () =&gt; ({ props: [] })
 <span class="linenr">  8: </span>
 <span class="linenr">  9: </span><span class=
-"org-keyword">const</span> <span class=
-"org-variable-name">V_ON_WITH_MODIFIERS</span> = Symbol(__DEV__ ? <span class="org-string">`vOnModifiersGuard`</span> : <span class="org-string">``</span>)
-<span class="linenr"> 10: </span><span class=
-"org-keyword">const</span> <span class=
-"org-variable-name">V_ON_WITH_KEYS</span> = Symbol(__DEV__ ? <span class="org-string">`vOnKeysGuard`</span> : <span class="org-string">``</span>)
-<span class="linenr"> 11: </span>
-<span class="linenr"> 12: </span><span class=
-"org-keyword">const</span> <span class=
-"org-variable-name">V_SHOW</span> = Symbol(__DEV__ ? <span class=
-"org-string">`vShow`</span> : <span class="org-string">``</span>)
-<span class="linenr"> 13: </span>
-<span class="linenr"> 14: </span><span class=
-"org-keyword">const</span> <span class=
-"org-variable-name">TRANSITION</span> = Symbol(__DEV__ ? <span class="org-string">`Transition`</span> : <span class="org-string">``</span>)
-<span class="linenr"> 15: </span><span class=
-"org-keyword">const</span> <span class=
-"org-variable-name">TRANSITION_GROUP</span> = Symbol(__DEV__ ? <span class="org-string">`TransitionGroup`</span> : <span class="org-string">``</span>)
-<span class="linenr"> 16: </span>
-<span class="linenr"> 17: </span>registerRuntimeHelpers({
-<span class="linenr"> 18: </span>  [V_MODEL_RADIO]: <span class=
-"org-string">`vModelRadio`</span>,
-<span class="linenr"> 19: </span>  [V_MODEL_CHECKBOX]: <span class=
-"org-string">`vModelCheckbox`</span>,
-<span class="linenr"> 20: </span>  [V_MODEL_TEXT]: <span class=
-"org-string">`vModelText`</span>,
-<span class="linenr"> 21: </span>  [V_MODEL_SELECT]: <span class=
-"org-string">`vModelSelect`</span>,
-<span class="linenr"> 22: </span>  [V_MODEL_DYNAMIC]: <span class=
-"org-string">`vModelDynamic`</span>,
-<span class=
-"linenr"> 23: </span>  [V_ON_WITH_MODIFIERS]: <span class=
-"org-string">`withModifiers`</span>,
-<span class="linenr"> 24: </span>  [V_ON_WITH_KEYS]: <span class=
-"org-string">`withKeys`</span>,
-<span class="linenr"> 25: </span>  [V_SHOW]: <span class=
-"org-string">`vShow`</span>,
-<span class="linenr"> 26: </span>  [TRANSITION]: <span class=
-"org-string">`Transition`</span>,
-<span class="linenr"> 27: </span>  [TRANSITION_GROUP]: <span class=
-"org-string">`TransitionGroup`</span>
-<span class="linenr"> 28: </span>})
-<span class="linenr"> 29: </span>
-<span class="linenr"> 30: </span><span class=
-"org-comment-delimiter">// </span><span class=
-"org-comment">https://developer.mozilla.org/en-US/docs/Web/HTML/Element</span>
-<span class="linenr"> 31: </span><span class=
-"org-keyword">const</span> <span class=
-"org-variable-name">HTML_TAGS</span> =
-<span class="linenr"> 32: </span>  <span class=
-"org-string">'html,body,base,head,link,meta,style,title,address,article,aside,footer,'</span> +
-<span class="linenr"> 33: </span>  <span class=
-"org-string">'header,h1,h2,h3,h4,h5,h6,nav,section,div,dd,dl,dt,figcaption,'</span> +
-<span class="linenr"> 34: </span>  <span class=
-"org-string">'figure,picture,hr,img,li,main,ol,p,pre,ul,a,b,abbr,bdi,bdo,br,cite,code,'</span> +
-<span class="linenr"> 35: </span>  <span class=
-"org-string">'data,dfn,em,i,kbd,mark,q,rp,rt,ruby,s,samp,small,span,strong,sub,sup,'</span> +
-<span class="linenr"> 36: </span>  <span class=
-"org-string">'time,u,var,wbr,area,audio,map,track,video,embed,object,param,source,'</span> +
-<span class="linenr"> 37: </span>  <span class=
-"org-string">'canvas,script,noscript,del,ins,caption,col,colgroup,table,thead,tbody,td,'</span> +
-<span class="linenr"> 38: </span>  <span class=
-"org-string">'th,tr,button,datalist,fieldset,form,input,label,legend,meter,optgroup,'</span> +
-<span class="linenr"> 39: </span>  <span class=
-"org-string">'option,output,progress,select,textarea,details,dialog,menu,'</span> +
-<span class="linenr"> 40: </span>  <span class=
-"org-string">'summary,template,blockquote,iframe,tfoot'</span>
-<span class="linenr"> 41: </span>
-<span class="linenr"> 42: </span><span class=
-"org-comment-delimiter">// </span><span class=
-"org-comment">https://developer.mozilla.org/en-US/docs/Web/SVG/Element</span>
-<span class="linenr"> 43: </span><span class=
-"org-keyword">const</span> <span class=
-"org-variable-name">SVG_TAGS</span> =
-<span class="linenr"> 44: </span>  <span class=
-"org-string">'svg,animate,animateMotion,animateTransform,circle,clipPath,color-profile,'</span> +
-<span class="linenr"> 45: </span>  <span class=
-"org-string">'defs,desc,discard,ellipse,feBlend,feColorMatrix,feComponentTransfer,'</span> +
-<span class="linenr"> 46: </span>  <span class=
-"org-string">'feComposite,feConvolveMatrix,feDiffuseLighting,feDisplacementMap,'</span> +
-<span class="linenr"> 47: </span>  <span class=
-"org-string">'feDistanceLight,feDropShadow,feFlood,feFuncA,feFuncB,feFuncG,feFuncR,'</span> +
-<span class="linenr"> 48: </span>  <span class=
-"org-string">'feGaussianBlur,feImage,feMerge,feMergeNode,feMorphology,feOffset,'</span> +
-<span class="linenr"> 49: </span>  <span class=
-"org-string">'fePointLight,feSpecularLighting,feSpotLight,feTile,feTurbulence,filter,'</span> +
-<span class="linenr"> 50: </span>  <span class=
-"org-string">'foreignObject,g,hatch,hatchpath,image,line,linearGradient,marker,mask,'</span> +
-<span class="linenr"> 51: </span>  <span class=
-"org-string">'mesh,meshgradient,meshpatch,meshrow,metadata,mpath,path,pattern,'</span> +
-<span class="linenr"> 52: </span>  <span class=
-"org-string">'polygon,polyline,radialGradient,rect,set,solidcolor,stop,switch,symbol,'</span> +
-<span class="linenr"> 53: </span>  <span class=
-"org-string">'text,textPath,title,tspan,unknown,use,view'</span>
-<span class="linenr"> 54: </span>
-<span class="linenr"> 55: </span><span class=
-"org-keyword">const</span> <span class=
-"org-variable-name">isHTMLTag</span> = <span class=
-"org-comment-delimiter">/*</span><span class=
-"org-comment">#__PURE__</span><span class=
-"org-comment-delimiter">*/</span> makeMap(HTML_TAGS)
-<span class="linenr"> 56: </span><span class="org-doc">/**</span>
-<span class="linenr"> 57: </span><span class=
-"org-doc"> * Compiler only.</span>
-<span class="linenr"> 58: </span><span class=
-"org-doc"> * Do NOT use in runtime code paths unless behind `__DEV__` flag.</span>
-<span class="linenr"> 59: </span><span class="org-doc"> */</span>
-<span class="linenr"> 60: </span><span class=
-"org-keyword">const</span> <span class=
-"org-variable-name">isSVGTag</span> = <span class=
-"org-comment-delimiter">/*</span><span class=
-"org-comment">#__PURE__</span><span class=
-"org-comment-delimiter">*/</span> makeMap(SVG_TAGS)
-<span class="linenr"> 61: </span>
-<span class="linenr"> 62: </span><span class=
 "org-keyword">const</span> <span class=
 "org-variable-name">isRawTextContainer</span> = <span class=
 "org-comment-delimiter">/*</span><span class=
 "org-comment">#__PURE__</span><span class=
 "org-comment-delimiter">*/</span> makeMap(
-<span class="linenr"> 63: </span>  <span class=
+<span class="linenr"> 10: </span>  <span class=
 "org-string">'style,iframe,script,noscript'</span>,
-<span class="linenr"> 64: </span>  <span class=
+<span class="linenr"> 11: </span>  <span class=
 "org-constant">true</span>
-<span class="linenr"> 65: </span>)
-<span class="linenr"> 66: </span>
-<span class="linenr"> 67: </span><span class=
+<span class="linenr"> 12: </span>)
+<span class="linenr"> 13: </span>
+<span class="linenr"> 14: </span><span class=
 "org-keyword">const</span> <span class=
 "org-variable-name">DOMNamespaces</span> = {
-<span class="linenr"> 68: </span>  HTML: Namespaces.HTML,
-<span class="linenr"> 69: </span>  SVG: <span class=
+<span class="linenr"> 15: </span>  HTML: Namespaces.HTML,
+<span class="linenr"> 16: </span>  SVG: <span class=
 "org-highlight-numbers-number">1</span>,
-<span class="linenr"> 70: </span>  MATH_ML: <span class=
+<span class="linenr"> 17: </span>  MATH_ML: <span class=
 "org-highlight-numbers-number">2</span>
-<span class="linenr"> 71: </span>}
-<span class="linenr"> 72: </span>
-<span class="linenr"> 73: </span><span class=
+<span class="linenr"> 18: </span>}
+<span class="linenr"> 19: </span>
+<span class="linenr"> 20: </span><span class=
 "org-keyword">const</span> <span class=
 "org-variable-name">parserOptions</span> = {
-<span class="linenr"> 74: </span>  isVoidTag,
+<span class="linenr"> 21: </span>  isVoidTag,
 <span class=
-"linenr"> 75: </span>  isNativeTag: tag =&gt; isHTMLTag(tag) || isSVGTag(tag),
+"linenr"> 22: </span>  isNativeTag: tag =&gt; isHTMLTag(tag) || isSVGTag(tag),
 <span class=
-"linenr"> 76: </span>  isPreTag: tag =&gt; tag === <span class=
+"linenr"> 23: </span>  isPreTag: tag =&gt; tag === <span class=
 "org-string">'pre'</span>,
 <span class=
-"linenr"> 77: </span>  decodeEntities: __BROWSER__ ? decodeHtmlBrowser : decodeHtml,
-<span class="linenr"> 78: </span>
-<span class="linenr"> 79: </span>  isBuiltInComponent: tag =&gt; {
-<span class="linenr"> 80: </span>    <span class=
+"linenr"> 24: </span>  decodeEntities: __BROWSER__ ? decodeHtmlBrowser : decodeHtml,
+<span class="linenr"> 25: </span>
+<span class="linenr"> 26: </span>  isBuiltInComponent: tag =&gt; {
+<span class="linenr"> 27: </span>    <span class=
 "org-keyword">if</span> (isBuiltInType(tag, <span class=
 "org-string">`Transition`</span>)) {
-<span class="linenr"> 81: </span>      <span class=
+<span class="linenr"> 28: </span>      <span class=
 "org-keyword">return</span> TRANSITION
-<span class="linenr"> 82: </span>    } <span class=
+<span class="linenr"> 29: </span>    } <span class=
 "org-keyword">else</span> <span class=
 "org-keyword">if</span> (isBuiltInType(tag, <span class=
 "org-string">`TransitionGroup`</span>)) {
-<span class="linenr"> 83: </span>      <span class=
+<span class="linenr"> 30: </span>      <span class=
 "org-keyword">return</span> TRANSITION_GROUP
-<span class="linenr"> 84: </span>    }
-<span class="linenr"> 85: </span>  },
-<span class="linenr"> 86: </span>
-<span class="linenr"> 87: </span>  <span class=
+<span class="linenr"> 31: </span>    }
+<span class="linenr"> 32: </span>  },
+<span class="linenr"> 33: </span>
+<span class="linenr"> 34: </span>  <span class=
 "org-comment-delimiter">// </span><span class=
 "org-comment">https://html.spec.whatwg.org/multipage/parsing.html#tree-construction-dispatcher</span>
-<span class="linenr"> 88: </span>  getNamespace(tag, parent) {
-<span class="linenr"> 89: </span>    <span class=
+<span class="linenr"> 35: </span>  getNamespace(tag, parent) {
+<span class="linenr"> 36: </span>    <span class=
 "org-keyword">let</span> <span class=
 "org-variable-name">ns</span> = parent ? parent.ns : DOMNamespaces.HTML
-<span class="linenr"> 90: </span>
-<span class="linenr"> 91: </span>    <span class=
+<span class="linenr"> 37: </span>
+<span class="linenr"> 38: </span>    <span class=
 "org-keyword">if</span> (parent &amp;& ns === DOMNamespaces.MATH_ML) {
-<span class="linenr"> 92: </span>      <span class=
+<span class="linenr"> 39: </span>      <span class=
 "org-keyword">if</span> (parent.tag === <span class=
 "org-string">'annotation-xml'</span>) {
-<span class="linenr"> 93: </span>        <span class=
+<span class="linenr"> 40: </span>        <span class=
 "org-keyword">if</span> (tag === <span class=
 "org-string">'svg'</span>) {
-<span class="linenr"> 94: </span>          <span class=
+<span class="linenr"> 41: </span>          <span class=
 "org-keyword">return</span> DOMNamespaces.SVG
-<span class="linenr"> 95: </span>        }
-<span class="linenr"> 96: </span>        <span class=
+<span class="linenr"> 42: </span>        }
+<span class="linenr"> 43: </span>        <span class=
 "org-keyword">if</span> (
-<span class="linenr"> 97: </span>          parent.props.some(
-<span class="linenr"> 98: </span>            a =&gt;
+<span class="linenr"> 44: </span>          parent.props.some(
+<span class="linenr"> 45: </span>            a =&gt;
 <span class=
-"linenr"> 99: </span>              a.type === NodeTypes.ATTRIBUTE &amp;&
+"linenr"> 46: </span>              a.type === NodeTypes.ATTRIBUTE &amp;&
 <span class=
-"linenr">100: </span>              a.name === <span class=
+"linenr"> 47: </span>              a.name === <span class=
 "org-string">'encoding'</span> &amp;&
 <span class=
-"linenr">101: </span>              a.value != <span class=
+"linenr"> 48: </span>              a.value != <span class=
 "org-constant">null</span> &amp;&
 <span class=
-"linenr">102: </span>              (a.value.content === <span class="org-string">'text/html'</span> ||
+"linenr"> 49: </span>              (a.value.content === <span class="org-string">'text/html'</span> ||
 <span class=
-"linenr">103: </span>                a.value.content === <span class="org-string">'application/xhtml+xml'</span>)
-<span class="linenr">104: </span>          )
-<span class="linenr">105: </span>        ) {
-<span class="linenr">106: </span>          ns = DOMNamespaces.HTML
-<span class="linenr">107: </span>        }
-<span class="linenr">108: </span>      } <span class=
+"linenr"> 50: </span>                a.value.content === <span class="org-string">'application/xhtml+xml'</span>)
+<span class="linenr"> 51: </span>          )
+<span class="linenr"> 52: </span>        ) {
+<span class="linenr"> 53: </span>          ns = DOMNamespaces.HTML
+<span class="linenr"> 54: </span>        }
+<span class="linenr"> 55: </span>      } <span class=
 "org-keyword">else</span> <span class="org-keyword">if</span> (
-<span class="linenr">109: </span>        <span class=
+<span class="linenr"> 56: </span>        <span class=
 "org-string">/^m(?:[ions]|text)$/</span>.test(parent.tag) &amp;&
-<span class="linenr">110: </span>        tag !== <span class=
+<span class="linenr"> 57: </span>        tag !== <span class=
 "org-string">'mglyph'</span> &amp;&
-<span class="linenr">111: </span>        tag !== <span class=
+<span class="linenr"> 58: </span>        tag !== <span class=
 "org-string">'malignmark'</span>
-<span class="linenr">112: </span>      ) {
-<span class="linenr">113: </span>        ns = DOMNamespaces.HTML
-<span class="linenr">114: </span>      }
-<span class="linenr">115: </span>    } <span class=
+<span class="linenr"> 59: </span>      ) {
+<span class="linenr"> 60: </span>        ns = DOMNamespaces.HTML
+<span class="linenr"> 61: </span>      }
+<span class="linenr"> 62: </span>    } <span class=
 "org-keyword">else</span> <span class=
 "org-keyword">if</span> (parent &amp;& ns === DOMNamespaces.SVG) {
-<span class="linenr">116: </span>      <span class=
+<span class="linenr"> 63: </span>      <span class=
 "org-keyword">if</span> (
 <span class=
-"linenr">117: </span>        parent.tag === <span class="org-string">'foreignObject'</span> ||
+"linenr"> 64: </span>        parent.tag === <span class="org-string">'foreignObject'</span> ||
 <span class=
-"linenr">118: </span>        parent.tag === <span class="org-string">'desc'</span> ||
+"linenr"> 65: </span>        parent.tag === <span class="org-string">'desc'</span> ||
 <span class=
-"linenr">119: </span>        parent.tag === <span class="org-string">'title'</span>
-<span class="linenr">120: </span>      ) {
-<span class="linenr">121: </span>        ns = DOMNamespaces.HTML
-<span class="linenr">122: </span>      }
-<span class="linenr">123: </span>    }
-<span class="linenr">124: </span>
-<span class="linenr">125: </span>    <span class=
+"linenr"> 66: </span>        parent.tag === <span class="org-string">'title'</span>
+<span class="linenr"> 67: </span>      ) {
+<span class="linenr"> 68: </span>        ns = DOMNamespaces.HTML
+<span class="linenr"> 69: </span>      }
+<span class="linenr"> 70: </span>    }
+<span class="linenr"> 71: </span>
+<span class="linenr"> 72: </span>    <span class=
 "org-keyword">if</span> (ns === DOMNamespaces.HTML) {
-<span class="linenr">126: </span>      <span class=
+<span class="linenr"> 73: </span>      <span class=
 "org-keyword">if</span> (tag === <span class=
 "org-string">'svg'</span>) {
-<span class="linenr">127: </span>        <span class=
+<span class="linenr"> 74: </span>        <span class=
 "org-keyword">return</span> DOMNamespaces.SVG
-<span class="linenr">128: </span>      }
-<span class="linenr">129: </span>      <span class=
+<span class="linenr"> 75: </span>      }
+<span class="linenr"> 76: </span>      <span class=
 "org-keyword">if</span> (tag === <span class=
 "org-string">'math'</span>) {
-<span class="linenr">130: </span>        <span class=
+<span class="linenr"> 77: </span>        <span class=
 "org-keyword">return</span> DOMNamespaces.MATH_ML
-<span class="linenr">131: </span>      }
-<span class="linenr">132: </span>    }
-<span class="linenr">133: </span>    <span class=
+<span class="linenr"> 78: </span>      }
+<span class="linenr"> 79: </span>    }
+<span class="linenr"> 80: </span>    <span class=
 "org-keyword">return</span> ns
-<span class="linenr">134: </span>  },
-<span class="linenr">135: </span>
-<span class="linenr">136: </span>  <span class=
+<span class="linenr"> 81: </span>  },
+<span class="linenr"> 82: </span>
+<span class="linenr"> 83: </span>  <span class=
 "org-comment-delimiter">// </span><span class=
 "org-comment">https://html.spec.whatwg.org/multipage/parsing.html#parsing-html-fragments</span>
-<span class="linenr">137: </span>  getTextMode({ tag, ns }) {
-<span class="linenr">138: </span>    <span class=
+<span class="linenr"> 84: </span>  getTextMode({ tag, ns }) {
+<span class="linenr"> 85: </span>    <span class=
 "org-keyword">if</span> (ns === DOMNamespaces.HTML) {
-<span class="linenr">139: </span>      <span class=
+<span class="linenr"> 86: </span>      <span class=
 "org-keyword">if</span> (tag === <span class=
 "org-string">'textarea'</span> || tag === <span class=
 "org-string">'title'</span>) {
-<span class="linenr">140: </span>        <span class=
+<span class="linenr"> 87: </span>        <span class=
 "org-keyword">return</span> TextModes.RCDATA
-<span class="linenr">141: </span>      }
-<span class="linenr">142: </span>      <span class=
+<span class="linenr"> 88: </span>      }
+<span class="linenr"> 89: </span>      <span class=
 "org-keyword">if</span> (isRawTextContainer(tag)) {
-<span class="linenr">143: </span>        <span class=
+<span class="linenr"> 90: </span>        <span class=
 "org-keyword">return</span> TextModes.RAWTEXT
-<span class="linenr">144: </span>      }
-<span class="linenr">145: </span>    }
-<span class="linenr">146: </span>    <span class=
+<span class="linenr"> 91: </span>      }
+<span class="linenr"> 92: </span>    }
+<span class="linenr"> 93: </span>    <span class=
 "org-keyword">return</span> TextModes.DATA
-<span class="linenr">147: </span>  }
-<span class="linenr">148: </span>}
-<span class="linenr">149: </span>
-<span class="linenr">150: </span>
-<span class="linenr">151: </span><span class=
+<span class="linenr"> 94: </span>  }
+<span class="linenr"> 95: </span>}
+<span class="linenr"> 96: </span>
+<span class="linenr"> 97: </span><span class=
+"org-keyword">function</span> <span class=
+"org-function-name">hasDynamicKeyVBind</span>(<span class=
+"org-variable-name">node</span>) {
+<span class="linenr"> 98: </span>  <span class=
+"org-keyword">return</span> node.props.some(
+<span class="linenr"> 99: </span>    p =&gt;
+<span class=
+"linenr">100: </span>      p.type === NodeTypes.DIRECTIVE &amp;&
+<span class="linenr">101: </span>      p.name === <span class=
+"org-string">'bind'</span> &amp;&
+<span class="linenr">102: </span>      (!p.arg || <span class=
+"org-comment-delimiter">// </span><span class=
+"org-comment">v-bind="obj"</span>
+<span class=
+"linenr">103: </span>        p.arg.type !== NodeTypes.SIMPLE_EXPRESSION || <span class="org-comment-delimiter">// </span><span class="org-comment">v-bind:[_ctx.foo]</span>
+<span class=
+"linenr">104: </span>        !p.arg.isStatic) <span class=
+"org-comment-delimiter">// </span><span class=
+"org-comment">v-bind:[foo]</span>
+<span class="linenr">105: </span>  )
+<span class="linenr">106: </span>}
+<span class="linenr">107: </span>
+<span class="linenr">108: </span>
+<span class="linenr">109: </span><span class=
 "org-keyword">function</span> <span class=
 "org-function-name">hasMultipleChildren</span>(<span class=
 "org-variable-name">node</span>) {
-<span class="linenr">152: </span>  <span class=
+<span class="linenr">110: </span>  <span class=
 "org-comment-delimiter">// </span><span class=
 "org-comment">#1352 filter out potential comment nodes.</span>
-<span class="linenr">153: </span>  <span class=
+<span class="linenr">111: </span>  <span class=
 "org-keyword">const</span> <span class=
 "org-variable-name">children</span> = (node.children = node.children.filter(
-<span class="linenr">154: </span>    c =&gt;
+<span class="linenr">112: </span>    c =&gt;
 <span class=
-"linenr">155: </span>      c.type !== NodeTypes.COMMENT &amp;&
+"linenr">113: </span>      c.type !== NodeTypes.COMMENT &amp;&
 <span class=
-"linenr">156: </span>      !(c.type === NodeTypes.TEXT &amp;& !c.content.trim())
-<span class="linenr">157: </span>  ))
-<span class="linenr">158: </span>  <span class=
+"linenr">114: </span>      !(c.type === NodeTypes.TEXT &amp;& !c.content.trim())
+<span class="linenr">115: </span>  ))
+<span class="linenr">116: </span>  <span class=
 "org-keyword">const</span> <span class=
 "org-variable-name">child</span> = children[<span class=
 "org-highlight-numbers-number">0</span>]
-<span class="linenr">159: </span>  <span class=
+<span class="linenr">117: </span>  <span class=
 "org-keyword">return</span> (
 <span class=
-"linenr">160: </span>    children.length !== <span class=
+"linenr">118: </span>    children.length !== <span class=
 "org-highlight-numbers-number">1</span> ||
 <span class=
-"linenr">161: </span>    child.type === NodeTypes.FOR ||
+"linenr">119: </span>    child.type === NodeTypes.FOR ||
 <span class=
-"linenr">162: </span>    (child.type === NodeTypes.IF &amp;& child.branches.some(hasMultipleChildren))
-<span class="linenr">163: </span>  )
-<span class="linenr">164: </span>}
-<span class="linenr">165: </span>
-<span class="linenr">166: </span><span class=
+"linenr">120: </span>    (child.type === NodeTypes.IF &amp;& child.branches.some(hasMultipleChildren))
+<span class="linenr">121: </span>  )
+<span class="linenr">122: </span>}
+<span class="linenr">123: </span>
+<span class="linenr">124: </span><span class=
 "org-keyword">const</span> <span class=
 "org-variable-name">warnTransitionChildren</span> = (node, context) =&gt; {
-<span class="linenr">167: </span>  <span class=
+<span class="linenr">125: </span>  <span class=
 "org-keyword">if</span> (
 <span class=
-"linenr">168: </span>    node.type === NodeTypes.ELEMENT &amp;&
+"linenr">126: </span>    node.type === NodeTypes.ELEMENT &amp;&
 <span class=
-"linenr">169: </span>    node.tagType === ElementTypes.COMPONENT
-<span class="linenr">170: </span>  ) {
-<span class="linenr">171: </span>    <span class=
+"linenr">127: </span>    node.tagType === ElementTypes.COMPONENT
+<span class="linenr">128: </span>  ) {
+<span class="linenr">129: </span>    <span class=
 "org-keyword">const</span> <span class=
 "org-variable-name">component</span> = context.isBuiltInComponent(node.tag)
-<span class="linenr">172: </span>    <span class=
+<span class="linenr">130: </span>    <span class=
 "org-keyword">if</span> (component === TRANSITION) {
-<span class="linenr">173: </span>      <span class=
+<span class="linenr">131: </span>      <span class=
 "org-keyword">return</span> () =&gt; {
-<span class="linenr">174: </span>        <span class=
+<span class="linenr">132: </span>        <span class=
 "org-keyword">if</span> (node.children.length &amp;& hasMultipleChildren(node)) {
 <span class=
-"linenr">175: </span>          console.warn(<span class="org-string">`X_TRANSITION_INVALID_CHILDREN`</span>, node)
-<span class="linenr">176: </span>        }
-<span class="linenr">177: </span>      }
-<span class="linenr">178: </span>    }
-<span class="linenr">179: </span>  }
-<span class="linenr">180: </span>}
-<span class="linenr">181: </span>
-<span class="linenr">182: </span>
-<span class="linenr">183: </span><span class=
+"linenr">133: </span>          console.warn(<span class="org-string">`X_TRANSITION_INVALID_CHILDREN`</span>, node)
+<span class="linenr">134: </span>        }
+<span class="linenr">135: </span>      }
+<span class="linenr">136: </span>    }
+<span class="linenr">137: </span>  }
+<span class="linenr">138: </span>}
+<span class="linenr">139: </span>
+<span class="linenr">140: </span>
+<span class="linenr">141: </span><span class=
 "org-keyword">const</span> <span class=
 "org-variable-name">ignoreSideEffectTags</span> = (node, context) =&gt; {
-<span class="linenr">184: </span>  <span class=
+<span class="linenr">142: </span>  <span class=
 "org-keyword">if</span> (
 <span class=
-"linenr">185: </span>    node.type === NodeTypes.ELEMENT &amp;&
+"linenr">143: </span>    node.type === NodeTypes.ELEMENT &amp;&
 <span class=
-"linenr">186: </span>    node.tagType === ElementTypes.ELEMENT &amp;&
-<span class="linenr">187: </span>    (node.tag === <span class=
+"linenr">144: </span>    node.tagType === ElementTypes.ELEMENT &amp;&
+<span class="linenr">145: </span>    (node.tag === <span class=
 "org-string">'script'</span> || node.tag === <span class=
 "org-string">'style'</span>)
-<span class="linenr">188: </span>  ) {
-<span class="linenr">189: </span>    console.warn(<span class=
+<span class="linenr">146: </span>  ) {
+<span class="linenr">147: </span>    console.warn(<span class=
 "org-string">`X_IGNORED_SIDE_EFFECT_TAG`</span>)
-<span class="linenr">190: </span>    context.removeNode()
-<span class="linenr">191: </span>  }
-<span class="linenr">192: </span>}
+<span class="linenr">148: </span>    context.removeNode()
+<span class="linenr">149: </span>  }
+<span class="linenr">150: </span>}
+</pre>
+          </div>
+        </details><br>
+        <details class="code-details" style=
+        "padding: 1em; background-color: #e5f5e5; /* background-color: pink; */ border-radius: 15px; color: hsl(157 75%); font-size: 0.9em; box-shadow: 0.05em 0.1em 5px 0.01em #00000057;">
+          <summary>
+            <strong><font face="Courier" size="3" color=
+            "green">html-tags</font></strong>
+          </summary>
+          <div class="org-src-container">
+            <pre class="src src-js" id="org42822d5"><span class=
+            "linenr"> 1: </span><span class=
+            "org-comment-delimiter">// </span><span class=
+            "org-comment">https://developer.mozilla.org/en-US/docs/Web/HTML/Element</span>
+<span class="linenr"> 2: </span><span class=
+"org-keyword">const</span> <span class=
+"org-variable-name">HTML_TAGS</span> =
+<span class="linenr"> 3: </span>  <span class=
+"org-string">'html,body,base,head,link,meta,style,title,address,article,aside,footer,'</span> +
+<span class="linenr"> 4: </span>  <span class=
+"org-string">'header,h1,h2,h3,h4,h5,h6,nav,section,div,dd,dl,dt,figcaption,'</span> +
+<span class="linenr"> 5: </span>  <span class=
+"org-string">'figure,picture,hr,img,li,main,ol,p,pre,ul,a,b,abbr,bdi,bdo,br,cite,code,'</span> +
+<span class="linenr"> 6: </span>  <span class=
+"org-string">'data,dfn,em,i,kbd,mark,q,rp,rt,ruby,s,samp,small,span,strong,sub,sup,'</span> +
+<span class="linenr"> 7: </span>  <span class=
+"org-string">'time,u,var,wbr,area,audio,map,track,video,embed,object,param,source,'</span> +
+<span class="linenr"> 8: </span>  <span class=
+"org-string">'canvas,script,noscript,del,ins,caption,col,colgroup,table,thead,tbody,td,'</span> +
+<span class="linenr"> 9: </span>  <span class=
+"org-string">'th,tr,button,datalist,fieldset,form,input,label,legend,meter,optgroup,'</span> +
+<span class="linenr">10: </span>  <span class=
+"org-string">'option,output,progress,select,textarea,details,dialog,menu,'</span> +
+<span class="linenr">11: </span>  <span class=
+"org-string">'summary,template,blockquote,iframe,tfoot'</span>
+<span class="linenr">12: </span>
+<span class="linenr">13: </span><span class=
+"org-comment-delimiter">// </span><span class=
+"org-comment">https://developer.mozilla.org/en-US/docs/Web/SVG/Element</span>
+<span class="linenr">14: </span><span class=
+"org-keyword">const</span> <span class=
+"org-variable-name">SVG_TAGS</span> =
+<span class="linenr">15: </span>  <span class=
+"org-string">'svg,animate,animateMotion,animateTransform,circle,clipPath,color-profile,'</span> +
+<span class="linenr">16: </span>  <span class=
+"org-string">'defs,desc,discard,ellipse,feBlend,feColorMatrix,feComponentTransfer,'</span> +
+<span class="linenr">17: </span>  <span class=
+"org-string">'feComposite,feConvolveMatrix,feDiffuseLighting,feDisplacementMap,'</span> +
+<span class="linenr">18: </span>  <span class=
+"org-string">'feDistanceLight,feDropShadow,feFlood,feFuncA,feFuncB,feFuncG,feFuncR,'</span> +
+<span class="linenr">19: </span>  <span class=
+"org-string">'feGaussianBlur,feImage,feMerge,feMergeNode,feMorphology,feOffset,'</span> +
+<span class="linenr">20: </span>  <span class=
+"org-string">'fePointLight,feSpecularLighting,feSpotLight,feTile,feTurbulence,filter,'</span> +
+<span class="linenr">21: </span>  <span class=
+"org-string">'foreignObject,g,hatch,hatchpath,image,line,linearGradient,marker,mask,'</span> +
+<span class="linenr">22: </span>  <span class=
+"org-string">'mesh,meshgradient,meshpatch,meshrow,metadata,mpath,path,pattern,'</span> +
+<span class="linenr">23: </span>  <span class=
+"org-string">'polygon,polyline,radialGradient,rect,set,solidcolor,stop,switch,symbol,'</span> +
+<span class="linenr">24: </span>  <span class=
+"org-string">'text,textPath,title,tspan,unknown,use,view'</span>
+<span class="linenr">25: </span>
+<span class="linenr">26: </span><span class=
+"org-keyword">const</span> <span class=
+"org-variable-name">VOID_TAGS</span> =
+<span class="linenr">27: </span>  <span class=
+"org-string">'area,base,br,col,embed,hr,img,input,link,meta,param,source,track,wbr'</span>
+<span class="linenr">28: </span>
+<span class="linenr">29: </span><span class=
+"org-keyword">const</span> <span class=
+"org-variable-name">isHTMLTag</span> = <span class=
+"org-comment-delimiter">/*</span><span class=
+"org-comment">#__PURE__</span><span class=
+"org-comment-delimiter">*/</span> makeMap(HTML_TAGS)
+<span class="linenr">30: </span><span class="org-doc">/**</span>
+<span class="linenr">31: </span><span class=
+"org-doc"> * Compiler only.</span>
+<span class="linenr">32: </span><span class=
+"org-doc"> * Do NOT use in runtime code paths unless behind `__DEV__` flag.</span>
+<span class="linenr">33: </span><span class="org-doc"> */</span>
+<span class="linenr">34: </span><span class=
+"org-keyword">const</span> <span class=
+"org-variable-name">isSVGTag</span> = <span class=
+"org-comment-delimiter">/*</span><span class=
+"org-comment">#__PURE__</span><span class=
+"org-comment-delimiter">*/</span> makeMap(SVG_TAGS)
+<span class="linenr">35: </span><span class=
+"org-keyword">const</span> <span class=
+"org-variable-name">isVoidTag</span> = <span class=
+"org-comment-delimiter">/*</span><span class=
+"org-comment">#__PURE__</span><span class=
+"org-comment-delimiter">*/</span> makeMap(VOID_TAGS)
+<span class="linenr">36: </span>
+</pre>
+          </div>
+        </details><br>
+        <details class="code-details" style=
+        "padding: 1em; background-color: #e5f5e5; /* background-color: pink; */ border-radius: 15px; color: hsl(157 75%); font-size: 0.9em; box-shadow: 0.05em 0.1em 5px 0.01em #00000057;">
+          <summary>
+            <strong><font face="Courier" size="3" color=
+            "green">helpers-cd</font></strong>
+          </summary>
+          <div class="org-src-container">
+            <pre class="src src-js" id="org597b90c"><span class=
+            "linenr"> 1: </span>
+<span class="linenr"> 2: </span><span class=
+"org-keyword">const</span> <span class=
+"org-variable-name">V_MODEL_RADIO</span> = Symbol(__DEV__ ? <span class="org-string">`vModelRadio`</span> : <span class="org-string">``</span>)
+<span class="linenr"> 3: </span><span class=
+"org-keyword">const</span> <span class=
+"org-variable-name">V_MODEL_CHECKBOX</span> = Symbol(__DEV__ ? <span class="org-string">`vModelCheckbox`</span> : <span class="org-string">``</span>)
+<span class="linenr"> 4: </span><span class=
+"org-keyword">const</span> <span class=
+"org-variable-name">V_MODEL_TEXT</span> = Symbol(__DEV__ ? <span class="org-string">`vModelText`</span> : <span class="org-string">``</span>)
+<span class="linenr"> 5: </span><span class=
+"org-keyword">const</span> <span class=
+"org-variable-name">V_MODEL_SELECT</span> = Symbol(__DEV__ ? <span class="org-string">`vModelSelect`</span> : <span class="org-string">``</span>)
+<span class="linenr"> 6: </span><span class=
+"org-keyword">const</span> <span class=
+"org-variable-name">V_MODEL_DYNAMIC</span> = Symbol(__DEV__ ? <span class="org-string">`vModelDynamic`</span> : <span class="org-string">``</span>)
+<span class="linenr"> 7: </span>
+<span class="linenr"> 8: </span><span class=
+"org-keyword">const</span> <span class=
+"org-variable-name">V_ON_WITH_MODIFIERS</span> = Symbol(__DEV__ ? <span class="org-string">`vOnModifiersGuard`</span> : <span class="org-string">``</span>)
+<span class="linenr"> 9: </span><span class=
+"org-keyword">const</span> <span class=
+"org-variable-name">V_ON_WITH_KEYS</span> = Symbol(__DEV__ ? <span class="org-string">`vOnKeysGuard`</span> : <span class="org-string">``</span>)
+<span class="linenr">10: </span>
+<span class="linenr">11: </span><span class=
+"org-keyword">const</span> <span class=
+"org-variable-name">V_SHOW</span> = Symbol(__DEV__ ? <span class=
+"org-string">`vShow`</span> : <span class="org-string">``</span>)
+<span class="linenr">12: </span>
+<span class="linenr">13: </span><span class=
+"org-keyword">const</span> <span class=
+"org-variable-name">TRANSITION</span> = Symbol(__DEV__ ? <span class="org-string">`Transition`</span> : <span class="org-string">``</span>)
+<span class="linenr">14: </span><span class=
+"org-keyword">const</span> <span class=
+"org-variable-name">TRANSITION_GROUP</span> = Symbol(__DEV__ ? <span class="org-string">`TransitionGroup`</span> : <span class="org-string">``</span>)
+<span class="linenr">15: </span>
+<span class="linenr">16: </span>registerRuntimeHelpers({
+<span class="linenr">17: </span>  [V_MODEL_RADIO]: <span class=
+"org-string">`vModelRadio`</span>,
+<span class="linenr">18: </span>  [V_MODEL_CHECKBOX]: <span class=
+"org-string">`vModelCheckbox`</span>,
+<span class="linenr">19: </span>  [V_MODEL_TEXT]: <span class=
+"org-string">`vModelText`</span>,
+<span class="linenr">20: </span>  [V_MODEL_SELECT]: <span class=
+"org-string">`vModelSelect`</span>,
+<span class="linenr">21: </span>  [V_MODEL_DYNAMIC]: <span class=
+"org-string">`vModelDynamic`</span>,
+<span class=
+"linenr">22: </span>  [V_ON_WITH_MODIFIERS]: <span class=
+"org-string">`withModifiers`</span>,
+<span class="linenr">23: </span>  [V_ON_WITH_KEYS]: <span class=
+"org-string">`withKeys`</span>,
+<span class="linenr">24: </span>  [V_SHOW]: <span class=
+"org-string">`vShow`</span>,
+<span class="linenr">25: </span>  [TRANSITION]: <span class=
+"org-string">`Transition`</span>,
+<span class="linenr">26: </span>  [TRANSITION_GROUP]: <span class=
+"org-string">`TransitionGroup`</span>
+<span class="linenr">27: </span>})
 </pre>
           </div>
         </details><br>
@@ -14722,7 +14783,7 @@ undefined
             "green">namedChars</font></strong>
           </summary>
           <div class="org-src-container">
-            <pre class="src src-js" id="orge931b24"><span class=
+            <pre class="src src-js" id="orgf862880"><span class=
             "linenr">   1: </span><span class=
             "org-keyword">const</span> <span class=
             "org-variable-name">namedCharacterReferences</span> = {
@@ -19911,8 +19972,7 @@ undefined
 "org-string">''</span>
 <span class="linenr">2261: </span>      <span class=
 "org-keyword">let</span> <span class=
-"org-variable-name">value</span>: string | <span class=
-"org-constant">undefined</span> = <span class=
+"org-variable-name">value</span> = <span class=
 "org-constant">undefined</span>
 <span class="linenr">2262: </span>      <span class=
 "org-keyword">if</span> (<span class=
@@ -20120,16 +20180,513 @@ undefined
 "org-keyword">else</span> {
 <span class="linenr">2370: </span>    decoder.innerHTML = raw
 <span class="linenr">2371: </span>    <span class=
-"org-keyword">return</span> decoder.textContent as string
+"org-keyword">return</span> decoder.textContent
 <span class="linenr">2372: </span>  }
 <span class="linenr">2373: </span>}
+</pre>
+          </div>
+        </details><br>
+        <details class="code-details" style=
+        "padding: 1em; background-color: #e5f5e5; /* background-color: pink; */ border-radius: 15px; color: hsl(157 75%); font-size: 0.9em; box-shadow: 0.05em 0.1em 5px 0.01em #00000057;">
+          <summary>
+            <strong><font face="Courier" size="3" color=
+            "green">dom-attrs</font></strong>
+          </summary>
+          <div class="org-src-container">
+            <pre class="src src-js" id="org77af91e"><span class=
+            "linenr">  1: </span>
+<span class="linenr">  2: </span><span class="org-doc">/**</span>
+<span class="linenr">  3: </span><span class=
+"org-doc"> * On the client we only need to offer special cases for boolean attributes that</span>
+<span class="linenr">  4: </span><span class=
+"org-doc"> * have different names from their corresponding dom properties:</span>
+<span class="linenr">  5: </span><span class=
+"org-doc"> * - itemscope -&gt; N/A</span>
+<span class="linenr">  6: </span><span class=
+"org-doc"> * - allowfullscreen -&gt; allowFullscreen</span>
+<span class="linenr">  7: </span><span class=
+"org-doc"> * - formnovalidate -&gt; formNoValidate</span>
+<span class="linenr">  8: </span><span class=
+"org-doc"> * - ismap -&gt; isMap</span>
+<span class="linenr">  9: </span><span class=
+"org-doc"> * - nomodule -&gt; noModule</span>
+<span class="linenr"> 10: </span><span class=
+"org-doc"> * - novalidate -&gt; noValidate</span>
+<span class="linenr"> 11: </span><span class=
+"org-doc"> * - readonly -&gt; readOnly</span>
+<span class="linenr"> 12: </span><span class="org-doc"> */</span>
+<span class="linenr"> 13: </span><span class=
+"org-keyword">const</span> <span class=
+"org-variable-name">specialBooleanAttrs</span> = <span class=
+"org-string">`itemscope,allowfullscreen,formnovalidate,ismap,nomodule,novalidate,readonly`</span>
+<span class="linenr"> 14: </span><span class=
+"org-keyword">const</span> <span class=
+"org-variable-name">isSpecialBooleanAttr</span> = <span class=
+"org-comment-delimiter">/*</span><span class=
+"org-comment">#__PURE__</span><span class=
+"org-comment-delimiter">*/</span> makeMap(specialBooleanAttrs)
+<span class="linenr"> 15: </span>
+<span class="linenr"> 16: </span><span class="org-doc">/**</span>
+<span class="linenr"> 17: </span><span class=
+"org-doc"> * The full list is needed during SSR to produce the correct initial markup.</span>
+<span class="linenr"> 18: </span><span class="org-doc"> */</span>
+<span class="linenr"> 19: </span><span class=
+"org-keyword">const</span> <span class=
+"org-variable-name">isBooleanAttr</span> = <span class=
+"org-comment-delimiter">/*</span><span class=
+"org-comment">#__PURE__</span><span class=
+"org-comment-delimiter">*/</span> makeMap(
+<span class="linenr"> 20: </span>  specialBooleanAttrs +
+<span class="linenr"> 21: </span>    <span class=
+"org-string">`,async,autofocus,autoplay,controls,default,defer,disabled,hidden,`</span> +
+<span class="linenr"> 22: </span>    <span class=
+"org-string">`loop,open,required,reversed,scoped,seamless,`</span> +
+<span class="linenr"> 23: </span>    <span class=
+"org-string">`checked,muted,multiple,selected`</span>
+<span class="linenr"> 24: </span>)
+<span class="linenr"> 25: </span>
+<span class="linenr"> 26: </span><span class="org-doc">/**</span>
+<span class="linenr"> 27: </span><span class=
+"org-doc"> * Boolean attributes should be included if the value is truthy or ''.</span>
+<span class="linenr"> 28: </span><span class=
+"org-doc"> * e.g. `&lt;select multiple&gt;` compiles to `{ multiple: '' }`</span>
+<span class="linenr"> 29: </span><span class="org-doc"> */</span>
+<span class="linenr"> 30: </span><span class=
+"org-keyword">function</span> <span class=
+"org-function-name">includeBooleanAttr</span>(<span class=
+"org-variable-name">value</span>) {
+<span class="linenr"> 31: </span>  <span class=
+"org-keyword">return</span> !!value || value === <span class=
+"org-string">''</span>
+<span class="linenr"> 32: </span>}
+<span class="linenr"> 33: </span>
+<span class="linenr"> 34: </span><span class=
+"org-keyword">const</span> <span class=
+"org-variable-name">unsafeAttrCharRE</span> = <span class=
+"org-string">/[&gt;/="'\u0009\u000a\u000c\u0020]/</span>
+<span class="linenr"> 35: </span><span class=
+"org-keyword">const</span> <span class=
+"org-variable-name">attrValidationCache</span> = {}
+<span class="linenr"> 36: </span>
+<span class="linenr"> 37: </span><span class=
+"org-keyword">function</span> <span class=
+"org-function-name">isSSRSafeAttrName</span>(<span class=
+"org-variable-name">name</span>) {
+<span class="linenr"> 38: </span>  <span class=
+"org-keyword">if</span> (attrValidationCache.hasOwnProperty(name)) {
+<span class="linenr"> 39: </span>    <span class=
+"org-keyword">return</span> attrValidationCache[name]
+<span class="linenr"> 40: </span>  }
+<span class="linenr"> 41: </span>  <span class=
+"org-keyword">const</span> <span class=
+"org-variable-name">isUnsafe</span> = unsafeAttrCharRE.test(name)
+<span class="linenr"> 42: </span>  <span class=
+"org-keyword">if</span> (isUnsafe) {
+<span class="linenr"> 43: </span>    console.error(<span class=
+"org-string">`unsafe attribute name: ${name}`</span>)
+<span class="linenr"> 44: </span>  }
+<span class="linenr"> 45: </span>  <span class=
+"org-keyword">return</span> (attrValidationCache[name] = !isUnsafe)
+<span class="linenr"> 46: </span>}
+<span class="linenr"> 47: </span>
+<span class="linenr"> 48: </span><span class=
+"org-keyword">const</span> <span class=
+"org-variable-name">propsToAttrMap</span> = {
+<span class="linenr"> 49: </span>  acceptCharset: <span class=
+"org-string">'accept-charset'</span>,
+<span class="linenr"> 50: </span>  className: <span class=
+"org-string">'class'</span>,
+<span class="linenr"> 51: </span>  htmlFor: <span class=
+"org-string">'for'</span>,
+<span class="linenr"> 52: </span>  httpEquiv: <span class=
+"org-string">'http-equiv'</span>
+<span class="linenr"> 53: </span>}
+<span class="linenr"> 54: </span>
+<span class="linenr"> 55: </span><span class="org-doc">/**</span>
+<span class="linenr"> 56: </span><span class=
+"org-doc"> * CSS properties that accept plain numbers</span>
+<span class="linenr"> 57: </span><span class="org-doc"> */</span>
+<span class="linenr"> 58: </span><span class=
+"org-keyword">const</span> <span class=
+"org-variable-name">isNoUnitNumericStyleProp</span> = <span class=
+"org-comment-delimiter">/*</span><span class=
+"org-comment">#__PURE__</span><span class=
+"org-comment-delimiter">*/</span> makeMap(
+<span class="linenr"> 59: </span>  <span class=
+"org-string">`animation-iteration-count,border-image-outset,border-image-slice,`</span> +
+<span class="linenr"> 60: </span>    <span class=
+"org-string">`border-image-width,box-flex,box-flex-group,box-ordinal-group,column-count,`</span> +
+<span class="linenr"> 61: </span>    <span class=
+"org-string">`columns,flex,flex-grow,flex-positive,flex-shrink,flex-negative,flex-order,`</span> +
+<span class="linenr"> 62: </span>    <span class=
+"org-string">`grid-row,grid-row-end,grid-row-span,grid-row-start,grid-column,`</span> +
+<span class="linenr"> 63: </span>    <span class=
+"org-string">`grid-column-end,grid-column-span,grid-column-start,font-weight,line-clamp,`</span> +
+<span class="linenr"> 64: </span>    <span class=
+"org-string">`line-height,opacity,order,orphans,tab-size,widows,z-index,zoom,`</span> +
+<span class="linenr"> 65: </span>    <span class=
+"org-comment-delimiter">// </span><span class=
+"org-comment">SVG</span>
+<span class="linenr"> 66: </span>    <span class=
+"org-string">`fill-opacity,flood-opacity,stop-opacity,stroke-dasharray,stroke-dashoffset,`</span> +
+<span class="linenr"> 67: </span>    <span class=
+"org-string">`stroke-miterlimit,stroke-opacity,stroke-width`</span>
+<span class="linenr"> 68: </span>)
+<span class="linenr"> 69: </span>
+<span class="linenr"> 70: </span><span class="org-doc">/**</span>
+<span class="linenr"> 71: </span><span class=
+"org-doc"> * Known attributes, this is used for stringification of runtime static nodes</span>
+<span class="linenr"> 72: </span><span class=
+"org-doc"> * so that we don't stringify bindings that cannot be set from HTML.</span>
+<span class="linenr"> 73: </span><span class=
+"org-doc"> * Don't also forget to allow `data-*` and `aria-*`!</span>
+<span class="linenr"> 74: </span><span class=
+"org-doc"> * Generated from https://developer.mozilla.org/en-US/docs/Web/HTML/Attributes</span>
+<span class="linenr"> 75: </span><span class="org-doc"> */</span>
+<span class="linenr"> 76: </span><span class=
+"org-keyword">const</span> <span class=
+"org-variable-name">isKnownHtmlAttr</span> = <span class=
+"org-comment-delimiter">/*</span><span class=
+"org-comment">#__PURE__</span><span class=
+"org-comment-delimiter">*/</span> makeMap(
+<span class="linenr"> 77: </span>  <span class=
+"org-string">`accept,accept-charset,accesskey,action,align,allow,alt,async,`</span> +
+<span class="linenr"> 78: </span>    <span class=
+"org-string">`autocapitalize,autocomplete,autofocus,autoplay,background,bgcolor,`</span> +
+<span class="linenr"> 79: </span>    <span class=
+"org-string">`border,buffered,capture,challenge,charset,checked,cite,class,code,`</span> +
+<span class="linenr"> 80: </span>    <span class=
+"org-string">`codebase,color,cols,colspan,content,contenteditable,contextmenu,controls,`</span> +
+<span class="linenr"> 81: </span>    <span class=
+"org-string">`coords,crossorigin,csp,data,datetime,decoding,default,defer,dir,dirname,`</span> +
+<span class="linenr"> 82: </span>    <span class=
+"org-string">`disabled,download,draggable,dropzone,enctype,enterkeyhint,for,form,`</span> +
+<span class="linenr"> 83: </span>    <span class=
+"org-string">`formaction,formenctype,formmethod,formnovalidate,formtarget,headers,`</span> +
+<span class="linenr"> 84: </span>    <span class=
+"org-string">`height,hidden,high,href,hreflang,http-equiv,icon,id,importance,integrity,`</span> +
+<span class="linenr"> 85: </span>    <span class=
+"org-string">`ismap,itemprop,keytype,kind,label,lang,language,loading,list,loop,low,`</span> +
+<span class="linenr"> 86: </span>    <span class=
+"org-string">`manifest,max,maxlength,minlength,media,min,multiple,muted,name,novalidate,`</span> +
+<span class="linenr"> 87: </span>    <span class=
+"org-string">`open,optimum,pattern,ping,placeholder,poster,preload,radiogroup,readonly,`</span> +
+<span class="linenr"> 88: </span>    <span class=
+"org-string">`referrerpolicy,rel,required,reversed,rows,rowspan,sandbox,scope,scoped,`</span> +
+<span class="linenr"> 89: </span>    <span class=
+"org-string">`selected,shape,size,sizes,slot,span,spellcheck,src,srcdoc,srclang,srcset,`</span> +
+<span class="linenr"> 90: </span>    <span class=
+"org-string">`start,step,style,summary,tabindex,target,title,translate,type,usemap,`</span> +
+<span class="linenr"> 91: </span>    <span class=
+"org-string">`value,width,wrap`</span>
+<span class="linenr"> 92: </span>)
+<span class="linenr"> 93: </span>
+<span class="linenr"> 94: </span><span class="org-doc">/**</span>
+<span class="linenr"> 95: </span><span class=
+"org-doc"> * Generated from https://developer.mozilla.org/en-US/docs/Web/SVG/Attribute</span>
+<span class="linenr"> 96: </span><span class="org-doc"> */</span>
+<span class="linenr"> 97: </span><span class=
+"org-keyword">const</span> <span class=
+"org-variable-name">isKnownSvgAttr</span> = <span class=
+"org-comment-delimiter">/*</span><span class=
+"org-comment">#__PURE__</span><span class=
+"org-comment-delimiter">*/</span> makeMap(
+<span class="linenr"> 98: </span>  <span class=
+"org-string">`xmlns,accent-height,accumulate,additive,alignment-baseline,alphabetic,amplitude,`</span> +
+<span class="linenr"> 99: </span>    <span class=
+"org-string">`arabic-form,ascent,attributeName,attributeType,azimuth,baseFrequency,`</span> +
+<span class="linenr">100: </span>    <span class=
+"org-string">`baseline-shift,baseProfile,bbox,begin,bias,by,calcMode,cap-height,class,`</span> +
+<span class="linenr">101: </span>    <span class=
+"org-string">`clip,clipPathUnits,clip-path,clip-rule,color,color-interpolation,`</span> +
+<span class="linenr">102: </span>    <span class=
+"org-string">`color-interpolation-filters,color-profile,color-rendering,`</span> +
+<span class="linenr">103: </span>    <span class=
+"org-string">`contentScriptType,contentStyleType,crossorigin,cursor,cx,cy,d,decelerate,`</span> +
+<span class="linenr">104: </span>    <span class=
+"org-string">`descent,diffuseConstant,direction,display,divisor,dominant-baseline,dur,dx,`</span> +
+<span class="linenr">105: </span>    <span class=
+"org-string">`dy,edgeMode,elevation,enable-background,end,exponent,fill,fill-opacity,`</span> +
+<span class="linenr">106: </span>    <span class=
+"org-string">`fill-rule,filter,filterRes,filterUnits,flood-color,flood-opacity,`</span> +
+<span class="linenr">107: </span>    <span class=
+"org-string">`font-family,font-size,font-size-adjust,font-stretch,font-style,`</span> +
+<span class="linenr">108: </span>    <span class=
+"org-string">`font-variant,font-weight,format,from,fr,fx,fy,g1,g2,glyph-name,`</span> +
+<span class="linenr">109: </span>    <span class=
+"org-string">`glyph-orientation-horizontal,glyph-orientation-vertical,glyphRef,`</span> +
+<span class="linenr">110: </span>    <span class=
+"org-string">`gradientTransform,gradientUnits,hanging,height,href,hreflang,horiz-adv-x,`</span> +
+<span class="linenr">111: </span>    <span class=
+"org-string">`horiz-origin-x,id,ideographic,image-rendering,in,in2,intercept,k,k1,k2,k3,`</span> +
+<span class="linenr">112: </span>    <span class=
+"org-string">`k4,kernelMatrix,kernelUnitLength,kerning,keyPoints,keySplines,keyTimes,`</span> +
+<span class="linenr">113: </span>    <span class=
+"org-string">`lang,lengthAdjust,letter-spacing,lighting-color,limitingConeAngle,local,`</span> +
+<span class="linenr">114: </span>    <span class=
+"org-string">`marker-end,marker-mid,marker-start,markerHeight,markerUnits,markerWidth,`</span> +
+<span class="linenr">115: </span>    <span class=
+"org-string">`mask,maskContentUnits,maskUnits,mathematical,max,media,method,min,mode,`</span> +
+<span class="linenr">116: </span>    <span class=
+"org-string">`name,numOctaves,offset,opacity,operator,order,orient,orientation,origin,`</span> +
+<span class="linenr">117: </span>    <span class=
+"org-string">`overflow,overline-position,overline-thickness,panose-1,paint-order,path,`</span> +
+<span class="linenr">118: </span>    <span class=
+"org-string">`pathLength,patternContentUnits,patternTransform,patternUnits,ping,`</span> +
+<span class="linenr">119: </span>    <span class=
+"org-string">`pointer-events,points,pointsAtX,pointsAtY,pointsAtZ,preserveAlpha,`</span> +
+<span class="linenr">120: </span>    <span class=
+"org-string">`preserveAspectRatio,primitiveUnits,r,radius,referrerPolicy,refX,refY,rel,`</span> +
+<span class="linenr">121: </span>    <span class=
+"org-string">`rendering-intent,repeatCount,repeatDur,requiredExtensions,requiredFeatures,`</span> +
+<span class="linenr">122: </span>    <span class=
+"org-string">`restart,result,rotate,rx,ry,scale,seed,shape-rendering,slope,spacing,`</span> +
+<span class="linenr">123: </span>    <span class=
+"org-string">`specularConstant,specularExponent,speed,spreadMethod,startOffset,`</span> +
+<span class="linenr">124: </span>    <span class=
+"org-string">`stdDeviation,stemh,stemv,stitchTiles,stop-color,stop-opacity,`</span> +
+<span class="linenr">125: </span>    <span class=
+"org-string">`strikethrough-position,strikethrough-thickness,string,stroke,`</span> +
+<span class="linenr">126: </span>    <span class=
+"org-string">`stroke-dasharray,stroke-dashoffset,stroke-linecap,stroke-linejoin,`</span> +
+<span class="linenr">127: </span>    <span class=
+"org-string">`stroke-miterlimit,stroke-opacity,stroke-width,style,surfaceScale,`</span> +
+<span class="linenr">128: </span>    <span class=
+"org-string">`systemLanguage,tabindex,tableValues,target,targetX,targetY,text-anchor,`</span> +
+<span class="linenr">129: </span>    <span class=
+"org-string">`text-decoration,text-rendering,textLength,to,transform,transform-origin,`</span> +
+<span class="linenr">130: </span>    <span class=
+"org-string">`type,u1,u2,underline-position,underline-thickness,unicode,unicode-bidi,`</span> +
+<span class="linenr">131: </span>    <span class=
+"org-string">`unicode-range,units-per-em,v-alphabetic,v-hanging,v-ideographic,`</span> +
+<span class="linenr">132: </span>    <span class=
+"org-string">`v-mathematical,values,vector-effect,version,vert-adv-y,vert-origin-x,`</span> +
+<span class="linenr">133: </span>    <span class=
+"org-string">`vert-origin-y,viewBox,viewTarget,visibility,width,widths,word-spacing,`</span> +
+<span class="linenr">134: </span>    <span class=
+"org-string">`writing-mode,x,x-height,x1,x2,xChannelSelector,xlink:actuate,xlink:arcrole,`</span> +
+<span class="linenr">135: </span>    <span class=
+"org-string">`xlink:href,xlink:role,xlink:show,xlink:title,xlink:type,xml:base,xml:lang,`</span> +
+<span class="linenr">136: </span>    <span class=
+"org-string">`xml:space,y,y1,y2,yChannelSelector,z,zoomAndPan`</span>
+<span class="linenr">137: </span>)
+<span class="linenr">138: </span>
+</pre>
+          </div>
+        </details><br>
+        <details class="code-details" style=
+        "padding: 1em; background-color: #e5f5e5; /* background-color: pink; */ border-radius: 15px; color: hsl(157 75%); font-size: 0.9em; box-shadow: 0.05em 0.1em 5px 0.01em #00000057;">
+          <summary>
+            <strong><font face="Courier" size="3" color=
+            "green">normalizeProp</font></strong>
+          </summary>
+          <div class="org-src-container">
+            <pre class="src src-js" id="org2ac9ea5"><span class=
+            "linenr"> 1: </span>
+<span id="coderef-normalizeStyle" class="coderef-off"><span class=
+"linenr"> 2: </span><span class=
+"org-keyword">function</span> <span class=
+"org-function-name">normalizeStyle</span>(<span class=
+"org-variable-name">value</span>) {</span>
+<span class="linenr"> 3: </span>  <span class=
+"org-keyword">if</span> (isArray(value)) {
+<span class="linenr"> 4: </span>    <span class=
+"org-keyword">const</span> <span class=
+"org-variable-name">res</span> = {}
+<span class="linenr"> 5: </span>    <span class=
+"org-keyword">for</span> (<span class=
+"org-keyword">let</span> <span class=
+"org-variable-name">i</span> = <span class=
+"org-highlight-numbers-number">0</span>; i &lt; value.length; i++) {
+<span class="linenr"> 6: </span>      <span class=
+"org-keyword">const</span> <span class=
+"org-variable-name">item</span> = value[i]
+<span class="linenr"> 7: </span>      <span class=
+"org-keyword">const</span> <span class=
+"org-variable-name">normalized</span> = isString(item)
+<span class="linenr"> 8: </span>        ? parseStringStyle(item)
+<span class="linenr"> 9: </span>        : normalizeStyle(item)
+<span class="linenr">10: </span>      <span class=
+"org-keyword">if</span> (normalized) {
+<span class="linenr">11: </span>        <span class=
+"org-keyword">for</span> (<span class=
+"org-keyword">const</span> <span class=
+"org-variable-name">key</span> <span class=
+"org-keyword">in</span> normalized) {
+<span class=
+"linenr">12: </span>          res[key] = normalized[key]
+<span class="linenr">13: </span>        }
+<span class="linenr">14: </span>      }
+<span class="linenr">15: </span>    }
+<span class="linenr">16: </span>    <span class=
+"org-keyword">return</span> res
+<span class="linenr">17: </span>  } <span class=
+"org-keyword">else</span> <span class=
+"org-keyword">if</span> (isString(value)) {
+<span class="linenr">18: </span>    <span class=
+"org-keyword">return</span> value
+<span class="linenr">19: </span>  } <span class=
+"org-keyword">else</span> <span class=
+"org-keyword">if</span> (isObject(value)) {
+<span class="linenr">20: </span>    <span class=
+"org-keyword">return</span> value
+<span class="linenr">21: </span>  }
+<span class="linenr">22: </span>}
+<span class="linenr">23: </span>
+<span class="linenr">24: </span><span class=
+"org-keyword">const</span> <span class=
+"org-variable-name">listDelimiterRE</span> = <span class=
+"org-string">/;(?![^(]*\))/</span>g
+<span class="linenr">25: </span><span class=
+"org-keyword">const</span> <span class=
+"org-variable-name">propertyDelimiterRE</span> = <span class=
+"org-string">/:(.+)/</span>
+<span class="linenr">26: </span>
+<span id="coderef-parseStringStyle" class=
+"coderef-off"><span class="linenr">27: </span><span class=
+"org-keyword">function</span> <span class=
+"org-function-name">parseStringStyle</span>(<span class=
+"org-variable-name">cssText</span>) {</span>
+<span class="linenr">28: </span>  <span class=
+"org-keyword">const</span> <span class=
+"org-variable-name">ret</span> = {}
+<span class=
+"linenr">29: </span>  cssText.split(listDelimiterRE).forEach(item =&gt; {
+<span class="linenr">30: </span>    <span class=
+"org-keyword">if</span> (item) {
+<span class="linenr">31: </span>      <span class=
+"org-keyword">const</span> <span class=
+"org-variable-name">tmp</span> = item.split(propertyDelimiterRE)
+<span class="linenr">32: </span>      tmp.length &gt; <span class=
+"org-highlight-numbers-number">1</span> &amp;& (ret[tmp[<span class="org-highlight-numbers-number">0</span>].trim()] = tmp[<span class="org-highlight-numbers-number">1</span>].trim())
+<span class="linenr">33: </span>    }
+<span class="linenr">34: </span>  })
+<span class="linenr">35: </span>  <span class=
+"org-keyword">return</span> ret
+<span class="linenr">36: </span>}
+<span class="linenr">37: </span>
+<span id="coderef-stringifyStyle" class="coderef-off"><span class=
+"linenr">38: </span><span class=
+"org-keyword">function</span> <span class=
+"org-function-name">stringifyStyle</span>(<span class=
+"org-variable-name">styles</span>) {</span>
+<span class="linenr">39: </span>  <span class=
+"org-keyword">let</span> <span class=
+"org-variable-name">ret</span> = <span class="org-string">''</span>
+<span class="linenr">40: </span>  <span class=
+"org-keyword">if</span> (!styles || isString(styles)) {
+<span class="linenr">41: </span>    <span class=
+"org-keyword">return</span> ret
+<span class="linenr">42: </span>  }
+<span class="linenr">43: </span>  <span class=
+"org-keyword">for</span> (<span class=
+"org-keyword">const</span> <span class=
+"org-variable-name">key</span> <span class=
+"org-keyword">in</span> styles) {
+<span class="linenr">44: </span>    <span class=
+"org-keyword">const</span> <span class=
+"org-variable-name">value</span> = styles[key]
+<span class="linenr">45: </span>    <span class=
+"org-keyword">const</span> <span class=
+"org-variable-name">normalizedKey</span> = key.startsWith(<span class="org-string">`--`</span>) ? key : hyphenate(key)
+<span class="linenr">46: </span>    <span class=
+"org-keyword">if</span> (
+<span class="linenr">47: </span>      isString(value) ||
+<span class="linenr">48: </span>      (<span class=
+"org-keyword">typeof</span> value === <span class=
+"org-string">'number'</span> &amp;& isNoUnitNumericStyleProp(normalizedKey))
+<span class="linenr">49: </span>    ) {
+<span class="linenr">50: </span>      <span class=
+"org-comment-delimiter">// </span><span class=
+"org-comment">only render valid values</span>
+<span class="linenr">51: </span>      ret += <span class=
+"org-string">`${normalizedKey}:${value};`</span>
+<span class="linenr">52: </span>    }
+<span class="linenr">53: </span>  }
+<span class="linenr">54: </span>  <span class=
+"org-keyword">return</span> ret
+<span class="linenr">55: </span>}
+<span class="linenr">56: </span>
+<span id="coderef-normalizeClass" class="coderef-off"><span class=
+"linenr">57: </span><span class=
+"org-keyword">function</span> <span class=
+"org-function-name">normalizeClass</span>(<span class=
+"org-variable-name">value</span>) {</span>
+<span class="linenr">58: </span>  <span class=
+"org-keyword">let</span> <span class=
+"org-variable-name">res</span> = <span class="org-string">''</span>
+<span class="linenr">59: </span>  <span class=
+"org-keyword">if</span> (isString(value)) {
+<span class="linenr">60: </span>    res = value
+<span class="linenr">61: </span>  } <span class=
+"org-keyword">else</span> <span class=
+"org-keyword">if</span> (isArray(value)) {
+<span class="linenr">62: </span>    <span class=
+"org-keyword">for</span> (<span class=
+"org-keyword">let</span> <span class=
+"org-variable-name">i</span> = <span class=
+"org-highlight-numbers-number">0</span>; i &lt; value.length; i++) {
+<span class="linenr">63: </span>      <span class=
+"org-keyword">const</span> <span class=
+"org-variable-name">normalized</span> = normalizeClass(value[i])
+<span class="linenr">64: </span>      <span class=
+"org-keyword">if</span> (normalized) {
+<span class=
+"linenr">65: </span>        res += normalized + <span class=
+"org-string">' '</span>
+<span class="linenr">66: </span>      }
+<span class="linenr">67: </span>    }
+<span class="linenr">68: </span>  } <span class=
+"org-keyword">else</span> <span class=
+"org-keyword">if</span> (isObject(value)) {
+<span class="linenr">69: </span>    <span class=
+"org-keyword">for</span> (<span class=
+"org-keyword">const</span> <span class=
+"org-variable-name">name</span> <span class=
+"org-keyword">in</span> value) {
+<span class="linenr">70: </span>      <span class=
+"org-keyword">if</span> (value[name]) {
+<span class="linenr">71: </span>        res += name + <span class=
+"org-string">' '</span>
+<span class="linenr">72: </span>      }
+<span class="linenr">73: </span>    }
+<span class="linenr">74: </span>  }
+<span class="linenr">75: </span>  <span class=
+"org-keyword">return</span> res.trim()
+<span class="linenr">76: </span>}
+<span class="linenr">77: </span>
+<span id="coderef-normalizeProps" class="coderef-off"><span class=
+"linenr">78: </span><span class=
+"org-keyword">function</span> <span class=
+"org-function-name">normalizeProps</span>(<span class=
+"org-variable-name">props</span>) {</span>
+<span class="linenr">79: </span>  <span class=
+"org-keyword">if</span> (!props) <span class=
+"org-keyword">return</span> <span class="org-constant">null</span>
+<span class="linenr">80: </span>  <span class=
+"org-keyword">let</span> { <span class=
+"org-keyword">class</span>: klass, style } = props
+<span class="linenr">81: </span>  <span class=
+"org-keyword">if</span> (klass &amp;& !isString(klass)) {
+<span class="linenr">82: </span>    props.<span class=
+"org-keyword">class</span> = normalizeClass(klass)
+<span class="linenr">83: </span>  }
+<span class="linenr">84: </span>  <span class=
+"org-keyword">if</span> (style) {
+<span class=
+"linenr">85: </span>    props.style = normalizeStyle(style)
+<span class="linenr">86: </span>  }
+<span class="linenr">87: </span>  <span class=
+"org-keyword">return</span> props
+<span class="linenr">88: </span>}
+<span class="linenr">89: </span>
 </pre>
           </div>
         </details>
       </div>
     </div>
-    <div id="outline-container-org4f9df92" class="outline-2">
-      <h2 id="org4f9df92"><span class="section-number-2">2.</span>
+    <div id="outline-container-org38f66d0" class="outline-2">
+      <h2 id="org38f66d0"><span class="section-number-2">2.</span>
       APIs</h2>
       <div class="outline-text-2" id="text-2">
         <p>compiler-dom 包包含以下 APIs 这个包主要是针对一些指令进行加工处理，如：
@@ -20147,16 +20704,22 @@ undefined
           </thead>
           <tbody>
             <tr>
-              <td class="org-left">&nbsp;</td>
-              <td class="org-left">handle style attribute, combine,
-              normalize</td>
+              <td class="org-left">
+                <a href="#org155c30f">transformStyle()</a>
+              </td>
+              <td class="org-left">combine & normalize, result to
+              object <code>{a:b, c:d}</code></td>
             </tr>
             <tr>
-              <td class="org-left">&nbsp;</td>
+              <td class="org-left">
+                <a href="#org60682be">transformVHtml()</a>
+              </td>
               <td class="org-left">v-html</td>
             </tr>
             <tr>
-              <td class="org-left">&nbsp;</td>
+              <td class="org-left">
+                <a href="#org9405a30">transformVText()</a>
+              </td>
               <td class="org-left">v-text</td>
             </tr>
             <tr>
@@ -20175,28 +20738,31 @@ undefined
         </table>
         <p>code:</p>
         <div class="org-src-container">
-          <pre class="src src-js"><span class=
-          "linenr"> 1: </span>&lt;&lt;globalVarsCD&gt;&gt;
+          <pre class="src src-js" id="orgadd68cc"><span class=
+          "linenr"> 1: </span>&lt;&lt;compiler-core&gt;&gt;
+<span class="linenr"> 2: </span>&lt;&lt;globalVarsCD&gt;&gt;
+<span class="linenr"> 3: </span>&lt;&lt;transformStyleCD&gt;&gt;
+<span class="linenr"> 4: </span>&lt;&lt;transformVHtml&gt;&gt;
+<span class="linenr"> 5: </span>&lt;&lt;transformVText&gt;&gt;
+<span class="linenr"> 6: </span>&lt;&lt;transformModelCD&gt;&gt;
+<span class="linenr"> 7: </span>&lt;&lt;transformOnCD&gt;&gt;
+<span class="linenr"> 8: </span>&lt;&lt;transformShowCD&gt;&gt;
+<span class="linenr"> 9: </span>&lt;&lt;stringifyStatic&gt;&gt;
 <span class=
-"linenr"> 2: </span>&lt;&lt;DOMDirectiveTransforms&gt;&gt;
-<span class="linenr"> 3: </span>&lt;&lt;DOMNodeTransforms&gt;&gt;
-<span class="linenr"> 4: </span>&lt;&lt;transformStyleCD&gt;&gt;
-<span class="linenr"> 5: </span>&lt;&lt;transformVHtmlCD&gt;&gt;
-<span class="linenr"> 6: </span>&lt;&lt;transformVTextCD&gt;&gt;
-<span class="linenr"> 7: </span>&lt;&lt;transformModelCD&gt;&gt;
-<span class="linenr"> 8: </span>&lt;&lt;transformOnCD&gt;&gt;
-<span class="linenr"> 9: </span>&lt;&lt;transformShowCD&gt;&gt;
-<span class="linenr">10: </span>&lt;&lt;stringifyStatic&gt;&gt;
+"linenr">10: </span>&lt;&lt;DOMDirectiveTransforms&gt;&gt;
+<span class="linenr">11: </span>&lt;&lt;DOMNodeTransforms&gt;&gt;
+<span class="linenr">12: </span>&lt;&lt;compile&gt;&gt;
+<span class="linenr">13: </span>&lt;&lt;parse&gt;&gt;
 </pre>
         </div>
       </div>
     </div>
-    <div id="outline-container-org6fcc797" class="outline-2">
-      <h2 id="org6fcc797"><span class="section-number-2">3.</span>
+    <div id="outline-container-org4832674" class="outline-2">
+      <h2 id="org4832674"><span class="section-number-2">3.</span>
       transforms</h2>
       <div class="outline-text-2" id="text-3">
         <div class="org-src-container">
-          <pre class="src src-js" id="orgf3ce38f"><span class=
+          <pre class="src src-js" id="org1612559"><span class=
           "linenr">1: </span><span class=
           "org-keyword">const</span> <span class=
           "org-variable-name">DOMDirectiveTransforms</span> = {
@@ -20204,240 +20770,1270 @@ undefined
 <span class="linenr">3: </span>  html: transformVHtml,
 <span class="linenr">4: </span>  text: transformVText,
 <span class=
-"linenr">5: </span>  model: transformModel, <span class="org-comment-delimiter">// </span><span class="org-comment">override compiler-core</span>
-<span class="linenr">6: </span>  on: transformOn, <span class=
+"linenr">5: </span>  model: transformModelCD, <span class=
 "org-comment-delimiter">// </span><span class=
 "org-comment">override compiler-core</span>
-<span class="linenr">7: </span>  show: transformShow
+<span class="linenr">6: </span>  on: transformOnCD, <span class=
+"org-comment-delimiter">// </span><span class=
+"org-comment">override compiler-core</span>
+<span class="linenr">7: </span>  show: transformShowCD
 <span class="linenr">8: </span>}
 </pre>
         </div>
         <div class="org-src-container">
-          <pre class="src src-js" id="org694ca69"><span class=
+          <pre class="src src-js" id="orge984dd6"><span class=
           "linenr">1: </span><span class=
           "org-keyword">const</span> <span class=
           "org-variable-name">DOMNodeTransforms</span> = [
-<span class="linenr">2: </span>  transformStyle,
+<span class="linenr">2: </span>  transformStyleCD,
 <span class=
 "linenr">3: </span>  ...(__DEV__ ? [warnTransitionChildren] : [])
 <span class="linenr">4: </span>]
 </pre>
         </div>
       </div>
-      <div id="outline-container-org5c696c0" class="outline-3">
-        <h3 id="org5c696c0"><span class=
+      <div id="outline-container-org8817a62" class="outline-3">
+        <h3 id="org8817a62"><span class=
         "section-number-3">3.1.</span> style</h3>
         <div class="outline-text-3" id="text-3-1">
           <p>compiler-dom 之前：</p>
           <div class="org-src-container">
-            <pre class="src src-js"><span class=
+            <pre class="src src-js" id="orgb3b0bd4"><span class=
             "linenr">1: </span>&lt;&lt;compiler-core&gt;&gt;
 <span class="linenr">2: </span>
-<span class="linenr">3: </span><span class=
+<span class="linenr">3: </span>logOff()
+<span class="linenr">4: </span><span class=
 "org-keyword">const</span> { code } = baseCompile(<span class=
-"org-string">'&lt;div style="width:200px" /&gt;'</span>, { filename: <span class="org-string">'foo.vue'</span> })
-<span class="linenr">4: </span>logg(<span class=
+"org-string">'&lt;div style="width:200px" :style="{height: `200px`}" /&gt;'</span>, { filename: <span class="org-string">'foo.vue'</span> })
+<span class="linenr">5: </span>logOn()
+<span class="linenr">6: </span>logg(<span class=
 "org-string">'&lt;div style="width:200px" /&gt;'</span>, code)
 </pre>
           </div>
-          <pre class="example" id="org92912c3">
+          <pre class="example" id="org6b0541a">
 --------- createStructuralDirectiveTransform ---------
 name=for, matches=(n) =&gt; n === name
 --------- createStructuralDirectiveTransform ---------
 name=/^(if|else|else-if)$/, matches=(n) =&gt; name.test(n)
---------- ATTR ---------
-{
-  type: 6,
-  name: 'style',
-  value: {
-    type: 2,
-    content: 'width:200px',
-    loc: { start: [Object], end: [Object], source: '"width:200px"' }
-  },
-  loc: {
-    start: { column: 6, line: 1, offset: 5 },
-    end: { column: 25, line: 1, offset: 24 },
-    source: 'style="width:200px"'
-  }
-}
---------- createRootCodegen ---------
-children=1, 只有一个用 block, 多个用Fragment
 --------- &lt;div style="width:200px" /&gt; ---------
 const _Vue = Vue
 
 return function render(_ctx, _cache) {
   with (_ctx) {
-    const { openBlock: _openBlock, createElementBlock: _createElementBlock } = _Vue
+    const { normalizeStyle: _normalizeStyle, openBlock: _openBlock, createElementBlock: _createElementBlock } = _Vue
 
-    return (_openBlock(), _createElementBlock("div", { style: "width:200px" }))
+    return (_openBlock(), _createElementBlock("div", {
+      style: _normalizeStyle([
+        "width:200px",
+        {height: `200px`}
+      ])
+    }, null, 4))
   }
 }
 undefined
 </pre>
+          <p>对 style 属性进行加工处理，字符串拆成对象，然后合并到，同时支持多种使用方式</p>
+          <ol class="org-ol">
+            <li><code>&lt;div style="width:100px"&gt;</code> =&gt;
+            <code>{width:'100px'}</code></li>
+            <li><code>&lt;div :style="{width:'100px'}"&gt;</code>
+            =&gt; <code>{width:'100px'}</code></li>
+            <li><code>&lt;div :style="{width:'100px'}
+            style="height:100px"&gt;</code> =&gt;
+            <code>{width:'100px',height:'100px'}</code></li>
+          </ol>
           <div class="org-src-container">
-            <pre class="src src-js" id="org280295c"><span class=
-            "linenr">1: </span><span class=
-            "org-keyword">function</span> <span class=
-            "org-function-name">transformStyleCD</span>() {}
+            <pre class="src src-js" id="org155c30f"><span class=
+            "linenr"> 1: </span>
+<span class="linenr"> 2: </span><span class=
+"org-comment-delimiter">// </span><span class=
+"org-comment">Parse inline CSS strings for static style attributes into an object.</span>
+<span class="linenr"> 3: </span><span class=
+"org-comment-delimiter">// </span><span class=
+"org-comment">This is a NodeTransform since it works on the static `style` attribute and</span>
+<span class="linenr"> 4: </span><span class=
+"org-comment-delimiter">// </span><span class=
+"org-comment">converts it into a dynamic equivalent:</span>
+<span class="linenr"> 5: </span><span class=
+"org-comment-delimiter">// </span><span class=
+"org-comment">style="color: red" -&gt; :style='{ "color": "red" }'</span>
+<span class="linenr"> 6: </span><span class=
+"org-comment-delimiter">// </span><span class=
+"org-comment">It is then processed by `transformElement` and included in the generated</span>
+<span class="linenr"> 7: </span><span class=
+"org-comment-delimiter">// </span><span class=
+"org-comment">props.</span>
+<span class="linenr"> 8: </span><span class=
+"org-keyword">const</span> <span class=
+"org-variable-name">transformStyleCD</span> = node =&gt; {
+<span class="linenr"> 9: </span>  <span class=
+"org-keyword">if</span> (node.type === NodeTypes.ELEMENT) {
+<span class=
+"linenr">10: </span>    node.props.forEach((p, i) =&gt; {
+<span class="linenr">11: </span>      <span class=
+"org-keyword">if</span> (p.type === NodeTypes.ATTRIBUTE &amp;& p.name === <span class="org-string">'style'</span> &amp;& p.value) {
+<span class="linenr">12: </span>        <span class=
+"org-comment-delimiter">// </span><span class=
+"org-comment">replace p with an expression node</span>
+<span class="linenr">13: </span>        node.props[i] = {
+<span class=
+"linenr">14: </span>          type: NodeTypes.DIRECTIVE,
+<span class="linenr">15: </span>          name: <span class=
+"org-string">`bind`</span>,
+<span class=
+"linenr">16: </span>          arg: createSimpleExpression(<span class="org-string">`style`</span>, <span class="org-constant">true</span>, p.loc),
+<span class=
+"linenr">17: </span>          exp: parseInlineCSS(p.value.content, p.loc),
+<span class="linenr">18: </span>          modifiers: [],
+<span class="linenr">19: </span>          loc: p.loc
+<span class="linenr">20: </span>        }
+<span class="linenr">21: </span>      }
+<span class="linenr">22: </span>    })
+<span class="linenr">23: </span>  }
+<span class="linenr">24: </span>}
+<span class="linenr">25: </span>
+<span class="linenr">26: </span><span class=
+"org-keyword">const</span> <span class=
+"org-variable-name">parseInlineCSS</span> = (cssText, loc) =&gt; {
+<span class="linenr">27: </span>  <span class=
+"org-keyword">const</span> <span class=
+"org-variable-name">normalized</span> = parseStringStyle(cssText)
+<span class="linenr">28: </span>  <span class=
+"org-keyword">return</span> createSimpleExpression(
+<span class="linenr">29: </span>    JSON.stringify(normalized),
+<span class="linenr">30: </span>    <span class=
+"org-constant">false</span>,
+<span class="linenr">31: </span>    loc,
+<span class="linenr">32: </span>    ConstantTypes.CAN_STRINGIFY
+<span class="linenr">33: </span>  )
+<span class="linenr">34: </span>}
 </pre>
           </div>
-          <pre class="example">
+          <p><a href="#coderef-parseStringStyle" class="coderef"
+          onmouseover=
+          "CodeHighlightOn(this, 'coderef-parseStringStyle');"
+          onmouseout=
+          "CodeHighlightOff(this, 'coderef-parseStringStyle');">parseStringStyle</a>
+          将字符串解析成对象 <code>"width:100px"</code> =&gt; <code>{ width:
+          '100px' }</code></p>
+          <p><a href="#coderef-stringifyStyle" class="coderef"
+          onmouseover=
+          "CodeHighlightOn(this, 'coderef-stringifyStyle');"
+          onmouseout=
+          "CodeHighlightOff(this, 'coderef-stringifyStyle');">stringifyStyle</a>
+          将对象转成字符串 <code>{ width: '100px' }</code> =&gt;
+          <code>"width:100px"</code></p>
+          <p><a href="#coderef-normalizeStyle" class="coderef"
+          onmouseover=
+          "CodeHighlightOn(this, 'coderef-normalizeStyle');"
+          onmouseout=
+          "CodeHighlightOff(this, 'coderef-normalizeStyle');">normalizeStyle</a>
+          解析 style 的值，可能是 <code>"width:100px"</code> 或
+          <code>{width:'100px'}</code> 也可以是 <code>['width:100px',
+          {height:'100px'}]</code> 的混合方式，最终都会被解析成对象
+          <code>{width:'100px', height: '100px'}</code> 。</p>
+          <div class="org-src-container">
+            <pre class="src src-js"><span class=
+            "linenr">1: </span>&lt;&lt;compiler-dom&gt;&gt;
+<span class="linenr">2: </span><span class=
+"org-keyword">const</span> <span class=
+"org-variable-name">pss</span> = s =&gt; parseStringStyle(s)
+<span class="linenr">3: </span><span class=
+"org-keyword">let</span> <span class=
+"org-variable-name">r</span> = pss(<span class=
+"org-string">'width:100px;height:100px'</span>)
+<span class="linenr">4: </span>logg(<span class=
+"org-string">'parseStringStyle'</span>, r)
+<span class="linenr">5: </span><span class=
+"org-keyword">const</span> <span class=
+"org-variable-name">sfs</span> = s =&gt; stringifyStyle(s)
+<span class="linenr">6: </span><span class=
+"org-keyword">const</span> <span class=
+"org-variable-name">s</span> = sfs(r)
+<span class="linenr">7: </span>logg(<span class=
+"org-string">'stringifyStyle'</span>, s)
+<span class="linenr">8: </span>logg(<span class=
+"org-string">'normalizeStyle'</span>, normalizeStyle([r, s, <span class="org-string">'font-size:12px'</span>, { <span class="org-string">'line-height'</span>: <span class="org-highlight-numbers-number">1.2</span> }]))
+</pre>
+          </div>
+          <pre class="example" id="orgbee37f2">
+--------- createStructuralDirectiveTransform ---------
+name=for, matches=(n) =&gt; n === name
+--------- createStructuralDirectiveTransform ---------
+name=/^(if|else|else-if)$/, matches=(n) =&gt; name.test(n)
+--------- parseStringStyle ---------
+{ width: '100px', height: '100px' }
+--------- stringifyStyle ---------
+width:100px;height:100px;
+--------- normalizeStyle ---------
+{
+  width: '100px',
+  height: '100px',
+  'font-size': '12px',
+  'line-height': 1.2
+}
 undefined
 </pre>
+          <p><span style="color:red;">Testing</span></p>
+          <div class="org-src-container">
+            <pre class="src src-js"><span class=
+            "linenr">1: </span>&lt;&lt;compiler-dom&gt;&gt;
+<span class="linenr">2: </span>
+<span class="linenr">3: </span>logOff()
+<span class="linenr">4: </span><span class=
+"org-keyword">const</span> { code } = compile(<span class=
+"org-string">'&lt;div style="width:200px" :style="{height: `200px`}" /&gt;'</span>, { filename: <span class="org-string">'foo.vue'</span> })
+<span class="linenr">5: </span>logOn()
+<span class="linenr">6: </span>logg(<span class=
+"org-string">'&lt;div style="width:200px" /&gt;'</span>, code)
+</pre>
+          </div>
+          <pre class="example" id="org1f7dc94">
+--------- createStructuralDirectiveTransform ---------
+name=for, matches=(n) =&gt; n === name
+--------- createStructuralDirectiveTransform ---------
+name=/^(if|else|else-if)$/, matches=(n) =&gt; name.test(n)
+--------- &lt;div style="width:200px" /&gt; ---------
+const _Vue = Vue
+
+return function render(_ctx, _cache) {
+  with (_ctx) {
+    const { normalizeStyle: _normalizeStyle, openBlock: _openBlock, createElementBlock: _createElementBlock } = _Vue
+
+    return (_openBlock(), _createElementBlock("div", {
+      style: _normalizeStyle([
+        {"width":"200px"},
+        {height: `200px`}
+      ])
+    }, null, 4))
+  }
+}
+undefined
+</pre>
+          <p>注意与 <a href="#orgb3b0bd4">实现 compiler-dom 之前测试结果</a>
+          对比结果，会发现后者的 <code>style</code> 都会被转成对 象形式。</p>
+          <p>之前：</p>
+          <div class="org-src-container">
+            <pre class="src src-js"> style: _normalizeStyle([
+   <span class="org-string">"width:200px"</span>,
+   {height: <span class="org-string">`200px`</span>}
+ ])
+</pre>
+          </div>
+          <p>之后：</p>
+          <div class="org-src-container">
+            <pre class="src src-js">style: _normalizeStyle([
+  {<span class="org-string">"width"</span>:<span class=
+"org-string">"200px"</span>},
+  {height: <span class="org-string">`200px`</span>}
+])
+</pre>
+          </div>
         </div>
       </div>
-      <div id="outline-container-org826eab9" class="outline-3">
-        <h3 id="org826eab9"><span class=
+      <div id="outline-container-orgd48015a" class="outline-3">
+        <h3 id="orgd48015a"><span class=
         "section-number-3">3.2.</span> v-html</h3>
         <div class="outline-text-3" id="text-3-2">
           <div class="org-src-container">
-            <pre class="src src-js" id="org80529f9"><span class=
-            "linenr">1: </span><span class=
-            "org-keyword">function</span> <span class=
-            "org-function-name">transformVHtmlCD</span>() {}
+            <pre class="src src-js" id="org60682be"><span class=
+            "linenr"> 1: </span><span class=
+            "org-keyword">const</span> <span class=
+            "org-variable-name">transformVHtml</span> = (dir, node, context) =&gt; {
+<span class="linenr"> 2: </span>  <span class=
+"org-keyword">const</span> { exp, loc } = dir
+<span class="linenr"> 3: </span>  <span class=
+"org-keyword">if</span> (!exp) {
+<span class="linenr"> 4: </span>    logg(<span class=
+"org-string">"v-html no exp"</span>)
+<span class="linenr"> 5: </span>  }
+<span class="linenr"> 6: </span>  <span class=
+"org-keyword">if</span> (node.children.length) {
+<span class="linenr"> 7: </span>    logg(<span class=
+"org-string">'v-html can not has children'</span>)
+<span class=
+"linenr"> 8: </span>    node.children.length = <span class=
+"org-highlight-numbers-number">0</span>
+<span class="linenr"> 9: </span>  }
+<span class="linenr">10: </span>  <span class=
+"org-keyword">return</span> {
+<span class="linenr">11: </span>    props: [
+<span class="linenr">12: </span>      createObjectProperty(
+<span class=
+"linenr">13: </span>        createSimpleExpression(<span class=
+"org-string">`innerHTML`</span>, <span class=
+"org-constant">true</span>, loc),
+<span class=
+"linenr">14: </span>        exp || createSimpleExpression(<span class="org-string">''</span>, <span class="org-constant">true</span>)
+<span class="linenr">15: </span>      )
+<span class="linenr">16: </span>    ]
+<span class="linenr">17: </span>  }
+<span class="linenr">18: </span>}
 </pre>
           </div>
-          <pre class="example">
+          <p><span style="color:red;">Testing</span></p>
+          <p>before: 不会被处理</p>
+          <div class="org-src-container">
+            <pre class="src src-js"><span class=
+            "linenr">1: </span>&lt;&lt;compiler-core&gt;&gt;
+<span class="linenr">2: </span>logOff()
+<span class="linenr">3: </span><span class=
+"org-keyword">const</span> { code } = baseCompile(<span class=
+"org-string">"&lt;div v-html='foo'&gt;&lt;span/&gt;&lt;/div&gt;"</span>, { filename: <span class="org-string">'foo.vue'</span> })
+<span class="linenr">4: </span>logOn()
+<span class="linenr">5: </span>logg(<span class=
+"org-string">'v-html'</span>, code)
+</pre>
+          </div>
+          <pre class="example" id="org6280f80">
+--------- createStructuralDirectiveTransform ---------
+name=for, matches=(n) =&gt; n === name
+--------- createStructuralDirectiveTransform ---------
+name=/^(if|else|else-if)$/, matches=(n) =&gt; name.test(n)
+--------- v-html ---------
+const _Vue = Vue
+
+return function render(_ctx, _cache) {
+  with (_ctx) {
+    const { createElementVNode: _createElementVNode, openBlock: _openBlock, createElementBlock: _createElementBlock } = _Vue
+
+    return (_openBlock(), _createElementBlock("div", null, [
+      _createElementVNode("span")
+    ]))
+  }
+}
 undefined
 </pre>
+          <p>after:</p>
+          <div class="org-src-container">
+            <pre class="src src-js"><span class=
+            "linenr">1: </span>&lt;&lt;compiler-dom&gt;&gt;
+<span class="linenr">2: </span>logOff()
+<span class="linenr">3: </span><span class=
+"org-keyword">const</span> { code } = compile(<span class=
+"org-string">"&lt;div v-html='foo'&gt;&lt;span/&gt;&lt;/div&gt;"</span>, { filename: <span class="org-string">'foo.vue'</span> })
+<span class="linenr">4: </span>logOn()
+<span class="linenr">5: </span>logg(<span class=
+"org-string">'v-html'</span>, code)
+</pre>
+          </div>
+          <pre class="example" id="org159178d">
+--------- createStructuralDirectiveTransform ---------
+name=for, matches=(n) =&gt; n === name
+--------- createStructuralDirectiveTransform ---------
+name=/^(if|else|else-if)$/, matches=(n) =&gt; name.test(n)
+--------- v-html ---------
+const _Vue = Vue
+
+return function render(_ctx, _cache) {
+  with (_ctx) {
+    const { createElementVNode: _createElementVNode, openBlock: _openBlock, createElementBlock: _createElementBlock } = _Vue
+
+    return (_openBlock(), _createElementBlock("div", { innerHTML: foo }, null, 8, ["innerHTML"]))
+  }
+}
+undefined
+</pre>
+          <p>注意看前后的结果， compile-core 阶段是没有对 v-html 进行处理的，且 after 结果中
+          的 <code>&lt;span/&gt;</code> 已经没有了，且增加了 <code>{ innerHTML
+          }</code> 属性。</p>
         </div>
       </div>
-      <div id="outline-container-org40727cc" class="outline-3">
-        <h3 id="org40727cc"><span class=
+      <div id="outline-container-org0500af8" class="outline-3">
+        <h3 id="org0500af8"><span class=
         "section-number-3">3.3.</span> v-text</h3>
         <div class="outline-text-3" id="text-3-3">
           <div class="org-src-container">
-            <pre class="src src-js" id="org10c2393"><span class=
-            "linenr">1: </span><span class=
-            "org-keyword">function</span> <span class=
-            "org-function-name">transformVTextCD</span>() {}
+            <pre class="src src-js" id="org9405a30"><span class=
+            "linenr"> 1: </span><span class=
+            "org-keyword">const</span> <span class=
+            "org-variable-name">transformVText</span> = (dir, node, context) =&gt; {
+<span class="linenr"> 2: </span>  <span class=
+"org-keyword">const</span> { exp, loc } = dir
+<span class="linenr"> 3: </span>  <span class=
+"org-keyword">if</span> (!exp) {
+<span class="linenr"> 4: </span>    logg(<span class=
+"org-string">'v-text no exp'</span>)
+<span class="linenr"> 5: </span>  }
+<span class="linenr"> 6: </span>  <span class=
+"org-keyword">if</span> (node.children.length) {
+<span class="linenr"> 7: </span>    logg(<span class=
+"org-string">'v-text can not have children'</span>)
+<span class=
+"linenr"> 8: </span>    node.children.length = <span class=
+"org-highlight-numbers-number">0</span>
+<span class="linenr"> 9: </span>  }
+<span class="linenr">10: </span>  <span class=
+"org-keyword">return</span> {
+<span class="linenr">11: </span>    props: [
+<span class="linenr">12: </span>      createObjectProperty(
+<span class=
+"linenr">13: </span>        createSimpleExpression(<span class=
+"org-string">`textContent`</span>, <span class=
+"org-constant">true</span>),
+<span class="linenr">14: </span>        exp
+<span class="linenr">15: </span>          ? createCallExpression(
+<span class=
+"linenr">16: </span>              context.helperString(TO_DISPLAY_STRING),
+<span class="linenr">17: </span>              [exp],
+<span class="linenr">18: </span>              loc
+<span class="linenr">19: </span>            )
+<span class=
+"linenr">20: </span>          : createSimpleExpression(<span class=
+"org-string">''</span>, <span class="org-constant">true</span>)
+<span class="linenr">21: </span>      )
+<span class="linenr">22: </span>    ]
+<span class="linenr">23: </span>  }
+<span class="linenr">24: </span>}
 </pre>
           </div>
-          <pre class="example">
+          <p><span style="color:red;">Testing</span></p>
+          <p>before: compiler-core 中也没有对 v-text 指令的处理</p>
+          <div class="org-src-container">
+            <pre class="src src-js"><span class=
+            "linenr">1: </span>&lt;&lt;compiler-core&gt;&gt;
+<span class="linenr">2: </span>logOff()
+<span class="linenr">3: </span><span class=
+"org-keyword">const</span> { code } = baseCompile(<span class=
+"org-string">"&lt;div v-text='foo'&gt;&lt;span/&gt;&lt;/div&gt;"</span>, { filename: <span class="org-string">'foo.vue'</span> })
+<span class="linenr">4: </span>logOn()
+<span class="linenr">5: </span>logg(<span class=
+"org-string">'v-text'</span>, code)
+</pre>
+          </div>
+          <pre class="example" id="orgf06817b">
+--------- createStructuralDirectiveTransform ---------
+name=for, matches=(n) =&gt; n === name
+--------- createStructuralDirectiveTransform ---------
+name=/^(if|else|else-if)$/, matches=(n) =&gt; name.test(n)
+--------- v-text ---------
+const _Vue = Vue
+
+return function render(_ctx, _cache) {
+  with (_ctx) {
+    const { createElementVNode: _createElementVNode, openBlock: _openBlock, createElementBlock: _createElementBlock } = _Vue
+
+    return (_openBlock(), _createElementBlock("div", null, [
+      _createElementVNode("span")
+    ]))
+  }
+}
+undefined
+</pre>
+          <p>after: <code>&lt;span/&gt;</code> 所有子节点都会被删除，增加
+          <code>{ textContent }</code> 属性。</p>
+          <div class="org-src-container">
+            <pre class="src src-js"><span class=
+            "linenr">1: </span>&lt;&lt;compiler-dom&gt;&gt;
+<span class="linenr">2: </span>logOff()
+<span class="linenr">3: </span><span class=
+"org-keyword">const</span> { code } = compile(<span class=
+"org-string">"&lt;div v-text='foo'&gt;&lt;span/&gt;&lt;/div&gt;"</span>, { filename: <span class="org-string">'foo.vue'</span> })
+<span class="linenr">4: </span>logOn()
+<span class="linenr">5: </span>logg(<span class=
+"org-string">'v-text'</span>, code)
+</pre>
+          </div>
+          <pre class="example" id="org9c21bf9">
+--------- createStructuralDirectiveTransform ---------
+name=for, matches=(n) =&gt; n === name
+--------- createStructuralDirectiveTransform ---------
+name=/^(if|else|else-if)$/, matches=(n) =&gt; name.test(n)
+--------- v-text ---------
+const _Vue = Vue
+
+return function render(_ctx, _cache) {
+  with (_ctx) {
+    const { createElementVNode: _createElementVNode, toDisplayString: _toDisplayString, openBlock: _openBlock, createElementBlock: _createElementBlock } = _Vue
+
+    return (_openBlock(), _createElementBlock("div", {
+      textContent: _toDisplayString(foo)
+    }, null, 8, ["textContent"]))
+  }
+}
 undefined
 </pre>
         </div>
       </div>
-      <div id="outline-container-org818eb81" class="outline-3">
-        <h3 id="org818eb81"><span class=
+      <div id="outline-container-orga162cfa" class="outline-3">
+        <h3 id="orga162cfa"><span class=
         "section-number-3">3.4.</span> v-model</h3>
         <div class="outline-text-3" id="text-3-4">
           <div class="org-src-container">
-            <pre class="src src-js" id="org8a8428f"><span class=
-            "linenr">1: </span><span class=
-            "org-keyword">function</span> <span class=
-            "org-function-name">transformModelCD</span>() {}
+            <pre class="src src-js" id="orgce9123d"><span class=
+            "linenr"> 1: </span><span class=
+            "org-keyword">const</span> <span class=
+            "org-variable-name">transformModelCD</span> = (dir, node, context) =&gt; {
+<span class="linenr"> 2: </span>  <span class=
+"org-keyword">const</span> <span class=
+"org-variable-name">baseResult</span> = transformModel(dir, node, context)
+<span class="linenr"> 3: </span>  <span class=
+"org-comment-delimiter">// </span><span class=
+"org-comment">base transform has errors OR component v-model (only need props)</span>
+<span class="linenr"> 4: </span>  <span class=
+"org-keyword">if</span> (!baseResult.props.length || node.tagType === ElementTypes.COMPONENT) {
+<span class="linenr"> 5: </span>    <span class=
+"org-keyword">return</span> baseResult
+<span class="linenr"> 6: </span>  }
+<span class="linenr"> 7: </span>
+<span class="linenr"> 8: </span>  <span class=
+"org-keyword">if</span> (dir.arg) {
+<span class="linenr"> 9: </span>    logg(<span class=
+"org-string">"transfromModelCD - X_V_MODEL_ARG_ON_ELEMENT"</span>)
+<span class="linenr">10: </span>  }
+<span class="linenr">11: </span>
+<span class="linenr">12: </span>  <span class=
+"org-keyword">function</span> <span class=
+"org-function-name">checkDuplicatedValue</span>() {
+<span class="linenr">13: </span>    <span class=
+"org-keyword">const</span> <span class=
+"org-variable-name">value</span> = findProp(node, <span class=
+"org-string">'value'</span>)
+<span class="linenr">14: </span>    <span class=
+"org-keyword">if</span> (value) {
+<span class="linenr">15: </span>      logg(<span class=
+"org-string">"transfromModelCD - X_V_MODEL_UNNECESSARY_VALUE"</span>)
+<span class="linenr">16: </span>    }
+<span class="linenr">17: </span>  }
+<span class="linenr">18: </span>
+<span class="linenr">19: </span>  <span class=
+"org-keyword">const</span> { tag } = node
+<span class="linenr">20: </span>  <span class=
+"org-keyword">const</span> <span class=
+"org-variable-name">isCustomElement</span> = context.isCustomElement(tag)
+<span class="linenr">21: </span>  <span class=
+"org-keyword">if</span> (
+<span class="linenr">22: </span>    tag === <span class=
+"org-string">'input'</span> ||
+<span class="linenr">23: </span>    tag === <span class=
+"org-string">'textarea'</span> ||
+<span class="linenr">24: </span>    tag === <span class=
+"org-string">'select'</span> ||
+<span class="linenr">25: </span>    isCustomElement
+<span class="linenr">26: </span>  ) {
+<span class="linenr">27: </span>    <span class=
+"org-keyword">let</span> <span class=
+"org-variable-name">directiveToUse</span> = V_MODEL_TEXT
+<span class="linenr">28: </span>    <span class=
+"org-keyword">let</span> <span class=
+"org-variable-name">isInvalidType</span> = <span class=
+"org-constant">false</span>
+<span class="linenr">29: </span>    <span class=
+"org-keyword">if</span> (tag === <span class=
+"org-string">'input'</span> || isCustomElement) {
+<span class="linenr">30: </span>      <span class=
+"org-keyword">const</span> <span class=
+"org-variable-name">type</span> = findProp(node, <span class=
+"org-string">`type`</span>)
+<span class="linenr">31: </span>      <span class=
+"org-keyword">if</span> (type) {
+<span class="linenr">32: </span>        <span class=
+"org-keyword">if</span> (type.type === NodeTypes.DIRECTIVE) {
+<span class="linenr">33: </span>          <span class=
+"org-comment-delimiter">// </span><span class=
+"org-comment">:type="foo"</span>
+<span class=
+"linenr">34: </span>          directiveToUse = V_MODEL_DYNAMIC
+<span class="linenr">35: </span>        } <span class=
+"org-keyword">else</span> <span class=
+"org-keyword">if</span> (type.value) {
+<span class="linenr">36: </span>          <span class=
+"org-keyword">switch</span> (type.value.content) {
+<span class="linenr">37: </span>            <span class=
+"org-keyword">case</span> <span class="org-string">'radio'</span>:
+<span class=
+"linenr">38: </span>              directiveToUse = V_MODEL_RADIO
+<span class="linenr">39: </span>              <span class=
+"org-keyword">break</span>
+<span class="linenr">40: </span>            <span class=
+"org-keyword">case</span> <span class=
+"org-string">'checkbox'</span>:
+<span class=
+"linenr">41: </span>              directiveToUse = V_MODEL_CHECKBOX
+<span class="linenr">42: </span>              <span class=
+"org-keyword">break</span>
+<span class="linenr">43: </span>            <span class=
+"org-keyword">case</span> <span class="org-string">'file'</span>:
+<span class=
+"linenr">44: </span>              isInvalidType = <span class=
+"org-constant">true</span>
+<span class="linenr">45: </span>              logg(<span class=
+"org-string">"[DOM]transformModel - X_V_MODEL_ON_FILE_INPUT_ELEMENT"</span>)
+<span class="linenr">46: </span>              <span class=
+"org-keyword">break</span>
+<span class="linenr">47: </span>            <span class=
+"org-keyword">default</span>:
+<span class="linenr">48: </span>              <span class=
+"org-comment-delimiter">// </span><span class=
+"org-comment">text type</span>
+<span class=
+"linenr">49: </span>              __DEV__ &amp;& checkDuplicatedValue()
+<span class="linenr">50: </span>              <span class=
+"org-keyword">break</span>
+<span class="linenr">51: </span>          }
+<span class="linenr">52: </span>        }
+<span class="linenr">53: </span>      } <span class=
+"org-keyword">else</span> <span class=
+"org-keyword">if</span> (hasDynamicKeyVBind(node)) {
+<span class="linenr">54: </span>        <span class=
+"org-comment-delimiter">// </span><span class=
+"org-comment">element has bindings with dynamic keys, which can possibly contain</span>
+<span class="linenr">55: </span>        <span class=
+"org-comment-delimiter">// </span><span class=
+"org-comment">"type".</span>
+<span class=
+"linenr">56: </span>        directiveToUse = V_MODEL_DYNAMIC
+<span class="linenr">57: </span>      } <span class=
+"org-keyword">else</span> {
+<span class="linenr">58: </span>        <span class=
+"org-comment-delimiter">// </span><span class=
+"org-comment">text type</span>
+<span class=
+"linenr">59: </span>        __DEV__ &amp;& checkDuplicatedValue()
+<span class="linenr">60: </span>      }
+<span class="linenr">61: </span>    } <span class=
+"org-keyword">else</span> <span class=
+"org-keyword">if</span> (tag === <span class=
+"org-string">'select'</span>) {
+<span class=
+"linenr">62: </span>      directiveToUse = V_MODEL_SELECT
+<span class="linenr">63: </span>    } <span class=
+"org-keyword">else</span> {
+<span class="linenr">64: </span>      <span class=
+"org-comment-delimiter">// </span><span class=
+"org-comment">textarea</span>
+<span class=
+"linenr">65: </span>      __DEV__ &amp;& checkDuplicatedValue()
+<span class="linenr">66: </span>    }
+<span class="linenr">67: </span>    <span class=
+"org-comment-delimiter">// </span><span class=
+"org-comment">inject runtime directive</span>
+<span class="linenr">68: </span>    <span class=
+"org-comment-delimiter">// </span><span class=
+"org-comment">by returning the helper symbol via needRuntime</span>
+<span class="linenr">69: </span>    <span class=
+"org-comment-delimiter">// </span><span class=
+"org-comment">the import will replaced a resolveDirective call.</span>
+<span class="linenr">70: </span>    <span class=
+"org-keyword">if</span> (!isInvalidType) {
+<span class=
+"linenr">71: </span>      baseResult.needRuntime = context.helper(directiveToUse)
+<span class="linenr">72: </span>    }
+<span class="linenr">73: </span>  } <span class=
+"org-keyword">else</span> {
+<span class="linenr">74: </span>    logg(<span class=
+"org-string">"[DOM]transformModel - X_V_MODEL_ON_INVALID_ELEMENT"</span>)
+<span class="linenr">75: </span>  }
+<span class="linenr">76: </span>
+<span class="linenr">77: </span>  <span class=
+"org-comment-delimiter">// </span><span class=
+"org-comment">native vmodel doesn't need the `modelValue` props since they are also</span>
+<span class="linenr">78: </span>  <span class=
+"org-comment-delimiter">// </span><span class=
+"org-comment">passed to the runtime as `binding.value`. removing it reduces code size.</span>
+<span class=
+"linenr">79: </span>  baseResult.props = baseResult.props.filter(
+<span class="linenr">80: </span>    p =&gt;
+<span class="linenr">81: </span>      !(
+<span class=
+"linenr">82: </span>        p.key.type === NodeTypes.SIMPLE_EXPRESSION &amp;&
+<span class=
+"linenr">83: </span>        p.key.content === <span class=
+"org-string">'modelValue'</span>
+<span class="linenr">84: </span>      )
+<span class="linenr">85: </span>  )
+<span class="linenr">86: </span>
+<span class="linenr">87: </span>  <span class=
+"org-keyword">return</span> baseResult
+<span class="linenr">88: </span>}
 </pre>
           </div>
-          <pre class="example">
+          <ol class="org-ol">
+            <li>只处理 input, textarea, select 文本框标签，或自定义的标签</li>
+            <li>&lt;input&gt; 标签类型分为 radio 和 checkbox 单复选项框处理，不能使用
+            type=’file’ 类型</li>
+            <li>&lt;select&gt; 下拉选项框的处理</li>
+            <li>过滤掉 transform 之后的 <code>{modelValue: value,
+            'onUpdate:value': $event =&gt; value = $event}</code>
+            里面的 <code>modelValue：value</code> 属性，因为在 runtime-core
+            时期的 <a href="#orgf80cd39">withDirectives(</a>)
+            处理里面会被绑定到 value 属性上
+            </li>
+          </ol>
+          <p><span style="color:red;">Testing</span></p>
+          <p>before:</p>
+          <div class="org-src-container">
+            <pre class="src src-js"><span class=
+            "linenr">1: </span>&lt;&lt;compiler-core&gt;&gt;
+<span class="linenr">2: </span>
+<span class="linenr">3: </span>logOff()
+<span class="linenr">4: </span><span class=
+"org-keyword">const</span> { code } = baseCompile(<span class=
+"org-string">"&lt;input type='text' v-model='value' /&gt;"</span>, { filename: <span class="org-string">'foo.vue'</span> })
+<span class="linenr">5: </span>logOn()
+<span class="linenr">6: </span>log(<span class=
+"org-string">'v-model'</span>, code)
+</pre>
+          </div>
+          <pre class="example" id="org8899ad1">
+--------- createStructuralDirectiveTransform ---------
+name=for, matches=(n) =&gt; n === name
+--------- createStructuralDirectiveTransform ---------
+name=/^(if|else|else-if)$/, matches=(n) =&gt; name.test(n)
+[v-model] const _Vue = Vue
+
+return function render(_ctx, _cache) {
+  with (_ctx) {
+    const { openBlock: _openBlock, createElementBlock: _createElementBlock } = _Vue
+
+    return (_openBlock(), _createElementBlock("input", {
+      type: "text",
+      modelValue: value,
+      "onUpdate:modelValue": $event =&gt; ((value) = $event)
+    }, null, 8, ["modelValue", "onUpdate:modelValue"]))
+  }
+}
 undefined
 </pre>
+          <p>after: 多了一层包装 <code>_withDirectives()</code></p>
+          <div class="org-src-container">
+            <pre class="src src-js"><span class=
+            "linenr">1: </span>&lt;&lt;compiler-dom&gt;&gt;
+<span class="linenr">2: </span>
+<span class="linenr">3: </span>logOff()
+<span class="linenr">4: </span><span class=
+"org-keyword">const</span> { code } = compile(<span class=
+"org-string">"&lt;input type='text' v-model='value' /&gt;"</span>, { filename: <span class="org-string">'foo.vue'</span> })
+<span class="linenr">5: </span>logOn()
+<span class="linenr">6: </span>log(<span class=
+"org-string">'v-model'</span>, code)
+</pre>
+          </div>
+          <pre class="example" id="orgd00d1d1">
+--------- createStructuralDirectiveTransform ---------
+name=for, matches=(n) =&gt; n === name
+--------- createStructuralDirectiveTransform ---------
+name=/^(if|else|else-if)$/, matches=(n) =&gt; name.test(n)
+[v-model] const _Vue = Vue
+
+return function render(_ctx, _cache) {
+  with (_ctx) {
+    const { vModelText: _vModelText, withDirectives: _withDirectives, openBlock: _openBlock, createElementBlock: _createElementBlock } = _Vue
+
+    return _withDirectives((_openBlock(), _createElementBlock("input", {
+      type: "text",
+      "onUpdate:modelValue": $event =&gt; ((value) = $event)
+    }, null, 8, ["onUpdate:modelValue"])), [
+      [
+        _vModelText,
+        value
+      ]
+    ])
+  }
+}
+undefined
+</pre>
+          <p>那来看下 <code>_withDirectives()</code> 里面做了什么？</p>
+          <div class="org-src-container">
+            <pre class="src src-js" id="orgf80cd39"><span class=
+            "linenr"> 1: </span><span class=
+            "org-keyword">function</span> <span class=
+            "org-function-name">withDirectives</span>(<span class=
+            "org-variable-name">vnode</span>, <span class=
+            "org-variable-name">directives</span>) {
+<span class="linenr"> 2: </span>  <span class=
+"org-keyword">const</span> <span class=
+"org-variable-name">internalInstance</span> = currentRenderingInstance
+<span class="linenr"> 3: </span>  <span class=
+"org-keyword">if</span> (internalInstance === <span class=
+"org-constant">null</span>) {
+<span class="linenr"> 4: </span>    <span class=
+"org-keyword">return</span> vnode
+<span class="linenr"> 5: </span>  }
+<span class="linenr"> 6: </span>  <span class=
+"org-comment-delimiter">// </span><span class=
+"org-comment">取当前应用实例</span>
+<span class="linenr"> 7: </span>  <span class=
+"org-keyword">const</span> <span class=
+"org-variable-name">instance</span> = getExposeProxy(internalInstance) || internalInstance.proxy
+<span class="linenr"> 8: </span>  <span class=
+"org-keyword">const</span> <span class=
+"org-variable-name">bindings</span> = vnode.dirs || (vnode.dirs = [])
+<span class="linenr"> 9: </span>  <span class=
+"org-keyword">for</span> (<span class=
+"org-keyword">let</span> <span class=
+"org-variable-name">i</span> = <span class=
+"org-highlight-numbers-number">0</span>; i &lt; directives.length; i++) {
+<span class="linenr">10: </span>
+<span class="linenr">11: </span>    <span class=
+"org-keyword">let</span> [dir, value, arg, modifiers = EMPTY_OBJ] = directives[i]
+<span class="linenr">12: </span>    <span class=
+"org-keyword">if</span> (isFunction(dir)) {
+<span class="linenr">13: </span>      dir = {
+<span class="linenr">14: </span>        mounted: dir,
+<span class="linenr">15: </span>        updated: dir
+<span class="linenr">16: </span>      }
+<span class="linenr">17: </span>    }
+<span class="linenr">18: </span>    <span class=
+"org-keyword">if</span> (dir.deep) {
+<span class="linenr">19: </span>      traverse(value)
+<span class="linenr">20: </span>    }
+<span class="linenr">21: </span>    bindings.push({
+<span class="linenr">22: </span>      dir,
+<span class="linenr">23: </span>      instance,
+<span class="linenr">24: </span>      value,
+<span class="linenr">25: </span>      oldValue: <span class=
+"org-keyword">void</span> <span class=
+"org-highlight-numbers-number">0</span>,
+<span class="linenr">26: </span>      arg,
+<span class="linenr">27: </span>      modifiers
+<span class="linenr">28: </span>    })
+<span class="linenr">29: </span>  }
+<span class="linenr">30: </span>  <span class=
+"org-keyword">return</span> vnode
+<span class="linenr">31: </span>}
+</pre>
+          </div>
         </div>
       </div>
-      <div id="outline-container-orga6b7663" class="outline-3">
-        <h3 id="orga6b7663"><span class=
+      <div id="outline-container-org12d6d6f" class="outline-3">
+        <h3 id="org12d6d6f"><span class=
         "section-number-3">3.5.</span> v-on</h3>
         <div class="outline-text-3" id="text-3-5">
           <div class="org-src-container">
-            <pre class="src src-js" id="org29a5c0c"><span class=
-            "linenr">1: </span><span class=
-            "org-keyword">function</span> <span class=
-            "org-function-name">transformOnCD</span>() {}
+            <pre class="src src-js" id="orgc27f710"><span class=
+            "linenr">  1: </span><span class=
+            "org-keyword">const</span> <span class=
+            "org-variable-name">isEventOptionModifier</span> = <span class=
+            "org-comment-delimiter">/*</span><span class=
+            "org-comment">#__PURE__</span><span class=
+            "org-comment-delimiter">*/</span> makeMap(<span class=
+            "org-string">`passive,once,capture`</span>)
+<span class="linenr">  2: </span><span class=
+"org-keyword">const</span> <span class=
+"org-variable-name">isNonKeyModifier</span> = <span class=
+"org-comment-delimiter">/*</span><span class=
+"org-comment">#__PURE__</span><span class=
+"org-comment-delimiter">*/</span> makeMap(
+<span class="linenr">  3: </span>  <span class=
+"org-comment-delimiter">// </span><span class=
+"org-comment">event propagation management</span>
+<span class="linenr">  4: </span>  <span class=
+"org-string">`stop,prevent,self,`</span> +
+<span class="linenr">  5: </span>    <span class=
+"org-comment-delimiter">// </span><span class=
+"org-comment">system modifiers + exact</span>
+<span class="linenr">  6: </span>    <span class=
+"org-string">`ctrl,shift,alt,meta,exact,`</span> +
+<span class="linenr">  7: </span>    <span class=
+"org-comment-delimiter">// </span><span class=
+"org-comment">mouse</span>
+<span class="linenr">  8: </span>    <span class=
+"org-string">`middle`</span>
+<span class="linenr">  9: </span>)
+<span class="linenr"> 10: </span><span class=
+"org-comment-delimiter">// </span><span class=
+"org-comment">left & right could be mouse or key modifiers based on event type</span>
+<span class="linenr"> 11: </span><span class=
+"org-keyword">const</span> <span class=
+"org-variable-name">maybeKeyModifier</span> = <span class=
+"org-comment-delimiter">/*</span><span class=
+"org-comment">#__PURE__</span><span class=
+"org-comment-delimiter">*/</span> makeMap(<span class=
+"org-string">'left,right'</span>)
+<span class="linenr"> 12: </span><span class=
+"org-keyword">const</span> <span class=
+"org-variable-name">isKeyboardEvent</span> = <span class=
+"org-comment-delimiter">/*</span><span class=
+"org-comment">#__PURE__</span><span class=
+"org-comment-delimiter">*/</span> makeMap(
+<span class="linenr"> 13: </span>  <span class=
+"org-string">`onkeyup,onkeydown,onkeypress`</span>,
+<span class="linenr"> 14: </span>  <span class=
+"org-constant">true</span>
+<span class="linenr"> 15: </span>)
+<span class="linenr"> 16: </span>
+<span class="linenr"> 17: </span><span class=
+"org-comment-delimiter">// </span><span class=
+"org-comment">将修饰符分类</span>
+<span class="linenr"> 18: </span><span class=
+"org-keyword">const</span> <span class=
+"org-variable-name">resolveModifiers</span> = (key, modifiers, context, loc) =&gt; {
+<span class="linenr"> 19: </span>  <span class=
+"org-keyword">const</span> <span class=
+"org-variable-name">keyModifiers</span> = []
+<span class="linenr"> 20: </span>  <span class=
+"org-keyword">const</span> <span class=
+"org-variable-name">nonKeyModifiers</span> = []
+<span class="linenr"> 21: </span>  <span class=
+"org-keyword">const</span> <span class=
+"org-variable-name">eventOptionModifiers</span> = []
+<span class="linenr"> 22: </span>
+<span class="linenr"> 23: </span>  <span class=
+"org-keyword">for</span> (<span class=
+"org-keyword">let</span> <span class=
+"org-variable-name">i</span> = <span class=
+"org-highlight-numbers-number">0</span>; i &lt; modifiers.length; i++) {
+<span class="linenr"> 24: </span>    <span class=
+"org-keyword">const</span> <span class=
+"org-variable-name">modifier</span> = modifiers[i]
+<span class="linenr"> 25: </span>
+<span class="linenr"> 26: </span>    <span class=
+"org-keyword">if</span> (isEventOptionModifier(modifier)) {
+<span class="linenr"> 27: </span>      <span class=
+"org-comment-delimiter">// </span><span class=
+"org-comment">eventOptionModifiers: modifiers for addEventListener() options,</span>
+<span class="linenr"> 28: </span>      <span class=
+"org-comment-delimiter">// </span><span class=
+"org-comment">e.g. .passive & .capture</span>
+<span class=
+"linenr"> 29: </span>      eventOptionModifiers.push(modifier)
+<span class="linenr"> 30: </span>    } <span class=
+"org-keyword">else</span> {
+<span class="linenr"> 31: </span>      <span class=
+"org-comment-delimiter">// </span><span class=
+"org-comment">runtimeModifiers: modifiers that needs runtime guards</span>
+<span class="linenr"> 32: </span>      <span class=
+"org-keyword">if</span> (maybeKeyModifier(modifier)) {
+<span class="linenr"> 33: </span>        <span class=
+"org-keyword">if</span> (isStaticExp(key)) {
+<span class="linenr"> 34: </span>          <span class=
+"org-keyword">if</span> (isKeyboardEvent(key.content)) {
+<span class=
+"linenr"> 35: </span>            keyModifiers.push(modifier)
+<span class="linenr"> 36: </span>          } <span class=
+"org-keyword">else</span> {
+<span class=
+"linenr"> 37: </span>            nonKeyModifiers.push(modifier)
+<span class="linenr"> 38: </span>          }
+<span class="linenr"> 39: </span>        } <span class=
+"org-keyword">else</span> {
+<span class=
+"linenr"> 40: </span>          keyModifiers.push(modifier)
+<span class=
+"linenr"> 41: </span>          nonKeyModifiers.push(modifier)
+<span class="linenr"> 42: </span>        }
+<span class="linenr"> 43: </span>      } <span class=
+"org-keyword">else</span> {
+<span class="linenr"> 44: </span>        <span class=
+"org-keyword">if</span> (isNonKeyModifier(modifier)) {
+<span class=
+"linenr"> 45: </span>          nonKeyModifiers.push(modifier)
+<span class="linenr"> 46: </span>        } <span class=
+"org-keyword">else</span> {
+<span class=
+"linenr"> 47: </span>          keyModifiers.push(modifier)
+<span class="linenr"> 48: </span>        }
+<span class="linenr"> 49: </span>      }
+<span class="linenr"> 50: </span>    }
+<span class="linenr"> 51: </span>  }
+<span class="linenr"> 52: </span>
+<span class="linenr"> 53: </span>  <span class=
+"org-keyword">return</span> {
+<span class="linenr"> 54: </span>    keyModifiers,
+<span class="linenr"> 55: </span>    nonKeyModifiers,
+<span class="linenr"> 56: </span>    eventOptionModifiers
+<span class="linenr"> 57: </span>  }
+<span class="linenr"> 58: </span>}
+<span class="linenr"> 59: </span>
+<span class="linenr"> 60: </span><span class=
+"org-comment-delimiter">// </span><span class=
+"org-comment">原生 click 事件</span>
+<span class="linenr"> 61: </span><span class=
+"org-keyword">const</span> <span class=
+"org-variable-name">transformClick</span> = (key, event) =&gt; {
+<span class="linenr"> 62: </span>  <span class=
+"org-keyword">const</span> <span class=
+"org-variable-name">isStaticClick</span> =
+<span class=
+"linenr"> 63: </span>    isStaticExp(key) &amp;& key.content.toLowerCase() === <span class="org-string">'onclick'</span>
+<span class="linenr"> 64: </span>  <span class=
+"org-keyword">return</span> isStaticClick
+<span class=
+"linenr"> 65: </span>    ? createSimpleExpression(event, <span class="org-constant">true</span>)
+<span class=
+"linenr"> 66: </span>    : key.type !== NodeTypes.SIMPLE_EXPRESSION
+<span class="linenr"> 67: </span>    ? createCompoundExpression([
+<span class="linenr"> 68: </span>        <span class=
+"org-string">`(`</span>,
+<span class="linenr"> 69: </span>        key,
+<span class="linenr"> 70: </span>        <span class=
+"org-string">`) === "onClick" ? "${event}" : (`</span>,
+<span class="linenr"> 71: </span>        key,
+<span class="linenr"> 72: </span>        <span class=
+"org-string">`)`</span>
+<span class="linenr"> 73: </span>      ])
+<span class="linenr"> 74: </span>    : key
+<span class="linenr"> 75: </span>}
+<span class="linenr"> 76: </span>
+<span class="linenr"> 77: </span><span class=
+"org-keyword">const</span> <span class=
+"org-variable-name">transformOnCD</span> = (dir, node, context) =&gt; {
+<span class="linenr"> 78: </span>  <span class=
+"org-keyword">return</span> transformOn(dir, node, context, baseResult =&gt; {
+<span class="linenr"> 79: </span>    <span class=
+"org-keyword">const</span> { modifiers } = dir
+<span class="linenr"> 80: </span>    <span class=
+"org-keyword">if</span> (!modifiers.length) <span class=
+"org-keyword">return</span> baseResult
+<span class="linenr"> 81: </span>
+<span class="linenr"> 82: </span>    <span class=
+"org-keyword">let</span> { key, value: handlerExp } = baseResult.props[<span class="org-highlight-numbers-number">0</span>]
+<span class="linenr"> 83: </span>    <span class=
+"org-keyword">const</span> { keyModifiers, nonKeyModifiers, eventOptionModifiers } =
+<span class=
+"linenr"> 84: </span>      resolveModifiers(key, modifiers, context, dir.loc)
+<span class="linenr"> 85: </span>
+<span class="linenr"> 86: </span>    <span class=
+"org-comment-delimiter">// </span><span class=
+"org-comment">normalize click.right and click.middle since they don't actually fire</span>
+<span id="coderef-transformOnCD-right" class=
+"coderef-off"><span class="linenr"> 87: </span>    <span class=
+"org-keyword">if</span> (nonKeyModifiers.includes(<span class=
+"org-string">'right'</span>)) {</span>
+<span class=
+"linenr"> 88: </span>      key = transformClick(key, <span class=
+"org-string">`onContextmenu`</span>)
+<span class="linenr"> 89: </span>    }
+<span class="linenr"> 90: </span>    <span class=
+"org-keyword">if</span> (nonKeyModifiers.includes(<span class=
+"org-string">'middle'</span>)) {
+<span class=
+"linenr"> 91: </span>      key = transformClick(key, <span class=
+"org-string">`onMouseup`</span>)
+<span class="linenr"> 92: </span>    }
+<span class="linenr"> 93: </span>
+<span class="linenr"> 94: </span>    <span class=
+"org-keyword">if</span> (nonKeyModifiers.length) {
+<span class=
+"linenr"> 95: </span>      handlerExp = createCallExpression(context.helper(V_ON_WITH_MODIFIERS), [
+<span class="linenr"> 96: </span>        handlerExp,
+<span class=
+"linenr"> 97: </span>        JSON.stringify(nonKeyModifiers)
+<span class="linenr"> 98: </span>      ])
+<span class="linenr"> 99: </span>    }
+<span class="linenr">100: </span>
+<span class="linenr">101: </span>    <span class=
+"org-keyword">if</span> (
+<span class="linenr">102: </span>      keyModifiers.length &amp;&
+<span class="linenr">103: </span>      <span class=
+"org-comment-delimiter">// </span><span class=
+"org-comment">if event name is dynamic, always wrap with keys guard</span>
+<span class=
+"linenr">104: </span>      (!isStaticExp(key) || isKeyboardEvent(key.content))
+<span class="linenr">105: </span>    ) {
+<span class=
+"linenr">106: </span>      handlerExp = createCallExpression(context.helper(V_ON_WITH_KEYS), [
+<span class="linenr">107: </span>        handlerExp,
+<span class=
+"linenr">108: </span>        JSON.stringify(keyModifiers)
+<span class="linenr">109: </span>      ])
+<span class="linenr">110: </span>    }
+<span class="linenr">111: </span>
+<span class="linenr">112: </span>    <span class=
+"org-keyword">if</span> (eventOptionModifiers.length) {
+<span class="linenr">113: </span>      <span class=
+"org-keyword">const</span> <span class=
+"org-variable-name">modifierPostfix</span> = eventOptionModifiers.map(capitalize).join(<span class="org-string">''</span>)
+<span class="linenr">114: </span>      key = isStaticExp(key)
+<span class=
+"linenr">115: </span>        ? createSimpleExpression(<span class=
+"org-string">`${key.content}${modifierPostfix}`</span>, <span class="org-constant">true</span>)
+<span class=
+"linenr">116: </span>        : createCompoundExpression([<span class="org-string">`(`</span>, key, <span class="org-string">`) + "${modifierPostfix}"`</span>])
+<span class="linenr">117: </span>    }
+<span class="linenr">118: </span>
+<span class="linenr">119: </span>    <span class=
+"org-keyword">return</span> {
+<span class=
+"linenr">120: </span>      props: [createObjectProperty(key, handlerExp)]
+<span class="linenr">121: </span>    }
+<span class="linenr">122: </span>  })
+<span class="linenr">123: </span>}
 </pre>
           </div>
-          <pre class="example">
+          <p><span style="color:red;">Testing</span></p>
+          <p>before: 注意看结果会发现修饰符并没有出现在 render 函数中</p>
+          <div class="org-src-container">
+            <pre class="src src-js"><span class=
+            "linenr">1: </span>&lt;&lt;compiler-core&gt;&gt;
+<span class="linenr">2: </span>
+<span class="linenr">3: </span>logOff()
+<span class="linenr">4: </span><span class=
+"org-keyword">const</span> { code } = baseCompile(<span class=
+"org-string">`&lt;div @click.enter.passive="handleClick" /&gt;`</span>, { filename: <span class="org-string">'foo.vue'</span> })
+<span class="linenr">5: </span>logOn()
+<span class="linenr">6: </span>log(<span class=
+"org-string">'onclick'</span>, code)
+</pre>
+          </div>
+          <pre class="example" id="org78260f5">
+--------- createStructuralDirectiveTransform ---------
+name=for, matches=(n) =&gt; n === name
+--------- createStructuralDirectiveTransform ---------
+name=/^(if|else|else-if)$/, matches=(n) =&gt; name.test(n)
+[onclick] const _Vue = Vue
+
+return function render(_ctx, _cache) {
+  with (_ctx) {
+    const { openBlock: _openBlock, createElementBlock: _createElementBlock } = _Vue
+
+    return (_openBlock(), _createElementBlock("div", { onClick: handleClick }, null, 8, ["onClick"]))
+  }
+}
 undefined
 </pre>
+          <p>after:</p>
+          <div class="org-src-container">
+            <pre class="src src-js"><span class=
+            "linenr">1: </span>&lt;&lt;compiler-dom&gt;&gt;
+<span class="linenr">2: </span>
+<span class="linenr">3: </span>logOff()
+<span class="linenr">4: </span><span class=
+"org-keyword">const</span> { code } = compile(<span class=
+"org-string">`&lt;div @click.right.passive="handleClick" /&gt;`</span>, { filename: <span class="org-string">'foo.vue'</span> })
+<span class="linenr">5: </span>logOn()
+<span class="linenr">6: </span>log(<span class=
+"org-string">'onclick'</span>, code)
+</pre>
+          </div>
+          <pre class="example" id="orgd0cc721">
+--------- createStructuralDirectiveTransform ---------
+name=for, matches=(n) =&gt; n === name
+--------- createStructuralDirectiveTransform ---------
+name=/^(if|else|else-if)$/, matches=(n) =&gt; name.test(n)
+[onclick] const _Vue = Vue
+
+return function render(_ctx, _cache) {
+  with (_ctx) {
+    const { withModifiers: _withModifiers, openBlock: _openBlock, createElementBlock: _createElementBlock } = _Vue
+
+    return (_openBlock(), _createElementBlock("div", {
+      onContextmenuPassive: _withModifiers(handleClick, ["right"])
+    }, null, 40, ["onContextmenuPassive"]))
+  }
+}
+undefined
+</pre>
+          <ol class="org-ol">
+            <li>right 修饰符下的 click 事件被转成了 <code>onContextmenu</code>
+            右键点击事件</li>
+            <li>
+              <p>passive 修饰符直接被追加到了事件 key 后面
+              <code>onContextmenuPassive</code>, 这也是 vue 中
+              对修饰符的处理方式(如： <code>@click.right.once</code> =&gt;
+              <code>onContextmenuOnce</code>)</p>
+              <p>参考文</p>
+            </li>
+          </ol>
+          <div style=
+          "padding: 1em; background-color: #CCFFCC;border-radius: 15px; font-size: 0.9em; box-shadow: 0.05em 0.1em 5px 0.01em #00000057;">
+            <h3>小结</h3>
+            <p>修饰符有三类：</p>
+            <ol class="org-ol">
+              <li>
+                <p>事件选项<kbd style="">passive,once,capture</kbd></p>
+                <p><a href=
+                "https://segmentfault.com/a/1190000017247263">passive的作用和原理
+                - SegmentFault 思否</a></p>
+                <p><a href=
+                "https://blog.techbridge.cc/2017/07/15/javascript-event-propagation/">
+                DOM 的事件傳遞機制：捕獲與冒泡</a></p>
+              </li>
+              <li>冒泡相关 <kbd style="">stop,prevent,self</kbd>, 系统组合键
+              <kbd style="">ctrl,shift,alt,meta,exact</kbd>, 鼠 标按键
+              <kbd style="">middle</kbd></li>
+              <li><kbd style="">left, right</kbd>
+              可能是鼠标也可以是键盘上的左右键</li>
+            </ol>
+            <p>修饰符影响事件类型：</p>
+            <ol class="org-ol">
+              <li>click.right 转成右键菜单键
+              <code>onContextmenu</code></li>
+              <li>click.middle 转成鼠标中键 <code>onMouseUp</code></li>
+            </ol>
+          </div>
         </div>
       </div>
-      <div id="outline-container-org81e37b2" class="outline-3">
-        <h3 id="org81e37b2"><span class=
+      <div id="outline-container-orgbf641c9" class="outline-3">
+        <h3 id="orgbf641c9"><span class=
         "section-number-3">3.6.</span> v-show</h3>
         <div class="outline-text-3" id="text-3-6">
           <div class="org-src-container">
-            <pre class="src src-js" id="org7a2cb2b"><span class=
+            <pre class="src src-js" id="org39b8ff9"><span class=
             "linenr">1: </span><span class=
             "org-keyword">function</span> <span class=
             "org-function-name">transformShowCD</span>() {}
 </pre>
           </div>
-          <pre class="example">
-undefined
-</pre>
         </div>
       </div>
-      <div id="outline-container-org0f5c07b" class="outline-3">
-        <h3 id="org0f5c07b"><span class=
+      <div id="outline-container-orge543cd6" class="outline-3">
+        <h3 id="orge543cd6"><span class=
         "section-number-3">3.7.</span> stringifyStatic</h3>
         <div class="outline-text-3" id="text-3-7">
           <div class="org-src-container">
-            <pre class="src src-js" id="org557aa96"><span class=
+            <pre class="src src-js" id="orgfd90b5b"><span class=
             "linenr">1: </span><span class=
             "org-keyword">function</span> <span class=
             "org-function-name">stringifyStatic</span>() {}
 </pre>
           </div>
-          <pre class="example">
-undefined
-</pre>
         </div>
       </div>
     </div>
-    <div id="outline-container-orga0168d3" class="outline-2">
-      <h2 id="orga0168d3"><span class="section-number-2">4.</span>
+    <div id="outline-container-org6dcc6a9" class="outline-2">
+      <h2 id="org6dcc6a9"><span class="section-number-2">4.</span>
       compile()</h2>
       <div class="outline-text-2" id="text-4">
         <div class="org-src-container">
-          <pre class="src src-js" id="orgf9bc0d7"><span class=
-          "linenr"> 1: </span>&lt;&lt;DOMDirectiveTransforms&gt;&gt;
-<span class="linenr"> 2: </span>&lt;&lt;DOMNodeTransforms&gt;&gt;
-<span class="linenr"> 3: </span>
-<span class="linenr"> 4: </span><span class=
-"org-keyword">function</span> <span class=
-"org-function-name">compile</span>(<span class=
-"org-variable-name">template</span>, <span class=
-"org-variable-name">options</span> = {}) {
-<span class="linenr"> 5: </span>  <span class=
+          <pre class="src src-js" id="org6b54c79"><span class=
+          "linenr"> 1: </span><span class=
+          "org-keyword">function</span> <span class=
+          "org-function-name">compile</span>(<span class=
+          "org-variable-name">template</span>, <span class=
+          "org-variable-name">options</span> = {}) {
+<span class="linenr"> 2: </span>  <span class=
 "org-keyword">return</span> baseCompile(
-<span class="linenr"> 6: </span>    template,
+<span class="linenr"> 3: </span>    template,
 <span class=
-"linenr"> 7: </span>    extend({}, parserOptions, options, {
-<span class="linenr"> 8: </span>      nodeTransforms: [
-<span class="linenr"> 9: </span>        <span class=
+"linenr"> 4: </span>    extend({}, parserOptions, options, {
+<span class="linenr"> 5: </span>      nodeTransforms: [
+<span class="linenr"> 6: </span>        <span class=
 "org-comment-delimiter">// </span><span class=
 "org-comment">ignore &lt;script&gt; and &lt;tag&gt;</span>
-<span class="linenr">10: </span>        <span class=
+<span class="linenr"> 7: </span>        <span class=
 "org-comment-delimiter">// </span><span class=
 "org-comment">this is not put inside DOMNodeTransforms because that list is used</span>
-<span class="linenr">11: </span>        <span class=
+<span class="linenr"> 8: </span>        <span class=
 "org-comment-delimiter">// </span><span class=
 "org-comment">by compiler-ssr to generate vnode fallback branches</span>
-<span class="linenr">12: </span>        ignoreSideEffectTags,
-<span class="linenr">13: </span>        ...DOMNodeTransforms,
+<span class="linenr"> 9: </span>        ignoreSideEffectTags,
+<span class="linenr">10: </span>        ...DOMNodeTransforms,
 <span class=
-"linenr">14: </span>        ...(options.nodeTransforms || [])
-<span class="linenr">15: </span>      ],
-<span class="linenr">16: </span>      directiveTransforms: extend(
-<span class="linenr">17: </span>        {},
-<span class="linenr">18: </span>        DOMDirectiveTransforms,
+"linenr">11: </span>        ...(options.nodeTransforms || [])
+<span class="linenr">12: </span>      ],
+<span class="linenr">13: </span>      directiveTransforms: extend(
+<span class="linenr">14: </span>        {},
+<span class="linenr">15: </span>        DOMDirectiveTransforms,
 <span class=
-"linenr">19: </span>        options.directiveTransforms || {}
-<span class="linenr">20: </span>      ),
+"linenr">16: </span>        options.directiveTransforms || {}
+<span class="linenr">17: </span>      ),
 <span class=
-"linenr">21: </span>      transformHoist: __BROWSER__ ? <span class="org-constant">null</span> : stringifyStatic
-<span class="linenr">22: </span>    })
-<span class="linenr">23: </span>  )
-<span class="linenr">24: </span>}
+"linenr">18: </span>      transformHoist: __BROWSER__ ? <span class="org-constant">null</span> : stringifyStatic
+<span class="linenr">19: </span>    })
+<span class="linenr">20: </span>  )
+<span class="linenr">21: </span>}
 </pre>
         </div>
       </div>
     </div>
-    <div id="outline-container-org2c4a086" class="outline-2">
-      <h2 id="org2c4a086"><span class="section-number-2">5.</span>
+    <div id="outline-container-org8c99c06" class="outline-2">
+      <h2 id="org8c99c06"><span class="section-number-2">5.</span>
       parse</h2>
       <div class="outline-text-2" id="text-5">
         <div class="org-src-container">
-          <pre class="src src-js" id="org36f5523"><span class=
+          <pre class="src src-js" id="org93a0049"><span class=
           "linenr">1: </span><span class=
           "org-keyword">function</span> <span class=
           "org-function-name">parse</span>(<span class=
@@ -20448,15 +22044,12 @@ undefined
 <span class="linenr">3: </span>}
 </pre>
         </div>
-        <pre class="example">
-undefined
-</pre>
       </div>
     </div>
   </div>
   <div id="postamble" class="status">
     <p class="author">Author: Zhicheng Lee</p>
-    <p class="date">Created: 2022-04-27 Wed 15:32</p>
+    <p class="date">Created: 2022-04-27 Wed 18:30</p>
   </div>
 </body>
 </html>
