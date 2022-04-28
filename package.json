@@ -36,6 +36,7 @@
   "dependencies": {
     "@element-plus/icons-vue": "^1.1.1",
     "lodash": "^4.17.21",
-    "vue": "^3.2.31"
+    "vue": "^3.2.31",
+    "vue-json-viewer": "3"
   }
 }

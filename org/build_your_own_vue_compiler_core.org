@@ -8959,17 +8959,17 @@ function _walk(
       if (isComponent) {
         context.scopes.vSlot++
       }
-      walk(child, context)
+      _walk(child, context)
       if (isComponent) {
         context.scopes.vSlot--
       }
     } else if (child.type === NodeTypes.FOR) {
       // Do not hoist v-for single child because it has to be a block
-      walk(child, context, child.children.length === 1)
+      _walk(child, context, child.children.length === 1)
     } else if (child.type === NodeTypes.IF) {
       for (let i = 0; i < child.branches.length; i++) {
         // Do not hoist v-if single child because it has to be a block
-        walk(
+        _walk(
           child.branches[i],
           context,
           child.branches[i].children.length === 1
@@ -8979,6 +8979,7 @@ function _walk(
   }
 
   if (hoistedCount && context.transformHoist) {
+    logg(`hoist walk -> transformHoist, hoistedCount = ${hoistedCount}`)
     context.transformHoist(children, context, node)
   }
 
@@ -11084,7 +11085,7 @@ undefined
 全部代码：
 
 #+html: <br>
-#+width:100px;height:100pxbegin_details baseCompile :title-color red
+#+begin_details baseCompile :title-color red
 #+begin_src js -n -r :noweb yes :tangle "~/github/mine/blog.cheng92.com/assets/tests/compiler-core.js"
 <<baseCompile>>
 #+end_src
