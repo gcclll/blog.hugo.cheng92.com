@@ -9,6 +9,10 @@ import config from '../config'
 
 export default function loadSearchApp() {
   const current = _.cloneDeep(cached.current)
+  const id = config.isHome ? '#vue-toc' : '#search'
+
+  const ele = document.getElementById(id.replace(/^#/, ''))
+  if (!ele) return
 
   Vue.createApp({
     template: `
@@ -66,5 +70,5 @@ export default function loadSearchApp() {
     }
   })
     .use(ElementPlus)
-    .mount(config.isHome ? '#vue-toc' : '#search')
+    .mount(id)
 }

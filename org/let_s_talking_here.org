@@ -5,6 +5,7 @@
 #+HUGO_SLUG: let_s_talking_here
 #+PROPERTY: header-args:js :exports both
 #+PROPERTY: header-args :noweb no-export
+#+HTML_HEAD: <script>window.isHomeLike=true</script>
 #+HTML_HEAD: <meta name="createdAt" content="2099-09-09 09:09:09"/>
 #+TITLE: Let's talking here
 <badge: GCCLL | Homepage | green | / | gnu-emacs | tinder>
