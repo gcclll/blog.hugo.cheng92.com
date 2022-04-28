@@ -1,0 +1,17 @@
+:PROPERTIES:
+:ID:       24104ef5-bb8e-4bc3-8a61-3fc2e5be34a3
+:END:
+#+SETUPFILE:~/.gclrc/org/hugo_setup.org
+#+HUGO_SLUG: build_your_own_vue_compiler_sfc
+#+HTML_HEAD: <meta name="category" content="vue"/>
+#+HTML_HEAD: <meta name="tags" content="compiler-sfc"/>
+#+HTML_HEAD: <meta name="createdAt" content="2022-04-28 16:19:09"/>
+#+PROPERTY: header-args:js :exports both
+#+PROPERTY: header-args :noweb no-export
+#+TITLE: build your own vue compiler-sfc
+<badge: GCCLL | Homepage | green | / | gnu-emacs | tinder>
+
+* COMMENT Local Variables       :ARCHIVE:
+# Local Variables:
+# after-save-hook: gcl/org-html-export-to-html
+# End:

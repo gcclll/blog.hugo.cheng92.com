@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <!-- 2022-04-28 Thu 15:39 -->
+  <!-- 2022-04-28 Thu 16:22 -->
   <meta charset="utf-8">
   <meta name="viewport" content=
   "width=device-width, initial-scale=1">
@@ -290,45 +290,45 @@
       <div id="text-table-of-contents" role="doc-toc">
         <ul>
           <li>
-            <a href="#org9ec6a00">1. Global Variables</a>
+            <a href="#org1cae9df">1. Global Variables</a>
           </li>
           <li>
-            <a href="#org85c93bb">2. APIs</a>
+            <a href="#org505c740">2. APIs</a>
           </li>
           <li>
-            <a href="#org87d417b">3. transforms</a>
+            <a href="#org77750ed">3. transforms</a>
             <ul>
               <li>
-                <a href="#org180c027">3.1. style</a>
+                <a href="#org50f549b">3.1. style</a>
               </li>
               <li>
-                <a href="#org4f251d9">3.2. v-html</a>
+                <a href="#orgc0d81f5">3.2. v-html</a>
               </li>
               <li>
-                <a href="#orgd6ce921">3.3. v-text</a>
+                <a href="#org4ceab48">3.3. v-text</a>
               </li>
               <li>
-                <a href="#orge900500">3.4. v-model</a>
+                <a href="#orga64bfaf">3.4. v-model</a>
               </li>
               <li>
-                <a href="#org5e52797">3.5. v-on</a>
+                <a href="#orgffcabfb">3.5. v-on</a>
               </li>
               <li>
-                <a href="#orgbde53a4">3.6. v-show</a>
+                <a href="#org5869c94">3.6. v-show</a>
               </li>
               <li>
-                <a href="#orgb03c54d">3.7. stringifyStatic</a>
+                <a href="#org7580104">3.7. stringifyStatic</a>
               </li>
             </ul>
           </li>
           <li>
-            <a href="#orga4b3c1a">4. compile()</a>
+            <a href="#orge67060a">4. compile()</a>
           </li>
           <li>
-            <a href="#orgfec0551">5. parse</a>
+            <a href="#org7ceb604">5. parse</a>
           </li>
           <li>
-            <a href="#orgf2acf84">6. testing</a>
+            <a href="#org969c71d">6. testing</a>
           </li>
         </ul>
       </div>
@@ -341,7 +341,7 @@
       <p><a href=
       "https://www.cheng92.com/vue/vue-mind-map-compiler-dom/">Vue3
       源码头脑风暴之 4 ☞compiler-dom - 若叶知秋</a></p>
-      <p>文章最后有交互式的<a href="#org8d96bab">测试方法</a>，可输入想看的模板得到对应的
+      <p>文章最后有交互式的<a href="#orgc732622">测试方法</a>，可输入想看的模板得到对应的
       render 函数和 AST 。</p>
     </div><br>
     <details class="code-details" style=
@@ -354,7 +354,7 @@
       "https://blog.cheng92.com/posts/build_your_own_vue_compiler_core.html">
       build your own vue compiler-core</a></p>
       <div class="org-src-container">
-        <pre class="src src-js" id="orgf5ee14f"><span class=
+        <pre class="src src-js" id="orgdbf6702"><span class=
         "linenr">   1: </span><span class=
         "org-keyword">let</span> <span class=
         "org-variable-name">__BROWSER__</span> = <span class=
@@ -14329,11 +14329,9 @@
 <span class="linenr">6937: </span>}
 </pre>
       </div>
-      <p>##include: ../assets/tests/compiler-core.js src js -n
-      -r</p>
     </details>
-    <div id="outline-container-org9ec6a00" class="outline-2">
-      <h2 id="org9ec6a00"><span class="section-number-2">1.</span>
+    <div id="outline-container-org1cae9df" class="outline-2">
+      <h2 id="org1cae9df"><span class="section-number-2">1.</span>
       Global Variables</h2>
       <div class="outline-text-2" id="text-1">
         <br>
@@ -14344,7 +14342,7 @@
             "green">global variables</font></strong>
           </summary>
           <div class="org-src-container">
-            <pre class="src src-js" id="org7ca3cba"><span class=
+            <pre class="src src-js" id="org71e8d07"><span class=
             "linenr">  1: </span>&lt;&lt;namedChars&gt;&gt;
 <span class="linenr">  2: </span>&lt;&lt;helpers-cd&gt;&gt;
 <span class="linenr">  3: </span>&lt;&lt;dom-attrs&gt;&gt;
@@ -14627,7 +14625,7 @@
             "green">html-tags</font></strong>
           </summary>
           <div class="org-src-container">
-            <pre class="src src-js" id="orgbc961da"><span class=
+            <pre class="src src-js" id="orgaef1349"><span class=
             "linenr"> 1: </span><span class=
             "org-comment-delimiter">// </span><span class=
             "org-comment">https://developer.mozilla.org/en-US/docs/Web/HTML/Element</span>
@@ -14721,7 +14719,7 @@
             "green">helpers-cd</font></strong>
           </summary>
           <div class="org-src-container">
-            <pre class="src src-js" id="org6c774bc"><span class=
+            <pre class="src src-js" id="org27118d0"><span class=
             "linenr"> 1: </span>
 <span class="linenr"> 2: </span><span class=
 "org-keyword">const</span> <span class=
@@ -14791,7 +14789,7 @@
             "green">namedChars</font></strong>
           </summary>
           <div class="org-src-container">
-            <pre class="src src-js" id="org11b8d08"><span class=
+            <pre class="src src-js" id="orgc9e0470"><span class=
             "linenr">   1: </span><span class=
             "org-keyword">const</span> <span class=
             "org-variable-name">namedCharacterReferences</span> = {
@@ -20201,7 +20199,7 @@
             "green">dom-attrs</font></strong>
           </summary>
           <div class="org-src-container">
-            <pre class="src src-js" id="org59c81ea"><span class=
+            <pre class="src src-js" id="org80e4dfe"><span class=
             "linenr">  1: </span>
 <span class="linenr">  2: </span><span class="org-doc">/**</span>
 <span class="linenr">  3: </span><span class=
@@ -20489,7 +20487,7 @@
             "green">normalizeProp</font></strong>
           </summary>
           <div class="org-src-container">
-            <pre class="src src-js" id="orgf174da1"><span class=
+            <pre class="src src-js" id="orge5db715"><span class=
             "linenr"> 1: </span>
 <span id="coderef-normalizeStyle" class="coderef-off"><span class=
 "linenr"> 2: </span><span class=
@@ -20698,7 +20696,7 @@
             "green">escapeHtml</font></strong>
           </summary>
           <div class="org-src-container">
-            <pre class="src src-js" id="org5133725"><span class=
+            <pre class="src src-js" id="orgd02e8b8"><span class=
             "linenr"> 1: </span><span class=
             "org-keyword">const</span> <span class=
             "org-variable-name">escapeRE</span> = <span class=
@@ -20832,7 +20830,7 @@
             "green">toDisplayString</font></strong>
           </summary>
           <div class="org-src-container">
-            <pre class="src src-js" id="org3cf089d"><span class=
+            <pre class="src src-js" id="orgc0eea00"><span class=
             "linenr"> 1: </span><span class=
             "org-keyword">const</span> <span class=
             "org-variable-name">toDisplayString</span> = (val) =&gt; {
@@ -20898,8 +20896,8 @@
         </details>
       </div>
     </div>
-    <div id="outline-container-org85c93bb" class="outline-2">
-      <h2 id="org85c93bb"><span class="section-number-2">2.</span>
+    <div id="outline-container-org505c740" class="outline-2">
+      <h2 id="org505c740"><span class="section-number-2">2.</span>
       APIs</h2>
       <div class="outline-text-2" id="text-2">
         <p>compiler-dom 包包含以下 APIs 这个包主要是针对一些指令进行加工处理，如：
@@ -20918,20 +20916,20 @@
           <tbody>
             <tr>
               <td class="org-left">
-                <a href="#orgd5cbd99">transformStyle()</a>
+                <a href="#orgb88d09c">transformStyle()</a>
               </td>
               <td class="org-left">combine & normalize, result to
               object <code>{a:b, c:d}</code></td>
             </tr>
             <tr>
               <td class="org-left">
-                <a href="#orgcce1dc1">transformVHtml()</a>
+                <a href="#org1a8e96e">transformVHtml()</a>
               </td>
               <td class="org-left">v-html</td>
             </tr>
             <tr>
               <td class="org-left">
-                <a href="#org52348e9">transformVText()</a>
+                <a href="#orgd702e0f">transformVText()</a>
               </td>
               <td class="org-left">v-text</td>
             </tr>
@@ -20953,7 +20951,7 @@
         </table>
         <p>code:</p>
         <div class="org-src-container">
-          <pre class="src src-js" id="org5105101"><span class=
+          <pre class="src src-js" id="org009265b"><span class=
           "linenr"> 1: </span>&lt;&lt;compiler-core&gt;&gt;
 <span class="linenr"> 2: </span>&lt;&lt;globalVarsCD&gt;&gt;
 <span class="linenr"> 3: </span>&lt;&lt;transformStyleCD&gt;&gt;
@@ -42775,12 +42773,12 @@
         </details>
       </div>
     </div>
-    <div id="outline-container-org87d417b" class="outline-2">
-      <h2 id="org87d417b"><span class="section-number-2">3.</span>
+    <div id="outline-container-org77750ed" class="outline-2">
+      <h2 id="org77750ed"><span class="section-number-2">3.</span>
       transforms</h2>
       <div class="outline-text-2" id="text-3">
         <div class="org-src-container">
-          <pre class="src src-js" id="org2142a0a"><span class=
+          <pre class="src src-js" id="org03f9579"><span class=
           "linenr">1: </span><span class=
           "org-keyword">const</span> <span class=
           "org-variable-name">DOMDirectiveTransforms</span> = {
@@ -42799,7 +42797,7 @@
 </pre>
         </div>
         <div class="org-src-container">
-          <pre class="src src-js" id="org57a5703"><span class=
+          <pre class="src src-js" id="org8bad199"><span class=
           "linenr">1: </span><span class=
           "org-keyword">const</span> <span class=
           "org-variable-name">DOMNodeTransforms</span> = [
@@ -42810,13 +42808,13 @@
 </pre>
         </div>
       </div>
-      <div id="outline-container-org180c027" class="outline-3">
-        <h3 id="org180c027"><span class=
+      <div id="outline-container-org50f549b" class="outline-3">
+        <h3 id="org50f549b"><span class=
         "section-number-3">3.1.</span> style</h3>
         <div class="outline-text-3" id="text-3-1">
           <p>compiler-dom 之前：</p>
           <div class="org-src-container">
-            <pre class="src src-js" id="orgefbd6d3"><span class=
+            <pre class="src src-js" id="org66aafc2"><span class=
             "linenr">1: </span>&lt;&lt;compiler-core&gt;&gt;
 <span class="linenr">2: </span>
 <span class="linenr">3: </span>logOff()
@@ -42828,7 +42826,7 @@
 "org-string">'&lt;div style="width:200px" /&gt;'</span>, code)
 </pre>
           </div>
-          <pre class="example" id="org28c3c21">
+          <pre class="example" id="orgd64882b">
 --------- createStructuralDirectiveTransform ---------
 name=for, matches=(n) =&gt; n === name
 --------- createStructuralDirectiveTransform ---------
@@ -42861,7 +42859,7 @@ undefined
             <code>{width:'100px',height:'100px'}</code></li>
           </ol>
           <div class="org-src-container">
-            <pre class="src src-js" id="orgd5cbd99"><span class=
+            <pre class="src src-js" id="orgb88d09c"><span class=
             "linenr"> 1: </span>
 <span class="linenr"> 2: </span><span class=
 "org-comment-delimiter">// </span><span class=
@@ -42974,7 +42972,7 @@ undefined
 "org-string">'normalizeStyle'</span>, normalizeStyle([r, s, <span class="org-string">'font-size:12px'</span>, { <span class="org-string">'line-height'</span>: <span class="org-highlight-numbers-number">1.2</span> }]))
 </pre>
           </div>
-          <pre class="example" id="orgc2ef9a6">
+          <pre class="example" id="org36a5749">
 --------- createStructuralDirectiveTransform ---------
 name=for, matches=(n) =&gt; n === name
 --------- createStructuralDirectiveTransform ---------
@@ -43006,7 +43004,7 @@ undefined
 "org-string">'&lt;div style="width:200px" /&gt;'</span>, code)
 </pre>
           </div>
-          <pre class="example" id="orgc3eb99f">
+          <pre class="example" id="orgc9882b2">
 --------- createStructuralDirectiveTransform ---------
 name=for, matches=(n) =&gt; n === name
 --------- createStructuralDirectiveTransform ---------
@@ -43028,7 +43026,7 @@ return function render(_ctx, _cache) {
 }
 undefined
 </pre>
-          <p>注意与 <a href="#orgefbd6d3">实现 compiler-dom 之前测试结果</a>
+          <p>注意与 <a href="#org66aafc2">实现 compiler-dom 之前测试结果</a>
           对比结果，会发现后者的 <code>style</code> 都会被转成对 象形式。</p>
           <p>之前：</p>
           <div class="org-src-container">
@@ -43049,12 +43047,12 @@ undefined
           </div>
         </div>
       </div>
-      <div id="outline-container-org4f251d9" class="outline-3">
-        <h3 id="org4f251d9"><span class=
+      <div id="outline-container-orgc0d81f5" class="outline-3">
+        <h3 id="orgc0d81f5"><span class=
         "section-number-3">3.2.</span> v-html</h3>
         <div class="outline-text-3" id="text-3-2">
           <div class="org-src-container">
-            <pre class="src src-js" id="orgcce1dc1"><span class=
+            <pre class="src src-js" id="org1a8e96e"><span class=
             "linenr"> 1: </span><span class=
             "org-keyword">const</span> <span class=
             "org-variable-name">transformVHtml</span> = (dir, node, context) =&gt; {
@@ -43103,7 +43101,7 @@ undefined
 "org-string">'v-html'</span>, code)
 </pre>
           </div>
-          <pre class="example" id="org1ef6959">
+          <pre class="example" id="orgfd84e9f">
 --------- createStructuralDirectiveTransform ---------
 name=for, matches=(n) =&gt; n === name
 --------- createStructuralDirectiveTransform ---------
@@ -43135,7 +43133,7 @@ undefined
 "org-string">'v-html'</span>, code)
 </pre>
           </div>
-          <pre class="example" id="org552161c">
+          <pre class="example" id="orgf35d162">
 --------- createStructuralDirectiveTransform ---------
 name=for, matches=(n) =&gt; n === name
 --------- createStructuralDirectiveTransform ---------
@@ -43157,12 +43155,12 @@ undefined
           }</code> 属性。</p>
         </div>
       </div>
-      <div id="outline-container-orgd6ce921" class="outline-3">
-        <h3 id="orgd6ce921"><span class=
+      <div id="outline-container-org4ceab48" class="outline-3">
+        <h3 id="org4ceab48"><span class=
         "section-number-3">3.3.</span> v-text</h3>
         <div class="outline-text-3" id="text-3-3">
           <div class="org-src-container">
-            <pre class="src src-js" id="org52348e9"><span class=
+            <pre class="src src-js" id="orgd702e0f"><span class=
             "linenr"> 1: </span><span class=
             "org-keyword">const</span> <span class=
             "org-variable-name">transformVText</span> = (dir, node, context) =&gt; {
@@ -43219,7 +43217,7 @@ undefined
 "org-string">'v-text'</span>, code)
 </pre>
           </div>
-          <pre class="example" id="org4755a1b">
+          <pre class="example" id="orgd175ad8">
 --------- createStructuralDirectiveTransform ---------
 name=for, matches=(n) =&gt; n === name
 --------- createStructuralDirectiveTransform ---------
@@ -43252,7 +43250,7 @@ undefined
 "org-string">'v-text'</span>, code)
 </pre>
           </div>
-          <pre class="example" id="orge0ba55b">
+          <pre class="example" id="org0103f05">
 --------- createStructuralDirectiveTransform ---------
 name=for, matches=(n) =&gt; n === name
 --------- createStructuralDirectiveTransform ---------
@@ -43273,12 +43271,12 @@ undefined
 </pre>
         </div>
       </div>
-      <div id="outline-container-orge900500" class="outline-3">
-        <h3 id="orge900500"><span class=
+      <div id="outline-container-orga64bfaf" class="outline-3">
+        <h3 id="orga64bfaf"><span class=
         "section-number-3">3.4.</span> v-model</h3>
         <div class="outline-text-3" id="text-3-4">
           <div class="org-src-container">
-            <pre class="src src-js" id="org5bec952"><span class=
+            <pre class="src src-js" id="orgf16ddfc"><span class=
             "linenr"> 1: </span><span class=
             "org-keyword">const</span> <span class=
             "org-variable-name">transformModelCD</span> = (dir, node, context) =&gt; {
@@ -43474,7 +43472,7 @@ undefined
             <li>过滤掉 transform 之后的 <code>{modelValue: value,
             'onUpdate:value': $event =&gt; value = $event}</code>
             里面的 <code>modelValue：value</code> 属性，因为在 runtime-core
-            时期的 <a href="#org8f31843">withDirectives(</a>)
+            时期的 <a href="#orga35611e">withDirectives(</a>)
             处理里面会被绑定到 value 属性上
             </li>
           </ol>
@@ -43493,7 +43491,7 @@ undefined
 "org-string">'v-model'</span>, code)
 </pre>
           </div>
-          <pre class="example" id="orgac9aca8">
+          <pre class="example" id="org3dc1453">
 --------- createStructuralDirectiveTransform ---------
 name=for, matches=(n) =&gt; n === name
 --------- createStructuralDirectiveTransform ---------
@@ -43527,7 +43525,7 @@ undefined
 "org-string">'v-model'</span>, code)
 </pre>
           </div>
-          <pre class="example" id="org62c13c6">
+          <pre class="example" id="orgd9dc9c3">
 --------- createStructuralDirectiveTransform ---------
 name=for, matches=(n) =&gt; n === name
 --------- createStructuralDirectiveTransform ---------
@@ -43553,7 +43551,7 @@ undefined
 </pre>
           <p>那来看下 <code>_withDirectives()</code> 里面做了什么？</p>
           <div class="org-src-container">
-            <pre class="src src-js" id="org8f31843"><span class=
+            <pre class="src src-js" id="orga35611e"><span class=
             "linenr"> 1: </span><span class=
             "org-keyword">function</span> <span class=
             "org-function-name">withDirectives</span>(<span class=
@@ -43614,12 +43612,12 @@ undefined
           </div>
         </div>
       </div>
-      <div id="outline-container-org5e52797" class="outline-3">
-        <h3 id="org5e52797"><span class=
+      <div id="outline-container-orgffcabfb" class="outline-3">
+        <h3 id="orgffcabfb"><span class=
         "section-number-3">3.5.</span> v-on</h3>
         <div class="outline-text-3" id="text-3-5">
           <div class="org-src-container">
-            <pre class="src src-js" id="orgf5816c0"><span class=
+            <pre class="src src-js" id="orgce86621"><span class=
             "linenr">  1: </span><span class=
             "org-keyword">const</span> <span class=
             "org-variable-name">isEventOptionModifier</span> = <span class=
@@ -43885,7 +43883,7 @@ undefined
 "org-string">'onclick'</span>, code)
 </pre>
           </div>
-          <pre class="example" id="org2bccf20">
+          <pre class="example" id="org89448a4">
 --------- createStructuralDirectiveTransform ---------
 name=for, matches=(n) =&gt; n === name
 --------- createStructuralDirectiveTransform ---------
@@ -43915,7 +43913,7 @@ undefined
 "org-string">'onclick'</span>, code)
 </pre>
           </div>
-          <pre class="example" id="org577a9ff">
+          <pre class="example" id="org6a13808">
 --------- createStructuralDirectiveTransform ---------
 name=for, matches=(n) =&gt; n === name
 --------- createStructuralDirectiveTransform ---------
@@ -44120,8 +44118,8 @@ undefined
           </div>
         </div>
       </div>
-      <div id="outline-container-orgbde53a4" class="outline-3">
-        <h3 id="orgbde53a4"><span class=
+      <div id="outline-container-org5869c94" class="outline-3">
+        <h3 id="org5869c94"><span class=
         "section-number-3">3.6.</span> v-show</h3>
         <div class="outline-text-3" id="text-3-6">
           <p>v-show 在这里并没有真正的被处理到，而在 runtime 运行时才会被处理，也就是后面会完 成的
@@ -44131,7 +44129,7 @@ undefined
           "https://www.cheng92.com/vue/vue-mind-map-runtime-dom/#v-show">Vue3
           源码头脑风暴之 8 ☞ runtime-dom - 若叶知秋</a></p>
           <div class="org-src-container">
-            <pre class="src src-js" id="org7a4c85e"><span class=
+            <pre class="src src-js" id="org463e359"><span class=
             "linenr"> 1: </span><span class=
             "org-keyword">const</span> <span class=
             "org-variable-name">transformShowCD</span> = (dir, node, context) =&gt; {
@@ -44154,15 +44152,15 @@ undefined
           </div>
         </div>
       </div>
-      <div id="outline-container-orgb03c54d" class="outline-3">
-        <h3 id="orgb03c54d"><span class=
+      <div id="outline-container-org7580104" class="outline-3">
+        <h3 id="org7580104"><span class=
         "section-number-3">3.7.</span> stringifyStatic</h3>
         <div class="outline-text-3" id="text-3-7">
           <p>在处理静态提升代码时需要用到 <code>stringifyStatic</code>,
           它会将静态提升的节点直接字符串化， 然后创建一个 off-dom 节点来保存它，等到需要使用的时候直接使用这个
           off-dom 节点。</p>
           <div class="org-src-container">
-            <pre class="src src-js" id="org511d641"><span class=
+            <pre class="src src-js" id="orge60b14b"><span class=
             "linenr">  1: </span> <span class=
             "org-keyword">const</span> <span class=
             "org-variable-name">StringifyThresholds</span> = {
@@ -44823,7 +44821,7 @@ undefined
           </div>
           <p><span style="color:red;">Testing</span></p>
           <div class="org-src-container">
-            <pre class="src src-js" id="org0b072f2"><span class=
+            <pre class="src src-js" id="org529c908"><span class=
             "linenr"> 1: </span>&lt;&lt;compiler-dom&gt;&gt;
 <span class="linenr"> 2: </span>
 <span class="linenr"> 3: </span><span class=
@@ -44882,7 +44880,7 @@ undefined
 "org-string">'code'</span>, code)
 </pre>
             </div>
-            <pre class="example" id="org3a4ad60">
+            <pre class="example" id="org9385f20">
 --------- createStructuralDirectiveTransform ---------
 name=for, matches=(n) =&gt; n === name
 --------- createStructuralDirectiveTransform ---------
@@ -44964,7 +44962,7 @@ undefined
 "org-string">'code'</span>, code)
 </pre>
             </div>
-            <pre class="example" id="orgddefc0a">
+            <pre class="example" id="orgda2f648">
 --------- createStructuralDirectiveTransform ---------
 name=for, matches=(n) =&gt; n === name
 --------- createStructuralDirectiveTransform ---------
@@ -45024,7 +45022,7 @@ undefined
 "org-string">'code'</span>, code)
 </pre>
             </div>
-            <pre class="example" id="org518e09e">
+            <pre class="example" id="org5ba4802">
 --------- createStructuralDirectiveTransform ---------
 name=for, matches=(n) =&gt; n === name
 --------- createStructuralDirectiveTransform ---------
@@ -45091,7 +45089,7 @@ undefined
 "org-string">'code'</span>, code)
 </pre>
             </div>
-            <pre class="example" id="org5629d26">
+            <pre class="example" id="org1aa3a6a">
 --------- createStructuralDirectiveTransform ---------
 name=for, matches=(n) =&gt; n === name
 --------- createStructuralDirectiveTransform ---------
@@ -45165,12 +45163,12 @@ undefined
         </div>
       </div>
     </div>
-    <div id="outline-container-orga4b3c1a" class="outline-2">
-      <h2 id="orga4b3c1a"><span class="section-number-2">4.</span>
+    <div id="outline-container-orge67060a" class="outline-2">
+      <h2 id="orge67060a"><span class="section-number-2">4.</span>
       compile()</h2>
       <div class="outline-text-2" id="text-4">
         <div class="org-src-container">
-          <pre class="src src-js" id="orgd996c5c"><span class=
+          <pre class="src src-js" id="org3d245a6"><span class=
           "linenr"> 1: </span><span class=
           "org-keyword">function</span> <span class=
           "org-function-name">compile</span>(<span class=
@@ -45211,12 +45209,12 @@ undefined
         </div>
       </div>
     </div>
-    <div id="outline-container-orgfec0551" class="outline-2">
-      <h2 id="orgfec0551"><span class="section-number-2">5.</span>
+    <div id="outline-container-org7ceb604" class="outline-2">
+      <h2 id="org7ceb604"><span class="section-number-2">5.</span>
       parse</h2>
       <div class="outline-text-2" id="text-5">
         <div class="org-src-container">
-          <pre class="src src-js" id="orgb4760c2"><span class=
+          <pre class="src src-js" id="orgc2473f8"><span class=
           "linenr">1: </span><span class=
           "org-keyword">function</span> <span class=
           "org-function-name">parse</span>(<span class=
@@ -45229,8 +45227,8 @@ undefined
         </div>
       </div>
     </div>
-    <div id="outline-container-orgf2acf84" class="outline-2">
-      <h2 id="orgf2acf84"><span class="section-number-2">6.</span>
+    <div id="outline-container-org969c71d" class="outline-2">
+      <h2 id="org969c71d"><span class="section-number-2">6.</span>
       testing</h2>
       <div class="outline-text-2" id="text-6">
         <p>更多测试(<a href=
@@ -45246,7 +45244,7 @@ undefined
   </div>
   <div id="postamble" class="status">
     <p class="author">Author: Zhicheng Lee</p>
-    <p class="date">Created: 2022-04-28 Thu 15:39</p>
+    <p class="date">Created: 2022-04-28 Thu 16:22</p>
   </div>
 </body>
 </html>
