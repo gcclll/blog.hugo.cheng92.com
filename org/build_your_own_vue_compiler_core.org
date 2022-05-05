@@ -54,6 +54,7 @@ red:浏览器测试请使用 [[/assets/tests/compiler-core.html][compiler-core.h
 | [[transformSlotOutlet][<slot/>]] | [[buildSlots][v-slot]] | [[transformBind][v-bind]] |
 | [[transformModel][v-model]] | [[transformOnce][v-once]] | [[transformMemo][v-memo]] |
 
+使用到的一些公共变量和函数：
 #+html: <br>
 #+begin_details global variables :title-color red
 #+name: globalVars
