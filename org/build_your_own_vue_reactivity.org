@@ -7,7 +7,6 @@
 #+HTML_HEAD: <meta name="category" content="vue"/>
 #+HTML_HEAD: <meta name="tags" content="reactivity"/>
 #+HTML_HEAD: <meta name="createdAt" content="2022-04-12 09:38:54"/>
-# #+PROPERTY: header-args:js :exports both
 #+PROPERTY: header-args :noweb no-export
 #+TITLE: build your own vue reactivity
 <badge: GCCLL | Homepage | green | / | gnu-emacs | tinder>
@@ -63,7 +62,6 @@ data-fancybox="gallery"
 data-caption="Preview"
 >------------- 函数调用流程图 ---------------</a>
 #+end_export
-
 
 * Global variables
 
@@ -193,6 +191,30 @@ function cleanupEffect(effect) {
 #+begin_details ReactiveEffect :title-color green
 #+name: ReactiveEffect
 #+begin_src js -n -r
+function markRaw(value) {
+  def(value, ReactiveFlags.SKIP, true)
+  return value
+}
+
+function isReactive(value) {
+  if (isReadonly(value)) {
+    return isReactive(value[ReactiveFlags.RAW])
+  }
+  return !!(value && value[ReactiveFlags.IS_REACTIVE])
+}
+
+function isReadonly(value) {
+  return !!(value && value[ReactiveFlags.IS_READONLY])
+}
+
+function isShallow(value) {
+  return !!(value && value[ReactiveFlags.IS_SHALLOW])
+}
+
+function isProxy(value) {
+  return isReactive(value) || isReadonly(value)
+}
+
 class ReactiveEffect {
   active = true
   // 依赖列表
@@ -2291,7 +2313,6 @@ data-caption="Preview"
 ><img src="../assets/img/vue3/reactivity/reactivity-effect-track-trigger.svg"/></a>
 #+end_export
 
-
 要搞清楚是怎么回事，还需要从头开始，也就是 ~reactive~ -> ~createReactiveObject~ 会发
 生这两个函数里面并没有与这两相关的代码，那么只能到
 [[(mutableHandlers)][mutableHandlers]] 和 [[(mutableCollectionHandlers)][mutableCollectionHandlers]] 中去找了，因为这两个涉及的是取值和
@@ -2617,6 +2638,27 @@ export interface ReactiveEffectRunner<T = any> {
 
 #+name: effect
 #+begin_src js -n -r
+<<EffectScope>>
+
+function stop(runner) {
+  runner.effect.stop()
+}
+
+function pauseTracking() {
+  trackStack.push(shouldTrack)
+  shouldTrack = false
+}
+
+function enableTracking() {
+  trackStack.push(shouldTrack)
+  shouldTrack = true
+}
+
+function resetTracking() {
+  const last = trackStack.pop()
+  shouldTrack = last === undefined ? true : last
+}
+
 function effect(fn, options) {
   // 可能是一个对象
   if (fn.effect) {
@@ -3063,6 +3105,18 @@ it('should collect nested scope', () => {
 
 #+name: EffectScope
 #+begin_src js -n -r
+<<onScopeDispose>>
+
+function effectScope(detached) {
+  return new EffectScope(detached)
+}
+
+function getCurrentScope() {
+  return activeEffectScope
+}
+
+
+
 class EffectScope {
   active = true
   effects = []
@@ -3676,15 +3730,57 @@ function triggerRefValue(ref, newVal) {
 #+begin_details 完整代码 :title-color green
 #+name: reactivity
 #+begin_src js -n -r :noweb yes
-<<reactiveP2>>
+function def(obj, key, value) {
+  Object.defineProperty(obj, key, {
+    configurable: true,
+    enumerable: false,
+    value
+  })
+}
 
-<<effect>>
+const reactivity = (function() {
+  <<reactiveP2>>
 
-<<computed>>
+  <<effect>>
 
-<<deferredComputed>>
+  <<computed>>
 
-<<ref>>
+  <<deferredComputed>>
+
+  <<ref>>
+
+  return {
+    ref,
+    isRef,
+    toRef,
+    toRefs,
+    unref,
+    proxyRefs,
+    triggerRef,
+
+    reactive,
+    isReactive,
+    isShallow,
+    isProxy,
+    markRaw,
+    toRaw,
+
+    computed,
+    deferredComputed,
+
+    effect,
+    stop,
+    trigger,
+    track,
+    enableTracking,
+    pauseTracking,
+    resetTracking,
+
+    effectScope,
+    getCurrentScope,
+    onScopeDispose
+  }
+}())
 #+end_src
 #+end_details
 
@@ -3693,6 +3789,7 @@ red:Testing
 #+begin_src js -n -r :exports both
 <<reactivity>>
 
+const { reactive, effect } = reactivity
 debugOn = false
 const ob = reactive({ count: 0 })
 let foo
@@ -3704,15 +3801,34 @@ debugOn = true
 #+end_src
 
 #+RESULTS:
-: before, foo=0
-: after, foo=1
-: undefined
+#+begin_example
+effect|run| active=true, shouldTrack=true
+track| type=get, key=count, targetMap=[object WeakMap], dep=[object Set]
+trackEffects| shouldTrack=true, activeEffect=[object Object], dep=1, activeEffect.deps=1
+createGetter|isRef get, key=count, value=0, isRef=false
+createGetter|isObject get, key=count, value=0, isRef=false
+before, foo=0
+createGetter|isRef get, key=count, value=0, isRef=false
+createGetter|isObject get, key=count, value=0, isRef=false
+createSetter| set value=1, key=count, result=true
+trigger| type=set, key=count, newValue=1, oldValue=0
+trigger|deps| deps=[object Set], deps.length=1
+triggerEffects| dep=[object Set], size=1, effect=[object Object]
+effect|run| active=true, shouldTrack=true
+track| type=get, key=count, targetMap=[object WeakMap], dep=[object Set]
+trackEffects| shouldTrack=true, activeEffect=[object Object], dep=1, activeEffect.deps=2
+createGetter|isRef get, key=count, value=1, isRef=false
+createGetter|isObject get, key=count, value=1, isRef=false
+after, foo=1
+undefined
+#+end_example
 
 red:Testing
 
 #+begin_src js -n -r :exports both
 <<reactivity>>
 
+const { reactive, computed } = reactivity
 const value = reactive({})
 const cValue = computed(() => value.foo)
 console.log(`#1 before set value.foo, cValue.value = ${cValue.value}`)

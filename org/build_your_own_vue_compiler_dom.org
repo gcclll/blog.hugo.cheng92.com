@@ -25,11 +25,1168 @@
 #+include: ../assets/tests/compiler-core.js src js -n -r
 #+end_details
 
+* APIs
+
+compiler-dom 包包含以下 APIs 这个包主要是针对一些指令进行加工处理，如： ~v-html~,
+~v-text~ 等等。
+
+| name             | description                                      |
+|------------------+--------------------------------------------------|
+| [[transformStyleCD][transformStyle()]] | combine & normalize, result to object ~{a:b, c:d}~ |
+| [[transformVHtml][transformVHtml()]] | v-html                                           |
+| [[transformVText][transformVText()]] | v-text                                           |
+| [[transformModel][transformModel()]] | v-model, transform bind value and event handler  |
+| [[transformOn][transformOn()]]    | v-on, handle the event modifiers                 |
+| [[transformShow][transformShow()]]  | v-show                                           |
+
+code:
+
+#+name: compiler-dom
+#+begin_src js -n -r
+<<compiler-core>>
+const compilerDom = (function() {
+  <<globalVars>>
+  <<transformStyle>>
+  <<transformVHtml>>
+  <<transformVText>>
+  <<transformModel>>
+  <<transformOn>>
+  <<transformShow>>
+  <<stringifyStatic>>
+  <<DOMDirectiveTransforms>>
+  <<DOMNodeTransforms>>
+  <<compile>>
+  <<parse>>
+
+  return {
+    DOMNodeTransforms,
+    DOMDirectiveTransforms,
+    compile,
+    parse,
+    transformStyle,
+  }
+}())
+#+end_src
+
+#+RESULTS: compiler-dom
+
+export to file:
+#+html: <br>
+#+begin_details compiler-dom :title-color red
+#+begin_src js -n -r :noweb yes :tangle "~/github/mine/blog.cheng92.com/assets/tests/compiler-dom.js"
+<<compiler-dom>>
+#+end_src
+#+end_details
+
+* transforms
+
+#+name: DOMDirectiveTransforms
+#+begin_src js -n -r
+const DOMDirectiveTransforms = {
+  cloak: noopDirectiveTransform,
+  html: transformVHtml,
+  text: transformVText,
+  model: transformModel, // override compiler-core
+  on: transformOn, // override compiler-core
+  show: transformShow
+}
+#+end_src
+
+#+name: DOMNodeTransforms
+#+begin_src js -n -r
+const DOMNodeTransforms = [
+  transformStyle,
+  ...(__DEV__ ? [warnTransitionChildren] : [])
+]
+#+end_src
+
+** style
+
+compiler-dom 之前：
+
+#+name: test-before-cd
+#+begin_src js -n -r :exports both
+<<compiler-core>>
+
+const { baseCompile } = compilerCore
+logOff()
+const { code } = baseCompile('<div style="width:200px" :style="{height: `200px`}" />', { filename: 'foo.vue' })
+logOn()
+logg('<div style="width:200px" />', code)
+#+end_src
+
+对 style 属性进行加工处理，字符串拆成对象，然后合并到，同时支持多种使用方式
+
+1. ~<div style="width:100px">~ => ~{width:'100px'}~
+2. ~<div :style="{width:'100px'}">~ => ~{width:'100px'}~
+3. ~<div :style="{width:'100px'} style="height:100px">~ => ~{width:'100px',height:'100px'}~
+
+#+name: transformStyle
+#+begin_src js -n -r
+
+// Parse inline CSS strings for static style attributes into an object.
+// This is a NodeTransform since it works on the static `style` attribute and
+// converts it into a dynamic equivalent:
+// style="color: red" -> :style='{ "color": "red" }'
+// It is then processed by `transformElement` and included in the generated
+// props.
+const transformStyle = node => {
+  if (node.type === NodeTypes.ELEMENT) {
+    node.props.forEach((p, i) => {
+      if (p.type === NodeTypes.ATTRIBUTE && p.name === 'style' && p.value) {
+        // replace p with an expression node
+        node.props[i] = {
+          type: NodeTypes.DIRECTIVE,
+          name: `bind`,
+          arg: createSimpleExpression(`style`, true, p.loc),
+          exp: parseInlineCSS(p.value.content, p.loc),
+          modifiers: [],
+          loc: p.loc
+        }
+      }
+    })
+  }
+}
+
+const parseInlineCSS = (cssText, loc) => {
+  const normalized = parseStringStyle(cssText)
+  return createSimpleExpression(
+    JSON.stringify(normalized),
+    false,
+    loc,
+    ConstantTypes.CAN_STRINGIFY
+  )
+}
+#+end_src
+
+[[(parseStringStyle)][parseStringStyle]] 将字符串解析成对象 ~"width:100px"~ => ~{ width: '100px' }~
+
+[[(stringifyStyle)][stringifyStyle]] 将对象转成字符串 ~{ width: '100px' }~ => ~"width:100px"~
+
+[[(normalizeStyle)][normalizeStyle]] 解析 style 的值，可能是 ~"width:100px"~ 或 ~{width:'100px'}~ 也可以是
+~['width:100px', {height:'100px'}]~ 的混合方式，最终都会被解析成对象
+~{width:'100px', height: '100px'}~ 。
+
+#+begin_src js -n -r :exports both
+<<compiler-dom>>
+
+const { parseStringStyle, stringifyStyle, normalizeStyle } = compilerDom
+const { logg } = compilerCore
+const pss = s => parseStringStyle(s)
+let r = pss('width:100px;height:100px')
+logg('parseStringStyle', r)
+const sfs = s => stringifyStyle(s)
+const s = sfs(r)
+logg('stringifyStyle', s)
+logg('normalizeStyle', normalizeStyle([r, s, 'font-size:12px', { 'line-height': 1.2 }]))
+#+end_src
+
+red:Testing
+
+#+begin_src js -n -r :exports both
+<<compiler-dom>>
+
+const { compile } = compilerDom
+logOff()
+const { code } = compile('<div style="width:200px" :style="{height: `200px`}" />', { filename: 'foo.vue' })
+logOn()
+logg('<div style="width:200px" />', code)
+#+end_src
+
+注意与 [[test-before-cd][实现 compiler-dom 之前测试结果]] 对比结果，会发现后者的 ~style~ 都会被转成对
+象形式。
+
+之前：
+#+begin_src js
+ style: _normalizeStyle([
+   "width:200px",
+   {height: `200px`}
+ ])
+#+end_src
+
+之后：
+
+#+begin_src js
+style: _normalizeStyle([
+  {"width":"200px"},
+  {height: `200px`}
+])
+#+end_src
+
+** v-html
+
+#+name: transformVHtml
+#+begin_src js -n -r
+const transformVHtml = (dir, node, context) => {
+  const { exp, loc } = dir
+  if (!exp) {
+    logg("v-html no exp")
+  }
+  if (node.children.length) {
+    logg('v-html can not has children')
+    node.children.length = 0
+  }
+  return {
+    props: [
+      createObjectProperty(
+        createSimpleExpression(`innerHTML`, true, loc),
+        exp || createSimpleExpression('', true)
+      )
+    ]
+  }
+}
+#+end_src
+
+red:Testing
+
+before: 不会被处理
+#+begin_src js -n -r :exports both
+<<compiler-core>>
+logOff()
+const { code } = baseCompile("<div v-html='foo'><span/></div>", { filename: 'foo.vue' })
+logOn()
+logg('v-html', code)
+#+end_src
+
+after:
+
+#+begin_src js -n -r :exports both
+<<compiler-dom>>
+logOff()
+const { code } = compile("<div v-html='foo'><span/></div>", { filename: 'foo.vue' })
+logOn()
+logg('v-html', code)
+#+end_src
+
+注意看前后的结果， compile-core 阶段是没有对 v-html 进行处理的，且 after 结果中
+的 ~<span/>~ 已经没有了，且增加了 ~{ innerHTML }~ 属性。
+
+** v-text
+
+#+name: transformVText
+#+begin_src js -n -r
+const transformVText = (dir, node, context) => {
+  const { exp, loc } = dir
+  if (!exp) {
+    logg('v-text no exp')
+  }
+  if (node.children.length) {
+    logg('v-text can not have children')
+    node.children.length = 0
+  }
+  return {
+    props: [
+      createObjectProperty(
+        createSimpleExpression(`textContent`, true),
+        exp
+          ? createCallExpression(
+              context.helperString(TO_DISPLAY_STRING),
+              [exp],
+              loc
+            )
+          : createSimpleExpression('', true)
+      )
+    ]
+  }
+}
+#+end_src
+
+red:Testing
+
+before: compiler-core 中也没有对 v-text 指令的处理
+
+#+begin_src js -n -r :exports both
+<<compiler-core>>
+logOff()
+const { code } = baseCompile("<div v-text='foo'><span/></div>", { filename: 'foo.vue' })
+logOn()
+logg('v-text', code)
+#+end_src
+
+after: ~<span/>~ 所有子节点都会被删除，增加 ~{ textContent }~ 属性。
+#+begin_src js -n -r :exports both
+<<compiler-dom>>
+logOff()
+const { code } = compile("<div v-text='foo'><span/></div>", { filename: 'foo.vue' })
+logOn()
+logg('v-text', code)
+#+end_src
+
+** v-model
+
+#+name: transformModel
+#+begin_src js -n -r
+const transformModel = (dir, node, context) => {
+  const baseResult = transformModel(dir, node, context)
+  // base transform has errors OR component v-model (only need props)
+  if (!baseResult.props.length || node.tagType === ElementTypes.COMPONENT) {
+    return baseResult
+  }
+
+  if (dir.arg) {
+    logg("transfromModel - X_V_MODEL_ARG_ON_ELEMENT")
+  }
+
+  function checkDuplicatedValue() {
+    const value = findProp(node, 'value')
+    if (value) {
+      logg("transfromModel - X_V_MODEL_UNNECESSARY_VALUE")
+    }
+  }
+
+  const { tag } = node
+  const isCustomElement = context.isCustomElement(tag)
+  if (
+    tag === 'input' ||
+    tag === 'textarea' ||
+    tag === 'select' ||
+    isCustomElement
+  ) {
+    let directiveToUse = V_MODEL_TEXT
+    let isInvalidType = false
+    if (tag === 'input' || isCustomElement) {
+      const type = findProp(node, `type`)
+      if (type) {
+        if (type.type === NodeTypes.DIRECTIVE) {
+          // :type="foo"
+          directiveToUse = V_MODEL_DYNAMIC
+        } else if (type.value) {
+          switch (type.value.content) {
+            case 'radio':
+              directiveToUse = V_MODEL_RADIO
+              break
+            case 'checkbox':
+              directiveToUse = V_MODEL_CHECKBOX
+              break
+            case 'file':
+              isInvalidType = true
+              logg("[DOM]transformModel - X_V_MODEL_ON_FILE_INPUT_ELEMENT")
+              break
+            default:
+              // text type
+              __DEV__ && checkDuplicatedValue()
+              break
+          }
+        }
+      } else if (hasDynamicKeyVBind(node)) {
+        // element has bindings with dynamic keys, which can possibly contain
+        // "type".
+        directiveToUse = V_MODEL_DYNAMIC
+      } else {
+        // text type
+        __DEV__ && checkDuplicatedValue()
+      }
+    } else if (tag === 'select') {
+      directiveToUse = V_MODEL_SELECT
+    } else {
+      // textarea
+      __DEV__ && checkDuplicatedValue()
+    }
+    // inject runtime directive
+    // by returning the helper symbol via needRuntime
+    // the import will replaced a resolveDirective call.
+    if (!isInvalidType) {
+      baseResult.needRuntime = context.helper(directiveToUse)
+    }
+  } else {
+    logg("[DOM]transformModel - X_V_MODEL_ON_INVALID_ELEMENT")
+  }
+
+  // native vmodel doesn't need the `modelValue` props since they are also
+  // passed to the runtime as `binding.value`. removing it reduces code size.
+  baseResult.props = baseResult.props.filter(
+    p =>
+      !(
+        p.key.type === NodeTypes.SIMPLE_EXPRESSION &&
+        p.key.content === 'modelValue'
+      )
+  )
+
+  return baseResult
+}
+#+end_src
+
+1. 只处理 input, textarea, select 文本框标签，或自定义的标签
+
+2. <input> 标签类型分为 radio 和 checkbox 单复选项框处理，不能使用 type='file' 类型
+
+3. <select> 下拉选项框的处理
+
+4. 过滤掉 transform 之后的 ~{modelValue: value, 'onUpdate:value': $event => value
+   = $event}~ 里面的 ~modelValue：value~ 属性，因为在 runtime-core 时期的
+   [[withDirectives][withDirectives(]]) 处理里面会被绑定到 value 属性上
+
+red:Testing
+
+before:
+
+#+begin_src js -n -r :exports both
+<<compiler-core>>
+
+logOff()
+const { code } = baseCompile("<input type='text' v-model='value' />", { filename: 'foo.vue' })
+logOn()
+log('v-model', code)
+#+end_src
+
+after: 多了一层包装 ~_withDirectives()~
+#+begin_src js -n -r :exports both
+<<compiler-dom>>
+
+logOff()
+const { code } = compile("<input type='text' v-model='value' />", { filename: 'foo.vue' })
+logOn()
+log('v-model', code)
+#+end_src
+
+那来看下 ~_withDirectives()~ 里面做了什么？
+
+#+name: withDirectives
+#+begin_src js -n -r
+function withDirectives(vnode, directives) {
+  const internalInstance = currentRenderingInstance
+  if (internalInstance === null) {
+    return vnode
+  }
+  // 取当前应用实例
+  const instance = getExposeProxy(internalInstance) || internalInstance.proxy
+  const bindings = vnode.dirs || (vnode.dirs = [])
+  for (let i = 0; i < directives.length; i++) {
+
+    let [dir, value, arg, modifiers = EMPTY_OBJ] = directives[i]
+    if (isFunction(dir)) {
+      dir = {
+        mounted: dir,
+        updated: dir
+      }
+    }
+    if (dir.deep) {
+      traverse(value)
+    }
+    bindings.push({
+      dir,
+      instance,
+      value,
+      oldValue: void 0,
+      arg,
+      modifiers
+    })
+  }
+  return vnode
+}
+#+end_src
+** v-on
+
+#+name: transformOn
+#+begin_src js -n -r
+const isEventOptionModifier = /*#__PURE__*/ makeMap(`passive,once,capture`)
+const isNonKeyModifier = /*#__PURE__*/ makeMap(
+  // event propagation management
+  `stop,prevent,self,` +
+    // system modifiers + exact
+    `ctrl,shift,alt,meta,exact,` +
+    // mouse
+    `middle`
+)
+// left & right could be mouse or key modifiers based on event type
+const maybeKeyModifier = /*#__PURE__*/ makeMap('left,right')
+const isKeyboardEvent = /*#__PURE__*/ makeMap(
+  `onkeyup,onkeydown,onkeypress`,
+  true
+)
+
+// 将修饰符分类
+const resolveModifiers = (key, modifiers, context, loc) => {
+  const keyModifiers = []
+  const nonKeyModifiers = []
+  const eventOptionModifiers = []
+
+  for (let i = 0; i < modifiers.length; i++) {
+    const modifier = modifiers[i]
+
+    if (isEventOptionModifier(modifier)) {
+      // eventOptionModifiers: modifiers for addEventListener() options,
+      // e.g. .passive & .capture
+      eventOptionModifiers.push(modifier)
+    } else {
+      // runtimeModifiers: modifiers that needs runtime guards
+      if (maybeKeyModifier(modifier)) {
+        if (isStaticExp(key)) {
+          if (isKeyboardEvent(key.content)) {
+            keyModifiers.push(modifier)
+          } else {
+            nonKeyModifiers.push(modifier)
+          }
+        } else {
+          keyModifiers.push(modifier)
+          nonKeyModifiers.push(modifier)
+        }
+      } else {
+        if (isNonKeyModifier(modifier)) {
+          nonKeyModifiers.push(modifier)
+        } else {
+          keyModifiers.push(modifier)
+        }
+      }
+    }
+  }
+
+  return {
+    keyModifiers,
+    nonKeyModifiers,
+    eventOptionModifiers
+  }
+}
+
+// 原生 click 事件
+const transformClick = (key, event) => {
+  const isStaticClick =
+    isStaticExp(key) && key.content.toLowerCase() === 'onclick'
+  return isStaticClick
+    ? createSimpleExpression(event, true)
+    : key.type !== NodeTypes.SIMPLE_EXPRESSION
+    ? createCompoundExpression([
+        `(`,
+        key,
+        `) === "onClick" ? "${event}" : (`,
+        key,
+        `)`
+      ])
+    : key
+}
+
+const transformOn = (dir, node, context) => {
+  return transformOn(dir, node, context, baseResult => {
+    const { modifiers } = dir
+    if (!modifiers.length) return baseResult
+
+    let { key, value: handlerExp } = baseResult.props[0]
+    const { keyModifiers, nonKeyModifiers, eventOptionModifiers } =
+      resolveModifiers(key, modifiers, context, dir.loc)
+
+    // normalize click.right and click.middle since they don't actually fire
+    if (nonKeyModifiers.includes('right')) { (ref:transformOn-right)
+      key = transformClick(key, `onContextmenu`)
+    }
+    if (nonKeyModifiers.includes('middle')) {
+      key = transformClick(key, `onMouseup`)
+    }
+
+    if (nonKeyModifiers.length) {
+      handlerExp = createCallExpression(context.helper(V_ON_WITH_MODIFIERS), [
+        handlerExp,
+        JSON.stringify(nonKeyModifiers)
+      ])
+    }
+
+    if (
+      keyModifiers.length &&
+      // if event name is dynamic, always wrap with keys guard
+      (!isStaticExp(key) || isKeyboardEvent(key.content))
+    ) {
+      handlerExp = createCallExpression(context.helper(V_ON_WITH_KEYS), [
+        handlerExp,
+        JSON.stringify(keyModifiers)
+      ])
+    }
+
+    if (eventOptionModifiers.length) {
+      const modifierPostfix = eventOptionModifiers.map(capitalize).join('')
+      key = isStaticExp(key)
+        ? createSimpleExpression(`${key.content}${modifierPostfix}`, true)
+        : createCompoundExpression([`(`, key, `) + "${modifierPostfix}"`])
+    }
+
+    return {
+      props: [createObjectProperty(key, handlerExp)]
+    }
+  })
+}
+#+end_src
+
+red:Testing
+
+before: 注意看结果会发现修饰符并没有出现在 render 函数中
+#+begin_src js -n -r :exports both
+<<compiler-core>>
+
+logOff()
+const { code } = baseCompile(`<div @click.enter.passive="handleClick" />`, { filename: 'foo.vue' })
+logOn()
+log('onclick', code)
+#+end_src
+
+after:
+#+begin_src js -n -r :exports both
+<<compiler-dom>>
+
+logOff()
+const { code } = compile(`<div @click.right.passive="handleClick" />`, { filename: 'foo.vue' })
+logOn()
+log('onclick', code)
+#+end_src
+
+1. right 修饰符下的 click 事件被转成了 ~onContextmenu~ 右键点击事件
+2. passive 修饰符直接被追加到了事件 key 后面 ~onContextmenuPassive~, 这也是 vue 中
+   对修饰符的处理方式(如： ~@click.right.once~ => ~onContextmenuOnce~)
+
+
+当有修饰符的时候会使用到 withModifiers, 每个修饰符都有自己对应的一个函数，只有当
+满足条件的才会让事件继续，也就是最后的 ~fn(event, ...args)~ 执行:
+
+#+begin_src typescript -n -r
+const modifierGuards: Record<
+  string,
+  (e: Event, modifiers: string[]) => void | boolean
+> = {
+  stop: e => e.stopPropagation(),
+  prevent: e => e.preventDefault(),
+  self: e => e.target !== e.currentTarget,
+  ctrl: e => !(e as KeyedEvent).ctrlKey,
+  shift: e => !(e as KeyedEvent).shiftKey,
+  alt: e => !(e as KeyedEvent).altKey,
+  meta: e => !(e as KeyedEvent).metaKey,
+  left: e => 'button' in e && (e as MouseEvent).button !== 0,
+  middle: e => 'button' in e && (e as MouseEvent).button !== 1,
+  right: e => 'button' in e && (e as MouseEvent).button !== 2,
+  exact: (e, modifiers) =>
+    systemModifiers.some(m => (e as any)[`${m}Key`] && !modifiers.includes(m))
+}
+
+const withModifiers = (fn: Function, modifiers: string[]) => {
+  return (event: Event, ...args: unknown[]) => {
+    for (let i = 0; i < modifiers.length; i++) {
+      const guard = modifierGuards[modifiers[i]]
+      if (guard && guard(event, modifiers)) return
+    }
+    return fn(event, ...args)
+  }
+}
+#+end_src
+
+#+begin_box 小结
+compiler-dom 对 v-on 指令的处理就是对修饰符的处理，将事件函数进行转换，使用
+~withModifiers()~ 进行封装。
+
+修饰符有三类：
+
+1. 事件选项kbd:passive,once,capture
+
+   [[https://segmentfault.com/a/1190000017247263][passive的作用和原理 - SegmentFault 思否]]
+
+   [[https://blog.techbridge.cc/2017/07/15/javascript-event-propagation/][DOM 的事件傳遞機制：捕獲與冒泡]]
+
+2. 冒泡相关 kbd:stop,prevent,self, 系统组合键 kbd:ctrl,shift,alt,meta,exact, 鼠
+   标按键 kbd:middle
+3. <kbd:left, right> 可能是鼠标也可以是键盘上的左右键
+
+
+修饰符影响事件类型：
+
+1. click.right 转成右键菜单键 ~onContextmenu~
+2. click.middle 转成鼠标中键 ~onMouseUp~
+#+end_box
+
+** v-show
+
+v-show 在这里并没有真正的被处理到，而在 runtime 运行时才会被处理，也就是后面会完
+成的 ~runtime-dom~ 包里，实现原理其实就是控制元素 ~display~ 属性，这里只是将其标识了
+下需要运行时去处理。
+
+旧博客中有相关分析：[[https://www.cheng92.com/vue/vue-mind-map-runtime-dom/#v-show][Vue3 源码头脑风暴之 8 ☞ runtime-dom - 若叶知秋]]
+
+#+name: transformShow
+#+begin_src js -n -r
+const transformShow = (dir, node, context) => {
+  const { exp, loc } = dir
+  if (!exp) {
+    logg('transformShow no exp.')
+  }
+
+  return {
+    props: [],
+    needRuntime: context.helper(V_SHOW)
+  }
+}
+#+end_src
+
+** stringifyStatic
+
+在处理静态提升代码时需要用到 ~stringifyStatic~, 它会将静态提升的节点直接字符串化，
+然后创建一个 off-dom 节点来保存它，等到需要使用的时候直接使用这个 off-dom 节点。
+
+#+name: stringifyStatic
+#+begin_src js -n -r
+ const StringifyThresholds = {
+   ELEMENT_WITH_BINDING_COUNT: 5,
+   NODE_COUNT: 20
+}
+
+/**
+ ,* Regex for replacing placeholders for embedded constant variables
+ ,* (e.g. import URL string constants generated by compiler-sfc)
+ ,*/
+const expReplaceRE = /__VUE_EXP_START__(.*?)__VUE_EXP_END__/g
+
+/**
+ ,* Turn eligible hoisted static trees into stringified static nodes, e.g.
+ ,*
+ ,* ```js
+ ,* const _hoisted_1 = createStaticVNode(`<div class="foo">bar</div>`)
+ ,* ```
+ ,*
+ ,* A single static vnode can contain stringified content for **multiple**
+ ,* consecutive nodes (element and plain text), called a "chunk".
+ ,* `@vue/runtime-dom` will create the content via innerHTML in a hidden
+ ,* container element and insert all the nodes in place. The call must also
+ ,* provide the number of nodes contained in the chunk so that during hydration
+ ,* we can know how many nodes the static vnode should adopt.
+ ,*
+ ,* The optimization scans a children list that contains hoisted nodes, and
+ ,* tries to find the largest chunk of consecutive hoisted nodes before running
+ ,* into a non-hoisted node or the end of the list. A chunk is then converted
+ ,* into a single static vnode and replaces the hoisted expression of the first
+ ,* node in the chunk. Other nodes in the chunk are considered "merged" and
+ ,* therefore removed from both the hoist list and the children array.
+ ,*
+ ,* This optimization is only performed in Node.js.
+ ,*/
+const stringifyStatic = (children, context, parent) => {
+  // bail stringification for slot content
+  if (context.scopes.vSlot > 0) {
+    return
+  }
+
+  let nc = 0 // current node count
+  let ec = 0 // current element with binding count
+  const currentChunk = []
+
+  logg(`stringifyStatic - children.length = ${children.length}`)
+  const stringifyCurrentChunk = (currentIndex) => {
+    if (
+      nc >= StringifyThresholds.NODE_COUNT ||
+      ec >= StringifyThresholds.ELEMENT_WITH_BINDING_COUNT
+    ) {
+      logg(`stringifyCurrentChunk - index = ${currentIndex}`)
+      // combine all currently eligible nodes into a single static vnode call
+      const staticCall = createCallExpression(context.helper(CREATE_STATIC), [
+        JSON.stringify(
+          currentChunk.map(node => stringifyNode(node, context)).join('')
+        ).replace(expReplaceRE, `" + $1 + "`),
+        // the 2nd argument indicates the number of DOM nodes this static vnode
+        // will insert / hydrate
+        String(currentChunk.length)
+      ])
+      // replace the first node's hoisted expression with the static vnode call
+      replaceHoist(currentChunk[0], staticCall, context)
+
+      if (currentChunk.length > 1) {
+        for (let i = 1; i < currentChunk.length; i++) {
+          // for the merged nodes, set their hoisted expression to null
+          replaceHoist(currentChunk[i], null, context)
+        }
+
+        // also remove merged nodes from children
+        const deleteCount = currentChunk.length - 1
+        children.splice(currentIndex - currentChunk.length + 1, deleteCount)
+        return deleteCount
+      }
+    }
+    return 0
+  }
+
+  let i = 0
+  for (; i < children.length; i++) {
+    const child = children[i]
+    const hoisted = getHoistedNode(child)
+    if (hoisted) {
+      // presence of hoisted means child must be a stringifiable node
+      const node = child
+      const result = analyzeNode(node)
+      if (result) {
+        // node is stringifiable, record state
+        nc += result[0]
+        ec += result[1]
+        currentChunk.push(node)
+        continue
+      }
+    }
+    // we only reach here if we ran into a node that is not stringifiable
+    // check if currently analyzed nodes meet criteria for stringification.
+    // adjust iteration index
+    i -= stringifyCurrentChunk(i)
+    // reset state
+    nc = 0
+    ec = 0
+    currentChunk.length = 0
+  }
+  // in case the last node was also stringifiable
+  stringifyCurrentChunk(i)
+}
+
+const getHoistedNode = (node) =>
+  ((node.type === NodeTypes.ELEMENT && node.tagType === ElementTypes.ELEMENT) ||
+    node.type == NodeTypes.TEXT_CALL) &&
+  node.codegenNode &&
+  node.codegenNode.type === NodeTypes.SIMPLE_EXPRESSION &&
+  node.codegenNode.hoisted
+
+const dataAriaRE = /^(data|aria)-/
+const isStringifiableAttr = (name, ns) => {
+  return (
+    (ns === DOMNamespaces.HTML
+      ? isKnownHtmlAttr(name)
+      : ns === DOMNamespaces.SVG
+      ? isKnownSvgAttr(name)
+      : false) || dataAriaRE.test(name)
+  )
+}
+
+const replaceHoist = (node,replacement,context) => {
+  const hoistToReplace = node.codegenNode.hoisted
+  context.hoists[context.hoists.indexOf(hoistToReplace)] = replacement
+}
+
+const isNonStringifiable = /*#__PURE__*/ makeMap(
+  `caption,thead,tr,th,tbody,td,tfoot,colgroup,col`
+)
+
+/**
+ ,* for a hoisted node, analyze it and return:
+ ,* - false: bailed (contains non-stringifiable props or runtime constant)
+ ,* - [nc, ec] where
+ ,*   - nc is the number of nodes inside
+ ,*   - ec is the number of element with bindings inside
+ ,*/
+function analyzeNode(node) {
+  if (node.type === NodeTypes.ELEMENT && isNonStringifiable(node.tag)) {
+    return false
+  }
+
+  if (node.type === NodeTypes.TEXT_CALL) {
+    return [1, 0]
+  }
+
+  let nc = 1 // node count
+  let ec = node.props.length > 0 ? 1 : 0 // element w/ binding count
+  let bailed = false
+  const bail = () => {
+    bailed = true
+    return false
+  }
+
+  // TODO: check for cases where using innerHTML will result in different
+  // output compared to imperative node insertions.
+  // probably only need to check for most common case
+  // i.e. non-phrasing-content tags inside `<p>`
+  function walk(node) {
+    for (let i = 0; i < node.props.length; i++) {
+      const p = node.props[i]
+      // bail on non-attr bindings
+      if (
+        p.type === NodeTypes.ATTRIBUTE &&
+        !isStringifiableAttr(p.name, node.ns)
+      ) {
+        return bail()
+      }
+      if (p.type === NodeTypes.DIRECTIVE && p.name === 'bind') {
+        // bail on non-attr bindings
+        if (
+          p.arg &&
+          (p.arg.type === NodeTypes.COMPOUND_EXPRESSION ||
+            (p.arg.isStatic && !isStringifiableAttr(p.arg.content, node.ns)))
+        ) {
+          return bail()
+        }
+        if (
+          p.exp &&
+          (p.exp.type === NodeTypes.COMPOUND_EXPRESSION ||
+            p.exp.constType < ConstantTypes.CAN_STRINGIFY)
+        ) {
+          return bail()
+        }
+      }
+    }
+    for (let i = 0; i < node.children.length; i++) {
+      nc++
+      const child = node.children[i]
+      if (child.type === NodeTypes.ELEMENT) {
+        if (child.props.length > 0) {
+          ec++
+        }
+        walk(child)
+        if (bailed) {
+          return false
+        }
+      }
+    }
+    return true
+  }
+
+  return walk(node) ? [nc, ec] : false
+}
+
+function stringifyNode(node, context) {
+  if (isString(node)) {
+    return node
+  }
+  if (isSymbol(node)) {
+    return ``
+  }
+  switch (node.type) {
+    case NodeTypes.ELEMENT:
+      return stringifyElement(node, context)
+    case NodeTypes.TEXT:
+      return escapeHtml(node.content)
+    case NodeTypes.COMMENT:
+      return `<!--${escapeHtml(node.content)}-->`
+    case NodeTypes.INTERPOLATION:
+      return escapeHtml(toDisplayString(evaluateConstant(node.content)))
+    case NodeTypes.COMPOUND_EXPRESSION:
+      return escapeHtml(evaluateConstant(node))
+    case NodeTypes.TEXT_CALL:
+      return stringifyNode(node.content, context)
+    default:
+      // static trees will not contain if/for nodes
+      return ''
+  }
+}
+
+function stringifyElement(node, context) {
+  let res = `<${node.tag}`
+  for (let i = 0; i < node.props.length; i++) {
+    const p = node.props[i]
+    if (p.type === NodeTypes.ATTRIBUTE) {
+      res += ` ${p.name}`
+      if (p.value) {
+        res += `="${escapeHtml(p.value.content)}"`
+      }
+    } else if (p.type === NodeTypes.DIRECTIVE && p.name === 'bind') {
+      const exp = p.exp
+      if (exp.content[0] === '_') {
+        // internally generated string constant references
+        // e.g. imported URL strings via compiler-sfc transformAssetUrl plugin
+        res += ` ${p.arg.content}="__VUE_EXP_START__${
+          exp.content
+        }__VUE_EXP_END__"`
+        continue
+      }
+      // constant v-bind, e.g. :foo="1"
+      let evaluated = evaluateConstant(exp)
+      if (evaluated != null) {
+        const arg = p.arg && p.arg.content
+        if (arg === 'class') {
+          evaluated = normalizeClass(evaluated)
+        } else if (arg === 'style') {
+          evaluated = stringifyStyle(normalizeStyle(evaluated))
+        }
+        res += ` ${p.arg.content}="${escapeHtml(evaluated)}"`
+      }
+    }
+  }
+  if (context.scopeId) {
+    res += ` ${context.scopeId}`
+  }
+  res += `>`
+  for (let i = 0; i < node.children.length; i++) {
+    res += stringifyNode(node.children[i], context)
+  }
+  if (!isVoidTag(node.tag)) {
+    res += `</${node.tag}>`
+  }
+  return res
+}
+
+// __UNSAFE__
+// Reason: eval.
+// It's technically safe to eval because only constant expressions are possible
+// here, e.g. `{{ 1 }}` or `{{ 'foo' }}`
+// in addition, constant exps bail on presence of parens so you can't even
+// run JSFuck in here. But we mark it unsafe for security review purposes.
+// (see compiler-core/src/transformExpressions)
+function evaluateConstant(exp) {
+  if (exp.type === NodeTypes.SIMPLE_EXPRESSION) {
+    return new Function(`return ${exp.content}`)()
+  } else {
+    // compound
+    let res = ``
+    exp.children.forEach(c => {
+      if (isString(c) || isSymbol(c)) {
+        return
+      }
+      if (c.type === NodeTypes.TEXT) {
+        res += c.content
+      } else if (c.type === NodeTypes.INTERPOLATION) {
+        res += toDisplayString(evaluateConstant(c.content))
+      } else {
+        res += evaluateConstant(c)
+      }
+    })
+    return res
+  }
+}
+
+#+end_src
+
+red:Testing
+
+#+name: stringifyStatic-test-utils
+#+begin_src js -n -r
+<<compiler-dom>>
+
+function compileWithStringify(template) {
+    return compile(template, {
+      hoistStatic: true,
+      prefixIdentifiers: true,
+      transformHoist: stringifyStatic
+    })
+  }
+
+  function repeat(code, n) {
+    return new Array(n)
+      .fill(0)
+      .map(() => code)
+      .join('')
+  }
+#+end_src
+
+#+html: <br>
+#+begin_details should bail on non-eligible static trees :title-color red
+#+begin_src js -n -r :exports both
+<<stringifyStatic-test-utils>>
+
+logOff()
+const { ast, code } = compileWithStringify(
+  `<div><div><div>hello</div><div>hello</div></div></div>`
+)
+logOn()
+logg('ast hoists', ast.hoists)
+logg('code', code)
+#+end_src
+#+end_details
+
+#+html: <br>
+#+begin_details should work on eligible content (elements with binding > 5) :title-color red
+#+begin_src js -n -r :exports both
+<<stringifyStatic-test-utils>>
+
+logOff()
+const { ast, code } = compileWithStringify(
+  `<div><div>${repeat(
+        `<span class="foo"/>`,
+        StringifyThresholds.ELEMENT_WITH_BINDING_COUNT
+      )}</div></div><div></div>`
+  //`<div><div><div>hello</div><div>hello</div></div></div>`
+)
+logOn()
+logg('ast hoists', ast.hoists)
+logg('code', code)
+#+end_src
+#+end_details
+
+#+html: <br>
+#+begin_details should work on eligible content (elements > 20) :title-color red
+#+begin_src js -n -r :exports both
+<<stringifyStatic-test-utils>>
+
+logOff()
+const { ast, code } = compileWithStringify(
+  `<div><div>${repeat(
+        `<span/>`,
+        StringifyThresholds.NODE_COUNT
+      )}</div></div>`
+)
+logOn()
+logg('ast hoists', ast.hoists)
+logg('code', code)
+#+end_src
+#+end_details
+
+#+html: <br>
+#+begin_details serializing constant bindings :title-color red
+#+begin_src js -n -r :exports both
+<<stringifyStatic-test-utils>>
+
+logOff()
+const { ast, code } = compileWithStringify(
+  `<div><div :style="{ color: 'red' }">${repeat(
+        `<span :class="[{ foo: true }, { bar: true }]">{{ 1 }} + {{ false }}</span>`,
+        StringifyThresholds.ELEMENT_WITH_BINDING_COUNT
+      )}</div></div>`
+)
+logOn()
+logg('ast hoists', ast.hoists)
+logg('code', code)
+#+end_src
+#+end_details
+
+createStaticVNode:
+
+#+begin_src typescript -n -r
+function createStaticVNode(
+  content: string,
+  numberOfNodes: number
+): VNode {
+  // A static vnode can contain multiple stringified elements, and the number
+  // of elements is necessary for hydration.
+  const vnode = createVNode(Static, null, content)
+  vnode.staticCount = numberOfNodes
+  return vnode
+}
+#+end_src
+
+* compile()
+
+#+name: compile
+#+begin_src js -n -r
+function compile(template, options = {}) {
+  return baseCompile(
+    template,
+    extend({}, parserOptions, options, {
+      nodeTransforms: [
+        // ignore <script> and <tag>
+        // this is not put inside DOMNodeTransforms because that list is used
+        // by compiler-ssr to generate vnode fallback branches
+        ignoreSideEffectTags,
+        ...DOMNodeTransforms,
+        ...(options.nodeTransforms || [])
+      ],
+      directiveTransforms: extend(
+        {},
+        DOMDirectiveTransforms,
+        options.directiveTransforms || {}
+      ),
+      transformHoist: __BROWSER__ ? null : stringifyStatic
+    })
+  )
+}
+#+end_src
+* parse
+
+#+name: parse
+#+begin_src js -n -r
+function parse(template, options = {}) {
+  return baseParse(template, extend({}, parserOptions, options))
+}
+#+end_src
+* testing
+
+更多测试([[https://github.com/vuejs/core/blob/main/packages/compiler-dom/__tests__/transforms/stringifyStatic.spec.ts][core/stringifyStatic.spec.ts at main · vuejs/core]])：
+
+#+name: testing
+#+begin_export html
+<script src="/assets/tests/compiler-core.js"></script>
+<script src="/assets/tests/compiler-dom.js"></script>
+<div id="h1Mvr33k"></div>
+<script src="/assets/js/vue-json-viewer/index.js"></script>
+<script src="/assets/tests/h1Mvr33k.js"></script>
+#+end_export
+
 * Global Variables
 
 #+html: <br>
 #+begin_details global variables :title-color green
-#+name: globalVarsCD
+#+name: globalVars
 #+begin_src js -n -r
 <<namedChars>>
 <<helpers-cd>>
@@ -2983,1169 +4140,6 @@ const replacer = (_key, val) => {
 
 #+end_src
 #+end_details
-* APIs
-
-compiler-dom 包包含以下 APIs 这个包主要是针对一些指令进行加工处理，如： ~v-html~,
-~v-text~ 等等。
-
-| name             | description                                      |
-|------------------+--------------------------------------------------|
-| [[transformStyleCD][transformStyle()]] | combine & normalize, result to object ~{a:b, c:d}~ |
-| [[transformVHtml][transformVHtml()]] | v-html                                           |
-| [[transformVText][transformVText()]] | v-text                                           |
-| [[transformModel][transformModel()]] | v-model, transform bind value and event handler  |
-| [[transformOn][transformOn()]]    | v-on, handle the event modifiers                 |
-| [[transformShow][transformShow()]]  | v-show                                           |
-
-code:
-
-#+name: compiler-dom
-#+begin_src js -n -r
-<<compiler-core>>
-<<globalVarsCD>>
-<<transformStyleCD>>
-<<transformVHtml>>
-<<transformVText>>
-<<transformModelCD>>
-<<transformOnCD>>
-<<transformShowCD>>
-<<stringifyStatic>>
-<<DOMDirectiveTransforms>>
-<<DOMNodeTransforms>>
-<<compile>>
-<<parse>>
-#+end_src
-
-export to file:
-#+html: <br>
-#+begin_details compiler-dom :title-color red
-#+begin_src js -n -r :noweb yes :tangle "~/github/mine/blog.cheng92.com/assets/tests/compiler-dom.js"
-<<compiler-dom>>
-#+end_src
-#+end_details
-
-* transforms
-
-#+name: DOMDirectiveTransforms
-#+begin_src js -n -r
-const DOMDirectiveTransforms = {
-  cloak: noopDirectiveTransform,
-  html: transformVHtml,
-  text: transformVText,
-  model: transformModelCD, // override compiler-core
-  on: transformOnCD, // override compiler-core
-  show: transformShowCD
-}
-#+end_src
-
-#+name: DOMNodeTransforms
-#+begin_src js -n -r
-const DOMNodeTransforms = [
-  transformStyleCD,
-  ...(__DEV__ ? [warnTransitionChildren] : [])
-]
-#+end_src
-
-** style
-
-compiler-dom 之前：
-
-#+name: test-before-cd
-#+begin_src js -n -r :exports both
-<<compiler-core>>
-
-logOff()
-const { code } = baseCompile('<div style="width:200px" :style="{height: `200px`}" />', { filename: 'foo.vue' })
-logOn()
-logg('<div style="width:200px" />', code)
-#+end_src
-
-对 style 属性进行加工处理，字符串拆成对象，然后合并到，同时支持多种使用方式
-
-1. ~<div style="width:100px">~ => ~{width:'100px'}~
-2. ~<div :style="{width:'100px'}">~ => ~{width:'100px'}~
-3. ~<div :style="{width:'100px'} style="height:100px">~ => ~{width:'100px',height:'100px'}~
-
-#+name: transformStyleCD
-#+begin_src js -n -r
-
-// Parse inline CSS strings for static style attributes into an object.
-// This is a NodeTransform since it works on the static `style` attribute and
-// converts it into a dynamic equivalent:
-// style="color: red" -> :style='{ "color": "red" }'
-// It is then processed by `transformElement` and included in the generated
-// props.
-const transformStyleCD = node => {
-  if (node.type === NodeTypes.ELEMENT) {
-    node.props.forEach((p, i) => {
-      if (p.type === NodeTypes.ATTRIBUTE && p.name === 'style' && p.value) {
-        // replace p with an expression node
-        node.props[i] = {
-          type: NodeTypes.DIRECTIVE,
-          name: `bind`,
-          arg: createSimpleExpression(`style`, true, p.loc),
-          exp: parseInlineCSS(p.value.content, p.loc),
-          modifiers: [],
-          loc: p.loc
-        }
-      }
-    })
-  }
-}
-
-const parseInlineCSS = (cssText, loc) => {
-  const normalized = parseStringStyle(cssText)
-  return createSimpleExpression(
-    JSON.stringify(normalized),
-    false,
-    loc,
-    ConstantTypes.CAN_STRINGIFY
-  )
-}
-#+end_src
-
-[[(parseStringStyle)][parseStringStyle]] 将字符串解析成对象 ~"width:100px"~ => ~{ width: '100px' }~
-
-[[(stringifyStyle)][stringifyStyle]] 将对象转成字符串 ~{ width: '100px' }~ => ~"width:100px"~
-
-[[(normalizeStyle)][normalizeStyle]] 解析 style 的值，可能是 ~"width:100px"~ 或 ~{width:'100px'}~ 也可以是
-~['width:100px', {height:'100px'}]~ 的混合方式，最终都会被解析成对象
-~{width:'100px', height: '100px'}~ 。
-
-#+begin_src js -n -r :exports both
-<<compiler-dom>>
-const pss = s => parseStringStyle(s)
-let r = pss('width:100px;height:100px')
-logg('parseStringStyle', r)
-const sfs = s => stringifyStyle(s)
-const s = sfs(r)
-logg('stringifyStyle', s)
-logg('normalizeStyle', normalizeStyle([r, s, 'font-size:12px', { 'line-height': 1.2 }]))
-#+end_src
-
-red:Testing
-
-#+begin_src js -n -r :exports both
-<<compiler-dom>>
-
-logOff()
-const { code } = compile('<div style="width:200px" :style="{height: `200px`}" />', { filename: 'foo.vue' })
-logOn()
-logg('<div style="width:200px" />', code)
-#+end_src
-
-#+RESULTS:
-#+begin_example
---------- createStructuralDirectiveTransform ---------
-name=for, matches=(n) => n === name
---------- createStructuralDirectiveTransform ---------
-name=/^(if|else|else-if)$/, matches=(n) => name.test(n)
---------- <div style="width:200px" /> ---------
-const _Vue = Vue
-
-return function render(_ctx, _cache) {
-  with (_ctx) {
-    const { normalizeStyle: _normalizeStyle, openBlock: _openBlock, createElementBlock: _createElementBlock } = _Vue
-
-    return (_openBlock(), _createElementBlock("div", {
-      style: _normalizeStyle([
-        {"width":"200px"},
-        {height: `200px`}
-      ])
-    }, null, 4))
-  }
-}
-undefined
-#+end_example
-
-注意与 [[test-before-cd][实现 compiler-dom 之前测试结果]] 对比结果，会发现后者的 ~style~ 都会被转成对
-象形式。
-
-之前：
-#+begin_src js
- style: _normalizeStyle([
-   "width:200px",
-   {height: `200px`}
- ])
-#+end_src
-
-之后：
-
-#+begin_src js
-style: _normalizeStyle([
-  {"width":"200px"},
-  {height: `200px`}
-])
-#+end_src
-
-** v-html
-
-#+name: transformVHtml
-#+begin_src js -n -r
-const transformVHtml = (dir, node, context) => {
-  const { exp, loc } = dir
-  if (!exp) {
-    logg("v-html no exp")
-  }
-  if (node.children.length) {
-    logg('v-html can not has children')
-    node.children.length = 0
-  }
-  return {
-    props: [
-      createObjectProperty(
-        createSimpleExpression(`innerHTML`, true, loc),
-        exp || createSimpleExpression('', true)
-      )
-    ]
-  }
-}
-#+end_src
-
-red:Testing
-
-before: 不会被处理
-#+begin_src js -n -r :exports both
-<<compiler-core>>
-logOff()
-const { code } = baseCompile("<div v-html='foo'><span/></div>", { filename: 'foo.vue' })
-logOn()
-logg('v-html', code)
-#+end_src
-
-after:
-
-#+begin_src js -n -r :exports both
-<<compiler-dom>>
-logOff()
-const { code } = compile("<div v-html='foo'><span/></div>", { filename: 'foo.vue' })
-logOn()
-logg('v-html', code)
-#+end_src
-
-注意看前后的结果， compile-core 阶段是没有对 v-html 进行处理的，且 after 结果中
-的 ~<span/>~ 已经没有了，且增加了 ~{ innerHTML }~ 属性。
-
-** v-text
-
-#+name: transformVText
-#+begin_src js -n -r
-const transformVText = (dir, node, context) => {
-  const { exp, loc } = dir
-  if (!exp) {
-    logg('v-text no exp')
-  }
-  if (node.children.length) {
-    logg('v-text can not have children')
-    node.children.length = 0
-  }
-  return {
-    props: [
-      createObjectProperty(
-        createSimpleExpression(`textContent`, true),
-        exp
-          ? createCallExpression(
-              context.helperString(TO_DISPLAY_STRING),
-              [exp],
-              loc
-            )
-          : createSimpleExpression('', true)
-      )
-    ]
-  }
-}
-#+end_src
-
-red:Testing
-
-before: compiler-core 中也没有对 v-text 指令的处理
-
-#+begin_src js -n -r :exports both
-<<compiler-core>>
-logOff()
-const { code } = baseCompile("<div v-text='foo'><span/></div>", { filename: 'foo.vue' })
-logOn()
-logg('v-text', code)
-#+end_src
-
-after: ~<span/>~ 所有子节点都会被删除，增加 ~{ textContent }~ 属性。
-#+begin_src js -n -r :exports both
-<<compiler-dom>>
-logOff()
-const { code } = compile("<div v-text='foo'><span/></div>", { filename: 'foo.vue' })
-logOn()
-logg('v-text', code)
-#+end_src
-
-** v-model
-
-#+name: transformModelCD
-#+begin_src js -n -r
-const transformModelCD = (dir, node, context) => {
-  const baseResult = transformModel(dir, node, context)
-  // base transform has errors OR component v-model (only need props)
-  if (!baseResult.props.length || node.tagType === ElementTypes.COMPONENT) {
-    return baseResult
-  }
-
-  if (dir.arg) {
-    logg("transfromModelCD - X_V_MODEL_ARG_ON_ELEMENT")
-  }
-
-  function checkDuplicatedValue() {
-    const value = findProp(node, 'value')
-    if (value) {
-      logg("transfromModelCD - X_V_MODEL_UNNECESSARY_VALUE")
-    }
-  }
-
-  const { tag } = node
-  const isCustomElement = context.isCustomElement(tag)
-  if (
-    tag === 'input' ||
-    tag === 'textarea' ||
-    tag === 'select' ||
-    isCustomElement
-  ) {
-    let directiveToUse = V_MODEL_TEXT
-    let isInvalidType = false
-    if (tag === 'input' || isCustomElement) {
-      const type = findProp(node, `type`)
-      if (type) {
-        if (type.type === NodeTypes.DIRECTIVE) {
-          // :type="foo"
-          directiveToUse = V_MODEL_DYNAMIC
-        } else if (type.value) {
-          switch (type.value.content) {
-            case 'radio':
-              directiveToUse = V_MODEL_RADIO
-              break
-            case 'checkbox':
-              directiveToUse = V_MODEL_CHECKBOX
-              break
-            case 'file':
-              isInvalidType = true
-              logg("[DOM]transformModel - X_V_MODEL_ON_FILE_INPUT_ELEMENT")
-              break
-            default:
-              // text type
-              __DEV__ && checkDuplicatedValue()
-              break
-          }
-        }
-      } else if (hasDynamicKeyVBind(node)) {
-        // element has bindings with dynamic keys, which can possibly contain
-        // "type".
-        directiveToUse = V_MODEL_DYNAMIC
-      } else {
-        // text type
-        __DEV__ && checkDuplicatedValue()
-      }
-    } else if (tag === 'select') {
-      directiveToUse = V_MODEL_SELECT
-    } else {
-      // textarea
-      __DEV__ && checkDuplicatedValue()
-    }
-    // inject runtime directive
-    // by returning the helper symbol via needRuntime
-    // the import will replaced a resolveDirective call.
-    if (!isInvalidType) {
-      baseResult.needRuntime = context.helper(directiveToUse)
-    }
-  } else {
-    logg("[DOM]transformModel - X_V_MODEL_ON_INVALID_ELEMENT")
-  }
-
-  // native vmodel doesn't need the `modelValue` props since they are also
-  // passed to the runtime as `binding.value`. removing it reduces code size.
-  baseResult.props = baseResult.props.filter(
-    p =>
-      !(
-        p.key.type === NodeTypes.SIMPLE_EXPRESSION &&
-        p.key.content === 'modelValue'
-      )
-  )
-
-  return baseResult
-}
-#+end_src
-
-1. 只处理 input, textarea, select 文本框标签，或自定义的标签
-
-2. <input> 标签类型分为 radio 和 checkbox 单复选项框处理，不能使用 type='file' 类型
-
-3. <select> 下拉选项框的处理
-
-4. 过滤掉 transform 之后的 ~{modelValue: value, 'onUpdate:value': $event => value
-   = $event}~ 里面的 ~modelValue：value~ 属性，因为在 runtime-core 时期的
-   [[withDirectives][withDirectives(]]) 处理里面会被绑定到 value 属性上
-
-red:Testing
-
-before:
-
-#+begin_src js -n -r :exports both
-<<compiler-core>>
-
-logOff()
-const { code } = baseCompile("<input type='text' v-model='value' />", { filename: 'foo.vue' })
-logOn()
-log('v-model', code)
-#+end_src
-
-after: 多了一层包装 ~_withDirectives()~
-#+begin_src js -n -r :exports both
-<<compiler-dom>>
-
-logOff()
-const { code } = compile("<input type='text' v-model='value' />", { filename: 'foo.vue' })
-logOn()
-log('v-model', code)
-#+end_src
-
-那来看下 ~_withDirectives()~ 里面做了什么？
-
-#+name: withDirectives
-#+begin_src js -n -r
-function withDirectives(vnode, directives) {
-  const internalInstance = currentRenderingInstance
-  if (internalInstance === null) {
-    return vnode
-  }
-  // 取当前应用实例
-  const instance = getExposeProxy(internalInstance) || internalInstance.proxy
-  const bindings = vnode.dirs || (vnode.dirs = [])
-  for (let i = 0; i < directives.length; i++) {
-
-    let [dir, value, arg, modifiers = EMPTY_OBJ] = directives[i]
-    if (isFunction(dir)) {
-      dir = {
-        mounted: dir,
-        updated: dir
-      }
-    }
-    if (dir.deep) {
-      traverse(value)
-    }
-    bindings.push({
-      dir,
-      instance,
-      value,
-      oldValue: void 0,
-      arg,
-      modifiers
-    })
-  }
-  return vnode
-}
-#+end_src
-** v-on
-
-#+name: transformOnCD
-#+begin_src js -n -r
-const isEventOptionModifier = /*#__PURE__*/ makeMap(`passive,once,capture`)
-const isNonKeyModifier = /*#__PURE__*/ makeMap(
-  // event propagation management
-  `stop,prevent,self,` +
-    // system modifiers + exact
-    `ctrl,shift,alt,meta,exact,` +
-    // mouse
-    `middle`
-)
-// left & right could be mouse or key modifiers based on event type
-const maybeKeyModifier = /*#__PURE__*/ makeMap('left,right')
-const isKeyboardEvent = /*#__PURE__*/ makeMap(
-  `onkeyup,onkeydown,onkeypress`,
-  true
-)
-
-// 将修饰符分类
-const resolveModifiers = (key, modifiers, context, loc) => {
-  const keyModifiers = []
-  const nonKeyModifiers = []
-  const eventOptionModifiers = []
-
-  for (let i = 0; i < modifiers.length; i++) {
-    const modifier = modifiers[i]
-
-    if (isEventOptionModifier(modifier)) {
-      // eventOptionModifiers: modifiers for addEventListener() options,
-      // e.g. .passive & .capture
-      eventOptionModifiers.push(modifier)
-    } else {
-      // runtimeModifiers: modifiers that needs runtime guards
-      if (maybeKeyModifier(modifier)) {
-        if (isStaticExp(key)) {
-          if (isKeyboardEvent(key.content)) {
-            keyModifiers.push(modifier)
-          } else {
-            nonKeyModifiers.push(modifier)
-          }
-        } else {
-          keyModifiers.push(modifier)
-          nonKeyModifiers.push(modifier)
-        }
-      } else {
-        if (isNonKeyModifier(modifier)) {
-          nonKeyModifiers.push(modifier)
-        } else {
-          keyModifiers.push(modifier)
-        }
-      }
-    }
-  }
-
-  return {
-    keyModifiers,
-    nonKeyModifiers,
-    eventOptionModifiers
-  }
-}
-
-// 原生 click 事件
-const transformClick = (key, event) => {
-  const isStaticClick =
-    isStaticExp(key) && key.content.toLowerCase() === 'onclick'
-  return isStaticClick
-    ? createSimpleExpression(event, true)
-    : key.type !== NodeTypes.SIMPLE_EXPRESSION
-    ? createCompoundExpression([
-        `(`,
-        key,
-        `) === "onClick" ? "${event}" : (`,
-        key,
-        `)`
-      ])
-    : key
-}
-
-const transformOnCD = (dir, node, context) => {
-  return transformOn(dir, node, context, baseResult => {
-    const { modifiers } = dir
-    if (!modifiers.length) return baseResult
-
-    let { key, value: handlerExp } = baseResult.props[0]
-    const { keyModifiers, nonKeyModifiers, eventOptionModifiers } =
-      resolveModifiers(key, modifiers, context, dir.loc)
-
-    // normalize click.right and click.middle since they don't actually fire
-    if (nonKeyModifiers.includes('right')) { (ref:transformOnCD-right)
-      key = transformClick(key, `onContextmenu`)
-    }
-    if (nonKeyModifiers.includes('middle')) {
-      key = transformClick(key, `onMouseup`)
-    }
-
-    if (nonKeyModifiers.length) {
-      handlerExp = createCallExpression(context.helper(V_ON_WITH_MODIFIERS), [
-        handlerExp,
-        JSON.stringify(nonKeyModifiers)
-      ])
-    }
-
-    if (
-      keyModifiers.length &&
-      // if event name is dynamic, always wrap with keys guard
-      (!isStaticExp(key) || isKeyboardEvent(key.content))
-    ) {
-      handlerExp = createCallExpression(context.helper(V_ON_WITH_KEYS), [
-        handlerExp,
-        JSON.stringify(keyModifiers)
-      ])
-    }
-
-    if (eventOptionModifiers.length) {
-      const modifierPostfix = eventOptionModifiers.map(capitalize).join('')
-      key = isStaticExp(key)
-        ? createSimpleExpression(`${key.content}${modifierPostfix}`, true)
-        : createCompoundExpression([`(`, key, `) + "${modifierPostfix}"`])
-    }
-
-    return {
-      props: [createObjectProperty(key, handlerExp)]
-    }
-  })
-}
-#+end_src
-
-red:Testing
-
-before: 注意看结果会发现修饰符并没有出现在 render 函数中
-#+begin_src js -n -r :exports both
-<<compiler-core>>
-
-logOff()
-const { code } = baseCompile(`<div @click.enter.passive="handleClick" />`, { filename: 'foo.vue' })
-logOn()
-log('onclick', code)
-#+end_src
-
-after:
-#+begin_src js -n -r :exports both
-<<compiler-dom>>
-
-logOff()
-const { code } = compile(`<div @click.right.passive="handleClick" />`, { filename: 'foo.vue' })
-logOn()
-log('onclick', code)
-#+end_src
-
-1. right 修饰符下的 click 事件被转成了 ~onContextmenu~ 右键点击事件
-2. passive 修饰符直接被追加到了事件 key 后面 ~onContextmenuPassive~, 这也是 vue 中
-   对修饰符的处理方式(如： ~@click.right.once~ => ~onContextmenuOnce~)
-
-
-当有修饰符的时候会使用到 withModifiers, 每个修饰符都有自己对应的一个函数，只有当
-满足条件的才会让事件继续，也就是最后的 ~fn(event, ...args)~ 执行:
-
-#+begin_src typescript -n -r
-const modifierGuards: Record<
-  string,
-  (e: Event, modifiers: string[]) => void | boolean
-> = {
-  stop: e => e.stopPropagation(),
-  prevent: e => e.preventDefault(),
-  self: e => e.target !== e.currentTarget,
-  ctrl: e => !(e as KeyedEvent).ctrlKey,
-  shift: e => !(e as KeyedEvent).shiftKey,
-  alt: e => !(e as KeyedEvent).altKey,
-  meta: e => !(e as KeyedEvent).metaKey,
-  left: e => 'button' in e && (e as MouseEvent).button !== 0,
-  middle: e => 'button' in e && (e as MouseEvent).button !== 1,
-  right: e => 'button' in e && (e as MouseEvent).button !== 2,
-  exact: (e, modifiers) =>
-    systemModifiers.some(m => (e as any)[`${m}Key`] && !modifiers.includes(m))
-}
-
-const withModifiers = (fn: Function, modifiers: string[]) => {
-  return (event: Event, ...args: unknown[]) => {
-    for (let i = 0; i < modifiers.length; i++) {
-      const guard = modifierGuards[modifiers[i]]
-      if (guard && guard(event, modifiers)) return
-    }
-    return fn(event, ...args)
-  }
-}
-#+end_src
-
-#+begin_box 小结
-compiler-dom 对 v-on 指令的处理就是对修饰符的处理，将事件函数进行转换，使用
-~withModifiers()~ 进行封装。
-
-修饰符有三类：
-
-1. 事件选项kbd:passive,once,capture
-
-   [[https://segmentfault.com/a/1190000017247263][passive的作用和原理 - SegmentFault 思否]]
-
-   [[https://blog.techbridge.cc/2017/07/15/javascript-event-propagation/][DOM 的事件傳遞機制：捕獲與冒泡]]
-
-2. 冒泡相关 kbd:stop,prevent,self, 系统组合键 kbd:ctrl,shift,alt,meta,exact, 鼠
-   标按键 kbd:middle
-3. <kbd:left, right> 可能是鼠标也可以是键盘上的左右键
-
-
-修饰符影响事件类型：
-
-1. click.right 转成右键菜单键 ~onContextmenu~
-2. click.middle 转成鼠标中键 ~onMouseUp~
-#+end_box
-
-** v-show
-
-v-show 在这里并没有真正的被处理到，而在 runtime 运行时才会被处理，也就是后面会完
-成的 ~runtime-dom~ 包里，实现原理其实就是控制元素 ~display~ 属性，这里只是将其标识了
-下需要运行时去处理。
-
-旧博客中有相关分析：[[https://www.cheng92.com/vue/vue-mind-map-runtime-dom/#v-show][Vue3 源码头脑风暴之 8 ☞ runtime-dom - 若叶知秋]]
-
-#+name: transformShowCD
-#+begin_src js -n -r
-const transformShowCD = (dir, node, context) => {
-  const { exp, loc } = dir
-  if (!exp) {
-    logg('transformShowCD no exp.')
-  }
-
-  return {
-    props: [],
-    needRuntime: context.helper(V_SHOW)
-  }
-}
-#+end_src
-
-** stringifyStatic
-
-在处理静态提升代码时需要用到 ~stringifyStatic~, 它会将静态提升的节点直接字符串化，
-然后创建一个 off-dom 节点来保存它，等到需要使用的时候直接使用这个 off-dom 节点。
-
-#+name: stringifyStatic
-#+begin_src js -n -r
- const StringifyThresholds = {
-   ELEMENT_WITH_BINDING_COUNT: 5,
-   NODE_COUNT: 20
-}
-
-/**
- ,* Regex for replacing placeholders for embedded constant variables
- ,* (e.g. import URL string constants generated by compiler-sfc)
- ,*/
-const expReplaceRE = /__VUE_EXP_START__(.*?)__VUE_EXP_END__/g
-
-/**
- ,* Turn eligible hoisted static trees into stringified static nodes, e.g.
- ,*
- ,* ```js
- ,* const _hoisted_1 = createStaticVNode(`<div class="foo">bar</div>`)
- ,* ```
- ,*
- ,* A single static vnode can contain stringified content for **multiple**
- ,* consecutive nodes (element and plain text), called a "chunk".
- ,* `@vue/runtime-dom` will create the content via innerHTML in a hidden
- ,* container element and insert all the nodes in place. The call must also
- ,* provide the number of nodes contained in the chunk so that during hydration
- ,* we can know how many nodes the static vnode should adopt.
- ,*
- ,* The optimization scans a children list that contains hoisted nodes, and
- ,* tries to find the largest chunk of consecutive hoisted nodes before running
- ,* into a non-hoisted node or the end of the list. A chunk is then converted
- ,* into a single static vnode and replaces the hoisted expression of the first
- ,* node in the chunk. Other nodes in the chunk are considered "merged" and
- ,* therefore removed from both the hoist list and the children array.
- ,*
- ,* This optimization is only performed in Node.js.
- ,*/
-const stringifyStatic = (children, context, parent) => {
-  // bail stringification for slot content
-  if (context.scopes.vSlot > 0) {
-    return
-  }
-
-  let nc = 0 // current node count
-  let ec = 0 // current element with binding count
-  const currentChunk = []
-
-  logg(`stringifyStatic - children.length = ${children.length}`)
-  const stringifyCurrentChunk = (currentIndex) => {
-    if (
-      nc >= StringifyThresholds.NODE_COUNT ||
-      ec >= StringifyThresholds.ELEMENT_WITH_BINDING_COUNT
-    ) {
-      logg(`stringifyCurrentChunk - index = ${currentIndex}`)
-      // combine all currently eligible nodes into a single static vnode call
-      const staticCall = createCallExpression(context.helper(CREATE_STATIC), [
-        JSON.stringify(
-          currentChunk.map(node => stringifyNode(node, context)).join('')
-        ).replace(expReplaceRE, `" + $1 + "`),
-        // the 2nd argument indicates the number of DOM nodes this static vnode
-        // will insert / hydrate
-        String(currentChunk.length)
-      ])
-      // replace the first node's hoisted expression with the static vnode call
-      replaceHoist(currentChunk[0], staticCall, context)
-
-      if (currentChunk.length > 1) {
-        for (let i = 1; i < currentChunk.length; i++) {
-          // for the merged nodes, set their hoisted expression to null
-          replaceHoist(currentChunk[i], null, context)
-        }
-
-        // also remove merged nodes from children
-        const deleteCount = currentChunk.length - 1
-        children.splice(currentIndex - currentChunk.length + 1, deleteCount)
-        return deleteCount
-      }
-    }
-    return 0
-  }
-
-  let i = 0
-  for (; i < children.length; i++) {
-    const child = children[i]
-    const hoisted = getHoistedNode(child)
-    if (hoisted) {
-      // presence of hoisted means child must be a stringifiable node
-      const node = child
-      const result = analyzeNode(node)
-      if (result) {
-        // node is stringifiable, record state
-        nc += result[0]
-        ec += result[1]
-        currentChunk.push(node)
-        continue
-      }
-    }
-    // we only reach here if we ran into a node that is not stringifiable
-    // check if currently analyzed nodes meet criteria for stringification.
-    // adjust iteration index
-    i -= stringifyCurrentChunk(i)
-    // reset state
-    nc = 0
-    ec = 0
-    currentChunk.length = 0
-  }
-  // in case the last node was also stringifiable
-  stringifyCurrentChunk(i)
-}
-
-const getHoistedNode = (node) =>
-  ((node.type === NodeTypes.ELEMENT && node.tagType === ElementTypes.ELEMENT) ||
-    node.type == NodeTypes.TEXT_CALL) &&
-  node.codegenNode &&
-  node.codegenNode.type === NodeTypes.SIMPLE_EXPRESSION &&
-  node.codegenNode.hoisted
-
-const dataAriaRE = /^(data|aria)-/
-const isStringifiableAttr = (name, ns) => {
-  return (
-    (ns === DOMNamespaces.HTML
-      ? isKnownHtmlAttr(name)
-      : ns === DOMNamespaces.SVG
-      ? isKnownSvgAttr(name)
-      : false) || dataAriaRE.test(name)
-  )
-}
-
-const replaceHoist = (node,replacement,context) => {
-  const hoistToReplace = node.codegenNode.hoisted
-  context.hoists[context.hoists.indexOf(hoistToReplace)] = replacement
-}
-
-const isNonStringifiable = /*#__PURE__*/ makeMap(
-  `caption,thead,tr,th,tbody,td,tfoot,colgroup,col`
-)
-
-/**
- ,* for a hoisted node, analyze it and return:
- ,* - false: bailed (contains non-stringifiable props or runtime constant)
- ,* - [nc, ec] where
- ,*   - nc is the number of nodes inside
- ,*   - ec is the number of element with bindings inside
- ,*/
-function analyzeNode(node) {
-  if (node.type === NodeTypes.ELEMENT && isNonStringifiable(node.tag)) {
-    return false
-  }
-
-  if (node.type === NodeTypes.TEXT_CALL) {
-    return [1, 0]
-  }
-
-  let nc = 1 // node count
-  let ec = node.props.length > 0 ? 1 : 0 // element w/ binding count
-  let bailed = false
-  const bail = () => {
-    bailed = true
-    return false
-  }
-
-  // TODO: check for cases where using innerHTML will result in different
-  // output compared to imperative node insertions.
-  // probably only need to check for most common case
-  // i.e. non-phrasing-content tags inside `<p>`
-  function walk(node) {
-    for (let i = 0; i < node.props.length; i++) {
-      const p = node.props[i]
-      // bail on non-attr bindings
-      if (
-        p.type === NodeTypes.ATTRIBUTE &&
-        !isStringifiableAttr(p.name, node.ns)
-      ) {
-        return bail()
-      }
-      if (p.type === NodeTypes.DIRECTIVE && p.name === 'bind') {
-        // bail on non-attr bindings
-        if (
-          p.arg &&
-          (p.arg.type === NodeTypes.COMPOUND_EXPRESSION ||
-            (p.arg.isStatic && !isStringifiableAttr(p.arg.content, node.ns)))
-        ) {
-          return bail()
-        }
-        if (
-          p.exp &&
-          (p.exp.type === NodeTypes.COMPOUND_EXPRESSION ||
-            p.exp.constType < ConstantTypes.CAN_STRINGIFY)
-        ) {
-          return bail()
-        }
-      }
-    }
-    for (let i = 0; i < node.children.length; i++) {
-      nc++
-      const child = node.children[i]
-      if (child.type === NodeTypes.ELEMENT) {
-        if (child.props.length > 0) {
-          ec++
-        }
-        walk(child)
-        if (bailed) {
-          return false
-        }
-      }
-    }
-    return true
-  }
-
-  return walk(node) ? [nc, ec] : false
-}
-
-function stringifyNode(node, context) {
-  if (isString(node)) {
-    return node
-  }
-  if (isSymbol(node)) {
-    return ``
-  }
-  switch (node.type) {
-    case NodeTypes.ELEMENT:
-      return stringifyElement(node, context)
-    case NodeTypes.TEXT:
-      return escapeHtml(node.content)
-    case NodeTypes.COMMENT:
-      return `<!--${escapeHtml(node.content)}-->`
-    case NodeTypes.INTERPOLATION:
-      return escapeHtml(toDisplayString(evaluateConstant(node.content)))
-    case NodeTypes.COMPOUND_EXPRESSION:
-      return escapeHtml(evaluateConstant(node))
-    case NodeTypes.TEXT_CALL:
-      return stringifyNode(node.content, context)
-    default:
-      // static trees will not contain if/for nodes
-      return ''
-  }
-}
-
-function stringifyElement(node, context) {
-  let res = `<${node.tag}`
-  for (let i = 0; i < node.props.length; i++) {
-    const p = node.props[i]
-    if (p.type === NodeTypes.ATTRIBUTE) {
-      res += ` ${p.name}`
-      if (p.value) {
-        res += `="${escapeHtml(p.value.content)}"`
-      }
-    } else if (p.type === NodeTypes.DIRECTIVE && p.name === 'bind') {
-      const exp = p.exp
-      if (exp.content[0] === '_') {
-        // internally generated string constant references
-        // e.g. imported URL strings via compiler-sfc transformAssetUrl plugin
-        res += ` ${p.arg.content}="__VUE_EXP_START__${
-          exp.content
-        }__VUE_EXP_END__"`
-        continue
-      }
-      // constant v-bind, e.g. :foo="1"
-      let evaluated = evaluateConstant(exp)
-      if (evaluated != null) {
-        const arg = p.arg && p.arg.content
-        if (arg === 'class') {
-          evaluated = normalizeClass(evaluated)
-        } else if (arg === 'style') {
-          evaluated = stringifyStyle(normalizeStyle(evaluated))
-        }
-        res += ` ${p.arg.content}="${escapeHtml(evaluated)}"`
-      }
-    }
-  }
-  if (context.scopeId) {
-    res += ` ${context.scopeId}`
-  }
-  res += `>`
-  for (let i = 0; i < node.children.length; i++) {
-    res += stringifyNode(node.children[i], context)
-  }
-  if (!isVoidTag(node.tag)) {
-    res += `</${node.tag}>`
-  }
-  return res
-}
-
-// __UNSAFE__
-// Reason: eval.
-// It's technically safe to eval because only constant expressions are possible
-// here, e.g. `{{ 1 }}` or `{{ 'foo' }}`
-// in addition, constant exps bail on presence of parens so you can't even
-// run JSFuck in here. But we mark it unsafe for security review purposes.
-// (see compiler-core/src/transformExpressions)
-function evaluateConstant(exp) {
-  if (exp.type === NodeTypes.SIMPLE_EXPRESSION) {
-    return new Function(`return ${exp.content}`)()
-  } else {
-    // compound
-    let res = ``
-    exp.children.forEach(c => {
-      if (isString(c) || isSymbol(c)) {
-        return
-      }
-      if (c.type === NodeTypes.TEXT) {
-        res += c.content
-      } else if (c.type === NodeTypes.INTERPOLATION) {
-        res += toDisplayString(evaluateConstant(c.content))
-      } else {
-        res += evaluateConstant(c)
-      }
-    })
-    return res
-  }
-}
-
-#+end_src
-
-red:Testing
-
-#+name: stringifyStatic-test-utils
-#+begin_src js -n -r
-<<compiler-dom>>
-
-function compileWithStringify(template) {
-    return compile(template, {
-      hoistStatic: true,
-      prefixIdentifiers: true,
-      transformHoist: stringifyStatic
-    })
-  }
-
-  function repeat(code, n) {
-    return new Array(n)
-      .fill(0)
-      .map(() => code)
-      .join('')
-  }
-#+end_src
-
-#+html: <br>
-#+begin_details should bail on non-eligible static trees :title-color red
-#+begin_src js -n -r :exports both
-<<stringifyStatic-test-utils>>
-
-logOff()
-const { ast, code } = compileWithStringify(
-  `<div><div><div>hello</div><div>hello</div></div></div>`
-)
-logOn()
-logg('ast hoists', ast.hoists)
-logg('code', code)
-#+end_src
-#+end_details
-
-#+html: <br>
-#+begin_details should work on eligible content (elements with binding > 5) :title-color red
-#+begin_src js -n -r :exports both
-<<stringifyStatic-test-utils>>
-
-logOff()
-const { ast, code } = compileWithStringify(
-  `<div><div>${repeat(
-        `<span class="foo"/>`,
-        StringifyThresholds.ELEMENT_WITH_BINDING_COUNT
-      )}</div></div><div></div>`
-  //`<div><div><div>hello</div><div>hello</div></div></div>`
-)
-logOn()
-logg('ast hoists', ast.hoists)
-logg('code', code)
-#+end_src
-#+end_details
-
-#+html: <br>
-#+begin_details should work on eligible content (elements > 20) :title-color red
-#+begin_src js -n -r :exports both
-<<stringifyStatic-test-utils>>
-
-logOff()
-const { ast, code } = compileWithStringify(
-  `<div><div>${repeat(
-        `<span/>`,
-        StringifyThresholds.NODE_COUNT
-      )}</div></div>`
-)
-logOn()
-logg('ast hoists', ast.hoists)
-logg('code', code)
-#+end_src
-#+end_details
-
-#+html: <br>
-#+begin_details serializing constant bindings :title-color red
-#+begin_src js -n -r :exports both
-<<stringifyStatic-test-utils>>
-
-logOff()
-const { ast, code } = compileWithStringify(
-  `<div><div :style="{ color: 'red' }">${repeat(
-        `<span :class="[{ foo: true }, { bar: true }]">{{ 1 }} + {{ false }}</span>`,
-        StringifyThresholds.ELEMENT_WITH_BINDING_COUNT
-      )}</div></div>`
-)
-logOn()
-logg('ast hoists', ast.hoists)
-logg('code', code)
-#+end_src
-#+end_details
-
-createStaticVNode:
-
-#+begin_src typescript -n -r
-function createStaticVNode(
-  content: string,
-  numberOfNodes: number
-): VNode {
-  // A static vnode can contain multiple stringified elements, and the number
-  // of elements is necessary for hydration.
-  const vnode = createVNode(Static, null, content)
-  vnode.staticCount = numberOfNodes
-  return vnode
-}
-#+end_src
-
-* compile()
-
-#+name: compile
-#+begin_src js -n -r
-function compile(template, options = {}) {
-  return baseCompile(
-    template,
-    extend({}, parserOptions, options, {
-      nodeTransforms: [
-        // ignore <script> and <tag>
-        // this is not put inside DOMNodeTransforms because that list is used
-        // by compiler-ssr to generate vnode fallback branches
-        ignoreSideEffectTags,
-        ...DOMNodeTransforms,
-        ...(options.nodeTransforms || [])
-      ],
-      directiveTransforms: extend(
-        {},
-        DOMDirectiveTransforms,
-        options.directiveTransforms || {}
-      ),
-      transformHoist: __BROWSER__ ? null : stringifyStatic
-    })
-  )
-}
-#+end_src
-* parse
-
-#+name: parse
-#+begin_src js -n -r
-function parse(template, options = {}) {
-  return baseParse(template, extend({}, parserOptions, options))
-}
-#+end_src
-* testing
-
-更多测试([[https://github.com/vuejs/core/blob/main/packages/compiler-dom/__tests__/transforms/stringifyStatic.spec.ts][core/stringifyStatic.spec.ts at main · vuejs/core]])：
-
-#+name: testing
-#+begin_export html
-<script src="/assets/tests/compiler-dom.js"></script>
-<div id="h1Mvr33k"></div>
-<script src="/assets/js/vue-json-viewer/index.js"></script>
-<script src="/assets/tests/h1Mvr33k.js"></script>
-#+end_export
-
 * COMMENT Local Variables       :ARCHIVE:
 # Local Variables:
 # after-save-hook: gcl/org-html-export-to-html
