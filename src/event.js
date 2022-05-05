@@ -10,10 +10,13 @@ function addCopyButton() {
     if (e.type === 'mouseenter') {
       $(this).append(`<button id="${id}">复制代码</button>`)
       $(qid).click(function () {
-        const code = $pre
-          .clone(true)
+        const cloned = $pre.clone(true)
+        cloned.find('span.linenr').each(function () {
+          $(this).remove()
+        })
+        const code = cloned
           .text()
-          .replace(/\x20{0,}\d+:/g, '')
+          // .replace(/\x20{0,}\d+:/g, '')
           .replace('复制代码', '')
         navigator.clipboard.writeText(code).then(() => {
           ElementPlus.ElMessage({
