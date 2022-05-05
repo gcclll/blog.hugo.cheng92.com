@@ -1909,7 +1909,7 @@ logg("children[2]", ast.children[2])
 #+begin_src js -n -r  :exports both
 <<transform-testing-utils>>
 
-const ast = baseParse(`<span/><div>hello</div><span/>`)
+const ast = baseParse(`<span/><div>hello</div><p>world!</p><span/>`)
 const c1 = ast.children[0]
 const c2 = ast.children[1]
 const c3 = ast.children[2]
