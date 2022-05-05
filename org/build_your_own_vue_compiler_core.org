@@ -54,13 +54,6 @@ red:浏览器测试请使用 [[/assets/tests/compiler-core.html][compiler-core.h
 | [[transformSlotOutlet][<slot/>]] | [[buildSlots][v-slot]] | [[transformBind][v-bind]] |
 | [[transformModel][v-model]] | [[transformOnce][v-once]] | [[transformMemo][v-memo]] |
 
-使用到的一些公共变量和函数：
-#+html: <br>
-#+begin_details global variables :title-color red
-#+name: globalVars
-#+include: ../assets/tests/globalVars.js src js -n -r
-#+end_details
-
 * ast parser
 :PROPERTIES:
 :COLUMNS:  %CUSTOM_ID[(Custom Id)]
@@ -9003,19 +8996,54 @@ logg("block + directives", _genCode(
 :CUSTOM_ID: cc-compile
 :END:
 
-
 结合 ast parser -> transform -> codegen 使用 compile 函数将 SFC 编译成 render 函
 数。
 
 #+begin_details compiler-core.js :title-color red
 #+name: compiler-core
 #+begin_src js -n -r :noweb no-export :tangle "~/github/mine/blog.cheng92.com/assets/tests/compiler-core.js"
+
 const compilerCore = (function() {
-  <<baseCompile-export>>
+  <<baseParse>>
+  <<transform>>
+  <<getBaseTransformPreset>>
+  <<codegen>>
+
+  function baseCompile(template, options = {}) {
+    const isModuleMode = options.mode === 'module'
+
+    const prefixIdentifiers =
+        !__BROWSER__ && (options.prefixIdentifiers === true || isModuleMode)
+
+    const ast = isString(template) ? baseParse(template, options) : template
+    const [nodeTransforms, directiveTransforms] = getBaseTransformPreset(prefixIdentifiers)
+
+    // 转换出每个节点的 codegenNode
+    transform(
+        ast,
+        extend({}, options, {
+        prefixIdentifiers,
+        nodeTransforms: [
+            ...nodeTransforms,
+            ...(options.nodeTransforms || []) // user transforms
+        ],
+        directiveTransforms: extend(
+            {},
+            directiveTransforms,
+            options.directiveTransforms || {} // user transforms
+        )
+        })
+    )
+
+    // 生成 codegen
+    return generate(ast, extend({}, options, { prefixIdentifiers }))
+  }
 
   return {
     baseCompile,
+    baseParse,
     generate,
+    transform
   }
 }())
 #+end_src
@@ -9023,60 +9051,12 @@ const compilerCore = (function() {
 
 用于本文测试用的，包含了全局变量代码。
 
-#+name: baseCompile
-#+begin_src js -n -r :noweb no-export
-<<globalVars>>
-
-<<baseCompile-export>>
-#+end_src
-
-用来导出到文件的，不含全局变量。
-
-#+name: baseCompile-export
-#+begin_src js -n -r
-<<baseParse>>
-<<transform>>
-<<getBaseTransformPreset>>
-<<codegen>>
-
-function baseCompile(template, options = {}) {
-  const isModuleMode = options.mode === 'module'
-
-  const prefixIdentifiers =
-    !__BROWSER__ && (options.prefixIdentifiers === true || isModuleMode)
-
-  const ast = isString(template) ? baseParse(template, options) : template
-  const [nodeTransforms, directiveTransforms] = getBaseTransformPreset(prefixIdentifiers)
-
-  // 转换出每个节点的 codegenNode
-  transform(
-    ast,
-    extend({}, options, {
-      prefixIdentifiers,
-      nodeTransforms: [
-        ...nodeTransforms,
-        ...(options.nodeTransforms || []) // user transforms
-      ],
-      directiveTransforms: extend(
-        {},
-        directiveTransforms,
-        options.directiveTransforms || {} // user transforms
-      )
-    })
-  )
-
-  // 生成 codegen
-  return generate(ast, extend({}, options, { prefixIdentifiers }))
-}
-#+end_src
-
 red:Testing
 
 #+html: <br>
 #+begin_details integration tests :title-color red
 #+begin_src js -n -r :exports both
-<<globalVars>>
-<<baseCompile>>
+<<compiler-core>>
 
 const { baseCompile } = compilerCore
 const source = `
@@ -9179,6 +9159,16 @@ function getBaseTransformPreset(prefixIdentifiers) {
 #+end_export
 
 旧博客中包含很多测试用例和对应的流程图可供参考：[[https://www.cheng92.com/vue/vue-mind-map-house-cc/][Vue3 源码头脑风暴之☞compiler-core - 若叶知秋]]
+** global variables
+
+使用到的一些公共变量和函数：
+#+html: <br>
+#+begin_details global variables :title-color red
+#+name: globalVars
+#+include: ../assets/tests/globalVars.js src js -n -r
+#+end_details
+
+
 * COMMENT Local Variables :ARCHIVE:
 # Local Variables:
 # after-save-hook: gcl/org-html-export-to-html

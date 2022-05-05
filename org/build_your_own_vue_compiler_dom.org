@@ -21,6 +21,9 @@
 #+begin_details compiler-core 代码 :title-color green
 [[https://blog.cheng92.com/posts/build_your_own_vue_compiler_core.html][build your own vue compiler-core]]
 
+#+name: globalVars
+#+include ../assets/tests/globalVars.js src js -n -r
+
 #+name: compiler-core
 #+include: ../assets/tests/compiler-core.js src js -n -r
 #+end_details
@@ -41,11 +44,9 @@ compiler-dom 包包含以下 APIs 这个包主要是针对一些指令进行加�
 
 code:
 
-#+name: compiler-dom
+#+name: compiler-dom-export
 #+begin_src js -n -r
-<<compiler-core>>
 const compilerDom = (function() {
-  <<globalVars>>
   <<transformStyle>>
   <<transformVHtml>>
   <<transformVText>>
@@ -68,13 +69,18 @@ const compilerDom = (function() {
 }())
 #+end_src
 
-#+RESULTS: compiler-dom
+#+name: compiler-dom
+#+begin_src js -n -r
+<<globalVars>>
+<<compiler-core>>
+<<compiler-dom-export>>
+#+end_src
 
 export to file:
 #+html: <br>
 #+begin_details compiler-dom :title-color red
 #+begin_src js -n -r :noweb yes :tangle "~/github/mine/blog.cheng92.com/assets/tests/compiler-dom.js"
-<<compiler-dom>>
+<<compiler-dom-export>>
 #+end_src
 #+end_details
 
