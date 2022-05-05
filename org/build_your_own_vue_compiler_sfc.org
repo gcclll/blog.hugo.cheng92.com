@@ -48,6 +48,7 @@ TODO compiler-sfc
 <<globalVarsDom>>
 <<compiler-dom>>
 <<globalVarsSFC>>
+<<sfc-parse-script>>
 <<compileScript>>
 #+end_src
 #+end_details
@@ -619,7 +620,7 @@ function processDefineExpose(node) {
 #+end_src
 *** checkInvalidScopeReference()
 
-#+name: checkInvalidScopeReference
+#+name: cs-u-checkInvalidScopeReference
 #+begin_src js -n -r
 function checkInvalidScopeReference(node, method) {
     if (!node) return
@@ -980,7 +981,7 @@ function processNormalScript() {
 #+name: cs-s-processSetupScript
 #+begin_src js -n -r
 function processSetupScript() {
-  const scriptSetupAst = babelParser.parse(
+  const scriptSetupAst = parse(
     scriptSetup.content,
     {
       plugins: [
@@ -1207,6 +1208,10 @@ function processSetupScript() {
   return scriptSetupAst
 }
 #+end_src
+
+#+RESULTS: cs-s-processSetupScript
+: undefined
+
 *** apply reactivity transform
 
 #+name: cs-s-applyReactivityTransform
@@ -2461,7 +2466,7 @@ function genNormalScriptCssVarsCode(
 
 #+name: sfc-testing
 #+begin_src js -n -r
-<<compiler-sfc>>
+<<compiler-sfc-script>>
 
 const mockId = 'xxxxxxxx'
 
@@ -2469,7 +2474,7 @@ function compileSFCScript(
   src,
   options
 ) {
-  const { descriptor } = parse(src)
+  const { descriptor } = parseSFCScript(src)
   return compileScript(descriptor, {
     ...options,
     id: mockId
@@ -2477,6 +2482,10 @@ function compileSFCScript(
 }
 #+end_src
 
+red:Testing
+
+#+html: <br>
+#+begin_details script&setup 合并变量 :title-color red
 #+begin_src js -n -r :exports both
 <<sfc-testing>>
 
@@ -2497,9 +2506,92 @@ const { content, bindings } = compileSFCScript(`
       class dd {}
       </script>
       `)
+logg('content', content)
+logg('bindings', bindings)
 #+end_src
+#+end_details
 
-#+RESULTS:
+#+html: <br>
+#+begin_details 解构 :title-color red
+#+begin_src js -n -r :exports both
+<<sfc-testing>>
+
+const { content, bindings } = compileSFCScript(`
+      <script setup>
+      const { foo, b: bar, ['x' + 'y']: baz, x: { y, zz: { z }}} = {}
+      </script>
+      `)
+logg('content', content)
+logg('bindings', bindings)
+#+end_src
+#+end_details
+
+#+html: <br>
+#+begin_details defineProps,defineEmits,defineExpose :title-color red
+#+begin_src js -n -r :exports both
+<<sfc-testing>>
+
+const { content, bindings } = compileSFCScript(`
+<script setup>
+  defineExpose({ foo: 123 })
+  const myEmit = defineEmits(['foo', 'bar'])
+  const props = defineProps({
+    foo: String
+   })
+  const bar = 1
+</script>`)
+logg('content', content)
+logg('bindings', bindings)
+#+end_src
+#+end_details
+
+#+html: <br>
+#+begin_details 普通 script 和 setup script 优先级问题 :title-color red
+#+begin_src js -n -r :exports both
+<<sfc-testing>>
+
+const { content, bindings } = compileSFCScript(`
+      <script setup>
+      import { x } from './x'
+      x()
+      </script>
+      <script>
+      export const n = 1
+      export default {}
+      </script>
+      `)
+logg('content', content)
+logg('bindings', bindings)
+#+end_src
+#+end_details
+
+#+html: <br>
+#+begin_details 综合测试 :title-color red
+#+begin_src js -n -r :exports both
+<<sfc-testing>>
+
+const { content, bindings } = compileSFCScript(`
+<script setup>
+const { foo, b: bar, ['x' + 'y']: baz, x: { y, zz: { z }}} = {}
+const props = defineProps({
+  foo: String
+})
+const myEmit = defineEmits(['foo', 'bar'])
+defineExpose({ foo: 123 })
+const bar = 1
+const r = ref(0)
+</script>
+<script>
+export const n = 1
+
+export default {
+  some:'option'
+}
+</script>`)
+logg('content', content)
+logg('bindings', bindings)
+#+end_src
+#+end_details
 
 * template
 
@@ -2569,6 +2661,302 @@ function doCompileTemplate({
 
   return { code, ast, preamble, source, errors, tips, map }
 }
+#+end_src
+* parse
+
+** script
+
+#+name: sfc-parse-script
+#+begin_src js -n -r
+const sourceToSFC = createCache()
+
+const parseSFCScript = (function() {
+  function parse(
+  source,
+  {
+    sourceMap = false,
+    filename = 'anonymous.vue',
+    sourceRoot = '',
+    pad = false,
+    ignoreEmpty = true,
+    compiler = compilerDom
+  } = {}
+) {
+  const sourceKey =
+    source + sourceMap + filename + sourceRoot + pad + compiler.parse
+  const cache = sourceToSFC.get(sourceKey)
+  if (cache) {
+    return cache
+  }
+
+  const descriptor = {
+    filename,
+    source,
+    template: null,
+    script: null,
+    scriptSetup: null,
+    styles: [],
+    customBlocks: [],
+    cssVars: [],
+    slotted: false,
+    // shouldForceReload: prevImports => hmrShouldReload(prevImports, descriptor)
+  }
+
+  const errors = []
+  const ast = compiler.parse(source, {
+    // there are no components at SFC parsing level
+    isNativeTag: () => true,
+    // preserve all whitespaces
+    isPreTag: () => true,
+    getTextMode: ({ tag, props }, parent) => {
+      // all top level elements except <template> are parsed as raw text
+      // containers
+      if (
+        (!parent && tag !== 'template') ||
+        // <template lang="xxx"> should also be treated as raw text
+        (tag === 'template' &&
+          props.some(
+            p =>
+              p.type === NodeTypes.ATTRIBUTE &&
+              p.name === 'lang' &&
+              p.value &&
+              p.value.content &&
+              p.value.content !== 'html'
+          ))
+      ) {
+        return TextModes.RAWTEXT
+      } else {
+        return TextModes.DATA
+      }
+    },
+    onError: e => {
+      errors.push(e)
+    }
+  })
+
+  ast.children.forEach(node => {
+    if (node.type !== NodeTypes.ELEMENT) {
+      return
+    }
+    // we only want to keep the nodes that are not empty (when the tag is not a template)
+    if (
+      ignoreEmpty &&
+      node.tag !== 'template' &&
+      isEmpty(node) &&
+      !hasSrc(node)
+    ) {
+      return
+    }
+    switch (node.tag) {
+      case 'script':
+        const scriptBlock = createBlock(node, source, pad)
+        const isSetup = !!scriptBlock.attrs.setup
+        if (isSetup && !descriptor.scriptSetup) {
+          descriptor.scriptSetup = scriptBlock
+          break
+        }
+        if (!isSetup && !descriptor.script) {
+          descriptor.script = scriptBlock
+          break
+        }
+        errors.push(createDuplicateBlockError(node, isSetup))
+        break
+      default:
+        descriptor.customBlocks.push(createBlock(node, source, pad))
+        break
+    }
+  })
+
+  if (descriptor.scriptSetup) {
+    if (descriptor.scriptSetup.src) {
+      errors.push(
+        new SyntaxError(
+          `<script setup> cannot use the "src" attribute because ` +
+            `its syntax will be ambiguous outside of the component.`
+        )
+      )
+      descriptor.scriptSetup = null
+    }
+    if (descriptor.script && descriptor.script.src) {
+      errors.push(
+        new SyntaxError(
+          `<script> cannot use the "src" attribute when <script setup> is ` +
+            `also present because they must be processed together.`
+        )
+      )
+      descriptor.script = null
+    }
+  }
+
+  // parse CSS vars
+  descriptor.cssVars = parseCssVars(descriptor)
+
+  // check if the SFC uses :slotted
+  const slottedRE = /(?:::v-|:)slotted\(/
+  descriptor.slotted = descriptor.styles.some(
+    s => s.scoped && slottedRE.test(s.content)
+  )
+
+  const result = {
+    descriptor,
+    errors
+  }
+  sourceToSFC.set(sourceKey, result)
+  return result
+}
+
+function createDuplicateBlockError(
+  node,
+  isScriptSetup = false
+) {
+  const err = new SyntaxError(
+    `Single file component can contain only one <${node.tag}${
+      isScriptSetup ? ` setup` : ``
+    }> element`
+  )
+  err.loc = node.loc
+  return err
+}
+
+function createBlock(
+  node,
+  source,
+  pad
+) {
+  const type = node.tag
+  let { start, end } = node.loc
+  let content = ''
+  if (node.children.length) {
+    start = node.children[0].loc.start
+    end = node.children[node.children.length - 1].loc.end
+    content = source.slice(start.offset, end.offset)
+  } else {
+    const offset = node.loc.source.indexOf(`</`)
+    if (offset > -1) {
+      start = {
+        line: start.line,
+        column: start.column + offset,
+        offset: start.offset + offset
+      }
+    }
+    end = { ...start }
+  }
+  const loc = {
+    source: content,
+    start,
+    end
+  }
+  const attrs = {}
+  const block = {
+    type,
+    content,
+    loc,
+    attrs
+  }
+  if (pad) {
+    block.content = padContent(source, block, pad) + block.content
+  }
+  node.props.forEach(p => {
+    if (p.type === NodeTypes.ATTRIBUTE) {
+      attrs[p.name] = p.value ? p.value.content || true : true
+      if (p.name === 'lang') {
+        block.lang = p.value && p.value.content
+      } else if (p.name === 'src') {
+        block.src = p.value && p.value.content
+      } else if (type === 'style') {
+        if (p.name === 'scoped') {
+          block.scoped = true
+        } else if (p.name === 'module') {
+          block.module = attrs[p.name]
+        }
+      } else if (type === 'script' && p.name === 'setup') {
+        block.setup = attrs.setup
+      }
+    }
+  })
+  return block
+}
+
+const splitRE = /\r?\n/g
+const emptyRE = /^(?:\/\/)?\s*$/
+const replaceRE = /./g
+
+function generateSourceMap(
+  filename,
+  source,
+  generated,
+  sourceRoot,
+  lineOffset
+) {
+  const map = new SourceMapGenerator({
+    file: filename.replace(/\\/g, '/'),
+    sourceRoot: sourceRoot.replace(/\\/g, '/')
+  })
+  map.setSourceContent(filename, source)
+  generated.split(splitRE).forEach((line, index) => {
+    if (!emptyRE.test(line)) {
+      const originalLine = index + 1 + lineOffset
+      const generatedLine = index + 1
+      for (let i = 0; i < line.length; i++) {
+        if (!/\s/.test(line[i])) {
+          map.addMapping({
+            source: filename,
+            original: {
+              line: originalLine,
+              column: i
+            },
+            generated: {
+              line: generatedLine,
+              column: i
+            }
+          })
+        }
+      }
+    }
+  })
+  return JSON.parse(map.toString())
+}
+
+function padContent(
+  content,
+  block,
+  pad
+) {
+  content = content.slice(0, block.loc.start.offset)
+  if (pad === 'space') {
+    return content.replace(replaceRE, ' ')
+  } else {
+    const offset = content.split(splitRE).length
+    const padChar = block.type === 'script' && !block.lang ? '//\n' : '\n'
+    return Array(offset).join(padChar)
+  }
+}
+
+function hasSrc(node) {
+  return node.props.some(p => {
+    if (p.type !== NodeTypes.ATTRIBUTE) {
+      return false
+    }
+    return p.name === 'src'
+  })
+}
+
+/**
+ ,* Returns true if the node has no children
+ ,* once the empty text nodes (trimmed content) have been filtered out.
+ ,*/
+function isEmpty(node) {
+  for (let i = 0; i < node.children.length; i++) {
+    const child = node.children[i]
+    if (child.type !== NodeTypes.TEXT || child.content.trim() !== '') {
+      return false
+    }
+  }
+  return true
+}
+
+return parse
+}())
 #+end_src
 * mindmaps
 
