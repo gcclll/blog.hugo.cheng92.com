@@ -43,7 +43,7 @@ green:该模块主要实现将SFC文件编译成render函数，其实主要包�
 这个包代码量巨大所以这篇文章篇幅很长很长，不建议通篇阅读，应该根据[[cc-contents-table][这里]]的功能列表
 按照自己想了解的内容去阅读。
 
-red:浏览器测试请使用 [[/assets/tests/compiler-core.html][compiler-core.html]]
+[[compile-testing][交互式测试]](ElementPlus + Vue3 实现，由本文最后生成的 compiler-core.js 编译)
 #+end_box
 #+html: <br>
 
@@ -9039,71 +9039,6 @@ logg("block + directives", _genCode(
 #+end_src
 #+end_details
 
-用于本文测试用的，包含了全局变量代码。
-
-red:Testing
-
-#+html: <br>
-#+begin_details integration tests :title-color red
-#+begin_src js -n -r :exports both
-<<compiler-core>>
-
-const { baseCompile } = compilerCore
-const source = `
-<div id="foo" :class="bar.baz">
-  {{ world.burn() }}
-  <div v-if="ok">yes</div>
-  <template v-else>no</template>
-  <div v-for="(value, index) in list"><span>{{ value + index }}</span></div>
-</div>
-`.trim()
-
-logOff()
-const { code, map } = baseCompile(source, {
-  sourceMap: true,
-  filename: 'foo.vue'
-})
-logOn()
-logg('code', code)
-#+end_src
-
-#+RESULTS:
-#+begin_example
---------- createStructuralDirectiveTransform ---------
-name=for, matches=(n) => n === name
---------- createStructuralDirectiveTransform ---------
-name=/^(if|else|else-if)$/, matches=(n) => name.test(n)
---------- code ---------
-const _Vue = Vue
-
-return function render(_ctx, _cache) {
-  with (_ctx) {
-    const { toDisplayString: _toDisplayString, openBlock: _openBlock, createElementBlock: _createElementBlock, createCommentVNode: _createCommentVNode, createTextVNode: _createTextVNode, Fragment: _Fragment, renderList: _renderList, createElementVNode: _createElementVNode, normalizeClass: _normalizeClass } = _Vue
-
-    return (_openBlock(), _createElementBlock("div", {
-      id: "foo",
-      class: _normalizeClass(bar.baz)
-    }, [
-      _createTextVNode("   " + _toDisplayString(world.burn()) + "   ", 1 /* TEXT */),
-      ok
-        ? (_openBlock(), _createElementBlock("div", { key: 0 }, "yes"))
-        : (_openBlock(), _createElementBlock(_Fragment, { key: 1 }, [
-            _createTextVNode("no")
-          ], 64 /* STABLE_FRAGMENT */)),
-      _createTextVNode("   "),
-      (_openBlock(true), _createElementBlock(_Fragment, null, _renderList(list, (value, index) => {
-        return (_openBlock(), _createElementBlock("div", null, [
-          _createElementVNode("span", null, _toDisplayString(value + index), 1)
-        ]))
-      }), 256 /* UNKEYED_FRAGMENT */))
-    ], 2))
-  }
-}
-undefined
-#+end_example
-
-#+end_details
-
 ** getBaseTransformPreset()
 
 #+name: getBaseTransformPreset
@@ -9141,6 +9076,7 @@ function getBaseTransformPreset(prefixIdentifiers) {
 
 测试及案例分析(含流程图)，输入对应的模板生成 render 函数:
 
+#+name: compile-testing
 #+begin_export html
 <script src="/assets/tests/globalVars.js"></script>
 <script src="/assets/tests/compiler-core.js"></script>

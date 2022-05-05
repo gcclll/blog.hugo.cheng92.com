@@ -1,10 +1,16 @@
 /** jsx?|tsx? file header */
 $(function () {
+  const defaultTmplValue = `
+<div v-text="text"></div>
+<div v-html="html"></div>
+<div v-cloak>test</div>
+<div style="color:red">red</div>
+<div :style="{color: 'green'}"></div>`.trim()
   currentLogKey = 'compiler-dom-01'
   Vue.createApp({
     template: `
 <div>
-<el-input type="textarea" v-model="value" placeholder="请输入测试模板，如： <div v-if/>" />
+<el-input :rows="10" type="textarea" v-model="value" placeholder="请输入测试模板，如： <div v-if/>" />
 <el-button style="width:100%;margin:1rem 0;" @click="runCompile" type="primary">编译</el-button>
 <p>
     <span><el-switch inline-prompt v-model="showAst"/>&nbsp;show ast</span>
@@ -18,7 +24,7 @@ $(function () {
 </div>
 `,
     setup() {
-      const value = Vue.ref('')
+      const value = Vue.ref(defaultTmplValue)
       const localLogs = Vue.ref([])
       const showAst = Vue.ref(false)
       const hoistStatic = Vue.ref(true)
@@ -30,15 +36,19 @@ $(function () {
         runCompile()
       })
 
-      function runCompile() {
-        if (value.value == '') {
-          ElementPlus.ElMessageBox({
-            type: 'warning',
-            title: '提示',
-            message: '请输入模板'
-          })
-          return
+      Vue.watch(value, val => {
+        if (val == '') value.value = defaultTmplValue
+      })
+
+      Vue.onMounted(() => {
+        if (value.value) {
+            runCompile()
+        } else {
+
         }
+      })
+
+      function runCompile() {
         clearLog(currentLogKey)
 
         try {

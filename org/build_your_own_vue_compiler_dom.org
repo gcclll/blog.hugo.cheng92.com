@@ -24,10 +24,10 @@
 [[https://blog.cheng92.com/posts/build_your_own_vue_compiler_core.html][build your own vue compiler-core]]
 
 #+name: globalVars
-#+include ../assets/tests/globalVars.js src js -n -r
+#+include: ../assets/tests/globalVars.js src js -n -r
 
 #+name: globalVarsDom
-#+include ../assets/tests/globalVarsDom.js src js -n -r
+#+include: ../assets/tests/globalVarsDom.js src js -n -r
 
 #+name: compiler-core
 #+include: ../assets/tests/compiler-core.js src js -n -r
@@ -91,6 +91,7 @@ test utils:
 <<globalVarsDom>>
 <<compiler-dom>>
 #+end_src
+
 * transforms
 
 #+name: DOMDirectiveTransforms
@@ -184,7 +185,6 @@ const parseInlineCSS = (cssText, loc) => {
 #+begin_src js -n -r :exports both
 <<test-utils>>
 
-const { parseStringStyle, stringifyStyle, normalizeStyle } = compilerDom
 const pss = s => parseStringStyle(s)
 let r = pss('width:100px;height:100px')
 logg('parseStringStyle', r)
@@ -193,6 +193,8 @@ const s = sfs(r)
 logg('stringifyStyle', s)
 logg('normalizeStyle', normalizeStyle([r, s, 'font-size:12px', { 'line-height': 1.2 }]))
 #+end_src
+
+#+RESULTS:
 
 red:Testing
 
@@ -1178,6 +1180,7 @@ function compile(template, options = {}) {
   )
 }
 #+end_src
+
 * parse
 
 #+name: parse
