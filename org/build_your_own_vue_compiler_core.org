@@ -9001,9 +9001,7 @@ logg("block + directives", _genCode(
 
 #+begin_details compiler-core.js :title-color red
 #+name: compiler-core
-#+begin_src js -n -r :noweb no-export :tangle "~/github/mine/blog.cheng92.com/assets/tests/compiler-core.js"
-
-const compilerCore = (function() {
+#+begin_src js -n -r :noweb yes :tangle "~/github/mine/blog.cheng92.com/assets/tests/compiler-core.js"
   <<baseParse>>
   <<transform>>
   <<getBaseTransformPreset>>
@@ -9037,15 +9035,7 @@ const compilerCore = (function() {
 
     // 生成 codegen
     return generate(ast, extend({}, options, { prefixIdentifiers }))
-  }
-
-  return {
-    baseCompile,
-    baseParse,
-    generate,
-    transform
-  }
-}())
+  } 
 #+end_src
 #+end_details
 

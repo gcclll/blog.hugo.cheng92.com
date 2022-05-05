@@ -17,7 +17,6 @@ $(function () {
       const value = Vue.ref('')
       const localLogs = Vue.ref([])
       const showAst = Vue.ref(false)
-      const { baseCompile } = compilerCore
       currentLogKey = 'compiler-core-01'
       return {
         value,

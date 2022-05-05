@@ -43,7 +43,7 @@ $(function () {
 
         try {
           logOff()
-          const { code, ast: astResult } = compile(value.value, {
+          const { code, ast: astResult } = compilerDom.compile(value.value, {
             filename: 'foo.vue',
             hoistStatic: hoistStatic.value,
             prefixIdentifiers: true
