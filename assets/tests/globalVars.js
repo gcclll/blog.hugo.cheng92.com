@@ -1849,3 +1849,43 @@ function createElementWithCodegen(
     }
   }
 }
+
+// codegen utils
+const PURE_ANNOTATION = `/*#__PURE__*/`
+
+function isText$1(n) {
+  return (
+    isString(n) ||
+    n.type === NodeTypes.SIMPLE_EXPRESSION ||
+    n.type === NodeTypes.TEXT ||
+    n.type === NodeTypes.INTERPOLATION ||
+    n.type === NodeTypes.COMPOUND_EXPRESSION
+  )
+}
+
+// 过滤掉后面空值参数fn(a, b, c, null, undefined, '') => fn(a,b,c)
+function genNullableArgs(args) {
+  let i = args.length
+  while (i--) {
+    if (args[i] != null) break
+  }
+  return args.slice(0, i + 1).map((arg) => arg || `null`)
+}
+
+// 生成对象的 key 值，可能是个表达式，如： { [a + b + c]: value }
+function genExpressionAsPropertyKey(node, context) {
+  const { push } = context
+  if (node.type === NodeTypes.COMPOUND_EXPRESSION) {
+    push(`[`)
+    genCompoundExpression(node, context)
+    push(`]`)
+  } else if (node.isStatic) {
+    // only quote keys if necessary
+    const text = isSimpleIdentifier(node.content)
+      ? node.content
+      : JSON.stringify(node.content)
+    push(text, node)
+  } else {
+    push(`[${node.content}]`, node)
+  }
+}
