@@ -1,5 +1,5 @@
 /** jsx?|tsx? file header */
-import { querySearch } from '../utils'
+import { querySearch, deleteLocalPath } from '../utils'
 import { cached } from '../cache'
 import SearchItem from './SearchItem'
 
@@ -79,6 +79,7 @@ export default Vue.defineComponent({
           querySearch(
             newVal,
             (results) => {
+              console.log(state, 222)
               state.filterResults = results
             },
             state.results
@@ -101,15 +102,14 @@ export default Vue.defineComponent({
         return new RegExp(`${file}$`).test(location.pathname)
       },
       locate(link) {
-        location.href = link
+        location.href = deleteLocalPath(link)
         clean()
         state.dialogVisible = false
-        console.log({ link }, 'locate')
       },
       querySearch: (qs, cb) => querySearch(qs, cb, state.results),
       handleSelect(item) {
         if (item.link) {
-          location.href = item.href
+          location.href = deleteLocalPath(item.href)
           state.search = ''
         }
       }

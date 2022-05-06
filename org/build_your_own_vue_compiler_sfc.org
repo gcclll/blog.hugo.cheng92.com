@@ -2578,7 +2578,6 @@ const props = defineProps({
 })
 const myEmit = defineEmits(['foo', 'bar'])
 defineExpose({ foo: 123 })
-const bar = 1
 const r = ref(0)
 </script>
 <script>

@@ -53,6 +53,7 @@ export default function loadSearchApp() {
     methods: {
       querySearch(s, cb) {
         const target = current // pageValues
+        console.log(target, 1111)
         cb(s ? filterList(s, target) : target)
       },
       handleSelect(value) {

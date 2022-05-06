@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <!-- 2022-05-05 Thu 19:00 -->
+  <!-- 2022-05-06 Fri 09:06 -->
   <meta charset="utf-8">
   <meta name="viewport" content=
   "width=device-width, initial-scale=1">
@@ -290,259 +290,259 @@
       <div id="text-table-of-contents" role="doc-toc">
         <ul>
           <li>
-            <a href="#org4156a43">1. script</a>
+            <a href="#orgb16333e">1. script</a>
             <ul>
               <li>
-                <a href="#org9e790ff">1.1. compileScript()</a>
+                <a href="#org9e08f84">1.1. compileScript()</a>
               </li>
               <li>
-                <a href="#org9dfa3f3">1.2. utils</a>
+                <a href="#orgaf7adeb">1.2. utils</a>
                 <ul>
                   <li>
-                    <a href="#orge7a74c8">1.2.1. helper()</a>
+                    <a href="#org61a7e4f">1.2.1. helper()</a>
                   </li>
                   <li>
-                    <a href="#org8cd1cfc">1.2.2. parse()</a>
+                    <a href="#orgdf267a1">1.2.2. parse()</a>
                   </li>
                   <li>
-                    <a href="#orgf034058">1.2.3. error()</a>
+                    <a href="#org5af1664">1.2.3. error()</a>
                   </li>
                   <li>
-                    <a href="#orgce886ff">1.2.4.
+                    <a href="#orgc1b2631">1.2.4.
                     registerUserImport()</a>
                   </li>
                   <li>
-                    <a href="#org91a469c">1.2.5.
+                    <a href="#org64a4ac6">1.2.5.
                     processDefineProps()</a>
                   </li>
                   <li>
-                    <a href="#orgcafa2e1">1.2.6.
+                    <a href="#orgbd4eeda">1.2.6.
                     processWithDefaults()</a>
                   </li>
                   <li>
-                    <a href="#org0561c36">1.2.7.
+                    <a href="#orgd1f73f6">1.2.7.
                     processDefineEmits()</a>
                   </li>
                   <li>
-                    <a href="#org8f8d3ba">1.2.8.
+                    <a href="#org31ea96c">1.2.8.
                     resolveQualifiedType()</a>
                   </li>
                   <li>
-                    <a href="#org72cbd32">1.2.9.
+                    <a href="#org47f1085">1.2.9.
                     processDefineExpose()</a>
                   </li>
                   <li>
-                    <a href="#org79da059">1.2.10.
+                    <a href="#org83b943e">1.2.10.
                     checkInvalidScopeReference()</a>
                   </li>
                   <li>
-                    <a href="#orgfb4a83a">1.2.11.
+                    <a href="#orgb896bea">1.2.11.
                     processAwait()</a>
                   </li>
                   <li>
-                    <a href="#org6a82e74">1.2.12.
+                    <a href="#org10f3cdd">1.2.12.
                     hasStaticWithDefaults()</a>
                   </li>
                   <li>
-                    <a href="#org54b36c7">1.2.13.
+                    <a href="#orga09196e">1.2.13.
                     genRuntimeProps()</a>
                   </li>
                   <li>
-                    <a href="#orgd4cc4ba">1.2.14.
+                    <a href="#org3c7a018">1.2.14.
                     genDestructuredDefaultValue()</a>
                   </li>
                   <li>
-                    <a href="#orgcb69354">1.2.15.
+                    <a href="#orga72a4ba">1.2.15.
                     genSetupPropsType()</a>
                   </li>
                 </ul>
               </li>
               <li>
-                <a href="#org5cd2d66">1.3. steps</a>
+                <a href="#org6eb9e9a">1.3. steps</a>
                 <ul>
                   <li>
-                    <a href="#orgff55401">1.3.1. process normal
+                    <a href="#orgea75978">1.3.1. process normal
                     script</a>
                   </li>
                   <li>
-                    <a href="#orgadc0442">1.3.2. process setup
+                    <a href="#orgf5483af">1.3.2. process setup
                     script</a>
                   </li>
                   <li>
-                    <a href="#orge25f1d4">1.3.3. apply reactivity
+                    <a href="#orgb9f885d">1.3.3. apply reactivity
                     transform</a>
                   </li>
                   <li>
-                    <a href="#orgaadfd9b">1.3.4. extract runtime
+                    <a href="#org62f7fec">1.3.4. extract runtime
                     props/emits</a>
                   </li>
                   <li>
-                    <a href="#org5e1196e">1.3.5. check useOptions
+                    <a href="#orga90f06f">1.3.5. check useOptions
                     dont ref setup scope variables</a>
                   </li>
                   <li>
-                    <a href="#org2b1a389">1.3.6. remove non-script
+                    <a href="#org99e7a3c">1.3.6. remove non-script
                     content</a>
                   </li>
                   <li>
-                    <a href="#org0ababc2">1.3.7. analyze binding
+                    <a href="#org6e9db3f">1.3.7. analyze binding
                     metadata</a>
                   </li>
                   <li>
-                    <a href="#orgc812eea">1.3.8. inject useCssVars
+                    <a href="#org39cbfa8">1.3.8. inject useCssVars
                     calls</a>
                   </li>
                   <li>
-                    <a href="#org3f4e400">1.3.9. finalize setup()
+                    <a href="#org77847c6">1.3.9. finalize setup()
                     argument signature</a>
                   </li>
                   <li>
-                    <a href="#org4d080f9">1.3.10. generate return
+                    <a href="#org550b5ff">1.3.10. generate return
                     statement</a>
                   </li>
                   <li>
-                    <a href="#orgf47bb9b">1.3.11. finalize default
+                    <a href="#orgff1f6bb">1.3.11. finalize default
                     export</a>
                   </li>
                   <li>
-                    <a href="#org8950523">1.3.12. finalize Vue
+                    <a href="#org63b92c6">1.3.12. finalize Vue
                     helper imports</a>
                   </li>
                 </ul>
               </li>
               <li>
-                <a href="#org4293534">1.4. functions</a>
+                <a href="#org481e506">1.4. functions</a>
                 <ul>
                   <li>
-                    <a href="#org4be6844">1.4.1.
+                    <a href="#orgc046897">1.4.1.
                     registerBinding()</a>
                   </li>
                   <li>
-                    <a href="#orga4548e8">1.4.2.
+                    <a href="#org322bb9b">1.4.2.
                     walkDeclaration()</a>
                   </li>
                   <li>
-                    <a href="#org5e14cf3">1.4.3.
+                    <a href="#org02afbfa">1.4.3.
                     walkObjectPattern()</a>
                   </li>
                   <li>
-                    <a href="#org7eb746c">1.4.4.
+                    <a href="#org22daeec">1.4.4.
                     walkArrayPattern()</a>
                   </li>
                   <li>
-                    <a href="#orgdd7f821">1.4.5. walkPattern()</a>
+                    <a href="#org87fc09f">1.4.5. walkPattern()</a>
                   </li>
                   <li>
-                    <a href="#org941bd7d">1.4.6. recordType()</a>
+                    <a href="#org3e4443a">1.4.6. recordType()</a>
                   </li>
                   <li>
-                    <a href="#org61739f3">1.4.7.
+                    <a href="#orgf54d86e">1.4.7.
                     extractRuntimeProps()</a>
                   </li>
                   <li>
-                    <a href="#org80b4366">1.4.8.
+                    <a href="#org6f91362">1.4.8.
                     inferRuntimeType()</a>
                   </li>
                   <li>
-                    <a href="#org3b7c5a5">1.4.9.
+                    <a href="#orge4055f3">1.4.9.
                     toRuntimeTypeString()</a>
                   </li>
                   <li>
-                    <a href="#orga0fa312">1.4.10.
+                    <a href="#org66178c6">1.4.10.
                     extractRuntimeEmits()</a>
                   </li>
                   <li>
-                    <a href="#org42f5eff">1.4.11.
+                    <a href="#orgba3c704">1.4.11.
                     extractEventNames()</a>
                   </li>
                   <li>
-                    <a href="#orgd1ecfe1">1.4.12.
+                    <a href="#orge0e757a">1.4.12.
                     genRuntimeEmits()</a>
                   </li>
                   <li>
-                    <a href="#org78b3647">1.4.13. isCallOf()</a>
+                    <a href="#orgf1e491d">1.4.13. isCallOf()</a>
                   </li>
                   <li>
-                    <a href="#orgaa1542f">1.4.14.
+                    <a href="#org590e220">1.4.14.
                     canNeverBeRef()</a>
                   </li>
                   <li>
-                    <a href="#org2575913">1.4.15.
+                    <a href="#orgba5f7a6">1.4.15.
                     analyzeScriptBindings()</a>
                   </li>
                   <li>
-                    <a href="#org905c954">1.4.16.
+                    <a href="#orgb149e7c">1.4.16.
                     analyzeBindingsFromOptions()</a>
                   </li>
                   <li>
-                    <a href="#orgb0e56e7">1.4.17.
+                    <a href="#orgdbd7a26">1.4.17.
                     getObjectExpressionKeys()</a>
                   </li>
                   <li>
-                    <a href="#org00f9823">1.4.18.
+                    <a href="#org2b5fab2">1.4.18.
                     getArrayExpressionKeys()</a>
                   </li>
                   <li>
-                    <a href="#org75f2b4c">1.4.19.
+                    <a href="#orgc066eae">1.4.19.
                     getObjectOrArrayExpressionKeys()</a>
                   </li>
                   <li>
-                    <a href="#org66b8ae9">1.4.20.
+                    <a href="#orgbb6e9e4">1.4.20.
                     resolveTemplateUsageCheckString()</a>
                   </li>
                   <li>
-                    <a href="#org42001c8">1.4.21.
+                    <a href="#org567106b">1.4.21.
                     stripStrings()</a>
                   </li>
                   <li>
-                    <a href="#org7a12988">1.4.22.
+                    <a href="#orgedfc530">1.4.22.
                     stripTemplateString()</a>
                   </li>
                   <li>
-                    <a href="#org44c78b9">1.4.23.
+                    <a href="#org1ec964a">1.4.23.
                     isImportUsed()</a>
                   </li>
                   <li>
-                    <a href="#org21e683d">1.4.24.
+                    <a href="#org4b69b2f">1.4.24.
                     hmrShouldReload()</a>
                   </li>
                 </ul>
               </li>
               <li>
-                <a href="#org1092992">1.5. rewriteDefault</a>
+                <a href="#org16cb399">1.5. rewriteDefault</a>
               </li>
               <li>
-                <a href="#orgcd2471d">1.6. cssVars</a>
+                <a href="#org9134b4f">1.6. cssVars</a>
               </li>
               <li>
-                <a href="#org6f29cba">1.7. testing</a>
-              </li>
-            </ul>
-          </li>
-          <li>
-            <a href="#orgdaa9a27">2. template</a>
-            <ul>
-              <li>
-                <a href="#org0651a6c">2.1. compileTemplate()</a>
+                <a href="#orga0ae230">1.7. testing</a>
               </li>
             </ul>
           </li>
           <li>
-            <a href="#orgb2c3b47">3. parse</a>
+            <a href="#org517f6eb">2. template</a>
             <ul>
               <li>
-                <a href="#org3cc19a8">3.1. script</a>
+                <a href="#org937fa8b">2.1. compileTemplate()</a>
               </li>
             </ul>
           </li>
           <li>
-            <a href="#orgd76955b">4. mindmaps</a>
-          </li>
-          <li>
-            <a href="#orgb6f1fa5">5. global variables</a>
+            <a href="#orgef255b2">3. parse</a>
             <ul>
               <li>
-                <a href="#org47d8ab1">5.1. reactivity-transform</a>
+                <a href="#org5793069">3.1. script</a>
+              </li>
+            </ul>
+          </li>
+          <li>
+            <a href="#orgf48259e">4. mindmaps</a>
+          </li>
+          <li>
+            <a href="#orga453145">5. global variables</a>
+            <ul>
+              <li>
+                <a href="#orgdedabb3">5.1. reactivity-transform</a>
               </li>
             </ul>
           </li>
@@ -562,7 +562,7 @@
       "https://blog.cheng92.com/posts/build_your_own_vue_compiler_dom.html">
       build your own vue compiler-dom</a></p>
       <div class="org-src-container">
-        <pre class="src src-js" id="org77a59a2"><span class=
+        <pre class="src src-js" id="org7c3a13c"><span class=
         "linenr">   1: </span><span class=
         "org-doc">/** jsx?|tsx? file header */</span>
 <span class="linenr">   2: </span><span class=
@@ -4639,7 +4639,7 @@
 </pre>
       </div>
       <div class="org-src-container">
-        <pre class="src src-js" id="org8b88086"><span class=
+        <pre class="src src-js" id="org2c40072"><span class=
         "linenr">   1: </span><span class=
         "org-keyword">const</span> <span class=
         "org-variable-name">namedCharacterReferences</span> = {
@@ -11117,7 +11117,7 @@
 </pre>
       </div>
       <div class="org-src-container">
-        <pre class="src src-js" id="org1648c67"><span class=
+        <pre class="src src-js" id="org11cb4a3"><span class=
         "linenr">   1: </span>  <span class=
         "org-keyword">function</span> <span class=
         "org-function-name">createParserContext</span>(<span class=
@@ -21067,7 +21067,7 @@
 </pre>
       </div>
       <div class="org-src-container">
-        <pre class="src src-js" id="orgf71bb0c"><span class=
+        <pre class="src src-js" id="org3814ea6"><span class=
         "linenr">  1: </span><span class=
         "org-keyword">const</span> <span class=
         "org-variable-name">compilerDom</span> = (<span class=
@@ -28237,8 +28237,8 @@
 </pre>
       </div>
     </details>
-    <div id="outline-container-org4156a43" class="outline-2">
-      <h2 id="org4156a43"><span class="section-number-2">1.</span>
+    <div id="outline-container-orgb16333e" class="outline-2">
+      <h2 id="orgb16333e"><span class="section-number-2">1.</span>
       script</h2>
       <div class="outline-text-2" id="text-1">
         <br>
@@ -28249,7 +28249,7 @@
             "red">script codes</font></strong>
           </summary>
           <div class="org-src-container">
-            <pre class="src src-js" id="org55c9967"><span class=
+            <pre class="src src-js" id="org7f7235c"><span class=
             "org-doc">/** jsx?|tsx? file header */</span>
 <span class="org-keyword">let</span> <span class=
 "org-variable-name">debugOn</span> = <span class=
@@ -50239,12 +50239,12 @@ cssVarsPlugin.postcss = <span class="org-constant">true</span>
           </div>
         </details>
       </div>
-      <div id="outline-container-org9e790ff" class="outline-3">
-        <h3 id="org9e790ff"><span class=
+      <div id="outline-container-org9e08f84" class="outline-3">
+        <h3 id="org9e08f84"><span class=
         "section-number-3">1.1.</span> compileScript()</h3>
         <div class="outline-text-3" id="text-1-1">
           <div class="org-src-container">
-            <pre class="src src-js" id="org2b85ca2"><span class=
+            <pre class="src src-js" id="orgcb78368"><span class=
             "linenr">  1: </span>&lt;&lt;compileScript-functions&gt;&gt;
 <span class="linenr">  2: </span>&lt;&lt;compileTemplate&gt;&gt;
 <span class="linenr">  3: </span>&lt;&lt;sfc-cssVars&gt;&gt;
@@ -50759,12 +50759,12 @@ cssVarsPlugin.postcss = <span class="org-constant">true</span>
           个步聚完成，这里为了简化这个函数，会将这 12 步拆分成 12 个单独的函数。</p>
         </div>
       </div>
-      <div id="outline-container-org9dfa3f3" class="outline-3">
-        <h3 id="org9dfa3f3"><span class=
+      <div id="outline-container-orgaf7adeb" class="outline-3">
+        <h3 id="orgaf7adeb"><span class=
         "section-number-3">1.2.</span> utils</h3>
         <div class="outline-text-3" id="text-1-2">
           <div class="org-src-container">
-            <pre class="src src-js" id="org392c95a"><span class=
+            <pre class="src src-js" id="orga299f79"><span class=
             "linenr"> 1: </span>&lt;&lt;cs-u-helper&gt;&gt;
 <span class="linenr"> 2: </span>&lt;&lt;cs-u-parse&gt;&gt;
 <span class="linenr"> 3: </span>&lt;&lt;cs-u-error&gt;&gt;
@@ -50794,12 +50794,12 @@ cssVarsPlugin.postcss = <span class="org-constant">true</span>
 </pre>
           </div>
         </div>
-        <div id="outline-container-orge7a74c8" class="outline-4">
-          <h4 id="orge7a74c8"><span class=
+        <div id="outline-container-org61a7e4f" class="outline-4">
+          <h4 id="org61a7e4f"><span class=
           "section-number-4">1.2.1.</span> helper()</h4>
           <div class="outline-text-4" id="text-1-2-1">
             <div class="org-src-container">
-              <pre class="src src-js" id="org555322a"><span class=
+              <pre class="src src-js" id="org99a3893"><span class=
               "linenr">1: </span><span class=
               "org-keyword">function</span> <span class=
               "org-function-name">helper</span>(<span class=
@@ -50813,12 +50813,12 @@ cssVarsPlugin.postcss = <span class="org-constant">true</span>
             </div>
           </div>
         </div>
-        <div id="outline-container-org8cd1cfc" class="outline-4">
-          <h4 id="org8cd1cfc"><span class=
+        <div id="outline-container-orgdf267a1" class="outline-4">
+          <h4 id="orgdf267a1"><span class=
           "section-number-4">1.2.2.</span> parse()</h4>
           <div class="outline-text-4" id="text-1-2-2">
             <div class="org-src-container">
-              <pre class="src src-js" id="org1c03cc1"><span class=
+              <pre class="src src-js" id="orge0183ca"><span class=
               "linenr"> 1: </span>  <span class=
               "org-keyword">function</span> <span class=
               "org-function-name">parse</span>(<span class=
@@ -50847,12 +50847,12 @@ cssVarsPlugin.postcss = <span class="org-constant">true</span>
             </div>
           </div>
         </div>
-        <div id="outline-container-orgf034058" class="outline-4">
-          <h4 id="orgf034058"><span class=
+        <div id="outline-container-org5af1664" class="outline-4">
+          <h4 id="org5af1664"><span class=
           "section-number-4">1.2.3.</span> error()</h4>
           <div class="outline-text-4" id="text-1-2-3">
             <div class="org-src-container">
-              <pre class="src src-js" id="org1af4fdd"><span class=
+              <pre class="src src-js" id="orgec48174"><span class=
               "linenr">1: </span><span class=
               "org-keyword">function</span> <span class=
               "org-function-name">error</span>(<span class=
@@ -50881,13 +50881,13 @@ cssVarsPlugin.postcss = <span class="org-constant">true</span>
             </div>
           </div>
         </div>
-        <div id="outline-container-orgce886ff" class="outline-4">
-          <h4 id="orgce886ff"><span class=
+        <div id="outline-container-orgc1b2631" class="outline-4">
+          <h4 id="orgc1b2631"><span class=
           "section-number-4">1.2.4.</span>
           registerUserImport()</h4>
           <div class="outline-text-4" id="text-1-2-4">
             <div class="org-src-container">
-              <pre class="src src-js" id="orgb61292f"><span class=
+              <pre class="src src-js" id="orgb1decd4"><span class=
               "linenr"> 1: </span>  <span class=
               "org-keyword">function</span> <span class=
               "org-function-name">registerUserImport</span>(<span class=
@@ -50927,8 +50927,8 @@ cssVarsPlugin.postcss = <span class="org-constant">true</span>
             </div>
           </div>
         </div>
-        <div id="outline-container-org91a469c" class="outline-4">
-          <h4 id="org91a469c"><span class=
+        <div id="outline-container-org64a4ac6" class="outline-4">
+          <h4 id="org64a4ac6"><span class=
           "section-number-4">1.2.5.</span>
           processDefineProps()</h4>
           <div class="outline-text-4" id="text-1-2-5">
@@ -50941,7 +50941,7 @@ cssVarsPlugin.postcss = <span class="org-constant">true</span>
               <li>解构不支持嵌套使用</li>
             </ol>
             <div class="org-src-container">
-              <pre class="src src-js" id="org4c48e3d"><span class=
+              <pre class="src src-js" id="org0dbb32e"><span class=
               "linenr"> 1: </span>
 <span class="linenr"> 2: </span>  <span class=
 "org-keyword">function</span> <span class=
@@ -51105,14 +51105,14 @@ cssVarsPlugin.postcss = <span class="org-constant">true</span>
             </div>
           </div>
         </div>
-        <div id="outline-container-orgcafa2e1" class="outline-4">
-          <h4 id="orgcafa2e1"><span class=
+        <div id="outline-container-orgbd4eeda" class="outline-4">
+          <h4 id="orgbd4eeda"><span class=
           "section-number-4">1.2.6.</span>
           processWithDefaults()</h4>
           <div class="outline-text-4" id="text-1-2-6">
             <p>处理带默认值的 props.</p>
             <div class="org-src-container">
-              <pre class="src src-js" id="org1726513"><span class=
+              <pre class="src src-js" id="org95efe47"><span class=
               "linenr"> 1: </span>  <span class=
               "org-keyword">function</span> <span class=
               "org-function-name">processWithDefaults</span>(<span class=
@@ -51183,13 +51183,13 @@ cssVarsPlugin.postcss = <span class="org-constant">true</span>
             </div>
           </div>
         </div>
-        <div id="outline-container-org0561c36" class="outline-4">
-          <h4 id="org0561c36"><span class=
+        <div id="outline-container-orgd1f73f6" class="outline-4">
+          <h4 id="orgd1f73f6"><span class=
           "section-number-4">1.2.7.</span>
           processDefineEmits()</h4>
           <div class="outline-text-4" id="text-1-2-7">
             <div class="org-src-container">
-              <pre class="src src-js" id="orgd7b0fba"><span class=
+              <pre class="src src-js" id="org0e44c2c"><span class=
               "linenr"> 1: </span>
 <span class="linenr"> 2: </span>  <span class=
 "org-keyword">function</span> <span class=
@@ -51263,13 +51263,13 @@ cssVarsPlugin.postcss = <span class="org-constant">true</span>
             </div>
           </div>
         </div>
-        <div id="outline-container-org8f8d3ba" class="outline-4">
-          <h4 id="org8f8d3ba"><span class=
+        <div id="outline-container-org31ea96c" class="outline-4">
+          <h4 id="org31ea96c"><span class=
           "section-number-4">1.2.8.</span>
           resolveQualifiedType()</h4>
           <div class="outline-text-4" id="text-1-2-8">
             <div class="org-src-container">
-              <pre class="src src-js" id="org300ddbf"><span class=
+              <pre class="src src-js" id="org3691cee"><span class=
               "linenr"> 1: </span>
 <span class="linenr"> 2: </span>  <span class=
 "org-keyword">function</span> <span class=
@@ -51350,13 +51350,13 @@ cssVarsPlugin.postcss = <span class="org-constant">true</span>
             </div>
           </div>
         </div>
-        <div id="outline-container-org72cbd32" class="outline-4">
-          <h4 id="org72cbd32"><span class=
+        <div id="outline-container-org47f1085" class="outline-4">
+          <h4 id="org47f1085"><span class=
           "section-number-4">1.2.9.</span>
           processDefineExpose()</h4>
           <div class="outline-text-4" id="text-1-2-9">
             <div class="org-src-container">
-              <pre class="src src-js" id="orgedf365c"><span class=
+              <pre class="src src-js" id="org07e2e4d"><span class=
               "linenr"> 1: </span><span class=
               "org-keyword">function</span> <span class=
               "org-function-name">processDefineExpose</span>(<span class=
@@ -51381,13 +51381,13 @@ cssVarsPlugin.postcss = <span class="org-constant">true</span>
             </div>
           </div>
         </div>
-        <div id="outline-container-org79da059" class="outline-4">
-          <h4 id="org79da059"><span class=
+        <div id="outline-container-org83b943e" class="outline-4">
+          <h4 id="org83b943e"><span class=
           "section-number-4">1.2.10.</span>
           checkInvalidScopeReference()</h4>
           <div class="outline-text-4" id="text-1-2-10">
             <div class="org-src-container">
-              <pre class="src src-js" id="org1062ca1"><span class=
+              <pre class="src src-js" id="org895104a"><span class=
               "linenr"> 1: </span><span class=
               "org-keyword">function</span> <span class=
               "org-function-name">checkInvalidScopeReference</span>(<span class=
@@ -51420,12 +51420,12 @@ cssVarsPlugin.postcss = <span class="org-constant">true</span>
             </div>
           </div>
         </div>
-        <div id="outline-container-orgfb4a83a" class="outline-4">
-          <h4 id="orgfb4a83a"><span class=
+        <div id="outline-container-orgb896bea" class="outline-4">
+          <h4 id="orgb896bea"><span class=
           "section-number-4">1.2.11.</span> processAwait()</h4>
           <div class="outline-text-4" id="text-1-2-11">
             <div class="org-src-container">
-              <pre class="src src-js" id="org139efda"><span class=
+              <pre class="src src-js" id="org7eca290"><span class=
               "linenr"> 1: </span><span class="org-doc">/**</span>
 <span class="linenr"> 2: </span><span class=
 "org-doc">   * await foo()</span>
@@ -51515,13 +51515,13 @@ cssVarsPlugin.postcss = <span class="org-constant">true</span>
             </div>
           </div>
         </div>
-        <div id="outline-container-org6a82e74" class="outline-4">
-          <h4 id="org6a82e74"><span class=
+        <div id="outline-container-org10f3cdd" class="outline-4">
+          <h4 id="org10f3cdd"><span class=
           "section-number-4">1.2.12.</span>
           hasStaticWithDefaults()</h4>
           <div class="outline-text-4" id="text-1-2-12">
             <div class="org-src-container">
-              <pre class="src src-js" id="orgea76ad7"><span class=
+              <pre class="src src-js" id="org83ef5e8"><span class=
               "linenr"> 1: </span><span class="org-doc">/**</span>
 <span class="linenr"> 2: </span><span class=
 "org-doc">   * check defaults. If the default object is an object literal with only</span>
@@ -51553,12 +51553,12 @@ cssVarsPlugin.postcss = <span class="org-constant">true</span>
             </div>
           </div>
         </div>
-        <div id="outline-container-org54b36c7" class="outline-4">
-          <h4 id="org54b36c7"><span class=
+        <div id="outline-container-orga09196e" class="outline-4">
+          <h4 id="orga09196e"><span class=
           "section-number-4">1.2.13.</span> genRuntimeProps()</h4>
           <div class="outline-text-4" id="text-1-2-13">
             <div class="org-src-container">
-              <pre class="src src-js" id="orged429f7"><span class=
+              <pre class="src src-js" id="org0b1d56b"><span class=
               "linenr"> 1: </span><span class=
               "org-keyword">function</span> <span class=
               "org-function-name">genRuntimeProps</span>(<span class=
@@ -51702,13 +51702,13 @@ cssVarsPlugin.postcss = <span class="org-constant">true</span>
             </div>
           </div>
         </div>
-        <div id="outline-container-orgd4cc4ba" class="outline-4">
-          <h4 id="orgd4cc4ba"><span class=
+        <div id="outline-container-org3c7a018" class="outline-4">
+          <h4 id="org3c7a018"><span class=
           "section-number-4">1.2.14.</span>
           genDestructuredDefaultValue()</h4>
           <div class="outline-text-4" id="text-1-2-14">
             <div class="org-src-container">
-              <pre class="src src-js" id="org531bff7"><span class=
+              <pre class="src src-js" id="org4880af1"><span class=
               "linenr"> 1: </span><span class=
               "org-keyword">function</span> <span class=
               "org-function-name">genDestructuredDefaultValue</span>(<span class=
@@ -51740,13 +51740,13 @@ cssVarsPlugin.postcss = <span class="org-constant">true</span>
             </div>
           </div>
         </div>
-        <div id="outline-container-orgcb69354" class="outline-4">
-          <h4 id="orgcb69354"><span class=
+        <div id="outline-container-orga72a4ba" class="outline-4">
+          <h4 id="orga72a4ba"><span class=
           "section-number-4">1.2.15.</span>
           genSetupPropsType()</h4>
           <div class="outline-text-4" id="text-1-2-15">
             <div class="org-src-container">
-              <pre class="src src-js" id="orgbcc7def"><span class=
+              <pre class="src src-js" id="org610967b"><span class=
               "linenr"> 1: </span>
 <span class="linenr"> 2: </span>  <span class=
 "org-keyword">function</span> <span class=
@@ -51834,12 +51834,12 @@ cssVarsPlugin.postcss = <span class="org-constant">true</span>
           </div>
         </div>
       </div>
-      <div id="outline-container-org5cd2d66" class="outline-3">
-        <h3 id="org5cd2d66"><span class=
+      <div id="outline-container-org6eb9e9a" class="outline-3">
+        <h3 id="org6eb9e9a"><span class=
         "section-number-3">1.3.</span> steps</h3>
         <div class="outline-text-3" id="text-1-3">
           <div class="org-src-container">
-            <pre class="src src-js" id="org3b181d2"><span class=
+            <pre class="src src-js" id="org3d55eae"><span class=
             "linenr"> 1: </span>&lt;&lt;cs-s-processNormalScript&gt;&gt;
 <span class=
 "linenr"> 2: </span>&lt;&lt;cs-s-processSetupScript&gt;&gt;
@@ -51868,13 +51868,13 @@ cssVarsPlugin.postcss = <span class="org-constant">true</span>
 </pre>
           </div>
         </div>
-        <div id="outline-container-orgff55401" class="outline-4">
-          <h4 id="orgff55401"><span class=
+        <div id="outline-container-orgea75978" class="outline-4">
+          <h4 id="orgea75978"><span class=
           "section-number-4">1.3.1.</span> process normal
           script</h4>
           <div class="outline-text-4" id="text-1-3-1">
             <div class="org-src-container">
-              <pre class="src src-js" id="orgd2ccae8"><span class=
+              <pre class="src src-js" id="orgbf36fe2"><span class=
               "linenr">  1: </span><span class=
               "org-keyword">function</span> <span class=
               "org-function-name">processNormalScript</span>() {
@@ -52088,13 +52088,13 @@ cssVarsPlugin.postcss = <span class="org-constant">true</span>
             </div>
           </div>
         </div>
-        <div id="outline-container-orgadc0442" class="outline-4">
-          <h4 id="orgadc0442"><span class=
+        <div id="outline-container-orgf5483af" class="outline-4">
+          <h4 id="orgf5483af"><span class=
           "section-number-4">1.3.2.</span> process setup
           script</h4>
           <div class="outline-text-4" id="text-1-3-2">
             <div class="org-src-container">
-              <pre class="src src-js" id="org2bc511b"><span class=
+              <pre class="src src-js" id="org113a3c4"><span class=
               "linenr">  1: </span><span class=
               "org-keyword">function</span> <span class=
               "org-function-name">processSetupScript</span>() {
@@ -52538,13 +52538,13 @@ cssVarsPlugin.postcss = <span class="org-constant">true</span>
             </div>
           </div>
         </div>
-        <div id="outline-container-orge25f1d4" class="outline-4">
-          <h4 id="orge25f1d4"><span class=
+        <div id="outline-container-orgb9f885d" class="outline-4">
+          <h4 id="orgb9f885d"><span class=
           "section-number-4">1.3.3.</span> apply reactivity
           transform</h4>
           <div class="outline-text-4" id="text-1-3-3">
             <div class="org-src-container">
-              <pre class="src src-js" id="org6bd95fb"><span class=
+              <pre class="src src-js" id="orgdb02979"><span class=
               "linenr"> 1: </span><span class=
               "org-keyword">function</span> <span class=
               "org-function-name">applyReactivityTransform</span>() {
@@ -52582,13 +52582,13 @@ cssVarsPlugin.postcss = <span class="org-constant">true</span>
             </div>
           </div>
         </div>
-        <div id="outline-container-orgaadfd9b" class="outline-4">
-          <h4 id="orgaadfd9b"><span class=
+        <div id="outline-container-org62f7fec" class="outline-4">
+          <h4 id="org62f7fec"><span class=
           "section-number-4">1.3.4.</span> extract runtime
           props/emits</h4>
           <div class="outline-text-4" id="text-1-3-4">
             <div class="org-src-container">
-              <pre class="src src-js" id="org3f2413f"><span class=
+              <pre class="src src-js" id="org52282c5"><span class=
               "linenr">1: </span><span class=
               "org-keyword">function</span> <span class=
               "org-function-name">extractRuntimePropsEmits</span>() {
@@ -52607,13 +52607,13 @@ cssVarsPlugin.postcss = <span class="org-constant">true</span>
             </div>
           </div>
         </div>
-        <div id="outline-container-org5e1196e" class="outline-4">
-          <h4 id="org5e1196e"><span class=
+        <div id="outline-container-orga90f06f" class="outline-4">
+          <h4 id="orga90f06f"><span class=
           "section-number-4">1.3.5.</span> check useOptions dont
           ref setup scope variables</h4>
           <div class="outline-text-4" id="text-1-3-5">
             <div class="org-src-container">
-              <pre class="src src-js" id="org3e5c068"><span class=
+              <pre class="src src-js" id="orgfc70a57"><span class=
               "linenr">1: </span><span class=
               "org-keyword">function</span> <span class=
               "org-function-name">checkUseOptions</span>() {
@@ -52630,13 +52630,13 @@ cssVarsPlugin.postcss = <span class="org-constant">true</span>
             </div>
           </div>
         </div>
-        <div id="outline-container-org2b1a389" class="outline-4">
-          <h4 id="org2b1a389"><span class=
+        <div id="outline-container-org99e7a3c" class="outline-4">
+          <h4 id="org99e7a3c"><span class=
           "section-number-4">1.3.6.</span> remove non-script
           content</h4>
           <div class="outline-text-4" id="text-1-3-6">
             <div class="org-src-container">
-              <pre class="src src-js" id="orga8a9d4e"><span class=
+              <pre class="src src-js" id="orge451a80"><span class=
               "linenr"> 1: </span><span class=
               "org-keyword">function</span> <span class=
               "org-function-name">removeNonScriptContent</span>() {
@@ -52680,13 +52680,13 @@ cssVarsPlugin.postcss = <span class="org-constant">true</span>
             </div>
           </div>
         </div>
-        <div id="outline-container-org0ababc2" class="outline-4">
-          <h4 id="org0ababc2"><span class=
+        <div id="outline-container-org6e9db3f" class="outline-4">
+          <h4 id="org6e9db3f"><span class=
           "section-number-4">1.3.7.</span> analyze binding
           metadata</h4>
           <div class="outline-text-4" id="text-1-3-7">
             <div class="org-src-container">
-              <pre class="src src-js" id="org7ab2076"><span class=
+              <pre class="src src-js" id="orga21479d"><span class=
               "linenr"> 1: </span><span class=
               "org-keyword">function</span> <span class=
               "org-function-name">analyzeBindingMetadata</span>() {
@@ -52794,13 +52794,13 @@ cssVarsPlugin.postcss = <span class="org-constant">true</span>
             </div>
           </div>
         </div>
-        <div id="outline-container-orgc812eea" class="outline-4">
-          <h4 id="orgc812eea"><span class=
+        <div id="outline-container-org39cbfa8" class="outline-4">
+          <h4 id="org39cbfa8"><span class=
           "section-number-4">1.3.8.</span> inject useCssVars
           calls</h4>
           <div class="outline-text-4" id="text-1-3-8">
             <div class="org-src-container">
-              <pre class="src src-js" id="orgbae6201"><span class=
+              <pre class="src src-js" id="orgd6417ef"><span class=
               "linenr"> 1: </span><span class=
               "org-keyword">function</span> <span class=
               "org-function-name">injectUseCssVarsCalls</span>() {
@@ -52821,13 +52821,13 @@ cssVarsPlugin.postcss = <span class="org-constant">true</span>
             </div>
           </div>
         </div>
-        <div id="outline-container-org3f4e400" class="outline-4">
-          <h4 id="org3f4e400"><span class=
+        <div id="outline-container-org77847c6" class="outline-4">
+          <h4 id="org77847c6"><span class=
           "section-number-4">1.3.9.</span> finalize setup()
           argument signature</h4>
           <div class="outline-text-4" id="text-1-3-9">
             <div class="org-src-container">
-              <pre class="src src-js" id="org9bd0e2a"><span class=
+              <pre class="src src-js" id="org496e4d1"><span class=
               "linenr"> 1: </span><span class=
               "org-keyword">function</span> <span class=
               "org-function-name">finalizeSetupArgumentSignature</span>() {
@@ -52929,13 +52929,13 @@ cssVarsPlugin.postcss = <span class="org-constant">true</span>
             </div>
           </div>
         </div>
-        <div id="outline-container-org4d080f9" class="outline-4">
-          <h4 id="org4d080f9"><span class=
+        <div id="outline-container-org550b5ff" class="outline-4">
+          <h4 id="org550b5ff"><span class=
           "section-number-4">1.3.10.</span> generate return
           statement</h4>
           <div class="outline-text-4" id="text-1-3-10">
             <div class="org-src-container">
-              <pre class="src src-js" id="orgabe08e2"><span class=
+              <pre class="src src-js" id="org893b7b4"><span class=
               "linenr"> 1: </span><span class=
               "org-keyword">function</span> <span class=
               "org-function-name">generateReturnStatement</span>() {
@@ -53094,13 +53094,13 @@ cssVarsPlugin.postcss = <span class="org-constant">true</span>
             </div>
           </div>
         </div>
-        <div id="outline-container-orgf47bb9b" class="outline-4">
-          <h4 id="orgf47bb9b"><span class=
+        <div id="outline-container-orgff1f6bb" class="outline-4">
+          <h4 id="orgff1f6bb"><span class=
           "section-number-4">1.3.11.</span> finalize default
           export</h4>
           <div class="outline-text-4" id="text-1-3-11">
             <div class="org-src-container">
-              <pre class="src src-js" id="org463a828"><span class=
+              <pre class="src src-js" id="org37f9824"><span class=
               "linenr"> 1: </span><span class=
               "org-keyword">function</span> <span class=
               "org-function-name">finalizeDefaultExport</span>() {
@@ -53269,13 +53269,13 @@ cssVarsPlugin.postcss = <span class="org-constant">true</span>
             </div>
           </div>
         </div>
-        <div id="outline-container-org8950523" class="outline-4">
-          <h4 id="org8950523"><span class=
+        <div id="outline-container-org63b92c6" class="outline-4">
+          <h4 id="org63b92c6"><span class=
           "section-number-4">1.3.12.</span> finalize Vue helper
           imports</h4>
           <div class="outline-text-4" id="text-1-3-12">
             <div class="org-src-container">
-              <pre class="src src-js" id="orgbf92c8b"><span class=
+              <pre class="src src-js" id="org1b58bb8"><span class=
               "linenr">1: </span><span class=
               "org-keyword">function</span> <span class=
               "org-function-name">finalizeVueHelperImports</span>() {
@@ -53298,12 +53298,12 @@ cssVarsPlugin.postcss = <span class="org-constant">true</span>
           </div>
         </div>
       </div>
-      <div id="outline-container-org4293534" class="outline-3">
-        <h3 id="org4293534"><span class=
+      <div id="outline-container-org481e506" class="outline-3">
+        <h3 id="org481e506"><span class=
         "section-number-3">1.4.</span> functions</h3>
         <div class="outline-text-3" id="text-1-4">
           <div class="org-src-container">
-            <pre class="src src-js" id="org01e5814"><span class=
+            <pre class="src src-js" id="org4e2420e"><span class=
             "linenr"> 1: </span>&lt;&lt;registerBinding&gt;&gt;
 <span class="linenr"> 2: </span>&lt;&lt;walkDeclaration&gt;&gt;
 <span class="linenr"> 3: </span>&lt;&lt;walkObjectPattern&gt;&gt;
@@ -53336,12 +53336,12 @@ cssVarsPlugin.postcss = <span class="org-constant">true</span>
 </pre>
           </div>
         </div>
-        <div id="outline-container-org4be6844" class="outline-4">
-          <h4 id="org4be6844"><span class=
+        <div id="outline-container-orgc046897" class="outline-4">
+          <h4 id="orgc046897"><span class=
           "section-number-4">1.4.1.</span> registerBinding()</h4>
           <div class="outline-text-4" id="text-1-4-1">
             <div class="org-src-container">
-              <pre class="src src-js" id="orgd3bf3b2"><span class=
+              <pre class="src src-js" id="org51c8f11"><span class=
               "linenr">1: </span><span class=
               "org-keyword">function</span> <span class=
               "org-function-name">registerBinding</span>(<span class=
@@ -53354,12 +53354,12 @@ cssVarsPlugin.postcss = <span class="org-constant">true</span>
             </div>
           </div>
         </div>
-        <div id="outline-container-orga4548e8" class="outline-4">
-          <h4 id="orga4548e8"><span class=
+        <div id="outline-container-org322bb9b" class="outline-4">
+          <h4 id="org322bb9b"><span class=
           "section-number-4">1.4.2.</span> walkDeclaration()</h4>
           <div class="outline-text-4" id="text-1-4-2">
             <div class="org-src-container">
-              <pre class="src src-js" id="org02d403d"><span class=
+              <pre class="src src-js" id="orge2478de"><span class=
               "linenr"> 1: </span><span class=
               "org-keyword">function</span> <span class=
               "org-function-name">walkDeclaration</span>(<span class=
@@ -53486,12 +53486,12 @@ cssVarsPlugin.postcss = <span class="org-constant">true</span>
             </div>
           </div>
         </div>
-        <div id="outline-container-org5e14cf3" class="outline-4">
-          <h4 id="org5e14cf3"><span class=
+        <div id="outline-container-org02afbfa" class="outline-4">
+          <h4 id="org02afbfa"><span class=
           "section-number-4">1.4.3.</span> walkObjectPattern()</h4>
           <div class="outline-text-4" id="text-1-4-3">
             <div class="org-src-container">
-              <pre class="src src-js" id="org46db6de"><span class=
+              <pre class="src src-js" id="org41267fa"><span class=
               "linenr"> 1: </span>
 <span class="linenr"> 2: </span><span class=
 "org-keyword">function</span> <span class=
@@ -53553,12 +53553,12 @@ cssVarsPlugin.postcss = <span class="org-constant">true</span>
             </div>
           </div>
         </div>
-        <div id="outline-container-org7eb746c" class="outline-4">
-          <h4 id="org7eb746c"><span class=
+        <div id="outline-container-org22daeec" class="outline-4">
+          <h4 id="org22daeec"><span class=
           "section-number-4">1.4.4.</span> walkArrayPattern()</h4>
           <div class="outline-text-4" id="text-1-4-4">
             <div class="org-src-container">
-              <pre class="src src-js" id="org4ef9cc2"><span class=
+              <pre class="src src-js" id="org48bb0e0"><span class=
               "linenr">1: </span><span class=
               "org-keyword">function</span> <span class=
               "org-function-name">walkArrayPattern</span>(<span class=
@@ -53580,12 +53580,12 @@ cssVarsPlugin.postcss = <span class="org-constant">true</span>
             </div>
           </div>
         </div>
-        <div id="outline-container-orgdd7f821" class="outline-4">
-          <h4 id="orgdd7f821"><span class=
+        <div id="outline-container-org87fc09f" class="outline-4">
+          <h4 id="org87fc09f"><span class=
           "section-number-4">1.4.5.</span> walkPattern()</h4>
           <div class="outline-text-4" id="text-1-4-5">
             <div class="org-src-container">
-              <pre class="src src-js" id="org03acbd0"><span class=
+              <pre class="src src-js" id="org4c6c4a9"><span class=
               "linenr"> 1: </span><span class=
               "org-keyword">function</span> <span class=
               "org-function-name">walkPattern</span>(<span class=
@@ -53659,12 +53659,12 @@ cssVarsPlugin.postcss = <span class="org-constant">true</span>
             </div>
           </div>
         </div>
-        <div id="outline-container-org941bd7d" class="outline-4">
-          <h4 id="org941bd7d"><span class=
+        <div id="outline-container-org3e4443a" class="outline-4">
+          <h4 id="org3e4443a"><span class=
           "section-number-4">1.4.6.</span> recordType()</h4>
           <div class="outline-text-4" id="text-1-4-6">
             <div class="org-src-container">
-              <pre class="src src-js" id="org8595b31"><span class=
+              <pre class="src src-js" id="orgb341997"><span class=
               "linenr"> 1: </span><span class=
               "org-keyword">function</span> <span class=
               "org-function-name">recordType</span>(<span class=
@@ -53697,13 +53697,13 @@ cssVarsPlugin.postcss = <span class="org-constant">true</span>
             </div>
           </div>
         </div>
-        <div id="outline-container-org61739f3" class="outline-4">
-          <h4 id="org61739f3"><span class=
+        <div id="outline-container-orgf54d86e" class="outline-4">
+          <h4 id="orgf54d86e"><span class=
           "section-number-4">1.4.7.</span>
           extractRuntimeProps()</h4>
           <div class="outline-text-4" id="text-1-4-7">
             <div class="org-src-container">
-              <pre class="src src-js" id="org77a1863"><span class=
+              <pre class="src src-js" id="org44af637"><span class=
               "linenr"> 1: </span><span class=
               "org-keyword">function</span> <span class=
               "org-function-name">extractRuntimeProps</span>(<span class=
@@ -53756,12 +53756,12 @@ cssVarsPlugin.postcss = <span class="org-constant">true</span>
             </div>
           </div>
         </div>
-        <div id="outline-container-org80b4366" class="outline-4">
-          <h4 id="org80b4366"><span class=
+        <div id="outline-container-org6f91362" class="outline-4">
+          <h4 id="org6f91362"><span class=
           "section-number-4">1.4.8.</span> inferRuntimeType()</h4>
           <div class="outline-text-4" id="text-1-4-8">
             <div class="org-src-container">
-              <pre class="src src-js" id="orgf038d6c"><span class=
+              <pre class="src src-js" id="orgf30d019"><span class=
               "linenr"> 1: </span><span class=
               "org-keyword">function</span> <span class=
               "org-function-name">inferRuntimeType</span>(<span class=
@@ -53970,13 +53970,13 @@ cssVarsPlugin.postcss = <span class="org-constant">true</span>
             </div>
           </div>
         </div>
-        <div id="outline-container-org3b7c5a5" class="outline-4">
-          <h4 id="org3b7c5a5"><span class=
+        <div id="outline-container-orge4055f3" class="outline-4">
+          <h4 id="orge4055f3"><span class=
           "section-number-4">1.4.9.</span>
           toRuntimeTypeString()</h4>
           <div class="outline-text-4" id="text-1-4-9">
             <div class="org-src-container">
-              <pre class="src src-js" id="org186d8cb"><span class=
+              <pre class="src src-js" id="org8acb7fd"><span class=
               "linenr">1: </span><span class=
               "org-keyword">function</span> <span class=
               "org-function-name">toRuntimeTypeString</span>(<span class=
@@ -53991,13 +53991,13 @@ cssVarsPlugin.postcss = <span class="org-constant">true</span>
             </div>
           </div>
         </div>
-        <div id="outline-container-orga0fa312" class="outline-4">
-          <h4 id="orga0fa312"><span class=
+        <div id="outline-container-org66178c6" class="outline-4">
+          <h4 id="org66178c6"><span class=
           "section-number-4">1.4.10.</span>
           extractRuntimeEmits()</h4>
           <div class="outline-text-4" id="text-1-4-10">
             <div class="org-src-container">
-              <pre class="src src-js" id="org2495df3"><span class=
+              <pre class="src src-js" id="org607cd36"><span class=
               "linenr"> 1: </span><span class=
               "org-keyword">function</span> <span class=
               "org-function-name">extractRuntimeEmits</span>(<span class=
@@ -54035,13 +54035,13 @@ cssVarsPlugin.postcss = <span class="org-constant">true</span>
             </div>
           </div>
         </div>
-        <div id="outline-container-org42f5eff" class="outline-4">
-          <h4 id="org42f5eff"><span class=
+        <div id="outline-container-orgba3c704" class="outline-4">
+          <h4 id="orgba3c704"><span class=
           "section-number-4">1.4.11.</span>
           extractEventNames()</h4>
           <div class="outline-text-4" id="text-1-4-11">
             <div class="org-src-container">
-              <pre class="src src-js" id="orgab5a7f7"><span class=
+              <pre class="src src-js" id="org67fc37d"><span class=
               "linenr"> 1: </span><span class=
               "org-keyword">function</span> <span class=
               "org-function-name">extractEventNames</span>(<span class=
@@ -54095,12 +54095,12 @@ cssVarsPlugin.postcss = <span class="org-constant">true</span>
             </div>
           </div>
         </div>
-        <div id="outline-container-orgd1ecfe1" class="outline-4">
-          <h4 id="orgd1ecfe1"><span class=
+        <div id="outline-container-orge0e757a" class="outline-4">
+          <h4 id="orge0e757a"><span class=
           "section-number-4">1.4.12.</span> genRuntimeEmits()</h4>
           <div class="outline-text-4" id="text-1-4-12">
             <div class="org-src-container">
-              <pre class="src src-js" id="org7acf679"><span class=
+              <pre class="src src-js" id="org0aba9ea"><span class=
               "linenr">1: </span><span class=
               "org-keyword">function</span> <span class=
               "org-function-name">genRuntimeEmits</span>(<span class=
@@ -54120,12 +54120,12 @@ cssVarsPlugin.postcss = <span class="org-constant">true</span>
             </div>
           </div>
         </div>
-        <div id="outline-container-org78b3647" class="outline-4">
-          <h4 id="org78b3647"><span class=
+        <div id="outline-container-orgf1e491d" class="outline-4">
+          <h4 id="orgf1e491d"><span class=
           "section-number-4">1.4.13.</span> isCallOf()</h4>
           <div class="outline-text-4" id="text-1-4-13">
             <div class="org-src-container">
-              <pre class="src src-js" id="org07c4295"><span class=
+              <pre class="src src-js" id="org1b9f591"><span class=
               "linenr"> 1: </span><span class=
               "org-keyword">function</span> <span class=
               "org-function-name">isCallOf</span>(<span class=
@@ -54150,12 +54150,12 @@ cssVarsPlugin.postcss = <span class="org-constant">true</span>
             </div>
           </div>
         </div>
-        <div id="outline-container-orgaa1542f" class="outline-4">
-          <h4 id="orgaa1542f"><span class=
+        <div id="outline-container-org590e220" class="outline-4">
+          <h4 id="org590e220"><span class=
           "section-number-4">1.4.14.</span> canNeverBeRef()</h4>
           <div class="outline-text-4" id="text-1-4-14">
             <div class="org-src-container">
-              <pre class="src src-js" id="orgda751b3"><span class=
+              <pre class="src src-js" id="orgfde1765"><span class=
               "linenr"> 1: </span><span class=
               "org-keyword">function</span> <span class=
               "org-function-name">canNeverBeRef</span>(<span class=
@@ -54224,13 +54224,13 @@ cssVarsPlugin.postcss = <span class="org-constant">true</span>
             </div>
           </div>
         </div>
-        <div id="outline-container-org2575913" class="outline-4">
-          <h4 id="org2575913"><span class=
+        <div id="outline-container-orgba5f7a6" class="outline-4">
+          <h4 id="orgba5f7a6"><span class=
           "section-number-4">1.4.15.</span>
           analyzeScriptBindings()</h4>
           <div class="outline-text-4" id="text-1-4-15">
             <div class="org-src-container">
-              <pre class="src src-js" id="orgc37c0c4"><span class=
+              <pre class="src src-js" id="orgebeeaab"><span class=
               "linenr"> 1: </span><span class="org-doc">/**</span>
 <span class="linenr"> 2: </span><span class=
 "org-doc"> * Analyze bindings in normal `&lt;script&gt;`</span>
@@ -54267,13 +54267,13 @@ cssVarsPlugin.postcss = <span class="org-constant">true</span>
             </div>
           </div>
         </div>
-        <div id="outline-container-org905c954" class="outline-4">
-          <h4 id="org905c954"><span class=
+        <div id="outline-container-orgb149e7c" class="outline-4">
+          <h4 id="orgb149e7c"><span class=
           "section-number-4">1.4.16.</span>
           analyzeBindingsFromOptions()</h4>
           <div class="outline-text-4" id="text-1-4-16">
             <div class="org-src-container">
-              <pre class="src src-js" id="orgbb6b422"><span class=
+              <pre class="src src-js" id="org4295a14"><span class=
               "linenr"> 1: </span><span class=
               "org-keyword">function</span> <span class=
               "org-function-name">analyzeBindingsFromOptions</span>(<span class=
@@ -54451,13 +54451,13 @@ cssVarsPlugin.postcss = <span class="org-constant">true</span>
             </div>
           </div>
         </div>
-        <div id="outline-container-orgb0e56e7" class="outline-4">
-          <h4 id="orgb0e56e7"><span class=
+        <div id="outline-container-orgdbd7a26" class="outline-4">
+          <h4 id="orgdbd7a26"><span class=
           "section-number-4">1.4.17.</span>
           getObjectExpressionKeys()</h4>
           <div class="outline-text-4" id="text-1-4-17">
             <div class="org-src-container">
-              <pre class="src src-js" id="org7d3f34c"><span class=
+              <pre class="src src-js" id="orgb2d5be9"><span class=
               "linenr"> 1: </span><span class=
               "org-keyword">function</span> <span class=
               "org-function-name">getObjectExpressionKeys</span>(<span class=
@@ -54496,13 +54496,13 @@ cssVarsPlugin.postcss = <span class="org-constant">true</span>
             </div>
           </div>
         </div>
-        <div id="outline-container-org00f9823" class="outline-4">
-          <h4 id="org00f9823"><span class=
+        <div id="outline-container-org2b5fab2" class="outline-4">
+          <h4 id="org2b5fab2"><span class=
           "section-number-4">1.4.18.</span>
           getArrayExpressionKeys()</h4>
           <div class="outline-text-4" id="text-1-4-18">
             <div class="org-src-container">
-              <pre class="src src-js" id="org4f83fe2"><span class=
+              <pre class="src src-js" id="org13c382c"><span class=
               "linenr">1: </span><span class=
               "org-keyword">function</span> <span class=
               "org-function-name">getArrayExpressionKeys</span>(<span class=
@@ -54527,13 +54527,13 @@ cssVarsPlugin.postcss = <span class="org-constant">true</span>
             </div>
           </div>
         </div>
-        <div id="outline-container-org75f2b4c" class="outline-4">
-          <h4 id="org75f2b4c"><span class=
+        <div id="outline-container-orgc066eae" class="outline-4">
+          <h4 id="orgc066eae"><span class=
           "section-number-4">1.4.19.</span>
           getObjectOrArrayExpressionKeys()</h4>
           <div class="outline-text-4" id="text-1-4-19">
             <div class="org-src-container">
-              <pre class="src src-js" id="org0ea3b72"><span class=
+              <pre class="src src-js" id="orgcb6e81d"><span class=
               "linenr">1: </span><span class=
               "org-keyword">function</span> <span class=
               "org-function-name">getObjectOrArrayExpressionKeys</span>(<span class="org-variable-name">value</span>) {
@@ -54556,13 +54556,13 @@ cssVarsPlugin.postcss = <span class="org-constant">true</span>
             </div>
           </div>
         </div>
-        <div id="outline-container-org66b8ae9" class="outline-4">
-          <h4 id="org66b8ae9"><span class=
+        <div id="outline-container-orgbb6e9e4" class="outline-4">
+          <h4 id="orgbb6e9e4"><span class=
           "section-number-4">1.4.20.</span>
           resolveTemplateUsageCheckString()</h4>
           <div class="outline-text-4" id="text-1-4-20">
             <div class="org-src-container">
-              <pre class="src src-js" id="org18f448b"><span class=
+              <pre class="src src-js" id="orga8c965d"><span class=
               "linenr"> 1: </span><span class=
               "org-keyword">function</span> <span class=
               "org-function-name">resolveTemplateUsageCheckString</span>(<span class="org-variable-name">sfc</span>) {
@@ -54639,12 +54639,12 @@ cssVarsPlugin.postcss = <span class="org-constant">true</span>
             </div>
           </div>
         </div>
-        <div id="outline-container-org42001c8" class="outline-4">
-          <h4 id="org42001c8"><span class=
+        <div id="outline-container-org567106b" class="outline-4">
+          <h4 id="org567106b"><span class=
           "section-number-4">1.4.21.</span> stripStrings()</h4>
           <div class="outline-text-4" id="text-1-4-21">
             <div class="org-src-container">
-              <pre class="src src-js" id="org5d5addd"><span class=
+              <pre class="src src-js" id="orgfa19c19"><span class=
               "linenr">1: </span><span class=
               "org-keyword">function</span> <span class=
               "org-function-name">stripStrings</span>(<span class=
@@ -54661,13 +54661,13 @@ cssVarsPlugin.postcss = <span class="org-constant">true</span>
             </div>
           </div>
         </div>
-        <div id="outline-container-org7a12988" class="outline-4">
-          <h4 id="org7a12988"><span class=
+        <div id="outline-container-orgedfc530" class="outline-4">
+          <h4 id="orgedfc530"><span class=
           "section-number-4">1.4.22.</span>
           stripTemplateString()</h4>
           <div class="outline-text-4" id="text-1-4-22">
             <div class="org-src-container">
-              <pre class="src src-js" id="org2991ed3"><span class=
+              <pre class="src src-js" id="org6fe552f"><span class=
               "linenr">1: </span><span class=
               "org-keyword">function</span> <span class=
               "org-function-name">stripTemplateString</span>(<span class=
@@ -54688,12 +54688,12 @@ cssVarsPlugin.postcss = <span class="org-constant">true</span>
             </div>
           </div>
         </div>
-        <div id="outline-container-org44c78b9" class="outline-4">
-          <h4 id="org44c78b9"><span class=
+        <div id="outline-container-org1ec964a" class="outline-4">
+          <h4 id="org1ec964a"><span class=
           "section-number-4">1.4.23.</span> isImportUsed()</h4>
           <div class="outline-text-4" id="text-1-4-23">
             <div class="org-src-container">
-              <pre class="src src-js" id="org861274d"><span class=
+              <pre class="src src-js" id="org27f96f7"><span class=
               "linenr">1: </span><span class=
               "org-keyword">function</span> <span class=
               "org-function-name">isImportUsed</span>(<span class=
@@ -54717,12 +54717,12 @@ cssVarsPlugin.postcss = <span class="org-constant">true</span>
             </div>
           </div>
         </div>
-        <div id="outline-container-org21e683d" class="outline-4">
-          <h4 id="org21e683d"><span class=
+        <div id="outline-container-org4b69b2f" class="outline-4">
+          <h4 id="org4b69b2f"><span class=
           "section-number-4">1.4.24.</span> hmrShouldReload()</h4>
           <div class="outline-text-4" id="text-1-4-24">
             <div class="org-src-container">
-              <pre class="src src-js" id="org7445fc6"><span class=
+              <pre class="src src-js" id="orgd9a5c5e"><span class=
               "linenr"> 1: </span><span class="org-doc">/**</span>
 <span class="linenr"> 2: </span><span class=
 "org-doc"> * Note: this comparison assumes the prev/next script are already identical,</span>
@@ -54779,12 +54779,12 @@ cssVarsPlugin.postcss = <span class="org-constant">true</span>
           </div>
         </div>
       </div>
-      <div id="outline-container-org1092992" class="outline-3">
-        <h3 id="org1092992"><span class=
+      <div id="outline-container-org16cb399" class="outline-3">
+        <h3 id="org16cb399"><span class=
         "section-number-3">1.5.</span> rewriteDefault</h3>
         <div class="outline-text-3" id="text-1-5">
           <div class="org-src-container">
-            <pre class="src src-js" id="orgadbf2b2"><span class=
+            <pre class="src src-js" id="org9f7db5e"><span class=
             "linenr"> 1: </span>
 <span class="linenr"> 2: </span><span class=
 "org-keyword">const</span> <span class=
@@ -54917,12 +54917,12 @@ cssVarsPlugin.postcss = <span class="org-constant">true</span>
           </div>
         </div>
       </div>
-      <div id="outline-container-orgcd2471d" class="outline-3">
-        <h3 id="orgcd2471d"><span class=
+      <div id="outline-container-org9134b4f" class="outline-3">
+        <h3 id="org9134b4f"><span class=
         "section-number-3">1.6.</span> cssVars</h3>
         <div class="outline-text-3" id="text-1-6">
           <div class="org-src-container">
-            <pre class="src src-js" id="org7c31063"><span class=
+            <pre class="src src-js" id="org5aa64b3"><span class=
             "linenr">  1: </span><span class=
             "org-keyword">const</span> <span class=
             "org-variable-name">hash</span> = require(process.env.NODE_LIB + <span class="org-string">'/hash-sum'</span>)
@@ -55167,12 +55167,12 @@ cssVarsPlugin.postcss = <span class="org-constant">true</span>
           </div>
         </div>
       </div>
-      <div id="outline-container-org6f29cba" class="outline-3">
-        <h3 id="org6f29cba"><span class=
+      <div id="outline-container-orga0ae230" class="outline-3">
+        <h3 id="orga0ae230"><span class=
         "section-number-3">1.7.</span> testing</h3>
         <div class="outline-text-3" id="text-1-7">
           <div class="org-src-container">
-            <pre class="src src-js" id="org3a998f2"><span class=
+            <pre class="src src-js" id="org67a0c17"><span class=
             "linenr"> 1: </span>&lt;&lt;compiler-sfc-script&gt;&gt;
 <span class="linenr"> 2: </span>
 <span class="linenr"> 3: </span><span class=
@@ -55247,7 +55247,7 @@ cssVarsPlugin.postcss = <span class="org-constant">true</span>
 "org-string">'bindings'</span>, bindings)
 </pre>
             </div>
-            <pre class="example" id="org2462e4c">
+            <pre class="example" id="orgd31e7d9">
 --------- createStructuralDirectiveTransform ---------
 name=for, matches=(n) =&gt; n === name
 --------- createStructuralDirectiveTransform ---------
@@ -55328,7 +55328,7 @@ undefined
 "org-string">'bindings'</span>, bindings)
 </pre>
             </div>
-            <pre class="example" id="orgff69de8">
+            <pre class="example" id="org8402a57">
 --------- createStructuralDirectiveTransform ---------
 name=for, matches=(n) =&gt; n === name
 --------- createStructuralDirectiveTransform ---------
@@ -55403,7 +55403,7 @@ undefined
 "org-string">'bindings'</span>, bindings)
 </pre>
             </div>
-            <pre class="example" id="org4eb6ea5">
+            <pre class="example" id="orgd6f5846">
 --------- createStructuralDirectiveTransform ---------
 name=for, matches=(n) =&gt; n === name
 --------- createStructuralDirectiveTransform ---------
@@ -55486,7 +55486,7 @@ undefined
 "org-string">'bindings'</span>, bindings)
 </pre>
             </div>
-            <pre class="example" id="orgf832e98">
+            <pre class="example" id="orgf002e7e">
 --------- createStructuralDirectiveTransform ---------
 name=for, matches=(n) =&gt; n === name
 --------- createStructuralDirectiveTransform ---------
@@ -55550,43 +55550,99 @@ undefined
 <span class="linenr">10: </span><span class=
 "org-string">defineExpose({ foo: 123 })</span>
 <span class="linenr">11: </span><span class=
-"org-string">const bar = 1</span>
-<span class="linenr">12: </span><span class=
 "org-string">const r = ref(0)</span>
-<span class="linenr">13: </span><span class=
+<span class="linenr">12: </span><span class=
 "org-string">&lt;/script&gt;</span>
-<span class="linenr">14: </span><span class=
+<span class="linenr">13: </span><span class=
 "org-string">&lt;script&gt;</span>
-<span class="linenr">15: </span><span class=
+<span class="linenr">14: </span><span class=
 "org-string">export const n = 1</span>
-<span class="linenr">16: </span>
-<span class="linenr">17: </span><span class=
+<span class="linenr">15: </span>
+<span class="linenr">16: </span><span class=
 "org-string">export default {</span>
-<span class="linenr">18: </span><span class=
+<span class="linenr">17: </span><span class=
 "org-string">  some:'option'</span>
-<span class="linenr">19: </span><span class="org-string">}</span>
-<span class="linenr">20: </span><span class=
+<span class="linenr">18: </span><span class="org-string">}</span>
+<span class="linenr">19: </span><span class=
 "org-string">&lt;/script&gt;`</span>)
-<span class="linenr">21: </span>logg(<span class=
+<span class="linenr">20: </span>logg(<span class=
 "org-string">'content'</span>, content)
-<span class="linenr">22: </span>logg(<span class=
+<span class="linenr">21: </span>logg(<span class=
 "org-string">'bindings'</span>, bindings)
 </pre>
             </div>
+            <pre class="example" id="orga75318c">
+--------- createStructuralDirectiveTransform ---------
+name=for, matches=(n) =&gt; n === name
+--------- createStructuralDirectiveTransform ---------
+name=/^(if|else|else-if)$/, matches=(n) =&gt; name.test(n)
+--------- ATTR ---------
+{
+  type: 6,
+  name: 'setup',
+  value: undefined,
+  loc: {
+    start: { column: 9, line: 2, offset: 9 },
+    end: { column: 14, line: 2, offset: 14 },
+    source: 'setup'
+  }
+}
+--------- content ---------
+export const n = 1
+
+const __default__ = {
+  some:'option'
+}
+
+export default /*#__PURE__*/Object.assign(__default__, {
+  props: {
+  foo: String
+},
+  emits: ['foo', 'bar'],
+  setup(__props, { expose, emit: myEmit }) {
+
+const props = __props
+
+const { foo, b: bar, ['x' + 'y']: baz, x: { y, zz: { z }}} = {}
+
+
+expose({ foo: 123 })
+const r = ref(0)
+
+const __returned__ = { n, foo, bar, baz, y, z, props, myEmit, r }
+Object.defineProperty(__returned__, '__isScriptSetup', { enumerable: false, value: true })
+return __returned__
+}
+
+})
+--------- bindings ---------
+{
+  foo: 'setup-maybe-ref',
+  n: 'setup-const',
+  bar: 'setup-maybe-ref',
+  baz: 'setup-maybe-ref',
+  y: 'setup-maybe-ref',
+  z: 'setup-maybe-ref',
+  props: 'setup-const',
+  myEmit: 'setup-const',
+  r: 'setup-ref'
+}
+undefined
+</pre>
           </details>
         </div>
       </div>
     </div>
-    <div id="outline-container-orgdaa9a27" class="outline-2">
-      <h2 id="orgdaa9a27"><span class="section-number-2">2.</span>
+    <div id="outline-container-org517f6eb" class="outline-2">
+      <h2 id="org517f6eb"><span class="section-number-2">2.</span>
       template</h2>
       <div class="outline-text-2" id="text-2"></div>
-      <div id="outline-container-org0651a6c" class="outline-3">
-        <h3 id="org0651a6c"><span class=
+      <div id="outline-container-org937fa8b" class="outline-3">
+        <h3 id="org937fa8b"><span class=
         "section-number-3">2.1.</span> compileTemplate()</h3>
         <div class="outline-text-3" id="text-2-1">
           <div class="org-src-container">
-            <pre class="src src-js" id="org42cf443"><span class=
+            <pre class="src src-js" id="org2bed9ce"><span class=
             "linenr"> 1: </span><span class=
             "org-keyword">function</span> <span class=
             "org-function-name">compileTemplate</span>(<span class=
@@ -55702,16 +55758,16 @@ undefined
         </div>
       </div>
     </div>
-    <div id="outline-container-orgb2c3b47" class="outline-2">
-      <h2 id="orgb2c3b47"><span class="section-number-2">3.</span>
+    <div id="outline-container-orgef255b2" class="outline-2">
+      <h2 id="orgef255b2"><span class="section-number-2">3.</span>
       parse</h2>
       <div class="outline-text-2" id="text-3"></div>
-      <div id="outline-container-org3cc19a8" class="outline-3">
-        <h3 id="org3cc19a8"><span class=
+      <div id="outline-container-org5793069" class="outline-3">
+        <h3 id="org5793069"><span class=
         "section-number-3">3.1.</span> script</h3>
         <div class="outline-text-3" id="text-3-1">
           <div class="org-src-container">
-            <pre class="src src-js" id="orgb555577"><span class=
+            <pre class="src src-js" id="org0c86eae"><span class=
             "linenr">  1: </span><span class=
             "org-keyword">const</span> <span class=
             "org-variable-name">sourceToSFC</span> = createCache()
@@ -56263,11 +56319,11 @@ undefined
         </div>
       </div>
     </div>
-    <div id="outline-container-orgd76955b" class="outline-2">
-      <h2 id="orgd76955b"><span class="section-number-2">4.</span>
+    <div id="outline-container-orgf48259e" class="outline-2">
+      <h2 id="orgf48259e"><span class="section-number-2">4.</span>
       mindmaps</h2>
       <div class="outline-text-2" id="text-4">
-        <p><a href="#org2b85ca2">compileScript()</a>:</p><a href=
+        <p><a href="#orgcb78368">compileScript()</a>:</p><a href=
         "../assets/img/vue3/compiler-sfc/vue-compiler-sfc-compile-script.svg"
         data-fancybox="gallery" data-caption="Preview"><img src=
         "../assets/img/vue3/compiler-sfc/vue-compiler-sfc-compile-script.svg"></a>
@@ -56277,8 +56333,8 @@ undefined
         "../assets/img/vue3/compiler-sfc/vue-compiler-sfc-keypoints.svg"></a>
       </div>
     </div>
-    <div id="outline-container-orgb6f1fa5" class="outline-2">
-      <h2 id="orgb6f1fa5"><span class="section-number-2">5.</span>
+    <div id="outline-container-orga453145" class="outline-2">
+      <h2 id="orga453145"><span class="section-number-2">5.</span>
       global variables</h2>
       <div class="outline-text-2" id="text-5">
         <br>
@@ -56289,7 +56345,7 @@ undefined
             "green">globalVars</font></strong>
           </summary>
           <div class="org-src-container">
-            <pre class="src src-js" id="orgbea8b6e"><span class=
+            <pre class="src src-js" id="org432ac80"><span class=
             "linenr"> 1: </span><span class=
             "org-keyword">const</span> <span class=
             "org-variable-name">__ESM_BROWSER__</span> = <span class=
@@ -56450,8 +56506,8 @@ undefined
           </div>
         </details>
       </div>
-      <div id="outline-container-org47d8ab1" class="outline-3">
-        <h3 id="org47d8ab1"><span class=
+      <div id="outline-container-orgdedabb3" class="outline-3">
+        <h3 id="orgdedabb3"><span class=
         "section-number-3">5.1.</span> reactivity-transform</h3>
         <div class="outline-text-3" id="text-5-1">
           <p><a href=
@@ -56463,7 +56519,7 @@ undefined
           <code>$toRef()</code>, 语法糖，可以减少 <code>import ... from
           "vue"</code> 语法。</p>
           <div class="org-src-container">
-            <pre class="src src-js" id="org94ad865"><span class=
+            <pre class="src src-js" id="orgf84ad95"><span class=
             "linenr">  1: </span><span class=
             "org-keyword">const</span> <span class=
             "org-variable-name">RT</span> = (<span class=
@@ -57681,7 +57737,7 @@ undefined
   </div>
   <div id="postamble" class="status">
     <p class="author">Author: Zhicheng Lee</p>
-    <p class="date">Created: 2022-05-05 Thu 19:00</p>
+    <p class="date">Created: 2022-05-06 Fri 09:06</p>
   </div>
 </body>
 </html>

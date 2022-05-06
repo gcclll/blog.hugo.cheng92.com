@@ -165,3 +165,7 @@ export function filterList(queryList, list = []) {
     })
     .filter(Boolean)
 }
+
+export function deleteLocalPath(link) {
+  return link.replace(/.+gclrc\/org\/roam\//, '')
+}
