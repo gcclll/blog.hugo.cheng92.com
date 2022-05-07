@@ -15,16 +15,22 @@
 
 ** xcode-select: Failed to locate 'git'
 
-#+begin_example
+#+begin_question-block
+@@html:<p>❓ <strong>Question</strong> ❓</p>@@
+
 git: error: sh -c '/Applications/Xcode.app/Contents/Developer/usr/bin/xcodebuild -sdk macosx -find git 2> /dev/null' failed with exit code 17920: (null) (errno=No such file or directory)
 xcode-select: Failed to locate 'git', requesting installation of command line developer tools.
-#+end_example
 
-FIX: [[https://developer.apple.com/forums/thread/666584][After upgrade to Big Sur git stopp… | Apple Developer Forums]]
+#+begin_answer-block
+@@html:<p>❗ <strong>Answer</strong> ❗</p>@@
+
+green:FIX: [[https://developer.apple.com/forums/thread/666584][After upgrade to Big Sur git stopp… | Apple Developer Forums]]
 
 ~$ sudo xcode-select -switch /Library/Developer/CommandLineTools~
+#+end_answer-block
+#+end_question-block
 
-* COMMENT Local Variables       :ARCHIVE:
+* COMMENT Local Variables :ARCHIVE:
 # Local Variables:
 # after-save-hook: gcl/org-html-export-to-html
 # End:

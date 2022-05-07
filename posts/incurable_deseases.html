@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <!-- 2022-05-07 Sat 13:57 -->
+  <!-- 2022-05-07 Sat 15:02 -->
   <meta charset="utf-8">
   <meta name="viewport" content=
   "width=device-width, initial-scale=1">
@@ -290,10 +290,10 @@
       <div id="text-table-of-contents" role="doc-toc">
         <ul>
           <li>
-            <a href="#org3be7b40">1. git</a>
+            <a href="#org5007baf">1. git</a>
             <ul>
               <li>
-                <a href="#org57190c0">1.1. xcode-select: Failed to
+                <a href="#org5bf3b5d">1.1. xcode-select: Failed to
                 locate ’git’</a>
               </li>
             </ul>
@@ -303,32 +303,40 @@
     </div>
     <p><a href="/"><img src=
     "https://img.shields.io/badge/GCCLL-Homepage-green?logo=gnu-emacs"></a></p>
-    <div id="outline-container-org3be7b40" class="outline-2">
-      <h2 id="org3be7b40"><span class="section-number-2">1.</span>
+    <div id="outline-container-org5007baf" class="outline-2">
+      <h2 id="org5007baf"><span class="section-number-2">1.</span>
       git</h2>
       <div class="outline-text-2" id="text-1"></div>
-      <div id="outline-container-org57190c0" class="outline-3">
-        <h3 id="org57190c0"><span class=
+      <div id="outline-container-org5bf3b5d" class="outline-3">
+        <h3 id="org5bf3b5d"><span class=
         "section-number-3">1.1.</span> xcode-select: Failed to
         locate ’git’</h3>
         <div class="outline-text-3" id="text-1-1">
-          <pre class="example" id="org40208b2">
-git: error: sh -c '/Applications/Xcode.app/Contents/Developer/usr/bin/xcodebuild -sdk macosx -find git 2&gt; /dev/null' failed with exit code 17920: (null) (errno=No such file or directory)
-xcode-select: Failed to locate 'git', requesting installation of command line developer tools.
-</pre>
-          <p>FIX: <a href=
-          "https://developer.apple.com/forums/thread/666584">After
-          upgrade to Big Sur git stopp… | Apple Developer
-          Forums</a></p>
-          <p><code>$ sudo xcode-select -switch
-          /Library/Developer/CommandLineTools</code></p>
+          <div class="question-block" id="orgdf79c04">
+            <p>❓ <strong>Question</strong> ❓</p>
+            <p>git: error: sh -c
+            ’/Applications/Xcode.app/Contents/Developer/usr/bin/xcodebuild
+            -sdk macosx -find git 2&gt; /dev/null’ failed with exit
+            code 17920: (null) (errno=No such file or directory)
+            xcode-select: Failed to locate ’git’, requesting
+            installation of command line developer tools.</p>
+            <div class="answer-block" id="org4b99713">
+              <p>❗ <strong>Answer</strong> ❗</p>
+              <p><span style="color:green;">FIX</span>: <a href=
+              "https://developer.apple.com/forums/thread/666584">After
+              upgrade to Big Sur git stopp… | Apple Developer
+              Forums</a></p>
+              <p><code>$ sudo xcode-select -switch
+              /Library/Developer/CommandLineTools</code></p>
+            </div>
+          </div>
         </div>
       </div>
     </div>
   </div>
   <div id="postamble" class="status">
     <p class="author">Author: Zhicheng Lee</p>
-    <p class="date">Created: 2022-05-07 Sat 13:57</p>
+    <p class="date">Created: 2022-05-07 Sat 15:02</p>
   </div>
 </body>
 </html>

@@ -1325,7 +1325,11 @@ Possibly using ID's as the current working solution above.
 
 ** 问答(solution)
 
-#+begin_solution
+参数： ~#+begin_solution "question?" :reprimand "answer?" :really "what?"~
+
+分别是 green:最外层标题(question), black:第二层标题(answer), red:最内层标题(what)
+
+#+begin_solution "question?" :reprimand "answer?" :really "what?"
 The answer is 2.
 
 If you're interested in such ‘fundamental’ questions, consider reading
@@ -2195,6 +2199,64 @@ error
 danger
 #+end_danger
 #+html: <br>
+
+* 自定义
+
+~$BLOG/src/css/block.scss~ 中增加各种 block 的样式。
+
+通过 ~#+begin_xxx-block ... #+end_xxx-block~ 增加对应的 ~xxx~ block
+
+然后通过 snippets 快捷创建 block，如：
+
+~1iw=warn-block~, ~1is=success-block~, ... 等等。
+
+支持的有：
+
+#+begin_src css
+@include gen-block('warn', rgba(255, 229, 100, 0.3), #6b5900, #e7c000);
+@include gen-block('danger', #ffe6e6, #4d0000, #c00);
+@include gen-block('tip', #f3f5f7, #000000, #42b983);
+@include gen-block('info', #f3f5f7, #000000, #42b983);
+@include gen-block('question', #f3f5f7, #000000, #42b983);
+@include gen-block('success', #f3f5f7, #42b983, #42b983);
+@include gen-block('comment', #f3f5f7, #6a737d, #e0e3e6);
+#+end_src
+
+#+begin_warn-block
+@@html:<p><strong>⚠&nbsp;WARNING</strong></p>@@
+
+#+end_warn-block
+
+#+begin_danger-block
+@@html:<p><strong>📓&nbsp;NOTE</strong></p>@@
+
+#+end_danger-block
+
+#+begin_tip-block
+@@html:<p><strong>TIP</strong></p>@@
+
+#+end_tip-block
+
+#+begin_info-block
+@@html:<p><strong>ℹ&nbsp;INFO</strong></p>@@
+
+#+end_info-block
+
+#+begin_success-block
+@@html:<p><strong>😏&nbsp;Success</strong></p>@@
+
+#+end_success-block
+
+#+begin_answer-block
+@@html:<p>❗ <strong>Answer</strong> ❗</p>@@
+
+#+end_answer-block
+
+#+begin_question-block
+@@html:<p>❓ <strong>Question</strong> ❓</p>@@
+
+#+end_question-block
+
 
 
 * COMMENT Local Variables :ARCHIVE:

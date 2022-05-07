@@ -1,6 +1,6 @@
 @mixin gen-block($name, $bgcolor, $color, $border-color) {
   .#{$name}-block {
-    padding: 0.1rem 1.5rem;
+    padding: 0.1rem 1.5rem 0.1rem 0.5rem;
     border-left-width: 0.5rem;
     border-left-style: solid;
     margin: 1rem 0;
@@ -20,13 +20,15 @@
   }
 }
 
-.post-content {
+#content {
   @include gen-block('warn', rgba(255, 229, 100, 0.3), #6b5900, #e7c000);
   @include gen-block('danger', #ffe6e6, #4d0000, #c00);
   @include gen-block('tip', #f3f5f7, #000000, #42b983);
   @include gen-block('info', #f3f5f7, #000000, #42b983);
   @include gen-block('success', #f3f5f7, #42b983, #42b983);
   @include gen-block('comment', #f3f5f7, #6a737d, #e0e3e6);
+  @include gen-block('question', #ffe6e6, #4d0000, #c00);
+  @include gen-block('answer', rgba(255, 229, 100, 0.3), #6b5900, #e7c000);
   .comment-block {
     padding: 0.5rem;
     p {

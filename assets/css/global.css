@@ -1,5 +1,18 @@
-.post-content .warn-block {
-  padding: 0.1rem 1.5rem;
+div[id^=outline-container-] a {
+  font-family: "EB Garamond";
+  text-decoration: none;
+  background: linear-gradient(to bottom, transparent 70%, rgba(49, 184, 204, 0.5) 70%);
+}
+div[id^=outline-container-] a.footref, div[id^=outline-container-] a.coderef {
+  background: none;
+}
+
+a[data-fancybox=gallery] {
+  background: none !important;
+}
+
+#content .warn-block {
+  padding: 0.1rem 1.5rem 0.1rem 0.5rem;
   border-left-width: 0.5rem;
   border-left-style: solid;
   margin: 1rem 0;
@@ -7,11 +20,11 @@
   border-color: #e7c000;
   color: #6b5900;
 }
-.post-content .warn-block strong {
+#content .warn-block strong {
   color: #6b5900;
 }
-.post-content .danger-block {
-  padding: 0.1rem 1.5rem;
+#content .danger-block {
+  padding: 0.1rem 1.5rem 0.1rem 0.5rem;
   border-left-width: 0.5rem;
   border-left-style: solid;
   margin: 1rem 0;
@@ -19,11 +32,11 @@
   border-color: #c00;
   color: #4d0000;
 }
-.post-content .danger-block strong {
+#content .danger-block strong {
   color: #4d0000;
 }
-.post-content .tip-block {
-  padding: 0.1rem 1.5rem;
+#content .tip-block {
+  padding: 0.1rem 1.5rem 0.1rem 0.5rem;
   border-left-width: 0.5rem;
   border-left-style: solid;
   margin: 1rem 0;
@@ -31,11 +44,11 @@
   border-color: #42b983;
   color: #000000;
 }
-.post-content .tip-block strong {
+#content .tip-block strong {
   color: #000000;
 }
-.post-content .info-block {
-  padding: 0.1rem 1.5rem;
+#content .info-block {
+  padding: 0.1rem 1.5rem 0.1rem 0.5rem;
   border-left-width: 0.5rem;
   border-left-style: solid;
   margin: 1rem 0;
@@ -43,11 +56,11 @@
   border-color: #42b983;
   color: #000000;
 }
-.post-content .info-block strong {
+#content .info-block strong {
   color: #000000;
 }
-.post-content .success-block {
-  padding: 0.1rem 1.5rem;
+#content .success-block {
+  padding: 0.1rem 1.5rem 0.1rem 0.5rem;
   border-left-width: 0.5rem;
   border-left-style: solid;
   margin: 1rem 0;
@@ -55,11 +68,11 @@
   border-color: #42b983;
   color: #42b983;
 }
-.post-content .success-block strong {
+#content .success-block strong {
   color: #42b983;
 }
-.post-content .comment-block {
-  padding: 0.1rem 1.5rem;
+#content .comment-block {
+  padding: 0.1rem 1.5rem 0.1rem 0.5rem;
   border-left-width: 0.5rem;
   border-left-style: solid;
   margin: 1rem 0;
@@ -67,16 +80,40 @@
   border-color: #e0e3e6;
   color: #6a737d;
 }
-.post-content .comment-block strong {
+#content .comment-block strong {
   color: #6a737d;
 }
-.post-content .comment-block {
+#content .question-block {
+  padding: 0.1rem 1.5rem 0.1rem 0.5rem;
+  border-left-width: 0.5rem;
+  border-left-style: solid;
+  margin: 1rem 0;
+  background-color: #ffe6e6;
+  border-color: #c00;
+  color: #4d0000;
+}
+#content .question-block strong {
+  color: #4d0000;
+}
+#content .answer-block {
+  padding: 0.1rem 1.5rem 0.1rem 0.5rem;
+  border-left-width: 0.5rem;
+  border-left-style: solid;
+  margin: 1rem 0;
+  background-color: rgba(255, 229, 100, 0.3);
+  border-color: #e7c000;
+  color: #6b5900;
+}
+#content .answer-block strong {
+  color: #6b5900;
+}
+#content .comment-block {
   padding: 0.5rem;
 }
-.post-content .comment-block p {
+#content .comment-block p {
   margin-bottom: 0;
 }
-.post-content .red-block {
+#content .red-block {
   color: red;
 }
 
@@ -408,6 +445,21 @@ blockquote {
     width: 100% !important;
   }
 }
+.tooltipster-base {
+  max-width: 100vw;
+}
+
+.tooltipster-box .tooltipster-content strong {
+  color: green;
+}
+.tooltipster-box .tooltipster-content h2 {
+  color: aqua;
+}
+.tooltipster-box .tooltipster-content h3 {
+  text-indent: 0;
+  color: cyan;
+}
+
 /* Set the colors in <pre> blocks from the Leuven theme */
 body {
   font-family: "EB Garamond", "Lato", "proxima-nova", "Helvetica Neue", Arial, sans-serif;
@@ -532,34 +584,6 @@ pre span.org-diff-indicator-added {
 b,
 strong {
   color: #a020f0;
-}
-
-.tooltipster-base {
-  max-width: 100vw;
-}
-
-.tooltipster-box .tooltipster-content strong {
-  color: green;
-}
-.tooltipster-box .tooltipster-content h2 {
-  color: aqua;
-}
-.tooltipster-box .tooltipster-content h3 {
-  text-indent: 0;
-  color: cyan;
-}
-
-div[id^=outline-container-] a {
-  font-family: "EB Garamond";
-  text-decoration: none;
-  background: linear-gradient(to bottom, transparent 70%, rgba(49, 184, 204, 0.5) 70%);
-}
-div[id^=outline-container-] a.footref, div[id^=outline-container-] a.coderef {
-  background: none;
-}
-
-a[data-fancybox=gallery] {
-  background: none !important;
 }
 
 pre.debug {
