@@ -47,6 +47,7 @@ CLOSED: [2022-04-28 Thu 16:17]
 ** TODO [[id:a10d6fd1-893b-4ed4-967d-d57388ba6525][shell basis]]
 * 怪谈杂物间
 ** [[id:95666e03-38b5-4ad4-b50f-ef40f6cc36d8][collections]]
+** [[id:93914fa7-93b9-464c-8e6d-98fb5107966d][incurable deseases]]
 ** [[id:acb1ce02-6444-4b0e-a61d-7091dbe05d92][Let's talking here]]
 
 * COMMENT Local Variables :ARCHIVE:
