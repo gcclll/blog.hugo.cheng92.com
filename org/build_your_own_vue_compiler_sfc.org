@@ -10,7 +10,6 @@
 #+TITLE: build your own vue compiler-sfc
 <badge: GCCLL | Homepage | green | / | gnu-emacs | tinder>
 
-TODO compiler-sfc
 #+html: <br>
 #+begin_details compiler-dom :title-color green
 
