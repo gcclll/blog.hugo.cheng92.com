@@ -10,6 +10,28 @@
 #+TITLE: build your own vue compiler-sfc
 <badge: GCCLL | Homepage | green | / | gnu-emacs | tinder>
 
+#+begin_warn-block
+@@html:<p>⚠ <strong>慎入</strong></p>@@
+
+这个包感觉没啥可看的，先是通过 babel parse 解析出的 ast 通过 magic string 对 vue
+的一些语法做一些加工处理，直接替换 render 函数字符串的一个过程。
+
+例如
+
+defineProps 会被解析完之后合并到 ~instance.props~
+
+defineEmits -> emits
+
+defineExpose 则会被解析成 setup 函数中的 ~expose()~ 函数调用。
+
+还有 typescript 语法的一些处理和双 script 同时存在时的一些合并，这个只要
+记住一点： ~script setup~ 被解析成 setup 函数，且优先级比普通的 script 高，也就是
+说如果你在普通的 script 的 export default 中包含了 setup() 函数会被替代而无效。
+
+另外， css 变量的处理也可以关注下，实现原理就是 vue v-bind + css var 变量方式，
+动态修改 css 变量的值来实现。
+#+end_warn-block
+
 #+html: <br>
 #+begin_details compiler-dom :title-color green
 
@@ -364,7 +386,7 @@ function error(msg, node, end = node.end + startOffset) {
 #+end_src
 *** processDefineProps()
 
-TODO 使用场景：
+使用场景：
 
 1. 不能重复调用 ~defineProps()~
 2. 不能同时使用类型和非类型参数
@@ -603,6 +625,8 @@ TODO 使用场景：
 
 #+end_src
 *** processDefineExpose()
+
+解析 ~defineExpose({})~ 成 ~expose({})~
 
 #+name: cs-u-processDefineExpose
 #+begin_src js -n -r
@@ -986,7 +1010,7 @@ function processSetupScript() {
       plugins: [
         ...plugins,
         // allow top level await but only inside <script setup>
-        'topLevelAwait'
+        'topLevelAwait' (ref:processSetupScript-topLevelAwait)
       ],
       sourceType: 'module'
     },
@@ -1010,6 +1034,7 @@ function processSetupScript() {
       end++
     }
 
+    (ref:processSetupScript-label-ref)
     // (Dropped) `ref: x` bindings
     if (
       node.type === 'LabeledStatement' &&
@@ -1086,6 +1111,7 @@ function processSetupScript() {
     }
 
     if (node.type === 'ExpressionStatement') {
+      (ref:define-props-emits-defaults)
       // process `defineProps` and `defineEmit(s)` calls
       if (
         processDefineProps(node.expression) ||
@@ -1207,9 +1233,6 @@ function processSetupScript() {
   return scriptSetupAst
 }
 #+end_src
-
-#+RESULTS: cs-s-processSetupScript
-: undefined
 
 *** apply reactivity transform
 
@@ -2546,6 +2569,7 @@ logg('bindings', bindings)
 
 #+html: <br>
 #+begin_details 普通 script 和 setup script 优先级问题 :title-color red
+#+name: script-test-priority
 #+begin_src js -n -r :exports both
 <<sfc-testing>>
 
@@ -2590,6 +2614,22 @@ logg('content', content)
 logg('bindings', bindings)
 #+end_src
 #+end_details
+** 小结
+
+~script setup~ 中的代码都会被解析成 ~setup() {...}~ 方法，如示例 [[script-test-priority][script+setup]]
+
+~script setup~ 支持以下特性(更具体的使用案例看官方的测试用例更直接全面)
+
+- ~await~ 关键词([[(processSetupScript-topLevelAwait)]])，如果其中出现了相关使用，那么 ~setup~ 会被解析成异步函数 ~async setup~
+
+- ~ref:name = 100~ 这种新的语法糖未开始就结束了([[https://github.com/vuejs/rfcs/discussions/369][369]])
+
+- 使用 [[cs-u-processDefineProps][defineProps]], [[cs-u-processDefineEmits][defineEmits]], [[cs-u-processDefineExpose][defineExpose]], [[(define-props-emits-defaults)]]
+  , 这些函数都不能重复调用。通过 [[cs-s-extractRuntimeProps][extractRuntimeProps]] 解析合并到组件的 props
+  上, [[cs-s-extractRuntimeEmits][extractRuntimeEmits]] 或 emits 上。
+
+- 而对于 ~$ref, $computed~ 这种快捷的语法解析是在单独的 [[https://github.com/vuejs/core/tree/main/packages/reactivity-transform][core/packages/reactivity-transform at main · vuejs/core]] 包
+  里面处理的([[reactivity-transform][reactivity-transform]])
 
 * template
 
