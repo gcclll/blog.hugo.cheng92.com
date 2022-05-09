@@ -202,7 +202,7 @@ function parseRoots(roots) {
           year,
           day,
           date: `${month}-${day}`,
-          title: next.root.querySelector('title').text,
+          title: next.root.querySelector('.title').text,
           category,
           tags
         }
