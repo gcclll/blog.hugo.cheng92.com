@@ -7,7 +7,7 @@
 #+HTML_HEAD: <meta name="category" content="javascript"/>
 #+HTML_HEAD: <meta name="tags" content="weekly"/>
 #+HTML_HEAD: <meta name="createdAt" content="2099-09-09 09:09:09"/>
-#+TITLE: JavaScript Weekly(精华)
+#+TITLE: JavaScript Weekly
 <badge: GCCLL | Homepage | green | / | gnu-emacs | tinder>
 
 * plugins
