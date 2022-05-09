@@ -32,6 +32,9 @@ function parseHTMLFiles() {
 
       const ps = []
       files.map((file) => {
+        if (/^\./.test(file)) {
+          return
+        }
         ps.push(
           new Promise((resolve, reject) => {
             const path = `./posts/${file}`
@@ -193,7 +196,7 @@ function parseRoots(roots) {
           createdAt = createdAt.getAttribute('content')
         }
 
-console.log(next.root.querySelector('.title'))
+        console.log(next.root.querySelector('.title'))
         o[next.file] = {
           createdAt,
           updatedAt,

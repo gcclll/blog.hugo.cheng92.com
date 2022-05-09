@@ -143,6 +143,21 @@ a[data-fancybox=gallery] {
   background: none !important;
 }
 
+.tooltipster-base {
+  max-width: 100vw;
+}
+
+.tooltipster-box .tooltipster-content strong {
+  color: green;
+}
+.tooltipster-box .tooltipster-content h2 {
+  color: aqua;
+}
+.tooltipster-box .tooltipster-content h3 {
+  text-indent: 0;
+  color: cyan;
+}
+
 #table-of-contents {
   width: 316px !important;
 }
@@ -575,21 +590,6 @@ pre.src-diff .org-diff-indicator-added {
 code.src-diff .org-diff-indicator-removed,
 pre.src-diff .org-diff-indicator-removed {
   background-color: #ffebe9;
-}
-
-.tooltipster-base {
-  max-width: 100vw;
-}
-
-.tooltipster-box .tooltipster-content strong {
-  color: green;
-}
-.tooltipster-box .tooltipster-content h2 {
-  color: aqua;
-}
-.tooltipster-box .tooltipster-content h3 {
-  text-indent: 0;
-  color: cyan;
 }
 
 pre.debug {
