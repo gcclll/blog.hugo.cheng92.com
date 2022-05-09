@@ -6,7 +6,7 @@
 #+PROPERTY: header-args :noweb no-export
 #+HTML_HEAD: <meta name="category" content="javascript"/>
 #+HTML_HEAD: <meta name="tags" content="weekly"/>
-#+HTML_HEAD: <meta name="createdAt" content="2022-05-09 18:14:39"/>
+#+HTML_HEAD: <meta name="createdAt" content="2099-09-09 09:09:09"/>
 #+TITLE: JavaScript Weekly(周报汇总)
 <badge: GCCLL | Homepage | green | / | gnu-emacs | tinder>
 
