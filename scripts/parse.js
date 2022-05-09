@@ -196,7 +196,7 @@ function parseRoots(roots) {
           createdAt = createdAt.getAttribute('content')
         }
 
-        console.log(next.root.querySelector('.title'))
+        console.log(next.file)
         o[next.file] = {
           createdAt,
           updatedAt,
