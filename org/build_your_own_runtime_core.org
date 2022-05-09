@@ -19,11 +19,12 @@
 [[https://www.cheng92.com/vue/vue-mind-map-runtime-core-2-render/][Vue3 源码头脑风暴之 7 ☞ runtime-core(2) - render - 若叶知秋]]
 
 red:测试代码涉及到非runtime-core的会直接使用 [[https://github.com/vuejs/core/tree/main/packages][core/packages at main · vuejs/core]] red:现成的代码去测试
+
+[[https://github.com/vuejs/core/tree/main/packages/runtime-core][core/packages/runtime-core at main · vuejs/core]]  应该说是最核心的一个模块了，以
+h 函数为入口涵盖了组件完整生命周期的处理，从 vnode -> dom, mount -> update ->
+unmount 的实现原理。
 #+end_box
 #+html: <br>
-
-依赖 [[https://blog.cheng92.com/posts/build_your_own_vue_compiler_core.html][build your own vue compiler-core]] 中的代码
-
 
 #+name: vue-pkgs
 #+begin_src js -n -r
@@ -33,7 +34,7 @@ console.log(compilerSFC)
 
 * 简介
 
-green:runtime-core的核心入口函数即h也就是render函数，所以会以这个为切入点。
+green:runtime-core的核心入口函数即h也就是createVNode函数，所以会以这个为切入点。
 
 #+begin_export html
 <a href="../assets/img/vue3/runtime-core/vue-runtime-core.svg"
@@ -54,12 +55,11 @@ data-caption="Preview"
 
   2. 含 ~__vccOpts = { template: '<div />'}~
 
-
 - [[test-vnode-ref][vnode ref 属性合并处理逻辑？]]
 
 - [[test-vnode-key][vnode key 属性简单的值覆盖操作？]]
 
-- [[fn-h][h()]] 和 [[createVNode][createVNode()]] 函数多种使用方式组合？
+- [[api-h][h()]] 和 [[api-createVNode][createVNode()]] 函数多种使用方式组合？
 
   ~h(type, propsOrChildren, ...children)~, 参数个数多变，对于这个函数的使用方法 记
   忆只要记住一点：
@@ -114,6 +114,7 @@ watch(shallowRef, (newVal) => {
   vue2 的 options api 写法。
 
 组件声明周期函数(onBeforeXxx, onXxx)触发顺序是什么？
+* h
 * COMMENT Local Variables :ARCHIVE:
 # Local Variables:
 # after-save-hook: gcl/org-html-export-to-html

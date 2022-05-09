@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <!-- 2022-05-09 Mon 17:34 -->
+  <!-- 2022-05-09 Mon 18:05 -->
   <meta charset="utf-8">
   <meta name="viewport" content=
   "width=device-width, initial-scale=1">
@@ -290,7 +290,10 @@
       <div id="text-table-of-contents" role="doc-toc">
         <ul>
           <li>
-            <a href="#orgc096061">1. 简介</a>
+            <a href="#org3950e39">1. 简介</a>
+          </li>
+          <li>
+            <a href="#org16797d0">2. h</a>
           </li>
         </ul>
       </div>
@@ -312,24 +315,26 @@
       "https://github.com/vuejs/core/tree/main/packages">core/packages
       at main · vuejs/core</a> <span style=
       "color:red;">现成的代码去测试</span></p>
+      <p><a href=
+      "https://github.com/vuejs/core/tree/main/packages/runtime-core">
+      core/packages/runtime-core at main · vuejs/core</a>
+      应该说是最核心的一个模块了，以 h 函数为入口涵盖了组件完整生命周期的处理，从 vnode -&gt; dom,
+      mount -&gt; update -&gt; unmount 的实现原理。</p>
     </div><br>
-    <p>依赖 <a href=
-    "https://blog.cheng92.com/posts/build_your_own_vue_compiler_core.html">
-    build your own vue compiler-core</a> 中的代码</p>
     <div class="org-src-container">
-      <pre class="src src-js" id="orgcef934b"><span class=
+      <pre class="src src-js" id="org721656d"><span class=
       "linenr">1: </span><span class=
       "org-keyword">const</span> <span class=
       "org-variable-name">compilerSFC</span> = require(process.env.NODE_LIB + <span class="org-string">"/@vue/compiler-sfc"</span>)
 <span class="linenr">2: </span>console.log(compilerSFC)
 </pre>
     </div>
-    <div id="outline-container-orgc096061" class="outline-2">
-      <h2 id="orgc096061"><span class="section-number-2">1.</span>
+    <div id="outline-container-org3950e39" class="outline-2">
+      <h2 id="org3950e39"><span class="section-number-2">1.</span>
       简介</h2>
       <div class="outline-text-2" id="text-1">
         <p><span style=
-        "color:green;">runtime-core的核心入口函数即h也就是render函数，所以会以这个为切入点</span>。</p><a href="../assets/img/vue3/runtime-core/vue-runtime-core.svg"
+        "color:green;">runtime-core的核心入口函数即h也就是createVNode函数，所以会以这个为切入点</span>。</p><a href="../assets/img/vue3/runtime-core/vue-runtime-core.svg"
         data-fancybox="gallery" data-caption="Preview"><img src=
         "../assets/img/vue3/runtime-core/vue-runtime-core.svg"></a>
         <p>本文中涉及的一些关键点记录：</p>
@@ -346,8 +351,6 @@
               /&gt;'}</code></li>
             </ol>
           </li>
-        </ul>
-        <ul class="org-ul">
           <li>
             <p>和 函数多种使用方式组合？</p>
             <p><code>h(type, propsOrChildren, ...children)</code>,
@@ -409,9 +412,13 @@ watch(shallowRef, (newVal) =&gt; {
       <p>组件声明周期函数(onBeforeXxx, onXxx)触发顺序是什么？</p>
     </div>
   </div>
+  <div id="outline-container-org16797d0" class="outline-2">
+    <h2 id="org16797d0"><span class="section-number-2">2.</span>
+    h</h2>
+  </div>
   <div id="postamble" class="status">
     <p class="author">Author: Zhicheng Lee</p>
-    <p class="date">Created: 2022-05-09 Mon 17:34</p>
+    <p class="date">Created: 2022-05-09 Mon 18:05</p>
   </div>
 </body>
 </html>
