@@ -193,6 +193,7 @@ function parseRoots(roots) {
           createdAt = createdAt.getAttribute('content')
         }
 
+console.log(next.root.querySelector('.title'))
         o[next.file] = {
           createdAt,
           updatedAt,
