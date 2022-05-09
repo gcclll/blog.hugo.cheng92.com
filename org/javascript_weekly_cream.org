@@ -10,7 +10,14 @@
 #+TITLE: JavaScript Weekly(精华)
 <badge: GCCLL | Homepage | green | / | gnu-emacs | tinder>
 
-test
+
+* plugins
+
+** partytown^{performance}
+
+[[https://partytown.builder.io/][Welcome To Partytown]] 可以让第三方脚本在 Worker 中执行的一个插件，提升网站的加载
+性能和体验。
+
 
 * COMMENT Local Variables :ARCHIVE:
 # Local Variables:
