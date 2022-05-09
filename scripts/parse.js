@@ -197,18 +197,20 @@ function parseRoots(roots) {
         }
 
         console.log(next.file)
-        o[next.file] = {
-          createdAt,
-          updatedAt,
-          birthtime,
-          ctime,
-          month,
-          year,
-          day,
-          date: `${month}-${day}`,
-          title: next.root.querySelector('.title').text,
-          category,
-          tags
+        if (checkValidPage(next)) {
+          o[next.file] = {
+            createdAt,
+            updatedAt,
+            birthtime,
+            ctime,
+            month,
+            year,
+            day,
+            date: `${month}-${day}`,
+            title: next.root.querySelector('.title').text,
+            category,
+            tags
+          }
         }
 
         return o
@@ -228,3 +230,12 @@ function handleError(err) {
 }
 
 parseHTMLFiles().then(parseRoots, handleError)
+
+function checkValidPage(next) {
+  if (['index.html'].includes(next.file)) return
+
+  if (/^\./.test(next.file)) return
+
+  // valid
+  return next
+}
