@@ -5,8 +5,7 @@
 #+HUGO_SLUG: build_your_own_runtime_core
 #+HTML_HEAD: <meta name="category" content="vue"/>
 #+HTML_HEAD: <meta name="tags" content="runtime-core"/>
-#+HTML_HEAD: <meta name="createdAt" content="2022-04-16 09:40:04"/>
-#+PROPERTY: header-args:js :exports both
+#+HTML_HEAD: <meta name="createdAt" content="2022-05-09 09:40:04"/>
 #+PROPERTY: header-args :noweb no-export
 #+TITLE: build your own vue runtime-core
 <badge: GCCLL | Homepage | green | / | gnu-emacs | tinder>
@@ -19,14 +18,103 @@
 
 [[https://www.cheng92.com/vue/vue-mind-map-runtime-core-2-render/][Vue3 源码头脑风暴之 7 ☞ runtime-core(2) - render - 若叶知秋]]
 
+red:测试代码涉及到非runtime-core的会直接使用 [[https://github.com/vuejs/core/tree/main/packages][core/packages at main · vuejs/core]] red:现成的代码去测试
 #+end_box
 #+html: <br>
 
 依赖 [[https://blog.cheng92.com/posts/build_your_own_vue_compiler_core.html][build your own vue compiler-core]] 中的代码
 
-#+INCLUDE: ../assets/tests/compiler-core.js src js -n -r
 
-* COMMENT Local Variables       :ARCHIVE:
+#+name: vue-pkgs
+#+begin_src js -n -r
+const compilerSFC = require(process.env.NODE_LIB + "/@vue/compiler-sfc")
+console.log(compilerSFC)
+#+end_src
+
+* 简介
+
+green:runtime-core的核心入口函数即h也就是render函数，所以会以这个为切入点。
+
+#+begin_export html
+<a href="../assets/img/vue3/runtime-core/vue-runtime-core.svg"
+data-fancybox="gallery"
+data-caption="Preview"
+><img src="../assets/img/vue3/runtime-core/vue-runtime-core.svg"/></a>
+#+end_export
+
+本文中涉及的一些关键点记录：
+
+- class 支持数组(~['foo', 'bar']~)，对象(~{foo:true,bar:false}~)，字符串(~'foo bar'~)
+
+- style 支持数组(~['color:red', {foo:'foo'}]~)，对象(~{color:'red',foo:'foo'}~)，字符串(~'color:red'~)
+
+- class component 条件：
+
+  1. 必须是 function 类型，其实 class 只不是个语法糖，实际它也是个函数类型。
+
+  2. 含 ~__vccOpts = { template: '<div />'}~
+
+
+- [[test-vnode-ref][vnode ref 属性合并处理逻辑？]]
+
+- [[test-vnode-key][vnode key 属性简单的值覆盖操作？]]
+
+- [[fn-h][h()]] 和 [[createVNode][createVNode()]] 函数多种使用方式组合？
+
+  ~h(type, propsOrChildren, ...children)~, 参数个数多变，对于这个函数的使用方法 记
+  忆只要记住一点：
+
+  #+begin_box
+  props 总是对象，children 可以是对象(必须是 VNode 类型 __v_isVNode)也可以是 数
+  组，所以：
+
+  argc = 2, 如果是数组就一定是 children
+
+  argc = 2, 如果是对象且有 __v_isVNode 标识，一定是 children 否则是 props
+
+  argc = 3, 按照 h(type, props, children) 处理
+
+  argc > 3, 按照 h(type, props, ...children) 处理，从第三个开始都是 children
+  #+end_box
+
+  ~createVNode(type, props, children)~, 固定三个参数，第二个一定是 props, 第三 个
+  一定是数组类型的 children，因为它后面还有更多的其他参数(patchFlag,
+  dynamicProps, isBlockNode)，所以前三个必须确定下来。
+
+- scheduler, vue-next 中的任务调度器如何实现？ -> [[id:4a858df2-f6f8-4d2f-9cda-78c12cbf42b3][build your own vue scheduler]]
+
+- [[api-watch][api watch(source, cb, option)]] 中的 source 只能是 reactive/ref/function/array
+  类型， 如果是数组时其元素只能是 reactive/ref/function
+
+- [[api-watch-deep][api watch(…, { deep: true }) 是如何做到深度监听的]]？
+
+- [[api-watch-shallow-ref][api watch(shallowRef, cb (newVal) => {})]] 是如何直接使用 ~newVal.a~ 的？
+
+  #+begin_src js
+var obj = shallowRef({ a: 0 });
+watch(shallowRef, (newVal) => {
+  dummy = newVal.a; // 这里为什么可以直接访问 obj.a，obj 又是什么？
+});
+  #+end_src
+
+- [[api-provide-inject][provide & inject 如何实现]]？
+
+  实际上就是一个应用级别的全局变量，然后通过原型链继承的方式实现传递。
+
+  ~provide(key,value)~ 向组件 ~provides[key] = value~ 设置
+
+  ~inject(key)~ 从组件 ~provides[key]~ 取值
+
+- setup() 返回值用来做了啥？
+
+  如果是函数会被当做是该组件的 render 函数，可在使用 jsx 或 api 方式定义组件的时
+  候使用。
+
+  如果是一个对象则会被合并到 data 上去,所以如果使用了 setup() 可以考虑省略掉
+  vue2 的 options api 写法。
+
+组件声明周期函数(onBeforeXxx, onXxx)触发顺序是什么？
+* COMMENT Local Variables :ARCHIVE:
 # Local Variables:
 # after-save-hook: gcl/org-html-export-to-html
 # End:
