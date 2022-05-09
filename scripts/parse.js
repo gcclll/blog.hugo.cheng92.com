@@ -196,7 +196,6 @@ function parseRoots(roots) {
           createdAt = createdAt.getAttribute('content')
         }
 
-        console.log(next.file)
         if (checkValidPage(next)) {
           o[next.file] = {
             createdAt,
