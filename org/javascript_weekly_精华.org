@@ -7,13 +7,12 @@
 #+HTML_HEAD: <meta name="category" content="javascript"/>
 #+HTML_HEAD: <meta name="tags" content="weekly"/>
 #+HTML_HEAD: <meta name="createdAt" content="2099-09-09 09:09:09"/>
-#+TITLE: JavaScript Weekly(周报汇总)
+#+TITLE: JavaScript Weekly(精华)
 <badge: GCCLL | Homepage | green | / | gnu-emacs | tinder>
-
 
 test
 
-* COMMENT Local Variables       :ARCHIVE:
+* COMMENT Local Variables :ARCHIVE:
 # Local Variables:
 # after-save-hook: gcl/org-html-export-to-html
 # End:
