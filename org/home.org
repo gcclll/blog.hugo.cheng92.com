@@ -22,7 +22,8 @@
 
 * [[id:aa445529-4f0e-48d8-833f-12c149603ca6][Documentations]]
 * Emacs
-** TODO [[id:82acaa2e-9913-4c5b-83d9-57ac24698449][org-special-block-extras]]
+** DONE [[id:82acaa2e-9913-4c5b-83d9-57ac24698449][org-special-block-extras]]
+CLOSED: [2022-05-09 Mon 18:13]
 ** [[id:193fb17e-b4ea-4b4b-bc78-056815359664][org-roam]]
 ** [[id:e2bc5e53-a5f7-4aed-b0b1-644183b2932e][org-mode]]
 * Vue
@@ -42,6 +43,7 @@ CLOSED: [2022-04-28 Thu 16:17]
 ** TODO [[id:293eb7ed-0b86-4a5c-acc2-ea5b26e92326][Build your own react]]
 * JavaScript
 ** TODO [[id:cc2b98c6-21d9-488c-9a05-8485a36c1e01][JavaScript Proxy And Reflect]]
+** TODO [[id:ff2d55a2-ae96-4144-866a-1c7bbe5bf9ef][JavaScript Weekly(周报汇总)]]
 * Shell Programming
 ** TODO [[id:1a7e98ba-a7f1-4758-b3a0-6ee1e148a61d][sed command]]
 ** TODO [[id:a10d6fd1-893b-4ed4-967d-d57388ba6525][shell basis]]

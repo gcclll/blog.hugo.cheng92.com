@@ -1,0 +1,16 @@
+:PROPERTIES:
+:ID:       ff2d55a2-ae96-4144-866a-1c7bbe5bf9ef
+:END:
+#+SETUPFILE:~/.gclrc/org/hugo_setup.org
+#+HUGO_SLUG: javascript_weekly_周报汇总
+#+PROPERTY: header-args :noweb no-export
+#+HTML_HEAD: <meta name="category" content="javascript"/>
+#+HTML_HEAD: <meta name="tags" content="weekly"/>
+#+HTML_HEAD: <meta name="createdAt" content="2022-05-09 18:14:39"/>
+#+TITLE: JavaScript Weekly(周报汇总)
+<badge: GCCLL | Homepage | green | / | gnu-emacs | tinder>
+
+* COMMENT Local Variables       :ARCHIVE:
+# Local Variables:
+# after-save-hook: gcl/org-html-export-to-html
+# End:
