@@ -23,6 +23,12 @@
 
 ** esbuild
 
+[[https://esbuild.github.io/][esbuild - An extremely fast JavaScript bundler]]
+
+[[https://github.com/evanw/esbuild][evanw/esbuild: An extremely fast JavaScript and CSS bundler and minifier]]
+
+#+html: <br>
+#+begin_details build typescript file :title-color green
 #+begin_src js -n -r
 // production -> require('esbuild')
 const esbuild = require(process.env.NODE_LIB + '/esbuild');
@@ -55,7 +61,7 @@ esbuild.build(commands);
 构建之后的代码：
 
 #+include: ~/github/tools/cta-modal/dist/cta-modal.js src js
-
+#+end_details
 * COMMENT Local Variables       :ARCHIVE:
 # Local Variables:
 # after-save-hook: gcl/org-html-export-to-html

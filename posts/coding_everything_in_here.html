@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <!-- 2022-05-10 Tue 18:15 -->
+  <!-- 2022-05-10 Tue 18:22 -->
   <meta charset="utf-8">
   <meta name="viewport" content=
   "width=device-width, initial-scale=1">
@@ -292,10 +292,10 @@
       <div id="text-table-of-contents" role="doc-toc">
         <ul>
           <li>
-            <a href="#org97f3449">1. build & scaffold</a>
+            <a href="#orgdd17953">1. build & scaffold</a>
             <ul>
               <li>
-                <a href="#org54611ad">1.1. esbuild</a>
+                <a href="#org60896b9">1.1. esbuild</a>
               </li>
             </ul>
           </li>
@@ -316,19 +316,31 @@
       <kbd style="border-color: red">C-c C-c</kbd></abbr>
       执行得到结果才使用的。</p>
     </div><br>
-    <div id="outline-container-org97f3449" class="outline-2">
-      <h2 id="org97f3449"><span class="section-number-2">1.</span>
+    <div id="outline-container-orgdd17953" class="outline-2">
+      <h2 id="orgdd17953"><span class="section-number-2">1.</span>
       build & scaffold</h2>
       <div class="outline-text-2" id="text-1"></div>
-      <div id="outline-container-org54611ad" class="outline-3">
-        <h3 id="org54611ad"><span class=
+      <div id="outline-container-org60896b9" class="outline-3">
+        <h3 id="org60896b9"><span class=
         "section-number-3">1.1.</span> esbuild</h3>
         <div class="outline-text-3" id="text-1-1">
-          <div class="org-src-container">
-            <pre class="src src-js"><span class=
-            "linenr"> 1: </span><span class=
-            "org-comment-delimiter">// </span><span class=
-            "org-comment">production -&gt; require('esbuild')</span>
+          <p><a href="https://esbuild.github.io/">esbuild - An
+          extremely fast JavaScript bundler</a></p>
+          <p><a href=
+          "https://github.com/evanw/esbuild">evanw/esbuild: An
+          extremely fast JavaScript and CSS bundler and
+          minifier</a></p><br>
+          <details class="code-details" style=
+          "padding: 1em; background-color: #e5f5e5; /* background-color: pink; */ border-radius: 15px; color: hsl(157 75%); font-size: 0.9em; box-shadow: 0.05em 0.1em 5px 0.01em #00000057;">
+            <summary>
+              <strong><font face="Courier" size="3" color=
+              "green">build typescript file</font></strong>
+            </summary>
+            <div class="org-src-container">
+              <pre class="src src-js"><span class=
+              "linenr"> 1: </span><span class=
+              "org-comment-delimiter">// </span><span class=
+              "org-comment">production -&gt; require('esbuild')</span>
 <span class="linenr"> 2: </span><span class=
 "org-keyword">const</span> <span class=
 "org-variable-name">esbuild</span> = require(process.env.NODE_LIB + <span class="org-string">'/esbuild'</span>);
@@ -373,13 +385,13 @@
 "org-string">'running esbuild…'</span>);
 <span class="linenr">22: </span>esbuild.build(commands);
 </pre>
-          </div>
-          <p>构建之后的代码：</p>
-          <div class="org-src-container">
-            <pre class="src src-js"><span class=
-            "org-keyword">if</span> (<span class=
-            "org-string">"customElements"</span> <span class=
-            "org-keyword">in</span> window) {
+            </div>
+            <p>构建之后的代码：</p>
+            <div class="org-src-container">
+              <pre class="src src-js"><span class=
+              "org-keyword">if</span> (<span class=
+              "org-string">"customElements"</span> <span class=
+              "org-keyword">in</span> window) {
   <span class="org-keyword">const</span> <span class=
 "org-variable-name">ACTIVE</span> = <span class=
 "org-string">"active"</span>;
@@ -1224,14 +1236,15 @@
   });
 }
 </pre>
-          </div>
+            </div>
+          </details>
         </div>
       </div>
     </div>
   </div>
   <div id="postamble" class="status">
     <p class="author">Author: Zhicheng Lee</p>
-    <p class="date">Created: 2022-05-10 Tue 18:15</p>
+    <p class="date">Created: 2022-05-10 Tue 18:22</p>
   </div>
 </body>
 </html>
