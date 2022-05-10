@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <!-- 2022-05-10 Tue 18:04 -->
+  <!-- 2022-05-10 Tue 18:15 -->
   <meta charset="utf-8">
   <meta name="viewport" content=
   "width=device-width, initial-scale=1">
@@ -287,13 +287,951 @@
 <body>
   <div id="content" class="content">
     <h1 class="title">Coding Everything In Here</h1>
+    <div id="table-of-contents" role="doc-toc">
+      <h2>Table of Contents</h2>
+      <div id="text-table-of-contents" role="doc-toc">
+        <ul>
+          <li>
+            <a href="#org97f3449">1. build & scaffold</a>
+            <ul>
+              <li>
+                <a href="#org54611ad">1.1. esbuild</a>
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </div>
+    </div>
     <p><a href="/"><img src=
     "https://img.shields.io/badge/GCCLL-Homepage-green?logo=gnu-emacs"></a></p>
-    <p>TODO</p>
+    <div style=
+    "padding: 1em; background-color: #CCFFCC;border-radius: 15px; font-size: 0.9em; box-shadow: 0.05em 0.1em 5px 0.01em #00000057;">
+      <h3>Introduce</h3>
+      <p>这里是一些个人代码或网上看到的些优秀的代码记录文。</p>
+      <p>方便代码可能会用到 <code>process.env.HOME</code> 之类的环境变量，正常是不需要的，直接
+      <code>require('esbuild')</code> 就行，使用它们是因为我用的是 Emacs +
+      org-mode 方式写的博客， 为了方便直接能 <abbr class="tooltip" style=
+      "border: none; text-decoration: none;" title=
+      "C-c C-c ∷ org-ctrl-c-ctrl-c&lt;br&gt;Set tags in headline, or update according to changed information at point.&lt;br&gt;&lt;br&gt;This command does many different things, depending on context:&lt;br&gt;&lt;br&gt;- If column view is active, in agenda or org buffers, quit it.&lt;br&gt;&lt;br&gt;- If there are highlights, remove them.&lt;br&gt;&lt;br&gt;- If a function in ‘org-ctrl-c-ctrl-c-hook’ recognizes this location,&lt;br&gt; this is what we do.&lt;br&gt;&lt;br&gt;- If the cursor is on a statistics cookie, update it.&lt;br&gt;&lt;br&gt;- If the cursor is in a headline, in an agenda or an org buffer,&lt;br&gt; prompt for tags and insert them into the current line, aligned&lt;br&gt; to ‘org-tags-column’. When called with prefix arg, realign all&lt;br&gt; tags in the current buffer.&lt;br&gt;&lt;br&gt;- If the cursor is in one of the special #+KEYWORD lines, this&lt;br&gt; triggers scanning the buffer for these lines and updating the&lt;br&gt; information.&lt;br&gt;&lt;br&gt;- If the cursor is inside a table, realign the table. This command&lt;br&gt; works even if the automatic table editor has been turned off.&lt;br&gt;&lt;br&gt;- If the cursor is on a #+TBLFM line, re-apply the formulas to&lt;br&gt; the entire table.&lt;br&gt;&lt;br&gt;- If the cursor is at a footnote reference or definition, jump to&lt;br&gt; the corresponding definition or references, respectively.&lt;br&gt;&lt;br&gt;- If the cursor is a the beginning of a dynamic block, update it.&lt;br&gt;&lt;br&gt;- If the current buffer is a capture buffer, close note and file it.&lt;br&gt;&lt;br&gt;- If the cursor is on a &lt;&lt;&lt;target&gt;&gt;&gt;, update radio targets and&lt;br&gt; corresponding links in this buffer.&lt;br&gt;&lt;br&gt;- If the cursor is on a numbered item in a plain list, renumber the&lt;br&gt; ordered list.&lt;br&gt;&lt;br&gt;- If the cursor is on a checkbox, toggle it.&lt;br&gt;&lt;br&gt;- If the cursor is on a code block, evaluate it. The variable&lt;br&gt; ‘org-confirm-babel-evaluate’ can be used to control prompting&lt;br&gt; before code block evaluation, by default every code block&lt;br&gt; evaluation requires confirmation. Code block evaluation can be&lt;br&gt; inhibited by setting ‘org-babel-no-eval-on-ctrl-c-ctrl-c’.&lt;br&gt;&lt;br&gt;(fn &amp;optional ARG)">
+      <kbd style="border-color: red">C-c C-c</kbd></abbr>
+      执行得到结果才使用的。</p>
+    </div><br>
+    <div id="outline-container-org97f3449" class="outline-2">
+      <h2 id="org97f3449"><span class="section-number-2">1.</span>
+      build & scaffold</h2>
+      <div class="outline-text-2" id="text-1"></div>
+      <div id="outline-container-org54611ad" class="outline-3">
+        <h3 id="org54611ad"><span class=
+        "section-number-3">1.1.</span> esbuild</h3>
+        <div class="outline-text-3" id="text-1-1">
+          <div class="org-src-container">
+            <pre class="src src-js"><span class=
+            "linenr"> 1: </span><span class=
+            "org-comment-delimiter">// </span><span class=
+            "org-comment">production -&gt; require('esbuild')</span>
+<span class="linenr"> 2: </span><span class=
+"org-keyword">const</span> <span class=
+"org-variable-name">esbuild</span> = require(process.env.NODE_LIB + <span class="org-string">'/esbuild'</span>);
+<span class="linenr"> 3: </span>
+<span class="linenr"> 4: </span><span class=
+"org-keyword">const</span> <span class=
+"org-variable-name">path</span> = process.env.HOME + <span class=
+"org-string">'/github/tools/cta-modal'</span>
+<span class="linenr"> 5: </span><span class=
+"org-keyword">const</span> <span class=
+"org-variable-name">commands</span> = {
+<span class="linenr"> 6: </span>  entryPoints: [<span class=
+"org-string">`${path}/src/assets/ts/cta-modal.ts`</span>],
+<span class="linenr"> 7: </span>  target: [
+<span class="linenr"> 8: </span>    <span class=
+"org-comment-delimiter">// </span><span class=
+"org-comment">Modern browsers.</span>
+<span class="linenr"> 9: </span>    <span class=
+"org-string">'chrome98'</span>,
+<span class="linenr">10: </span>    <span class=
+"org-string">'edge98'</span>,
+<span class="linenr">11: </span>    <span class=
+"org-string">'firefox97'</span>,
+<span class="linenr">12: </span>    <span class=
+"org-string">'safari15'</span>,
+<span class="linenr">13: </span>  ],
+<span class="linenr">14: </span>  outfile: <span class=
+"org-string">`${path}/dist/cta-modal.js`</span>,
+<span class="linenr">15: </span>};
+<span class="linenr">16: </span>
+<span class="linenr">17: </span><span class=
+"org-comment-delimiter">// </span><span class=
+"org-comment">=============</span>
+<span class="linenr">18: </span><span class=
+"org-comment-delimiter">// </span><span class=
+"org-comment">Run commands.</span>
+<span class="linenr">19: </span><span class=
+"org-comment-delimiter">// </span><span class=
+"org-comment">=============</span>
+<span class="linenr">20: </span>
+<span class="linenr">21: </span>global.console.log(<span class=
+"org-string">'running esbuild…'</span>);
+<span class="linenr">22: </span>esbuild.build(commands);
+</pre>
+          </div>
+          <p>构建之后的代码：</p>
+          <div class="org-src-container">
+            <pre class="src src-js"><span class=
+            "org-keyword">if</span> (<span class=
+            "org-string">"customElements"</span> <span class=
+            "org-keyword">in</span> window) {
+  <span class="org-keyword">const</span> <span class=
+"org-variable-name">ACTIVE</span> = <span class=
+"org-string">"active"</span>;
+  <span class="org-keyword">const</span> <span class=
+"org-variable-name">ANIMATED</span> = <span class=
+"org-string">"animated"</span>;
+  <span class="org-keyword">const</span> <span class=
+"org-variable-name">ANIMATION_DURATION</span> = <span class=
+"org-highlight-numbers-number">250</span>;
+  <span class="org-keyword">const</span> <span class=
+"org-variable-name">ARIA_LABEL</span> = <span class=
+"org-string">"aria-label"</span>;
+  <span class="org-keyword">const</span> <span class=
+"org-variable-name">BLOCK</span> = <span class=
+"org-string">"block"</span>;
+  <span class="org-keyword">const</span> <span class=
+"org-variable-name">CLICK</span> = <span class=
+"org-string">"click"</span>;
+  <span class="org-keyword">const</span> <span class=
+"org-variable-name">CLOSE</span> = <span class=
+"org-string">"close"</span>;
+  <span class="org-keyword">const</span> <span class=
+"org-variable-name">CLOSE_TITLE</span> = <span class=
+"org-string">"Close"</span>;
+  <span class="org-keyword">const</span> <span class=
+"org-variable-name">DATA_HIDE</span> = <span class=
+"org-string">"data-cta-modal-hide"</span>;
+  <span class="org-keyword">const</span> <span class=
+"org-variable-name">DATA_SHOW</span> = <span class=
+"org-string">"data-cta-modal-show"</span>;
+  <span class="org-keyword">const</span> <span class=
+"org-variable-name">EMPTY_STRING</span> = <span class=
+"org-string">""</span>;
+  <span class="org-keyword">const</span> <span class=
+"org-variable-name">ENTER</span> = <span class=
+"org-string">"enter"</span>;
+  <span class="org-keyword">const</span> <span class=
+"org-variable-name">ESCAPE</span> = <span class=
+"org-string">"escape"</span>;
+  <span class="org-keyword">const</span> <span class=
+"org-variable-name">FALSE</span> = <span class=
+"org-string">"false"</span>;
+  <span class="org-keyword">const</span> <span class=
+"org-variable-name">FOCUSIN</span> = <span class=
+"org-string">"focusin"</span>;
+  <span class="org-keyword">const</span> <span class=
+"org-variable-name">FUNCTION</span> = <span class=
+"org-string">"function"</span>;
+  <span class="org-keyword">const</span> <span class=
+"org-variable-name">HIDDEN</span> = <span class=
+"org-string">"hidden"</span>;
+  <span class="org-keyword">const</span> <span class=
+"org-variable-name">KEYDOWN</span> = <span class=
+"org-string">"keydown"</span>;
+  <span class="org-keyword">const</span> <span class=
+"org-variable-name">MODAL_LABEL_FALLBACK</span> = <span class=
+"org-string">"modal"</span>;
+  <span class="org-keyword">const</span> <span class=
+"org-variable-name">NONE</span> = <span class=
+"org-string">"none"</span>;
+  <span class="org-keyword">const</span> <span class=
+"org-variable-name">PREFERS_REDUCED_MOTION</span> = <span class=
+"org-string">"(prefers-reduced-motion: reduce)"</span>;
+  <span class="org-keyword">const</span> <span class=
+"org-variable-name">SPACE</span> = <span class=
+"org-string">" "</span>;
+  <span class="org-keyword">const</span> <span class=
+"org-variable-name">SPACE_REGEX</span> = <span class=
+"org-string">/\s+/</span>g;
+  <span class="org-keyword">const</span> <span class=
+"org-variable-name">STATIC</span> = <span class=
+"org-string">"static"</span>;
+  <span class="org-keyword">const</span> <span class=
+"org-variable-name">TAB</span> = <span class=
+"org-string">"tab"</span>;
+  <span class="org-keyword">const</span> <span class=
+"org-variable-name">TEMPLATE</span> = <span class=
+"org-string">"template"</span>;
+  <span class="org-keyword">const</span> <span class=
+"org-variable-name">TRUE</span> = <span class=
+"org-string">"true"</span>;
+  <span class="org-keyword">const</span> <span class=
+"org-variable-name">FOCUSABLE_SELECTORS</span> = [
+    <span class="org-string">"[contenteditable]"</span>,
+    <span class=
+"org-string">'[tabindex="0"]:not([disabled])'</span>,
+    <span class="org-string">"a[href]"</span>,
+    <span class="org-string">"audio[controls]"</span>,
+    <span class="org-string">"button:not([disabled])"</span>,
+    <span class="org-string">"iframe"</span>,
+    <span class=
+"org-string">"input:not([disabled]):not([type='hidden'])"</span>,
+    <span class="org-string">"select:not([disabled])"</span>,
+    <span class="org-string">"summary"</span>,
+    <span class="org-string">"textarea:not([disabled])"</span>,
+    <span class="org-string">"video[controls]"</span>
+  ].join(<span class="org-string">","</span>);
+  <span class="org-keyword">const</span> <span class=
+"org-variable-name">STYLE</span> = <span class=
+"org-string">`</span>
+<span class="org-string">    &lt;style&gt;</span>
+<span class="org-string">      *,</span>
+<span class="org-string">      *:after,</span>
+<span class="org-string">      *:before {</span>
+<span class="org-string">        box-sizing: border-box;</span>
+<span class="org-string">        margin: 0;</span>
+<span class="org-string">        padding: 0;</span>
+<span class="org-string">      }</span>
+
+<span class=
+"org-string">      @media ${PREFERS_REDUCED_MOTION} {</span>
+<span class="org-string">        *,</span>
+<span class="org-string">        *:after,</span>
+<span class="org-string">        *:before {</span>
+<span class=
+"org-string">          animation: none !important;</span>
+<span class=
+"org-string">          transition: none !important;</span>
+<span class="org-string">        }</span>
+<span class="org-string">      }</span>
+
+<span class="org-string">      @keyframes SHOW-OVERLAY {</span>
+<span class="org-string">        0% {</span>
+<span class="org-string">          opacity: 0;</span>
+<span class="org-string">        }</span>
+
+<span class="org-string">        100% {</span>
+<span class="org-string">          opacity: 1;</span>
+<span class="org-string">        }</span>
+<span class="org-string">      }</span>
+
+<span class="org-string">      @keyframes SHOW-DIALOG {</span>
+<span class="org-string">        0% {</span>
+<span class="org-string">          transform: scale(0.95);</span>
+<span class="org-string">        }</span>
+
+<span class="org-string">        100% {</span>
+<span class="org-string">          transform: scale(1);</span>
+<span class="org-string">        }</span>
+<span class="org-string">      }</span>
+
+<span class="org-string">      @keyframes HIDE-OVERLAY {</span>
+<span class="org-string">        0% {</span>
+<span class="org-string">          opacity: 1;</span>
+<span class="org-string">        }</span>
+
+<span class="org-string">        100% {</span>
+<span class="org-string">          opacity: 0;</span>
+<span class="org-string">        }</span>
+<span class="org-string">      }</span>
+
+<span class="org-string">      @keyframes HIDE-DIALOG {</span>
+<span class="org-string">        0% {</span>
+<span class="org-string">          transform: scale(1);</span>
+<span class="org-string">        }</span>
+
+<span class="org-string">        100% {</span>
+<span class="org-string">          transform: scale(0.95);</span>
+<span class="org-string">        }</span>
+<span class="org-string">      }</span>
+
+<span class="org-string">      .cta-modal__focus-trap {</span>
+<span class="org-string">        opacity: 0;</span>
+<span class="org-string">        overflow: hidden;</span>
+
+<span class="org-string">        width: 0;</span>
+<span class="org-string">        height: 0;</span>
+
+<span class="org-string">        position: fixed;</span>
+<span class="org-string">        top: 0;</span>
+<span class="org-string">        left: 0;</span>
+<span class="org-string">      }</span>
+
+<span class="org-string">      .cta-modal__scroll {</span>
+<span class="org-string">        overflow-x: hidden;</span>
+<span class="org-string">        overflow-y: auto;</span>
+
+<span class="org-string">        width: 100%;</span>
+<span class="org-string">        height: 100%;</span>
+
+<span class=
+"org-string">        z-index: var(--cta-modal-overlay-z-index, 100000);</span>
+<span class="org-string">        position: fixed;</span>
+<span class="org-string">        top: 0;</span>
+<span class="org-string">        left: 0;</span>
+<span class="org-string">      }</span>
+
+<span class="org-string">      .cta-modal__overlay {</span>
+<span class=
+"org-string">        background-color: var(--cta-modal-overlay-background-color, rgba(0, 0, 0, 0.5));</span>
+<span class="org-string">        display: flex;</span>
+<span class="org-string">        align-items: center;</span>
+<span class="org-string">        justify-content: center;</span>
+
+<span class=
+"org-string">        padding-top: var(--cta-modal-overlay-padding-top, 20px);</span>
+<span class=
+"org-string">        padding-left: var(--cta-modal-overlay-padding-left, 20px);</span>
+<span class=
+"org-string">        padding-right: var(--cta-modal-overlay-padding-right, 20px);</span>
+<span class=
+"org-string">        padding-bottom: var(--cta-modal-overlay-padding-bottom, 20px);</span>
+
+<span class="org-string">        width: 100%;</span>
+<span class="org-string">        min-height: 100%;</span>
+<span class="org-string">      }</span>
+
+<span class="org-string">      .cta-modal__dialog {</span>
+<span class=
+"org-string">        background-color: var(--cta-modal-dialog-background-color, #fff);</span>
+<span class=
+"org-string">        border-radius: var(--cta-modal-dialog-border-radius, 5px);</span>
+<span class=
+"org-string">        box-shadow: var(--cta-modal-dialog-box-shadow, 0 2px 5px 0 rgba(0, 0, 0, 0.5));</span>
+
+<span class=
+"org-string">        padding-top: var(--cta-modal-dialog-padding-top, 20px);</span>
+<span class=
+"org-string">        padding-left: var(--cta-modal-dialog-padding-left, 20px);</span>
+<span class=
+"org-string">        padding-right: var(--cta-modal-dialog-padding-right, 20px);</span>
+<span class=
+"org-string">        padding-bottom: var(--cta-modal-dialog-padding-bottom, 20px);</span>
+
+<span class=
+"org-string">        width: var(--cta-modal-dialog-width, 500px);</span>
+<span class="org-string">        max-width: 100%;</span>
+
+<span class="org-string">        position: relative;</span>
+<span class="org-string">      }</span>
+
+<span class=
+"org-string">      [${DATA_SHOW}='true'] .cta-modal__overlay {</span>
+<span class=
+"org-string">        animation-duration: ${ANIMATION_DURATION}ms;</span>
+<span class=
+"org-string">        animation-name: SHOW-OVERLAY;</span>
+<span class="org-string">      }</span>
+
+<span class=
+"org-string">      [${DATA_SHOW}='true'] .cta-modal__dialog {</span>
+<span class=
+"org-string">        animation-duration: ${ANIMATION_DURATION}ms;</span>
+<span class=
+"org-string">        animation-name: SHOW-DIALOG;</span>
+<span class="org-string">      }</span>
+
+<span class=
+"org-string">      [${DATA_HIDE}='true'] .cta-modal__overlay {</span>
+<span class=
+"org-string">        animation-duration: ${ANIMATION_DURATION}ms;</span>
+<span class=
+"org-string">        animation-name: HIDE-OVERLAY;</span>
+<span class="org-string">        opacity: 0;</span>
+<span class="org-string">      }</span>
+
+<span class=
+"org-string">      [${DATA_HIDE}='true'] .cta-modal__dialog {</span>
+<span class=
+"org-string">        animation-duration: ${ANIMATION_DURATION}ms;</span>
+<span class=
+"org-string">        animation-name: HIDE-DIALOG;</span>
+<span class="org-string">        transform: scale(0.95);</span>
+<span class="org-string">      }</span>
+
+<span class="org-string">      .cta-modal__close {</span>
+<span class="org-string">        appearance: none;</span>
+<span class="org-string">        touch-action: none;</span>
+<span class="org-string">        user-select: none;</span>
+
+<span class="org-string">        border: 0;</span>
+<span class="org-string">        padding: 0;</span>
+
+<span class=
+"org-string">        color: var(--cta-modal-close-color, #fff);</span>
+<span class=
+"org-string">        background-color: var(--cta-modal-close-background-color, #000);</span>
+<span class=
+"org-string">        border-radius: var(--cta-modal-close-border-radius, 50%);</span>
+<span class=
+"org-string">        box-shadow: var(--cta-modal-close-box-shadow, 0 0 0 1px #fff);</span>
+<span class=
+"org-string">        display: var(--cta-modal-close-display, block);</span>
+
+<span class="org-string">        cursor: pointer;</span>
+<span class=
+"org-string">        font-family: var(--cta-modal-close-font-family, 'Arial', sans-serif);</span>
+<span class=
+"org-string">        font-size: var(--cta-modal-close-font-size, 23px);</span>
+<span class="org-string">        text-align: center;</span>
+
+<span class=
+"org-string">        line-height: var(--cta-modal-close-line-height, 26px);</span>
+<span class=
+"org-string">        width: var(--cta-modal-close-width, 26px);</span>
+
+<span class=
+"org-string">        transform: translate(40%, -40%);</span>
+<span class="org-string">        position: absolute;</span>
+<span class="org-string">        top: 0;</span>
+<span class="org-string">        right: 0;</span>
+<span class="org-string">      }</span>
+
+<span class="org-string">      .cta-modal__close:hover {</span>
+<span class=
+"org-string">        color: var(--cta-modal-close-color-hover, #000);</span>
+<span class=
+"org-string">        background-color: var(--cta-modal-close-background-color-hover, #fff);</span>
+<span class=
+"org-string">        box-shadow: var(--cta-modal-close-box-shadow-hover, 0 0 0 1px #000);</span>
+<span class="org-string">      }</span>
+
+<span class=
+"org-string">      @supports selector(:focus-visible) {</span>
+<span class=
+"org-string">        .cta-modal__close:focus-visible {</span>
+<span class=
+"org-string">          color: var(--cta-modal-close-color-hover, #000);</span>
+<span class=
+"org-string">          background-color: var(--cta-modal-close-background-color-hover, #fff);</span>
+<span class=
+"org-string">          box-shadow: var(--cta-modal-close-box-shadow-hover, 0 0 0 1px #000);</span>
+<span class="org-string">        }</span>
+<span class="org-string">      }</span>
+
+<span class=
+"org-string">      @supports not selector(:focus-visible) {</span>
+<span class="org-string">        .cta-modal__close:focus {</span>
+<span class=
+"org-string">          color: var(--cta-modal-close-color-hover, #000);</span>
+<span class=
+"org-string">          background-color: var(--cta-modal-close-background-color-hover, #fff);</span>
+<span class=
+"org-string">          box-shadow: var(--cta-modal-close-box-shadow-hover, 0 0 0 1px #000);</span>
+<span class="org-string">        }</span>
+<span class="org-string">      }</span>
+<span class="org-string">    &lt;/style&gt;</span>
+<span class="org-string">  `</span>;
+  <span class="org-keyword">const</span> <span class=
+"org-variable-name">FOCUS_TRAP</span> = <span class=
+"org-string">`</span>
+<span class="org-string">    &lt;span</span>
+<span class="org-string">      aria-hidden='true'</span>
+<span class="org-string">      class='cta-modal__focus-trap'</span>
+<span class="org-string">      tabindex='0'</span>
+<span class="org-string">    &gt;&lt;/span&gt;</span>
+<span class="org-string">  `</span>;
+  <span class="org-keyword">const</span> <span class=
+"org-variable-name">MODAL</span> = <span class=
+"org-string">`</span>
+<span class=
+"org-string">    &lt;slot name='button'&gt;&lt;/slot&gt;</span>
+
+<span class=
+"org-string">    &lt;div class='cta-modal__scroll' style='display:none'&gt;</span>
+<span class="org-string">      ${FOCUS_TRAP}</span>
+
+<span class=
+"org-string">      &lt;div class='cta-modal__overlay'&gt;</span>
+<span class="org-string">        &lt;div</span>
+<span class="org-string">          aria-modal='true'</span>
+<span class="org-string">          class='cta-modal__dialog'</span>
+<span class="org-string">          role='dialog'</span>
+<span class="org-string">          tabindex='-1'</span>
+<span class="org-string">        &gt;</span>
+<span class="org-string">          &lt;button</span>
+<span class=
+"org-string">            class='cta-modal__close'</span>
+<span class="org-string">            type='button'</span>
+<span class=
+"org-string">          &gt;&amp;times;&lt;/button&gt;</span>
+
+<span class=
+"org-string">          &lt;slot name='modal'&gt;&lt;/slot&gt;</span>
+<span class="org-string">        &lt;/div&gt;</span>
+<span class="org-string">      &lt;/div&gt;</span>
+
+<span class="org-string">      ${FOCUS_TRAP}</span>
+<span class="org-string">    &lt;/div&gt;</span>
+<span class="org-string">  `</span>;
+  <span class="org-keyword">const</span> <span class=
+"org-variable-name">markup</span> = [STYLE, MODAL].join(EMPTY_STRING).trim().replace(SPACE_REGEX, SPACE);
+  <span class="org-keyword">const</span> <span class=
+"org-variable-name">template</span> = document.createElement(TEMPLATE);
+  template.innerHTML = markup;
+  <span class="org-keyword">class</span> CtaModal <span class=
+"org-keyword">extends</span> HTMLElement {
+    _buttonClose;
+    _heading;
+    _modal;
+    _modalOverlay;
+    _modalScroll;
+    _shadow;
+    _slotForButton;
+    _slotForModal;
+    _activeElement = <span class="org-constant">null</span>;
+    _focusTrapList;
+    _isActive = <span class="org-constant">false</span>;
+    _isAnimated = <span class="org-constant">true</span>;
+    _isHideShow = <span class="org-constant">false</span>;
+    _isStatic = <span class="org-constant">false</span>;
+    _timerForHide;
+    _timerForShow;
+    constructor() {
+      <span class="org-keyword">super</span>();
+      <span class="org-constant">this</span>._bind();
+      <span class="org-constant">this</span>._shadow = <span class=
+"org-constant">this</span>.attachShadow({ mode: <span class=
+"org-string">"closed"</span> });
+      <span class=
+"org-constant">this</span>._shadow.appendChild(template.content.cloneNode(<span class="org-constant">true</span>));
+      <span class=
+"org-constant">this</span>._slotForButton = <span class=
+"org-constant">this</span>.querySelector(<span class=
+"org-string">"[slot='button']"</span>);
+      <span class=
+"org-constant">this</span>._slotForModal = <span class=
+"org-constant">this</span>.querySelector(<span class=
+"org-string">"[slot='modal']"</span>);
+      <span class=
+"org-constant">this</span>._heading = <span class="org-constant">this</span>.querySelector(<span class="org-string">"h1, h2, h3, h4, h5, h6"</span>);
+      <span class=
+"org-constant">this</span>._buttonClose = <span class=
+"org-constant">this</span>._shadow.querySelector(<span class=
+"org-string">".cta-modal__close"</span>);
+      <span class=
+"org-constant">this</span>._focusTrapList = <span class=
+"org-constant">this</span>._shadow.querySelectorAll(<span class=
+"org-string">".cta-modal__focus-trap"</span>);
+      <span class="org-constant">this</span>._modal = <span class=
+"org-constant">this</span>._shadow.querySelector(<span class=
+"org-string">".cta-modal__dialog"</span>);
+      <span class=
+"org-constant">this</span>._modalOverlay = <span class=
+"org-constant">this</span>._shadow.querySelector(<span class=
+"org-string">".cta-modal__overlay"</span>);
+      <span class=
+"org-constant">this</span>._modalScroll = <span class=
+"org-constant">this</span>._shadow.querySelector(<span class=
+"org-string">".cta-modal__scroll"</span>);
+      <span class="org-keyword">if</span> (!<span class=
+"org-constant">this</span>._slotForModal) {
+        window.console.error(<span class=
+"org-string">'Required [slot="modal"] not found inside cta-modal.'</span>);
+      }
+      <span class="org-constant">this</span>._setAnimationFlag();
+      <span class="org-constant">this</span>._setCloseTitle();
+      <span class="org-constant">this</span>._setModalLabel();
+      <span class="org-constant">this</span>._setStaticFlag();
+      <span class="org-constant">this</span>._setActiveFlag();
+    }
+    <span class=
+"org-keyword">static</span> get observedAttributes() {
+      <span class=
+"org-keyword">return</span> [ACTIVE, ANIMATED, CLOSE, STATIC];
+    }
+    attributeChangedCallback(name, oldValue, newValue) {
+      <span class="org-keyword">if</span> (oldValue !== newValue) {
+        <span class="org-keyword">if</span> (name === ACTIVE) {
+          <span class="org-constant">this</span>._setActiveFlag();
+        }
+        <span class="org-keyword">if</span> (name === ANIMATED) {
+          <span class=
+"org-constant">this</span>._setAnimationFlag();
+        }
+        <span class="org-keyword">if</span> (name === CLOSE) {
+          <span class="org-constant">this</span>._setCloseTitle();
+        }
+        <span class="org-keyword">if</span> (name === STATIC) {
+          <span class="org-constant">this</span>._setStaticFlag();
+        }
+      }
+    }
+    connectedCallback() {
+      <span class="org-constant">this</span>._addEvents();
+    }
+    disconnectedCallback() {
+      <span class="org-constant">this</span>._removeEvents();
+    }
+    _bind() {
+      <span class="org-keyword">const</span> <span class=
+"org-variable-name">propertyNames</span> = Object.getOwnPropertyNames(Object.getPrototypeOf(<span class="org-constant">this</span>));
+      propertyNames.forEach((name) =&gt; {
+        <span class="org-keyword">if</span> (<span class=
+"org-keyword">typeof</span> <span class=
+"org-constant">this</span>[name] === FUNCTION) {
+          <span class=
+"org-constant">this</span>[name] = <span class=
+"org-constant">this</span>[name].bind(<span class=
+"org-constant">this</span>);
+        }
+      });
+    }
+    _addEvents() {
+      <span class="org-constant">this</span>._removeEvents();
+      document.addEventListener(FOCUSIN, <span class=
+"org-constant">this</span>._handleFocusIn);
+      document.addEventListener(KEYDOWN, <span class=
+"org-constant">this</span>._handleKeyDown);
+      <span class=
+"org-constant">this</span>._buttonClose.addEventListener(CLICK, <span class="org-constant">this</span>._handleClickToggle);
+      <span class=
+"org-constant">this</span>._modalOverlay.addEventListener(CLICK, <span class="org-constant">this</span>._handleClickOverlay);
+      <span class="org-keyword">if</span> (<span class=
+"org-constant">this</span>._slotForButton) {
+        <span class=
+"org-constant">this</span>._slotForButton.addEventListener(CLICK, <span class="org-constant">this</span>._handleClickToggle);
+        <span class=
+"org-constant">this</span>._slotForButton.addEventListener(KEYDOWN, <span class="org-constant">this</span>._handleClickToggle);
+      }
+      <span class="org-keyword">if</span> (<span class=
+"org-constant">this</span>._slotForModal) {
+        <span class=
+"org-constant">this</span>._slotForModal.addEventListener(CLICK, <span class="org-constant">this</span>._handleClickToggle);
+        <span class=
+"org-constant">this</span>._slotForModal.addEventListener(KEYDOWN, <span class="org-constant">this</span>._handleClickToggle);
+      }
+    }
+    _removeEvents() {
+      document.removeEventListener(FOCUSIN, <span class=
+"org-constant">this</span>._handleFocusIn);
+      document.removeEventListener(KEYDOWN, <span class=
+"org-constant">this</span>._handleKeyDown);
+      <span class=
+"org-constant">this</span>._buttonClose.removeEventListener(CLICK, <span class="org-constant">this</span>._handleClickToggle);
+      <span class=
+"org-constant">this</span>._modalOverlay.removeEventListener(CLICK, <span class="org-constant">this</span>._handleClickOverlay);
+      <span class="org-keyword">if</span> (<span class=
+"org-constant">this</span>._slotForButton) {
+        <span class=
+"org-constant">this</span>._slotForButton.removeEventListener(CLICK, <span class="org-constant">this</span>._handleClickToggle);
+        <span class=
+"org-constant">this</span>._slotForButton.removeEventListener(KEYDOWN, <span class="org-constant">this</span>._handleClickToggle);
+      }
+      <span class="org-keyword">if</span> (<span class=
+"org-constant">this</span>._slotForModal) {
+        <span class=
+"org-constant">this</span>._slotForModal.removeEventListener(CLICK, <span class="org-constant">this</span>._handleClickToggle);
+        <span class=
+"org-constant">this</span>._slotForModal.removeEventListener(KEYDOWN, <span class="org-constant">this</span>._handleClickToggle);
+      }
+    }
+    _setAnimationFlag() {
+      <span class=
+"org-constant">this</span>._isAnimated = <span class=
+"org-constant">this</span>.getAttribute(ANIMATED) !== FALSE;
+    }
+    _setCloseTitle() {
+      <span class="org-keyword">const</span> <span class=
+"org-variable-name">title</span> = <span class=
+"org-constant">this</span>.getAttribute(CLOSE) || CLOSE_TITLE;
+      <span class=
+"org-constant">this</span>._buttonClose.title = title;
+      <span class=
+"org-constant">this</span>._buttonClose.setAttribute(ARIA_LABEL, title);
+    }
+    _setModalLabel() {
+      <span class="org-keyword">let</span> <span class=
+"org-variable-name">label</span> = MODAL_LABEL_FALLBACK;
+      <span class="org-keyword">if</span> (<span class=
+"org-constant">this</span>._heading) {
+        label = <span class=
+"org-constant">this</span>._heading.textContent || label;
+        label = label.trim().replace(SPACE_REGEX, SPACE);
+      }
+      <span class=
+"org-constant">this</span>._modal.setAttribute(ARIA_LABEL, label);
+    }
+    _setActiveFlag() {
+      <span class="org-keyword">const</span> <span class=
+"org-variable-name">isActive</span> = <span class=
+"org-constant">this</span>.getAttribute(ACTIVE) === TRUE;
+      <span class="org-constant">this</span>._isActive = isActive;
+      <span class=
+"org-constant">this</span>._toggleModalDisplay(() =&gt; {
+        <span class="org-keyword">if</span> (<span class=
+"org-constant">this</span>._isActive) {
+          <span class="org-constant">this</span>._focusModal();
+        }
+      });
+    }
+    _setStaticFlag() {
+      <span class=
+"org-constant">this</span>._isStatic = <span class=
+"org-constant">this</span>.getAttribute(STATIC) === TRUE;
+    }
+    _focusElement(element) {
+      window.requestAnimationFrame(() =&gt; {
+        <span class="org-keyword">if</span> (<span class=
+"org-keyword">typeof</span> element.focus === FUNCTION) {
+          element.focus();
+        }
+      });
+    }
+    _focusModal() {
+      window.requestAnimationFrame(() =&gt; {
+        <span class="org-constant">this</span>._modal.focus();
+        <span class=
+"org-constant">this</span>._modalScroll.scrollTo(<span class=
+"org-highlight-numbers-number">0</span>, <span class=
+"org-highlight-numbers-number">0</span>);
+      });
+    }
+    _isOutsideModal(element) {
+      <span class="org-keyword">if</span> (!<span class=
+"org-constant">this</span>._isActive || !element) {
+        <span class="org-keyword">return</span> <span class=
+"org-constant">false</span>;
+      }
+      <span class="org-keyword">const</span> <span class=
+"org-variable-name">hasElement</span> = <span class=
+"org-constant">this</span>.contains(element) || <span class=
+"org-constant">this</span>._modal.contains(element);
+      <span class="org-keyword">const</span> <span class=
+"org-variable-name">bool</span> = !hasElement;
+      <span class="org-keyword">return</span> bool;
+    }
+    _isMotionOkay() {
+      <span class=
+"org-keyword">const</span> { matches } = window.matchMedia(PREFERS_REDUCED_MOTION);
+      <span class="org-keyword">return</span> <span class=
+"org-constant">this</span>._isAnimated &amp;& !matches;
+    }
+    _toggleModalDisplay(callback) {
+      <span class=
+"org-constant">this</span>.setAttribute(ACTIVE, <span class=
+"org-constant">this</span>._isActive);
+      <span class="org-keyword">const</span> <span class=
+"org-variable-name">isModalVisible</span> = <span class=
+"org-constant">this</span>._modalScroll.style.display === BLOCK;
+      <span class="org-keyword">const</span> <span class=
+"org-variable-name">isMotionOkay</span> = <span class=
+"org-constant">this</span>._isMotionOkay();
+      <span class="org-keyword">const</span> <span class=
+"org-variable-name">delay</span> = isMotionOkay ? ANIMATION_DURATION : <span class="org-highlight-numbers-number">0</span>;
+      <span class="org-keyword">const</span> <span class=
+"org-variable-name">scrollbarWidth</span> = window.innerWidth - document.documentElement.clientWidth;
+      <span class="org-keyword">const</span> <span class=
+"org-variable-name">activeElement</span> = document.activeElement;
+      <span class="org-keyword">if</span> (<span class=
+"org-constant">this</span>._isActive &amp;& activeElement) {
+        <span class=
+"org-constant">this</span>._activeElement = activeElement;
+      }
+      <span class="org-keyword">if</span> (<span class=
+"org-constant">this</span>._isActive) {
+        <span class=
+"org-constant">this</span>._modalScroll.style.display = BLOCK;
+        document.documentElement.style.overflow = HIDDEN;
+        <span class="org-keyword">if</span> (scrollbarWidth) {
+          document.documentElement.style.paddingRight = <span class="org-string">`${scrollbarWidth}px`</span>;
+        }
+        <span class="org-keyword">if</span> (isMotionOkay) {
+          <span class=
+"org-constant">this</span>._isHideShow = <span class=
+"org-constant">true</span>;
+          <span class=
+"org-constant">this</span>._modalScroll.setAttribute(DATA_SHOW, TRUE);
+        }
+        callback();
+        <span class=
+"org-constant">this</span>._timerForShow = window.setTimeout(() =&gt; {
+          clearTimeout(<span class=
+"org-constant">this</span>._timerForShow);
+          <span class=
+"org-constant">this</span>._isHideShow = <span class=
+"org-constant">false</span>;
+          <span class=
+"org-constant">this</span>._modalScroll.removeAttribute(DATA_SHOW);
+        }, delay);
+      } <span class="org-keyword">else</span> <span class=
+"org-keyword">if</span> (isModalVisible) {
+        <span class="org-keyword">if</span> (isMotionOkay) {
+          <span class=
+"org-constant">this</span>._isHideShow = <span class=
+"org-constant">true</span>;
+          <span class=
+"org-constant">this</span>._modalScroll.setAttribute(DATA_HIDE, TRUE);
+        }
+        callback();
+        <span class=
+"org-constant">this</span>._timerForHide = window.setTimeout(() =&gt; {
+          clearTimeout(<span class=
+"org-constant">this</span>._timerForHide);
+          <span class=
+"org-constant">this</span>._isHideShow = <span class=
+"org-constant">false</span>;
+          <span class=
+"org-constant">this</span>._modalScroll.removeAttribute(DATA_HIDE);
+          <span class=
+"org-constant">this</span>._modalScroll.style.display = NONE;
+          document.documentElement.style.overflow = EMPTY_STRING;
+          document.documentElement.style.paddingRight = EMPTY_STRING;
+        }, delay);
+      }
+    }
+    _handleClickOverlay(event) {
+      <span class="org-keyword">if</span> (<span class=
+"org-constant">this</span>._isHideShow || <span class=
+"org-constant">this</span>._isStatic) {
+        <span class="org-keyword">return</span>;
+      }
+      <span class="org-keyword">const</span> <span class=
+"org-variable-name">target</span> = event.target;
+      <span class=
+"org-keyword">if</span> (target.classList.contains(<span class=
+"org-string">"cta-modal__overlay"</span>)) {
+        <span class=
+"org-constant">this</span>._handleClickToggle();
+      }
+    }
+    _handleClickToggle(event) {
+      <span class="org-keyword">let</span> <span class=
+"org-variable-name">key</span> = EMPTY_STRING;
+      <span class="org-keyword">let</span> <span class=
+"org-variable-name">target</span> = <span class=
+"org-constant">null</span>;
+      <span class="org-keyword">if</span> (event) {
+        <span class="org-keyword">if</span> (event.target) {
+          target = event.target;
+        }
+        <span class="org-keyword">if</span> (event.key) {
+          key = event.key;
+          key = key.toLowerCase();
+        }
+      }
+      <span class="org-keyword">let</span> <span class=
+"org-variable-name">button</span>;
+      <span class="org-keyword">if</span> (target) {
+        <span class=
+"org-keyword">if</span> (target.classList.contains(<span class=
+"org-string">"cta-modal__close"</span>)) {
+          button = target;
+        } <span class="org-keyword">else</span> <span class=
+"org-keyword">if</span> (<span class=
+"org-keyword">typeof</span> target.closest === FUNCTION) {
+          button = target.closest(<span class=
+"org-string">".cta-modal-toggle"</span>);
+        }
+      }
+      <span class="org-keyword">const</span> <span class=
+"org-variable-name">isValidEvent</span> = event &amp;& <span class=
+"org-keyword">typeof</span> event.preventDefault === FUNCTION;
+      <span class="org-keyword">const</span> <span class=
+"org-variable-name">isValidClick</span> = button &amp;& isValidEvent &amp;& !key;
+      <span class="org-keyword">const</span> <span class=
+"org-variable-name">isValidKey</span> = button &amp;& isValidEvent &amp;& [ENTER, SPACE].includes(key);
+      <span class="org-keyword">const</span> <span class=
+"org-variable-name">isButtonDisabled</span> = button &amp;& button.disabled;
+      <span class="org-keyword">const</span> <span class=
+"org-variable-name">isButtonMissing</span> = isValidEvent &amp;& !button;
+      <span class="org-keyword">const</span> <span class=
+"org-variable-name">isWrongKeyEvent</span> = key &amp;& !isValidKey;
+      <span class=
+"org-keyword">if</span> (isButtonDisabled || isButtonMissing || isWrongKeyEvent) {
+        <span class="org-keyword">return</span>;
+      }
+      <span class=
+"org-keyword">if</span> (isValidKey || isValidClick) {
+        event.preventDefault();
+      }
+      <span class=
+"org-constant">this</span>._isActive = !<span class=
+"org-constant">this</span>._isActive;
+      <span class=
+"org-constant">this</span>._toggleModalDisplay(() =&gt; {
+        <span class="org-keyword">if</span> (<span class=
+"org-constant">this</span>._isActive) {
+          <span class="org-constant">this</span>._focusModal();
+        } <span class="org-keyword">else</span> <span class=
+"org-keyword">if</span> (<span class=
+"org-constant">this</span>._activeElement) {
+          <span class=
+"org-constant">this</span>._focusElement(<span class=
+"org-constant">this</span>._activeElement);
+        }
+      });
+    }
+    _handleFocusIn() {
+      <span class="org-keyword">if</span> (!<span class=
+"org-constant">this</span>._isActive) {
+        <span class="org-keyword">return</span>;
+      }
+      <span class="org-keyword">const</span> <span class=
+"org-variable-name">activeElement</span> = <span class=
+"org-constant">this</span>._shadow.activeElement || document.activeElement;
+      <span class="org-keyword">const</span> <span class=
+"org-variable-name">isFocusTrap1</span> = activeElement === <span class="org-constant">this</span>._focusTrapList[<span class="org-highlight-numbers-number">0</span>];
+      <span class="org-keyword">const</span> <span class=
+"org-variable-name">isFocusTrap2</span> = activeElement === <span class="org-constant">this</span>._focusTrapList[<span class="org-highlight-numbers-number">1</span>];
+      <span class="org-keyword">let</span> <span class=
+"org-variable-name">focusListReal</span> = [];
+      <span class="org-keyword">if</span> (<span class=
+"org-constant">this</span>._slotForModal) {
+        focusListReal = Array.from(<span class=
+"org-constant">this</span>._slotForModal.querySelectorAll(FOCUSABLE_SELECTORS));
+      }
+      <span class="org-keyword">const</span> <span class=
+"org-variable-name">focusListShadow</span> = Array.from(<span class="org-constant">this</span>._modal.querySelectorAll(FOCUSABLE_SELECTORS));
+      <span class="org-keyword">const</span> <span class=
+"org-variable-name">focusListTotal</span> = focusListShadow.concat(focusListReal);
+      <span class="org-keyword">const</span> <span class=
+"org-variable-name">focusItemFirst</span> = focusListTotal[<span class="org-highlight-numbers-number">0</span>];
+      <span class="org-keyword">const</span> <span class=
+"org-variable-name">focusItemLast</span> = focusListTotal[focusListTotal.length - <span class="org-highlight-numbers-number">1</span>];
+      <span class=
+"org-keyword">if</span> (isFocusTrap1 &amp;& focusItemLast) {
+        <span class=
+"org-constant">this</span>._focusElement(focusItemLast);
+      } <span class="org-keyword">else</span> <span class=
+"org-keyword">if</span> (isFocusTrap2 &amp;& focusItemFirst) {
+        <span class=
+"org-constant">this</span>._focusElement(focusItemFirst);
+      } <span class="org-keyword">else</span> <span class=
+"org-keyword">if</span> (<span class=
+"org-constant">this</span>._isOutsideModal(activeElement)) {
+        <span class="org-constant">this</span>._focusModal();
+      }
+    }
+    _handleKeyDown({ key }) {
+      <span class="org-keyword">if</span> (!<span class=
+"org-constant">this</span>._isActive) {
+        <span class="org-keyword">return</span>;
+      }
+      key = key.toLowerCase();
+      <span class=
+"org-keyword">if</span> (key === ESCAPE &amp;& !<span class=
+"org-constant">this</span>._isHideShow &amp;& !<span class=
+"org-constant">this</span>._isStatic) {
+        <span class=
+"org-constant">this</span>._handleClickToggle();
+      }
+      <span class="org-keyword">if</span> (key === TAB) {
+        <span class="org-constant">this</span>._handleFocusIn();
+      }
+    }
+  }
+  window.addEventListener(<span class=
+"org-string">"DOMContentLoaded"</span>, () =&gt; {
+    window.customElements.define(<span class=
+"org-string">"cta-modal"</span>, CtaModal);
+  });
+}
+</pre>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
   <div id="postamble" class="status">
     <p class="author">Author: Zhicheng Lee</p>
-    <p class="date">Created: 2022-05-10 Tue 18:04</p>
+    <p class="date">Created: 2022-05-10 Tue 18:15</p>
   </div>
 </body>
 </html>

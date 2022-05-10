@@ -10,7 +10,51 @@
 #+TITLE: Coding Everything In Here
 <badge: GCCLL | Homepage | green | / | gnu-emacs | tinder>
 
-TODO
+#+begin_box Introduce
+这里是一些个人代码或网上看到的些优秀的代码记录文。
+
+方便代码可能会用到 ~process.env.HOME~ 之类的环境变量，正常是不需要的，直接
+~require('esbuild')~ 就行，使用它们是因为我用的是 Emacs + org-mode 方式写的博客，
+为了方便直接能 kbd:C-c_C-c 执行得到结果才使用的。
+#+end_box
+#+html:<br>
+
+* build & scaffold
+
+** esbuild
+
+#+begin_src js -n -r
+// production -> require('esbuild')
+const esbuild = require(process.env.NODE_LIB + '/esbuild');
+
+const path = process.env.HOME + '/github/tools/cta-modal'
+const commands = {
+  entryPoints: [`${path}/src/assets/ts/cta-modal.ts`],
+  target: [
+    // Modern browsers.
+    'chrome98',
+    'edge98',
+    'firefox97',
+    'safari15',
+  ],
+  outfile: `${path}/dist/cta-modal.js`,
+};
+
+// =============
+// Run commands.
+// =============
+
+global.console.log('running esbuild…');
+esbuild.build(commands);
+#+end_src
+
+#+RESULTS:
+: running esbuild…
+: undefined
+
+构建之后的代码：
+
+#+include: ~/github/tools/cta-modal/dist/cta-modal.js src js
 
 * COMMENT Local Variables       :ARCHIVE:
 # Local Variables:
