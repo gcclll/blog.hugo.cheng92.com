@@ -15,12 +15,17 @@
 #+end_box
 #+html: <br>
 
-* Array.prototype.sort
+* Array
+** Array.prototype.sort
 
 #+begin_src js -n -r :exports both
 const arr = [5, 14, 22, 9]
 console.log(arr.sort().join(','))
 #+end_src
+
+#+RESULTS:
+: 14,22,5,9
+: undefined
 
 是不是很疑惑怎么不是 ~5,9,14,22~ ?
 
@@ -79,6 +84,26 @@ function sort(compareFn) {
 如上面的伪码，实现步骤就是先检测有没有 compareFn 函数，这个函数决定了比较的方式，
 是不是应该转成字符串去比较[[(sort-no-compareFn-toString)]] ，所以在使用 sort 的时候
 尽量都传入比较函数给它。
+
+字符串比较：
+#+begin_src js -n -r :exports both
+console.log('14 < 22 < 5 < 9', '14' < '22', '22' < '5', '5' < '9')
+#+end_src
+
+#+RESULTS:
+: 14 < 22 < 5 < 9 true true true
+: undefined
+
+正确使用：
+
+#+begin_src js -n -r :exports both
+const arr = [5, 14, 22, 9]
+console.log(arr.sort((a, b) => a - b).join(','))
+#+end_src
+
+#+RESULTS:
+: 5,9,14,22
+: undefined
 
 * COMMENT Local Variables       :ARCHIVE:
 # Local Variables:

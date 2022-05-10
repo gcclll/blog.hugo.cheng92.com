@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <!-- 2022-05-10 Tue 14:36 -->
+  <!-- 2022-05-10 Tue 14:42 -->
   <meta charset="utf-8">
   <meta name="viewport" content=
   "width=device-width, initial-scale=1">
@@ -292,7 +292,12 @@
       <div id="text-table-of-contents" role="doc-toc">
         <ul>
           <li>
-            <a href="#org74b141f">1. Array.prototype.sort</a>
+            <a href="#org6bcdc3d">1. Array</a>
+            <ul>
+              <li>
+                <a href="#org65fd7d4">1.1. Array.prototype.sort</a>
+              </li>
+            </ul>
           </li>
         </ul>
       </div>
@@ -305,40 +310,44 @@
       "color:green;">学习</span>、<span style=
       "color:blue;">冲浪</span>过程中遇到的各种容易产生疑惑的知识点。</p>
     </div><br>
-    <div id="outline-container-org74b141f" class="outline-2">
-      <h2 id="org74b141f"><span class="section-number-2">1.</span>
-      Array.prototype.sort</h2>
-      <div class="outline-text-2" id="text-1">
-        <div class="org-src-container">
-          <pre class="src src-js"><span class=
-          "linenr">1: </span><span class=
-          "org-keyword">const</span> <span class=
-          "org-variable-name">arr</span> = [<span class=
-          "org-highlight-numbers-number">5</span>, <span class=
-          "org-highlight-numbers-number">14</span>, <span class=
-          "org-highlight-numbers-number">22</span>, <span class=
-          "org-highlight-numbers-number">9</span>]
+    <div id="outline-container-org6bcdc3d" class="outline-2">
+      <h2 id="org6bcdc3d"><span class="section-number-2">1.</span>
+      Array</h2>
+      <div class="outline-text-2" id="text-1"></div>
+      <div id="outline-container-org65fd7d4" class="outline-3">
+        <h3 id="org65fd7d4"><span class=
+        "section-number-3">1.1.</span> Array.prototype.sort</h3>
+        <div class="outline-text-3" id="text-1-1">
+          <div class="org-src-container">
+            <pre class="src src-js"><span class=
+            "linenr">1: </span><span class=
+            "org-keyword">const</span> <span class=
+            "org-variable-name">arr</span> = [<span class=
+            "org-highlight-numbers-number">5</span>, <span class=
+            "org-highlight-numbers-number">14</span>, <span class=
+            "org-highlight-numbers-number">22</span>, <span class=
+            "org-highlight-numbers-number">9</span>]
 <span class=
 "linenr">2: </span>console.log(arr.sort().join(<span class=
 "org-string">','</span>))
 </pre>
-        </div>
-        <pre class="example">
+          </div>
+          <pre class="example">
 14,22,5,9
 undefined
 </pre>
-        <p>是不是很疑惑怎么不是 <code>5,9,14,22</code> ?</p>
-        <p><span style="color:red;">解惑：</span></p>
-        <p><a href=
-        "https://tc39.es/ecma262/#sec-array.prototype.sort">ECMAScript®
-        2023 Language&nbsp;Specification</a> 这里是标准里 sort
-        方法实现的步骤，下面是 其伪码：</p>
-        <div class="org-src-container">
-          <pre class="src src-js"><span class=
-          "linenr"> 1: </span><span class=
-          "org-keyword">function</span> <span class=
-          "org-function-name">sort</span>(<span class=
-          "org-variable-name">compareFn</span>) {
+          <p>是不是很疑惑怎么不是 <code>5,9,14,22</code> ?</p>
+          <p><span style="color:red;">解惑：</span></p>
+          <p><a href=
+          "https://tc39.es/ecma262/#sec-array.prototype.sort">ECMAScript®
+          2023 Language&nbsp;Specification</a> 这里是标准里 sort
+          方法实现的步骤，下面是 其伪码：</p>
+          <div class="org-src-container">
+            <pre class="src src-js"><span class=
+            "linenr"> 1: </span><span class=
+            "org-keyword">function</span> <span class=
+            "org-function-name">sort</span>(<span class=
+            "org-variable-name">compareFn</span>) {
 <span class="linenr"> 2: </span>  <span class=
 "org-keyword">if</span> (compareFn &amp;& <span class=
 "org-keyword">typeof</span> compareFn !== <span class=
@@ -453,20 +462,57 @@ undefined
 "org-keyword">return</span> SortIndexedProperties(obj, len, SortCompare)
 <span class="linenr">44: </span>}
 </pre>
+          </div>
+          <p>如上面的伪码，实现步骤就是先检测有没有 compareFn 函数，这个函数决定了比较的方式，
+          是不是应该转成字符串去比较<a href=
+          "#coderef-sort-no-compareFn-toString" class="coderef"
+          onmouseover=
+          "CodeHighlightOn(this, 'coderef-sort-no-compareFn-toString');"
+          onmouseout=
+          "CodeHighlightOff(this, 'coderef-sort-no-compareFn-toString');">29</a>
+          ，所以在使用 sort 的时候 尽量都传入比较函数给它。</p>
+          <p>字符串比较：</p>
+          <div class="org-src-container">
+            <pre class="src src-js"><span class=
+            "linenr">1: </span>console.log(<span class=
+            "org-string">'14 &lt; 22 &lt; 5 &lt; 9'</span>, <span class=
+            "org-string">'14'</span> &lt; <span class=
+            "org-string">'22'</span>, <span class=
+            "org-string">'22'</span> &lt; <span class=
+            "org-string">'5'</span>, <span class=
+            "org-string">'5'</span> &lt; <span class=
+            "org-string">'9'</span>)
+</pre>
+          </div>
+          <pre class="example">
+14 &lt; 22 &lt; 5 &lt; 9 true true true
+undefined
+</pre>
+          <p>正确使用：</p>
+          <div class="org-src-container">
+            <pre class="src src-js"><span class=
+            "linenr">1: </span><span class=
+            "org-keyword">const</span> <span class=
+            "org-variable-name">arr</span> = [<span class=
+            "org-highlight-numbers-number">5</span>, <span class=
+            "org-highlight-numbers-number">14</span>, <span class=
+            "org-highlight-numbers-number">22</span>, <span class=
+            "org-highlight-numbers-number">9</span>]
+<span class=
+"linenr">2: </span>console.log(arr.sort((a, b) =&gt; a - b).join(<span class="org-string">','</span>))
+</pre>
+          </div>
+          <pre class="example">
+5,9,14,22
+undefined
+</pre>
         </div>
-        <p>如上面的伪码，实现步骤就是先检测有没有 compareFn 函数，这个函数决定了比较的方式，
-        是不是应该转成字符串去比较<a href="#coderef-sort-no-compareFn-toString"
-        class="coderef" onmouseover=
-        "CodeHighlightOn(this, 'coderef-sort-no-compareFn-toString');"
-        onmouseout=
-        "CodeHighlightOff(this, 'coderef-sort-no-compareFn-toString');">29</a>
-        ，所以在使用 sort 的时候 尽量都传入比较函数给它。</p>
       </div>
     </div>
   </div>
   <div id="postamble" class="status">
     <p class="author">Author: Zhicheng Lee</p>
-    <p class="date">Created: 2022-05-10 Tue 14:36</p>
+    <p class="date">Created: 2022-05-10 Tue 14:42</p>
   </div>
 </body>
 </html>
