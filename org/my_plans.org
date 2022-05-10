@@ -17,7 +17,6 @@
 <script src="/assets/tests/my-plan.js"></script>
 #+end_export
 
-
 * COMMENT Local Variables       :ARCHIVE:
 # Local Variables:
 # after-save-hook: gcl/org-html-export-to-html
