@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <!-- 2022-05-10 Tue 15:42 -->
+  <!-- 2022-05-10 Tue 15:53 -->
   <meta charset="utf-8">
   <meta name="viewport" content=
   "width=device-width, initial-scale=1">
@@ -292,23 +292,31 @@
       <div id="text-table-of-contents" role="doc-toc">
         <ul>
           <li>
-            <a href="#org81d0028">1. Array</a>
+            <a href="#org8a7f6a8">1. Array</a>
             <ul>
               <li>
-                <a href="#orgadeb621">1.1. Array.prototype.sort</a>
+                <a href="#org28c6fd1">1.1. Array.prototype.sort</a>
               </li>
             </ul>
           </li>
           <li>
-            <a href="#orgffa27a4">2. 闭包</a>
+            <a href="#org5c7e135">2. 闭包</a>
             <ul>
               <li>
-                <a href="#orge231756">2.1. +setTimeout</a>
+                <a href="#org0622105">2.1. +setTimeout</a>
               </li>
             </ul>
           </li>
           <li>
-            <a href="#orgf17f94e">3. Footnote</a>
+            <a href="#orgb9c25b7">3. 语法</a>
+            <ul>
+              <li>
+                <a href="#org509a8a7">3.1. return</a>
+              </li>
+            </ul>
+          </li>
+          <li>
+            <a href="#orgb43e80e">4. Footnote</a>
           </li>
         </ul>
       </div>
@@ -321,12 +329,12 @@
       "color:green;">学习</span>、<span style=
       "color:blue;">冲浪</span>过程中遇到的各种容易产生疑惑的知识点。</p>
     </div><br>
-    <div id="outline-container-org81d0028" class="outline-2">
-      <h2 id="org81d0028"><span class="section-number-2">1.</span>
+    <div id="outline-container-org8a7f6a8" class="outline-2">
+      <h2 id="org8a7f6a8"><span class="section-number-2">1.</span>
       Array</h2>
       <div class="outline-text-2" id="text-1"></div>
-      <div id="outline-container-orgadeb621" class="outline-3">
-        <h3 id="orgadeb621"><span class=
+      <div id="outline-container-org28c6fd1" class="outline-3">
+        <h3 id="org28c6fd1"><span class=
         "section-number-3">1.1.</span> Array.prototype.sort</h3>
         <div class="outline-text-3" id="text-1-1">
           <div class="org-src-container">
@@ -521,12 +529,12 @@ undefined
         </div>
       </div>
     </div>
-    <div id="outline-container-orgffa27a4" class="outline-2">
-      <h2 id="orgffa27a4"><span class="section-number-2">2.</span>
+    <div id="outline-container-org5c7e135" class="outline-2">
+      <h2 id="org5c7e135"><span class="section-number-2">2.</span>
       闭包</h2>
       <div class="outline-text-2" id="text-2"></div>
-      <div id="outline-container-orge231756" class="outline-3">
-        <h3 id="orge231756"><span class=
+      <div id="outline-container-org0622105" class="outline-3">
+        <h3 id="org0622105"><span class=
         "section-number-3">2.1.</span> +setTimeout</h3>
         <div class="outline-text-3" id="text-2-1">
           <div class="org-src-container">
@@ -714,10 +722,53 @@ undefined
         </div>
       </div>
     </div>
-    <div id="outline-container-orgf17f94e" class="outline-2">
-      <h2 id="orgf17f94e"><span class="section-number-2">3.</span>
-      Footnote</h2>
+    <div id="outline-container-orgb9c25b7" class="outline-2">
+      <h2 id="orgb9c25b7"><span class="section-number-2">3.</span>
+      语法</h2>
       <div class="outline-text-2" id="text-3"></div>
+      <div id="outline-container-org509a8a7" class="outline-3">
+        <h3 id="org509a8a7"><span class=
+        "section-number-3">3.1.</span> return</h3>
+        <div class="outline-text-3" id="text-3-1">
+          <p>来看下下面的例子</p>
+          <div class="org-src-container">
+            <pre class="src src-js"><span class="linenr">1: </span>
+<span class="linenr">2: </span><span class=
+"org-keyword">function</span> <span class=
+"org-function-name">test</span>(<span class=
+"org-variable-name">item</span>) {
+<span class="linenr">3: </span>  <span class=
+"org-keyword">return</span>
+<span class="linenr">4: </span>    [item]
+<span class="linenr">5: </span>}
+<span class="linenr">6: </span>console.log(<span class=
+"org-string">'test result: '</span> + test())
+</pre>
+          </div>
+          <pre class="example">
+test result: undefined
+undefined
+</pre>
+          <p>😂 有没写过这这样代码呢？？？</p>
+          <p>原因<sup><a id="fnr.4" class="footref" href="#fn.4"
+          role="doc-backlink">4</a></sup>： return 语句后面不能有换行符，下面是
+          <a href=
+          "https://tc39.es/ecma262/#prod-ReturnStatement">ECMAScript®
+          2023 Language&nbsp;Specification</a> 中 return 语法的定义</p>
+          <div id="orgd9508d9" class="figure">
+            <p><img src=
+            "../assets/img/tmp/js-return-no-linebreak.png" alt=
+            "js-return-no-linebreak.png"></p>
+          </div>
+          <p><i><span style=
+          "color:orange;">所有没事多看看标准还是有必要的</span></i> 。</p>
+        </div>
+      </div>
+    </div>
+    <div id="outline-container-orgb43e80e" class="outline-2">
+      <h2 id="orgb43e80e"><span class="section-number-2">4.</span>
+      Footnote</h2>
+      <div class="outline-text-2" id="text-4"></div>
     </div>
     <div id="footnotes">
       <h2 class="footnotes">Footnotes:</h2>
@@ -747,12 +798,20 @@ undefined
             "https://tc39.es/ecma262/#sec-variable-statement">https://tc39.es/ecma262/#sec-variable-statement</a></p>
           </div>
         </div>
+        <div class="footdef">
+          <sup><a id="fn.4" class="footnum" href="#fnr.4" role=
+          "doc-backlink">4</a></sup>
+          <div class="footpara" role="doc-footnote">
+            <p class="footpara"><a href=
+            "https://tc39.es/ecma262/#prod-ReturnStatement">https://tc39.es/ecma262/#prod-ReturnStatement</a></p>
+          </div>
+        </div>
       </div>
     </div>
   </div>
   <div id="postamble" class="status">
     <p class="author">Author: Zhicheng Lee</p>
-    <p class="date">Created: 2022-05-10 Tue 15:42</p>
+    <p class="date">Created: 2022-05-10 Tue 15:53</p>
   </div>
 </body>
 </html>

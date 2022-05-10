@@ -228,12 +228,39 @@ test()
 <kbd:注意，函数只有声明式函数才会声明和赋值同时提升，表达式函数和普通的 var 变量一样，只提升声明>。
 #+end_box
 #+html: <br>
+* 语法
 
+** return
+
+来看下下面的例子
+
+#+begin_src js -n -r
+
+function test(item) {
+  return
+    [item]
+}
+console.log('test result: ' + test())
+#+end_src
+
+#+RESULTS:
+: test result: undefined
+: undefined
+
+😂 有没写过这这样代码呢？？？
+
+原因[fn:return]： return 语句后面不能有换行符，下面是 [[https://tc39.es/ecma262/#prod-ReturnStatement][ECMAScript® 2023
+Language Specification]] 中 return 语法的定义
+
+[[../assets/img/tmp/js-return-no-linebreak.png]]
+
+/orange:所有没事多看看标准还是有必要的/ 。
 * Footnote
 
 [fn:let-const] https://tc39.es/ecma262/#sec-let-and-const-declarations
 [fn:sort] https://tc39.es/ecma262/#sec-array.prototype.sort
 [fn:var] https://tc39.es/ecma262/#sec-variable-statement
+[fn:return] https://tc39.es/ecma262/#prod-ReturnStatement
 
 * COMMENT Local Variables       :ARCHIVE:
 # Local Variables:
