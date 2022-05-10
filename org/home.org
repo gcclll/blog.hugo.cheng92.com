@@ -44,6 +44,7 @@ CLOSED: [2022-04-28 Thu 16:17]
 * JavaScript
 ** TODO [[id:cc2b98c6-21d9-488c-9a05-8485a36c1e01][JavaScript Proxy And Reflect]]
 ** TODO [[id:ff2d55a2-ae96-4144-866a-1c7bbe5bf9ef][JavaScript Weekly]]
+** TODO [[id:44f588fc-94b5-4d3d-ae87-7a60366972cb][JavaScript Confusable Collections]]
 * Shell Programming
 ** TODO [[id:1a7e98ba-a7f1-4758-b3a0-6ee1e148a61d][sed command]]
 ** TODO [[id:a10d6fd1-893b-4ed4-967d-d57388ba6525][shell basis]]

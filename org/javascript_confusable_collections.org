@@ -1,0 +1,27 @@
+:PROPERTIES:
+:ID:       44f588fc-94b5-4d3d-ae87-7a60366972cb
+:END:
+#+SETUPFILE:~/.gclrc/org/hugo_setup.org
+#+HUGO_SLUG: javascript_confusable_collections
+#+HTML_HEAD: <meta name="category" content="javascript"/>
+#+HTML_HEAD: <meta name="tags" content="confusable"/>
+#+HTML_HEAD: <meta name="createdAt" content="2022-05-10 14:09:15"/>
+#+PROPERTY: header-args :noweb no-export
+#+TITLE: JavaScript Confusable Collections
+<badge: GCCLL | Homepage | green | / | gnu-emacs | tinder>
+
+* sort()
+
+#+begin_src js -n -r :exports both
+const arr = [5, 14, 22, 9]
+console.log(arr.sort().join(','))
+#+end_src
+
+#+RESULTS:
+: 14,22,5,9
+: undefined
+
+* COMMENT Local Variables       :ARCHIVE:
+# Local Variables:
+# after-save-hook: gcl/org-html-export-to-html
+# End:

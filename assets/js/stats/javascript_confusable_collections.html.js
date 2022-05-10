@@ -1,0 +1,1 @@
+window.$stats=window.$stats||{};window.$stats['javascript_confusable_collections.html']={"IDLinks":[{"text":"sort()","tagName":"H2","id":"orgd7632a4","filename":"javascript_confusable_collections.html"}],"aLinks":[{"text":"sort()","url":"#orgd7632a4","tag":"A","filename":"javascript_confusable_collections.html"}],"toc":null}
