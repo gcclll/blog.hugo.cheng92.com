@@ -1,0 +1,24 @@
+:PROPERTIES:
+:ID:       fc444cea-b33d-401c-b514-7d78cec8f90f
+:END:
+#+SETUPFILE:~/.gclrc/org/hugo_setup.org
+#+HUGO_SLUG: my_plans
+#+HTML_HEAD: <script>window.isHomeLike=true</script>
+#+HTML_HEAD: <meta name="category" content="others"/>
+#+HTML_HEAD: <meta name="tags" content="plan"/>
+#+HTML_HEAD: <meta name="createdAt" content="2021-05-10 09:58:41"/>
+#+PROPERTY: header-args :noweb no-export
+#+TITLE: my plans(我的学习计划表)
+<badge: GCCLL | Homepage | green | / | gnu-emacs | tinder>
+
+我的计划表：
+#+begin_export html
+<div id="app"></div>
+<script src="/assets/tests/my-plan.js"></script>
+#+end_export
+
+
+* COMMENT Local Variables       :ARCHIVE:
+# Local Variables:
+# after-save-hook: gcl/org-html-export-to-html
+# End:

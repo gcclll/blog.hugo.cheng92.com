@@ -10,6 +10,24 @@
 #+TITLE: JavaScript Weekly
 <badge: GCCLL | Homepage | green | / | gnu-emacs | tinder>
 
+* frameworks
+
+** wallabyjs 测试框架^{payment}
+
+[[https://wallabyjs.com/?utm_source=cooperpress&utm_medium=javascriptweekly&utm_content=javascriptweekly][Wallaby - Immediate JavaScript test feedback in your IDE as-you-type]]
+
+特点：可以实时修改后看到结果的。
+
+red:不过是收费的，还特别贵 😂 ！
+
+#+begin_export html
+<video id="main-video" width="700" height="650" controls="" preload="" draggable="true" style="display: inline;">
+<source src="https://wallabyjs.com/assets/img/mainvideo.mp4" type="video/mp4">
+Your browser does not support the video tag or this video format. You can download the video
+anyway.
+</video>
+#+end_export
+
 * plugins
 
 ** partytown^{performance}
@@ -17,6 +35,17 @@
 [[https://partytown.builder.io/][Welcome To Partytown]] 可以让第三方脚本在 Worker 中执行的一个插件，提升网站的加载
 性能和体验。
 
+实现原理：
+
+1. 使用 ~<script type="text/partytown">~ 阻止脚本执行，因为不识别这种类型所以不会
+   执行对应的脚本
+2. 然后通过 ~document.querySelectorAll('script[type="text/partytown"]')~ 找到所有
+   的 partytown 脚本下载下来队列方式放到 WebWorker 中去执行。
+
+
+[[https://user-images.githubusercontent.com/452425/152363590-89d3b9a5-35c7-4c12-8f3e-c8b5ce4bb267.png]]
+
+更多说明请翻阅官网 [[https://partytown.builder.io/how-does-partytown-work][How Does Partytown Work - Partytown]]
 
 * COMMENT Local Variables :ARCHIVE:
 # Local Variables:
