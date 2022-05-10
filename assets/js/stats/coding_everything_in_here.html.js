@@ -1,0 +1,1 @@
+window.$stats=window.$stats||{};window.$stats['coding_everything_in_here.html']={"IDLinks":[],"aLinks":[],"toc":null}

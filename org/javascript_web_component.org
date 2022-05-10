@@ -15,9 +15,12 @@
 * TODO
 
 test [fn:1]
+
+test [fn:2]
 * Footnotes
 
 [fn:1] [[https://www.smashingmagazine.com/2022/04/cta-modal-build-web-component/][CTA Modal: How To Build A Web Component — Smashing Magazine]]
+[fn:2] [[https://developer.mozilla.org/en-US/docs/Web/Web_Components][Web Components | MDN]]
 
 * COMMENT Local Variables :ARCHIVE:
 # Local Variables:

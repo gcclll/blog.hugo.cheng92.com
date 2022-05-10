@@ -1,0 +1,18 @@
+:PROPERTIES:
+:ID:       c1cf80bc-b25e-439f-bdb1-c066c0755398
+:END:
+#+SETUPFILE:~/.gclrc/org/hugo_setup.org
+#+HUGO_SLUG: coding_everything_in_here
+#+PROPERTY: header-args :noweb no-export
+#+HTML_HEAD: <meta name="category" content="javascript"/>
+#+HTML_HEAD: <meta name="tags" content="javascript,web"/>
+#+HTML_HEAD: <meta name="createdAt" content="2022-05-10 18:04:21"/>
+#+TITLE: Coding Everything In Here
+<badge: GCCLL | Homepage | green | / | gnu-emacs | tinder>
+
+TODO
+
+* COMMENT Local Variables       :ARCHIVE:
+# Local Variables:
+# after-save-hook: gcl/org-html-export-to-html
+# End:
