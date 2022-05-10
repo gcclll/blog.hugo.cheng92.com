@@ -10,16 +10,75 @@
 #+TITLE: JavaScript Confusable Collections
 <badge: GCCLL | Homepage | green | / | gnu-emacs | tinder>
 
-* sort()
+#+begin_box
+本文收集了<red:开发>、<green:学习>、<blue:冲浪>过程中遇到的各种容易产生疑惑的知识点。
+#+end_box
+#+html: <br>
+
+* Array.prototype.sort
 
 #+begin_src js -n -r :exports both
 const arr = [5, 14, 22, 9]
 console.log(arr.sort().join(','))
 #+end_src
 
-#+RESULTS:
-: 14,22,5,9
-: undefined
+是不是很疑惑怎么不是 ~5,9,14,22~ ?
+
+red:解惑：
+
+[[https://tc39.es/ecma262/#sec-array.prototype.sort][ECMAScript® 2023 Language Specification]] 这里是标准里 sort 方法实现的步骤，下面是
+其伪码：
+
+#+begin_src js -n -r
+function sort(compareFn) {
+  if (compareFn && typeof compareFn !== 'function') {
+    throw new TypeError('compareFn must be a function')
+  }
+
+  let obj = Object(this)
+  let len = obj.length
+
+  if (len == void 0) {
+    throw new Error('sort 不能在非数组对象上使用')
+  }
+
+  function SortCompare(x, y) {
+    if (x === undefined && y === undefined) return +0
+
+    if (x === undefined) return 1
+
+    if (y === undefined) return -1
+
+    // 结果又提供的比较函数决定
+    if (compareFn) {
+      let v = compareFn(x, y)
+      if (Number.isNaN(v)) return +0
+
+      return v
+    }
+
+    // 如果没有 compareFn 会将比较的两个参数转成字符串
+    let xString = String(x), yString = String(y) (ref:sort-no-compareFn-toString)
+    // 这里用到了 isLessThan 比较(https://tc39.es/ecma262/#sec-islessthan)
+    // 这里先省略了，直接字符串比较了，有兴趣的同学可以进上面的链接了解字符串比较详情
+    let xSmaller = xString < yString
+    if (xSmaller) return -1
+
+    let ySmaller = yString < xString
+    if (ySmaller) return 1
+
+    return +0
+
+  }
+
+  // 这里是进行比较后替换位置
+  return SortIndexedProperties(obj, len, SortCompare)
+}
+#+end_src
+
+如上面的伪码，实现步骤就是先检测有没有 compareFn 函数，这个函数决定了比较的方式，
+是不是应该转成字符串去比较[[(sort-no-compareFn-toString)]] ，所以在使用 sort 的时候
+尽量都传入比较函数给它。
 
 * COMMENT Local Variables       :ARCHIVE:
 # Local Variables:

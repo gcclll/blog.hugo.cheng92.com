@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <!-- 2022-05-10 Tue 14:10 -->
+  <!-- 2022-05-10 Tue 14:36 -->
   <meta charset="utf-8">
   <meta name="viewport" content=
   "width=device-width, initial-scale=1">
@@ -292,16 +292,22 @@
       <div id="text-table-of-contents" role="doc-toc">
         <ul>
           <li>
-            <a href="#orgd7632a4">1. sort()</a>
+            <a href="#org74b141f">1. Array.prototype.sort</a>
           </li>
         </ul>
       </div>
     </div>
     <p><a href="/"><img src=
     "https://img.shields.io/badge/GCCLL-Homepage-green?logo=gnu-emacs"></a></p>
-    <div id="outline-container-orgd7632a4" class="outline-2">
-      <h2 id="orgd7632a4"><span class="section-number-2">1.</span>
-      sort()</h2>
+    <div style=
+    "padding: 1em; background-color: #CCFFCC;border-radius: 15px; font-size: 0.9em; box-shadow: 0.05em 0.1em 5px 0.01em #00000057;">
+      <p>本文收集了<span style="color:red;">开发</span>、<span style=
+      "color:green;">学习</span>、<span style=
+      "color:blue;">冲浪</span>过程中遇到的各种容易产生疑惑的知识点。</p>
+    </div><br>
+    <div id="outline-container-org74b141f" class="outline-2">
+      <h2 id="org74b141f"><span class="section-number-2">1.</span>
+      Array.prototype.sort</h2>
       <div class="outline-text-2" id="text-1">
         <div class="org-src-container">
           <pre class="src src-js"><span class=
@@ -321,12 +327,146 @@
 14,22,5,9
 undefined
 </pre>
+        <p>是不是很疑惑怎么不是 <code>5,9,14,22</code> ?</p>
+        <p><span style="color:red;">解惑：</span></p>
+        <p><a href=
+        "https://tc39.es/ecma262/#sec-array.prototype.sort">ECMAScript®
+        2023 Language&nbsp;Specification</a> 这里是标准里 sort
+        方法实现的步骤，下面是 其伪码：</p>
+        <div class="org-src-container">
+          <pre class="src src-js"><span class=
+          "linenr"> 1: </span><span class=
+          "org-keyword">function</span> <span class=
+          "org-function-name">sort</span>(<span class=
+          "org-variable-name">compareFn</span>) {
+<span class="linenr"> 2: </span>  <span class=
+"org-keyword">if</span> (compareFn &amp;& <span class=
+"org-keyword">typeof</span> compareFn !== <span class=
+"org-string">'function'</span>) {
+<span class="linenr"> 3: </span>    <span class=
+"org-keyword">throw</span> <span class=
+"org-keyword">new</span> <span class=
+"org-type">TypeError</span>(<span class=
+"org-string">'compareFn must be a function'</span>)
+<span class="linenr"> 4: </span>  }
+<span class="linenr"> 5: </span>
+<span class="linenr"> 6: </span>  <span class=
+"org-keyword">let</span> <span class=
+"org-variable-name">obj</span> = Object(<span class=
+"org-constant">this</span>)
+<span class="linenr"> 7: </span>  <span class=
+"org-keyword">let</span> <span class=
+"org-variable-name">len</span> = obj.length
+<span class="linenr"> 8: </span>
+<span class="linenr"> 9: </span>  <span class=
+"org-keyword">if</span> (len == <span class=
+"org-keyword">void</span> <span class=
+"org-highlight-numbers-number">0</span>) {
+<span class="linenr">10: </span>    <span class=
+"org-keyword">throw</span> <span class=
+"org-keyword">new</span> <span class=
+"org-type">Error</span>(<span class=
+"org-string">'sort 不能在非数组对象上使用'</span>)
+<span class="linenr">11: </span>  }
+<span class="linenr">12: </span>
+<span class="linenr">13: </span>  <span class=
+"org-keyword">function</span> <span class=
+"org-function-name">SortCompare</span>(<span class=
+"org-variable-name">x</span>, <span class=
+"org-variable-name">y</span>) {
+<span class="linenr">14: </span>    <span class=
+"org-keyword">if</span> (x === <span class=
+"org-constant">undefined</span> &amp;& y === <span class=
+"org-constant">undefined</span>) <span class=
+"org-keyword">return</span> +<span class=
+"org-highlight-numbers-number">0</span>
+<span class="linenr">15: </span>
+<span class="linenr">16: </span>    <span class=
+"org-keyword">if</span> (x === <span class=
+"org-constant">undefined</span>) <span class=
+"org-keyword">return</span> <span class=
+"org-highlight-numbers-number">1</span>
+<span class="linenr">17: </span>
+<span class="linenr">18: </span>    <span class=
+"org-keyword">if</span> (y === <span class=
+"org-constant">undefined</span>) <span class=
+"org-keyword">return</span> -<span class=
+"org-highlight-numbers-number">1</span>
+<span class="linenr">19: </span>
+<span class="linenr">20: </span>    <span class=
+"org-comment-delimiter">// </span><span class=
+"org-comment">结果又提供的比较函数决定</span>
+<span class="linenr">21: </span>    <span class=
+"org-keyword">if</span> (compareFn) {
+<span class="linenr">22: </span>      <span class=
+"org-keyword">let</span> <span class=
+"org-variable-name">v</span> = compareFn(x, y)
+<span class="linenr">23: </span>      <span class=
+"org-keyword">if</span> (Number.isNaN(v)) <span class=
+"org-keyword">return</span> +<span class=
+"org-highlight-numbers-number">0</span>
+<span class="linenr">24: </span>
+<span class="linenr">25: </span>      <span class=
+"org-keyword">return</span> v
+<span class="linenr">26: </span>    }
+<span class="linenr">27: </span>
+<span class="linenr">28: </span>    <span class=
+"org-comment-delimiter">// </span><span class=
+"org-comment">如果没有 compareFn 会将比较的两个参数转成字符串</span>
+<span id="coderef-sort-no-compareFn-toString" class=
+"coderef-off"><span class="linenr">29: </span>    <span class=
+"org-keyword">let</span> <span class=
+"org-variable-name">xString</span> = String(x), <span class=
+"org-variable-name">yString</span> = String(y)</span>
+<span class="linenr">30: </span>    <span class=
+"org-comment-delimiter">// </span><span class=
+"org-comment">这里用到了 isLessThan 比较(https://tc39.es/ecma262/#sec-islessthan)</span>
+<span class="linenr">31: </span>    <span class=
+"org-comment-delimiter">// </span><span class=
+"org-comment">这里先省略了，直接字符串比较了，有兴趣的同学可以进上面的链接了解字符串比较详情</span>
+<span class="linenr">32: </span>    <span class=
+"org-keyword">let</span> <span class=
+"org-variable-name">xSmaller</span> = xString &lt; yString
+<span class="linenr">33: </span>    <span class=
+"org-keyword">if</span> (xSmaller) <span class=
+"org-keyword">return</span> -<span class=
+"org-highlight-numbers-number">1</span>
+<span class="linenr">34: </span>
+<span class="linenr">35: </span>    <span class=
+"org-keyword">let</span> <span class=
+"org-variable-name">ySmaller</span> = yString &lt; xString
+<span class="linenr">36: </span>    <span class=
+"org-keyword">if</span> (ySmaller) <span class=
+"org-keyword">return</span> <span class=
+"org-highlight-numbers-number">1</span>
+<span class="linenr">37: </span>
+<span class="linenr">38: </span>    <span class=
+"org-keyword">return</span> +<span class=
+"org-highlight-numbers-number">0</span>
+<span class="linenr">39: </span>
+<span class="linenr">40: </span>  }
+<span class="linenr">41: </span>
+<span class="linenr">42: </span>  <span class=
+"org-comment-delimiter">// </span><span class=
+"org-comment">这里是进行比较后替换位置</span>
+<span class="linenr">43: </span>  <span class=
+"org-keyword">return</span> SortIndexedProperties(obj, len, SortCompare)
+<span class="linenr">44: </span>}
+</pre>
+        </div>
+        <p>如上面的伪码，实现步骤就是先检测有没有 compareFn 函数，这个函数决定了比较的方式，
+        是不是应该转成字符串去比较<a href="#coderef-sort-no-compareFn-toString"
+        class="coderef" onmouseover=
+        "CodeHighlightOn(this, 'coderef-sort-no-compareFn-toString');"
+        onmouseout=
+        "CodeHighlightOff(this, 'coderef-sort-no-compareFn-toString');">29</a>
+        ，所以在使用 sort 的时候 尽量都传入比较函数给它。</p>
       </div>
     </div>
   </div>
   <div id="postamble" class="status">
     <p class="author">Author: Zhicheng Lee</p>
-    <p class="date">Created: 2022-05-10 Tue 14:10</p>
+    <p class="date">Created: 2022-05-10 Tue 14:36</p>
   </div>
 </body>
 </html>
