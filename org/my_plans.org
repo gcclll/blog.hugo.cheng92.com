@@ -11,14 +11,19 @@
 #+TITLE: my plans(我的学习计划表)
 <badge: GCCLL | Homepage | green | / | gnu-emacs | tinder>
 
+red:红灯💡：快到期了，赶紧完成。
+
+green:绿灯💡：时间充足。
+
+yellow:黄灯💡：需要注意截止日期。
+
 我的计划表：
 #+begin_export html
 <div id="app"></div>
 <script src="/assets/tests/my-plan.js"></script>
 #+end_export
 
-
-* COMMENT Local Variables       :ARCHIVE:
+* COMMENT Local Variables :ARCHIVE:
 # Local Variables:
 # after-save-hook: gcl/org-html-export-to-html
 # End:
