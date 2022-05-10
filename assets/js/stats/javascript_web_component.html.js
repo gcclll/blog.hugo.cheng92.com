@@ -1,0 +1,1 @@
+window.$stats=window.$stats||{};window.$stats['javascript_web_component.html']={"IDLinks":[],"aLinks":[],"toc":null}

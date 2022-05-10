@@ -1,0 +1,18 @@
+:PROPERTIES:
+:ID:       1626d6f0-b158-4478-81cb-c9eefdd87a6f
+:END:
+#+SETUPFILE:~/.gclrc/org/hugo_setup.org
+#+HUGO_SLUG: javascript_web_component
+#+HTML_HEAD: <meta name="category" content="javascript"/>
+#+HTML_HEAD: <meta name="tags" content="WebComponent"/>
+#+HTML_HEAD: <meta name="createdAt" content="2022-05-10 16:09:43"/>
+#+PROPERTY: header-args:js :exports both
+#+PROPERTY: header-args :noweb no-export
+#+TITLE: JavaScript Web Component
+<badge: GCCLL | Homepage | green | / | gnu-emacs | tinder>
+
+
+* COMMENT Local Variables :ARCHIVE:
+# Local Variables:
+# after-save-hook: gcl/org-html-export-to-html
+# End:
