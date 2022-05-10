@@ -40,15 +40,15 @@ CLOSED: [2022-04-28 Thu 16:17]
 ** WAIT [[id:24104ef5-bb8e-4bc3-8a61-3fc2e5be34a3][build your own vue compiler-sfc]]
 ** DOING [[id:d0fc0f76-8429-429c-99a0-206792da22ad][build your own vue runtime-core]]
 * React
-** TODO [[id:293eb7ed-0b86-4a5c-acc2-ea5b26e92326][Build your own react]]
+** [[id:293eb7ed-0b86-4a5c-acc2-ea5b26e92326][Build your own react]]
 * JavaScript
-** TODO [[id:cc2b98c6-21d9-488c-9a05-8485a36c1e01][JavaScript Proxy And Reflect]]
-** TODO [[id:ff2d55a2-ae96-4144-866a-1c7bbe5bf9ef][JavaScript Weekly]]
-** TODO [[id:44f588fc-94b5-4d3d-ae87-7a60366972cb][JavaScript Confusable Collections]]
-** TODO
+** [[id:cc2b98c6-21d9-488c-9a05-8485a36c1e01][JavaScript Proxy And Reflect]]
+** [[id:ff2d55a2-ae96-4144-866a-1c7bbe5bf9ef][JavaScript Weekly]]
+** [[id:44f588fc-94b5-4d3d-ae87-7a60366972cb][JavaScript Confusable Collections]]
+** [[id:1626d6f0-b158-4478-81cb-c9eefdd87a6f][JavaScript Web Component]]
 * Shell Programming
-** TODO [[id:1a7e98ba-a7f1-4758-b3a0-6ee1e148a61d][sed command]]
-** TODO [[id:a10d6fd1-893b-4ed4-967d-d57388ba6525][shell basis]]
+** [[id:1a7e98ba-a7f1-4758-b3a0-6ee1e148a61d][sed command]]
+** [[id:a10d6fd1-893b-4ed4-967d-d57388ba6525][shell basis]]
 * 怪谈杂物间
 ** [[id:95666e03-38b5-4ad4-b50f-ef40f6cc36d8][collections]]
 ** [[id:93914fa7-93b9-464c-8e6d-98fb5107966d][incurable deseases]]

@@ -12,6 +12,13 @@
 <badge: GCCLL | Homepage | green | / | gnu-emacs | tinder>
 
 
+* TODO
+
+test [fn:1]
+* Footnotes
+
+[fn:1] [[https://www.smashingmagazine.com/2022/04/cta-modal-build-web-component/][CTA Modal: How To Build A Web Component — Smashing Magazine]]
+
 * COMMENT Local Variables :ARCHIVE:
 # Local Variables:
 # after-save-hook: gcl/org-html-export-to-html

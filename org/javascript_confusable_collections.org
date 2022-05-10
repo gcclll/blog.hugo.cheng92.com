@@ -255,7 +255,7 @@ Language Specification]] 中 return 语法的定义
 [[../assets/img/tmp/js-return-no-linebreak.png]]
 
 /orange:所有没事多看看标准还是有必要的/ 。
-* Footnote
+* Footnotes
 
 [fn:let-const] https://tc39.es/ecma262/#sec-let-and-const-declarations
 [fn:sort] https://tc39.es/ecma262/#sec-array.prototype.sort
