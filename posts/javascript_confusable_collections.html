@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <!-- 2022-05-10 Tue 14:42 -->
+  <!-- 2022-05-10 Tue 15:42 -->
   <meta charset="utf-8">
   <meta name="viewport" content=
   "width=device-width, initial-scale=1">
@@ -292,12 +292,23 @@
       <div id="text-table-of-contents" role="doc-toc">
         <ul>
           <li>
-            <a href="#org6bcdc3d">1. Array</a>
+            <a href="#org81d0028">1. Array</a>
             <ul>
               <li>
-                <a href="#org65fd7d4">1.1. Array.prototype.sort</a>
+                <a href="#orgadeb621">1.1. Array.prototype.sort</a>
               </li>
             </ul>
+          </li>
+          <li>
+            <a href="#orgffa27a4">2. 闭包</a>
+            <ul>
+              <li>
+                <a href="#orge231756">2.1. +setTimeout</a>
+              </li>
+            </ul>
+          </li>
+          <li>
+            <a href="#orgf17f94e">3. Footnote</a>
           </li>
         </ul>
       </div>
@@ -310,12 +321,12 @@
       "color:green;">学习</span>、<span style=
       "color:blue;">冲浪</span>过程中遇到的各种容易产生疑惑的知识点。</p>
     </div><br>
-    <div id="outline-container-org6bcdc3d" class="outline-2">
-      <h2 id="org6bcdc3d"><span class="section-number-2">1.</span>
+    <div id="outline-container-org81d0028" class="outline-2">
+      <h2 id="org81d0028"><span class="section-number-2">1.</span>
       Array</h2>
       <div class="outline-text-2" id="text-1"></div>
-      <div id="outline-container-org65fd7d4" class="outline-3">
-        <h3 id="org65fd7d4"><span class=
+      <div id="outline-container-orgadeb621" class="outline-3">
+        <h3 id="orgadeb621"><span class=
         "section-number-3">1.1.</span> Array.prototype.sort</h3>
         <div class="outline-text-3" id="text-1-1">
           <div class="org-src-container">
@@ -340,8 +351,9 @@ undefined
           <p><span style="color:red;">解惑：</span></p>
           <p><a href=
           "https://tc39.es/ecma262/#sec-array.prototype.sort">ECMAScript®
-          2023 Language&nbsp;Specification</a> 这里是标准里 sort
-          方法实现的步骤，下面是 其伪码：</p>
+          2023 Language&nbsp;Specification</a> 这里<sup><a id="fnr.1"
+          class="footref" href="#fn.1" role=
+          "doc-backlink">1</a></sup>是标准里 sort 方法实现的步 骤，下面是其伪码：</p>
           <div class="org-src-container">
             <pre class="src src-js"><span class=
             "linenr"> 1: </span><span class=
@@ -509,10 +521,238 @@ undefined
         </div>
       </div>
     </div>
+    <div id="outline-container-orgffa27a4" class="outline-2">
+      <h2 id="orgffa27a4"><span class="section-number-2">2.</span>
+      闭包</h2>
+      <div class="outline-text-2" id="text-2"></div>
+      <div id="outline-container-orge231756" class="outline-3">
+        <h3 id="orge231756"><span class=
+        "section-number-3">2.1.</span> +setTimeout</h3>
+        <div class="outline-text-3" id="text-2-1">
+          <div class="org-src-container">
+            <pre class="src src-js"><span class=
+            "linenr">1: </span><span class=
+            "org-keyword">for</span> (<span class=
+            "org-keyword">var</span> <span class=
+            "org-variable-name">i</span> = <span class=
+            "org-highlight-numbers-number">0</span>; i &lt; <span class=
+            "org-highlight-numbers-number">3</span>; i++) {
+<span class="linenr">2: </span>  <span class=
+"org-keyword">const</span> <span class=
+"org-variable-name">log</span> = () =&gt; {
+<span class="linenr">3: </span>    console.log(<span class=
+"org-string">''</span>)
+<span class="linenr">4: </span>    console.log(i)
+<span class="linenr">5: </span>  }
+<span id="coderef-closure-01-log" class="coderef-off"><span class=
+"linenr">6: </span>  setTimeout(log, <span class=
+"org-highlight-numbers-number">100</span>)</span>
+<span class="linenr">7: </span>}
+<span class="linenr">8: </span>
+</pre>
+          </div>
+          <pre class="example">
+undefined
+3
+
+3
+
+3
+</pre>
+          <p><span style="color:red;">输出结果解释：</span></p>
+          <p>for 循环每次执行都会重新执行一遍 <code>var i = 0</code> 操作，而对于
+          <code>var</code> 它只会在第一次时候是 声明，后面都是重新赋值，所以每次传递给闭包的
+          <code>i</code> 其实在内存里都是同一个地址。</p>
+          <p>而在后面(<a href="#coderef-closure-01-log" class="coderef"
+          onmouseover=
+          "CodeHighlightOn(this, 'coderef-closure-01-log');"
+          onmouseout=
+          "CodeHighlightOff(this, 'coderef-closure-01-log');">6</a>)并没有立即执行
+          log ，只是将其加入到了微任务队列中，等 到同步代码执行完成，这里也就是 for
+          循环执行完之后才会去执行微任务队列中的三个 log() ，而此时的上下文中的 i 值其实已经是 3 了，也就是
+          for 执行完之后的最终值。</p>
+          <p><span style="color:green;">解决方案</span></p>
+          <ol class="org-ol">
+            <li>
+              <p><code>var i = 0</code> 改成 <code>let i = 0</code>
+              让每次遍历都创新创建<sup><a id="fnr.2" class="footref" href=
+              "#fn.2" role="doc-backlink">2</a></sup>一个新的变量 i
+              (var<sup><a id="fnr.3" class="footref" href="#fn.3"
+              role="doc-backlink">3</a></sup> 则不会)。</p>
+              <div class="org-src-container">
+                <pre class="src src-js"><span class=
+                "linenr">1: </span>  <span class=
+                "org-keyword">for</span> (<span class=
+                "org-keyword">let</span> <span class=
+                "org-variable-name">i</span> = <span class=
+                "org-highlight-numbers-number">0</span>; i &lt; <span class=
+                "org-highlight-numbers-number">3</span>; i++) {
+<span class="linenr">2: </span>    <span class=
+"org-keyword">const</span> <span class=
+"org-variable-name">log</span> = () =&gt; {
+<span class="linenr">3: </span>        console.log(<span class=
+"org-string">''</span>)
+<span class="linenr">4: </span>        console.log(i)
+<span class="linenr">5: </span>    }
+<span class="linenr">6: </span>    setTimeout(log, <span class=
+"org-highlight-numbers-number">100</span>)
+<span class="linenr">7: </span>  }
+</pre>
+              </div>
+              <pre class="example">
+undefined
+0
+
+1
+
+2
+</pre>
+            </li>
+            <li>
+              <p>立即函数再包一层调用传参方式</p>
+              <div class="org-src-container">
+                <pre class="src src-js"><span class=
+                "linenr">1: </span>  <span class=
+                "org-keyword">for</span> (<span class=
+                "org-keyword">var</span> <span class=
+                "org-variable-name">i</span> = <span class=
+                "org-highlight-numbers-number">0</span>; i &lt; <span class=
+                "org-highlight-numbers-number">3</span>; i++) {
+<span class="linenr">2: </span>    <span class=
+"org-keyword">const</span> <span class=
+"org-variable-name">log</span> = (((i) =&gt; {
+<span class="linenr">3: </span>      <span class=
+"org-keyword">return</span> () =&gt; {
+<span class="linenr">4: </span>        console.log(<span class=
+"org-string">''</span>)
+<span class="linenr">5: </span>        console.log(i)
+<span class="linenr">6: </span>      }
+<span class="linenr">7: </span>    })(i))
+<span class="linenr">8: </span>    setTimeout(log, <span class=
+"org-highlight-numbers-number">100</span>)
+<span class="linenr">9: </span>  }
+</pre>
+              </div>
+              <pre class="example">
+undefined
+0
+
+1
+
+2
+</pre>
+            </li>
+          </ol>
+          <p>关于 var<sup><a id="fnr.3.100" class="footref" href=
+          "#fn.3" role="doc-backlink">3</a></sup> 声明变量的标准说明：</p>
+          <div style=
+          "padding: 1em; background-color: #CCFFCC;border-radius: 15px; font-size: 0.9em; box-shadow: 0.05em 0.1em 5px 0.01em #00000057;">
+            <h3>var 声明语法标准解释</h3>
+            <p>A var statement declares variables that are scoped
+            to the running execution context’s VariableEnvironment.
+            Var variables are created when their containing
+            Environment Record is instantiated and are initialized
+            to undefined when created. Within the scope of any
+            VariableEnvironment a common BindingIdentifier may
+            appear <span style="color:red;">in more than one
+            VariableDeclaration but those declarationscollectively
+            define only one variable</span>. <span style=
+            "color:blue;">A variable defined by
+            aVariableDeclaration with an Initializer is assigned
+            the value of itsInitializer's AssignmentExpression when
+            the VariableDeclaration is executed, notwhen the
+            variable is created</span>.</p>
+          </div><br>
+          <p><span style="color:red;">红色部分</span> 意思是 var
+          可以有多个声明语句，但是不管声明几次实际都只会创建一个变量。</p>
+          <p><span style="color:blue;">蓝色部分</span> 意思是带赋值的 var
+          语句，并不会在创建它的时候就赋值，而是第一个执 行的时候才会真正被赋值(这也就是<span style=
+          "color:blue;">var只会声明提升而不会提升赋值</span>)</p>
+          <div style=
+          "padding: 1em; background-color: #CCFFCC;border-radius: 15px; font-size: 0.9em; box-shadow: 0.05em 0.1em 5px 0.01em #00000057;">
+            <h3>提升有关知识扩展</h3>
+            <p>提升是指当要执行的代码在初始化的时候变量和函数会提升到它作用域的开头部分，这样即使你在它书
+            写位置前面去使用它也是不会报错，就是因为它被提升了。</p>
+            <p>如：</p>
+            <div class="org-src-container">
+              <pre class="src src-js"><span class=
+              "linenr">1: </span><span class=
+              "org-keyword">function</span> <span class=
+              "org-function-name">test</span>() {
+<span class="linenr">2: </span>  <span class=
+"org-comment-delimiter">// </span><span class=
+"org-comment">相当于 varValue, getValue 被提升到这里来了</span>
+<span class="linenr">3: </span>  console.log(<span class=
+"org-string">'value from function = '</span> + getValue() + <span class="org-string">', value from var = '</span> + varValue)
+<span class="linenr">4: </span>  <span class=
+"org-keyword">var</span> <span class=
+"org-variable-name">varValue</span> = <span class=
+"org-highlight-numbers-number">200</span>
+<span class="linenr">5: </span>  <span class=
+"org-keyword">function</span> <span class=
+"org-function-name">getValue</span>() {
+<span class="linenr">6: </span>    <span class=
+"org-keyword">return</span> <span class=
+"org-highlight-numbers-number">100</span>
+<span class="linenr">7: </span>  }
+<span class="linenr">8: </span>}
+<span class="linenr">9: </span>test()
+</pre>
+            </div>
+            <pre class="example">
+value from function = 100, value from var = undefined
+undefined
+</pre>
+            <p>如上面的输出，就是因为 var 和 getValue 这两个被提升到了 test() 函数内的作用域顶
+            部才会被第一行的 console.log 访问到。但是 varValue 值是 undefined 而
+            getValue() 却可以执行，这是因为不同类型提升方式是不一样的(<span style=
+            "color:red;">var
+            变量只会声明提升，不会赋值提升，而声明式函数是声明和赋值都会提升</span>)</p>
+            <p><kbd style="">注意，函数只有声明式函数才会声明和赋值同时提升，表达式函数和普通的 var
+            变量一样，只提升声明</kbd>。</p>
+          </div><br>
+        </div>
+      </div>
+    </div>
+    <div id="outline-container-orgf17f94e" class="outline-2">
+      <h2 id="orgf17f94e"><span class="section-number-2">3.</span>
+      Footnote</h2>
+      <div class="outline-text-2" id="text-3"></div>
+    </div>
+    <div id="footnotes">
+      <h2 class="footnotes">Footnotes:</h2>
+      <div id="text-footnotes">
+        <div class="footdef">
+          <sup><a id="fn.1" class="footnum" href="#fnr.1" role=
+          "doc-backlink">1</a></sup>
+          <div class="footpara" role="doc-footnote">
+            <p class="footpara"><a href=
+            "https://tc39.es/ecma262/#sec-array.prototype.sort">https://tc39.es/ecma262/#sec-array.prototype.sort</a></p>
+          </div>
+        </div>
+        <div class="footdef">
+          <sup><a id="fn.2" class="footnum" href="#fnr.2" role=
+          "doc-backlink">2</a></sup>
+          <div class="footpara" role="doc-footnote">
+            <p class="footpara"><a href=
+            "https://tc39.es/ecma262/#sec-let-and-const-declarations">
+            https://tc39.es/ecma262/#sec-let-and-const-declarations</a></p>
+          </div>
+        </div>
+        <div class="footdef">
+          <sup><a id="fn.3" class="footnum" href="#fnr.3" role=
+          "doc-backlink">3</a></sup>
+          <div class="footpara" role="doc-footnote">
+            <p class="footpara"><a href=
+            "https://tc39.es/ecma262/#sec-variable-statement">https://tc39.es/ecma262/#sec-variable-statement</a></p>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
   <div id="postamble" class="status">
     <p class="author">Author: Zhicheng Lee</p>
-    <p class="date">Created: 2022-05-10 Tue 14:42</p>
+    <p class="date">Created: 2022-05-10 Tue 15:42</p>
   </div>
 </body>
 </html>

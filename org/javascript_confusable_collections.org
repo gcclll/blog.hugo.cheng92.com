@@ -6,6 +6,7 @@
 #+HTML_HEAD: <meta name="category" content="javascript"/>
 #+HTML_HEAD: <meta name="tags" content="confusable"/>
 #+HTML_HEAD: <meta name="createdAt" content="2022-05-10 14:09:15"/>
+#+PROPERTY: header-args:js :exports both
 #+PROPERTY: header-args :noweb no-export
 #+TITLE: JavaScript Confusable Collections
 <badge: GCCLL | Homepage | green | / | gnu-emacs | tinder>
@@ -31,10 +32,10 @@ console.log(arr.sort().join(','))
 
 red:解惑：
 
-[[https://tc39.es/ecma262/#sec-array.prototype.sort][ECMAScript® 2023 Language Specification]] 这里是标准里 sort 方法实现的步骤，下面是
-其伪码：
+[[https://tc39.es/ecma262/#sec-array.prototype.sort][ECMAScript® 2023 Language Specification]] 这里[fn:sort]是标准里 sort 方法实现的步
+骤，下面是其伪码：
 
-#+begin_src js -n -r
+#+begin_src js -n -r :exports code
 function sort(compareFn) {
   if (compareFn && typeof compareFn !== 'function') {
     throw new TypeError('compareFn must be a function')
@@ -104,6 +105,135 @@ console.log(arr.sort((a, b) => a - b).join(','))
 #+RESULTS:
 : 5,9,14,22
 : undefined
+* 闭包
+
+** +setTimeout
+
+#+begin_src js -n -r
+for (var i = 0; i < 3; i++) {
+  const log = () => {
+    console.log('')
+    console.log(i)
+  }
+  setTimeout(log, 100) (ref:closure-01-log)
+}
+
+#+end_src
+
+#+RESULTS:
+: undefined
+: 3
+:
+: 3
+:
+: 3
+
+red:输出结果解释：
+
+for 循环每次执行都会重新执行一遍 ~var i = 0~ 操作，而对于 ~var~ 它只会在第一次时候是
+声明，后面都是重新赋值，所以每次传递给闭包的 ~i~ 其实在内存里都是同一个地址。
+
+而在后面([[(closure-01-log)]])并没有立即执行 log ，只是将其加入到了微任务队列中，等
+到同步代码执行完成，这里也就是 for 循环执行完之后才会去执行微任务队列中的三个
+log() ，而此时的上下文中的 i 值其实已经是 3 了，也就是 for 执行完之后的最终值。
+
+green:解决方案
+
+1. ~var i = 0~ 改成 ~let i = 0~ 让每次遍历都创新创建[fn:let-const]一个新的变量 i (var[fn:var] 则不会)。
+
+  #+begin_src js -n -r
+  for (let i = 0; i < 3; i++) {
+    const log = () => {
+        console.log('')
+        console.log(i)
+    }
+    setTimeout(log, 100)
+  }
+  #+end_src
+
+  #+RESULTS:
+  : undefined
+  : 0
+  :
+  : 1
+  :
+  : 2
+
+2. 立即函数再包一层调用传参方式
+
+  #+begin_src js -n -r
+  for (var i = 0; i < 3; i++) {
+    const log = (((i) => {
+      return () => {
+        console.log('')
+        console.log(i)
+      }
+    })(i))
+    setTimeout(log, 100)
+  }
+  #+end_src
+
+  #+RESULTS:
+  : undefined
+  : 0
+  :
+  : 1
+  :
+  : 2
+
+
+关于 var[fn:var] 声明变量的标准说明：
+
+#+begin_box var 声明语法标准解释
+A var statement declares variables that are scoped to the running execution
+context's VariableEnvironment. Var variables are created when their containing
+Environment Record is instantiated and are initialized to undefined when
+created. Within the scope of any VariableEnvironment a common BindingIdentifier
+may appear <red:in more than one VariableDeclaration but those declarations
+collectively define only one variable>. <blue:A variable defined by a
+VariableDeclaration with an Initializer is assigned the value of its
+Initializer's AssignmentExpression when the VariableDeclaration is executed, not
+when the variable is created>.
+#+end_box
+#+html: <br>
+
+red:红色部分 意思是 var 可以有多个声明语句，但是不管声明几次实际都只会创建一个变量。
+
+blue:蓝色部分 意思是带赋值的 var 语句，并不会在创建它的时候就赋值，而是第一个执
+行的时候才会真正被赋值(这也就是blue:var只会声明提升而不会提升赋值)
+
+#+begin_box 提升有关知识扩展
+
+提升是指当要执行的代码在初始化的时候变量和函数会提升到它作用域的开头部分，这样即使你在它书
+写位置前面去使用它也是不会报错，就是因为它被提升了。
+
+如：
+#+begin_src js -n -r
+function test() {
+  // 相当于 varValue, getValue 被提升到这里来了
+  console.log('value from function = ' + getValue() + ', value from var = ' + varValue)
+  var varValue = 200
+  function getValue() {
+    return 100
+  }
+}
+test()
+#+end_src
+
+如上面的输出，就是因为 var 和 getValue 这两个被提升到了 test() 函数内的作用域顶
+部才会被第一行的 console.log 访问到。但是 varValue 值是 undefined 而 getValue()
+却可以执行，这是因为不同类型提升方式是不一样的(<red:var 变量只会声明提升，不会赋值
+提升，而声明式函数是声明和赋值都会提升>)
+
+<kbd:注意，函数只有声明式函数才会声明和赋值同时提升，表达式函数和普通的 var 变量一样，只提升声明>。
+#+end_box
+#+html: <br>
+
+* Footnote
+
+[fn:let-const] https://tc39.es/ecma262/#sec-let-and-const-declarations
+[fn:sort] https://tc39.es/ecma262/#sec-array.prototype.sort
+[fn:var] https://tc39.es/ecma262/#sec-variable-statement
 
 * COMMENT Local Variables       :ARCHIVE:
 # Local Variables:
