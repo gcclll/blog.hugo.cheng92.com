@@ -46,6 +46,7 @@ CLOSED: [2022-04-28 Thu 16:17]
 ** [[id:ff2d55a2-ae96-4144-866a-1c7bbe5bf9ef][JavaScript Weekly]]
 ** [[id:44f588fc-94b5-4d3d-ae87-7a60366972cb][JavaScript Confusable Collections]]
 ** [[id:1626d6f0-b158-4478-81cb-c9eefdd87a6f][JavaScript Web Component]]
+* Node.js
 * Shell Programming
 ** [[id:1a7e98ba-a7f1-4758-b3a0-6ee1e148a61d][sed command]]
 ** [[id:a10d6fd1-893b-4ed4-967d-d57388ba6525][shell basis]]

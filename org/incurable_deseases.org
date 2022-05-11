@@ -30,6 +30,21 @@ green:FIX: [[https://developer.apple.com/forums/thread/666584][After upgrade to 
 #+end_answer-block
 #+end_question-block
 
+** fatal: No url found for submodule path 'xxx' in .gitmodules
+
+#+begin_question-block
+@@html:<p>❓ <strong>Question</strong></p>@@
+
+➜  lazycat-emacs git:(master) git submodule update --init --recursive
+fatal: No url found for submodule path 'site-lisp/extensions/company-mode' in .gitmodules
+
+#+begin_answer-block
+@@html:<p>❗ <strong>Answer</strong></p>@@
+
+~$ git rm --cached -- site-lisp/extensions/company-mode'~
+#+end_answer-block
+#+end_question-block
+
 * COMMENT Local Variables :ARCHIVE:
 # Local Variables:
 # after-save-hook: gcl/org-html-export-to-html

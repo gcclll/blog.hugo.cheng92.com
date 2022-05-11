@@ -26,11 +26,37 @@ unmount 的实现原理。
 #+end_box
 #+html: <br>
 
+#+html: <br>
+#+begin_details GlobalVars :title-color green
 #+name: vue-pkgs
 #+begin_src js -n -r
 const compilerSFC = require(process.env.NODE_LIB + "/@vue/compiler-sfc")
-console.log(compilerSFC)
+const {
+  isArray,
+  isFunction,
+  isString,
+  isObject,
+  EMPTY_ARR,
+  extend,
+  PatchFlags,
+  ShapeFlags,
+  SlotFlags,
+  isOn,
+  toDisplayString,
+  camelize,
+  capitalize,
+  toHandlerKey,
+  normalizeProps,
+  normalizeClass,
+  normalizeStyle,
+  isNoUnitNumericStyleProp
+} = require(process.env.NODE_LIB + "/@vue/shared")
+
+const {
+  isProxy, Ref, toRaw, isRef
+} = require(process.env.NODE_LIB + "/@vue/reactivity")
 #+end_src
+#+end_details
 
 * 简介
 
@@ -42,9 +68,10 @@ data-fancybox="gallery"
 data-caption="Preview"
 ><img src="../assets/img/vue3/runtime-core/vue-runtime-core.svg"/></a>
 #+end_export
+#+html: <br>
 
-本文中涉及的一些关键点记录：
-
+#+html: <br>
+#+begin_details 本文中涉及的一些关键点记录 :title-color red
 - class 支持数组(~['foo', 'bar']~)，对象(~{foo:true,bar:false}~)，字符串(~'foo bar'~)
 
 - style 支持数组(~['color:red', {foo:'foo'}]~)，对象(~{color:'red',foo:'foo'}~)，字符串(~'color:red'~)
@@ -75,18 +102,18 @@ data-caption="Preview"
   argc = 3, 按照 h(type, props, children) 处理
 
   argc > 3, 按照 h(type, props, ...children) 处理，从第三个开始都是 children
-  #+end_box
 
   ~createVNode(type, props, children)~, 固定三个参数，第二个一定是 props, 第三 个
   一定是数组类型的 children，因为它后面还有更多的其他参数(patchFlag,
   dynamicProps, isBlockNode)，所以前三个必须确定下来。
+  #+end_box
 
-- scheduler, vue-next 中的任务调度器如何实现？ -> [[id:4a858df2-f6f8-4d2f-9cda-78c12cbf42b3][build your own vue scheduler]]
+- [[id:4a858df2-f6f8-4d2f-9cda-78c12cbf42b3][scheduler, vue-next 中的任务调度器如何实现?]]
 
 - [[api-watch][api watch(source, cb, option)]] 中的 source 只能是 reactive/ref/function/array
   类型， 如果是数组时其元素只能是 reactive/ref/function
 
-- [[api-watch-deep][api watch(…, { deep: true }) 是如何做到深度监听的]]？
+- [[api-watch-deep][api watch(…, { deep: true }) 是如何做到深度监听的?]]
 
 - [[api-watch-shallow-ref][api watch(shallowRef, cb (newVal) => {})]] 是如何直接使用 ~newVal.a~ 的？
 
@@ -113,8 +140,366 @@ watch(shallowRef, (newVal) => {
   如果是一个对象则会被合并到 data 上去,所以如果使用了 setup() 可以考虑省略掉
   vue2 的 options api 写法。
 
-组件声明周期函数(onBeforeXxx, onXxx)触发顺序是什么？
-* h
+- 组件声明周期函数(onBeforeXxx, onXxx)触发顺序是什么？
+#+end_details
+
+在开始之前，先来看看 ~createApp()~ 做了什么，首先看一下 vue3 是如何启动项目的。
+
+#+begin_src js
+createApp(<App/>).use(ElementPlus).mount('#app')
+#+end_src
+
+因此首先应该是 ~createApp(<App/>)~ 然后才是 mount，这个两个关键节点的实现也都在
+runtime-core 这个包里面，所以这里就按照这个开发流程一步步往下解析(注： 至于
+~<App/>~ 就不讲了，这个其实就是一个 root render 函数，与 [[id:5eff117f-92ba-490a-ba9c-e5f59e0cbe47][build your own vue
+compiler-core]] 有关)。
+
+下面是一个大致的流程图，供参考。
+
+#+begin_export html
+<a href="../assets/img/vue3/runtime-core/runtime-core-brief-structure.svg"
+data-fancybox="gallery"
+data-caption="Preview"
+><img src="../assets/img/vue3/runtime-core/runtime-core-brief-structure.svg"/></a>
+#+end_export
+
+如上图， app 提供了几个能力：
+
+1. ~app.config~ 配置应用的能力
+
+   - ~app.config.globalProperties~ 注册全局对象
+   - ~app.config.compilerOptions~ 提供额外的编译选项
+
+2. ~app.use(Plugin)~ 注册插件，如： ~use(router)~, ~use(ElementPlus)~, ~use(vuex)~ 等等
+3. ~app.component(name, MyComponent)~ 注册全局组件到 ~context.components[]~ ，这里注册的组件可以直接在任意子组
+   件中直接使用 ~<my-component/>~ 而不需要引入。
+4. ~app.mixin()~ 这个是为了兼容 vue2.x 的 options api。
+5. ~app.directive(name, { beforeMount, mounted, ... })~ 注册全局指令(~context.directives[]~)使用的。
+6. ~app.mount(Container)~
+7. ~app.provide(key, value)~ 注入 root 级别的共享变量，子组件中可以通过
+   ~inject(key)~ 拿到这些变量，实现就是基于原型链。
+
+* mount()
+
+createVNode 构建完整的 vnode 树，再 render 到 DOM 。
+
+#+begin_src typescript -n -r
+export function createAppAPI<HostElement>(
+  render: RootRenderFunction,
+  hydrate?: RootHydrateFunction
+): CreateAppFunction<HostElement> {
+  return function createApp(rootComponent, rootProps = null) {
+
+    // ...
+
+    const app: App = (context.app = {
+      mount(
+        rootContainer: HostElement,
+        isHydrate?: boolean,
+        isSVG?: boolean
+      ): any {
+        if (!isMounted) {
+          const vnode = createVNode(
+            rootComponent as ConcreteComponent,
+            rootProps
+          )
+          // store app context on the root VNode.
+          // this will be set on the root instance on initial mount.
+          vnode.appContext = context
+
+          // ...
+
+          if (isHydrate && hydrate) {
+            hydrate(vnode as VNode<Node, Element>, rootContainer as any)
+          } else {
+            render(vnode, rootContainer, isSVG)
+          }
+
+          // ...
+          return getExposeProxy(vnode.component!) || vnode.component!.proxy
+        }
+      },
+    })
+
+    return app
+  }
+}
+#+end_src
+
+* createVNode()
+
+#+begin_src typescript
+const vnode = createVNode(
+  rootComponent as ConcreteComponent,
+  rootProps
+)
+#+end_src
+
+rootProps 是在 ~createApp(Root, props)~ 的第二个参数传过来的对象做为 root 组件的 props。
+
+#+name: createVNode
+#+begin_src js -n -r
+function isVNode(value) {
+  return value ? value.__v_isVNode === true : false
+}
+
+function createVNode(
+  type,
+  props,
+  children = null,
+  patchFlag = 0,
+  dynamicProps = null,
+  isBlockNode = false
+) {
+  if (isVNode(type)) {
+    const cloned = cloneVNode(type, props)
+    if (children) {
+      normalizeChildren(cloned, children)
+    }
+    return cloned
+  }
+
+  // class 和 style 处理
+  if (props) {
+    // TODO
+  }
+
+  const shapeFlag = isString(type)
+    ? ShapeFlags.ELEMENT
+    : isSuspense(type)
+    ? ShapeFlags.SUSPENSE
+    : isTeleport(type)
+    ? ShapeFlags.TELEPORT
+    : isObject(type)
+    ? ShapeFlags.STATEFUL_COMPONENT
+    : isFunction(type)
+    ? ShapeFlags.FUNCTIONAL_COMPONENT
+    : 0
+
+
+  return createBaseVNode(
+    type,
+    props,
+    children,
+    patchFlag,
+    dynamicProps,
+    shapeFlag,
+    isBlockNode,
+    true
+  )
+}
+#+end_src
+
+** cloneVNode()
+
+克隆过程中处理了 key 和 ref 属性：
+
+1. [[mergeProps][mergeProps(props, extraProps)]] 这个里面处理了 class 和 style
+
+   - [[normalizeClass][normalizeClass()]]
+   - [[normalizeStyle][normalizeStyle()]]
+
+2. [[normalizeKey][normalizeKey(mergedProps)]], 处理 prop key
+3. [[normalizeRef][normalizeRef(extraProps)]], 处理 prop ref
+
+#+name: cloneVNode
+#+begin_src js -n -r
+function cloneVNode(vnode, extraProps, mergeRef = false) {
+  // This is intentionally NOT using spread or extend to avoid the runtime
+  // key enumeration cost.
+  const { props, ref, patchFlag, children } = vnode
+  const mergedProps = extraProps ? mergeProps(props || {}, extraProps) : props
+  const cloned = {
+    __v_isVNode: true,
+    __v_skip: true,
+    type: vnode.type,
+    props: mergedProps,
+    key: mergedProps && normalizeKey(mergedProps),
+    ref:
+      extraProps && extraProps.ref
+        ? // #2078 in the case of <component :is="vnode" ref="extra"/>
+          // if the vnode itself already has a ref, cloneVNode will need to merge
+          // the refs so the single vnode can be set on multiple refs
+          mergeRef && ref
+          ? isArray(ref)
+            ? ref.concat(normalizeRef(extraProps)!)
+            : [ref, normalizeRef(extraProps)]
+          : normalizeRef(extraProps)
+        : ref,
+    scopeId: vnode.scopeId,
+    slotScopeIds: vnode.slotScopeIds,
+    children,
+    target: vnode.target,
+    targetAnchor: vnode.targetAnchor,
+    staticCount: vnode.staticCount,
+    shapeFlag: vnode.shapeFlag,
+    // if the vnode is cloned with extra props, we can no longer assume its
+    // existing patch flag to be reliable and need to add the FULL_PROPS flag.
+    // note: preserve flag for fragments since they use the flag for children
+    // fast paths only.
+    patchFlag:
+      extraProps && vnode.type !== Fragment
+        ? patchFlag === -1 // hoisted node
+          ? PatchFlags.FULL_PROPS
+          : patchFlag | PatchFlags.FULL_PROPS
+        : patchFlag,
+    dynamicProps: vnode.dynamicProps,
+    dynamicChildren: vnode.dynamicChildren,
+    appContext: vnode.appContext,
+    dirs: vnode.dirs,
+    transition: vnode.transition,
+
+    // These should technically only be non-null on mounted VNodes. However,
+    // they *should* be copied for kept-alive vnodes. So we just always copy
+    // them since them being non-null during a mount doesn't affect the logic as
+    // they will simply be overwritten.
+    component: vnode.component,
+    suspense: vnode.suspense,
+    ssContent: vnode.ssContent && cloneVNode(vnode.ssContent),
+    ssFallback: vnode.ssFallback && cloneVNode(vnode.ssFallback),
+    el: vnode.el,
+    anchor: vnode.anchor
+  }
+
+  return cloned
+}
+
+
+#+end_src
+* h()
+
+h 函数实际上是对 createVNode 函数的一次包装，主要是支持多种参数传递方式。
+
+* utils
+
+#+name: utils
+#+begin_src js -n -r
+const InternalObjectKey = `__vInternal`
+
+<<normalizeKey>>
+<<normalizeRef>>
+<<normalizeClass>>
+<<normalizeStyle>>
+#+end_src
+
+** normalizeClass()
+兼容各种类型的 class 使用：
+
+1. ~<div class="name">~ => ~"name"~
+2. ~<div :class="['name1', 'name2']>~ => ~"name1 name2"~
+3. ~<div :class="{ name1: true, name2: true }">~ => ~"name1 name2"~
+
+
+并且三种情况可以同时使用：
+
+~<div class="name1" :class="['name2', 'name3']" :class="{ name4: true }">~ =>
+~"name1 name2 name3 name4"~
+
+#+name: normalizeClass
+#+begin_src js -n -r
+function normalizeClass(value) {
+  let res = ''
+  if (isString(value)) {
+    res = value
+  } else if (isArray(value)) {
+    for (let i = 0; i < value.length; i++) {
+      const normalized = normalizeClass(value[i])
+      if (normalized) {
+        res += normalized + ' '
+      }
+    }
+  } else if (isObject(value)) {
+    for (const name in value) {
+      if (value[name]) {
+        res += name + ' '
+      }
+    }
+  }
+  return res.trim()
+}
+#+end_src
+
+** normalizeStyle()
+
+#+name: normalizeStyle
+#+begin_src js -n -r
+function normalizeStyle(value) {
+  if (isArray(value)) {
+    const res = {}
+    for (let i = 0; i < value.length; i++) {
+      const item = value[i]
+      const normalized = isString(item)
+        ? parseStringStyle(item)
+        : (normalizeStyle(item))
+      if (normalized) {
+        for (const key in normalized) {
+          res[key] = normalized[key]
+        }
+      }
+    }
+    return res
+  } else if (isString(value)) {
+    return value
+  } else if (isObject(value)) {
+    return value
+  }
+}
+
+const listDelimiterRE = /;(?![^(]*\))/g
+const propertyDelimiterRE = /:(.+)/
+
+function parseStringStyle(cssText) {
+  const ret = {}
+  cssText.split(listDelimiterRE).forEach(item => {
+    if (item) {
+      const tmp = item.split(propertyDelimiterRE)
+      tmp.length > 1 && (ret[tmp[0].trim()] = tmp[1].trim())
+    }
+  })
+  return ret
+}
+
+function stringifyStyle(styles) {
+  let ret = ''
+  if (!styles || isString(styles)) {
+    return ret
+  }
+  for (const key in styles) {
+    const value = styles[key]
+    const normalizedKey = key.startsWith(`--`) ? key : hyphenate(key)
+    if (
+      isString(value) ||
+      (typeof value === 'number' && isNoUnitNumericStyleProp(normalizedKey))
+    ) {
+      // only render valid values
+      ret += `${normalizedKey}:${value};`
+    }
+  }
+  return ret
+}
+#+end_src
+
+** normalizeKey()
+
+#+name: normalizeKey
+#+begin_src js -n -r
+const normalizeKey = ({ key }) => key != null ? key : null
+#+end_src
+
+** normalizeRef()
+
+#+begin_src js -n -r
+const normalizeRef = ({ ref, ref_key, ref_for }) => {
+  return (
+    ref != null
+      ? isString(ref) || isRef(ref) || isFunction(ref)
+        ? { i: currentRenderingInstance, r: ref, k: ref_key, f: !!ref_for }
+        : ref
+      : null
+  )
+}
+#+end_src
+* watch
 * COMMENT Local Variables :ARCHIVE:
 # Local Variables:
 # after-save-hook: gcl/org-html-export-to-html
