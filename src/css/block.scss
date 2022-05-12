@@ -68,7 +68,7 @@ pre {
 
 pre.example {
   position: relative;
-  overflow: inherit;
+  // overflow: inherit;
 
   &::before {
     position: absolute;

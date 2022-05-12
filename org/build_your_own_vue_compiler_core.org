@@ -1152,12 +1152,16 @@ function parseAttributeValue(context) {
 :PROPERTIES:
 :COLUMNS:  %CUSTOM_ID[(Custom Id)]
 :CUSTOM_ID: cc-transform
+:ID:       3035f86a-3d31-4fe7-9fe5-11ded6d19b83
 :END:
 
 transform 阶段是将 [[cc-ast-parser][ast-parser]] 阶段生成的 AST 树进行加工处理，主要是针对不同的组
 件类型和各种指令。
 
 ** transform()
+:PROPERTIES:
+:ID:       fe0fa544-bd86-4a81-b472-c1eaa3889fdb
+:END:
 
 #+name: transform
 #+begin_src js -n -r
@@ -2123,6 +2127,9 @@ logg('childs[4]', childs[4])
 #+end_details
 
 *** transformElement()
+:PROPERTIES:
+:ID:       27ceff76-40d6-40b4-9e6d-49a85b3dc27f
+:END:
 
 #+name: transformElement
 #+begin_src js -n -r
@@ -2585,7 +2592,7 @@ function buildProps(
       }
 
       // special case for v-bind and v-on with no argument
-      if (!arg && (isVBind || isVOn)) {
+      if (!arg && (isVBind || isVOn)) { (ref:transformElement-bind-on-no-arg)
         hasDynamicKeys = true
         if (exp) {
           if (properties.length) {
@@ -2735,7 +2742,7 @@ function buildProps(
           }
         } else {
           // dynamic key binding, wrap with `normalizeProps`
-          propsExpression = createCallExpression(
+          propsExpression = createCallExpression( (ref:transformElement-normalizeProps)
             context.helper(NORMALIZE_PROPS),
             [propsExpression]
           )
@@ -4908,6 +4915,9 @@ logg('node.children[0].children[0].content', node.children[0].children[0].conten
 #+end_details
 
 *** transformBind
+:PROPERTIES:
+:ID:       d3cd8afe-f0e9-43b5-96f6-22837f5bec8d
+:END:
 
 #+name: transformBind
 #+begin_src js -n -r
@@ -7216,6 +7226,7 @@ function getPatchFlag(node) {
 :PROPERTIES:
 :COLUMNS:  %CUSTOM_ID[(Custom Id)]
 :CUSTOM_ID: cc-codegen
+:ID:       53aa5092-68c3-4f90-a517-f8c51d7f340f
 :END:
 
 #+name: codegen
@@ -7675,6 +7686,9 @@ function genAssets(assets, type, { helper, push, newline, isTS }) {
 }
 #+end_src
 ** genNode()
+:PROPERTIES:
+:ID:       28c5ab6d-f87d-4fb3-ba8e-2eb16a95f99b
+:END:
 
 #+name: gen-node-fns
 #+begin_src js -n -r
@@ -7789,6 +7803,9 @@ function genNode(node, context) {
 #+end_src
 
 *** genText()
+:PROPERTIES:
+:ID:       a628391c-8cfa-4cc7-9e46-ff0eb57b205c
+:END:
 
 #+name: genText
 #+begin_src js -n -r
@@ -7797,6 +7814,9 @@ function genText(node, context) {
 }
 #+end_src
 *** genExpression()
+:PROPERTIES:
+:ID:       116b60a9-f41c-4e53-8fbe-b2b1b14a7da5
+:END:
 
 #+name: genExpression
 #+begin_src js -n -r
@@ -7806,6 +7826,9 @@ function genExpression(node, context) {
 }
 #+end_src
 *** genInterpolation()
+:PROPERTIES:
+:ID:       5187ed65-1c32-4796-a45a-b9ed0e3d3fff
+:END:
 
 #+name: genInterpolation
 #+begin_src js -n -r
@@ -7818,6 +7841,9 @@ function genInterpolation(node, context) {
 }
 #+end_src
 *** genCompoundExpression()
+:PROPERTIES:
+:ID:       4eeb3657-e62e-4eaf-b1d6-ce34ce9b9748
+:END:
 
 #+name: genCompoundExpression
 #+begin_src js -n -r
@@ -7845,6 +7871,9 @@ function genComment(node, context) {
 }
 #+end_src
 *** genVNodeCall()
+:PROPERTIES:
+:ID:       1c43b047-4d39-46a8-b3d8-40313179ff8d
+:END:
 
 #+name: genVNodeCall
 #+begin_src js -n -r
@@ -7890,6 +7919,9 @@ function genVNodeCall(node, context) {
 }
 #+end_src
 *** genCallExpression()
+:PROPERTIES:
+:ID:       33b0bdac-8475-41cf-8a91-473df4618137
+:END:
 
 #+name: genCallExpression
 #+begin_src js -n -r
@@ -7906,6 +7938,9 @@ function genCallExpression(node, context) {
 }
 #+end_src
 *** genObjectExpression()
+:PROPERTIES:
+:ID:       55e66c31-078b-4677-9718-46eeb86411be
+:END:
 
 #+name: genObjectExpression
 #+begin_src js -n -r
@@ -7940,6 +7975,9 @@ function genObjectExpression(node, context) {
 }
 #+end_src
 *** genArrayExpression()
+:PROPERTIES:
+:ID:       e5754d56-a0fd-4246-9672-9269e97f1da4
+:END:
 
 #+name: genArrayExpression
 #+begin_src js -n -r
@@ -7948,6 +7986,9 @@ function genArrayExpression(node, context) {
 }
 #+end_src
 *** genFunctionExpression()
+:PROPERTIES:
+:ID:       d0e4eeb2-4de3-47a8-91bd-a910368ea03a
+:END:
 
 #+name: genFunctionExpression
 #+begin_src js -n -r
@@ -7991,6 +8032,9 @@ function genFunctionExpression(node, context) {
 }
 #+end_src
 *** genConditionalExpression()
+:PROPERTIES:
+:ID:       25019161-a6ef-4b95-98d5-33ec79b3bcac
+:END:
 
 #+name: genConditionalExpression
 #+begin_src js -n -r
@@ -8028,6 +8072,9 @@ function genConditionalExpression(node, context) {
 }
 #+end_src
 *** genCacheExpression()
+:PROPERTIES:
+:ID:       7c1c3213-31c8-494f-848c-3c6d5c1d79f6
+:END:
 
 #+name: genCacheExpression
 #+begin_src js -n -r
@@ -8053,6 +8100,9 @@ function genCacheExpression(node, context) {
 }
 #+end_src
 *** genNodeList()
+:PROPERTIES:
+:ID:       ffe14c2e-0c00-4e89-87c8-adb2f35f0287
+:END:
 
 #+name: genNodeList
 #+begin_src js -n -r
@@ -8079,6 +8129,9 @@ function genNodeList(nodes, context, multilines = false, comma = true) {
 }
 #+end_src
 *** genTemplateLiteral()
+:PROPERTIES:
+:ID:       6f46373e-c60b-4269-a642-c3659cf3ce8f
+:END:
 
 #+name: genTemplateLiteral
 #+begin_src js -n -r
@@ -8103,6 +8156,9 @@ function genTemplateLiteral(node, context) {
 }
 #+end_src
 *** genIfStatement()
+:PROPERTIES:
+:ID:       6ba0299d-c849-48ef-84ec-1afcdee00398
+:END:
 
 #+name: genIfStatement
 #+begin_src js -n -r
@@ -8131,6 +8187,9 @@ function genIfStatement(node, context) {
 }
 #+end_src
 *** genAssignmentExpression()
+:PROPERTIES:
+:ID:       f2e83e15-9186-4b78-a1bd-3c688b44d708
+:END:
 
 #+name: genAssignmentExpression
 #+begin_src js -n -r
@@ -8141,6 +8200,9 @@ function genAssignmentExpression(node, context) {
 }
 #+end_src
 *** genSequenceExpression()
+:PROPERTIES:
+:ID:       92d260d8-41b5-4e20-85a6-119fa209bbb3
+:END:
 
 #+name: genSequenceExpression
 #+begin_src js -n -r
@@ -8151,6 +8213,9 @@ function genSequenceExpression(node, context) {
 }
 #+end_src
 *** genReturnStatement()
+:PROPERTIES:
+:ID:       ef3013ff-9bdb-4d2f-b465-2e68addd499b
+:END:
 
 #+name: genReturnStatement
 #+begin_src js -n -r
@@ -8994,6 +9059,7 @@ logg("block + directives", _genCode(
 :PROPERTIES:
 :COLUMNS:  %CUSTOM_ID[(Custom Id)]
 :CUSTOM_ID: cc-compile
+:ID:       959aa202-5dde-4931-b3f1-5ebc961256c1
 :END:
 
 结合 ast parser -> transform -> codegen 使用 compile 函数将 SFC 编译成 render 函
