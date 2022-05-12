@@ -1,0 +1,1 @@
+window.$stats=window.$stats||{};window.$stats['vue_directives.html']={"IDLinks":[{"text":"v-bind","tagName":"H2","id":"orgfbd76bd","filename":"vue_directives.html"}],"aLinks":[{"text":"v-bind","url":"#orgfbd76bd","tag":"A","filename":"vue_directives.html"}],"toc":null}

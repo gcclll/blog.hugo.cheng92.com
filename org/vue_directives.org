@@ -1,0 +1,38 @@
+:PROPERTIES:
+:ID:       8ce7491b-8996-44b3-b8cd-d857cfd32b53
+:END:
+#+SETUPFILE:~/.gclrc/org/hugo_setup.org
+#+HUGO_SLUG: vue_directives
+#+HTML_HEAD: <meta name="category" content="vue"/>
+#+HTML_HEAD: <meta name="tags" content="directives"/>
+#+HTML_HEAD: <meta name="createdAt" content="2022-05-12 08:30:10"/>
+#+PROPERTY: header-args :noweb no-export
+#+TITLE: Vue Directives
+<badge: GCCLL | Homepage | green | / | gnu-emacs | tinder>
+
+#+begin_box
+本文中主要包含了 vue3 中各种指令的使用以及其源码的相关实现(分为三个阶段 parser ->
+compiler -> runtime)。
+#+end_box
+#+html:<br>
+
+* v-bind
+
+#+begin_export html
+<div id="app-b-bind"></div>
+<script>
+Vue.createApp({
+  template: `<el-input v-bind:value="foo" @input="val=>(foo = val)" placeholder="<el-input v-bind:value='foo' .../>" />`,
+  setup() {
+    return {
+      foo: Vue.ref(0)
+    }
+  }
+}).use(ElementPlus).mounted('#app-b-bind')
+</script>
+#+end_export
+
+* COMMENT Local Variables       :ARCHIVE:
+# Local Variables:
+# after-save-hook: gcl/org-html-export-to-html
+# End:
