@@ -513,6 +513,20 @@ props: {
   },
   properties: [ [Object], [Object] ]
 }
+
+// render
+const _Vue = Vue
+
+return function render(_ctx, _cache) {
+  with (_ctx) {
+    const { openBlock: _openBlock, createElementBlock: _createElementBlock } = _Vue
+
+    return (_openBlock(), _createElementBlock("div", {
+      foo: foo,
+      bar: bar
+    }, null, 8 /* PROPS */, ["foo", "bar"]))
+  }
+}
 #+end_src
 
 而 ~v-bind="{...}"~ 生成的是，因为没有参数和 v-on 无参数时一样，它们的处理是在
@@ -525,9 +539,49 @@ props: {
   callee: Symbol(normalizeProps),
   arguments: [ [Object] ]
 }
+
+// render
+const _Vue = Vue
+
+return function render(_ctx, _cache) {
+  with (_ctx) {
+    const { normalizeProps: _normalizeProps, guardReactiveProps: _guardReactiveProps, openBlock: _openBlock, createElementBlock: _createElementBlock } = _Vue
+
+    return (_openBlock(), _createElementBlock("div", _normalizeProps(_guardReactiveProps({foo:'foo',bar:'bar'})), null, 16 /* FULL_PROPS */))
+  }
+}
 #+end_src
 
-且关键不同点就在 ast codegenNode 中
+且关键不同点就在 ast codegenNode 中的 props.properties 和 props.arguments 前者是
+正常的使用，后者是无参数时使用直接就在 [[id:27ceff76-40d6-40b4-9e6d-49a85b3dc27f][transformElement()]] 处理掉了。
+
+剩下的就是看下 ~_normalizeProps(_guardReactiveProps({foo:'foo',bar:'bar'}))~ 这个
+最后返回了啥(gray:简单的合并)：
+
+#+begin_src typescript -n -r
+function normalizeProps(props: Record<string, any> | null) {
+  if (!props) return null
+  let { class: klass, style } = props
+  if (klass && !isString(klass)) {
+    props.class = normalizeClass(klass)
+  }
+  if (style) {
+    props.style = normalizeStyle(style)
+  }
+  return props
+}
+
+function guardReactiveProps(props: (Data & VNodeProps) | null) {
+  if (!props) return null
+  return isProxy(props) || InternalObjectKey in props
+    ? extend({}, props)
+    : props
+}
+
+#+end_src
+
+/还会说你不懂 v-bind 吗？嘿嘿 /😎😎~~~/
+
 * COMMENT Local Variables :ARCHIVE:
 # Local Variables:
 # after-save-hook: gcl/org-html-export-to-html

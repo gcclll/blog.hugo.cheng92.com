@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <!-- 2022-05-12 Thu 11:57 -->
+  <!-- 2022-05-12 Thu 12:09 -->
   <meta charset="utf-8">
   <meta name="viewport" content=
   "width=device-width, initial-scale=1">
@@ -292,7 +292,7 @@
       <div id="text-table-of-contents" role="doc-toc">
         <ul>
           <li>
-            <a href="#org8f5654e">1. v-bind</a>
+            <a href="#orge321a84">1. v-bind</a>
           </li>
         </ul>
       </div>
@@ -313,7 +313,7 @@
         packages</font></strong>
       </summary>
       <div class="org-src-container">
-        <pre class="src src-js" id="org8b23bdb"><span class=
+        <pre class="src src-js" id="org34832d8"><span class=
         "linenr">  1: </span><span class=
         "org-keyword">const</span> <span class=
         "org-variable-name">__BROWSER__</span> = <span class=
@@ -468,8 +468,8 @@
 </pre>
       </div>
     </details>
-    <div id="outline-container-org8f5654e" class="outline-2">
-      <h2 id="org8f5654e"><span class="section-number-2">1.</span>
+    <div id="outline-container-orge321a84" class="outline-2">
+      <h2 id="orge321a84"><span class="section-number-2">1.</span>
       v-bind</h2>
       <div class="outline-text-2" id="text-1">
         <div id="app-b-bind"></div>
@@ -515,7 +515,7 @@
 "org-highlight-numbers-number">1</span>])
 </pre>
           </div>
-          <pre class="example" id="org9a1d324">
+          <pre class="example" id="org029d66e">
 --------- prop foo ---------
 {
   type: 7,
@@ -581,7 +581,7 @@ undefined
 "linenr">4: </span>console.log(ast.children[<span class="org-highlight-numbers-number">0</span>].props[<span class="org-highlight-numbers-number">0</span>])
 </pre>
           </div>
-          <pre class="example" id="org2d5e7d1">
+          <pre class="example" id="org04efafa">
 {
   type: 7,
   name: 'bind',
@@ -625,7 +625,7 @@ undefined
 "org-highlight-numbers-number">1</span>])
 </pre>
           </div>
-          <pre class="example" id="org5cd78e5">
+          <pre class="example" id="org37023a5">
 --------- prop foo ---------
 {
   type: 7,
@@ -692,7 +692,7 @@ undefined
 "org-highlight-numbers-number">0</span>])
 </pre>
           </div>
-          <pre class="example" id="orgb23d7da">
+          <pre class="example" id="org9676f44">
 --------- prop foo ---------
 {
   type: 7,
@@ -737,7 +737,7 @@ undefined
 "org-string">'code'</span>, code)
 </pre>
           </div>
-          <pre class="example" id="org0499992">
+          <pre class="example" id="orge2290b9">
 --------- ast ---------
 {
   type: 13,
@@ -835,7 +835,7 @@ undefined
 "org-string">'code'</span>, code)
 </pre>
           </div>
-          <pre class="example" id="orga2eb791">
+          <pre class="example" id="org968e615">
 --------- ast ---------
 {
   type: 13,
@@ -1028,6 +1028,32 @@ undefined
   },
   properties: [ [Object], [Object] ]
 }
+
+<span class="org-comment-delimiter">// </span><span class=
+"org-comment">render</span>
+<span class="org-keyword">const</span> <span class=
+"org-variable-name">_Vue</span> = Vue
+
+<span class="org-keyword">return</span> <span class=
+"org-keyword">function</span> render(<span class=
+"org-variable-name">_ctx</span>, <span class=
+"org-variable-name">_cache</span>) {
+  <span class="org-keyword">with</span> (_ctx) {
+    <span class=
+"org-keyword">const</span> { openBlock: <span class="org-variable-name">_openBlock</span>, createElementBlock: <span class="org-variable-name">_createElementBlock</span> } = _Vue
+
+    <span class=
+"org-keyword">return</span> (_openBlock(), _createElementBlock(<span class="org-string">"div"</span>, {
+      foo: foo,
+      bar: bar
+    }, <span class="org-constant">null</span>, <span class=
+"org-highlight-numbers-number">8</span> <span class=
+"org-comment-delimiter">/* </span><span class=
+"org-comment">PROPS</span><span class=
+"org-comment-delimiter"> */</span>, [<span class=
+"org-string">"foo"</span>, <span class="org-string">"bar"</span>]))
+  }
+}
 </pre>
         </div>
         <p>而 <code>v-bind="{...}"</code> 生成的是，因为没有参数和 v-on
@@ -1042,15 +1068,128 @@ undefined
   callee: Symbol(normalizeProps),
   <span class="org-constant">arguments</span>: [ [Object] ]
 }
+
+<span class="org-comment-delimiter">// </span><span class=
+"org-comment">render</span>
+<span class="org-keyword">const</span> <span class=
+"org-variable-name">_Vue</span> = Vue
+
+<span class="org-keyword">return</span> <span class=
+"org-keyword">function</span> render(<span class=
+"org-variable-name">_ctx</span>, <span class=
+"org-variable-name">_cache</span>) {
+  <span class="org-keyword">with</span> (_ctx) {
+    <span class=
+"org-keyword">const</span> { normalizeProps: <span class=
+"org-variable-name">_normalizeProps</span>, guardReactiveProps: <span class="org-variable-name">_guardReactiveProps</span>, openBlock: <span class="org-variable-name">_openBlock</span>, createElementBlock: <span class="org-variable-name">_createElementBlock</span> } = _Vue
+
+    <span class=
+"org-keyword">return</span> (_openBlock(), _createElementBlock(<span class="org-string">"div"</span>, _normalizeProps(_guardReactiveProps({foo:<span class="org-string">'foo'</span>,bar:<span class="org-string">'bar'</span>})), <span class="org-constant">null</span>, <span class="org-highlight-numbers-number">16</span> <span class="org-comment-delimiter">/* </span><span class="org-comment">FULL_PROPS</span><span class="org-comment-delimiter"> */</span>))
+  }
+}
 </pre>
         </div>
-        <p>且关键不同点就在 ast codegenNode 中</p>
+        <p>且关键不同点就在 ast codegenNode 中的 props.properties 和
+        props.arguments 前者是 正常的使用，后者是无参数时使用直接就在 <a href=
+        "build_your_own_vue_compiler_core.html#ID-27ceff76-40d6-40b4-9e6d-49a85b3dc27f">
+        transformElement()</a> 处理掉了。</p>
+        <p>剩下的就是看下
+        <code>_normalizeProps(_guardReactiveProps({foo:'foo',bar:'bar'}))</code>
+        这个 最后返回了啥(<span style="color:gray;">简单的合并</span>)：</p>
+        <div class="org-src-container">
+          <pre class="src src-typescript"><span class=
+          "linenr"> 1: </span><span class=
+          "org-keyword">function</span> <span class=
+          "org-function-name">normalizeProps</span><span class=
+          "org-rainbow-delimiters-depth-1">(</span><span class=
+          "org-variable-name">props</span>: <span class=
+          "org-type">Record</span>&lt;<span class=
+          "org-typescript-primitive">string</span>, <span class=
+          "org-typescript-primitive">any</span>&gt; | <span class=
+          "org-constant">null</span><span class=
+          "org-rainbow-delimiters-depth-1">)</span> <span class=
+          "org-rainbow-delimiters-depth-1">{</span>
+<span class="linenr"> 2: </span>  <span class=
+"org-keyword">if</span> <span class=
+"org-rainbow-delimiters-depth-2">(</span>!props<span class=
+"org-rainbow-delimiters-depth-2">)</span> <span class=
+"org-keyword">return</span> <span class="org-constant">null</span>
+<span class="linenr"> 3: </span>  <span class=
+"org-keyword">let</span> <span class=
+"org-rainbow-delimiters-depth-2">{</span> <span class=
+"org-keyword">class</span>: klass, style <span class=
+"org-rainbow-delimiters-depth-2">}</span> = props
+<span class="linenr"> 4: </span>  <span class=
+"org-keyword">if</span> <span class=
+"org-rainbow-delimiters-depth-2">(</span>klass &amp;& !<span class=
+"org-function-name">isString</span><span class=
+"org-rainbow-delimiters-depth-3">(</span>klass<span class=
+"org-rainbow-delimiters-depth-3">)</span><span class=
+"org-rainbow-delimiters-depth-2">)</span> <span class=
+"org-rainbow-delimiters-depth-2">{</span>
+<span class="linenr"> 5: </span>    props.<span class=
+"org-keyword">class</span> = <span class=
+"org-function-name">normalizeClass</span><span class=
+"org-rainbow-delimiters-depth-3">(</span>klass<span class=
+"org-rainbow-delimiters-depth-3">)</span>
+<span class="linenr"> 6: </span>  <span class=
+"org-rainbow-delimiters-depth-2">}</span>
+<span class="linenr"> 7: </span>  <span class=
+"org-keyword">if</span> <span class=
+"org-rainbow-delimiters-depth-2">(</span>style<span class=
+"org-rainbow-delimiters-depth-2">)</span> <span class=
+"org-rainbow-delimiters-depth-2">{</span>
+<span class="linenr"> 8: </span>    props.style = <span class=
+"org-function-name">normalizeStyle</span><span class=
+"org-rainbow-delimiters-depth-3">(</span>style<span class=
+"org-rainbow-delimiters-depth-3">)</span>
+<span class="linenr"> 9: </span>  <span class=
+"org-rainbow-delimiters-depth-2">}</span>
+<span class="linenr">10: </span>  <span class=
+"org-keyword">return</span> props
+<span class="linenr">11: </span><span class=
+"org-rainbow-delimiters-depth-1">}</span>
+<span class="linenr">12: </span>
+<span class="linenr">13: </span><span class=
+"org-keyword">function</span> <span class=
+"org-function-name">guardReactiveProps</span><span class=
+"org-rainbow-delimiters-depth-1">(</span><span class=
+"org-variable-name">props</span>: <span class=
+"org-rainbow-delimiters-depth-2">(</span><span class=
+"org-variable-name">Data</span> & <span class=
+"org-variable-name">VNodeProps</span><span class=
+"org-rainbow-delimiters-depth-2">)</span> | <span class=
+"org-constant">null</span><span class=
+"org-rainbow-delimiters-depth-1">)</span> <span class=
+"org-rainbow-delimiters-depth-1">{</span>
+<span class="linenr">14: </span>  <span class=
+"org-keyword">if</span> <span class=
+"org-rainbow-delimiters-depth-2">(</span>!props<span class=
+"org-rainbow-delimiters-depth-2">)</span> <span class=
+"org-keyword">return</span> <span class="org-constant">null</span>
+<span class="linenr">15: </span>  <span class=
+"org-keyword">return</span> <span class=
+"org-function-name">isProxy</span><span class=
+"org-rainbow-delimiters-depth-2">(</span>props<span class=
+"org-rainbow-delimiters-depth-2">)</span> || InternalObjectKey <span class="org-keyword">in</span> props
+<span class="linenr">16: </span>    ? <span class=
+"org-function-name">extend</span><span class=
+"org-rainbow-delimiters-depth-2">(</span><span class=
+"org-rainbow-delimiters-depth-3">{}</span>, props<span class=
+"org-rainbow-delimiters-depth-2">)</span>
+<span class="linenr">17: </span>    : props
+<span class="linenr">18: </span><span class=
+"org-rainbow-delimiters-depth-1">}</span>
+<span class="linenr">19: </span>
+</pre>
+        </div>
+        <p><i>还会说你不懂 v-bind 吗？嘿嘿 /😎😎~~~</i></p>
       </div>
     </div>
   </div>
   <div id="postamble" class="status">
     <p class="author">Author: Zhicheng Lee</p>
-    <p class="date">Created: 2022-05-12 Thu 11:57</p>
+    <p class="date">Created: 2022-05-12 Thu 12:09</p>
   </div>
 </body>
 </html>
