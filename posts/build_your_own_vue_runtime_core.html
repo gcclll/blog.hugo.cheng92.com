@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <!-- 2022-05-11 Wed 18:16 -->
+  <!-- 2022-05-12 Thu 14:39 -->
   <meta charset="utf-8">
   <meta name="viewport" content=
   "width=device-width, initial-scale=1">
@@ -292,41 +292,47 @@
       <div id="text-table-of-contents" role="doc-toc">
         <ul>
           <li>
-            <a href="#org49e93f1">1. 简介</a>
+            <a href="#orgc5cede5">1. 简介</a>
           </li>
           <li>
-            <a href="#orgf4e48a8">2. mount()</a>
+            <a href="#org20aca26">2. mount()</a>
           </li>
           <li>
-            <a href="#orgaf5fb8b">3. createVNode()</a>
+            <a href="#orged10293">3. createVNode()</a>
             <ul>
               <li>
-                <a href="#orgb9a2f62">3.1. cloneVNode()</a>
+                <a href="#org9d61672">3.1. cloneVNode()</a>
+              </li>
+              <li>
+                <a href="#orgc7ded08">3.2. normalizeChildren()</a>
+              </li>
+              <li>
+                <a href="#orgb8983f4">3.3. createBaseVNode()</a>
               </li>
             </ul>
           </li>
           <li>
-            <a href="#orgfa597ec">4. h()</a>
+            <a href="#org9357b3e">4. h()</a>
           </li>
           <li>
-            <a href="#orga424a86">5. utils</a>
+            <a href="#org5c4f1d5">5. utils</a>
             <ul>
               <li>
-                <a href="#orgb35863a">5.1. normalizeClass()</a>
+                <a href="#orga2c7f83">5.1. normalizeClass()</a>
               </li>
               <li>
-                <a href="#org851a1d4">5.2. normalizeStyle()</a>
+                <a href="#org5da451e">5.2. normalizeStyle()</a>
               </li>
               <li>
-                <a href="#orgd56a4bb">5.3. normalizeKey()</a>
+                <a href="#orgeeee497">5.3. normalizeKey()</a>
               </li>
               <li>
-                <a href="#orgca42217">5.4. normalizeRef()</a>
+                <a href="#org47aad84">5.4. normalizeRef()</a>
               </li>
             </ul>
           </li>
           <li>
-            <a href="#org54ee212">6. watch</a>
+            <a href="#orge9e728f">6. watch</a>
           </li>
         </ul>
       </div>
@@ -362,7 +368,7 @@
         "green">GlobalVars</font></strong>
       </summary>
       <div class="org-src-container">
-        <pre class="src src-js" id="org1443eea"><span class=
+        <pre class="src src-js" id="org9b13f76"><span class=
         "linenr"> 1: </span><span class=
         "org-keyword">const</span> <span class=
         "org-variable-name">compilerSFC</span> = require(process.env.NODE_LIB + <span class="org-string">"/@vue/compiler-sfc"</span>)
@@ -396,11 +402,50 @@
 <span class=
 "linenr">25: </span>} = require(process.env.NODE_LIB + <span class=
 "org-string">"/@vue/reactivity"</span>)
+<span class="linenr">26: </span>
+<span class="linenr">27: </span><span class=
+"org-keyword">const</span> <span class=
+"org-variable-name">InternalObjectKey</span> = <span class=
+"org-string">`__vInternal`</span>
+<span class="linenr">28: </span><span class=
+"org-keyword">const</span> <span class=
+"org-variable-name">ShapeFlags</span> = {
+<span class="linenr">29: </span>  ELEMENT: <span class=
+"org-highlight-numbers-number">1</span>,
+<span class=
+"linenr">30: </span>  FUNCTIONAL_COMPONENT: <span class="org-highlight-numbers-number">1</span> &lt;&lt; <span class="org-highlight-numbers-number">1</span>,
+<span class="linenr">31: </span>  STATEFUL_COMPONENT: <span class=
+"org-highlight-numbers-number">1</span> &lt;&lt; <span class=
+"org-highlight-numbers-number">2</span>,
+<span class="linenr">32: </span>  TEXT_CHILDREN: <span class=
+"org-highlight-numbers-number">1</span> &lt;&lt; <span class=
+"org-highlight-numbers-number">3</span>,
+<span class="linenr">33: </span>  ARRAY_CHILDREN: <span class=
+"org-highlight-numbers-number">1</span> &lt;&lt; <span class=
+"org-highlight-numbers-number">4</span>,
+<span class="linenr">34: </span>  SLOTS_CHILDREN: <span class=
+"org-highlight-numbers-number">1</span> &lt;&lt; <span class=
+"org-highlight-numbers-number">5</span>,
+<span class="linenr">35: </span>  TELEPORT: <span class=
+"org-highlight-numbers-number">1</span> &lt;&lt; <span class=
+"org-highlight-numbers-number">6</span>,
+<span class="linenr">36: </span>  SUSPENSE: <span class=
+"org-highlight-numbers-number">1</span> &lt;&lt; <span class=
+"org-highlight-numbers-number">7</span>,
+<span class=
+"linenr">37: </span>  COMPONENT_SHOULD_KEEP_ALIVE: <span class=
+"org-highlight-numbers-number">1</span> &lt;&lt; <span class=
+"org-highlight-numbers-number">8</span>,
+<span class=
+"linenr">38: </span>  COMPONENT_KEPT_ALIVE: <span class="org-highlight-numbers-number">1</span> &lt;&lt; <span class="org-highlight-numbers-number">9</span>,
+<span class=
+"linenr">39: </span>  COMPONENT: ShapeFlags.STATEFUL_COMPONENT | ShapeFlags.FUNCTIONAL_COMPONENT
+<span class="linenr">40: </span>}
 </pre>
       </div>
     </details>
-    <div id="outline-container-org49e93f1" class="outline-2">
-      <h2 id="org49e93f1"><span class="section-number-2">1.</span>
+    <div id="outline-container-orgc5cede5" class="outline-2">
+      <h2 id="orgc5cede5"><span class="section-number-2">1.</span>
       简介</h2>
       <div class="outline-text-2" id="text-1">
         <p><span style=
@@ -429,6 +474,8 @@
                 /&gt;'}</code></li>
               </ol>
             </li>
+            <li></li>
+            <li></li>
             <li>
               <p>和 函数多种使用方式组合？</p>
               <p><code>h(type, propsOrChildren,
@@ -436,6 +483,7 @@
               忆只要记住一点：</p>
               <div style=
               "padding: 1em; background-color: #CCFFCC;border-radius: 15px; font-size: 0.9em; box-shadow: 0.05em 0.1em 5px 0.01em #00000057;">
+                <h3></h3>
                 <p>props 总是对象，children 可以是对象(必须是 VNode 类型
                 _<sub>v</sub><sub>isVNode</sub>)也可以是 数 组，所以：</p>
                 <p>argc = 2, 如果是数组就一定是 children</p>
@@ -455,8 +503,10 @@
         </details>
       </div>
       <ul class="org-ul">
+        <li></li>
         <li>中的 source 只能是 reactive/ref/function/array 类型，
         如果是数组时其元素只能是 reactive/ref/function</li>
+        <li></li>
         <li>
           <p>是如何直接使用 <code>newVal.a</code> 的？</p>
           <div class="org-src-container">
@@ -535,8 +585,8 @@ watch(shallowRef, (newVal) =&gt; {
       </ol>
     </div>
   </div>
-  <div id="outline-container-orgf4e48a8" class="outline-2">
-    <h2 id="orgf4e48a8"><span class="section-number-2">2.</span>
+  <div id="outline-container-org20aca26" class="outline-2">
+    <h2 id="org20aca26"><span class="section-number-2">2.</span>
     mount()</h2>
     <div class="outline-text-2" id="text-2">
       <p>createVNode 构建完整的 vnode 树，再 render 到 DOM 。</p>
@@ -667,26 +717,14 @@ watch(shallowRef, (newVal) =&gt; {
       </div>
     </div>
   </div>
-  <div id="outline-container-orgaf5fb8b" class="outline-2">
-    <h2 id="orgaf5fb8b"><span class="section-number-2">3.</span>
+  <div id="outline-container-orged10293" class="outline-2">
+    <h2 id="orged10293"><span class="section-number-2">3.</span>
     createVNode()</h2>
     <div class="outline-text-2" id="text-3">
-      <div class="org-src-container">
-        <pre class="src src-typescript"><span class=
-        "org-keyword">const</span> <span class=
-        "org-variable-name">vnode</span> = <span class=
-        "org-function-name">createVNode</span><span class=
-        "org-rainbow-delimiters-depth-1">(</span>
-  rootComponent <span class=
-"org-keyword">as</span> ConcreteComponent,
-  rootProps
-<span class="org-rainbow-delimiters-depth-1">)</span>
-</pre>
-      </div>
       <p>rootProps 是在 <code>createApp(Root, props)</code>
       的第二个参数传过来的对象做为 root 组件的 props。</p>
       <div class="org-src-container">
-        <pre class="src src-js" id="org2793255"><span class=
+        <pre class="src src-js" id="orgcdc5b7c"><span class=
         "linenr"> 1: </span><span class=
         "org-keyword">function</span> <span class=
         "org-function-name">isVNode</span>(<span class=
@@ -769,8 +807,8 @@ watch(shallowRef, (newVal) =&gt; {
 </pre>
       </div>
     </div>
-    <div id="outline-container-orgb9a2f62" class="outline-3">
-      <h3 id="orgb9a2f62"><span class=
+    <div id="outline-container-org9d61672" class="outline-3">
+      <h3 id="org9d61672"><span class=
       "section-number-3">3.1.</span> cloneVNode()</h3>
       <div class="outline-text-3" id="text-3-1">
         <p>克隆过程中处理了 key 和 ref 属性：</p>
@@ -778,21 +816,21 @@ watch(shallowRef, (newVal) =&gt; {
           <li>这个里面处理了 class 和 style
             <ul class="org-ul">
               <li>
-                <a href="#orgdc35822">normalizeClass()</a>
+                <a href="#orgf0e9bb9">normalizeClass()</a>
               </li>
               <li>
-                <a href="#orgb725493">normalizeStyle()</a>
+                <a href="#org234a92d">normalizeStyle()</a>
               </li>
             </ul>
           </li>
           <li>
-            <a href="#orgad76daf">normalizeKey(mergedProps)</a>, 处理
+            <a href="#org65186a4">normalizeKey(mergedProps)</a>, 处理
             prop key
           </li>
           <li>, 处理 prop ref</li>
         </ol>
         <div class="org-src-container">
-          <pre class="src src-js" id="org0e8cc99"><span class=
+          <pre class="src src-js" id="orga1649b0"><span class=
           "linenr"> 1: </span><span class=
           "org-keyword">function</span> <span class=
           "org-function-name">cloneVNode</span>(<span class=
@@ -915,20 +953,220 @@ watch(shallowRef, (newVal) =&gt; {
         </div>
       </div>
     </div>
+    <div id="outline-container-orgc7ded08" class="outline-3">
+      <h3 id="orgc7ded08"><span class=
+      "section-number-3">3.2.</span> normalizeChildren()</h3>
+      <div class="outline-text-3" id="text-3-2">
+        <div class="org-src-container">
+          <pre class="src src-js"><span class=
+          "linenr"> 1: </span><span class=
+          "org-keyword">function</span> <span class=
+          "org-function-name">normalizeChildren</span>(<span class=
+          "org-variable-name">vnode</span>, <span class=
+          "org-variable-name">children</span>) {
+<span class="linenr"> 2: </span>  <span class=
+"org-keyword">let</span> <span class=
+"org-variable-name">type</span> = <span class=
+"org-highlight-numbers-number">0</span>
+<span class="linenr"> 3: </span>  <span class=
+"org-keyword">const</span> { shapeFlag } = vnode
+<span class="linenr"> 4: </span>  <span class=
+"org-keyword">if</span> (children == <span class=
+"org-constant">null</span>) {
+<span class="linenr"> 5: </span>    children = <span class=
+"org-constant">null</span>
+<span class="linenr"> 6: </span>  } <span class=
+"org-keyword">else</span> <span class=
+"org-keyword">if</span> (isArray(children)) {
+<span class=
+"linenr"> 7: </span>    type = ShapeFlags.ARRAY_CHILDREN
+<span class="linenr"> 8: </span>  } <span class=
+"org-keyword">else</span> <span class=
+"org-keyword">if</span> (<span class=
+"org-keyword">typeof</span> children === <span class=
+"org-string">'object'</span>) {
+<span class="linenr"> 9: </span>    <span class=
+"org-keyword">if</span> (shapeFlag & (ShapeFlags.ELEMENT | ShapeFlags.TELEPORT)) {
+<span class="linenr">10: </span>      <span class=
+"org-comment-delimiter">// </span><span class=
+"org-comment">Normalize slot to plain children for plain element and Teleport</span>
+<span class="linenr">11: </span>      <span class=
+"org-keyword">const</span> <span class=
+"org-variable-name">slot</span> = children.<span class=
+"org-keyword">default</span>
+<span class="linenr">12: </span>      <span class=
+"org-keyword">if</span> (slot) {
+<span class="linenr">13: </span>        <span class=
+"org-comment-delimiter">// </span><span class=
+"org-comment">_c marker is added by withCtx() indicating this is a compiled slot</span>
+<span class=
+"linenr">14: </span>        slot._c &amp;& (slot._d = <span class=
+"org-constant">false</span>)
+<span class=
+"linenr">15: </span>        normalizeChildren(vnode, slot())
+<span class=
+"linenr">16: </span>        slot._c &amp;& (slot._d = <span class=
+"org-constant">true</span>)
+<span class="linenr">17: </span>      }
+<span class="linenr">18: </span>      <span class=
+"org-keyword">return</span>
+<span class="linenr">19: </span>    } <span class=
+"org-keyword">else</span> {
+<span class=
+"linenr">20: </span>      type = ShapeFlags.SLOTS_CHILDREN
+<span class="linenr">21: </span>      <span class=
+"org-keyword">const</span> <span class=
+"org-variable-name">slotFlag</span> = children._
+<span class="linenr">22: </span>      <span class=
+"org-keyword">if</span> (!slotFlag &amp;& !(InternalObjectKey <span class="org-keyword">in</span> children)) {
+<span class="linenr">23: </span>        <span class=
+"org-comment-delimiter">// </span><span class=
+"org-comment">if slots are not normalized, attach context instance</span>
+<span class="linenr">24: </span>        <span class=
+"org-comment-delimiter">// </span><span class=
+"org-comment">(compiled / normalized slots already have context)</span>
+<span class=
+"linenr">25: </span>        children._ctx = currentRenderingInstance
+<span class="linenr">26: </span>      } <span class=
+"org-keyword">else</span> <span class=
+"org-keyword">if</span> (slotFlag === SlotFlags.FORWARDED &amp;& currentRenderingInstance) {
+<span class="linenr">27: </span>        <span class=
+"org-comment-delimiter">// </span><span class=
+"org-comment">a child component receives forwarded slots from the parent.</span>
+<span class="linenr">28: </span>        <span class=
+"org-comment-delimiter">// </span><span class=
+"org-comment">its slot type is determined by its parent's slot type.</span>
+<span class="linenr">29: </span>        <span class=
+"org-keyword">if</span> (
+<span class=
+"linenr">30: </span>          (currentRenderingInstance.slots as RawSlots)._ === SlotFlags.STABLE
+<span class="linenr">31: </span>        ) {
+<span class=
+"linenr">32: </span>          ;(children as RawSlots)._ = SlotFlags.STABLE
+<span class="linenr">33: </span>        } <span class=
+"org-keyword">else</span> {
+<span class=
+"linenr">34: </span>          ;(children as RawSlots)._ = SlotFlags.DYNAMIC
+<span class=
+"linenr">35: </span>          vnode.patchFlag |= PatchFlags.DYNAMIC_SLOTS
+<span class="linenr">36: </span>        }
+<span class="linenr">37: </span>      }
+<span class="linenr">38: </span>    }
+<span class="linenr">39: </span>  } <span class=
+"org-keyword">else</span> <span class=
+"org-keyword">if</span> (isFunction(children)) {
+<span class="linenr">40: </span>    children = { <span class=
+"org-keyword">default</span>: children, _ctx: currentRenderingInstance }
+<span class=
+"linenr">41: </span>    type = ShapeFlags.SLOTS_CHILDREN
+<span class="linenr">42: </span>  } <span class=
+"org-keyword">else</span> {
+<span class="linenr">43: </span>    children = String(children)
+<span class="linenr">44: </span>    <span class=
+"org-comment-delimiter">// </span><span class=
+"org-comment">force teleport children to array so it can be moved around</span>
+<span class="linenr">45: </span>    <span class=
+"org-keyword">if</span> (shapeFlag & ShapeFlags.TELEPORT) {
+<span class=
+"linenr">46: </span>      type = ShapeFlags.ARRAY_CHILDREN
+<span class=
+"linenr">47: </span>      children = [createTextVNode(children as string)]
+<span class="linenr">48: </span>    } <span class=
+"org-keyword">else</span> {
+<span class=
+"linenr">49: </span>      type = ShapeFlags.TEXT_CHILDREN
+<span class="linenr">50: </span>    }
+<span class="linenr">51: </span>  }
+<span class="linenr">52: </span>  vnode.children = children
+<span class="linenr">53: </span>  vnode.shapeFlag |= type
+<span class="linenr">54: </span>}
+</pre>
+        </div>
+      </div>
+    </div>
+    <div id="outline-container-orgb8983f4" class="outline-3">
+      <h3 id="orgb8983f4"><span class=
+      "section-number-3">3.3.</span> createBaseVNode()</h3>
+    </div>
   </div>
-  <div id="outline-container-orgfa597ec" class="outline-2">
-    <h2 id="orgfa597ec"><span class="section-number-2">4.</span>
+  <div id="outline-container-org9357b3e" class="outline-2">
+    <h2 id="org9357b3e"><span class="section-number-2">4.</span>
     h()</h2>
     <div class="outline-text-2" id="text-4">
       <p>h 函数实际上是对 createVNode 函数的一次包装，主要是支持多种参数传递方式。</p>
+      <div class="org-src-container">
+        <pre class="src src-js" id="org1c404f8"><span class=
+        "linenr"> 1: </span>&lt;&lt;vue-pkgs&gt;&gt;
+<span class="linenr"> 2: </span>&lt;&lt;utils&gt;&gt;
+<span class="linenr"> 3: </span>&lt;&lt;createVNode&gt;&gt;
+<span class="linenr"> 4: </span>
+<span class="linenr"> 5: </span><span class=
+"org-keyword">function</span> <span class=
+"org-function-name">h</span>(<span class=
+"org-variable-name">type</span>, <span class=
+"org-variable-name">propsOrChildren</span>, <span class=
+"org-variable-name">children</span>) {
+<span class="linenr"> 6: </span>  <span class=
+"org-keyword">const</span> <span class=
+"org-variable-name">l</span> = <span class=
+"org-constant">arguments</span>.length
+<span class="linenr"> 7: </span>  <span class=
+"org-keyword">if</span> (l === <span class=
+"org-highlight-numbers-number">2</span>) {
+<span class="linenr"> 8: </span>    <span class=
+"org-keyword">if</span> (isObject(propsOrChildren) &amp;& !isArray(propsOrChildren)) {
+<span class="linenr"> 9: </span>      <span class=
+"org-comment-delimiter">// </span><span class=
+"org-comment">single vnode without props</span>
+<span class="linenr">10: </span>      <span class=
+"org-keyword">if</span> (isVNode(propsOrChildren)) {
+<span class="linenr">11: </span>        <span class=
+"org-keyword">return</span> createVNode(type, <span class=
+"org-constant">null</span>, [propsOrChildren])
+<span class="linenr">12: </span>      }
+<span class="linenr">13: </span>      <span class=
+"org-comment-delimiter">// </span><span class=
+"org-comment">props without children</span>
+<span class="linenr">14: </span>      <span class=
+"org-keyword">return</span> createVNode(type, propsOrChildren)
+<span class="linenr">15: </span>    } <span class=
+"org-keyword">else</span> {
+<span class="linenr">16: </span>      <span class=
+"org-comment-delimiter">// </span><span class=
+"org-comment">omit props</span>
+<span class="linenr">17: </span>      <span class=
+"org-keyword">return</span> createVNode(type, <span class=
+"org-constant">null</span>, propsOrChildren)
+<span class="linenr">18: </span>    }
+<span class="linenr">19: </span>  } <span class=
+"org-keyword">else</span> {
+<span class="linenr">20: </span>    <span class=
+"org-keyword">if</span> (l &gt; <span class=
+"org-highlight-numbers-number">3</span>) {
+<span class="linenr">21: </span>      children = Array.<span class=
+"org-constant">prototype</span>.slice.call(<span class=
+"org-constant">arguments</span>, <span class=
+"org-highlight-numbers-number">2</span>)
+<span class="linenr">22: </span>    } <span class=
+"org-keyword">else</span> <span class=
+"org-keyword">if</span> (l === <span class=
+"org-highlight-numbers-number">3</span> &amp;& isVNode(children)) {
+<span class="linenr">23: </span>      children = [children]
+<span class="linenr">24: </span>    }
+<span class="linenr">25: </span>    <span class=
+"org-keyword">return</span> createVNode(type, propsOrChildren, children)
+<span class="linenr">26: </span>  }
+<span class="linenr">27: </span>}
+</pre>
+      </div>
     </div>
   </div>
-  <div id="outline-container-orga424a86" class="outline-2">
-    <h2 id="orga424a86"><span class="section-number-2">5.</span>
+  <div id="outline-container-org5c4f1d5" class="outline-2">
+    <h2 id="org5c4f1d5"><span class="section-number-2">5.</span>
     utils</h2>
     <div class="outline-text-2" id="text-5">
       <div class="org-src-container">
-        <pre class="src src-js" id="orgb4c6dd5"><span class=
+        <pre class="src src-js" id="org54b8dc6"><span class=
         "linenr">1: </span><span class=
         "org-keyword">const</span> <span class=
         "org-variable-name">InternalObjectKey</span> = <span class=
@@ -941,8 +1179,8 @@ watch(shallowRef, (newVal) =&gt; {
 </pre>
       </div>
     </div>
-    <div id="outline-container-orgb35863a" class="outline-3">
-      <h3 id="orgb35863a"><span class=
+    <div id="outline-container-orga2c7f83" class="outline-3">
+      <h3 id="orga2c7f83"><span class=
       "section-number-3">5.1.</span> normalizeClass()</h3>
       <div class="outline-text-3" id="text-5-1">
         <p>兼容各种类型的 class 使用：</p>
@@ -959,7 +1197,7 @@ watch(shallowRef, (newVal) =&gt; {
         :class="{ name4: true }"&gt;</code> =&gt; <code>"name1
         name2 name3 name4"</code></p>
         <div class="org-src-container">
-          <pre class="src src-js" id="orgdc35822"><span class=
+          <pre class="src src-js" id="orgf0e9bb9"><span class=
           "linenr"> 1: </span><span class=
           "org-keyword">function</span> <span class=
           "org-function-name">normalizeClass</span>(<span class=
@@ -1010,12 +1248,12 @@ watch(shallowRef, (newVal) =&gt; {
         </div>
       </div>
     </div>
-    <div id="outline-container-org851a1d4" class="outline-3">
-      <h3 id="org851a1d4"><span class=
+    <div id="outline-container-org5da451e" class="outline-3">
+      <h3 id="org5da451e"><span class=
       "section-number-3">5.2.</span> normalizeStyle()</h3>
       <div class="outline-text-3" id="text-5-2">
         <div class="org-src-container">
-          <pre class="src src-js" id="orgb725493"><span class=
+          <pre class="src src-js" id="org234a92d"><span class=
           "linenr"> 1: </span><span class=
           "org-keyword">function</span> <span class=
           "org-function-name">normalizeStyle</span>(<span class=
@@ -1140,12 +1378,12 @@ watch(shallowRef, (newVal) =&gt; {
         </div>
       </div>
     </div>
-    <div id="outline-container-orgd56a4bb" class="outline-3">
-      <h3 id="orgd56a4bb"><span class=
+    <div id="outline-container-orgeeee497" class="outline-3">
+      <h3 id="orgeeee497"><span class=
       "section-number-3">5.3.</span> normalizeKey()</h3>
       <div class="outline-text-3" id="text-5-3">
         <div class="org-src-container">
-          <pre class="src src-js" id="orgad76daf"><span class=
+          <pre class="src src-js" id="org65186a4"><span class=
           "linenr">1: </span><span class=
           "org-keyword">const</span> <span class=
           "org-variable-name">normalizeKey</span> = ({ key }) =&gt; key != <span class="org-constant">null</span> ? key : <span class="org-constant">null</span>
@@ -1153,8 +1391,8 @@ watch(shallowRef, (newVal) =&gt; {
         </div>
       </div>
     </div>
-    <div id="outline-container-orgca42217" class="outline-3">
-      <h3 id="orgca42217"><span class=
+    <div id="outline-container-org47aad84" class="outline-3">
+      <h3 id="org47aad84"><span class=
       "section-number-3">5.4.</span> normalizeRef()</h3>
       <div class="outline-text-3" id="text-5-4">
         <div class="org-src-container">
@@ -1180,13 +1418,13 @@ watch(shallowRef, (newVal) =&gt; {
       </div>
     </div>
   </div>
-  <div id="outline-container-org54ee212" class="outline-2">
-    <h2 id="org54ee212"><span class="section-number-2">6.</span>
+  <div id="outline-container-orge9e728f" class="outline-2">
+    <h2 id="orge9e728f"><span class="section-number-2">6.</span>
     watch</h2>
   </div>
   <div id="postamble" class="status">
     <p class="author">Author: Zhicheng Lee</p>
-    <p class="date">Created: 2022-05-11 Wed 18:16</p>
+    <p class="date">Created: 2022-05-12 Thu 14:39</p>
   </div>
 </body>
 </html>

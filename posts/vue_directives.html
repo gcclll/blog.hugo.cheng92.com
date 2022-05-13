@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <!-- 2022-05-12 Thu 12:09 -->
+  <!-- 2022-05-12 Thu 14:18 -->
   <meta charset="utf-8">
   <meta name="viewport" content=
   "width=device-width, initial-scale=1">
@@ -292,7 +292,7 @@
       <div id="text-table-of-contents" role="doc-toc">
         <ul>
           <li>
-            <a href="#orge321a84">1. v-bind</a>
+            <a href="#orga7d3bec">1. v-bind</a>
           </li>
         </ul>
       </div>
@@ -301,9 +301,26 @@
     "https://img.shields.io/badge/GCCLL-Homepage-green?logo=gnu-emacs"></a></p>
     <div style=
     "padding: 1em; background-color: #CCFFCC;border-radius: 15px; font-size: 0.9em; box-shadow: 0.05em 0.1em 5px 0.01em #00000057;">
+      <h3></h3>
       <p>本文中主要包含了 vue3 中各种指令的使用以及其源码的相关实现(每个示例都会涵盖从 parser -&gt;
       transform -&gt; codegen -&gt; compile -&gt; runtime
       整个过程)。</p>
+      <ul class="org-ul">
+        <li class="off"><code>[&nbsp;]</code> v-text</li>
+        <li class="off"><code>[&nbsp;]</code> v-html</li>
+        <li class="off"><code>[&nbsp;]</code> v-show</li>
+        <li class="off"><code>[&nbsp;]</code> v-if, v-else,
+        v-else-if</li>
+        <li class="off"><code>[&nbsp;]</code> v-for</li>
+        <li class="off"><code>[&nbsp;]</code> v-on</li>
+        <li class="on"><code>[X]</code> v-bind</li>
+        <li class="off"><code>[&nbsp;]</code> v-model</li>
+        <li class="off"><code>[&nbsp;]</code> v-slot</li>
+        <li class="off"><code>[&nbsp;]</code> v-pre</li>
+        <li class="off"><code>[&nbsp;]</code> v-once</li>
+        <li class="off"><code>[&nbsp;]</code> v-memo</li>
+        <li class="off"><code>[&nbsp;]</code> v-cloak</li>
+      </ul>
     </div><br>
     <br>
     <details class="code-details" style=
@@ -313,7 +330,7 @@
         packages</font></strong>
       </summary>
       <div class="org-src-container">
-        <pre class="src src-js" id="org34832d8"><span class=
+        <pre class="src src-js" id="org27e8f15"><span class=
         "linenr">  1: </span><span class=
         "org-keyword">const</span> <span class=
         "org-variable-name">__BROWSER__</span> = <span class=
@@ -468,8 +485,8 @@
 </pre>
       </div>
     </details>
-    <div id="outline-container-orge321a84" class="outline-2">
-      <h2 id="orge321a84"><span class="section-number-2">1.</span>
+    <div id="outline-container-orga7d3bec" class="outline-2">
+      <h2 id="orga7d3bec"><span class="section-number-2">1.</span>
       v-bind</h2>
       <div class="outline-text-2" id="text-1">
         <div id="app-b-bind"></div>
@@ -515,7 +532,7 @@
 "org-highlight-numbers-number">1</span>])
 </pre>
           </div>
-          <pre class="example" id="org029d66e">
+          <pre class="example" id="orgdc6794b">
 --------- prop foo ---------
 {
   type: 7,
@@ -581,7 +598,7 @@ undefined
 "linenr">4: </span>console.log(ast.children[<span class="org-highlight-numbers-number">0</span>].props[<span class="org-highlight-numbers-number">0</span>])
 </pre>
           </div>
-          <pre class="example" id="org04efafa">
+          <pre class="example" id="org6647ea7">
 {
   type: 7,
   name: 'bind',
@@ -625,7 +642,7 @@ undefined
 "org-highlight-numbers-number">1</span>])
 </pre>
           </div>
-          <pre class="example" id="org37023a5">
+          <pre class="example" id="org31765d5">
 --------- prop foo ---------
 {
   type: 7,
@@ -692,7 +709,7 @@ undefined
 "org-highlight-numbers-number">0</span>])
 </pre>
           </div>
-          <pre class="example" id="org9676f44">
+          <pre class="example" id="orga7a8831">
 --------- prop foo ---------
 {
   type: 7,
@@ -737,7 +754,7 @@ undefined
 "org-string">'code'</span>, code)
 </pre>
           </div>
-          <pre class="example" id="orge2290b9">
+          <pre class="example" id="org77e33c5">
 --------- ast ---------
 {
   type: 13,
@@ -835,7 +852,7 @@ undefined
 "org-string">'code'</span>, code)
 </pre>
           </div>
-          <pre class="example" id="org968e615">
+          <pre class="example" id="orga8600de">
 --------- ast ---------
 {
   type: 13,
@@ -1189,7 +1206,7 @@ undefined
   </div>
   <div id="postamble" class="status">
     <p class="author">Author: Zhicheng Lee</p>
-    <p class="date">Created: 2022-05-12 Thu 12:09</p>
+    <p class="date">Created: 2022-05-12 Thu 14:18</p>
   </div>
 </body>
 </html>

@@ -13,6 +13,20 @@
 #+begin_box
 本文中主要包含了 vue3 中各种指令的使用以及其源码的相关实现(每个示例都会涵盖从 parser ->
 transform -> codegen -> compile -> runtime 整个过程)。
+
+- [ ] v-text
+- [ ] v-html
+- [ ] v-show
+- [ ] v-if, v-else, v-else-if
+- [ ] v-for
+- [ ] v-on
+- [X] v-bind
+- [ ] v-model
+- [ ] v-slot
+- [ ] v-pre
+- [ ] v-once
+- [ ] v-memo
+- [ ] v-cloak
 #+end_box
 #+html:<br>
 
