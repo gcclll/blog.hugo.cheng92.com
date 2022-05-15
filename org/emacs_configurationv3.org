@@ -5,7 +5,9 @@
 #+HUGO_SLUG: emacs_configurationv3
 #+PROPERTY: header-args:js :exports both
 #+PROPERTY: header-args :noweb no-export
-xmeta
+#+HTML_HEAD: <meta name="category" content="emacs"/>
+#+HTML_HEAD: <meta name="tags" content="emacs"/>
+#+HTML_HEAD: <meta name="createdAt" content="2022-05-15 21:23:40"/>
 #+TITLE: Emacs ConfigurationV3
 <badge: GCCLL | Homepage | green | / | gnu-emacs | tinder>
 
