@@ -1,0 +1,337 @@
+:PROPERTIES:
+:ID:       B93391AC-9E77-46FF-BAFC-C344642557C9
+:END:
+#+SETUPFILE:~/.gclrc/org/hugo_setup.org
+#+HUGO_SLUG: emacs_configurationv3
+#+PROPERTY: header-args:js :exports both
+#+PROPERTY: header-args :noweb no-export
+xmeta
+#+TITLE: Emacs ConfigurationV3
+<badge: GCCLL | Homepage | green | / | gnu-emacs | tinder>
+
+* key groups
+** 常用按键
+
+| key             | function                       |
+|-----------------+--------------------------------|
+| <f5>            | 退出emacs                      |
+| %               | 跳到匹配的括号                 |
+| M-w             | 复制                           |
+|-----------------+--------------------------------|
+| C-[78]          | lsp-bridge-jump[back]          |
+| C-SPC           | 标记                           |
+| C-,             | 跳到上次修改地方               |
+| C-'"            | 关闭当前buffer                 |
+| C-=             | expand-region                  |
+| C-:             | 注释行                         |
+| C-[/_?]         | undo, redo                     |
+| C-[<>]          | 记忆和回跳                     |
+| C-[ae]          | 行尾首                         |
+| C-[sr]          | isearch                        |
+| C-y             | 粘贴                           |
+|-----------------+--------------------------------|
+| M-2             | format-buffer                  |
+| M-SPC           | 合并空格                       |
+| M-"'[{(         | 包围字符串                     |
+| M-)             | 取消包围                       |
+| M-%             | 搜索替换                       |
+| M-[78]          | select prev/next tab           |
+| M-[<>JK]        | 滚动其它窗口                   |
+| M-[-=]          | 数字+-1                        |
+| M-[ae]          | 句子首尾                       |
+| M-r             | 正则搜索                       |
+| M-u             | vdiff-buffers                  |
+| M-z             | 首字母大写                     |
+| M-[NM]          | 删除前后单词                   |
+| M-s [78]        | 选择第一或最后一个标签         |
+|-----------------+--------------------------------|
+| s-,             | 切换buffer                     |
+| s-'             | eaf-open                       |
+| ~s-[<>?]~       | ace 跳转，分别是word,char,line |
+| s-h/n           | 切换/新建shell                 |
+| s-o             | iedit                          |
+| s-p             | 插入时间                       |
+| s-u             | snails 搜索当前点              |
+| s-y             | snails                         |
+| s-R             | 可视化正则搜索                 |
+| s-JK            | 光标不动，上下移动             |
+| s-NP            | move-text                      |
+| s-[-=]          | 字体大小                       |
+| s-c o           | one-key 目录                   |
+| ~s-x [,.fghjk]~ | color-rg 搜索                  |
+
+** Fn
+
+| key  | function            |
+|------+---------------------|
+| <f1> | woman帮助文档       |
+| <f2> | auto refresh buffer |
+| <f5> | 退出 emacs          |
+
+** s-<key>, Option
+
+| key      | function                        |
+|----------+---------------------------------|
+| ,        | 显示和隐藏buffer                |
+| '        | eaf-open                        |
+| \        | eaf-open-browswer               |
+| ~/~      | eaf-open-terminal               |
+| [        | 执行表达式                      |
+| ~<>?~    | ace-jump-word/char/line         |
+| b        | eaf-open-rss-reader             |
+| f        | 使用root打开文件                |
+| g        | goto-percent                    |
+| h/n      | 切换/新建 shell                 |
+| m        | 切换输入法                      |
+| o        | iedit                           |
+| p        | 插入标准时间2022-05-15 09:44:22 |
+| r        | 打开samba                       |
+| s        | org 文件                        |
+| u        | snails-search-point             |
+| y        | snails                          |
+| R        | 可视化正则搜索                  |
+| JK       | 光标位置不变，单行移动          |
+| NP       | 将当前行移动(move-text-up/down) |
+|----------+---------------------------------|
+| 矩形操作 |                                 |
+| D        | 删除                            |
+| M        | 标记                            |
+| X        | 对角交换                        |
+| S        | 保存                            |
+| Y        | 粘贴                            |
+| O        | 用空白填充，并向右移动文本      |
+| C        | 清空矩形                        |
+| T        | 用字符串代替每一行              |
+| I        | 在每一行插入字符串              |
+| F        | 删除矩形中的空格                |
+| "        | 拷贝到寄存器                    |
+| :        | 标记矩形到行末                  |
+| -=       | 字体变小/大                     |
+|----------+---------------------------------|
+*** s-c <key>
+
+| key | function     |
+|-----+--------------|
+| o   | one-key 目录 |
+
+*** s-x <key>
+
+| key      | function       |
+|----------+----------------|
+| color-rg | search         |
+| ,        | buffer symbol  |
+| .        | buffer input   |
+| f        | one-key 菜单   |
+| g        | symbol         |
+| h        | input          |
+| j        | project symbol |
+| k        | project input  |
+| s-x      | 切换shell      |
+|          |                |
+
+** shift+数字键(单字符按键)
+
+| key   | function              |
+|-------+-----------------------|
+| ~%~   | jump to matched paren |
+| <DEL> | 往回删除一个单词      |
+|       |                       |
+
+** C-<key>, Control
+
+| key   | function                           |
+|-------+------------------------------------|
+| 4     | 插入日志时间                       |
+| 78    | lsp-bridge-jump[back]              |
+| <SPC> | 标记                               |
+| ,     | 跳到上次修改的地方                 |
+| '     | 关闭当前buffer并关闭窗口           |
+| "     | 删除当前buffer的窗口               |
+| -     | 递归搜索引用(编程)                         |
+| =     | expand-region                      |
+| :     | 注释当前行                         |
+| &     | 跳到 *Message* buffer              |
+| /_    | undo 撤销                          |
+| ?     | redo 回退                          |
+| ><    | 记忆函数位置和回跳                 |
+| ae    | 行首行尾                           |
+| bfnp  | 移动一个字符或行                   |
+| d     | 删除光标右边的字符                 |
+| j     | 向父节点移动(如：编程时嵌套的函数) |
+| k     | 删除光标后行内容                   |
+| ol    | 在上(o)或下(l)新空行               |
+| g     | 中止Isearch搜索                    |
+| s/r   | Isearch                            |
+| wy    | 粘贴光标后的字符或行作为搜索对象   |
+| v     | scroll down                        |
+| w     | 删除选中内容                       |
+*** C-c <key>
+
+| key | function     |
+|-----+--------------|
+| r   | org-remenber |
+|     |              |
+*** C-x <key>
+
+| key    | function                 |
+|--------+--------------------------|
+| 0      | 关闭窗口                 |
+| 1      | delete other window      |
+| 2      | split horizontally       |
+| 3      | split vertically         |
+| 5 [20] | 新建/删除frame           |
+| ;      | 关闭其它窗口             |
+| f      | fill-columns, ~M-q~ 生效 |
+| u      | 选中当前行               |
+| b      | 切换buffer               |
+| s      | 保存其它buffers          |
+| vh     | 纵/横向分割窗口          |
+| y      | dash-at-point            |
+| C-b    | 列出所有buffers          |
+| C-f    | 查找文件                 |
+| C-s    | 保存                     |
+| C-x    | 标记和切换               |
+
+
+*** C-z <key>
+| key   | function               |
+|-------+------------------------|
+| ;     | popweb-dict-bing-input |
+| j     | 跳到文件尾             |
+| k     | 跳到文件头             |
+| l     | 开启/关闭行号显示      |
+| y     | popweb-dict-bing-point |
+*** C-s-<key>
+
+| key        | function                                                |
+|------------+---------------------------------------------------------|
+| pn         | move and comment up/down line                           |
+|            |                                                         |
+*** C-S-<key>, Control-Shift
+
+| key  | function                           |
+|------+------------------------------------|
+| j    | jump-to-import(python-mode)        |
+| ol   | 复制当前行到上面或下面             |
+| s-ol | 复制当前行到上面或下面且注释当前行 |
+
+*** C-M-<key>
+
+| key   | function                                                |
+|-------+---------------------------------------------------------|
+| ;     | 关闭其它窗口的buffer                                    |
+| %     | 正则替换                                                |
+| ae    | 跳到函数开头和结束                                      |
+| fb    | 按段落移动                                              |
+| youi  | jump into/out LIST, yo:left/right out, ui:left/right in |
+| v     | 滚动其它窗口                                            |
+|       |                                                         |
+
+** M-<key>, Command
+
+| key    | function                                            |
+|--------+-----------------------------------------------------|
+| 2      | 自动格式化buffer                                    |
+| 78     | 选择前/后一个标签                                   |
+| ~<>~   | 滚动其它窗口(Isearch跳到文件尾/头重新搜索)          |
+| -=     | 光标处的数字+-1                                     |
+| <DEL>  | 删除光标后的一个单词                                |
+| <SPC>  | 合并空格                                            |
+| "'[{(  | 包围当前字符串(加括号)                              |
+| )      | 去掉当前包围符号(去括号)                            |
+| :      | 跳出括号并换行                                      |
+| %      | 搜索替换                                            |
+| ~<>KJ~ | 滚动其它窗口                                        |
+| a      | 跳到句子开头                                        |
+| e      | 跳到句子结尾(Isearch中编辑搜索对象)                 |
+| c      | 特定模式切换buffer                                  |
+| d      | 删除光标前的一个单词(ISearch重复查找单词)           |
+| b      | 单词移动                                            |
+| h/H    | 同 =C-SPC=，方便输入法时标记                        |
+| j      | 用 eaf 打开文件管理器                                       |
+| k      | 删除光标后的语句                                    |
+| gG     | 跳到指定的列或行                                    |
+| o      | 删除光标后的字符                                    |
+| pn     | 左右移到，根据当前开发语言关键词(ISearch中切换历史) |
+| r      | 切换正则搜索(ISearch)                               |
+| s      | symbol-overlay-put, 标记颜色                        |
+| v      | scroll up                                           |
+| z      | 首字母大写                                          |
+| I      | 往后跳4个字符                                       |
+| NM     | 删除前后的单词                                      |
+|        |                                                     |
+
+*** M-s-<key>, Command-Option
+
+| key         | function                      |
+|-------------+-------------------------------|
+| 78          | 选择第一个或最后一个标签      |
+| .,          | 标记Buffer和回跳              |
+| h           | thing-edit one-key 菜单       |
+| i           | ielm                          |
+| jk          | 显示flycheck上/下一个错误     |
+| o           | 切换一个窗口，临时最大化/还原 |
+| pn          | move comment up/down          |
+| y           | kill-ring 搜索                |
+| ~sdcweavfq~ | 键盘宏                        |
+| u           | vdiff-buffers                 |
+|             |                               |
+** projectile-ruby
+
+| key | function           |
+|-----+--------------------|
+| f   | Ruby file          |
+| d   | file DWIM          |
+| r   | Routes             |
+| g   | Gemfile            |
+| t   | template           |
+| j   | visit javascript   |
+| s   | Seeds              |
+| h   | Helper             |
+| v   | Current View       |
+| c   | current controller |
+| m   | current model      |
+| V   | view               |
+| C   | controller         |
+| M   | Model              |
+| k   | kill buffers       |
+| p   | Grep Project       |
+| P   | visit project      |
+** Ido文件管理器
+
+| key         | function          |
+|-------------+-------------------|
+| Ido文件管理 |                   |
+| M-s-p/n     | 上下匹配          |
+| M-s-h/l     | 上/下一个工作目录 |
+| C-x i       | 插入缓存          |
+| C-x I       | 插入文件          |
+| M-[oO]      | -                 |
+|             |                   |
+** 多标签操作
+
+| key      | function                 |
+|----------+--------------------------|
+| M-[78]   | 选择前/后一个标签        |
+| M-s-[78] | 选择第一个或最后一个标签 |
+| C-;      | 关闭当前标签             |
+| s-q      | 关闭特定模式标签         |
+| S-Q      | 关闭所有标签             |
+
+** EAF
+
+| key | function              |
+|-----+-----------------------|
+| M-j | 用 eaf 打开文件管理器 |
+| s-' | eaf-open              |
+| s-\ | eaf-open-browser      |
+| s-/ | eaf-open-terminal     |
+| s-b | eaf-open-rss-reader   |
+
+
+
+
+* COMMENT Local Variables       :ARCHIVE:
+# Local Variables:
+# after-save-hook: gcl/org-html-export-to-html
+# End:
