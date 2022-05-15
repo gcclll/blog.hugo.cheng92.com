@@ -1,0 +1,1820 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<!-- 2022-05-15 Sun 21:47 -->
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Emacs ConfigurationV3</title>
+<meta name="author" content="Zhicheng Lee" />
+<meta name="generator" content="Org Mode" />
+<style>
+  #content { max-width: 60em; margin: auto; }
+  .title  { text-align: center;
+             margin-bottom: .2em; }
+  .subtitle { text-align: center;
+              font-size: medium;
+              font-weight: bold;
+              margin-top:0; }
+  .todo   { font-family: monospace; color: red; }
+  .done   { font-family: monospace; color: green; }
+  .priority { font-family: monospace; color: orange; }
+  .tag    { background-color: #eee; font-family: monospace;
+            padding: 2px; font-size: 80%; font-weight: normal; }
+  .timestamp { color: #bebebe; }
+  .timestamp-kwd { color: #5f9ea0; }
+  .org-right  { margin-left: auto; margin-right: 0px;  text-align: right; }
+  .org-left   { margin-left: 0px;  margin-right: auto; text-align: left; }
+  .org-center { margin-left: auto; margin-right: auto; text-align: center; }
+  .underline { text-decoration: underline; }
+  #postamble p, #preamble p { font-size: 90%; margin: .2em; }
+  p.verse { margin-left: 3%; }
+  pre {
+    border: 1px solid #e6e6e6;
+    border-radius: 3px;
+    background-color: #f2f2f2;
+    padding: 8pt;
+    font-family: monospace;
+    overflow: auto;
+    margin: 1.2em;
+  }
+  pre.src {
+    position: relative;
+    overflow: auto;
+  }
+  pre.src:before {
+    display: none;
+    position: absolute;
+    top: -8px;
+    right: 12px;
+    padding: 3px;
+    color: #555;
+    background-color: #f2f2f299;
+  }
+  pre.src:hover:before { display: inline; margin-top: 14px;}
+  /* Languages per Org manual */
+  pre.src-asymptote:before { content: 'Asymptote'; }
+  pre.src-awk:before { content: 'Awk'; }
+  pre.src-authinfo::before { content: 'Authinfo'; }
+  pre.src-C:before { content: 'C'; }
+  /* pre.src-C++ doesn't work in CSS */
+  pre.src-clojure:before { content: 'Clojure'; }
+  pre.src-css:before { content: 'CSS'; }
+  pre.src-D:before { content: 'D'; }
+  pre.src-ditaa:before { content: 'ditaa'; }
+  pre.src-dot:before { content: 'Graphviz'; }
+  pre.src-calc:before { content: 'Emacs Calc'; }
+  pre.src-emacs-lisp:before { content: 'Emacs Lisp'; }
+  pre.src-fortran:before { content: 'Fortran'; }
+  pre.src-gnuplot:before { content: 'gnuplot'; }
+  pre.src-haskell:before { content: 'Haskell'; }
+  pre.src-hledger:before { content: 'hledger'; }
+  pre.src-java:before { content: 'Java'; }
+  pre.src-js:before { content: 'Javascript'; }
+  pre.src-latex:before { content: 'LaTeX'; }
+  pre.src-ledger:before { content: 'Ledger'; }
+  pre.src-lisp:before { content: 'Lisp'; }
+  pre.src-lilypond:before { content: 'Lilypond'; }
+  pre.src-lua:before { content: 'Lua'; }
+  pre.src-matlab:before { content: 'MATLAB'; }
+  pre.src-mscgen:before { content: 'Mscgen'; }
+  pre.src-ocaml:before { content: 'Objective Caml'; }
+  pre.src-octave:before { content: 'Octave'; }
+  pre.src-org:before { content: 'Org mode'; }
+  pre.src-oz:before { content: 'OZ'; }
+  pre.src-plantuml:before { content: 'Plantuml'; }
+  pre.src-processing:before { content: 'Processing.js'; }
+  pre.src-python:before { content: 'Python'; }
+  pre.src-R:before { content: 'R'; }
+  pre.src-ruby:before { content: 'Ruby'; }
+  pre.src-sass:before { content: 'Sass'; }
+  pre.src-scheme:before { content: 'Scheme'; }
+  pre.src-screen:before { content: 'Gnu Screen'; }
+  pre.src-sed:before { content: 'Sed'; }
+  pre.src-sh:before { content: 'shell'; }
+  pre.src-sql:before { content: 'SQL'; }
+  pre.src-sqlite:before { content: 'SQLite'; }
+  /* additional languages in org.el's org-babel-load-languages alist */
+  pre.src-forth:before { content: 'Forth'; }
+  pre.src-io:before { content: 'IO'; }
+  pre.src-J:before { content: 'J'; }
+  pre.src-makefile:before { content: 'Makefile'; }
+  pre.src-maxima:before { content: 'Maxima'; }
+  pre.src-perl:before { content: 'Perl'; }
+  pre.src-picolisp:before { content: 'Pico Lisp'; }
+  pre.src-scala:before { content: 'Scala'; }
+  pre.src-shell:before { content: 'Shell Script'; }
+  pre.src-ebnf2ps:before { content: 'ebfn2ps'; }
+  /* additional language identifiers per "defun org-babel-execute"
+       in ob-*.el */
+  pre.src-cpp:before  { content: 'C++'; }
+  pre.src-abc:before  { content: 'ABC'; }
+  pre.src-coq:before  { content: 'Coq'; }
+  pre.src-groovy:before  { content: 'Groovy'; }
+  /* additional language identifiers from org-babel-shell-names in
+     ob-shell.el: ob-shell is the only babel language using a lambda to put
+     the execution function name together. */
+  pre.src-bash:before  { content: 'bash'; }
+  pre.src-csh:before  { content: 'csh'; }
+  pre.src-ash:before  { content: 'ash'; }
+  pre.src-dash:before  { content: 'dash'; }
+  pre.src-ksh:before  { content: 'ksh'; }
+  pre.src-mksh:before  { content: 'mksh'; }
+  pre.src-posh:before  { content: 'posh'; }
+  /* Additional Emacs modes also supported by the LaTeX listings package */
+  pre.src-ada:before { content: 'Ada'; }
+  pre.src-asm:before { content: 'Assembler'; }
+  pre.src-caml:before { content: 'Caml'; }
+  pre.src-delphi:before { content: 'Delphi'; }
+  pre.src-html:before { content: 'HTML'; }
+  pre.src-idl:before { content: 'IDL'; }
+  pre.src-mercury:before { content: 'Mercury'; }
+  pre.src-metapost:before { content: 'MetaPost'; }
+  pre.src-modula-2:before { content: 'Modula-2'; }
+  pre.src-pascal:before { content: 'Pascal'; }
+  pre.src-ps:before { content: 'PostScript'; }
+  pre.src-prolog:before { content: 'Prolog'; }
+  pre.src-simula:before { content: 'Simula'; }
+  pre.src-tcl:before { content: 'tcl'; }
+  pre.src-tex:before { content: 'TeX'; }
+  pre.src-plain-tex:before { content: 'Plain TeX'; }
+  pre.src-verilog:before { content: 'Verilog'; }
+  pre.src-vhdl:before { content: 'VHDL'; }
+  pre.src-xml:before { content: 'XML'; }
+  pre.src-nxml:before { content: 'XML'; }
+  /* add a generic configuration mode; LaTeX export needs an additional
+     (add-to-list 'org-latex-listings-langs '(conf " ")) in .emacs */
+  pre.src-conf:before { content: 'Configuration File'; }
+
+  table { border-collapse:collapse; }
+  caption.t-above { caption-side: top; }
+  caption.t-bottom { caption-side: bottom; }
+  td, th { vertical-align:top;  }
+  th.org-right  { text-align: center;  }
+  th.org-left   { text-align: center;   }
+  th.org-center { text-align: center; }
+  td.org-right  { text-align: right;  }
+  td.org-left   { text-align: left;   }
+  td.org-center { text-align: center; }
+  dt { font-weight: bold; }
+  .footpara { display: inline; }
+  .footdef  { margin-bottom: 1em; }
+  .figure { padding: 1em; }
+  .figure p { text-align: center; }
+  .equation-container {
+    display: table;
+    text-align: center;
+    width: 100%;
+  }
+  .equation {
+    vertical-align: middle;
+  }
+  .equation-label {
+    display: table-cell;
+    text-align: right;
+    vertical-align: middle;
+  }
+  .inlinetask {
+    padding: 10px;
+    border: 2px solid gray;
+    margin: 10px;
+    background: #ffffcc;
+  }
+  #org-div-home-and-up
+   { text-align: right; font-size: 70%; white-space: nowrap; }
+  textarea { overflow-x: auto; }
+  .linenr { font-size: smaller }
+  .code-highlighted { background-color: #ffff00; }
+  .org-info-js_info-navigation { border-style: none; }
+  #org-info-js_console-label
+    { font-size: 10px; font-weight: bold; white-space: nowrap; }
+  .org-info-js_search-highlight
+    { background-color: #ffff00; color: #000000; font-weight: bold; }
+  .org-svg { width: 90%; }
+</style>
+<link rel="stylesheet" type="text/css" href="/assets/css/htmlize.css"/>
+<link rel="stylesheet" type="text/css" href="/assets/css/readtheorg.css"/>
+<link rel="stylesheet" type="text/css" href="/assets/css/global.css"/>
+<link rel="stylesheet" type="text/css" href="/assets/css/element-plus.css" />
+<link rel="icon" type="image/png" sizes="48x48" href="/favicon.ico">
+<script type="text/javascript" src="/assets/js/jquery.min.js"></script>
+<script type="text/javascript" src="/assets/js/jquery.stickytableheaders.min.js"></script>
+<script type="text/javascript" src="/assets/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="/assets/js/lodash.min.js"></script>
+<script type="text/javascript" src="/assets/js/readtheorg.js"></script>
+<link rel="stylesheet" href="/assets/js/fancybox/fancybox.css" type="text/css" media="screen" />
+<script type="text/javascript" src="/assets/js/fancybox/fancybox.umd.js"></script>
+<script type="text/javascript" src="/assets/js/mobile-detect.min.js"></script>
+<script type="text/javascript" src="/assets/js/Valine.min.js"></script>
+<script type="text/javascript" src="/assets/js/vue.js"></script>
+<script type="text/javascript" src="/assets/js/element-plus.js"></script>
+<script type="text/javascript" src="/assets/js/element-icons.js"></script>
+<script type="text/javascript" src="/assets/js/dist/stats.js"></script>
+<script type="text/javascript" src="/assets/js/dist/apps.js"></script>
+<script type="text/javascript" src="/assets/js/dist/global.js"></script>
+<meta name="category" content="emacs"/>
+<meta name="tags" content="emacs"/>
+<meta name="createdAt" content="2022-05-15 21:23:40"/>
+</head>
+<body>
+<div id="content" class="content">
+<h1 class="title">Emacs ConfigurationV3</h1>
+<div id="table-of-contents" role="doc-toc">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents" role="doc-toc">
+<ul>
+<li><a href="#orgca1395f">1. key groups</a>
+<ul>
+<li><a href="#orgeca9c38">1.1. 常用按键</a></li>
+<li><a href="#orgeb8fc51">1.2. Fn</a></li>
+<li><a href="#org39a6fe8">1.3. s-&lt;key&gt;, Option</a>
+<ul>
+<li><a href="#orgf02ca9d">1.3.1. s-c &lt;key&gt;</a></li>
+<li><a href="#orgce949fb">1.3.2. s-x &lt;key&gt;</a></li>
+</ul>
+</li>
+<li><a href="#orgdfeec8f">1.4. shift+数字键(单字符按键)</a></li>
+<li><a href="#org583dd05">1.5. C-&lt;key&gt;, Control</a>
+<ul>
+<li><a href="#orge285551">1.5.1. C-c &lt;key&gt;</a></li>
+<li><a href="#org03e0624">1.5.2. C-x &lt;key&gt;</a></li>
+<li><a href="#org42dc1d6">1.5.3. C-z &lt;key&gt;</a></li>
+<li><a href="#org602a66e">1.5.4. C-s-&lt;key&gt;</a></li>
+<li><a href="#orgc2b54fe">1.5.5. C-S-&lt;key&gt;, Control-Shift</a></li>
+<li><a href="#org95550b1">1.5.6. C-M-&lt;key&gt;</a></li>
+</ul>
+</li>
+<li><a href="#org66685a9">1.6. M-&lt;key&gt;, Command</a>
+<ul>
+<li><a href="#orgb5d3848">1.6.1. M-s-&lt;key&gt;, Command-Option</a></li>
+</ul>
+</li>
+<li><a href="#orgf5e05c3">1.7. projectile-ruby</a></li>
+<li><a href="#org8bc7fcb">1.8. Ido文件管理器</a></li>
+<li><a href="#orgea65fa4">1.9. 多标签操作</a></li>
+<li><a href="#orgc5808e1">1.10. EAF</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+<p>
+&lt;badge: GCCLL | Homepage | green | / | gnu-emacs | tinder&gt;
+</p>
+
+<div id="outline-container-orgca1395f" class="outline-2">
+<h2 id="orgca1395f"><span class="section-number-2">1.</span> key groups</h2>
+<div class="outline-text-2" id="text-1">
+</div>
+<div id="outline-container-orgeca9c38" class="outline-3">
+<h3 id="orgeca9c38"><span class="section-number-3">1.1.</span> 常用按键</h3>
+<div class="outline-text-3" id="text-1-1">
+<table>
+
+
+<colgroup>
+<col  class="org-left">
+
+<col  class="org-left">
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left">key</th>
+<th scope="col" class="org-left">function</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left">&lt;f5&gt;</td>
+<td class="org-left">退出emacs</td>
+</tr>
+
+<tr>
+<td class="org-left">%</td>
+<td class="org-left">跳到匹配的括号</td>
+</tr>
+
+<tr>
+<td class="org-left">M-w</td>
+<td class="org-left">复制</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="org-left">C-[78]</td>
+<td class="org-left">lsp-bridge-jump[back]</td>
+</tr>
+
+<tr>
+<td class="org-left">C-SPC</td>
+<td class="org-left">标记</td>
+</tr>
+
+<tr>
+<td class="org-left">C-,</td>
+<td class="org-left">跳到上次修改地方</td>
+</tr>
+
+<tr>
+<td class="org-left">C-'"</td>
+<td class="org-left">关闭当前buffer</td>
+</tr>
+
+<tr>
+<td class="org-left">C-=</td>
+<td class="org-left">expand-region</td>
+</tr>
+
+<tr>
+<td class="org-left">C-:</td>
+<td class="org-left">注释行</td>
+</tr>
+
+<tr>
+<td class="org-left">C-[/_?]</td>
+<td class="org-left">undo, redo</td>
+</tr>
+
+<tr>
+<td class="org-left">C-[&lt;&gt;]</td>
+<td class="org-left">记忆和回跳</td>
+</tr>
+
+<tr>
+<td class="org-left">C-[ae]</td>
+<td class="org-left">行尾首</td>
+</tr>
+
+<tr>
+<td class="org-left">C-[sr]</td>
+<td class="org-left">isearch</td>
+</tr>
+
+<tr>
+<td class="org-left">C-y</td>
+<td class="org-left">粘贴</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="org-left">M-2</td>
+<td class="org-left">format-buffer</td>
+</tr>
+
+<tr>
+<td class="org-left">M-SPC</td>
+<td class="org-left">合并空格</td>
+</tr>
+
+<tr>
+<td class="org-left">M-"'[{(</td>
+<td class="org-left">包围字符串</td>
+</tr>
+
+<tr>
+<td class="org-left">M-)</td>
+<td class="org-left">取消包围</td>
+</tr>
+
+<tr>
+<td class="org-left">M-%</td>
+<td class="org-left">搜索替换</td>
+</tr>
+
+<tr>
+<td class="org-left">M-[78]</td>
+<td class="org-left">select prev/next tab</td>
+</tr>
+
+<tr>
+<td class="org-left">M-[&lt;&gt;JK]</td>
+<td class="org-left">滚动其它窗口</td>
+</tr>
+
+<tr>
+<td class="org-left">M-[-=]</td>
+<td class="org-left">数字+-1</td>
+</tr>
+
+<tr>
+<td class="org-left">M-[ae]</td>
+<td class="org-left">句子首尾</td>
+</tr>
+
+<tr>
+<td class="org-left">M-r</td>
+<td class="org-left">正则搜索</td>
+</tr>
+
+<tr>
+<td class="org-left">M-u</td>
+<td class="org-left">vdiff-buffers</td>
+</tr>
+
+<tr>
+<td class="org-left">M-z</td>
+<td class="org-left">首字母大写</td>
+</tr>
+
+<tr>
+<td class="org-left">M-[NM]</td>
+<td class="org-left">删除前后单词</td>
+</tr>
+
+<tr>
+<td class="org-left">M-s [78]</td>
+<td class="org-left">选择第一或最后一个标签</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="org-left">s-,</td>
+<td class="org-left">切换buffer</td>
+</tr>
+
+<tr>
+<td class="org-left">s-'</td>
+<td class="org-left">eaf-open</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>s-[&lt;&gt;?]</code></td>
+<td class="org-left">ace 跳转，分别是word,char,line</td>
+</tr>
+
+<tr>
+<td class="org-left">s-h/n</td>
+<td class="org-left">切换/新建shell</td>
+</tr>
+
+<tr>
+<td class="org-left">s-o</td>
+<td class="org-left">iedit</td>
+</tr>
+
+<tr>
+<td class="org-left">s-p</td>
+<td class="org-left">插入时间</td>
+</tr>
+
+<tr>
+<td class="org-left">s-u</td>
+<td class="org-left">snails 搜索当前点</td>
+</tr>
+
+<tr>
+<td class="org-left">s-y</td>
+<td class="org-left">snails</td>
+</tr>
+
+<tr>
+<td class="org-left">s-R</td>
+<td class="org-left">可视化正则搜索</td>
+</tr>
+
+<tr>
+<td class="org-left">s-JK</td>
+<td class="org-left">光标不动，上下移动</td>
+</tr>
+
+<tr>
+<td class="org-left">s-NP</td>
+<td class="org-left">move-text</td>
+</tr>
+
+<tr>
+<td class="org-left">s-[-=]</td>
+<td class="org-left">字体大小</td>
+</tr>
+
+<tr>
+<td class="org-left">s-c o</td>
+<td class="org-left">one-key 目录</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>s-x [,.fghjk]</code></td>
+<td class="org-left">color-rg 搜索</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<div id="outline-container-orgeb8fc51" class="outline-3">
+<h3 id="orgeb8fc51"><span class="section-number-3">1.2.</span> Fn</h3>
+<div class="outline-text-3" id="text-1-2">
+<table>
+
+
+<colgroup>
+<col  class="org-left">
+
+<col  class="org-left">
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left">key</th>
+<th scope="col" class="org-left">function</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left">&lt;f1&gt;</td>
+<td class="org-left">woman帮助文档</td>
+</tr>
+
+<tr>
+<td class="org-left">&lt;f2&gt;</td>
+<td class="org-left">auto refresh buffer</td>
+</tr>
+
+<tr>
+<td class="org-left">&lt;f5&gt;</td>
+<td class="org-left">退出 emacs</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<div id="outline-container-org39a6fe8" class="outline-3">
+<h3 id="org39a6fe8"><span class="section-number-3">1.3.</span> s-&lt;key&gt;, Option</h3>
+<div class="outline-text-3" id="text-1-3">
+<table>
+
+
+<colgroup>
+<col  class="org-left">
+
+<col  class="org-left">
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left">key</th>
+<th scope="col" class="org-left">function</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left">,</td>
+<td class="org-left">显示和隐藏buffer</td>
+</tr>
+
+<tr>
+<td class="org-left">'</td>
+<td class="org-left">eaf-open</td>
+</tr>
+
+<tr>
+<td class="org-left">\</td>
+<td class="org-left">eaf-open-browswer</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>/</code></td>
+<td class="org-left">eaf-open-terminal</td>
+</tr>
+
+<tr>
+<td class="org-left">[</td>
+<td class="org-left">执行表达式</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>&lt;&gt;?</code></td>
+<td class="org-left">ace-jump-word/char/line</td>
+</tr>
+
+<tr>
+<td class="org-left">b</td>
+<td class="org-left">eaf-open-rss-reader</td>
+</tr>
+
+<tr>
+<td class="org-left">f</td>
+<td class="org-left">使用root打开文件</td>
+</tr>
+
+<tr>
+<td class="org-left">g</td>
+<td class="org-left">goto-percent</td>
+</tr>
+
+<tr>
+<td class="org-left">h/n</td>
+<td class="org-left">切换/新建 shell</td>
+</tr>
+
+<tr>
+<td class="org-left">m</td>
+<td class="org-left">切换输入法</td>
+</tr>
+
+<tr>
+<td class="org-left">o</td>
+<td class="org-left">iedit</td>
+</tr>
+
+<tr>
+<td class="org-left">p</td>
+<td class="org-left">插入标准时间2022-05-15 09:44:22</td>
+</tr>
+
+<tr>
+<td class="org-left">r</td>
+<td class="org-left">打开samba</td>
+</tr>
+
+<tr>
+<td class="org-left">s</td>
+<td class="org-left">org 文件</td>
+</tr>
+
+<tr>
+<td class="org-left">u</td>
+<td class="org-left">snails-search-point</td>
+</tr>
+
+<tr>
+<td class="org-left">y</td>
+<td class="org-left">snails</td>
+</tr>
+
+<tr>
+<td class="org-left">R</td>
+<td class="org-left">可视化正则搜索</td>
+</tr>
+
+<tr>
+<td class="org-left">JK</td>
+<td class="org-left">光标位置不变，单行移动</td>
+</tr>
+
+<tr>
+<td class="org-left">NP</td>
+<td class="org-left">将当前行移动(move-text-up/down)</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="org-left">矩形操作</td>
+<td class="org-left">&#xa0;</td>
+</tr>
+
+<tr>
+<td class="org-left">D</td>
+<td class="org-left">删除</td>
+</tr>
+
+<tr>
+<td class="org-left">M</td>
+<td class="org-left">标记</td>
+</tr>
+
+<tr>
+<td class="org-left">X</td>
+<td class="org-left">对角交换</td>
+</tr>
+
+<tr>
+<td class="org-left">S</td>
+<td class="org-left">保存</td>
+</tr>
+
+<tr>
+<td class="org-left">Y</td>
+<td class="org-left">粘贴</td>
+</tr>
+
+<tr>
+<td class="org-left">O</td>
+<td class="org-left">用空白填充，并向右移动文本</td>
+</tr>
+
+<tr>
+<td class="org-left">C</td>
+<td class="org-left">清空矩形</td>
+</tr>
+
+<tr>
+<td class="org-left">T</td>
+<td class="org-left">用字符串代替每一行</td>
+</tr>
+
+<tr>
+<td class="org-left">I</td>
+<td class="org-left">在每一行插入字符串</td>
+</tr>
+
+<tr>
+<td class="org-left">F</td>
+<td class="org-left">删除矩形中的空格</td>
+</tr>
+
+<tr>
+<td class="org-left">"</td>
+<td class="org-left">拷贝到寄存器</td>
+</tr>
+
+<tr>
+<td class="org-left">:</td>
+<td class="org-left">标记矩形到行末</td>
+</tr>
+
+<tr>
+<td class="org-left">-=</td>
+<td class="org-left">字体变小/大</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="outline-container-orgf02ca9d" class="outline-4">
+<h4 id="orgf02ca9d"><span class="section-number-4">1.3.1.</span> s-c &lt;key&gt;</h4>
+<div class="outline-text-4" id="text-1-3-1">
+<table>
+
+
+<colgroup>
+<col  class="org-left">
+
+<col  class="org-left">
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left">key</th>
+<th scope="col" class="org-left">function</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left">o</td>
+<td class="org-left">one-key 目录</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<div id="outline-container-orgce949fb" class="outline-4">
+<h4 id="orgce949fb"><span class="section-number-4">1.3.2.</span> s-x &lt;key&gt;</h4>
+<div class="outline-text-4" id="text-1-3-2">
+<table>
+
+
+<colgroup>
+<col  class="org-left">
+
+<col  class="org-left">
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left">key</th>
+<th scope="col" class="org-left">function</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left">color-rg</td>
+<td class="org-left">search</td>
+</tr>
+
+<tr>
+<td class="org-left">,</td>
+<td class="org-left">buffer symbol</td>
+</tr>
+
+<tr>
+<td class="org-left">.</td>
+<td class="org-left">buffer input</td>
+</tr>
+
+<tr>
+<td class="org-left">f</td>
+<td class="org-left">one-key 菜单</td>
+</tr>
+
+<tr>
+<td class="org-left">g</td>
+<td class="org-left">symbol</td>
+</tr>
+
+<tr>
+<td class="org-left">h</td>
+<td class="org-left">input</td>
+</tr>
+
+<tr>
+<td class="org-left">j</td>
+<td class="org-left">project symbol</td>
+</tr>
+
+<tr>
+<td class="org-left">k</td>
+<td class="org-left">project input</td>
+</tr>
+
+<tr>
+<td class="org-left">s-x</td>
+<td class="org-left">切换shell</td>
+</tr>
+
+<tr>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">&#xa0;</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgdfeec8f" class="outline-3">
+<h3 id="orgdfeec8f"><span class="section-number-3">1.4.</span> shift+数字键(单字符按键)</h3>
+<div class="outline-text-3" id="text-1-4">
+<table>
+
+
+<colgroup>
+<col  class="org-left">
+
+<col  class="org-left">
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left">key</th>
+<th scope="col" class="org-left">function</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left"><code>%</code></td>
+<td class="org-left">jump to matched paren</td>
+</tr>
+
+<tr>
+<td class="org-left">&lt;DEL&gt;</td>
+<td class="org-left">往回删除一个单词</td>
+</tr>
+
+<tr>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">&#xa0;</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<div id="outline-container-org583dd05" class="outline-3">
+<h3 id="org583dd05"><span class="section-number-3">1.5.</span> C-&lt;key&gt;, Control</h3>
+<div class="outline-text-3" id="text-1-5">
+<table>
+
+
+<colgroup>
+<col  class="org-left">
+
+<col  class="org-left">
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left">key</th>
+<th scope="col" class="org-left">function</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left">4</td>
+<td class="org-left">插入日志时间</td>
+</tr>
+
+<tr>
+<td class="org-left">78</td>
+<td class="org-left">lsp-bridge-jump[back]</td>
+</tr>
+
+<tr>
+<td class="org-left">&lt;SPC&gt;</td>
+<td class="org-left">标记</td>
+</tr>
+
+<tr>
+<td class="org-left">,</td>
+<td class="org-left">跳到上次修改的地方</td>
+</tr>
+
+<tr>
+<td class="org-left">'</td>
+<td class="org-left">关闭当前buffer并关闭窗口</td>
+</tr>
+
+<tr>
+<td class="org-left">"</td>
+<td class="org-left">删除当前buffer的窗口</td>
+</tr>
+
+<tr>
+<td class="org-left">-</td>
+<td class="org-left">递归搜索引用(编程)</td>
+</tr>
+
+<tr>
+<td class="org-left">=</td>
+<td class="org-left">expand-region</td>
+</tr>
+
+<tr>
+<td class="org-left">:</td>
+<td class="org-left">注释当前行</td>
+</tr>
+
+<tr>
+<td class="org-left">&amp;</td>
+<td class="org-left">跳到 <b>Message</b> buffer</td>
+</tr>
+
+<tr>
+<td class="org-left">/_</td>
+<td class="org-left">undo 撤销</td>
+</tr>
+
+<tr>
+<td class="org-left">?</td>
+<td class="org-left">redo 回退</td>
+</tr>
+
+<tr>
+<td class="org-left">&gt;&lt;</td>
+<td class="org-left">记忆函数位置和回跳</td>
+</tr>
+
+<tr>
+<td class="org-left">ae</td>
+<td class="org-left">行首行尾</td>
+</tr>
+
+<tr>
+<td class="org-left">bfnp</td>
+<td class="org-left">移动一个字符或行</td>
+</tr>
+
+<tr>
+<td class="org-left">d</td>
+<td class="org-left">删除光标右边的字符</td>
+</tr>
+
+<tr>
+<td class="org-left">j</td>
+<td class="org-left">向父节点移动(如：编程时嵌套的函数)</td>
+</tr>
+
+<tr>
+<td class="org-left">k</td>
+<td class="org-left">删除光标后行内容</td>
+</tr>
+
+<tr>
+<td class="org-left">ol</td>
+<td class="org-left">在上(o)或下(l)新空行</td>
+</tr>
+
+<tr>
+<td class="org-left">g</td>
+<td class="org-left">中止Isearch搜索</td>
+</tr>
+
+<tr>
+<td class="org-left">s/r</td>
+<td class="org-left">Isearch</td>
+</tr>
+
+<tr>
+<td class="org-left">wy</td>
+<td class="org-left">粘贴光标后的字符或行作为搜索对象</td>
+</tr>
+
+<tr>
+<td class="org-left">v</td>
+<td class="org-left">scroll down</td>
+</tr>
+
+<tr>
+<td class="org-left">w</td>
+<td class="org-left">删除选中内容</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="outline-container-orge285551" class="outline-4">
+<h4 id="orge285551"><span class="section-number-4">1.5.1.</span> C-c &lt;key&gt;</h4>
+<div class="outline-text-4" id="text-1-5-1">
+<table>
+
+
+<colgroup>
+<col  class="org-left">
+
+<col  class="org-left">
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left">key</th>
+<th scope="col" class="org-left">function</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left">r</td>
+<td class="org-left">org-remenber</td>
+</tr>
+
+<tr>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">&#xa0;</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div id="outline-container-org03e0624" class="outline-4">
+<h4 id="org03e0624"><span class="section-number-4">1.5.2.</span> C-x &lt;key&gt;</h4>
+<div class="outline-text-4" id="text-1-5-2">
+<table>
+
+
+<colgroup>
+<col  class="org-left">
+
+<col  class="org-left">
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left">key</th>
+<th scope="col" class="org-left">function</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left">0</td>
+<td class="org-left">关闭窗口</td>
+</tr>
+
+<tr>
+<td class="org-left">1</td>
+<td class="org-left">delete other window</td>
+</tr>
+
+<tr>
+<td class="org-left">2</td>
+<td class="org-left">split horizontally</td>
+</tr>
+
+<tr>
+<td class="org-left">3</td>
+<td class="org-left">split vertically</td>
+</tr>
+
+<tr>
+<td class="org-left">5 [20]</td>
+<td class="org-left">新建/删除frame</td>
+</tr>
+
+<tr>
+<td class="org-left">;</td>
+<td class="org-left">关闭其它窗口</td>
+</tr>
+
+<tr>
+<td class="org-left">f</td>
+<td class="org-left">fill-columns, <code>M-q</code> 生效</td>
+</tr>
+
+<tr>
+<td class="org-left">u</td>
+<td class="org-left">选中当前行</td>
+</tr>
+
+<tr>
+<td class="org-left">b</td>
+<td class="org-left">切换buffer</td>
+</tr>
+
+<tr>
+<td class="org-left">s</td>
+<td class="org-left">保存其它buffers</td>
+</tr>
+
+<tr>
+<td class="org-left">vh</td>
+<td class="org-left">纵/横向分割窗口</td>
+</tr>
+
+<tr>
+<td class="org-left">y</td>
+<td class="org-left">dash-at-point</td>
+</tr>
+
+<tr>
+<td class="org-left">C-b</td>
+<td class="org-left">列出所有buffers</td>
+</tr>
+
+<tr>
+<td class="org-left">C-f</td>
+<td class="org-left">查找文件</td>
+</tr>
+
+<tr>
+<td class="org-left">C-s</td>
+<td class="org-left">保存</td>
+</tr>
+
+<tr>
+<td class="org-left">C-x</td>
+<td class="org-left">标记和切换</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+
+<div id="outline-container-org42dc1d6" class="outline-4">
+<h4 id="org42dc1d6"><span class="section-number-4">1.5.3.</span> C-z &lt;key&gt;</h4>
+<div class="outline-text-4" id="text-1-5-3">
+<table>
+
+
+<colgroup>
+<col  class="org-left">
+
+<col  class="org-left">
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left">key</th>
+<th scope="col" class="org-left">function</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left">;</td>
+<td class="org-left">popweb-dict-bing-input</td>
+</tr>
+
+<tr>
+<td class="org-left">j</td>
+<td class="org-left">跳到文件尾</td>
+</tr>
+
+<tr>
+<td class="org-left">k</td>
+<td class="org-left">跳到文件头</td>
+</tr>
+
+<tr>
+<td class="org-left">l</td>
+<td class="org-left">开启/关闭行号显示</td>
+</tr>
+
+<tr>
+<td class="org-left">y</td>
+<td class="org-left">popweb-dict-bing-point</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div id="outline-container-org602a66e" class="outline-4">
+<h4 id="org602a66e"><span class="section-number-4">1.5.4.</span> C-s-&lt;key&gt;</h4>
+<div class="outline-text-4" id="text-1-5-4">
+<table>
+
+
+<colgroup>
+<col  class="org-left">
+
+<col  class="org-left">
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left">key</th>
+<th scope="col" class="org-left">function</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left">pn</td>
+<td class="org-left">move and comment up/down line</td>
+</tr>
+
+<tr>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">&#xa0;</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div id="outline-container-orgc2b54fe" class="outline-4">
+<h4 id="orgc2b54fe"><span class="section-number-4">1.5.5.</span> C-S-&lt;key&gt;, Control-Shift</h4>
+<div class="outline-text-4" id="text-1-5-5">
+<table>
+
+
+<colgroup>
+<col  class="org-left">
+
+<col  class="org-left">
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left">key</th>
+<th scope="col" class="org-left">function</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left">j</td>
+<td class="org-left">jump-to-import(python-mode)</td>
+</tr>
+
+<tr>
+<td class="org-left">ol</td>
+<td class="org-left">复制当前行到上面或下面</td>
+</tr>
+
+<tr>
+<td class="org-left">s-ol</td>
+<td class="org-left">复制当前行到上面或下面且注释当前行</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<div id="outline-container-org95550b1" class="outline-4">
+<h4 id="org95550b1"><span class="section-number-4">1.5.6.</span> C-M-&lt;key&gt;</h4>
+<div class="outline-text-4" id="text-1-5-6">
+<table>
+
+
+<colgroup>
+<col  class="org-left">
+
+<col  class="org-left">
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left">key</th>
+<th scope="col" class="org-left">function</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left">;</td>
+<td class="org-left">关闭其它窗口的buffer</td>
+</tr>
+
+<tr>
+<td class="org-left">%</td>
+<td class="org-left">正则替换</td>
+</tr>
+
+<tr>
+<td class="org-left">ae</td>
+<td class="org-left">跳到函数开头和结束</td>
+</tr>
+
+<tr>
+<td class="org-left">fb</td>
+<td class="org-left">按段落移动</td>
+</tr>
+
+<tr>
+<td class="org-left">youi</td>
+<td class="org-left">jump into/out LIST, yo:left/right out, ui:left/right in</td>
+</tr>
+
+<tr>
+<td class="org-left">v</td>
+<td class="org-left">滚动其它窗口</td>
+</tr>
+
+<tr>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">&#xa0;</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org66685a9" class="outline-3">
+<h3 id="org66685a9"><span class="section-number-3">1.6.</span> M-&lt;key&gt;, Command</h3>
+<div class="outline-text-3" id="text-1-6">
+<table>
+
+
+<colgroup>
+<col  class="org-left">
+
+<col  class="org-left">
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left">key</th>
+<th scope="col" class="org-left">function</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left">2</td>
+<td class="org-left">自动格式化buffer</td>
+</tr>
+
+<tr>
+<td class="org-left">78</td>
+<td class="org-left">选择前/后一个标签</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>&lt;&gt;</code></td>
+<td class="org-left">滚动其它窗口(Isearch跳到文件尾/头重新搜索)</td>
+</tr>
+
+<tr>
+<td class="org-left">-=</td>
+<td class="org-left">光标处的数字+-1</td>
+</tr>
+
+<tr>
+<td class="org-left">&lt;DEL&gt;</td>
+<td class="org-left">删除光标后的一个单词</td>
+</tr>
+
+<tr>
+<td class="org-left">&lt;SPC&gt;</td>
+<td class="org-left">合并空格</td>
+</tr>
+
+<tr>
+<td class="org-left">"'[{(</td>
+<td class="org-left">包围当前字符串(加括号)</td>
+</tr>
+
+<tr>
+<td class="org-left">)</td>
+<td class="org-left">去掉当前包围符号(去括号)</td>
+</tr>
+
+<tr>
+<td class="org-left">:</td>
+<td class="org-left">跳出括号并换行</td>
+</tr>
+
+<tr>
+<td class="org-left">%</td>
+<td class="org-left">搜索替换</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>&lt;&gt;KJ</code></td>
+<td class="org-left">滚动其它窗口</td>
+</tr>
+
+<tr>
+<td class="org-left">a</td>
+<td class="org-left">跳到句子开头</td>
+</tr>
+
+<tr>
+<td class="org-left">e</td>
+<td class="org-left">跳到句子结尾(Isearch中编辑搜索对象)</td>
+</tr>
+
+<tr>
+<td class="org-left">c</td>
+<td class="org-left">特定模式切换buffer</td>
+</tr>
+
+<tr>
+<td class="org-left">d</td>
+<td class="org-left">删除光标前的一个单词(ISearch重复查找单词)</td>
+</tr>
+
+<tr>
+<td class="org-left">b</td>
+<td class="org-left">单词移动</td>
+</tr>
+
+<tr>
+<td class="org-left">h/H</td>
+<td class="org-left">同 =C-SPC=，方便输入法时标记</td>
+</tr>
+
+<tr>
+<td class="org-left">j</td>
+<td class="org-left">用 eaf 打开文件管理器</td>
+</tr>
+
+<tr>
+<td class="org-left">k</td>
+<td class="org-left">删除光标后的语句</td>
+</tr>
+
+<tr>
+<td class="org-left">gG</td>
+<td class="org-left">跳到指定的列或行</td>
+</tr>
+
+<tr>
+<td class="org-left">o</td>
+<td class="org-left">删除光标后的字符</td>
+</tr>
+
+<tr>
+<td class="org-left">pn</td>
+<td class="org-left">左右移到，根据当前开发语言关键词(ISearch中切换历史)</td>
+</tr>
+
+<tr>
+<td class="org-left">r</td>
+<td class="org-left">切换正则搜索(ISearch)</td>
+</tr>
+
+<tr>
+<td class="org-left">s</td>
+<td class="org-left">symbol-overlay-put, 标记颜色</td>
+</tr>
+
+<tr>
+<td class="org-left">v</td>
+<td class="org-left">scroll up</td>
+</tr>
+
+<tr>
+<td class="org-left">z</td>
+<td class="org-left">首字母大写</td>
+</tr>
+
+<tr>
+<td class="org-left">I</td>
+<td class="org-left">往后跳4个字符</td>
+</tr>
+
+<tr>
+<td class="org-left">NM</td>
+<td class="org-left">删除前后的单词</td>
+</tr>
+
+<tr>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">&#xa0;</td>
+</tr>
+</tbody>
+</table>
+</div>
+
+<div id="outline-container-orgb5d3848" class="outline-4">
+<h4 id="orgb5d3848"><span class="section-number-4">1.6.1.</span> M-s-&lt;key&gt;, Command-Option</h4>
+<div class="outline-text-4" id="text-1-6-1">
+<table>
+
+
+<colgroup>
+<col  class="org-left">
+
+<col  class="org-left">
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left">key</th>
+<th scope="col" class="org-left">function</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left">78</td>
+<td class="org-left">选择第一个或最后一个标签</td>
+</tr>
+
+<tr>
+<td class="org-left">.,</td>
+<td class="org-left">标记Buffer和回跳</td>
+</tr>
+
+<tr>
+<td class="org-left">h</td>
+<td class="org-left">thing-edit one-key 菜单</td>
+</tr>
+
+<tr>
+<td class="org-left">i</td>
+<td class="org-left">ielm</td>
+</tr>
+
+<tr>
+<td class="org-left">jk</td>
+<td class="org-left">显示flycheck上/下一个错误</td>
+</tr>
+
+<tr>
+<td class="org-left">o</td>
+<td class="org-left">切换一个窗口，临时最大化/还原</td>
+</tr>
+
+<tr>
+<td class="org-left">pn</td>
+<td class="org-left">move comment up/down</td>
+</tr>
+
+<tr>
+<td class="org-left">y</td>
+<td class="org-left">kill-ring 搜索</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>sdcweavfq</code></td>
+<td class="org-left">键盘宏</td>
+</tr>
+
+<tr>
+<td class="org-left">u</td>
+<td class="org-left">vdiff-buffers</td>
+</tr>
+
+<tr>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">&#xa0;</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+<div id="outline-container-orgf5e05c3" class="outline-3">
+<h3 id="orgf5e05c3"><span class="section-number-3">1.7.</span> projectile-ruby</h3>
+<div class="outline-text-3" id="text-1-7">
+<table>
+
+
+<colgroup>
+<col  class="org-left">
+
+<col  class="org-left">
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left">key</th>
+<th scope="col" class="org-left">function</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left">f</td>
+<td class="org-left">Ruby file</td>
+</tr>
+
+<tr>
+<td class="org-left">d</td>
+<td class="org-left">file DWIM</td>
+</tr>
+
+<tr>
+<td class="org-left">r</td>
+<td class="org-left">Routes</td>
+</tr>
+
+<tr>
+<td class="org-left">g</td>
+<td class="org-left">Gemfile</td>
+</tr>
+
+<tr>
+<td class="org-left">t</td>
+<td class="org-left">template</td>
+</tr>
+
+<tr>
+<td class="org-left">j</td>
+<td class="org-left">visit javascript</td>
+</tr>
+
+<tr>
+<td class="org-left">s</td>
+<td class="org-left">Seeds</td>
+</tr>
+
+<tr>
+<td class="org-left">h</td>
+<td class="org-left">Helper</td>
+</tr>
+
+<tr>
+<td class="org-left">v</td>
+<td class="org-left">Current View</td>
+</tr>
+
+<tr>
+<td class="org-left">c</td>
+<td class="org-left">current controller</td>
+</tr>
+
+<tr>
+<td class="org-left">m</td>
+<td class="org-left">current model</td>
+</tr>
+
+<tr>
+<td class="org-left">V</td>
+<td class="org-left">view</td>
+</tr>
+
+<tr>
+<td class="org-left">C</td>
+<td class="org-left">controller</td>
+</tr>
+
+<tr>
+<td class="org-left">M</td>
+<td class="org-left">Model</td>
+</tr>
+
+<tr>
+<td class="org-left">k</td>
+<td class="org-left">kill buffers</td>
+</tr>
+
+<tr>
+<td class="org-left">p</td>
+<td class="org-left">Grep Project</td>
+</tr>
+
+<tr>
+<td class="org-left">P</td>
+<td class="org-left">visit project</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div id="outline-container-org8bc7fcb" class="outline-3">
+<h3 id="org8bc7fcb"><span class="section-number-3">1.8.</span> Ido文件管理器</h3>
+<div class="outline-text-3" id="text-1-8">
+<table>
+
+
+<colgroup>
+<col  class="org-left">
+
+<col  class="org-left">
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left">key</th>
+<th scope="col" class="org-left">function</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left">Ido文件管理</td>
+<td class="org-left">&#xa0;</td>
+</tr>
+
+<tr>
+<td class="org-left">M-s-p/n</td>
+<td class="org-left">上下匹配</td>
+</tr>
+
+<tr>
+<td class="org-left">M-s-h/l</td>
+<td class="org-left">上/下一个工作目录</td>
+</tr>
+
+<tr>
+<td class="org-left">C-x i</td>
+<td class="org-left">插入缓存</td>
+</tr>
+
+<tr>
+<td class="org-left">C-x I</td>
+<td class="org-left">插入文件</td>
+</tr>
+
+<tr>
+<td class="org-left">M-[oO]</td>
+<td class="org-left">-</td>
+</tr>
+
+<tr>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">&#xa0;</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div id="outline-container-orgea65fa4" class="outline-3">
+<h3 id="orgea65fa4"><span class="section-number-3">1.9.</span> 多标签操作</h3>
+<div class="outline-text-3" id="text-1-9">
+<table>
+
+
+<colgroup>
+<col  class="org-left">
+
+<col  class="org-left">
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left">key</th>
+<th scope="col" class="org-left">function</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left">M-[78]</td>
+<td class="org-left">选择前/后一个标签</td>
+</tr>
+
+<tr>
+<td class="org-left">M-s-[78]</td>
+<td class="org-left">选择第一个或最后一个标签</td>
+</tr>
+
+<tr>
+<td class="org-left">C-;</td>
+<td class="org-left">关闭当前标签</td>
+</tr>
+
+<tr>
+<td class="org-left">s-q</td>
+<td class="org-left">关闭特定模式标签</td>
+</tr>
+
+<tr>
+<td class="org-left">S-Q</td>
+<td class="org-left">关闭所有标签</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<div id="outline-container-orgc5808e1" class="outline-3">
+<h3 id="orgc5808e1"><span class="section-number-3">1.10.</span> EAF</h3>
+<div class="outline-text-3" id="text-1-10">
+<table>
+
+
+<colgroup>
+<col  class="org-left">
+
+<col  class="org-left">
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left">key</th>
+<th scope="col" class="org-left">function</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left">M-j</td>
+<td class="org-left">用 eaf 打开文件管理器</td>
+</tr>
+
+<tr>
+<td class="org-left">s-'</td>
+<td class="org-left">eaf-open</td>
+</tr>
+
+<tr>
+<td class="org-left">s-\</td>
+<td class="org-left">eaf-open-browser</td>
+</tr>
+
+<tr>
+<td class="org-left">s-/</td>
+<td class="org-left">eaf-open-terminal</td>
+</tr>
+
+<tr>
+<td class="org-left">s-b</td>
+<td class="org-left">eaf-open-rss-reader</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</div>
+<div id="postamble" class="status">
+<p class="author">Author: Zhicheng Lee</p>
+<p class="date">Created: 2022-05-15 Sun 21:47</p>
+<p class="validation"><a href="https://validator.w3.org/check?uri=referer">Validate</a></p>
+</div>
+</body>
+</html>
