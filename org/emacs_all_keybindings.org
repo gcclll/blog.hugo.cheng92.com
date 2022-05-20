@@ -1,0 +1,25 @@
+:PROPERTIES:
+:ID:       1F5B5C65-C3FE-466E-8C94-D1EAE54163FD
+:END:
+#+SETUPFILE:~/.gclrc/org/hugo_setup.org
+#+HUGO_SLUG: emacs_all_keybindings
+#+PROPERTY: header-args:js :exports both
+#+PROPERTY: header-args :noweb no-export
+#+HTML_HEAD: <meta name="category" content="emacs"/>
+#+HTML_HEAD: <meta name="tags" content="keybinding"/>
+#+HTML_HEAD: <meta name="createdAt" content="2022-05-21 00:20:53"/>
+#+TITLE: Emacs All Keybindings
+<badge: GCCLL | Homepage | green | / | gnu-emacs | tinder>
+
+基于 vue + element-plus 实现的 Emacs 按键管理工具。
+
+#+begin_export html
+<div id="PZm5mPCu"></div>
+<script type="text/javascript" src="../assets/tests/"></script>
+#+end_export
+
+
+* COMMENT Local Variables       :ARCHIVE:
+# Local Variables:
+# after-save-hook: gcl/org-html-export-to-html
+# End:

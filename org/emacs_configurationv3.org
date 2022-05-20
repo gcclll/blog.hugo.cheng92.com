@@ -9,7 +9,17 @@
 #+HTML_HEAD: <meta name="tags" content="emacs"/>
 #+HTML_HEAD: <meta name="createdAt" content="2022-05-15 21:23:40"/>
 #+TITLE: Emacs ConfigurationV3
+
 <badge: GCCLL | Homepage | green | / | gnu-emacs | tinder>
+
+#+html: <br>
+#+begin_details test :title-color red
+test note ...
+#+end_details
+
+red:color green:color blue:color
+
+kbd:org-mode
 
 * key groups
 ** 常用按键
