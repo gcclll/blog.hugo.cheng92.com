@@ -8,6 +8,7 @@
 #+HTML_HEAD: <meta name="category" content="emacs"/>
 #+HTML_HEAD: <meta name="tags" content="keybinding"/>
 #+HTML_HEAD: <meta name="createdAt" content="2022-05-21 00:20:53"/>
+#+HTML_HEAD: <script>window.isHomeLike=true</script>
 #+TITLE: Emacs All Keybindings
 <badge: GCCLL | Homepage | green | / | gnu-emacs | tinder>
 
@@ -15,7 +16,9 @@
 
 #+begin_export html
 <div id="PZm5mPCu"></div>
-<script type="text/javascript" src="../assets/tests/"></script>
+<script src="../assets/tests/utils.js"></script>
+<script src="../assets/tests/emacs-all-keys.js"></script>
+<script type="text/javascript" src="../assets/tests/PZm5mPCu.js"></script>
 #+end_export
 
 

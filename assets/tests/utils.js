@@ -33,3 +33,53 @@ function syntaxHighlight(json) {
     }
   )
 }
+
+function filterList(queryList, list = [], cacheMap) {
+  if (typeof queryList === 'string') {
+    queryList = queryList.replace(/\s+/g, ' ').toLowerCase().split(' ')
+  }
+  const cacheKey = queryList.join('-')
+  if (cacheMap && cacheMap[cacheKey]) return cacheKey
+
+  const cached = {} // map<string, boolean>
+
+  const result = list
+    .map((page) => {
+      const isString = typeof page === 'string'
+      const title =
+        typeof page === 'object' ? page.title || page.text || page.value : page
+      let text = $(`<p>${title}</p>`).text()
+      // .toLowerCase()
+      // 去重
+      if (cached[text]) {
+        return
+      }
+
+      if (
+        queryList.every(
+          (q) =>
+            text.toLowerCase().indexOf(q.replace(/^\^|\$$/, '').toLowerCase()) >
+            -1
+        )
+      ) {
+        const r = new RegExp('(' + queryList.join('|') + ')', 'ig')
+        let result = text.replace(r, (match) => {
+          const first = match[0]
+          let word = match
+          if (first >= 'A' && first <= 'Z') {
+            word = `${match[0].toUpperCase() + match.substring(1)}`
+          }
+          return `<span class="hl-word">${word}</span>`
+        })
+        cached[text] = true
+        return isString ? result : { ...page, title: result }
+      }
+    })
+    .filter(Boolean)
+
+  if (cacheMap) {
+    cacheMap[cacheKey] = result
+  }
+
+  return result
+}

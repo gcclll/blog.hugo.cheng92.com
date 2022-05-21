@@ -5,21 +5,29 @@ $(function () {
 <template #header>
 <el-input v-model="text" placeholder="请输入搜索key或其描述查找"/>
 </template>
-<ul class="box">
-<li v-for="({key, desc}) in items" :key="key">
-<el-row>
-<el-col :span="8">{{key}}</el-col>
-<el-col :span="16">{{desc}}</el-col>
-</el-row>
-</li>
-</ul>
+<div class="box">
+<p v-for="(item, i) in items" :key="i" v-html="item"/>
+</div>
 </el-card>
 `,
     setup() {
-      const items = Vue.reactive([
-        { key: 'C-c', desc: 'test' }
-      ])
-      return { items }
+      const _keys = Vue.readonly(window._keys)
+      const items = Vue.ref([])
+      const text = Vue.ref('')
+      
+      Vue.onMounted(() => {
+        items.value = _keys
+      })
+
+      Vue.watch(text, val => {
+        console.log({ val });
+        if (val) {
+          items.value = filterList(val, _keys)
+        } else {
+          items.value = _keys
+        }
+      })
+      return { items, text }
     }
   }).use(ElementPlus).mount('#PZm5mPCu')
 })
