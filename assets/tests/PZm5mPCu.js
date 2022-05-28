@@ -6,28 +6,32 @@ $(function () {
 <el-input v-model="text" placeholder="请输入搜索key或其描述查找"/>
 </template>
 <div class="box">
-<p v-for="(item, i) in items" :key="i" v-html="item"/>
+<section v-for="(list, title) in items">
+<template v-if="list.length">
+  <el-divider>{{ title }}</el-divider>
+  <p v-for="(item, i) in list" :key="i" v-html="item"/>
+</template>
+</section>
 </div>
 </el-card>
 `,
     setup() {
-      const _keys = Vue.readonly(window._keys)
-      const items = Vue.ref([])
+      const original = Vue.readonly(window.$keyMaps)
+      const keyMaps = Vue.reactive(_.cloneDeep(original))
       const text = Vue.ref('')
       
-      Vue.onMounted(() => {
-        items.value = _keys
-      })
-
       Vue.watch(text, val => {
-        console.log({ val });
         if (val) {
-          items.value = filterList(val, _keys)
+          for (let prop in original) {
+            // 不能改变原始数据，所以深拷贝出来
+            const list = _.cloneDeep(original[prop])
+            keyMaps[prop] = filterList(val, list)
+          }
         } else {
-          items.value = _keys
+          _.assign(keyMaps, _.cloneDeep(original))
         }
       })
-      return { items, text }
+      return { items: keyMaps, text }
     }
   }).use(ElementPlus).mount('#PZm5mPCu')
 })

@@ -2,7 +2,9 @@
 
 /** jsx?|tsx? file header */
 $(function () {
-  $(".tooltip").tooltipster({
+  var tts = $(".tooltip").tooltipster;
+  if (typeof tts !== 'function') return;
+  tts({
     theme: "tooltipster-punk",
     contentAsHTML: true,
     animation: "grow",

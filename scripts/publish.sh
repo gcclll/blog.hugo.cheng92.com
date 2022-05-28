@@ -5,6 +5,7 @@ path=$(pwd)
 echo "> generate sites index..."
 npm run stats
 
+npm run bindings # 解析出 init-general-key.el 中的按键
 # npm run apps
 
 # build scss -> css

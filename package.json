@@ -8,6 +8,7 @@
     "pub": "./scripts/publish.sh",
     "stats": "node ./scripts/parse.js",
     "apps": "node ./scripts/parse-app.js",
+    "bindings": "node ./scripts/parse-emacs.js",
     "dev": "rollup -c -w"
   },
   "repository": "git+https://github.com/gcclll/blog.cheng92.com.git",
