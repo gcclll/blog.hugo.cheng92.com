@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<!-- 2022-05-28 Sat 08:14 -->
+<!-- 2022-05-29 Sun 11:38 -->
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Emacs All Keybindings</title>
@@ -214,7 +214,6 @@
 <meta name="category" content="emacs"/>
 <meta name="tags" content="keybinding"/>
 <meta name="createdAt" content="2022-05-21 00:20:53"/>
-<script>window.isHomeLike=true</script>
 
         <style>
         /* From: https://endlessparentheses.com/public/css/endless.css */
@@ -286,6 +285,15 @@
 <body>
 <div id="content" class="content">
 <h1 class="title">Emacs All Keybindings</h1>
+<div id="table-of-contents" role="doc-toc">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents" role="doc-toc">
+<ul>
+<li><a href="#org41ccff4">1. Search</a></li>
+<li><a href="#org674669e">2. Ranger</a></li>
+</ul>
+</div>
+</div>
 <p>
 <a href="/"><img src="https://img.shields.io/badge/GCCLL-Homepage-green?logo=gnu-emacs"></a>
 </p>
@@ -294,28 +302,356 @@
 基于 vue + element-plus 实现的 Emacs 按键管理工具。
 </p>
 
-<ul class="org-ul">
-<li class="off"><code>[&#xa0;]</code> TODO org-super-agenda</li>
-</ul>
-
-
+<div id="outline-container-org41ccff4" class="outline-2">
+<h2 id="org41ccff4"><span class="section-number-2">1.</span> Search</h2>
+<div class="outline-text-2" id="text-1">
 <div id="PZm5mPCu"></div>
 <script src="../assets/tests/utils.js"></script>
 <script src="../assets/js/dist/emacs.js"></script>
 <script src="../assets/tests/emacs-all-keys.js"></script>
 <script type="text/javascript" src="../assets/tests/PZm5mPCu.js"></script>
+</div>
+</div>
+
+<div id="outline-container-org674669e" class="outline-2">
+<h2 id="org674669e"><span class="section-number-2">2.</span> Ranger</h2>
+<div class="outline-text-2" id="text-2">
+<table>
+
+
+<colgroup>
+<col  class="org-left">
+
+<col  class="org-left">
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left">按键</th>
+<th scope="col" class="org-left">功能</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left"><code>?</code></td>
+<td class="org-left">显示基本命令</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>f</code></td>
+<td class="org-left">搜索文件或目录</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="org-left">CRMD</td>
+<td class="org-left">拷贝、重命名、移动、删除(标记或当前)</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>;C</code></td>
+<td class="org-left">拷贝</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>R</code></td>
+<td class="org-left">重命名</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>D</code></td>
+<td class="org-left">删除</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>;d</code></td>
+<td class="org-left">标记删除</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>;x</code></td>
+<td class="org-left">执行删除</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>;+/+</code></td>
+<td class="org-left">创建目录</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>;=/=</code></td>
+<td class="org-left">比较两个文件</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>;g</code></td>
+<td class="org-left">反转当前buffer</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>;k</code></td>
+<td class="org-left">隐藏标记的文件 <code>C-r</code>  重新显示</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="org-left">子目录</td>
+<td class="org-left">&#xa0;</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>I</code></td>
+<td class="org-left">插入选中的目录</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>gk</code></td>
+<td class="org-left">移动到上一个子目录</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>gj</code></td>
+<td class="org-left">移到到下一个子目录</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="org-left">标记</td>
+<td class="org-left">&#xa0;</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>t</code></td>
+<td class="org-left">标记/取消标记</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>;m/C-SPC/TAB</code></td>
+<td class="org-left">标记当前的并选择下一个</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>;u</code></td>
+<td class="org-left">取消标记</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>;U</code></td>
+<td class="org-left">取消所有标记</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>v</code></td>
+<td class="org-left">反转所有标记</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>"</code></td>
+<td class="org-left">标记文件(正则)</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="org-left">排序</td>
+<td class="org-left">n/N 名称, e/E 扩展名,s/S大小</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>o?</code></td>
+<td class="org-left">o/O修改时间, c/C 创建时间, d 目录优先的最后</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="org-left">切换</td>
+<td class="org-left">&#xa0;</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>i</code></td>
+<td class="org-left">切换预览窗口(显示/隐藏 )</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>z?</code></td>
+<td class="org-left">h-隐藏文件,(ifpP-+)&#x2026;</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="org-left">shell</td>
+<td class="org-left">&#xa0;</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>!</code></td>
+<td class="org-left">在当前文件上执行shell 命令</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>;&amp;</code></td>
+<td class="org-left">异步执行命令</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>S</code></td>
+<td class="org-left">eshell 窗口</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="org-left">可修改模式</td>
+<td class="org-left">&#xa0;</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>C-c C-e</code></td>
+<td class="org-left">进入修改模式</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>C-c C-c/C-c C-s</code></td>
+<td class="org-left">完成修改并退出编辑模式</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>C-c C-k/C-c ESC</code></td>
+<td class="org-left">退出编辑模式并放弃所有修改</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>C-x C-q</code></td>
+<td class="org-left">退出编辑</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="org-left"><code>du</code></td>
+<td class="org-left">显示选中文件的大小</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>q/ZZ</code></td>
+<td class="org-left">退出</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>Q/ZQ</code></td>
+<td class="org-left">退出</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>C-r</code></td>
+<td class="org-left">刷新</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>k/j</code></td>
+<td class="org-left">上下移动</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>h/-/left</code></td>
+<td class="org-left">定位到父级目录</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>l/RET/right</code></td>
+<td class="org-left">进入选中目录</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>gg</code></td>
+<td class="org-left">到顶部</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>G</code></td>
+<td class="org-left">到底部</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>&lt;</code></td>
+<td class="org-left">到上一个目录</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>&gt;</code></td>
+<td class="org-left">到下一个目录</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>gh</code></td>
+<td class="org-left">到你的家目录($HOME)</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>C-b</code></td>
+<td class="org-left">往上翻一屏</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>C-f</code></td>
+<td class="org-left">往下翻一屏</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>K/C-u</code></td>
+<td class="org-left">往上翻半屏</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>J/C-d</code></td>
+<td class="org-left">往下翻半屏</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>C-k</code></td>
+<td class="org-left">向上滚动窗口</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>C-j</code></td>
+<td class="org-left">向下滚动窗口</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>[</code></td>
+<td class="org-left">上一个父级目录</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>]</code></td>
+<td class="org-left">下一个父级目录</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>M-{</code></td>
+<td class="org-left">上一个标记的文件/目录</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>M-}</code></td>
+<td class="org-left">下一个标记的文件/目录</td>
+</tr>
+
+<tr>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">&#xa0;</td>
+</tr>
+</tbody>
+</table>
 
 <p>
-结束。
+I	insert subdirectory from selected folder
+gk	move to prev subdirectory
+gj	move to next subdirectory
 </p>
-
-<pre class="example">
-
-</pre>
+</div>
+</div>
 </div>
 <div id="postamble" class="status">
 <p class="author">Author: Zhicheng Lee</p>
-<p class="date">Created: 2022-05-28 Sat 08:14</p>
+<p class="date">Created: 2022-05-29 Sun 11:38</p>
 <p class="validation"><a href="https://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>
