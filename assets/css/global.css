@@ -587,21 +587,6 @@ blockquote {
     width: 100% !important;
   }
 }
-.tooltipster-base {
-  max-width: 100vw;
-}
-
-.tooltipster-box .tooltipster-content strong {
-  color: green;
-}
-.tooltipster-box .tooltipster-content h2 {
-  color: aqua;
-}
-.tooltipster-box .tooltipster-content h3 {
-  text-indent: 0;
-  color: cyan;
-}
-
 pre.debug {
   outline: 1px solid #ccc;
   padding: 5px;
@@ -628,6 +613,21 @@ pre.debug.line {
   color: red;
   border: none;
   outline: none;
+}
+
+.tooltipster-base {
+  max-width: 100vw;
+}
+
+.tooltipster-box .tooltipster-content strong {
+  color: green;
+}
+.tooltipster-box .tooltipster-content h2 {
+  color: aqua;
+}
+.tooltipster-box .tooltipster-content h3 {
+  text-indent: 0;
+  color: cyan;
 }
 
 /*# sourceMappingURL=global.css.map */
