@@ -45,6 +45,18 @@ fatal: No url found for submodule path 'site-lisp/extensions/company-mode' in .g
 #+end_answer-block
 #+end_question-block
 
+* brew
+
+** How to fix the Homebrew error `Permission denied @ apply2files`
+
+[[https://flaviocopes.com/homebrew-fix-permission-denied-apply2files/][How to fix the Homebrew error `Permission denied @ apply2files`]]
+
+~$ mkdir -p /Applications/Docker.app/Contents/Resources/cli-plugins~
+
+~$ brew cleanup~
+
+-> [[$HOME/.gclrc/bin/fix-brew-permission-denied-apply2files]]
+
 * COMMENT Local Variables :ARCHIVE:
 # Local Variables:
 # after-save-hook: gcl/org-html-export-to-html
