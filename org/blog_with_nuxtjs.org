@@ -1,0 +1,18 @@
+:PROPERTIES:
+:ID:       4CA2735D-723C-4DAF-8273-20DF05D660DA
+:END:
+#+SETUPFILE:~/.gclrc/org/hugo_setup.org
+#+HUGO_SLUG: blog_with_nuxtjs
+#+PROPERTY: header-args:js :exports both
+#+PROPERTY: header-args :noweb no-export
+#+TITLE: blog with nuxtjs
+
+<badge: GCCLL | Homepage | green | / | gnu-emacs | tinder>
+
+test nuxtjs blog
+
+
+* COMMENT Local Variables       :ARCHIVE:
+# Local Variables:
+# after-save-hook: gcl/org-html-export-to-html
+# End:

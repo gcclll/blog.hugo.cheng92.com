@@ -1,0 +1,1 @@
+window.$stats=window.$stats||{};window.$stats['blog_with_nuxtjs.html']={"IDLinks":[],"aLinks":[{"text":"Validate","url":"https://validator.w3.org/check?uri=referer","tag":"A","filename":"blog_with_nuxtjs.html"}],"toc":null}
