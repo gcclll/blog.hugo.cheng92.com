@@ -1,0 +1,19 @@
+:PROPERTIES:
+:ID:       2211091B-7400-44F9-A005-383B23BF4824
+:END:
+#+SETUPFILE:~/.gclrc/org/hugo_setup.org
+#+HUGO_SLUG: org_file_parser_with_javascript
+#+PROPERTY: header-args:js :exports both
+#+PROPERTY: header-args :noweb no-export
+#+TITLE: Org File Parser With JavaScript
+
+<badge: GCCLL | Homepage | green | / | gnu-emacs | tinder>
+
+* TODOS
+
+- [-] setup repo
+
+* COMMENT Local Variables       :ARCHIVE:
+# Local Variables:
+# after-save-hook: gcl/org-html-export-to-html
+# End:

@@ -140,6 +140,138 @@ pre.example::before {
   content: "Output:";
 }
 
+/* Set the colors in <pre> blocks from the Leuven theme */
+body {
+  font-family: "EB Garamond", "Lato", "proxima-nova", "Helvetica Neue", Arial, sans-serif;
+}
+
+h2,
+h3 {
+  font-family: "Cinzel Decorative";
+}
+
+sub,
+sup {
+  font-style: italic;
+  color: green;
+}
+
+a,
+abbr {
+  font-family: "EB Garamond";
+}
+
+pre span.org-builtin {
+  color: #006fe0;
+  font-weight: bold;
+}
+pre span.org-string {
+  color: #008000;
+}
+pre span.org-keyword {
+  color: #0000ff;
+}
+pre span.org-variable-name {
+  color: #ba36a5;
+}
+pre span.org-function-name {
+  color: #006699;
+}
+pre span.org-type {
+  color: #6434a3;
+}
+pre span.org-preprocessor {
+  color: #808080;
+  font-weight: bold;
+}
+pre span.org-constant {
+  color: #d0372d;
+}
+pre span.org-comment-delimiter {
+  color: #8d8d84;
+}
+pre span.org-comment {
+  color: #8d8d84;
+  font-style: italic;
+}
+pre span.org-outshine-level-1 {
+  color: #8d8d84;
+  font-style: italic;
+}
+pre span.org-outshine-level-2 {
+  color: #8d8d84;
+  font-style: italic;
+}
+pre span.org-outshine-level-3 {
+  color: #8d8d84;
+  font-style: italic;
+}
+pre span.org-outshine-level-4 {
+  color: #8d8d84;
+  font-style: italic;
+}
+pre span.org-outshine-level-5 {
+  color: #8d8d84;
+  font-style: italic;
+}
+pre span.org-outshine-level-6 {
+  color: #8d8d84;
+  font-style: italic;
+}
+pre span.org-outshine-level-7 {
+  color: #8d8d84;
+  font-style: italic;
+}
+pre span.org-outshine-level-8 {
+  color: #8d8d84;
+  font-style: italic;
+}
+pre span.org-outshine-level-9 {
+  color: #8d8d84;
+  font-style: italic;
+}
+pre span.org-rainbow-delimiters-depth-1 {
+  color: #707183;
+}
+pre span.org-rainbow-delimiters-depth-2 {
+  color: #7388d6;
+}
+pre span.org-rainbow-delimiters-depth-3 {
+  color: #909183;
+}
+pre span.org-rainbow-delimiters-depth-4 {
+  color: #709870;
+}
+pre span.org-rainbow-delimiters-depth-5 {
+  color: #907373;
+}
+pre span.org-rainbow-delimiters-depth-6 {
+  color: #6276ba;
+}
+pre span.org-rainbow-delimiters-depth-7 {
+  color: #858580;
+}
+pre span.org-rainbow-delimiters-depth-8 {
+  color: #80a880;
+}
+pre span.org-rainbow-delimiters-depth-9 {
+  color: #887070;
+}
+pre span.org-sh-quoted-exec {
+  color: #ff1493;
+}
+pre span.org-diff-removed {
+  background-color: #ffebe9;
+}
+pre span.org-diff-indicator-added {
+  background-color: #e6ffec;
+}
+
+b,
+strong {
+  color: #a020f0;
+}
+
 div[id^=outline-container-] a {
   font-family: "EB Garamond";
   text-decoration: none;
@@ -468,138 +600,6 @@ blockquote {
 .tooltipster-box .tooltipster-content h3 {
   text-indent: 0;
   color: cyan;
-}
-
-/* Set the colors in <pre> blocks from the Leuven theme */
-body {
-  font-family: "EB Garamond", "Lato", "proxima-nova", "Helvetica Neue", Arial, sans-serif;
-}
-
-h2,
-h3 {
-  font-family: "Cinzel Decorative";
-}
-
-sub,
-sup {
-  font-style: italic;
-  color: green;
-}
-
-a,
-abbr {
-  font-family: "EB Garamond";
-}
-
-pre span.org-builtin {
-  color: #006fe0;
-  font-weight: bold;
-}
-pre span.org-string {
-  color: #008000;
-}
-pre span.org-keyword {
-  color: #0000ff;
-}
-pre span.org-variable-name {
-  color: #ba36a5;
-}
-pre span.org-function-name {
-  color: #006699;
-}
-pre span.org-type {
-  color: #6434a3;
-}
-pre span.org-preprocessor {
-  color: #808080;
-  font-weight: bold;
-}
-pre span.org-constant {
-  color: #d0372d;
-}
-pre span.org-comment-delimiter {
-  color: #8d8d84;
-}
-pre span.org-comment {
-  color: #8d8d84;
-  font-style: italic;
-}
-pre span.org-outshine-level-1 {
-  color: #8d8d84;
-  font-style: italic;
-}
-pre span.org-outshine-level-2 {
-  color: #8d8d84;
-  font-style: italic;
-}
-pre span.org-outshine-level-3 {
-  color: #8d8d84;
-  font-style: italic;
-}
-pre span.org-outshine-level-4 {
-  color: #8d8d84;
-  font-style: italic;
-}
-pre span.org-outshine-level-5 {
-  color: #8d8d84;
-  font-style: italic;
-}
-pre span.org-outshine-level-6 {
-  color: #8d8d84;
-  font-style: italic;
-}
-pre span.org-outshine-level-7 {
-  color: #8d8d84;
-  font-style: italic;
-}
-pre span.org-outshine-level-8 {
-  color: #8d8d84;
-  font-style: italic;
-}
-pre span.org-outshine-level-9 {
-  color: #8d8d84;
-  font-style: italic;
-}
-pre span.org-rainbow-delimiters-depth-1 {
-  color: #707183;
-}
-pre span.org-rainbow-delimiters-depth-2 {
-  color: #7388d6;
-}
-pre span.org-rainbow-delimiters-depth-3 {
-  color: #909183;
-}
-pre span.org-rainbow-delimiters-depth-4 {
-  color: #709870;
-}
-pre span.org-rainbow-delimiters-depth-5 {
-  color: #907373;
-}
-pre span.org-rainbow-delimiters-depth-6 {
-  color: #6276ba;
-}
-pre span.org-rainbow-delimiters-depth-7 {
-  color: #858580;
-}
-pre span.org-rainbow-delimiters-depth-8 {
-  color: #80a880;
-}
-pre span.org-rainbow-delimiters-depth-9 {
-  color: #887070;
-}
-pre span.org-sh-quoted-exec {
-  color: #ff1493;
-}
-pre span.org-diff-removed {
-  background-color: #ffebe9;
-}
-pre span.org-diff-indicator-added {
-  background-color: #e6ffec;
-}
-
-b,
-strong {
-  color: #a020f0;
 }
 
 pre.debug {
