@@ -113,7 +113,7 @@ parent、first child、sibling 这三个链接这个整个fiber 树的，这也�
 #+begin_quote
 nodeValue: [[https://www.w3schools.com/jsref/prop_node_nodevalue.asp][HTML DOM nodeValue Property]]
 
-[[/img/tmp/dom-prop-nodeValue.png]]
+[[../assets/img/tmp/dom-prop-nodeValue.png]]
 #+end_quote
 
 完整代码：
@@ -553,7 +553,7 @@ function performUnitOfWork(nextUnitOfWork) {
 }
 #+end_src
 
-[[/img/js/request-idle-callback.png]]
+[[../assets/img/js/request-idle-callback.png]]
 
 这里使用 ~requestIdleCallback~ 这个函数会在渲染之前检查是不是有空闲的时间，如果
 有则执行回调，或者超时了强制执行回调。
@@ -592,7 +592,7 @@ Didact.render(
 
 有如下的结构，该结构让每个节点都最多持有三个引用，从而更方便的找到下一个 work unit:
 
-[[/img/react/fiber-0.png]]
+[[../assets/img/react/fiber-0.png]]
 
 render 查找步骤拆解：
 
