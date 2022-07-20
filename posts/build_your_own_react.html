@@ -1,12 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <!-- 2022-04-25 Mon 10:03 -->
+  <!-- 2022-07-20 Wed 20:28 -->
   <meta charset="utf-8">
   <meta name="viewport" content=
   "width=device-width, initial-scale=1">
   <title>Build your own react</title>
-  <meta name="author" content="Zhicheng Lee">
+  <meta name="author" content="Lee Zhicheng">
   <meta name="generator" content="Org Mode">
   <style>
   #content { max-width: 60em; margin: auto; }
@@ -190,7 +190,7 @@
     { font-size: 10px; font-weight: bold; white-space: nowrap; }
   .org-info-js_search-highlight
     { background-color: #ffff00; color: #000000; font-weight: bold; }
-  .org-svg { width: 90%; }
+  .org-svg { }
   </style>
   <link rel="stylesheet" type="text/css" href=
   "/assets/css/htmlize.css">
@@ -224,6 +224,8 @@
   <script type="text/javascript" src=
   "/assets/js/element-plus.js"></script>
   <script type="text/javascript" src=
+  "/assets/js/element-icons.js"></script>
+  <script type="text/javascript" src=
   "/assets/js/dist/stats.js"></script>
   <script type="text/javascript" src=
   "/assets/js/dist/apps.js"></script>
@@ -231,65 +233,1703 @@
   "/assets/js/dist/global.js"></script>
   <meta name="category" content="react">
   <meta name="createdAt" content="2022-03-06 09:40:27">
-  <style>
-        /* From: https://endlessparentheses.com/public/css/endless.css */
-        /* See also: https://meta.superuser.com/questions/4788/css-for-the-new-kbd-style */
-        kbd
-        {
-          -moz-border-radius: 6px;
-          -moz-box-shadow: 0 1px 0 rgba(0,0,0,0.2),0 0 0 2px #fff inset;
-          -webkit-border-radius: 6px;
-          -webkit-box-shadow: 0 1px 0 rgba(0,0,0,0.2),0 0 0 2px #fff inset;
-          background-color: #f7f7f7;
-          border: 1px solid #ccc;
-          border-radius: 6px;
-          box-shadow: 0 1px 0 rgba(0,0,0,0.2),0 0 0 2px #fff inset;
-          color: #333;
-          display: inline-block;
-          font-family: 'Droid Sans Mono', monospace;
-          font-size: 80%;
-          font-weight: normal;
-          line-height: inherit;
-          margin: 0 .1em;
-          padding: .08em .4em;
-          text-shadow: 0 1px 0 #fff;
-          word-spacing: -4px;
-        
-          box-shadow: 2px 2px 2px #222; /* MA: An extra I've added. */
-        }
-  </style>
-  <link rel="stylesheet" type="text/css" href=
-  "/assets/css/tooltipster.bundle.min.css">
-  <link rel="stylesheet" type="text/css" href=
-  "/assets/css/tooltipster-sideTip-punk.min.css">
-  <script type="text/javascript">
-            if (typeof jQuery == 'undefined') {
-                document.write(unescape('%3Cscript src="https://code.jquery.com/jquery-1.10.0.min.js"%3E%3C/script%3E'));
-            }
-  </script>
-  <script type="text/javascript" src=
-  "/assets/js/tooltipster.bundle.min.js"></script>
-  <script type="text/javascript" src=
-  "/assets/js/tooltipster-scrollableTip.min.js"></script>
-  <script type="text/javascript" src=
-  "/assets/js/dist/tooltips.js"></script>
-  <style>
-           abbr {color: red;}
-        
-           .tooltip { border-bottom: 1px dotted #000;
-                      color:red;
-                      text-decoration: none;}
-  </style>
 </head>
 <body>
   <div id="content" class="content">
     <h1 class="title">Build your own react</h1>
-    <p><a href="/"><img src=
-    "https://img.shields.io/badge/GCCLL-Homepage-green?logo=gnu-emacs"></a></p>
+    <div id="table-of-contents" role="doc-toc">
+      <h2>Table of Contents</h2>
+      <div id="text-table-of-contents" role="doc-toc">
+        <ul>
+          <li>
+            <a href="#map">1. 代码脑图</a>
+          </li>
+          <li>
+            <a href="#preview">2. 预览</a>
+          </li>
+          <li>
+            <a href="#create-element">3. createElement</a>
+          </li>
+          <li>
+            <a href="#render">4. render</a>
+          </li>
+          <li>
+            <a href="#concurrent">5. 并发模式(workLoop())</a>
+          </li>
+          <li>
+            <a href="#fibers">6. Fibers</a>
+          </li>
+          <li>
+            <a href="#render-commit">7. Render and Commit 阶段</a>
+          </li>
+          <li>
+            <a href="#update-delete">8. updating and deleting
+            更新和删除</a>
+          </li>
+          <li>
+            <a href="#function-component">9. 函数组件</a>
+          </li>
+          <li>
+            <a href="#hooks">10. hooks</a>
+          </li>
+          <li>
+            <a href="#src-map">11. 最终源码流程图</a>
+          </li>
+          <li>
+            <a href="#test">12. 测试</a>
+          </li>
+          <li>
+            <a href="#summary">13. 总结</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+    <p>&lt;badge: GCCLL | Homepage | green | / | gnu-emacs |
+    tinder&gt;</p>
+    <link href=
+    "https://fonts.goo~gleapis.com/cs~s2?family=ZCOOL+XiaoWei&amp;display=swap"
+    rel="stylesheet"><kbd><font color="blue" size="3" style=
+    "font-family: 'ZCOOL XiaoWei', serif;">诗号：半神半圣亦半仙，全儒全道是全贤，脑中真书藏万卷，掌握文武半边天。</font></kbd><br>
+
+    <br>
+    <script src="/js/react/didact.js"></script> <img src=
+    "/img/bdx/shz-001.jpg">
+    <blockquote>
+      <p>该文代码均来自：<a href=
+      "https://pomb.us/build-your-own-react/">Build your own
+      React</a>， 所以文中代码会保持和原作者定义一致。</p>
+    </blockquote>
+    <div id="outline-container-map" class="outline-2">
+      <h2 id="map"><span class="section-number-2">1.</span>
+      代码脑图</h2>
+      <div class="outline-text-2" id="text-map">
+        <div class="org-src-container">
+          <pre class="src src-js"><span class=
+          "org-keyword">const</span> <span class=
+          "org-variable-name">element</span> = &lt;h1 title=<span class=
+          "org-string">"foo"</span>&gt;Hello&lt;/h1&gt;;
+<span class="org-keyword">const</span> <span class=
+"org-variable-name">container</span> = document.getElementById(<span class="org-string">"root"</span>);
+ReactDOM.render(element, container);
+</pre>
+        </div>
+        <div id="org56fc1b2" class="figure">
+          <p><img src="file:///img/react/react-zero.svg" alt=
+          "react-zero.svg" class="org-svg"></p>
+        </div>
+        <p>实现主要分为几个步骤</p>
+        <ol class="org-ol">
+          <li>createElement 函数实现</li>
+          <li>render 函数实现</li>
+          <li>并发模式，渲染任务的执行 <code>workLoop()</code> 函数</li>
+          <li>Fibers react 中通过 fiber 结构来链接 parent, first child,
+          sibling 以及作为节 点的结构，类似 vue 的 VNode</li>
+          <li>渲染和 commit 阶段，为了解决渲染进程可能被浏览器中断的问题，采取的是延迟渲染， 即在所有的
+          fiber 处理完之后，在最后执行渲染操作。</li>
+          <li>更新，新增，删除操作</li>
+          <li>函数式组件实现</li>
+          <li>钩子函数的实现 <code>useState</code></li>
+        </ol>
+      </div>
+    </div>
+    <div id="outline-container-preview" class="outline-2">
+      <h2 id="preview"><span class="section-number-2">2.</span>
+      预览</h2>
+      <div class="outline-text-2" id="text-preview">
+        <p>react 使用实例：</p>
+        <div class="org-src-container">
+          <pre class="src src-js"><span class=
+          "org-keyword">const</span> <span class=
+          "org-variable-name">element</span> = &lt;h1 title=<span class=
+          "org-string">"foo"</span>&gt;Hello&lt;/h1&gt;;
+<span class="org-keyword">const</span> <span class=
+"org-variable-name">container</span> = document.getElementById(<span class="org-string">'root'</span>);
+ReactDOM.render(element, container)
+</pre>
+        </div>
+        <p>首先 <code>const element = &lt;h1
+        title="foo"&gt;Hello&lt;/h1&gt;;</code> 属于 JSX 书写风格，这个会被转
+        换成 JS 代码:</p>
+        <div class="org-src-container">
+          <pre class="src src-js"><span class=
+          "org-comment-delimiter">// </span><span class=
+          "org-comment">参数：</span>
+<span class="org-comment-delimiter">// </span><span class=
+"org-comment">1. type: 'h1' 标签名</span>
+<span class="org-comment-delimiter">// </span><span class=
+"org-comment">2. props: {title: 'foo'} 为元素的属性对象</span>
+<span class="org-comment-delimiter">// </span><span class=
+"org-comment">3. children: 'Hello' 为子元素</span>
+<span class="org-keyword">const</span> <span class=
+"org-variable-name">element</span> = React.createElement(<span class="org-string">"h1"</span>, { title: <span class="org-string">"foo"</span> }, <span class="org-string">"Hello"</span>);
+</pre>
+        </div>
+        <p>其次是 <code>ReactDOM.render(element, container)</code>
+        进行渲染到真实DOM的操作，这个函数的 功能简述：</p>
+        <div class="org-src-container">
+          <pre class="src src-js"><span class=
+          "org-comment-delimiter">// </span><span class=
+          "org-comment">1. 根据 element.type 去创建 off-dom 元素</span>
+<span class="org-keyword">const</span> <span class=
+"org-variable-name">node</span> = document.createElement(element.type);
+<span class="org-comment-delimiter">// </span><span class=
+"org-comment">2. 设置属性 props</span>
+node[<span class="org-string">'title'</span>] = element.props.title
+
+<span class="org-comment-delimiter">// </span><span class=
+"org-comment">3. 处理 children 子元素</span>
+<span class="org-keyword">const</span> <span class=
+"org-variable-name">text</span> = document.createTextNode(<span class="org-string">''</span>)
+text[<span class=
+"org-string">'nodeValue'</span>] = element.props.children
+
+<span class="org-comment-delimiter">// </span><span class=
+"org-comment">4. 最后更新到真实DOM树</span>
+node.appendChild(text)
+container.appendChild(node)
+</pre>
+        </div>
+        <p>所以 render 函数的功能总结下来就分为四个步骤：</p>
+        <ol class="org-ol">
+          <li>拿到节点的 fiber 结构，创建 off-dom 元素</li>
+          <li>处理 element.props 属性(可能是动态，静态，也可能是事件属性)</li>
+          <li>处理 element.children 子元素</li>
+          <li>更新到真实的 DOM 树</li>
+        </ol>
+        <p>具体的实现都是围绕这个点去完成的，</p>
+        <p>比如 <b>1</b> 会使用 fiber 结构来组织每个节点，并且每个节点结构一般会有三个引用：
+        parent、first child、sibling 这三个链接这个整个fiber 树的，这也为了后面节点操作
+        时方便查找。</p>
+        <p>又比如 <b>2</b> 中对 props 的处理，会考虑是不是事件属性 onXxx 。</p>
+        <p>以及最后更新真实DOM的时机等待。</p>
+        <blockquote>
+          <p>nodeValue: <a href=
+          "https://www.w3schools.com/jsref/prop_node_nodevalue.asp">
+          HTML DOM nodeValue Property</a></p>
+          <div id="org0f2c500" class="figure">
+            <p><img src="file:///img/tmp/dom-prop-nodeValue.png"
+            alt="dom-prop-nodeValue.png"></p>
+          </div>
+        </blockquote>
+        <p>完整代码：</p>
+        <div class="org-src-container">
+          <pre class="src src-js"><span class=
+          "org-comment-delimiter">// </span><span class=
+          "org-comment">createElement: jsx -&gt; js vnode 结构</span>
+<span class="org-keyword">const</span> <span class=
+"org-variable-name">element</span> = {
+  type: <span class="org-string">'h1'</span>,
+  props: {
+    title: <span class="org-string">'foo'</span>,
+    children: <span class="org-string">'Hello'</span>
+  }
+}
+
+<span class="org-keyword">const</span> <span class=
+"org-variable-name">container</span> = document.getElementById(<span class="org-string">'root'</span>)
+
+<span class="org-comment-delimiter">// </span><span class=
+"org-comment">创建节点</span>
+<span class="org-keyword">const</span> <span class=
+"org-variable-name">node</span> = document.createElement(element.type)
+node[<span class="org-string">'title'</span>] = element.props.title
+
+<span class="org-comment-delimiter">// </span><span class=
+"org-comment">创建子节点</span>
+<span class="org-keyword">const</span> <span class=
+"org-variable-name">text</span> = document.createTextNode(<span class="org-string">''</span>)
+text[<span class=
+"org-string">'nodeValue'</span>] = element.props.children
+
+node.appendChild(text)
+container.appendChild(node)
+</pre>
+        </div><font color="blue">测试：</font>
+        <div id="c07Rp8"></div>
+        <script>
+        // createElement: jsx -> js vnode 结构
+        const element = {
+        type: 'h1',
+        props: {
+        title: 'foo',
+        children: 'Hello'
+        }
+        }
+
+        const container = document.getElementById('c07Rp8')
+
+        // 创建节点
+        const node = document.createElement(element.type)
+        node['title'] = element.props.title
+
+        // 创建子节点
+        const text = document.createTextNode('')
+        text['nodeValue'] = element.props.children
+
+        node.appendChild(text)
+        container.appendChild(node)
+        </script>
+        <div id="org98e1f18" class="figure">
+          <p><img src="file:///img/react/react-render-brief.svg"
+          alt="react-render-brief.svg" class="org-svg"></p>
+        </div>
+      </div>
+    </div>
+    <div id="outline-container-create-element" class="outline-2">
+      <h2 id="create-element"><span class=
+      "section-number-2">3.</span> createElement</h2>
+      <div class="outline-text-2" id="text-create-element">
+        <p>JSX 实例:</p>
+        <div class="org-src-container">
+          <pre class="src src-js"><span class=
+          "org-keyword">const</span> <span class=
+          "org-variable-name">element</span> = (
+  &lt;div id=<span class="org-string">"foo"</span>&gt;
+    &lt;a&gt;bar&lt;/a&gt;
+    &lt;b /&gt;
+  &lt;/div&gt;
+)
+</pre>
+        </div>
+        <p>转成 JS 后调用 createElement:</p>
+        <div class="org-src-container">
+          <pre class="src src-js">React.createElement(
+  <span class="org-string">"div"</span>,
+  {
+    id: <span class="org-string">"foo"</span>,
+  },
+  React.createElement(<span class=
+"org-string">"a"</span>, <span class=
+"org-constant">null</span>, <span class="org-string">"bar"</span>),
+  React.createElement(<span class="org-string">"b"</span>)
+);
+</pre>
+        </div>
+        <p>一个节点在渲染到 DOM 之前都会是以一个VNode 形式存在，其中就包含最基本的 type, props
+        属性。</p>
+        <p><code>{type: 'div', props: { id: 'foo', children: ... }
+        }</code></p>
+        <p>这和 vue vnode 结构是类似的，只不过 vue vnode 的 children 不是在 props
+        里面：</p>
+        <p><code>{type: 'div', props: {id: 'foo'}, children: [...]
+        }</code></p>
+        <p>这里只要知道 createElement 目的是解析节点，返回一个节点结构对象，下面就可以开始尝 试实现
+        createElement 了</p>
+        <p>最简单的实现：</p>
+        <div class="org-src-container">
+          <pre class="src src-js"><span class=
+          "org-comment-delimiter">// </span><span class=
+          "org-comment">第三个参数开始都当做子元素</span>
+<span class="org-keyword">function</span> <span class=
+"org-function-name">createElement</span>(<span class=
+"org-variable-name">type</span>, <span class=
+"org-variable-name">props</span>, ...<span class=
+"org-variable-name">children</span>) {
+  <span class="org-keyword">return</span> {
+    type,
+    props: {
+      ...props,
+      children,
+    },
+  };
+}
+
+<span class="org-comment-delimiter">// </span><span class=
+"org-comment">所以，上面的实例会有如下结构：</span>
+<span class="org-keyword">var</span> <span class=
+"org-variable-name">div</span> = {
+  type: <span class="org-string">"div"</span>,
+  props: { id: <span class=
+"org-string">"foo"</span>, children: [a, b] },
+};
+
+<span class="org-keyword">var</span> <span class=
+"org-variable-name">a</span> = {
+  type: <span class="org-string">"a"</span>,
+  props: {
+    children: [<span class="org-string">"bar"</span>],
+  },
+};
+
+<span class="org-keyword">var</span> <span class=
+"org-variable-name">b</span> = {
+  type: <span class="org-string">"b"</span>,
+  props: {
+    children: [], <span class=
+"org-comment-delimiter">// </span><span class=
+"org-comment">没有的时候默认返回空数组</span>
+  },
+};
+</pre>
+        </div>
+        <p>这里面对于 children 有两种类型</p>
+        <ol class="org-ol">
+          <li><code>&lt;a&gt;bar&lt;/a&gt;</code> 的 children 只有
+          “bar” 是个纯文本类型</li>
+          <li><code>&lt;div&gt;...&lt;/div&gt;</code> 的 children
+          有两个节点 a 和 b ，他们经过 createElement 之后
+          都是对象，所以这里需要进行判断下，纯文本去创建文本节点</li>
+        </ol>
+        <div class="org-src-container">
+          <pre class="src src-js"><span class=
+          "org-keyword">function</span> <span class=
+          "org-function-name">createElement</span>(<span class=
+          "org-variable-name">type</span>, <span class=
+          "org-variable-name">props</span>, ...<span class=
+          "org-variable-name">children</span>) {
+  <span class="org-keyword">return</span> {
+    type,
+    props: {
+      ...props,
+      <span class="org-comment-delimiter">// </span><span class=
+"org-comment">这里对于文本内容，去创建文本节点</span>
+      children: children.map((child) =&gt;
+        <span class=
+"org-keyword">typeof</span> child === <span class=
+"org-string">"object"</span> ? child : createTextElement(child)
+      ),
+    },
+  };
+}
+
+<span class="org-keyword">function</span> <span class=
+"org-function-name">createTextElement</span>(<span class=
+"org-variable-name">text</span>) {
+  <span class="org-keyword">return</span> {
+    type: <span class=
+"org-string">"TEXT_ELEMENT"</span>, <span class=
+"org-comment-delimiter">// </span><span class=
+"org-comment">标记类型</span>
+    props: {
+      <span class="org-comment-delimiter">// </span><span class=
+"org-comment">node.nodeValue 属性可以设置文本节点的内容，类似 textContent</span>
+      nodeValue: text,
+      children: [],
+    },
+  };
+}
+
+<span class="org-comment-delimiter">// </span><span class=
+"org-comment">测试</span>
+<span class="org-keyword">const</span> <span class=
+"org-variable-name">element</span> = createElement(
+  <span class="org-string">"div"</span>,
+  { id: <span class="org-string">"foo"</span> },
+  createElement(<span class="org-string">"a"</span>, <span class=
+"org-constant">null</span>, <span class="org-string">"bar"</span>),
+  createElement(<span class="org-string">"b"</span>)
+);
+console.log(
+  <span class="org-string">"输出结构&gt;&gt;&gt; \n"</span>,
+  element,
+  <span class="org-string">"\n &gt; element children: \n"</span>,
+  element.props.children,
+  <span class="org-string">"\n &gt; a children: \n"</span>,
+  element.props.children[<span class=
+"org-highlight-numbers-number">0</span>].props.children
+);
+
+<span class="org-comment-delimiter">// </span><span class=
+"org-comment">为了区别 React，这里采用文字作者的命名空间： Didact</span>
+<span class="org-keyword">const</span> <span class=
+"org-variable-name">Didact</span> = {
+  createElement
+}
+</pre>
+        </div>
+        <p>为了方便后面的测试，考虑到代码会慢慢变长问题，后面的代码会移到 <a href=
+        "file:///js/react/didact.js">file:///js/react/didact.js</a>
+        中去。</p>
+        <p>之后测试方式：</p>
+        <div class="org-src-container">
+          <pre class="src src-js"><span class=
+          "org-keyword">import</span>(process.env.BLOG_JS + <span class=
+          "org-string">"/react/didact.js"</span>).then(({ <span class=
+          "org-keyword">default</span>: Didact }) =&gt; {
+  console.log(Didact);
+  <span class="org-comment-delimiter">// </span><span class=
+"org-comment">这样照样可以完成上面的测试</span>
+  <span class="org-keyword">const</span> <span class=
+"org-variable-name">element</span> = Didact.createElement(
+    <span class="org-string">"div"</span>,
+    { id: <span class="org-string">"foo"</span> },
+    Didact.createElement(<span class=
+"org-string">"a"</span>, <span class=
+"org-constant">null</span>, <span class="org-string">"bar"</span>),
+    Didact.createElement(<span class="org-string">"b"</span>)
+  );
+  console.log(element);
+});
+</pre>
+        </div>
+      </div>
+    </div>
+    <div id="outline-container-render" class="outline-2">
+      <h2 id="render"><span class="section-number-2">4.</span>
+      render</h2>
+      <div class="outline-text-2" id="text-render">
+        <p>增加 render 函数，它的目的在一开始也说了，就是将 vnode 渲染到真实DOM，至于怎么渲
+        染，结构又是怎么处理的，这之后会慢慢的去完成。</p>
+        <div class="org-src-container">
+          <pre class="src src-js"><span class=
+          "org-keyword">const</span> <span class=
+          "org-variable-name">Didact</span> = {
+  createElement,
+  render
+}
+
+<span class="org-comment-delimiter">// </span><span class=
+"org-comment">ReactDOM.render</span>
+<span class="org-keyword">function</span> <span class=
+"org-function-name">render</span>(<span class=
+"org-variable-name">element</span>, <span class=
+"org-variable-name">container</span>) {
+  <span class="org-comment-delimiter">// </span><span class=
+"org-comment"><span class="org-bold"><span class=
+"org-warning">TODO</span></span></span>
+}
+</pre>
+        </div>
+        <p>渲染当前树根节点和子节点元素渲染工作：</p>
+        <div class="org-src-container">
+          <pre class="src src-js"><span class=
+          "org-comment-delimiter">// </span><span class=
+          "org-comment">ReactDOM.render</span>
+<span class="org-keyword">function</span> <span class=
+"org-function-name">render</span>(<span class=
+"org-variable-name">element</span>, <span class=
+"org-variable-name">container</span>) {
+  <span class="org-comment-delimiter">// </span><span class=
+"org-comment">1. 创建当前树根节点元素</span>
+  <span class="org-keyword">const</span> <span class=
+"org-variable-name">dom</span> = document.createElement(element.type)
+
+  <span class="org-comment-delimiter">// </span><span class=
+"org-comment">2. 遍历所有的 children 创建子元素</span>
+  element.props.children.forEach(child =&gt; render(child, dom <span class="org-comment-delimiter">/*</span><span class="org-comment">parent</span><span class="org-comment-delimiter">*/</span>))
+
+  container.appendChild(dom)
+}
+</pre>
+        </div>
+        <p>但是节点类型有可能是纯文本的，比如 <a href=
+        "#create-element">createElement 一节</a> 中的例子里面的
+        <code>&lt;a&gt;bar&lt;/a&gt;</code> 就有一个纯文本的
+        <code>"bar"</code> 节点，这个节点经过 createElement 之后结构 是：
+        <code>{type: 'TEXT_ELEMENT', props: {...}}</code>
+        ，所以这里面只需要针对 <code>TEXT_ELEMENT</code>
+        做下特殊处理，如果是文本就创建一个空的文本节点来容乃该文本内容。</p>
+        <div class="org-src-container">
+          <pre class="src src-diff"><span class=
+          "org-diff-context">// ReactDOM.render</span>
+<span class=
+"org-diff-context">function render(element, container) {</span>
+<span class="org-diff-context">  // 1. 创建当前树根节点元素</span>
+<span class="org-diff-indicator-removed">-</span><span class=
+"org-diff-removed">  const dom = document.createElement(element.type)</span>
+<span class="org-diff-indicator-added">+</span><span class=
+"org-diff-added">  const dom =</span>
+<span class="org-diff-indicator-added">+</span><span class=
+"org-diff-added">    element.type === "TEXT_ELEMENT"</span>
+<span class="org-diff-indicator-added">+</span><span class=
+"org-diff-added">      ? document.createTextNode("")</span>
+<span class="org-diff-indicator-added">+</span><span class=
+"org-diff-added">      : document.createElement(element.type);</span>
+
+<span class="org-diff-context">  // 2. 遍历所有的 children 创建子元素</span>
+<span class=
+"org-diff-context">  element.props.children.forEach((child) =&gt; render(child, dom /*parent*/));</span>
+
+<span class="org-diff-context">  container.appendChild(dom);</span>
+}
+</pre>
+        </div>
+        <p>最后是 props 的处理，这里记得要排除 <code>props.children</code></p>
+        <div class="org-src-container">
+          <pre class="src src-diff"><span class=
+          "org-diff-context">// ReactDOM.render</span>
+<span class=
+"org-diff-context">function render(element, container) {</span>
+<span class="org-diff-context">  // 1. 创建当前树根节点元素</span>
+<span class="org-diff-context">  const dom =</span>
+<span class=
+"org-diff-context">    element.type === "TEXT_ELEMENT"</span>
+<span class=
+"org-diff-context">      ? document.createTextNode("")</span>
+<span class=
+"org-diff-context">      : document.createElement(element.type);</span>
+
+<span class="org-diff-indicator-added">+</span><span class=
+"org-diff-added">  const isProperty = (key) =&gt; key !== "children";</span>
+<span class="org-diff-indicator-added">+</span><span class=
+"org-diff-added">  Object.keys(element.props)</span>
+<span class="org-diff-indicator-added">+</span><span class=
+"org-diff-added">    .filter(isProperty)</span>
+<span class="org-diff-indicator-added">+</span><span class=
+"org-diff-added">    .forEach((name) =&gt; (dom[name] = element.props[name]));</span>
+
+<span class="org-diff-context">  // 2. 遍历所有的 children 创建子元素</span>
+<span class=
+"org-diff-context">  element.props.children.forEach((child) =&gt; render(child, dom /*parent*/));</span>
+
+<span class="org-diff-context">  container.appendChild(dom);</span>
+}
+</pre>
+        </div>
+        <p>最后该阶段完整的代码：</p>
+        <div class="org-src-container">
+          <pre class="src src-js">console.log(<span class=
+          "org-string">"\n"</span>);
+<span class="org-keyword">const</span> <span class=
+"org-variable-name">Didact</span> = {
+  createElement,
+  render,
+};
+
+<span class="org-comment-delimiter">// </span><span class=
+"org-comment">ReactDOM.render</span>
+<span class="org-keyword">function</span> <span class=
+"org-function-name">render</span>(<span class=
+"org-variable-name">element</span>, <span class=
+"org-variable-name">container</span>) {
+  <span class="org-comment-delimiter">// </span><span class=
+"org-comment">1. 创建当前树根节点元素</span>
+  <span class="org-keyword">const</span> <span class=
+"org-variable-name">dom</span> =
+    element.type === <span class="org-string">"TEXT_ELEMENT"</span>
+      ? document.createTextNode(<span class="org-string">""</span>)
+      : document.createElement(element.type);
+
+  <span class="org-keyword">const</span> <span class=
+"org-variable-name">isProperty</span> = (key) =&gt; key !== <span class="org-string">"children"</span>;
+  Object.keys(element.props)
+    .filter(isProperty)
+    .forEach((name) =&gt; (dom[name] = element.props[name]));
+
+  <span class="org-comment-delimiter">// </span><span class=
+"org-comment">2. 遍历所有的 children 创建子元素</span>
+  element.props.children.forEach((child) =&gt; render(child, dom <span class="org-comment-delimiter">/*</span><span class="org-comment">parent</span><span class="org-comment-delimiter">*/</span>));
+
+  container.appendChild(dom);
+}
+
+<span class="org-comment-delimiter">// </span><span class=
+"org-comment">React.createElement</span>
+<span class="org-keyword">function</span> <span class=
+"org-function-name">createElement</span>(<span class=
+"org-variable-name">type</span>, <span class=
+"org-variable-name">props</span>, ...<span class=
+"org-variable-name">children</span>) {
+  <span class="org-keyword">return</span> {
+    type,
+    props: {
+      ...props,
+      children: children.map((child) =&gt;
+        <span class=
+"org-keyword">typeof</span> child === <span class=
+"org-string">"object"</span> ? child : createTextElement(child)
+      ),
+    },
+  };
+}
+
+<span class="org-keyword">function</span> <span class=
+"org-function-name">createTextElement</span>(<span class=
+"org-variable-name">text</span>) {
+  <span class="org-keyword">return</span> {
+    type: <span class="org-string">"TEXT_ELEMENT"</span>,
+    props: {
+      nodeValue: text, <span class=
+"org-comment-delimiter">// </span><span class=
+"org-comment">类似 textContent 可以修改节点文本内容的属性</span>
+      children: [],
+    },
+  };
+}
+</pre>
+        </div>
+        <p>测试:</p>
+        <div id="qoCIUr"></div>
+        <script>
+        (function() {
+        console.log(Didact)
+
+        const container = document.getElementById('qoCIUr')
+        const element = Didact.createElement('div', {
+        id: 'foo',
+        }, Didact.createElement('a', null, 'bar'),
+        Didact.createElement('b'))
+
+        Didact.render(element, container)
+        }());
+        </script>
+        <p>测试代码：</p>
+        <div class="org-src-container">
+          <pre class="src src-js">console.log(Didact);
+
+<span class="org-keyword">const</span> <span class=
+"org-variable-name">container</span> = document.getElementById(<span class="org-string">"qoCIUr"</span>);
+<span class="org-keyword">const</span> <span class=
+"org-variable-name">element</span> = Didact.createElement(
+  <span class="org-string">"div"</span>,
+  {
+    id: <span class="org-string">"foo"</span>,
+  },
+  Didact.createElement(<span class=
+"org-string">"a"</span>, <span class=
+"org-constant">null</span>, <span class="org-string">"bar"</span>),
+  Didact.createElement(<span class="org-string">"b"</span>)
+);
+
+Didact.render(element, container);
+</pre>
+        </div>
+      </div>
+    </div>
+    <div id="outline-container-concurrent" class="outline-2">
+      <h2 id="concurrent"><span class="section-number-2">5.</span>
+      并发模式(workLoop())</h2>
+      <div class="outline-text-2" id="text-concurrent">
+        <p>注意看上一节最后的代码，在 <a href="#render">render</a> 中会递归调用来完成
+        children 的渲染工作，这里就 会出现一个问题，只要 render
+        一旦执行，在渲染完整棵树之前是不能停止的，否则将导致 页面不完整。</p>
+        <blockquote>
+          <p>昨天微信里面看到一篇文章：</p>
+          <p><a href=
+          "https://mp.weixin.qq.com/s/g_-blGV4CVF5EogYZaPMzQ">Event
+          Loop 和 JS 引擎、渲染引擎的关系</a></p>
+          <p>这里面大概讲述了一些JS 和 渲染之间的一些关系，而这里的实现和这文章里讲述的一些原 理是相通的。</p>
+        </blockquote>
+        <p>要解决 render 递归的问题，大致的思想是通过 Fiber 将渲染任务封装，在某一个空闲的 时刻去执行这些
+        Fibers 进行实际的渲染，这样不至于阻塞主任务的执行。</p>
+        <p>这里的每个 Fiber 也被称作 work unit，当一个 work unit 完成会自动找到下一个应该执
+        行的 work unit 也就是下一个 Fiber，为什么叫应该呢，因为每个 Fiber 上面不止有一个
+        引用指向下一个 Fiber，然后如何决定下一个 work unit 跟渲染的优先级有关系。</p>
+        <p>每个 Fiber 上面最多有三个引用 parent, first child, parent sibling
+        三个节点。</p>
+        <p>优先级是: first child &gt; parent sibling &gt; parent。</p>
+        <p>如何执行 work unit ?</p>
+        <div class="org-src-container">
+          <pre class="src src-js"><span class=
+          "org-keyword">let</span> <span class=
+          "org-variable-name">nextUnitOfWork</span> = <span class=
+          "org-constant">null</span>
+<span class="org-keyword">function</span> <span class=
+"org-function-name">workLoop</span>(<span class=
+"org-variable-name">deadline</span>) {
+  <span class="org-keyword">let</span> <span class=
+"org-variable-name">shouldYield</span> = <span class=
+"org-constant">false</span>
+  <span class=
+"org-keyword">while</span> (nextUnitOfWork &amp;& !shouldYield) {
+    <span class="org-comment-delimiter">// </span><span class=
+"org-comment">执行当前的 work unit 返回下一个将要执行的 work unit</span>
+    nextUnitOfWork = performUnitOfWork(nextUnitOfWork)
+    <span class="org-comment-delimiter">// </span><span class=
+"org-comment">没有空闲的时间了</span>
+    shouldYield = deadline.timeRemaining() &lt; <span class=
+"org-highlight-numbers-number">1</span>
+  }
+  <span class="org-comment-delimiter">// </span><span class=
+"org-comment">下个空闲时间去执行下一次 work unit loop</span>
+  requestIdleCallback(workLoop)
+}
+
+<span class="org-keyword">function</span> <span class=
+"org-function-name">performUnitOfWork</span>(<span class=
+"org-variable-name">nextUnitOfWork</span>) {
+  <span class="org-comment-delimiter">// </span><span class=
+"org-comment"><span class="org-bold"><span class=
+"org-warning">TODO</span></span></span>
+}
+</pre>
+        </div>
+        <div id="org2d1454f" class="figure">
+          <p><img src="file:///img/js/request-idle-callback.png"
+          alt="request-idle-callback.png"></p>
+        </div>
+        <p>这里使用 <code>requestIdleCallback</code>
+        这个函数会在渲染之前检查是不是有空闲的时间，如果 有则执行回调，或者超时了强制执行回调。</p>
+        <blockquote>
+          <p>React 已经不用这个了，而是自己实现了 <a href=
+          "https://github.com/facebook/react/tree/master/packages/scheduler">
+          react/packages/scheduler at master · facebook/react</a>
+          来管理 fiber 的执行时机。</p>
+        </blockquote>
+      </div>
+    </div>
+    <div id="outline-container-fibers" class="outline-2">
+      <h2 id="fibers"><span class="section-number-2">6.</span>
+      Fibers</h2>
+      <div class="outline-text-2" id="text-fibers">
+        <p>上一节在实现 <code>workLoop()</code> 提到了 work unit 即
+        fiber。</p>
+        <p>为了方便管理一个 work unit ，需要一个比较合理的结构，里面能保存一些相关的信息， 比如 parent,
+        first child, parent sibling 引用， VNode 节点信息，等待。</p>
+        <p>这个结果就是: Fiber tree 由一个个 fiber 结构通过链接组成的树，其实就是类似 Vue 中的
+        VNode 节点树。</p>
+        <p>例如：</p>
+        <div class="org-src-container">
+          <pre class="src src-js">Didact.render(
+  &lt;div&gt;
+    &lt;h1&gt;
+      &lt;p /&gt;
+      &lt;a /&gt;
+    &lt;/h1&gt;
+    &lt;h2 /&gt;
+  &lt;/div&gt;,
+  container
+)
+</pre>
+        </div>
+        <p>有如下的结构，该结构让每个节点都最多持有三个引用，从而更方便的找到下一个 work unit:</p>
+        <div id="org6a20e74" class="figure">
+          <p><img src="file:///img/react/fiber-0.png" alt=
+          "fiber-0.png"></p>
+        </div>
+        <p>render 查找步骤拆解：</p>
+        <p><code>root</code> -&gt; <code>&lt;div&gt;</code> -&gt;
+        <code>&lt;h1&gt;</code> -&gt; <code>&lt;p&gt;</code> 这是遵循
+        first child 优先级最高查找的结果，一旦这个 过程渲染完成，接下来应该找
+        <code>&lt;p&gt;</code> 的 sibling(因为 sibling 优先级高于 parent 低于
+        first child):</p>
+        <p><code>&lt;a&gt;</code> -&gt; <code>&lt;h2&gt;</code> 因为
+        <code>&lt;a&gt;</code> 既没有 first child 也没有 sibling 所以找
+        parent sibling 即 <code>&lt;h2&gt;</code> 然后继续找发现
+        <code>&lt;div&gt;</code> 并没有 sibling，一直如此知道根节点。</p>
+        <p>更新 render 函数，将 DOM 元素的创建从 render 中抽离出来成
+        <code>createDom</code> 函数，这里开始使用 fiber:</p>
+        <div class="org-src-container">
+          <pre class="src src-js"><span class=
+          "org-keyword">function</span> <span class=
+          "org-function-name">createDom</span>(<span class=
+          "org-variable-name">fiber</span>) {
+  <span class="org-comment-delimiter">// </span><span class=
+"org-comment">1. 创建当前树根节点元素</span>
+  <span class="org-keyword">const</span> <span class=
+"org-variable-name">dom</span> =
+    fiber.type === <span class="org-string">"TEXT_ELEMENT"</span>
+      ? document.createTextNode(<span class="org-string">""</span>)
+      : document.createElement(fiber.type);
+
+  <span class="org-keyword">const</span> <span class=
+"org-variable-name">isProperty</span> = (key) =&gt; key !== <span class="org-string">"children"</span>;
+  Object.keys(fiber.props)
+    .filter(isProperty)
+    .forEach((name) =&gt; (fiber[name] = fiber.props[name]));
+
+  <span class="org-keyword">return</span> dom;
+}
+
+<span class="org-keyword">let</span> <span class=
+"org-variable-name">nextUnitOfWork</span> = <span class=
+"org-constant">null</span>
+<span class="org-keyword">function</span> <span class=
+"org-function-name">render</span>(<span class=
+"org-variable-name">element</span>, <span class=
+"org-variable-name">container</span>) {
+  <span class="org-comment-delimiter">// </span><span class=
+"org-comment">构建 root fiber 作为第一个 nextUnitOfWork</span>
+  nextUnitOfWork = {
+    dom: container,
+    props: {
+      children: [element]
+    }
+  }
+}
+</pre>
+        </div>
+        <p>在 render 一开始会创建一个 root fiber 并且将它作为第一个
+        <code>nextUnitOfWork</code> ，而后 面则是执行
+        <code>performUnitOfWork</code> 这里面主要完成三部分任务：</p>
+        <ol class="org-ol">
+          <li>将 fiber 对应的 element 添加到 DOM</li>
+          <li>为 <b>1</b> 中的 <code>element.children</code> 创建
+          fibers</li>
+          <li>找到合适的下一个 work unit 返回</li>
+        </ol>
+        <div class="org-src-container">
+          <pre class="src src-js"><span class=
+          "org-keyword">function</span> <span class=
+          "org-function-name">performUnitOfWork</span>(<span class=
+          "org-variable-name">fiber</span>) {
+  <span class="org-comment-delimiter">// </span><span class=
+"org-comment">1. 创建 fiber dom 元素</span>
+  <span class="org-keyword">if</span> (!fiber.dom) {
+    fiber.dom = createDom(fiber);
+  }
+
+  <span class="org-comment-delimiter">// </span><span class=
+"org-comment">2. 将 fiber dom 添加到 parent DOM 树中去</span>
+  <span class="org-keyword">if</span> (fiber.parent) {
+    fiber.parent.dom.appendChild(fiber.dom);
+  }
+
+  <span class="org-comment-delimiter">// </span><span class=
+"org-comment">3. 处理 children</span>
+  <span class="org-keyword">const</span> <span class=
+"org-variable-name">elements</span> = fiber.props.children;
+  <span class="org-keyword">let</span> <span class=
+"org-variable-name">index</span> = <span class=
+"org-highlight-numbers-number">0</span>;
+  <span class="org-keyword">let</span> <span class=
+"org-variable-name">prevSibling</span> = <span class=
+"org-constant">null</span>;
+
+  <span class=
+"org-keyword">while</span> (index &lt; elements.length) {
+    <span class="org-keyword">const</span> <span class=
+"org-variable-name">element</span> = elements[index];
+
+    <span class="org-comment-delimiter">// </span><span class=
+"org-comment">为每个 child 构建 fiber 结构</span>
+    <span class="org-keyword">const</span> <span class=
+"org-variable-name">newFiber</span> = {
+      type: element.type,
+      props: element.props,
+      parent: fiber, <span class=
+"org-comment-delimiter">// </span><span class=
+"org-comment">指向父级 fiber 的引用</span>
+      dom: <span class="org-constant">null</span>, <span class=
+"org-comment-delimiter">// </span><span class=
+"org-comment">指向真实DOM元素的引用</span>
+    };
+
+    <span class="org-keyword">if</span> (indx === <span class=
+"org-highlight-numbers-number">0</span>) {
+      <span class="org-comment-delimiter">// </span><span class=
+"org-comment">表示是 parent 的第一个 child，标记为 first child</span>
+      firber.child = newFiber; <span class=
+"org-comment-delimiter">// </span><span class=
+"org-comment">第一个引用，优先级最高</span>
+    } <span class="org-keyword">else</span> {
+      <span class="org-comment-delimiter">// </span><span class=
+"org-comment">非第一次的时候，等于是节点的兄弟节点</span>
+      <span class="org-comment-delimiter">// </span><span class=
+"org-comment">第二个引用，优先级低于 first child</span>
+      prevSibling.sibling = newFiber;
+    }
+
+    prevSibling = newFiber;
+    index++;
+  }
+
+  <span class="org-comment-delimiter">// </span><span class=
+"org-comment">到这里 fiber 结构初始化完成，此时每个 fiber 也有了自己的</span>
+  <span class="org-comment-delimiter">// </span><span class=
+"org-comment">三个引用 fiber.child, fiber.parent, fiber.sibling</span>
+  <span class="org-comment-delimiter">// </span><span class=
+"org-comment">下面将要去找到当前 Fiber 的下一个 work unit，查找遵循优先级:</span>
+  <span class="org-comment-delimiter">// </span><span class=
+"org-comment">fiber.child &gt; fiber.sibling &gt; fiber.parent.sibling</span>
+  <span class="org-keyword">if</span> (fiber.child) {
+    <span class="org-keyword">return</span> fiber.child;
+  }
+  <span class="org-keyword">let</span> <span class=
+"org-variable-name">nextFiber</span> = fiber;
+  <span class="org-keyword">while</span> (nextFiber) {
+    <span class="org-keyword">if</span> (nextFiber.sibling) {
+      <span class="org-comment-delimiter">// </span><span class=
+"org-comment">第一次这里找的是当前节点的兄弟节点，如果没找到</span>
+      <span class="org-comment-delimiter">// </span><span class=
+"org-comment">依着 fiber 树往上找 parent 的 sibling</span>
+      <span class="org-keyword">return</span> nextFiber.sibling;
+    }
+
+    nextFiber = fiber.parent;
+  }
+}
+</pre>
+        </div>
+      </div>
+    </div>
+    <div id="outline-container-render-commit" class="outline-2">
+      <h2 id="render-commit"><span class=
+      "section-number-2">7.</span> Render and Commit 阶段</h2>
+      <div class="outline-text-2" id="text-render-commit">
+        <p>到现在为止，前面都只是在 fiber tree 基础上去做了处理（创建 DOM 元素，链接 fiber
+        tree，找下一个 work unit），但实际并没有开始渲染。</p>
+        <p>并且这里 performUnitOfWork 实现中有个问题：</p>
+        <div class="org-src-container">
+          <pre class="src src-js"><span class=
+          "org-keyword">if</span> (fiber.parent) {
+  fiber.parent.dom.appendChild(fiber.dom);
+}
+</pre>
+        </div>
+        <p>即这里每次执行 work unit 的时候都会立即将 fiber.dom 添加到 parent 的 DOM
+        🌲中去， 然后这个操作很有可能在完成整棵树的渲染之前被浏览器给终止了。</p>
+        <p>怎么解决这个问题？</p>
+        <p>从根上去解决这个问题，即在 render 中不用一开始就去进行 append 操作，而是从 root
+        开始去跟踪整个树的结构变化，将 root 也封装成 fiber。</p>
+        <div class="org-src-container">
+          <pre class="src src-js"><span class=
+          "org-keyword">let</span> <span class=
+          "org-variable-name">wipRoot</span> = <span class=
+          "org-constant">null</span>
+<span class="org-keyword">function</span> <span class=
+"org-function-name">render</span>(<span class=
+"org-variable-name">element</span>, <span class=
+"org-variable-name">container</span>) {
+  wipRoot = {
+    dom: container,
+    props: {
+      children: [element]
+    }
+  }
+
+  nextUnitOfWork = wipRoot
+}
+</pre>
+        </div>
+        <p>然后，一旦 wookLoop() 的一次循环结束了就进行一次提交，去一次性完成渲染任务。</p>
+        <p>那怎么判断说一次循环结束了？</p>
+        <div class="org-src-container">
+          <pre class="src src-js"><span class=
+          "org-keyword">function</span> <span class=
+          "org-function-name">commitRoot</span>() {
+  <span class="org-comment-delimiter">// </span><span class=
+"org-comment">执行 DOM 渲染</span>
+  commitWork(wipRoot.child);
+  <span class="org-comment-delimiter">// </span><span class=
+"org-comment">提交完成之后要重置，等待下一次更新的任务</span>
+  wipRoot = <span class="org-constant">null</span>;
+}
+
+<span class="org-keyword">function</span> <span class=
+"org-function-name">commitWork</span>(<span class=
+"org-variable-name">fiber</span>) {
+  <span class="org-keyword">if</span> (!fiber) <span class=
+"org-keyword">return</span>;
+
+  <span class="org-comment-delimiter">// </span><span class=
+"org-comment">这里顺序也是一样 fiber -&gt; fiber.child -&gt; fiber.sibling</span>
+  <span class="org-keyword">const</span> <span class=
+"org-variable-name">domParent</span> = fiber.parent.dom;
+  domParent.appendChild(fiber.dom);
+  commitWork(fiber.child);
+  commitWork(fiber.sibling);
+}
+
+<span class="org-keyword">function</span> <span class=
+"org-function-name">workLoop</span>(<span class=
+"org-variable-name">deadline</span>) {
+  <span class="org-keyword">let</span> <span class=
+"org-variable-name">shouldYield</span> = <span class=
+"org-constant">false</span>;
+  <span class=
+"org-keyword">while</span> (nextUnitOfWork &amp;& !shouldYield) {
+    <span class="org-comment-delimiter">// </span><span class=
+"org-comment">执行当前的 work unit 返回下一个将要执行的 work unit</span>
+    nextUnitOfWork = performUnitOfWork(nextUnitOfWork);
+    <span class="org-comment-delimiter">// </span><span class=
+"org-comment">没有空闲的时间了</span>
+    shouldYield = deadline.timeRemaining() &lt; <span class=
+"org-highlight-numbers-number">1</span>;
+  }
+
+  <span class="org-comment-delimiter">// </span><span class=
+"org-comment">这里检测没有下一个 work unit 了，说明整个树遍历完成了</span>
+  <span class=
+"org-keyword">if</span> (!nextUnitOfWork &amp;& wipRoot) {
+    commitRoot();
+  }
+
+  <span class="org-comment-delimiter">// </span><span class=
+"org-comment">下个空闲时间去执行下一次 work unit loop</span>
+  requestIdleCallback(workLoop);
+}
+</pre>
+        </div>
+      </div>
+    </div>
+    <div id="outline-container-update-delete" class="outline-2">
+      <h2 id="update-delete"><span class=
+      "section-number-2">8.</span> updating and deleting 更新和删除</h2>
+      <div class="outline-text-2" id="text-update-delete">
+        <p>这一节将讲述如何将 old fiber 和 new fiber 进行比较来判断是进行 update 还是
+        delete 操作。</p>
+        <p>所以 Fiber 里面需要对上一次的提交的 fiber tree 进行备份。</p>
+        <p>这里用 <code>currentRoot</code> 表示 new fiber 用
+        fiber.alternate 来保存 old fiber。</p>
+        <div class="org-src-container">
+          <pre class="src src-diff"><span class=
+          "org-diff-indicator-added">+</span><span class=
+          "org-diff-added"> let currentRoot = null</span>
+<span class="org-diff-context">function commitRoot() {</span>
+<span class="org-diff-context">  commitWork(wipRoot.child)</span>
+<span class="org-diff-indicator-added">+</span><span class=
+"org-diff-added">  // 当前渲染的树进行备份</span>
+<span class="org-diff-indicator-added">+</span><span class=
+"org-diff-added">  currentRoot = wipRoot</span>
+<span class="org-diff-context">  wipRoot = null</span>
+<span class="org-diff-context">}</span>
+
+<span class=
+"org-diff-context">function render(element, container) {</span>
+<span class="org-diff-context">  wipRoot = {</span>
+<span class="org-diff-context">    dom: container,</span>
+<span class="org-diff-context">    props: {</span>
+<span class="org-diff-context">      children: [element]</span>
+<span class="org-diff-context">    },</span>
+<span class="org-diff-indicator-added">+</span><span class=
+"org-diff-added">    // 保存一份老树</span>
+<span class="org-diff-indicator-added">+</span><span class=
+"org-diff-added">    alternate: currentRoot</span>
+<span class="org-diff-context">  }</span>
+
+<span class="org-diff-context">  nextUnitOfWork = wipRoot</span>
+}
+</pre>
+        </div>
+        <p>将 <code>performUnitOfWork</code> 中创建 Fiber 的抽离到
+        <code>reconcileChildren</code> 中去方便添加更 新和删除操作。</p>
+        <div class="org-src-container">
+          <pre class="src src-js"><span class=
+          "org-keyword">function</span> <span class=
+          "org-function-name">reconcileChildren</span>(<span class=
+          "org-variable-name">wipFiber</span>, <span class=
+          "org-variable-name">elements</span>) {
+  <span class="org-keyword">let</span> <span class=
+"org-variable-name">index</span> = <span class=
+"org-highlight-numbers-number">0</span>;
+  <span class="org-keyword">let</span> <span class=
+"org-variable-name">oldFiber</span> = wipFiber.alternate &amp;& wipFiber.alternate.child
+  <span class="org-keyword">let</span> <span class=
+"org-variable-name">prevSibling</span> = <span class=
+"org-constant">null</span>;
+
+  <span class=
+"org-keyword">while</span> (index &lt; elements.length) {
+    <span class="org-comment-delimiter">// </span><span class=
+"org-comment">这个 element 是将要更新到DOM中的节点</span>
+    <span class="org-keyword">const</span> <span class=
+"org-variable-name">element</span> = elements[index];
+    <span class="org-keyword">let</span> <span class=
+"org-variable-name">newFiber</span> = <span class=
+"org-constant">null</span>
+
+    <span class="org-comment-delimiter">// </span><span class=
+"org-comment">比较 oldFiber 和 element</span>
+    <span class="org-comment-delimiter">// </span><span class=
+"org-comment">类型一样，属于更新</span>
+    <span class="org-keyword">const</span> <span class=
+"org-variable-name">sameType</span> = oldFiber &amp;& element &amp;& oldFiber.type === element.type
+    <span class="org-comment-delimiter">// </span><span class=
+"org-comment">下面的更新并非是直接立即更新，而是为 Fiber 赋予新的属性来标识该节点</span>
+    <span class="org-comment-delimiter">// </span><span class=
+"org-comment">在 commit 阶段应该执行什么操作</span>
+
+    <span class="org-keyword">if</span> (sameType) {
+      <span class="org-comment-delimiter">// </span><span class=
+"org-comment">更新节点</span>
+      newFiber = {
+        type: oldFiber.type,
+        props: element.props,
+        dom: oldFiber.dom,
+        parent: wipFiber,
+        alternate: oldFiber,
+        effectTag: <span class="org-string">'UPDATE'</span>
+      }
+    }
+
+    <span class=
+"org-keyword">if</span> (element &amp;& !sameType) {
+      <span class="org-comment-delimiter">// </span><span class=
+"org-comment">添加节点</span>
+      newFiber = {
+        type: element.type,
+        props: element.props,
+        dom: <span class="org-constant">null</span>,
+        parent: wipFiber,
+        alternate: <span class="org-constant">null</span>,
+        effectTag: <span class="org-string">'PLACEMENT'</span>
+      }
+    }
+
+    <span class=
+"org-keyword">if</span> (oldFiber &amp;& !sameType) {
+      <span class="org-comment-delimiter">// </span><span class=
+"org-comment">删除节点</span>
+      oldFiber.effecTag = <span class=
+"org-string">'DELETION'</span>
+      <span class="org-comment-delimiter">// </span><span class=
+"org-comment">因为 commit 是从 root 从上往下提交的，且在提交阶段</span>
+      <span class="org-comment-delimiter">// </span><span class=
+"org-comment">已经丢失了 old fiber，因为上面结构已经更新了，因此这里需要记录</span>
+      <span class="org-comment-delimiter">// </span><span class=
+"org-comment">哪些节点需要删除</span>
+      deletion.push(oldFiber)
+    }
+
+    <span class="org-comment-delimiter">// </span><span class=
+"org-comment">为每个 child 构建 fiber 结构</span>
+    newFiber = {
+      type: element.type,
+      props: element.props,
+      parent: fiber, <span class=
+"org-comment-delimiter">// </span><span class=
+"org-comment">指向父级 fiber 的引用</span>
+      dom: <span class="org-constant">null</span>, <span class=
+"org-comment-delimiter">// </span><span class=
+"org-comment">指向真实DOM元素的引用</span>
+    };
+
+    <span class="org-keyword">if</span> (indx === <span class=
+"org-highlight-numbers-number">0</span>) {
+      <span class="org-comment-delimiter">// </span><span class=
+"org-comment">表示是 parent 的第一个 child，标记为 first child</span>
+      firber.child = newFiber; <span class=
+"org-comment-delimiter">// </span><span class=
+"org-comment">第一个引用，优先级最高</span>
+    } <span class="org-keyword">else</span> {
+      <span class="org-comment-delimiter">// </span><span class=
+"org-comment">非第一次的时候，等于是节点的兄弟节点</span>
+      <span class="org-comment-delimiter">// </span><span class=
+"org-comment">第二个引用，优先级低于 first child</span>
+      prevSibling.sibling = newFiber;
+    }
+
+    prevSibling = newFiber;
+    index++;
+  }
+}
+</pre>
+        </div>
+        <p>然后修改 render ，初始化或重置 deletion:</p>
+        <div class="org-src-container">
+          <pre class="src src-js"><span class=
+          "org-keyword">let</span> <span class=
+          "org-variable-name">deletion</span> = <span class=
+          "org-constant">null</span>
+<span class="org-comment-delimiter">// </span><span class=
+"org-comment">ReactDOM.render</span>
+<span class="org-keyword">function</span> <span class=
+"org-function-name">render</span>(<span class=
+"org-variable-name">element</span>, <span class=
+"org-variable-name">container</span>) {
+  wipRoot = {
+    dom: container,
+    props: {
+      children: [element],
+    },
+    alternate: currentRoot,
+  };
+
+  <span class="org-comment-delimiter">// </span><span class=
+"org-comment">初始化或重置待删除的节点，因为 fiber tree 更新发生在 commit 之前</span>
+  <span class="org-comment-delimiter">// </span><span class=
+"org-comment">因此在 commit 阶段 old fiber 已经被替换了，所以在 fiber tree 更新的</span>
+  <span class="org-comment-delimiter">// </span><span class=
+"org-comment">时候就要将要删除的 old fiber 缓存起来</span>
+  deletion = [];
+  nextUnitOfWork = wipRoot;
+}
+</pre>
+        </div>
+        <p>然后在提交阶段 commitRoot 中执行删除</p>
+        <div class="org-src-container">
+          <pre class="src src-js"><span class=
+          "org-keyword">function</span> <span class=
+          "org-function-name">commitRoot</span>() {
+  deletion.forEach(commitWork) <span class=
+"org-comment-delimiter">// </span><span class=
+"org-comment">执行节点删除</span>
+  commitWork(wipRoot.child)
+  currentRoot = wipRoot
+  wipRoot = <span class="org-constant">null</span>
+}
+
+</pre>
+        </div>
+        <p>最后修改 commitWork 去处理新增的 fiber.effectTag 根据不同类型执行相应的增加、删
+        除、更新操作。</p>
+        <div class="org-src-container">
+          <pre class="src src-js"><span class=
+          "org-keyword">function</span> <span class=
+          "org-function-name">commitWork</span>(<span class=
+          "org-variable-name">fiber</span>) {
+  <span class="org-keyword">if</span> (!fiber) <span class=
+"org-keyword">return</span>;
+
+  <span class="org-comment-delimiter">// </span><span class=
+"org-comment">这里顺序也是一样 fiber -&gt; fiber.child -&gt; fiber.sibling</span>
+  <span class="org-keyword">const</span> <span class=
+"org-variable-name">domParent</span> = fiber.parent.dom;
+  <span class=
+"org-keyword">if</span> (fiber.effectTag === <span class=
+"org-string">"PLACEMENT"</span> &amp;& fiber.dom != <span class=
+"org-constant">null</span>) {
+    <span class="org-comment-delimiter">// </span><span class=
+"org-comment">添加新节点</span>
+    domParent.appendChild(fiber.dom);
+  } <span class="org-keyword">else</span> <span class=
+"org-keyword">if</span> (fiber.effectTag === <span class=
+"org-string">"DELETION"</span>) {
+    domParent.removeChild(fiber.dom);
+  } <span class="org-keyword">else</span> <span class=
+"org-keyword">if</span> (fiber.effectTag === <span class=
+"org-string">"UPDATE"</span> &amp;& fiber.dom != <span class=
+"org-constant">null</span>) {
+    <span class="org-comment-delimiter">// </span><span class=
+"org-comment">更新节点</span>
+    updateDom(fiber.dom, fiber.alternate.props, fiber.props);
+  }
+
+  commitWork(fiber.child);
+  commitWork(fiber.sibling);
+}
+</pre>
+        </div>
+        <p>更新节点，需要对状态进行对比，进行更新：</p>
+        <div class="org-src-container">
+          <pre class="src src-js"><span class=
+          "org-keyword">const</span> <span class=
+          "org-variable-name">isProperty</span> = (key) =&gt; key !== <span class="org-string">"children"</span>;
+<span class="org-comment-delimiter">// </span><span class=
+"org-comment">新属性</span>
+<span class="org-keyword">const</span> <span class=
+"org-variable-name">isNew</span> = (prev, next) =&gt; (key) =&gt; prev[key] !== next[key];
+<span class="org-comment-delimiter">// </span><span class=
+"org-comment">要删除的属性</span>
+<span class="org-keyword">const</span> <span class=
+"org-variable-name">isGone</span> = (prev, next) =&gt; (key) =&gt; !key <span class="org-keyword">in</span> next;
+<span class="org-keyword">function</span> <span class=
+"org-function-name">updateDom</span>(<span class=
+"org-variable-name">dom</span>, <span class=
+"org-variable-name">prevProps</span>, <span class=
+"org-variable-name">nextProps</span>) {
+  <span class="org-comment-delimiter">// </span><span class=
+"org-comment">删除</span>
+  Object.keys(prevProps)
+    .filter(isProperty)
+    .filter(isGone(prevProps, nextProps))
+    .forEach((name) =&gt; (dom[name] = <span class=
+"org-string">""</span>));
+
+  <span class="org-comment-delimiter">// </span><span class=
+"org-comment">更新新增</span>
+  Object.keys(nextProps)
+  .filter(isProperty)
+  .filter(isNew(prevProps, nextProps))
+  .forEach(name =&gt; (dom[name] = nextProps[name]))
+}
+</pre>
+        </div>
+        <p>处理特殊属性：事件属性的处理，需要将原来的 handler 先移除再添加新的 handler。</p>
+        <div class="org-src-container">
+          <pre class="src src-js"><span class=
+          "org-keyword">const</span> <span class=
+          "org-variable-name">isEvent</span> = (key) =&gt; key.startsWith(<span class="org-string">"on"</span>);
+<span class="org-keyword">const</span> <span class=
+"org-variable-name">isProperty</span> = (key) =&gt; key !== <span class="org-string">"children"</span> &amp;& !isEvent(key);
+<span class="org-comment-delimiter">// </span><span class=
+"org-comment">新属性</span>
+<span class="org-keyword">const</span> <span class=
+"org-variable-name">isNew</span> = (prev, next) =&gt; (key) =&gt; prev[key] !== next[key];
+<span class="org-comment-delimiter">// </span><span class=
+"org-comment">要删除的属性</span>
+<span class="org-keyword">const</span> <span class=
+"org-variable-name">isGone</span> = (prev, next) =&gt; (key) =&gt; !key <span class="org-keyword">in</span> next;
+<span class="org-keyword">function</span> <span class=
+"org-function-name">updateDom</span>(<span class=
+"org-variable-name">dom</span>, <span class=
+"org-variable-name">prevProps</span>, <span class=
+"org-variable-name">nextProps</span>) {
+  <span class="org-comment-delimiter">// </span><span class=
+"org-comment">移除或更新 event listeners</span>
+  Object.keys(prevProps)
+    .filter(isEvent)
+    .filter((key) =&gt; !(key <span class=
+"org-keyword">in</span> nextProps) || isNew(prevProps, nextProps)(key))
+    .forEach((name) =&gt; {
+      <span class="org-keyword">const</span> <span class=
+"org-variable-name">eventType</span> = name.toLowerCase().substring(<span class="org-highlight-numbers-number">2</span>);
+      dom.removeEventListener(eventType, prevProps[name]);
+    });
+  <span class="org-comment-delimiter">// </span><span class=
+"org-comment">删除</span>
+  Object.keys(prevProps)
+    .filter(isProperty)
+    .filter(isGone(prevProps, nextProps))
+    .forEach((name) =&gt; (dom[name] = <span class=
+"org-string">""</span>));
+
+  <span class="org-comment-delimiter">// </span><span class=
+"org-comment">更新新增</span>
+  Object.keys(nextProps)
+    .filter(isProperty)
+    .filter(isNew(prevProps, nextProps))
+    .forEach((name) =&gt; (dom[name] = nextProps[name]));
+
+  <span class="org-comment-delimiter">// </span><span class=
+"org-comment">新增事件属性</span>
+  Object.keys(nextProps)
+    .filter(isEvent)
+    .filter(isNew(prevProps, nextProps))
+    .forEach((name) =&gt; {
+      <span class="org-keyword">const</span> <span class=
+"org-variable-name">eventType</span> = name.toLowerCase().substring(<span class="org-highlight-numbers-number">2</span>);
+      dom.addEventListener(eventType, nextProps[name]);
+    });
+}
+</pre>
+        </div>
+        <p>修改 createDom 初创建 DOM 元素的时候执行一次 <code>updateDom(dom, {},
+        fiber.props)</code></p>
+        <div class="org-src-container">
+          <pre class="src src-diff"><span class=
+          "org-diff-context">function createDom(fiber) {</span>
+<span class=
+"org-diff-context">  const dom = fiber.type === 'TEXT_ELEMENT'</span>
+<span class=
+"org-diff-context">    ? document.createTextNode('')</span>
+<span class=
+"org-diff-context">    : document.createElement(fiber.type)</span>
+
+<span class="org-diff-indicator-removed">-</span><span class=
+"org-diff-removed">  const isProperty = (key) =&gt; key !== "children";</span>
+<span class="org-diff-indicator-removed">-</span><span class=
+"org-diff-removed">  Object.keys(fiber.props)</span>
+<span class="org-diff-indicator-removed">-</span><span class=
+"org-diff-removed">    .filter(isProperty)</span>
+<span class="org-diff-indicator-removed">-</span><span class=
+"org-diff-removed">    .forEach((name) =&gt; (fiber[name] = fiber.props[name]));</span>
+
+<span class="org-diff-indicator-added">+</span><span class=
+"org-diff-added">  updateDom(dom, {}, fiber.props)</span>
+
+<span class="org-diff-context">  return dom</span>
+}
+</pre>
+        </div>
+      </div>
+    </div>
+    <div id="outline-container-function-component" class=
+    "outline-2">
+      <h2 id="function-component"><span class=
+      "section-number-2">9.</span> 函数组件</h2>
+      <div class="outline-text-2" id="text-function-component">
+        <p>如实例：</p>
+        <div class="org-src-container">
+          <pre class="src src-js"><span class=
+          "org-keyword">function</span> <span class=
+          "org-function-name">App</span>(<span class=
+          "org-variable-name">props</span>) {
+  <span class=
+"org-keyword">return</span> &lt;h1&gt;Hi {props.name}&lt;/h1&gt;
+}
+<span class="org-keyword">const</span> <span class=
+"org-variable-name">element</span> = &lt;App name=<span class=
+"org-string">"foo"</span>/&gt;
+<span class="org-comment-delimiter">// </span><span class=
+"org-comment">jsx -&gt; js</span>
+<span class="org-keyword">function</span> <span class=
+"org-function-name">App</span>(<span class=
+"org-variable-name">props</span>) {
+  <span class=
+"org-keyword">return</span> Didact.createElement(<span class=
+"org-string">'h1'</span>, <span class=
+"org-constant">null</span>, <span class=
+"org-string">"Hi "</span>, props.name)
+}
+<span class="org-keyword">const</span> <span class=
+"org-variable-name">element</span> = Didact.createElement(App, {
+  name: <span class="org-string">'foo'</span>
+})
+</pre>
+        </div>
+        <p>函数组件与普通组件不同点:</p>
+        <ol class="org-ol">
+          <li>来自函数组件的 Fiber 没有 DOM 节点</li>
+          <li>fiber.children 来自函数执行的结果，而不是直接从 props 中取</li>
+        </ol>
+        <p>修改 performUnitOfWork 增加函数组件判断:</p>
+        <div class="org-src-container">
+          <pre class="src src-js"><span class=
+          "org-keyword">function</span> <span class=
+          "org-function-name">performUnitOfWork</span>(<span class=
+          "org-variable-name">fiber</span>) {
+  <span class="org-keyword">const</span> <span class=
+"org-variable-name">isFunctionComponent</span> = fiber.type <span class="org-keyword">instanceof</span> <span class="org-type">Function</span>
+  <span class="org-keyword">if</span> (isFunctionComponent) {
+    updateFunctionComponent(fiber)
+  } <span class="org-keyword">else</span> {
+    updateHostComponent(fiber)
+  }
+
+  <span class="org-comment-delimiter">// </span><span class=
+"org-comment">到这里 fiber 结构初始化完成，此时每个 fiber 也有了自己的</span>
+  <span class="org-comment-delimiter">// </span><span class=
+"org-comment">三个引用 fiber.child, fiber.parent, fiber.sibling</span>
+  <span class="org-comment-delimiter">// </span><span class=
+"org-comment">下面将要去找到当前 Fiber 的下一个 work unit，查找遵循优先级:</span>
+  <span class="org-comment-delimiter">// </span><span class=
+"org-comment">fiber.child &gt; fiber.sibling &gt; fiber.parent.sibling</span>
+  <span class="org-keyword">if</span> (fiber.child) {
+    <span class="org-keyword">return</span> fiber.child;
+  }
+  <span class="org-keyword">let</span> <span class=
+"org-variable-name">nextFiber</span> = fiber;
+  <span class="org-keyword">while</span> (nextFiber) {
+    <span class="org-keyword">if</span> (nextFiber.sibling) {
+      <span class="org-comment-delimiter">// </span><span class=
+"org-comment">第一次这里找的是当前节点的兄弟节点，如果没找到</span>
+      <span class="org-comment-delimiter">// </span><span class=
+"org-comment">依着 fiber 树往上找 parent 的 sibling</span>
+      <span class="org-keyword">return</span> nextFiber.sibling;
+    }
+
+    nextFiber = nextFiber.parent;
+  }
+}
+</pre>
+        </div>
+        <p>更新函数组件 <code>updateFunctionComponent(fiber)</code> :</p>
+        <div class="org-src-container">
+          <pre class="src src-js"><span class=
+          "org-keyword">function</span> <span class=
+          "org-function-name">updateFunctionComponent</span>(<span class=
+          "org-variable-name">fiber</span>) {
+  <span class="org-comment-delimiter">// </span><span class=
+"org-comment">执行函数组件得到 children</span>
+  <span class="org-keyword">const</span> <span class=
+"org-variable-name">children</span> = [fiber.type(fiber.props)]
+  reconcileChildren(fiber, children)
+}
+</pre>
+        </div>
+        <p>更新普通组件 <code>updateHostComponent(fiber)</code> 直接把
+        performUnitOfWork 中原来的处理 挪进来就 OK:</p>
+        <div class="org-src-container">
+          <pre class="src src-js"><span class=
+          "org-keyword">function</span> <span class=
+          "org-function-name">updateHostComponent</span>(<span class=
+          "org-variable-name">fiber</span>) {
+  <span class="org-comment-delimiter">// </span><span class=
+"org-comment">1. 创建 fiber dom 元素</span>
+  <span class="org-keyword">if</span> (!fiber.dom) {
+    fiber.dom = createDom(fiber);
+  }
+
+  reconcileChildren(fiber, fiber.props.children);
+}
+</pre>
+        </div>
+        <p>因为函数组件并没有 DOM 元素，所以 commit 阶段需要进行判断，如果没有就往上找父级 的 dom
+        元素作为 parent 。</p>
+        <div class="org-src-container">
+          <pre class="src src-js"><span class=
+          "org-keyword">function</span> <span class=
+          "org-function-name">commitWork</span>(<span class=
+          "org-variable-name">fiber</span>) {
+  <span class="org-keyword">if</span> (!fiber) <span class=
+"org-keyword">return</span>;
+
+  <span class="org-comment-delimiter">// </span><span class=
+"org-comment">这里顺序也是一样 fiber -&gt; fiber.child -&gt; fiber.sibling</span>
+  <span class="org-keyword">const</span> <span class=
+"org-variable-name">domParentFiber</span> = fiber.parent;
+  <span class="org-comment-delimiter">// </span><span class=
+"org-comment">如果是函数组件是没有 dom 的，那么需要找到它的父级作为目标 parent</span>
+  <span class="org-keyword">while</span> (!domParentFiber.dom) {
+    domParentFiber = domParentFiber.parent;
+  }
+  <span class="org-keyword">const</span> <span class=
+"org-variable-name">domParent</span> = domParentFiber.dom;
+
+  <span class=
+"org-keyword">if</span> (fiber.effectTag === <span class=
+"org-string">"PLACEMENT"</span> &amp;& fiber.dom != <span class=
+"org-constant">null</span>) {
+    <span class="org-comment-delimiter">// </span><span class=
+"org-comment">添加新节点</span>
+    domParent.appendChild(fiber.dom);
+  } <span class="org-keyword">else</span> <span class=
+"org-keyword">if</span> (fiber.effectTag === <span class=
+"org-string">"UPDATE"</span> &amp;& fiber.dom != <span class=
+"org-constant">null</span>) {
+    <span class="org-comment-delimiter">// </span><span class=
+"org-comment">更新节点</span>
+    updateDom(fiber.dom, fiber.alternate.props, fiber.props);
+  } <span class="org-keyword">else</span> <span class=
+"org-keyword">if</span> (fiber.effectTag === <span class=
+"org-string">"DELETION"</span>) {
+    commitDeletion(fiber, domParent);
+  }
+
+  commitWork(fiber.child);
+  commitWork(fiber.sibling);
+}
+</pre>
+        </div>
+        <p>删除的时候也必须找到有 child 的 fiber, commitDeletion ：</p>
+        <div class="org-src-container">
+          <pre class="src src-js"><span class=
+          "org-keyword">function</span> <span class=
+          "org-function-name">commitDeletion</span>(<span class=
+          "org-variable-name">fiber</span>, <span class=
+          "org-variable-name">domParent</span>) {
+  <span class="org-keyword">if</span> (fiber.dom) {
+    domParent.removeChild(fiber.dom)
+  } <span class="org-keyword">else</span> {
+    commitDeletion(fiber.child, domParent)
+  }
+}
+</pre>
+        </div>
+      </div>
+    </div>
+    <div id="outline-container-hooks" class="outline-2">
+      <h2 id="hooks"><span class="section-number-2">10.</span>
+      hooks</h2>
+      <div class="outline-text-2" id="text-hooks">
+        <p>添加状态和 hooks。</p>
+        <p>在函数组件中我们可以通过 <code>useState</code> hook 来获取状态以及改变状态的函数
+        <code>setState</code> 让我们能在函数组件中来更新状态，从而来更新UI。</p>
+        <p>实例：</p>
+        <div class="org-src-container">
+          <pre class="src src-js"><span class=
+          "org-keyword">function</span> <span class=
+          "org-function-name">Counter</span>() {
+<span class="org-keyword">const</span> [<span class=
+"org-variable-name">state</span>, <span class=
+"org-variable-name">setState</span>] = useState(<span class=
+"org-highlight-numbers-number">1</span>)
+  <span class="org-keyword">return</span> (
+    &lt;h1 onClick={() =&gt; setState(c =&gt; c+<span class=
+"org-highlight-numbers-number">1</span>)}&gt;
+      Count: { state }
+    &lt;/h1&gt;
+  )
+}
+<span class="org-keyword">const</span> <span class=
+"org-variable-name">elment</span> = &lt;Counter/&gt;
+</pre>
+        </div>
+        <p>实现 useState 并且修改函数组件的更新函数 updateFunctionComponent
+        让状态的修改能 触发该函数执行:</p>
+        <div class="org-src-container">
+          <pre class="src src-js"><span class=
+          "org-keyword">function</span> <span class=
+          "org-function-name">useState</span>(<span class=
+          "org-variable-name">initial</span>) {
+}
+
+<span class="org-keyword">let</span> <span class=
+"org-variable-name">wipFiber</span> = <span class=
+"org-constant">null</span>
+<span class="org-keyword">let</span> <span class=
+"org-variable-name">hookIndex</span> = <span class=
+"org-constant">null</span>
+<span class="org-keyword">function</span> <span class=
+"org-function-name">updateFunctionComponent</span>(<span class=
+"org-variable-name">fiber</span>) {
+  wipFiber = fiber
+  hookIndex = <span class="org-highlight-numbers-number">0</span>
+  wipFiber.hooks = []
+
+  <span class="org-keyword">const</span> <span class=
+"org-variable-name">children</span> = [fiber.type(fiber.props)]
+  reconcileChildren(fiber, children)
+}
+</pre>
+        </div>
+        <p>新增 fiber.hooks 目的是为了在同一个组件内可以多次调用 <code>useState</code>,
+        并且记录每个 hook 所在的索引 hookIndex 。</p>
+        <p>当组件调用 <code>useState</code> 时候，在里面要去检测是不是有 old hook，从
+        fiber.alternate 根据 hookIndex 去找。</p>
+        <div class="org-src-container">
+          <pre class="src src-js"><span class=
+          "org-keyword">function</span> <span class=
+          "org-function-name">useState</span>(<span class=
+          "org-variable-name">initial</span>) {
+  <span class="org-keyword">const</span> <span class=
+"org-variable-name">oldHook</span> =
+    wipFiber.alternate &amp;&
+    wipFiber.alternate.hooks &amp;&
+    wipFiber.alternate.hooks[hookIndex];
+
+  <span class="org-comment-delimiter">// </span><span class=
+"org-comment">如果有老的 hook ，要将老的 hook state 更新过来</span>
+  <span class="org-keyword">const</span> <span class=
+"org-variable-name">hook</span> = {
+    state: oldHook ? oldHook.state : initial,
+    <span class="org-comment-delimiter">// </span><span class=
+"org-comment">缓存状态更新的 action</span>
+    queue: [],
+  };
+
+  <span class="org-comment-delimiter">// </span><span class=
+"org-comment">更新之前先执行 actions 更新状态，因此在状态返回之前是最新的</span>
+  <span class="org-keyword">const</span> <span class=
+"org-variable-name">actions</span> = oldHook ? oldHook.queue : [];
+  actions.forEach((action) =&gt; (hook.state = action(hook.state)));
+
+  <span class="org-keyword">const</span> <span class=
+"org-variable-name">setState</span> = (action) =&gt; {
+    hook.queue.push(action);
+    wipRoot = {
+      dom: currentRoot.dom,
+      props: currentRoot.props,
+      alternate: currentRoot,
+    };
+    <span class="org-comment-delimiter">// </span><span class=
+"org-comment">状态更新，插入新的 work unit</span>
+    nextUnitOfWork = wipRoot;
+    deletion = [];
+  };
+
+  wipFiber.hooks.push(hook);
+  hookIndex++;
+  <span class="org-keyword">return</span> [hook.state, setState];
+}
+</pre>
+        </div>
+      </div>
+    </div>
+    <div id="outline-container-src-map" class="outline-2">
+      <h2 id="src-map"><span class="section-number-2">11.</span>
+      最终源码流程图</h2>
+      <div class="outline-text-2" id="text-src-map">
+        <div id="orgb27c96e" class="figure">
+          <p><img src="file:///img/react/react-src-code.svg" alt=
+          "react-src-code.svg" class="org-svg"></p>
+        </div>
+      </div>
+    </div>
+    <div id="outline-container-test" class="outline-2">
+      <h2 id="test"><span class="section-number-2">12.</span>
+      测试</h2>
+      <div class="outline-text-2" id="text-test">
+        <div id="qvJvTTqyJw"></div>
+        <script src="/js/react/tests/qvJvTTqyJw.js"></script>
+        <p>diff 还没有深入实现，没做到 setState 只更新相应的文本 <code>count =
+        0</code> 组件。</p>
+        <p>还有待继续研究！！！</p>
+      </div>
+    </div>
+    <div id="outline-container-summary" class="outline-2">
+      <h2 id="summary"><span class="section-number-2">13.</span>
+      总结</h2>
+      <div class="outline-text-2" id="text-summary">
+        <p>通过<a href=
+        "https://pomb.us/build-your-own-react/">作者</a>的这个实现，对 react
+        的部分主要功能有了一定的认知，文内涉及的主要知识点：</p>
+        <ol class="org-ol">
+          <li>createElement 实现</li>
+          <li>render 函数的实现</li>
+          <li>fiber tree 的处理(初始化，更新，删除，新增等)</li>
+          <li>commit 阶段处理，实际渲染DOM和 fiber tree 的遍历是分开的</li>
+          <li>useState hook 函数实现的基础原理，通过 wipFiber + hookIndex
+          来实现函数组件和 useState 的连接，从而互相影响。</li>
+        </ol>
+      </div>
+    </div>
   </div>
   <div id="postamble" class="status">
-    <p class="author">Author: Zhicheng Lee</p>
-    <p class="date">Created: 2022-04-25 Mon 10:03</p>
+    <p class="author">Author: Lee Zhicheng</p>
+    <p class="date">Created: 2022-07-20 Wed 20:28</p>
   </div>
 </body>
 </html>
