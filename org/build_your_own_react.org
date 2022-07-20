@@ -35,7 +35,7 @@ const container = document.getElementById("root");
 ReactDOM.render(element, container);
 #+end_src
 
-[[/assets/img/react/react-zero.svg]]
+[[./assets/img/react/react-zero.svg]]
 
 实现主要分为几个步骤
 
@@ -169,7 +169,7 @@ container.appendChild(node)
 </script>
 #+end_export
 
-[[/assets/img/react/react-render-brief.svg]]
+[[./assets/img/react/react-render-brief.svg]]
 
 * createElement
 :PROPERTIES:
@@ -1233,7 +1233,7 @@ function useState(initial) {
 :CUSTOM_ID: src-map
 :END:
 
-[[/assets/img/react/react-src-code.svg]]
+[[./assets/img/react/react-src-code.svg]]
 
 * 测试
 :PROPERTIES:
